@@ -1,0 +1,67 @@
+{
+  "name": "drone-ui",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/drone/drone-ui.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/drone/drone-ui/issues"
+  },
+  "homepage": "https://github.com/drone/drone-ui",
+  "dependencies": {
+    "babel-polyfill": "^6.0.2",
+    "history": "^1.9.0",
+    "isomorphic-fetch": "^2.2.0",
+    "lodash": "^3.10.1",
+    "moment": "^2.10.6",
+    "react": "^0.14.1",
+    "react-dom": "^0.14.1",
+    "react-redux": "^4.0.0",
+    "react-router": "1.0.0-rc3",
+    "redux": "^3.0.4",
+    "redux-router": "1.0.0-beta3",
+    "redux-thunk": "^1.0.0"
+  },
+  "devDependencies": {
+    "babel": "5.8.3",
+    "babel-cli": "^6.1.1",
+    "babel-core": "^6.0.20",
+    "babel-loader": "^6.0.1",
+    "babel-plugin-transform-react-jsx": "^6.0.18",
+    "babelify": "6.1.3",
+    "browserify": "11.0.0",
+    "less": "2.5.1",
+    "redux-devtools": "^2.1.5",
+    "rollup-plugin-babel": "^1.0.0",
+    "uglify-js": "2.4.24",
+    "webpack": "^1.12.2"
+  },
+  "jest": {
+    "testFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "scriptPreprocessor": "preprocessor.js",
+    "unmockedModulePathPatterns": [
+      "react",
+      "react/addons"
+    ],
+    "testDirectoryName": "test"
+  },
+
+
+  "scripts": {
+    "less": "./node_modules/.bin/lessc ./styles/main.less > ./dist/style.css",
+    "browserify": "./node_modules/.bin/browserify -t [ babelify ] ./scripts/index -o ./dist/bundle.js",
+    "uglify": "cat ./dist/bundle.js | ./node_modules/.bin/uglifyjs --compress -o ./dist/bundle.min.js",
+
+    "babel": "./node_modules/.bin/babel --modules umd ./scripts/  --out-file ./dist/temp.js",
+    "jest": "./node_modules/.bin/jest --coverage",
+    "lint": "./node_modules/.bin/eslint ./scripts/**.js"
+  }
+}

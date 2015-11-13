@@ -1,0 +1,1 @@
+This is where compiled javascript and css files go after running "npm run less" and "npm run browserify" in the project's root directory.
