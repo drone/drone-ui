@@ -19,10 +19,11 @@
     "isomorphic-fetch": "^2.2.0",
     "lodash": "^3.10.1",
     "moment": "^2.10.6",
-    "react": "^0.14.1",
-    "react-dom": "^0.14.1",
+    "react": "^0.14.2",
+    "react-dom": "^0.14.2",
     "react-redux": "^4.0.0",
     "react-router": "1.0.0-rc3",
+    "react-stickynode": "^0.1.1",
     "redux": "^3.0.4",
     "redux-router": "1.0.0-beta3",
     "redux-thunk": "^1.0.0"
@@ -53,13 +54,10 @@
     ],
     "testDirectoryName": "test"
   },
-
-
   "scripts": {
     "less": "./node_modules/.bin/lessc ./styles/main.less > ./dist/style.css",
-    "browserify": "./node_modules/.bin/browserify -t [ babelify ] ./scripts/index -o ./dist/bundle.js",
+    "build": "./node_modules/.bin/browserify -t [ babelify ] ./scripts/index -o ./dist/bundle.js",
     "uglify": "cat ./dist/bundle.js | ./node_modules/.bin/uglifyjs --compress -o ./dist/bundle.min.js",
-
     "babel": "./node_modules/.bin/babel --modules umd ./scripts/  --out-file ./dist/temp.js",
     "jest": "./node_modules/.bin/jest --coverage",
     "lint": "./node_modules/.bin/eslint ./scripts/**.js"

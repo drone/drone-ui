@@ -152,5 +152,38 @@ export function fetchRepoList() {
 }
 
 //
-// Repo Actions
+// Repo Secure Actions
 //
+
+export const ENCRYPT_REQUEST = 'ENCRYPT_REQUEST'
+export const ENCRYPT_SUCCESS = 'ENCRYPT_SUCCESS'
+export const ENCRYPT_FAILURE = 'ENCRYPT_FAILURE'
+
+export function requestRepoEncrypt(owner, name) {
+  return { type: ENCRYPT_REQUEST, owner, name }
+}
+
+export function receiveRepoEncrypt(text) {
+  return {
+    type: ENCRYPT_SUCCESS,
+    secret: {text: text}
+  }
+}
+
+export function receiveRepoEncryptErr(e) {
+  return {
+    type: ENCRYPT_FAILURE,
+    secret: {error: e}
+  }
+}
+
+export function postRepoSecret(owner, name) {
+  return dispatch => {
+    requestRepoEncrypt(owner, name);
+
+    return fetch(`/api/repos/${owner}/${name}/encrypt`, {method: "POST"})
+      .then(response => response.text())
+      .then(text => dispatch(receiveRepoEncrypt(text)))
+      .catch(e => dispatch(receiveRepoEncryptErr(e)));
+  }
+}

@@ -2,6 +2,8 @@
 
 This project is a proposal for a react-based user interface for Drone. I am making this public for individuals that have expressed interest in helping accelerate these efforts. This codebase is in very **early stages** and largely **non-functioning**, so please set your expectations accordingly.
 
+This codebase will eventually be moved to the [drone/drone](https://github.com/drone/drone) once it is stable and functional.
+
 ## Building
 
 To build the stylesheets and scripts:
@@ -16,7 +18,7 @@ This is currently being tested on `node v4.2.1`
 
 ## Running
 
-To test the experimental user interface with Drone we have created a simple proxy server. Before running the proxy server you must download dependencies:
+To test the experimental user interface with Drone we have created a simple proxy server. This will proxy requests from the react application to a real Drone instance. Before running the proxy server you must download dependencies:
 
 ```
 go get github.com/drone/drone-go/drone

@@ -67,7 +67,26 @@ export const JOB_CANCEL_REQUEST = "JOB_CANCEL_REQUEST";
 export const JOB_CANCEL_SUCCESS = "JOB_CANCEL_SUCCESS";
 export const JOB_CANCEL_FAILURE = "JOB_CANCEL_FAILURE";
 
-// export function fetchBuildOutput(owner, name, build, job) {
-//   return fetch("/data/out.txt")
-//     .then(response => response.json());
-// }
+
+
+export const LOG_REQUEST = "LOG_REQUEST";
+export const LOG_SUCCESS = "LOG_SUCCESS";
+export const LOG_FAILURE = "LOG_FAILURE";
+
+export function requestLogs(owner, name, number, job) {
+  return { type: LOG_REQUEST, owner, name, number, job }
+}
+
+export function receiveLogs(owner, name, number, job, logs) {
+  return { type: LOG_SUCCESS, owner, name, number, job, logs }
+}
+
+export function fetchLogs(owner, name, number, job) {
+  return dispatch => {
+    dispatch(requestLogs(owner, name, number, job));
+
+    return fetch(`/api/repos/${owner}/${name}/logs/${number}/${job}`)
+      .then(response => response.text())
+      .then(text => dispatch(receiveLogs(owner, name, number, job, text)));
+  }
+}

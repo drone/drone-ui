@@ -4,11 +4,14 @@ import {
   REPO_FAILURE,
   REPO_PATCH_SUCCESS,
   KEY_SUCCESS,
+  ENCRYPT_SUCCESS,
+  ENCRYPT_FAILURE,
 } from '../actions';
 
 const initialState = {
   repo: {},
   keys: {},
+  secret: {},
   loading: true
 };
 
@@ -34,6 +37,9 @@ export function repo(state = initialState, action) {
   case KEY_SUCCESS:
     return Object.assign({}, state, {keys: action.keys})
 
+  case ENCRYPT_FAILURE:
+  case ENCRYPT_SUCCESS:
+    return Object.assign({}, state, {secret: action.secret})
 
   case REPO_PATCH_SUCCESS:
   case REPO_SUCCESS:
