@@ -1,5 +1,6 @@
 node_modules
 npm_debug.log
 *.txt
+*.bak
 dist/*.js
 dist/*.css

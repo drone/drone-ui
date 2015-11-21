@@ -24,8 +24,8 @@ export class UserList extends Component {
 
     var users = [];
     this.props.users.forEach(function(user) {
-      users.push(<UserItem user={user} key={user.login}/>);
-    });
+      users.push(<UserItem user={user} key={user.login} onToggle={this.props.onToggle} onDelete={this.props.onDelete} />);
+    }.bind(this));
     return (
       <div className="row row-user">
         {users}
@@ -36,5 +36,7 @@ export class UserList extends Component {
 
 UserList.props = {
 	users: PropTypes.array,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  onToggle: PropTypes.function,
+  onDelete: PropTypes.function
 }

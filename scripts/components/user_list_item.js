@@ -4,6 +4,17 @@ import { Link, IndexLink } from "react-router";
 export class UserItem extends Component {
   constructor(props) {
     super(props)
+
+    this.handleToggle = this.handleToggle.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+  }
+
+  handleToggle() {
+    this.props.onToggle(this.props.user);
+  }
+
+  handleDelete() {
+    this.props.onDelete(this.props.user);
   }
 
   render() {
@@ -22,8 +33,8 @@ export class UserItem extends Component {
             <h3 className="login">{this.props.user.login}{label}</h3>
             <p className="email card-text">{this.props.user.email}</p>
             <div className="btn-group">
-              <button className="btn btn-info">Toggle Admin</button>
-              <button className="btn btn-danger">Delete</button>
+              <button className="btn btn-info" onClick={this.handleToggle}>Toggle Admin</button>
+              <button className="btn btn-danger" onClick={this.handleDelete}>Delete</button>
             </div>
           </div>
         </div>
@@ -34,4 +45,6 @@ export class UserItem extends Component {
 
 UserItem.props = {
 	user: PropTypes.object,
+  onToggle: PropTypes.function,
+  onDelete: PropTypes.function
 }
