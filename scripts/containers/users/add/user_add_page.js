@@ -20,24 +20,25 @@ class Page extends Component {
   }
 
   render() {
+    const {status} = this.props;
 
     var message = (
       <div className="alert alert-info">
         this is some text explaining this page
       </div>
     );
-    if (this.props.alerts.danger) {
-      console.log(this.props.alerts.danger)
+
+    if (status.isError) {
       message = (
         <div className="alert alert-danger">
-          {this.props.alerts.danger}
+          There was an error adding the user.
         </div>
       );
     }
-    if (this.props.alerts.success) {
+    if (status.isSuccess) {
       message = (
         <div className="alert alert-success">
-          successfully added some user. add another or <Link to="/system/users">go back</Link> to the user list
+          Successfully added the user. <Link to="/system/users">Return</Link> to the user list.
         </div>
       );
     }
@@ -55,14 +56,13 @@ class Page extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state)
   return {
-    alerts: state.users.alerts
+    status: state.status
   }
 }
 
 Page.props = {
-  alerts: PropTypes.object,
+  status: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
 }
 

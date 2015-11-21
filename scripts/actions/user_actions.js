@@ -68,16 +68,20 @@ export function postUser(user) {
     }
     const body = JSON.stringify(user);
 
-    return fetch("/api/users", {method: "POST", body, headers})
-      .then((response) => {
-        if (response.status < 300) {
-          return response.json();
+    var processStatus = function (response) {
+        if (response.status === 200 || response.status === 0) {
+            return Promise.resolve(response)
+        } else {
+            return Promise.reject(new Error(response.statusText))
         }
-        throw response;
-      })
+    };
+
+    return fetch("/api/users", {method: "POST", body, headers})
+      .then(processStatus)
       .then(json => dispatch(receivePostUser(json)))
-      .catch(response => response.text())
-      .then(err => dispatch(receivePostUserError(err)));
+      .catch(err => {
+        dispatch(receivePostUserError(err))
+      });
   }
 }
 

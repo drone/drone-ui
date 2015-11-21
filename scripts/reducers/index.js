@@ -8,6 +8,7 @@ import { repo } from "./repo_reducer";
 import { builds } from "./builds_reducer";
 import { build } from "./build_reducer";
 import { location } from "./location_reducer";
+import { status } from "./status_reducer";
 
 import {
 	USER_REQUEST,
@@ -20,6 +21,7 @@ import {
 const initialState = {};
 
 export function user(state = initialState, action) {
+
   switch (action.type) {
   case USER_TOKEN_SUCCESS:
     return Object.assign({}, state, {token: action.token})
@@ -31,6 +33,7 @@ export function user(state = initialState, action) {
 export const drone = combineReducers({
   router: routerStateReducer,
   user: user,
+  status,
   repo,
   users,
   repos,
