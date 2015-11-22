@@ -31,14 +31,14 @@ class Page extends Component {
     if (status.isError) {
       message = (
         <div className="alert alert-danger">
-          There was an error adding the user.
+          Failed to add user {status.target.login}. {status.errorText}.
         </div>
       );
     }
     if (status.isSuccess) {
       message = (
         <div className="alert alert-success">
-          Successfully added the user. <Link to="/system/users">Return</Link> to the user list.
+          Successfully added {status.target.login}. <Link to="/system/users">Return</Link> to the user list.
         </div>
       );
     }

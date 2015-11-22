@@ -54,8 +54,8 @@ export function receivePostUser(user) {
   return { type: USER_CREATE_SUCCESS, user }
 }
 
-export function receivePostUserError(error) {
-  return { type: USER_CREATE_FAILURE, error }
+export function receivePostUserError(user, error) {
+  return { type: USER_CREATE_FAILURE, user, error }
 }
 
 export function postUser(user) {
@@ -72,15 +72,18 @@ export function postUser(user) {
         if (response.status === 200 || response.status === 0) {
             return Promise.resolve(response)
         } else {
-            return Promise.reject(new Error(response.statusText))
+            return Promise.reject(response) //new Error(response.statusText))
         }
     };
 
     return fetch("/api/users", {method: "POST", body, headers})
       .then(processStatus)
+      .then(resp => resp.json())
       .then(json => dispatch(receivePostUser(json)))
-      .catch(err => {
-        dispatch(receivePostUserError(err))
+      .catch(resp => {
+        resp.text().then(text => {
+          dispatch(receivePostUserError(user, text))
+        });
       });
   }
 }
