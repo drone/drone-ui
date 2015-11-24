@@ -14,7 +14,7 @@ export function fetchUserList() {
   return dispatch => {
     dispatch(requestUserList());
 
-    return fetch("/api/users")
+    return fetch("/api/users", {credentials: "same-origin"})
       .then(response => response.json())
       .then(json => dispatch(receiveUserList(json)));
   }
@@ -36,7 +36,7 @@ export function fetchUserToken() {
   return dispatch => {
     dispatch(requestUserToken());
 
-    return fetch("/api/user/token", {method: "POST"})
+    return fetch("/api/user/token", {method: "POST", credentials: "same-origin"})
       .then(response => response.text())
       .then(text => dispatch(receiveUserToken(text)));
   }
@@ -76,7 +76,7 @@ export function postUser(user) {
         }
     };
 
-    return fetch("/api/users", {method: "POST", body, headers})
+    return fetch("/api/users", {method: "POST", credentials: "same-origin", body, headers})
       .then(processStatus)
       .then(resp => resp.json())
       .then(json => dispatch(receivePostUser(json)))
@@ -116,7 +116,7 @@ export function patchUser(user) {
     }
     const body = JSON.stringify(user);
 
-    return fetch(`/api/users/${user.login}`, {method: "PATCH", body, headers})
+    return fetch(`/api/users/${user.login}`, {method: "PATCH", credentials: "same-origin", body, headers})
       .then(response => response.json())
       .then(json => dispatch(receivePatchUser(json)));
   }
@@ -149,7 +149,7 @@ export function deleteUser(user) {
     }
     const body = JSON.stringify(user);
 
-    return fetch(`/api/users/${user.login}`, {method: "DELETE", headers})
+    return fetch(`/api/users/${user.login}`, {method: "DELETE", credentials: "same-origin", headers})
       .then(response => dispatch(receiveDeleteUser(user)));
   }
 }

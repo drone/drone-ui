@@ -14,7 +14,7 @@ export function fetchFeed() {
   return dispatch => {
     dispatch(requestFeed());
 
-    return fetch("/api/user/feed")
+    return fetch("/api/user/feed", {credentials: "same-origin"})
       .then(response => response.json())
       .then(json => dispatch(receiveFeed(json)));
   }

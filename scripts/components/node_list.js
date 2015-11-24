@@ -24,8 +24,9 @@ export class NodeList extends Component {
 
     var nodes = [];
     this.props.nodes.forEach(function(node) {
-      nodes.push(<NodeItem node={node} key={node.id} />);
-    });
+      nodes.push(<NodeItem node={node} key={node.id} onDelete={this.props.onDelete} />);
+    }.bind(this));
+    
     return (
       <div className="row row-node">
         {nodes}
@@ -37,4 +38,5 @@ export class NodeList extends Component {
 NodeList.props = {
   loading: PropTypes.bool,
   nodes: PropTypes.array,
+  onDelete: PropTypes.function
 }

@@ -42,7 +42,7 @@ export function fetchRepo(owner, name) {
   return dispatch => {
     dispatch(requestRepo(owner, name));
 
-    return fetch(`/api/repos/${owner}/${name}`)
+    return fetch(`/api/repos/${owner}/${name}`, {credentials: "same-origin"})
       .then(response => response.json())
       .then(json => dispatch(receiveRepo(json)));
   }
@@ -74,7 +74,7 @@ export function patchRepo(owner, name, attrs) {
     }
     const json = JSON.stringify(attrs);
 
-    return fetch(`/api/repos/${owner}/${name}`, {method: "PATCH", body: json, headers: headers})
+    return fetch(`/api/repos/${owner}/${name}`, {method: "PATCH", body: json, credentials: "same-origin", headers: headers})
       .then(response => response.json())
       .then(json => dispatch(receivePatchRepo(json)));
   }
@@ -109,7 +109,7 @@ export function fetchRepoKey(owner, name) {
   return dispatch => {
     requestRepoKey(owner, name);
 
-    return fetch(`/api/repos/${owner}/${name}/key`)
+    return fetch(`/api/repos/${owner}/${name}/key`, {credentials: "same-origin"})
       .then(response => response.text())
       .then(text => dispatch(receiveRepoKey(text)));
   }
@@ -145,7 +145,7 @@ export function fetchRepoList() {
   return dispatch => {
     dispatch(requestRepoList());
 
-    return fetch(`/api/user/repos/remote`)
+    return fetch(`/api/user/repos/remote`, {credentials: "same-origin"})
       .then(response => response.json())
       .then(json => dispatch(receiveRepoList(json)));
   }
@@ -181,7 +181,7 @@ export function postRepoSecret(owner, name) {
   return dispatch => {
     requestRepoEncrypt(owner, name);
 
-    return fetch(`/api/repos/${owner}/${name}/encrypt`, {method: "POST"})
+    return fetch(`/api/repos/${owner}/${name}/encrypt`, {method: "POST", credentials: "same-origin"})
       .then(response => response.text())
       .then(text => dispatch(receiveRepoEncrypt(text)))
       .catch(e => dispatch(receiveRepoEncryptErr(e)));

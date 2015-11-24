@@ -26,6 +26,14 @@ export function status(state = initialState, action) {
   case actions.USER_DELETE_FAILURE:
     return Object.assign({}, initialState, {isError: true, target: action.user, errorText: action.error});
 
+  case actions.NODE_CREATE_FAILURE:
+  case actions.NODE_DELETE_FAILURE:
+    return Object.assign({}, initialState, {isError: true, target: action.node, errorText: action.error});
+
+  case actions.NODE_CREATE_SUCCESS:
+  case actions.NODE_DELETE_SUCCESS:
+    return Object.assign({}, initialState, {isSuccess: true, target: action.node});
+
   default:
     return state;
   }

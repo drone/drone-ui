@@ -14,7 +14,7 @@ export function fetchBuildList(owner, name) {
   return dispatch => {
     dispatch(requestBuildList(owner, name));
 
-    return fetch(`/api/repos/${owner}/${name}/builds`)
+    return fetch(`/api/repos/${owner}/${name}/builds`, {credentials: "same-origin"})
       .then(response => response.json())
       .then(json => dispatch(receiveBuildList(owner, name, json)));
   }
@@ -36,7 +36,7 @@ export function fetchBuild(owner, name, number) {
   return dispatch => {
     dispatch(requestBuild(owner, name, number));
 
-    return fetch(`/api/repos/${owner}/${name}/builds/${number}`)
+    return fetch(`/api/repos/${owner}/${name}/builds/${number}`, {credentials: "same-origin"})
       .then(response => response.json())
       .then(json => dispatch(receiveBuild(owner, name, number, json)));
   }
@@ -85,7 +85,7 @@ export function fetchLogs(owner, name, number, job) {
   return dispatch => {
     dispatch(requestLogs(owner, name, number, job));
 
-    return fetch(`/api/repos/${owner}/${name}/logs/${number}/${job}`)
+    return fetch(`/api/repos/${owner}/${name}/logs/${number}/${job}`, {credentials: "same-origin"})
       .then(response => response.text())
       .then(text => dispatch(receiveLogs(owner, name, number, job, text)));
   }
