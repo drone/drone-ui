@@ -7,7 +7,7 @@
     "url": "https://github.com/drone/drone-ui.git"
   },
   "author": "",
-  "license": "Apache",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/drone/drone-ui/issues"
   },
