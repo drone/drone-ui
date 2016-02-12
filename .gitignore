@@ -4,3 +4,5 @@ npm_debug.log
 *.bak
 dist/*.js
 dist/*.css
+dist/favicon.ico
+dist/*.map
