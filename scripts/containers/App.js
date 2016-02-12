@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from "react";
 import { connect } from "react-redux";
-import { pushState } from "redux-router";
+import { push } from "redux-router";
 import Header from "../components/header";
 import HeaderGuest from "../components/header_guest";
 
@@ -10,12 +10,13 @@ class App extends Component {
   }
 
   handleChange(nextValue) {
-    this.props.pushState(null, `/${nextValue}`)
+    this.props.push(null, `/${nextValue}`)
   }
 
   render() {
-    const { content, pagehead, pagenav } = this.props.children;
-    
+    const { content, pagehead, pagenav } = this.props;
+    //const { content, pagehead, pagenav } = this.props.children;
+
     var header;
     if (this.props.user) {
       header = <Header user={this.props.user} />;
@@ -42,9 +43,9 @@ function mapStateToProps(state) {
 
 App.props = {
   children: PropTypes.node,
-  pushState: PropTypes.func.isRequired,
+  push: PropTypes.func.isRequired,
 }
 
 export default connect(mapStateToProps, {
-  pushState,
+  push,
 })(App);
