@@ -1,29 +1,47 @@
-var path = require('path');
+var webpack = require('webpack');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-  entry: './scripts/index.js',
-  devtool: 'source-map',
+  entry: [
+    './src/index.js'
+  ],
   output: {
-    filename: './dist/bundle.js'
+    filename: 'bundle.js',
+    path: './dist'
   },
-  module: {
-    loaders: [
-      {
-        test: /\.js?$/,
-        exclude: /(node_modules|bower_components)/,
-        loader: 'babel',
-        query: {
-          presets: ['react', 'es2015']
-        }
-      }
-    ]
-  },
+  devtool: 'source-map',
   externals: {
     'react': 'React',
     'react-dom': 'ReactDOM',
     'moment': 'moment'
   },
   resolve: {
-    extensions: ['', '.js', '.jsx']
-  }
+    extensions: ['', '.js']
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.(js|jsx)/,
+        loader: 'babel',
+        query: {presets: ['react', 'es2015']},
+        exclude: /node_modules/
+      },
+      {
+        test: /\.css/,
+        loader: ExtractTextPlugin.extract("style-loader", "css-loader")
+      },
+      {
+        test: /\.less$/,
+        loader: ExtractTextPlugin.extract("style-loader", "css-loader!less-loader")
+      }
+    ]
+  },
+  plugins: [
+    new ExtractTextPlugin('style.css'),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': "'production'"
+      }
+    })
+  ]
 };
