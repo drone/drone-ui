@@ -5,7 +5,11 @@
 end_of_line = lf
 insert_final_newline = true
 
-[*.js]
+[*.{html,css,js}]
 charset = utf-8
 indent_style = space
 indent_size = 2
+
+[*.go]
+indent_style = tab
+indent_size = 8
