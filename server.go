@@ -23,6 +23,12 @@ var (
 func main() {
 	flag.Parse()
 
+	hostScheme := strings.Split(*host, "://")
+	if len(hostScheme) == 2 {
+		*scheme = hostScheme[0]
+		*host = hostScheme[1]
+	}
+
 	// create the drone client and get the Drone user
 	client := drone.NewClientToken(*scheme+"://"+*host, *token)
 	user, err := client.Self()
