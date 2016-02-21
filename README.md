@@ -10,7 +10,7 @@ To build the stylesheets and scripts:
 
 ```
 npm install
-npm run browserify
+npm build
 npm run less
 ```
 
@@ -28,7 +28,7 @@ To run the proxy server you must provide the location of your drone server (sche
 
 ```
 go run server.go --scheme <drone scheme>  \
-                 --addr   <drone address> \
+                 --host   <drone hostname> \
                  --token  <drone api token>
 ```
 
