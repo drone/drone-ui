@@ -1,10 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import Page from './layout/Page';
+
 class App extends React.Component {
   render() {
     return (
-      <div>Drone!</div>
+      <Page/>
     );
   }
 }
