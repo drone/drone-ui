@@ -1,10 +1,8 @@
 import React from 'react';
 
-import { styles } from '../style';
-
-import Header from './Header/index';
-import Breadcrumb from './Breadcrumb';
-import Content from './Content';
+import Header from './header/index';
+import Breadcrumb from './breadcrumb';
+import Content from './content';
 
 export default
 class Page extends React.Component {
@@ -13,7 +11,7 @@ class Page extends React.Component {
       <div>
         <Header/>
         <Breadcrumb/>
-        <hr style={styles.hr}/>
+        <hr/>
         <Content>
           hello world
         </Content>
