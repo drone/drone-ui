@@ -20,6 +20,8 @@
     "babel-preset-react": "^6.5.0",
     "eslint": "^2.5.3",
     "eslint-plugin-react": "^4.2.3",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "less-loader": "^2.2.3",
     "webpack": "^1.12.14"
   },
   "scripts": {},
