@@ -1,0 +1,34 @@
+@import "../../index";
+
+.header {
+  .clearfix();
+  margin: @layout-margin-vertical @layout-margin-horizontal;
+
+  .right {
+    float: right;
+  }
+
+  @import "avatar";
+  .avatar {
+    float: right;
+    margin-left: @layout-margin-horizontal / 2;
+  }
+
+  @import "dropdown";
+  .dropdown {
+    float: right;
+    margin-left: @layout-margin-horizontal / 2;
+  }
+
+  @import "logo";
+
+  .search {
+    float: left;
+    width: 100%;
+
+    input {
+      &:extend(input);
+      width: 100%;
+    }
+  }
+}
