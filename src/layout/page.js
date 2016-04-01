@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Header from 'header/index';
+import Header from './header/index';
 import Breadcrumb from './breadcrumb';
 import Content from './content';
 
