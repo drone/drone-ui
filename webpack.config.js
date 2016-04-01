@@ -5,6 +5,7 @@ module.exports = {
   output: {
     filename: './dist/app.js'
   },
+  devtool: 'source-map',
   module: {
     loaders: [
       {
@@ -18,7 +19,6 @@ module.exports = {
       {
         test: /\.less$/,
         loader: ExtractTextPlugin.extract(
-          // activate source maps via loader query
           'css?sourceMap!' +
           'less?sourceMap'
         )
