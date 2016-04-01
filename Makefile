@@ -12,7 +12,7 @@ watch: dist_dir copy
 	./node_modules/.bin/webpack -w
 
 copy: dist_dir
-	cp -r ./images/ dist/
+	cp -r ./images/* dist/
 
 dist_dir:
 	mkdir -p dist
