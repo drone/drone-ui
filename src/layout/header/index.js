@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 import Row from '../grid/row';
 import Col from '../grid/col';
@@ -14,7 +15,9 @@ class Header extends React.Component {
       <header className="header">
         <Row>
           <Col xs={6} sm={1}>
-            <Logo/>
+            <Link to="/">
+              <Logo/>
+            </Link>
           </Col>
           <Col xs={6} sm={2} last-sm>
             <Dropdown/>
