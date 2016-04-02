@@ -11,6 +11,8 @@ import Dropdown from './dropdown';
 export default
 class Header extends React.Component {
   render() {
+    const {user} = this.props;
+
     return (
       <header className="header">
         <Row>
@@ -21,7 +23,7 @@ class Header extends React.Component {
           </Col>
           <Col xs={6} sm={2} last-sm>
             <Dropdown/>
-            <Avatar/>
+            <Avatar src={user.get('avatar_url')}/>
           </Col>
           <Col xs={12} sm={5} sm-offset={4}>
             <div className="search">
