@@ -13,13 +13,14 @@ class Page extends React.Component {
   }
 
   render() {
+    const {user} = this.props;
+
     return (
       <div>
-        <Header/>
+        <Header user={user}/>
         <Breadcrumb/>
         <hr/>
         <Content>
-          hello world
         </Content>
       </div>
     );
