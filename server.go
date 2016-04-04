@@ -59,6 +59,7 @@ func main() {
 		Director: func(req *http.Request) {
 			req.URL.Scheme = *scheme
 			req.URL.Host = *host
+			req.Host = *host
 			req.Header.Set("X-Forwarded-For", *host)
 			req.Header.Set("X-Forwarded-Proto", *scheme)
 			req.Header.Set("Authorization", "Bearer "+*token)
