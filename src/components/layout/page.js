@@ -5,7 +5,7 @@ import Header from './header/index';
 import Breadcrumb from './breadcrumb';
 import Content from './content';
 
-import { fetchWindowUser } from '../data/user/actions';
+import { fetchWindowUser } from '../../data/user/actions';
 
 class Page extends React.Component {
   componentDidMount() {

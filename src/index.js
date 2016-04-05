@@ -9,8 +9,10 @@ import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 
 import './index.less'
 
-import { drone } from './reducers'
-import Page from './layout/page';
+import { drone } from './data/reducers'
+
+import Page from './components/layout/page';
+import Dashboard from './pages/dashboard/index';
 
 function configureStore(initialState) {
   const logger = createLogger();

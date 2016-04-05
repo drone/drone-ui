@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-import Row from '../../components/grid/row';
-import Col from '../../components/grid/col';
+import Row from '../../grid/row';
+import Col from '../../grid/col';
 
 import Logo from './logo';
 import Avatar from './../../components/avatar';
