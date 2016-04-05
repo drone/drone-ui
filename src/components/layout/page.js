@@ -5,7 +5,7 @@ import Header from './header/index';
 import Breadcrumb from './breadcrumb';
 import Content from './content';
 
-import { fetchWindowUser } from '../user/actions';
+import { fetchWindowUser } from '../data/user/actions';
 
 class Page extends React.Component {
   componentDidMount() {
@@ -13,14 +13,15 @@ class Page extends React.Component {
   }
 
   render() {
-    const {user} = this.props;
+    const {pageHead, pageContent, user} = this.props;
 
     return (
       <div>
         <Header user={user}/>
-        <Breadcrumb/>
+        {pageHead}
         <hr/>
         <Content>
+          {pageContent}
         </Content>
       </div>
     );

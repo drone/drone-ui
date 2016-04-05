@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-import Row from '../grid/row';
-import Col from '../grid/col';
+import Row from '../../components/grid/row';
+import Col from '../../components/grid/col';
 
 import Logo from './logo';
-import Avatar from './avatar';
+import Avatar from './../../components/avatar';
 import Dropdown from './dropdown';
 
 export default
@@ -23,7 +23,7 @@ class Header extends React.Component {
           </Col>
           <Col xs={6} sm={2} last-sm>
             <Dropdown/>
-            <Avatar src={user.get('avatar_url')}/>
+            <Avatar src={user.get('avatar_url')} circle/>
           </Col>
           <Col xs={12} sm={5} sm-offset={4}>
             <div className="search">
