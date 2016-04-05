@@ -4,8 +4,7 @@ import { Link } from 'react-router';
 import Row from '../../grid/row';
 import Col from '../../grid/col';
 
-import Logo from './logo';
-import Avatar from './../../components/avatar';
+import Avatar from '../../avatar';
 import Dropdown from './dropdown';
 
 export default
@@ -18,7 +17,7 @@ class Header extends React.Component {
         <Row>
           <Col xs={6} sm={1}>
             <Link to="/">
-              <Logo/>
+              <Avatar src="/static/drone.svg"/>
             </Link>
           </Col>
           <Col xs={6} sm={2} last-sm>
