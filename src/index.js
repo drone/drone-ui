@@ -12,7 +12,7 @@ import './index.less';
 import { drone } from './data/reducers';
 
 import Page from './components/layout/page';
-import Dashboard from './pages/dashboard/index';
+import Pages from './pages/index';
 
 function configureStore(initialState) {
   const logger = createLogger();
@@ -39,7 +39,8 @@ let app = (
   <Provider store={store}>
     <Router history={history}>
       <Route path="/" component={Page}>
-        <IndexRoute components={{pageHead: Dashboard.Header, pageContent: Dashboard.Content}}/>
+        <IndexRoute components={{pageHead: Pages.Dashboard.Header, pageContent: Pages.Dashboard.Content}}/>
+        <Route path="/:owner/:name" components={{pageHead: Pages.Repository.Header, pageContent: Pages.Repository.Content}}/>
       </Route>
     </Router>
   </Provider>

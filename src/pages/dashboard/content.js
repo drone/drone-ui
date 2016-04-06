@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 
 import { getUserRepos } from '../../data/repos/actions';
 import RepoListItem from '../../components/repo_list_item';
@@ -26,10 +27,10 @@ class Content extends React.Component {
       <div className="dashboard">
         {repos.map((repo, index) => {
           return (
-            <div key={repo.id}>
+            <Link key={repo.id} to={`/${repo.owner}/${repo.name}`}>
               <RepoListItem repo={repo}/>
               {index < repos.size - 1 ? <hr/> : null}
-            </div>
+            </Link>
           );
         })}
       </div>
