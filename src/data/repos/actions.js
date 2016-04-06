@@ -8,13 +8,13 @@ export function getUserRepos() {
   return dispatch => {
     Request.get('/api/user/repos')
       .end((err, response) => {
-        if(err != null) {
+        if (err != null) {
           console.error(err); // TODO: Add ui error handling
         }
 
         response = normalize(JSON.parse(response.text), arrayOf(repoSchema));
-
-        dispatch(userReposReceived(Immutable.Map(response.entities.repo)));
+        let repos = Immutable.Map(response.entities.repo);
+        dispatch(userReposReceived(repos));
       });
   };
 }
@@ -24,5 +24,29 @@ export function userReposReceived(repos) {
   return {
     type: USER_REPOS_RECEIVED,
     repos
+  };
+}
+
+export function getRepo(owner, name) {
+  return dispatch => {
+    Request.get(`/api/repos/${owner}/${name}`)
+      .end((err, response) => {
+        if (err != null) {
+          console.error(err);
+        }
+
+        response = normalize(JSON.parse(response.text), repoSchema);
+        let repo = Immutable.Map(response.entities.repo);
+
+        dispatch(repoReceived(repo));
+      });
+  };
+}
+
+export const REPO_RECEIVED = 'REPO_RECEIVED';
+export function repoReceived(repo) {
+  return {
+    type: REPO_RECEIVED,
+    repo
   };
 }
