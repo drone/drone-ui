@@ -16,7 +16,7 @@ class Page extends React.Component {
     const {pageHead, pageContent, user} = this.props;
 
     return (
-      <div>
+      <div className="page">
         <Header user={user}/>
         {pageHead}
         <hr/>
