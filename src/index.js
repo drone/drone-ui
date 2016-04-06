@@ -38,10 +38,11 @@ const history = syncHistoryWithStore(browserHistory, store);
 let app = (
   <Provider store={store}>
     <Router history={history}>
-      <Route path="/" component={Page}/>
+      <Route path="/" component={Page}>
+        <IndexRoute components={{pageHead: Dashboard.Header, pageContent: Dashboard.Content}}/>
+      </Route>
     </Router>
   </Provider>
 );
 
 ReactDOM.render(app, document.querySelector('#app'));
-
