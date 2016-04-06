@@ -26,8 +26,8 @@ class Content extends React.Component {
       <div className="dashboard">
         {repos.map((repo, index) => {
           return (
-            <div>
-              <RepoListItem key={repo.id} repo={repo}/>
+            <div key={repo.id}>
+              <RepoListItem repo={repo}/>
               {index < repos.size - 1 ? <hr/> : null}
             </div>
           );
