@@ -15,15 +15,15 @@ class Row extends React.Component {
     viewports.forEach((viewport) => {
       alignments.forEach((alignment) => {
         if (this.props[`${alignment}-${viewport}`]) {
-          classes.push(`${alignment}-${viewport}`)
+          classes.push(`${alignment}-${viewport}`);
         }
-      })
+      });
     });
 
     return (
       <div className={classes.join(' ')}>
         {this.props.children}
       </div>
-    )
+    );
   }
 }

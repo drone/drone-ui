@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux';
 import { Router, IndexRoute, browserHistory, Route } from 'react-router';
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import createLogger from 'redux-logger'
-import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
+import createLogger from 'redux-logger';
+import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 
-import './index.less'
+import './index.less';
 
-import { drone } from './data/reducers'
+import { drone } from './data/reducers';
 
 import Page from './components/layout/page';
 import Dashboard from './pages/dashboard/index';
@@ -27,7 +27,7 @@ function configureStore(initialState) {
     routing: routerReducer
   });
 
-  return createStoreWithMiddleware(combinedReducers, initialState)
+  return createStoreWithMiddleware(combinedReducers, initialState);
 }
 
 const store = configureStore();

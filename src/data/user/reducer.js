@@ -1,6 +1,6 @@
-import Immutable from 'immutable'
+import Immutable from 'immutable';
 
-import { USER_UPDATE } from './actions'
+import { USER_UPDATE } from './actions';
 
 let initialState = Immutable.Map();
 

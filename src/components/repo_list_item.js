@@ -12,6 +12,6 @@ class RepoListItem extends React.Component {
         <Avatar src={repo.avatar_url}/>
         <span>{repo.name}</span>
       </div>
-    )
+    );
   }
 }

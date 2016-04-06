@@ -30,7 +30,7 @@ class Content extends React.Component {
               <RepoListItem key={repo.id} repo={repo}/>
               {index < repos.size - 1 ? <hr/> : null}
             </div>
-          )
+          );
         })}
       </div>
     );
@@ -41,4 +41,4 @@ export default connect(
   state => ({
     repos: state.drone.repos
   })
-)(Content)
+)(Content);

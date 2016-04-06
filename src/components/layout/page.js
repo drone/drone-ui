@@ -32,4 +32,4 @@ export default connect(
   state => ({
     user: state.drone.user
   })
-)(Page)
+)(Page);

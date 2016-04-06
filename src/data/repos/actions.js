@@ -15,8 +15,8 @@ export function getUserRepos() {
         response = normalize(JSON.parse(response.text), arrayOf(repoSchema));
 
         dispatch(userReposReceived(Immutable.Map(response.entities.repo)));
-      })
-  }
+      });
+  };
 }
 
 export const USER_REPOS_RECEIVED = 'USER_REPOS_RECEIVED';
@@ -24,5 +24,5 @@ export function userReposReceived(repos) {
   return {
     type: USER_REPOS_RECEIVED,
     repos
-  }
+  };
 }
