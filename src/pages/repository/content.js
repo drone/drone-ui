@@ -29,7 +29,7 @@ class Content extends React.Component {
             return a.id < b.id ? 1 : -1;
           });
 
-          const date = new Date(dayBuilds.first().timestamp * 1000);
+          const date = new Date(dayBuilds.first().created_at * 1000);
 
           return (
             <div key={index} className="group">
@@ -51,7 +51,7 @@ export default connect(
     }),
     builds: state.drone.builds
       .groupBy((build) => { // group all builds by day of date
-        const date = new Date(build.timestamp * 1000);
+        const date = new Date(build.created_at * 1000);
         return `${date.getFullYear()}-${('0' + date.getMonth()).slice(-2)}-${('0' + date.getDate()).slice(-2)}`;
       })
       .sort((a, b) => { // sort all grouped builds descending
