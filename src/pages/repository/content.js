@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import { getRepo } from '../../data/repos/actions';
 import { getBuilds } from '../../data/builds/actions';
@@ -21,20 +22,23 @@ class Content extends React.Component {
       );
     }
 
-    builds = builds.toList().sort((a, b) => {
-      return a.timestamp < b.timestamp;
-    });
-
     return (
-      <div>
-        repository!
-        <ul>
-          {builds.map((build) => {
-            return (
-              <li key={build.id}>{build.id}</li>
-            );
-          })}
-        </ul>
+      <div className="repository timeline">
+        {builds.toList().reverse().map((dayBuilds, index) => {
+          dayBuilds = dayBuilds.toList().sort((a, b) => {
+            return a.id < b.id ? 1 : -1;
+          });
+
+          const date = new Date(dayBuilds.first().timestamp * 1000);
+
+          return (
+            <div key={index} className="group">
+              <div className="group-title">
+                Commits on {moment(date).format('MMM Do YYYY')}
+              </div>
+            </div>
+          );
+        })}
       </div>
     );
   }
@@ -46,5 +50,12 @@ export default connect(
       return repository.owner === router.params.owner && repository.name === router.params.name;
     }),
     builds: state.drone.builds
+      .groupBy((build) => { // group all builds by day of date
+        const date = new Date(build.timestamp * 1000);
+        return `${date.getFullYear()}-${('0' + date.getMonth()).slice(-2)}-${('0' + date.getDate()).slice(-2)}`;
+      })
+      .sort((a, b) => { // sort all grouped builds descending
+        return a.first().id > b.first().id ? 1 : -1;
+      })
   })
 )(Content);

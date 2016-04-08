@@ -1,5 +1,55 @@
-.dashboard {
-  .repo-list-item {
-    padding: @layout-margin-vertical
+.repository {
+  &.timeline {
+    padding-left: 50px;
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 40px;
+
+    &:before {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 14px;
+      z-index: -1;
+      display: block;
+      width: 1px;
+      content: "";
+      background-color: #DFE2E5;
+    }
+
+    .group {
+      padding-bottom: 16px;
+
+      &:first-child .group-title {
+        margin-top: 0;
+      }
+
+      &:last-child {
+        padding-bottom: 0;
+      }
+    }
+
+    .group-title {
+      font-size: 13px;
+      text-transform: uppercase;
+      color: #ADB3BA;
+      margin-bottom: 30px;
+      margin-top: 30px;
+      position: relative;
+      line-height: 20px;
+
+      &:before {
+        content: '\f01f';
+        font-family: "octicons";
+        position: absolute;
+        left: -48px;
+        font-size: 20px;
+        background: #FFF;
+        width: 24px;
+        vertical-align: middle;
+        text-align: center;
+        color: #ADB3BA;
+      }
+    }
   }
 }
