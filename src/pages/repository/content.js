@@ -4,6 +4,7 @@ import moment from 'moment';
 
 import { getRepo } from '../../data/repos/actions';
 import { getBuilds } from '../../data/builds/actions';
+import BuildCard from '../../components/build_card';
 
 class Content extends React.Component {
   componentDidMount() {
@@ -36,6 +37,11 @@ class Content extends React.Component {
               <div className="group-title">
                 Commits on {moment(date).format('MMM Do YYYY')}
               </div>
+              {dayBuilds.map((build) => {
+                return (
+                  <BuildCard key={build.id} build={build}/>
+                );
+              })}
             </div>
           );
         })}
