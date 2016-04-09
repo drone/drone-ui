@@ -1,0 +1,49 @@
+.status {
+  display: inline-block;
+  width: 100px;
+  padding: 0 15px;
+  margin-right: 10px;
+  border-radius: 2px;
+  font-size: 11px;
+  line-height: 22px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #FFF;
+
+  &.error, &.killed, &.failure {
+    background: #bf616a;
+  }
+
+  &.success {
+    background: #a3be8c;
+  }
+
+  &.pending, &.running {
+    background: #ebcb8b;
+    animation: horizontal 2s ease infinite;
+  }
+
+  @keyframes horizontal {
+    0% {
+      transform: translate(0, 0);
+    }
+    6% {
+      transform: translate(5px, 0);
+    }
+    12% {
+      transform: translate(0, 0);
+    }
+    18% {
+      transform: translate(5px, 0);
+    }
+    24% {
+      transform: translate(0, 0);
+    }
+    30% {
+      transform: translate(5px, 0);
+    }
+    36%, 100% {
+      transform: translate(0, 0);
+    }
+  }
+}
