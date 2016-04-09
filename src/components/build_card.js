@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment';
 
 import Avatar from '../components/avatar';
+import Status from '../components/status';
 
 export default
 class BuildCard extends React.Component {
@@ -15,6 +16,7 @@ class BuildCard extends React.Component {
         </div>
         <div className="card-block">
           <div>
+            <Status state={build.status}/>
             <h3>{build.message}</h3>
           </div>
           <p>
