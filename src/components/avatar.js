@@ -5,14 +5,14 @@ class Avatar extends React.Component {
   render() {
     const {src, circle} = this.props;
 
-    let classes = ['avatar'];
+    let classes = [this.props.className, 'avatar'];
 
     if (circle) {
       classes.push('avatar--circle');
     }
 
     return (
-      <img className={classes.join(' ')} src={src}/>
+      <img className={classes.join(' ').trim()} src={src}/>
     );
   }
 }
