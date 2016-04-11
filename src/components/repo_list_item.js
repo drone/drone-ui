@@ -9,8 +9,8 @@ class RepoListItem extends React.Component {
 
     return (
       <div className="repo-list-item">
-        <Avatar src={repo.avatar_url}/>
-        <h3>{repo.name}</h3>
+        <Avatar src={repo.get('avatar_url')}/>
+        <h3>{repo.get('name')}</h3>
       </div>
     );
   }

@@ -20,14 +20,14 @@ class Content extends React.Component {
     // Sort by repo's name
     repos = repos.toList();
     repos = repos.sort((a, b) => {
-      return a.name.localeCompare(b.name);
+      return a.get('name').localeCompare(b.get('name'));
     });
 
     return (
       <div className="dashboard">
         {repos.map((repo, index) => {
           return (
-            <Link key={repo.id} to={`/${repo.owner}/${repo.name}`}>
+            <Link key={repo.get('id')} to={`/${repo.get('owner')}/${repo.get('name')}`}>
               <RepoListItem repo={repo}/>
               {index < repos.size - 1 ? <hr/> : null}
             </Link>

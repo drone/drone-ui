@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 import moment from 'moment';
 
 import { getRepo } from '../../data/repos/actions';
@@ -15,9 +16,12 @@ class Content extends React.Component {
   }
 
   render() {
+    const {owner, name} = this.props.params;
     let {repository, builds} = this.props;
 
-    if (repository == null || builds == null) {
+    console.log(repository, builds);
+
+    if (repository == null && builds == null) {
       return (
         <div>Loading...</div>
       );
@@ -27,10 +31,10 @@ class Content extends React.Component {
       <div className="repository timeline">
         {builds.toList().reverse().map((dayBuilds, index) => {
           dayBuilds = dayBuilds.toList().sort((a, b) => {
-            return a.id < b.id ? 1 : -1;
+            return a.get('id') < b.get('id') ? 1 : -1;
           });
 
-          const date = new Date(dayBuilds.first().created_at * 1000);
+          const date = new Date(dayBuilds.first().get('created_at') * 1000);
 
           return (
             <div key={index} className="group">
@@ -39,7 +43,9 @@ class Content extends React.Component {
               </div>
               {dayBuilds.map((build) => {
                 return (
-                  <BuildCard key={build.id} build={build}/>
+                  <Link key={build.get('number')} to={`/${owner}/${name}/${build.get('number')}`}>
+                    <BuildCard build={build}/>
+                  </Link>
                 );
               })}
             </div>
@@ -53,15 +59,18 @@ class Content extends React.Component {
 export default connect(
   (state, router) => ({
     repository: state.drone.repos.find((repository) => {
-      return repository.owner === router.params.owner && repository.name === router.params.name;
+      return (
+        repository.get('owner') == router.params.owner &&
+        repository.get('name') == router.params.name
+      );
     }),
     builds: state.drone.builds
       .groupBy((build) => { // group all builds by day of date
-        const date = new Date(build.created_at * 1000);
+        const date = new Date(build.get('created_at') * 1000);
         return `${date.getFullYear()}-${('0' + date.getMonth()).slice(-2)}-${('0' + date.getDate()).slice(-2)}`;
       })
       .sort((a, b) => { // sort all grouped builds descending
-        return a.first().id > b.first().id ? 1 : -1;
+        return a.first().get('id') > b.first().get('id') ? 1 : -1;
       })
   })
 )(Content);

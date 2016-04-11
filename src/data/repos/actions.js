@@ -13,7 +13,7 @@ export function getUserRepos() {
         }
 
         response = normalize(JSON.parse(response.text), arrayOf(repoSchema));
-        let repos = Immutable.Map(response.entities.repo);
+        let repos = Immutable.fromJS(response.entities.repo);
         dispatch(userReposReceived(repos));
       });
   };
@@ -36,17 +36,18 @@ export function getRepo(owner, name) {
         }
 
         response = normalize(JSON.parse(response.text), repoSchema);
-        let repo = Immutable.Map(response.entities.repo);
+        let repo = Immutable.fromJS(response.entities.repo);
 
-        dispatch(repoReceived(repo));
+        dispatch(repoReceived({owner, name}, repo));
       });
   };
 }
 
 export const REPO_RECEIVED = 'REPO_RECEIVED';
-export function repoReceived(repo) {
+export function repoReceived(params, repo) {
   return {
     type: REPO_RECEIVED,
+    params,
     repo
   };
 }

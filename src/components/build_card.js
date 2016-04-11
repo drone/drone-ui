@@ -12,19 +12,19 @@ class BuildCard extends React.Component {
     return (
       <div className="card">
         <div className="card-header">
-          <Avatar src={build.author_avatar}/>
+          <Avatar src={build.get('author_avatar')}/>
         </div>
         <div className="card-block">
           <div>
-            <Status state={build.status}/>
-            <h3>{build.message}</h3>
+            <Status state={build.get('status')}/>
+            <h3>{build.get('message')}</h3>
           </div>
           <p>
-            <em>{build.author}</em>
+            <em>{build.get('author')}</em>
             <span>authored</span>
-            <em>{moment(build.created_at * 1000).fromNow()}</em>
+            <em>{moment(build.get('created_at') * 1000).fromNow()}</em>
             <span>to</span>
-            <em>{build.branch}</em>
+            <em>{build.get('branch')}</em>
           </p>
         </div>
       </div>

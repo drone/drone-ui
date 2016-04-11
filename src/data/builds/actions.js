@@ -13,17 +13,21 @@ export function getBuilds(owner, name) {
         }
 
         response = normalize(JSON.parse(response.text), arrayOf(buildSchema));
-        let builds = Immutable.Map(response.entities.build);
+        let builds = Immutable.fromJS(response.entities.build);
+        let buildIDs = Immutable.fromJS(response.result);
 
-        dispatch(buildsReceived(builds));
+        dispatch(buildsReceived({owner, name}, builds, buildIDs));
       });
   };
 }
 
 export const BUILDS_RECEIVED = 'BUILDS_RECEIVED';
-export function buildsReceived(builds) {
+export function buildsReceived(params, builds, buildIDs) {
   return {
     type: BUILDS_RECEIVED,
-    builds
+    params,
+    builds,
+    buildIDs
+  };
   };
 }
