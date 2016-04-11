@@ -1,8 +1,8 @@
 import React from 'react';
-import moment from 'moment';
 
-import Avatar from '../components/avatar';
-import Status from '../components/status';
+import Avatar from './avatar';
+import Status from './status';
+import BuildMeta from './build_meta';
 
 export default
 class BuildCard extends React.Component {
@@ -19,13 +19,7 @@ class BuildCard extends React.Component {
             <Status state={build.get('status')}/>
             <h3>{build.get('message')}</h3>
           </div>
-          <p>
-            <em>{build.get('author')}</em>
-            <span>authored</span>
-            <em>{moment(build.get('created_at') * 1000).fromNow()}</em>
-            <span>to</span>
-            <em>{build.get('branch')}</em>
-          </p>
+            <BuildMeta build={build}/>
         </div>
       </div>
     );
