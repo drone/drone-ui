@@ -19,8 +19,6 @@ class Content extends React.Component {
     const {owner, name} = this.props.params;
     let {repository, builds} = this.props;
 
-    console.log(repository, builds);
-
     if (repository == null && builds == null) {
       return (
         <div>Loading...</div>
@@ -57,20 +55,33 @@ class Content extends React.Component {
 }
 
 export default connect(
-  (state, router) => ({
-    repository: state.drone.repos.find((repository) => {
+  (state, ownProps) => {
+    const repository = state.drone.repos.find((repository) => { // find the correct repository by owner & name
       return (
-        repository.get('owner') == router.params.owner &&
-        repository.get('name') == router.params.name
+        repository.get('owner') == ownProps.params.owner &&
+        repository.get('name') == ownProps.params.name
       );
-    }),
-    builds: state.drone.builds
+    });
+
+    const builds = state.drone.builds
+      .filter((build) => { // filter builds for this repository
+        if (repository.get('builds') == null) { // If there are no builds don't return any builds (=loading)
+          return false;
+        }
+
+        return repository.get('builds').includes(build.get('id')); // If this build belongs to repo's builds
+      })
       .groupBy((build) => { // group all builds by day of date
         const date = new Date(build.get('created_at') * 1000);
         return `${date.getFullYear()}-${('0' + date.getMonth()).slice(-2)}-${('0' + date.getDate()).slice(-2)}`;
       })
       .sort((a, b) => { // sort all grouped builds descending
         return a.first().get('id') > b.first().get('id') ? 1 : -1;
-      })
-  })
+      });
+
+    return {
+      repository,
+      builds
+    };
+  }
 )(Content);
