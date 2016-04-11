@@ -17,7 +17,7 @@ class Header extends React.Component {
         <Row>
           <Col xs={6} sm={1}>
             <Link to="/">
-              <Avatar src="/static/drone.svg"/>
+              <Avatar className="logo" src="/static/drone.svg"/>
             </Link>
           </Col>
           <Col xs={6} sm={2} last-sm>

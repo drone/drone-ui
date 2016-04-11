@@ -33,3 +33,7 @@ When the server is running you can open the following url in your browser:
 ```
 http://localhost:9000
 ```
+
+* dashboard
+* repository dashboard 
+* build output page
