@@ -4,6 +4,7 @@ import moment from 'moment';
 
 import Row from '../../components/grid/row';
 import Col from '../../components/grid/col';
+import PageContent from '../../components/layout/content';
 import Status from '../../components/status';
 import BuildMeta from '../../components/build_meta';
 import Log from './log';
@@ -28,7 +29,7 @@ class Content extends React.Component {
     }
 
     return (
-      <div className="build">
+      <PageContent fluid className="build">
         <Row>
           <Col xs={12} sm={4} lg={3}>
             <h3>
@@ -48,7 +49,7 @@ class Content extends React.Component {
             </div>
           </Col>
         </Row>
-      </div>
+      </PageContent>
     );
   }
 }

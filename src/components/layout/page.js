@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 import Header from './header/index';
 import Breadcrumb from './breadcrumb';
-import Content from './content';
 
 import { fetchWindowUser } from '../../data/user/actions';
 
@@ -20,9 +19,7 @@ class Page extends React.Component {
         <Header user={user}/>
         {pageHead}
         <hr/>
-        <Content>
-          {pageContent}
-        </Content>
+        {pageContent}
       </div>
     );
   }

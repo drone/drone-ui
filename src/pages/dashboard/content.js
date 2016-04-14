@@ -5,6 +5,8 @@ import { Link } from 'react-router';
 import { getUserRepositories } from '../../data/repositories/actions';
 import RepoListItem from '../../components/repo_list_item';
 
+import PageContent from '../../components/layout/content';
+
 class Content extends React.Component {
   constructor(props) {
     super(props);
@@ -36,7 +38,7 @@ class Content extends React.Component {
       });
 
     return (
-      <div className="dashboard">
+      <PageContent className="dashboard">
         <input type="search" placeholder="Filter..." onChange={this.onFilter}/>
 
         {repositories.map((repo, index) => {
@@ -47,7 +49,7 @@ class Content extends React.Component {
             </Link>
           );
         })}
-      </div>
+      </PageContent>
     );
   }
 

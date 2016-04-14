@@ -5,6 +5,7 @@ import moment from 'moment';
 
 import { getRepository } from '../../data/repositories/actions';
 import { getBuilds } from '../../data/builds/actions';
+import PageContent from '../../components/layout/content';
 import BuildCard from '../../components/build_card';
 
 class Content extends React.Component {
@@ -26,7 +27,7 @@ class Content extends React.Component {
     }
 
     return (
-      <div className="repository timeline">
+      <PageContent className="repository timeline">
         {builds.toList().reverse().map((dayBuilds, index) => {
           dayBuilds = dayBuilds.toList().sort((a, b) => {
             return a.get('id') < b.get('id') ? 1 : -1;
@@ -49,7 +50,7 @@ class Content extends React.Component {
             </div>
           );
         })}
-      </div>
+      </PageContent>
     );
   }
 }
