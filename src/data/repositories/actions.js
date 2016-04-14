@@ -2,7 +2,7 @@ import Immutable from 'immutable';
 import Request from 'superagent';
 import { normalize, arrayOf, Schema } from 'normalizr';
 
-const repositorySchema = new Schema('repository');
+export const repositorySchema = new Schema('repository');
 
 export function getUserRepositories() {
   return dispatch => {
