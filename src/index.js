@@ -40,7 +40,10 @@ let app = (
     <Router history={history}>
       <Route path="/" component={Page}>
         <IndexRoute components={{pageHead: Pages.Dashboard.Header, pageContent: Pages.Dashboard.Content}}/>
-        <Route path="/:owner/:name" components={{pageHead: Pages.Repository.Header, pageContent: Pages.Repository.Content}}/>
+        <Route path="/:owner/:name"
+               components={{pageHead: Pages.Repository.Header, pageContent: Pages.Repository.Content}}/>
+        <Route path="/:owner/:name/:number"
+               components={{pageHead: Pages.Build.Header, pageContent: Pages.Build.Content}}/>
       </Route>
     </Router>
   </Provider>
