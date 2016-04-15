@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import Sticky from 'react-stickynode';
 
 import Row from '../../components/grid/row';
 import Col from '../../components/grid/col';
@@ -32,16 +33,18 @@ class Content extends React.Component {
       <PageContent fluid className="build">
         <Row>
           <Col xs={12} sm={4} lg={3}>
-            <h3>
-              {build.get('message').trim()}
-              <a className="material-icons" href={build.get('link_url')} target="_blank">link</a>
-            </h3>
-            <BuildMeta build={build}/>
-            <hr/>
-            <Status state={build.get('status')}/>
-            <p>finished {moment(build.get('finished_at') * 1000).fromNow()}</p>
-            <p>with exit code {job.get('exit_code')}</p>
-            <hr/>
+            <Sticky top={32} enabled={true}>
+              <h3>
+                {build.get('message').trim()}
+                <a className="material-icons" href={build.get('link_url')} target="_blank">link</a>
+              </h3>
+              <BuildMeta build={build}/>
+              <hr/>
+              <Status state={build.get('status')}/>
+              <p>finished {moment(build.get('finished_at') * 1000).fromNow()}</p>
+              <p>with exit code {job.get('exit_code')}</p>
+              <hr/>
+            </Sticky>
           </Col>
           <Col xs={12} sm={8} lg={9}>
             <div className="log">
