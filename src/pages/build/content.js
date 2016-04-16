@@ -48,7 +48,7 @@ class Content extends React.Component {
           </Col>
           <Col xs={12} sm={8} lg={9}>
             <div className="log">
-              <Log owner={owner} name={name} build={build.get('number')} job={job.get('number')}/>
+              <Log owner={owner} name={name} build={build} job={job}/>
             </div>
           </Col>
         </Row>
