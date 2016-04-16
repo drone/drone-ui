@@ -1,12 +1,12 @@
 import React from 'react';
 
-const SUCCESS = 'success';
-const FAILURE = 'failure';
-const KILLED = 'killed';
-const ERROR = 'error';
-const RUNNING = 'running';
-const PENDING = 'pending';
-
+// TODO: Move this into separate file, should not be the components concern
+export const SUCCESS = 'success';
+export const FAILURE = 'failure';
+export const KILLED = 'killed';
+export const ERROR = 'error';
+export const RUNNING = 'running';
+export const PENDING = 'pending';
 
 export default
 class Status extends React.Component {
