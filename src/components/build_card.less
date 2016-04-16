@@ -3,13 +3,8 @@
   margin-bottom: 8px;
   border: none;
   border-radius: 0;
-  border-top: 1px solid #eceeef;
   text-decoration: none;
   color: #2b303b;
-
-  &:nth-child(2) {
-    border-top: 0;
-  }
 }
 
 .card .card-header {
@@ -22,7 +17,8 @@
 
 .card .card-block {
   flex: 1 1 auto;
-  padding: 32px 16px 16px 16px;
+  padding: @layout-margin / 2;
+  padding-top: @layout-margin;
 
   h3 {
     display: inline-block;
