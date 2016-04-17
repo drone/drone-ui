@@ -8,6 +8,8 @@ class Log extends React.Component {
   constructor(props) {
     super(props);
 
+    this.eventSource = null;
+
     this.state = {
       text: ''
     };
@@ -21,6 +23,19 @@ class Log extends React.Component {
     } else {
       this.requestLog(owner, name, build, job);
     }
+  }
+
+  componentWillUnmount() {
+    if (this.eventSource != null) {
+      console.log('Closing the eventSource');
+      this.eventSource.close();
+    }
+  }
+
+  render() {
+    return (
+      <div>{this.state.text}</div>
+    );
   }
 
   requestLog(owner, name, build, job) {
@@ -37,25 +52,19 @@ class Log extends React.Component {
   }
 
   requestStream(owner, name, build, job) {
-    const events = new EventSource(
+    this.eventSource = new EventSource(
       `/api/stream/${owner}/${name}/${build.get('number')}/${job.get('number')}`,
       {withCredentials: true}
     );
 
-    events.onmessage = (event) => {
+    this.eventSource.onmessage = (event) => {
       this.setState({
         text: this.state.text + event.data
       });
     };
 
-    events.onerror = (event) => {
+    this.eventSource.onerror = (event) => {
       console.log('user event stream closed due to error.', event); // TODO: Create UI feedback for error
     };
-  }
-
-  render() {
-    return (
-      <div>{this.state.text}</div>
-    );
   }
 }
