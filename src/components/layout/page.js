@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import Header from './header/index';
-import Breadcrumb from './breadcrumb';
+import Subnav from './subnav';
 
 import { fetchWindowUser } from '../../data/user/actions';
 
@@ -17,7 +17,9 @@ class Page extends React.Component {
     return (
       <div className="page">
         <Header user={user}/>
-        {pageHead}
+        <Subnav>
+          {pageHead}
+        </Subnav>
         <hr/>
         {pageContent}
       </div>
