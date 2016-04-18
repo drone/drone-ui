@@ -44,6 +44,8 @@ let app = (
                components={{pageHead: Pages.Repository.Header, pageContent: Pages.Repository.Content}}/>
         <Route path="/:owner/:name/:number"
                components={{pageHead: Pages.Build.Header, pageContent: Pages.Build.Content}}/>
+        <Route path="/:owner/:name/settings/badges"
+               components={{pageHead: Pages.BuildBadge.Header, pageContent: Pages.BuildBadge.Content}}/>
       </Route>
     </Router>
   </Provider>

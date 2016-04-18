@@ -17,7 +17,7 @@ class Header extends React.Component {
             <Link to="/" className="active">Builds</Link>
           </Tab>
           <Tab>
-            <Link to="/">Badges</Link>
+            <Link to={`/${owner}/${name}/settings/badges`}>Badges</Link>
           </Tab>
           <Tab>
             <Link to="/">Secrets</Link>
