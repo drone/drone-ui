@@ -22,7 +22,9 @@ class Header extends React.Component {
           </Col>
           <Col xs={6} sm={2} last-sm>
             <Dropdown/>
-            <Avatar src={user.get('avatar_url')} circle/>
+            <Link to="/account/profile">
+              <Avatar src={user.get('avatar_url')} circle/>
+            </Link>
           </Col>
           <Col xs={12} sm={5} sm-offset={4}>
             <div className="search">

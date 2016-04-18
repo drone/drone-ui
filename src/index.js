@@ -40,6 +40,8 @@ let app = (
     <Router history={history}>
       <Route path="/" component={Page}>
         <IndexRoute components={{pageHead: Pages.Dashboard.Header, pageContent: Pages.Dashboard.Content}}/>
+        <Route path="/account/profile"
+               components={{pageHead: Pages.UserProfile.Header, pageContent: Pages.UserProfile.Content}}/>
         <Route path="/:owner/:name"
                components={{pageHead: Pages.Repository.Header, pageContent: Pages.Repository.Content}}/>
         <Route path="/:owner/:name/:number"
