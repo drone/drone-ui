@@ -11,8 +11,14 @@ class Button extends React.Component {
   }
 
   render() {
+    let classes = ['button'];
+
+    if (this.props.danger) {
+      classes.push('button--danger');
+    }
+
     return (
-      <button className="button" onClick={this.handleClick}>
+      <button className={classes.join(' ')} onClick={this.handleClick}>
         {this.props.children}
       </button>
     );
