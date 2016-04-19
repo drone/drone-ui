@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, IndexRoute, browserHistory, Route } from 'react-router';
+import { Router, browserHistory } from 'react-router';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
@@ -10,9 +10,7 @@ import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 import './index.less';
 
 import { drone } from './data/reducers';
-
-import Page from './components/layout/page';
-import Pages from './pages/index';
+import { routes } from './routes';
 
 function configureStore(initialState) {
   const logger = createLogger();
@@ -38,17 +36,7 @@ const history = syncHistoryWithStore(browserHistory, store);
 let app = (
   <Provider store={store}>
     <Router history={history}>
-      <Route path="/" component={Page}>
-        <IndexRoute components={{pageHead: Pages.Dashboard.Header, pageContent: Pages.Dashboard.Content}}/>
-        <Route path="/account/profile"
-               components={{pageHead: Pages.UserProfile.Header, pageContent: Pages.UserProfile.Content}}/>
-        <Route path="/:owner/:name"
-               components={{pageHead: Pages.Repository.Header, pageContent: Pages.Repository.Content}}/>
-        <Route path="/:owner/:name/:number"
-               components={{pageHead: Pages.Build.Header, pageContent: Pages.Build.Content}}/>
-        <Route path="/:owner/:name/settings/badges"
-               components={{pageHead: Pages.BuildBadge.Header, pageContent: Pages.BuildBadge.Content}}/>
-      </Route>
+      {routes}
     </Router>
   </Provider>
 );
