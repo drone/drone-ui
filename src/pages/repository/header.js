@@ -12,8 +12,7 @@ class Header extends React.Component {
     const tabs = [
       {url: `/${owner}/${name}`, text: 'Builds'},
       {url: `/${owner}/${name}/settings/badges`, text: 'Badges'},
-      {url: '/', text: 'Secrets'},
-      {url: '/', text: 'Settings'}
+      {url: `/${owner}/${name}/settings/`, text: 'Settings'}
     ];
 
     return (
