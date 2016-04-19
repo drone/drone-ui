@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import Request from 'superagent';
 
 import './index.less';
 
@@ -9,6 +10,16 @@ import Col from '../../components/grid/col';
 import Button from '../../components/button';
 
 class Content extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      token: ''
+    };
+
+    this.handleShowToken = this.handleShowToken.bind(this);
+  }
+
   render() {
     let {user} = this.props;
 
@@ -35,15 +46,27 @@ class Content extends React.Component {
         <Row>
           <Col xs={12} sm={3}>Token</Col>
           <Col xs={12} sm={9}>
-            <Button onClick={this.handleShowToken}>Show Token</Button>
+            {this.state.token == '' ?
+              <Button onClick={this.handleShowToken}>Show Token</Button> :
+              <pre>{this.state.token}</pre>
+            }
           </Col>
         </Row>
       </PageContent>
     );
   }
 
-  handleShowToken(event) {
-    console.log(event);
+  handleShowToken() {
+    Request.post(`/api/user/token`)
+      .end((err, response) => {
+        if (err != null) {
+          console.error(err); // TODO: Add ui error handling
+        }
+
+        this.setState({
+          token: response.text
+        });
+      });
   }
 }
 
