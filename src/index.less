@@ -47,12 +47,17 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: .5rem;
 }
 
-input {
+input, textarea {
   padding: 0.3rem 0.75rem;
+  box-sizing: border-box;
   border: none;
   outline: none;
   color: #747C84;
   background-color: #eff1f5;
+}
+
+textarea {
+  color: @color-text;
 }
 
 hr {
