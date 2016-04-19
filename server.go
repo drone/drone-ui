@@ -32,6 +32,8 @@ func main() {
 		log.Fatal(err)
 	}
 
+	log.Println("Listening on port 9000")
+
 	// serve the static html page
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		index, err := ioutil.ReadFile("index.html")
@@ -57,6 +59,7 @@ func main() {
 	// proxy all requests to beta.drone.io
 	http.Handle("/api/", &httputil.ReverseProxy{
 		Director: func(req *http.Request) {
+			log.Println(req.URL.Path)
 			req.URL.Scheme = *scheme
 			req.URL.Host = *host
 			req.Host = *host
