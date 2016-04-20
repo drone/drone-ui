@@ -1,31 +1,17 @@
-@import "../../index";
+@import "../../../index";
 
 .header {
   .clearfix();
-  margin: (@layout-margin / 2) @layout-margin;
 
-  .avatar {
-    float: right;
-    margin-left: @layout-margin / 4;
-  }
+  .header-right {
+    text-align: right;
 
-  .logo {
-    float: none;
-  }
+    .mdl-textfield {
+      margin: -20px;
+    }
 
-  @import "dropdown";
-  .dropdown {
-    float: right;
-    margin-left: @layout-margin / 4;
-  }
-
-  .search {
-    float: left;
-    width: 100%;
-
-    input {
-      &:extend(input);
-      width: 100%;
+    a, .mdl-textfield {
+      margin-right: @layout-margin / 2;
     }
   }
 }

@@ -1,6 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import { Grid, Cell, Textfield } from 'react-mdl';
+
+import './index.less';
 
 import { getUserRepositories } from '../../data/repositories/actions';
 import RepoListItem from '../../components/repo_list_item';
@@ -36,6 +39,20 @@ class Content extends React.Component {
       .sort((a, b) => { // sort repositories by name ascending
         return a.get('name').localeCompare(b.get('name'));
       });
+
+    return (
+      <Grid className="dashboard">
+        <Cell col={12}>
+          <Textfield label="Filter..." onChange={this.onFilter}/>
+
+          {repositories.map((repo, index) => {
+            return (
+              <div>{repo.get('name')}</div>
+            );
+          })}
+        </Cell>
+      </Grid>
+    );
 
     return (
       <PageContent className="dashboard">
