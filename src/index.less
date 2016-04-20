@@ -1,53 +1,10 @@
 @import "variables";
-
-// Clearfix
-//
-// For modern browsers
-// 1. The space content is one way to avoid an Opera bug when the
-//    contenteditable attribute is included anywhere else in the document.
-//    Otherwise it causes space to appear at the top and bottom of elements
-//    that are clearfixed.
-// 2. The use of `table` rather than `block` is only necessary if using
-//    `:before` to contain the top-margins of child elements.
-//
-// Source: http://nicolasgallagher.com/micro-clearfix-hack/
-
-.clearfix() {
-  &:before,
-  &:after {
-    content: " "; // 1
-    display: table; // 2
-  }
-  &:after {
-    clear: both;
-  }
-}
+@import "mixins";
 
 body {
   font-family: @font-family;
   font-size: 16px;
 }
-
-//h1, h2, h3, h4, h5, h6 {
-//  font-family: inherit;
-//  font-weight: 500;
-//  line-height: 1.1;
-//  color: inherit;
-//  margin-bottom: .5rem;
-//}
-//
-//input, textarea {
-//  padding: 0.3rem 0.75rem;
-//  box-sizing: border-box;
-//  border: none;
-//  outline: none;
-//  color: #747C84;
-//  background-color: #eff1f5;
-//}
-//
-//textarea {
-//  color: @color-text;
-//}
 
 hr {
   height: 1px;
@@ -55,12 +12,11 @@ hr {
   border: none;
 }
 
-//pre {
-//  margin: 0;
-//  white-space: pre-wrap;
-//  word-wrap: break-word;
-//  box-sizing: border-box;
-//  font-family: @font-family-mono;
-//  font-size: 14px;
-//  color: #2b303b;
-//}
+pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  box-sizing: border-box;
+  font-family: @font-family-mono;
+  font-size: 14px;
+}
