@@ -6,7 +6,7 @@ deps:
 	npm install
 
 build: dist_dir copy
-	./node_modules/.bin/webpack
+	./node_modules/.bin/webpack --optimize-minimize
 
 watch: dist_dir copy
 	./node_modules/.bin/webpack -w
