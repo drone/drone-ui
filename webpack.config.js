@@ -25,6 +25,16 @@ module.exports = {
       }
     ]
   },
+  externals: {
+    'immutable': 'Immutable',
+    'moment': 'moment',
+    'react': 'React',
+    'react-dom': 'ReactDOM',
+    'react-redux': 'ReactRedux',
+    'react-router': 'ReactRouter',
+    'redux': 'Redux',
+    'superagent': 'superagent'
+  },
   resolve: {
     extensions: ['', '.js', '.jsx']
   },
