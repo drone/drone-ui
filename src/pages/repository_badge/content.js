@@ -1,11 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Grid, Cell } from 'react-mdl';
 
 import './index.less';
 
 import PageContent from '../../components/layout/content';
-import Row from '../../components/grid/row';
-import Col from '../../components/grid/col';
 
 class Content extends React.Component {
   render() {
@@ -19,30 +18,30 @@ class Content extends React.Component {
 
     return (
       <PageContent className="repository-badge">
-        <Row>
-          <Col xs={12} sm={2}>Markdown</Col>
-          <Col xs={12} sm={10}>
+        <Grid>
+          <Cell phone={12} col={2}>Markdown</Cell>
+          <Cell phone={12} col={10}>
             <pre>{markdown}</pre>
-          </Col>
-        </Row>
+          </Cell>
+        </Grid>
 
         <hr/>
 
-        <Row>
-          <Col xs={12} sm={2}>Markup</Col>
-          <Col xs={12} sm={10}>
+        <Grid>
+          <Cell phone={12} col={2}>Markup</Cell>
+          <Cell phone={12} col={10}>
             <pre>{markup}</pre>
-          </Col>
-        </Row>
+          </Cell>
+        </Grid>
 
         <hr/>
 
-        <Row>
-          <Col xs={12} sm={2}>CC Menu</Col>
-          <Col xs={12} sm={10}>
+        <Grid>
+          <Cell phone={12} col={2}>CC Menu</Cell>
+          <Cell phone={12} col={10}>
             <pre>{ccMenu}</pre>
-          </Col>
-        </Row>
+          </Cell>
+        </Grid>
       </PageContent>
     );
   }

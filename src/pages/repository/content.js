@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import moment from 'moment';
 
+import './index.less';
+
 import { getRepository } from '../../data/repositories/actions';
 import { getBuilds } from '../../data/builds/actions';
 import PageContent from '../../components/layout/content';

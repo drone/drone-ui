@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { Grid, Cell, Textfield } from 'react-mdl';
+import { Grid, Cell, Textfield, List, ListItem } from 'react-mdl';
 
 import './index.less';
 
@@ -29,7 +29,7 @@ class Content extends React.Component {
     let {repositories} = this.props;
 
     if (repositories.size == 0) {
-      return <div></div>;
+      return <div>Loading...</div>;
     }
 
     repositories = repositories.toList()
@@ -41,31 +41,21 @@ class Content extends React.Component {
       });
 
     return (
-      <Grid className="dashboard">
-        <Cell col={12}>
-          <Textfield label="Filter..." onChange={this.onFilter}/>
-
-          {repositories.map((repo, index) => {
-            return (
-              <div>{repo.get('name')}</div>
-            );
-          })}
-        </Cell>
-      </Grid>
-    );
-
-    return (
       <PageContent className="dashboard">
-        <input type="search" placeholder="Filter..." onChange={this.onFilter}/>
+        <Grid>
+          <Cell col={12}>
+            <Textfield label="Filter..." onChange={this.onFilter}/>
 
-        {repositories.map((repo, index) => {
-          return (
-            <Link key={repo.get('id')} to={`/${repo.get('owner')}/${repo.get('name')}`}>
-              <RepoListItem repo={repo}/>
-              {index < repositories.size - 1 ? <hr/> : null}
-            </Link>
-          );
-        })}
+            {repositories.map((repo, index) => {
+              return (
+                <Link key={repo.get('id')} to={`/${repo.get('owner')}/${repo.get('name')}`}>
+                  <RepoListItem repo={repo}/>
+                  {index < repositories.size - 1 ? <hr/> : null}
+                </Link>
+              );
+            })}
+          </Cell>
+        </Grid>
       </PageContent>
     );
   }

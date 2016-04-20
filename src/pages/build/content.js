@@ -1,14 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Grid, Cell } from 'react-mdl';
 import Sticky from 'react-stickynode';
+
+import './index.less';
 
 import BuildMeta from '../../components/build_meta';
 import Button from '../../components/button';
-import Col from '../../components/grid/col';
 import JobListItem from '../../components/job_list_item';
 import Log from './log';
 import PageContent from '../../components/layout/content';
-import Row from '../../components/grid/row';
 import {RUNNING, PENDING} from '../../components/status';
 
 import { getBuild } from '../../data/builds/actions';
@@ -40,14 +41,14 @@ class Content extends React.Component {
 
     return (
       <PageContent fluid className="build">
-        <Row>
-          <Col xs={12} sm={4} lg={3}>
+        <Grid>
+          <Cell phone={12} col={3}>
             <Sticky top={32} enabled={true}>
               <div className="information">
-                <h3>
+                <h4>
                   {build.get('message').trim()}
                   <a className="material-icons" href={build.get('link_url')} target="_blank">link</a>
-                </h3>
+                </h4>
                 <BuildMeta build={build}/>
                 <hr/>
                 <JobListItem job={job}/>
@@ -58,13 +59,13 @@ class Content extends React.Component {
                 }
               </div>
             </Sticky>
-          </Col>
-          <Col xs={12} sm={8} lg={9}>
+          </Cell>
+          <Cell phone={12} col={9}>
             <div className="log">
               <Log owner={owner} name={name} build={build} job={job}/>
             </div>
-          </Col>
-        </Row>
+          </Cell>
+        </Grid>
       </PageContent>
     );
   }

@@ -1,12 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Request from 'superagent';
+import { Grid, Cell } from 'react-mdl';
 
 import './index.less';
 
 import PageContent from '../../components/layout/content';
-import Row from '../../components/grid/row';
-import Col from '../../components/grid/col';
 import Button from '../../components/button';
 
 class Content extends React.Component {
@@ -25,33 +24,33 @@ class Content extends React.Component {
 
     return (
       <PageContent className="user-profile">
-        <Row>
-          <Col xs={12} sm={3}>Login</Col>
-          <Col xs={12} sm={9}>
+        <Grid>
+          <Cell phone={12} col={3}>Login</Cell>
+          <Cell phone={12} col={9}>
             {user.get('login')}
-          </Col>
-        </Row>
+          </Cell>
+        </Grid>
 
         <hr/>
 
-        <Row>
-          <Col xs={12} sm={3}>Email</Col>
-          <Col xs={12} sm={9}>
+        <Grid>
+          <Cell phone={12} col={3}>Email</Cell>
+          <Cell phone={12} col={9}>
             {user.get('email')}
-          </Col>
-        </Row>
+          </Cell>
+        </Grid>
 
         <hr/>
 
-        <Row>
-          <Col xs={12} sm={3}>Token</Col>
-          <Col xs={12} sm={9}>
+        <Grid>
+          <Cell phone={12} col={3}>Token</Cell>
+          <Cell phone={12} col={9}>
             {this.state.token == '' ?
               <Button onClick={this.handleShowToken}>Show Token</Button> :
               <pre>{this.state.token}</pre>
             }
-          </Col>
-        </Row>
+          </Cell>
+        </Grid>
       </PageContent>
     );
   }

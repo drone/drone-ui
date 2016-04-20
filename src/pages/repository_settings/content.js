@@ -1,10 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Grid, Cell } from 'react-mdl';
 
 import './index.less';
 
-import Row from '../../components/grid/row';
-import Col from '../../components/grid/col';
 import PageContent from '../../components/layout/content';
 
 class Content extends React.Component {
@@ -13,12 +12,12 @@ class Content extends React.Component {
 
     return (
       <PageContent className="repository-settings">
-        <Row>
-          <Col xs={12} sm={3}>Push Hooks</Col>
-          <Col xs={12} sm={9}>
+        <Grid>
+          <Cell phone={12} col={3}>Push Hooks</Cell>
+          <Cell phone={12} col={9}>
             <input type="checkbox"/>
-          </Col>
-        </Row>
+          </Cell>
+        </Grid>
       </PageContent>
     );
   }
