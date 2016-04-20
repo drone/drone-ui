@@ -4,6 +4,8 @@ import Avatar from './avatar';
 import Status from './status';
 import BuildMeta from './build_meta';
 
+import './build_card.less';
+
 export default
 class BuildCard extends React.Component {
   render() {

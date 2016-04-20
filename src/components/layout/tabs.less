@@ -1,9 +1,9 @@
-@import "../../index";
+@import "../../variables";
 
 .tabs {
   position: absolute;
-  bottom: -(@layout-margin) - 1px;
-  right: 0;
+  bottom: -(@layout-margin / 2) - 1px;
+  right: @layout-margin / 2;
   margin: 0;
   padding: 0;
   border-bottom: 1px solid #eee;
@@ -11,7 +11,7 @@
 
   .tab {
     float: left;
-    margin-bottom: 6px;
+    margin-bottom: 5px;
   }
 
   a {

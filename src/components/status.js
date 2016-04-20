@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './status.less';
+
 // TODO: Move this into separate file, should not be the components concern
 export const SUCCESS = 'success';
 export const FAILURE = 'failure';
