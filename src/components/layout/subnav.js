@@ -1,4 +1,5 @@
 import React from 'react';
+import { Grid } from 'react-mdl';
 
 import './subnav.less';
 
@@ -7,7 +8,9 @@ class Subnav extends React.Component {
   render() {
     return (
       <nav className="sub">
-        {this.props.children}
+        <Grid>
+          {this.props.children}
+        </Grid>
       </nav>
     );
   }

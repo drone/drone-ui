@@ -1,4 +1,7 @@
 import React from 'react';
+import { Cell } from 'react-mdl';
+
+import './breadcrumb.less';
 
 export const SEPARATOR = (
   <i className="material-icons">chevron_right</i>
@@ -10,7 +13,7 @@ class Breadcrumb extends React.Component {
     const {elements} = this.props;
 
     return (
-      <div className="breadcrumb">
+      <Cell col={12} className="breadcrumb">
         <ol>
           {elements.map((element, index) => {
             return (
@@ -18,7 +21,7 @@ class Breadcrumb extends React.Component {
             );
           })}
         </ol>
-      </div>
+      </Cell>
     );
   }
 }

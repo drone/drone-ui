@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import {Cell} from 'react-mdl';
+
 import Header from './header/index';
 import Subnav from './subnav';
 

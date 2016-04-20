@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './avatar.less';
+
 export default
 class Avatar extends React.Component {
   render() {
