@@ -1,15 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Grid, Cell } from 'react-mdl';
+import { Grid, Cell, Button } from 'react-mdl';
 import Sticky from 'react-stickynode';
 
 import './index.less';
 
+import PageContent from '../../components/layout/content';
 import BuildMeta from '../../components/build_meta';
-import Button from '../../components/button';
 import JobListItem from '../../components/job_list_item';
 import Log from './log';
-import PageContent from '../../components/layout/content';
 import {RUNNING, PENDING} from '../../components/status';
 
 import { getBuild } from '../../data/builds/actions';
@@ -54,8 +53,8 @@ class Content extends React.Component {
                 <JobListItem job={job}/>
                 <hr/>
                 {job.get('status') == PENDING || job.get('status') == RUNNING ?
-                  <Button onClick={this.handleJobCancel}>Cancel</Button> :
-                  <Button onClick={this.handleJobRestart}>Restart</Button>
+                  <Button raised ripple onClick={this.handleJobCancel}>Cancel</Button> :
+                  <Button raised ripple primary onClick={this.handleJobRestart}>Restart</Button>
                 }
               </div>
             </Sticky>

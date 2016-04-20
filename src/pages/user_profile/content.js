@@ -1,12 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Request from 'superagent';
-import { Grid, Cell } from 'react-mdl';
+import { Grid, Cell, Button } from 'react-mdl';
 
 import './index.less';
 
 import PageContent from '../../components/layout/content';
-import Button from '../../components/button';
 
 class Content extends React.Component {
   constructor(props) {
@@ -46,7 +45,7 @@ class Content extends React.Component {
           <Cell phone={12} col={3}>Token</Cell>
           <Cell phone={12} col={9}>
             {this.state.token == '' ?
-              <Button onClick={this.handleShowToken}>Show Token</Button> :
+              <Button raised ripple primary onClick={this.handleShowToken}>Show Token</Button> :
               <pre>{this.state.token}</pre>
             }
           </Cell>
