@@ -59,7 +59,7 @@ func main() {
 	// proxy all requests to beta.drone.io
 	http.Handle("/api/", &httputil.ReverseProxy{
 		Director: func(req *http.Request) {
-			log.Println(req.URL.Path)
+			log.Println(req.Method, req.URL.Path)
 			req.URL.Scheme = *scheme
 			req.URL.Host = *host
 			req.Host = *host
