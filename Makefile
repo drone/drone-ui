@@ -13,6 +13,7 @@ watch: dist_dir copy
 
 copy: dist_dir
 	cp -r ./images/* dist/
+	cp -r ./node_modules/react-mdl/extra/material* dist/
 
 dist_dir:
 	mkdir -p dist
