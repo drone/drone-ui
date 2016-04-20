@@ -51,3 +51,20 @@ export function repositoryReceived(params, repository) {
     repository
   };
 }
+
+export function updateRepository(owner, name, body) {
+  return dispatch => {
+    Request.patch(`/api/repos/${owner}/${name}`)
+      .send(body)
+      .end((err, response) => {
+        if (err != null) {
+          console.error(err); // TODO: Add ui error handling
+        }
+
+        response = normalize(JSON.parse(response.text), repositorySchema);
+        let repository = Immutable.fromJS(response.entities.repository);
+
+        dispatch(repositoryReceived({owner, name}, repository));
+      });
+  };
+}
