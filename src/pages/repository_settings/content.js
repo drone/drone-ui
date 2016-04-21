@@ -1,12 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Grid, Cell, Slider, Switch } from 'react-mdl';
+import { browserHistory } from 'react-router';
+import { Grid, Cell, Button, Slider, Switch } from 'react-mdl';
 
 import './index.less';
 
 import PageContent from '../../components/layout/content';
 
-import { getRepository, getRepositoryKey, updateRepository } from '../../data/repositories/actions';
+import {
+  getRepository,
+  getRepositoryKey,
+  updateRepository,
+  deleteRepository
+} from '../../data/repositories/actions';
 
 class Content extends React.Component {
   constructor(props) {
@@ -19,6 +25,7 @@ class Content extends React.Component {
     this.handleTimeoutTimeout = null;
     this.handleSwitch = this.handleSwitch.bind(this);
     this.handleTimeout = this.handleTimeout.bind(this);
+    this.handleDeleteRepository = this.handleDeleteRepository.bind(this);
   }
 
   componentDidMount() {
@@ -96,6 +103,19 @@ class Content extends React.Component {
             <pre>{repository.get('key')}</pre>
           </Cell>
         </Grid>
+        <hr/>
+        <Grid className="danger-zone">
+          <Cell col={12}>
+            <h4>Danger Zone</h4>
+          </Cell>
+          <Cell phone={12} col={3}>
+            <Button raised ripple accent onClick={this.handleDeleteRepository}>Delete</Button>
+          </Cell>
+          <Cell phone={12} col={9}>
+            Permanently deletes the build history.<br/>
+            <strong>This action cannot be undone.</strong>
+          </Cell>
+        </Grid>
       </PageContent>
     );
   }
@@ -122,6 +142,16 @@ class Content extends React.Component {
     this.handleTimeoutTimeout = setTimeout(() => {
       this.props.dispatch(updateRepository(owner, name, {timeout}));
     }, 500);
+  }
+
+  handleDeleteRepository() {
+    var confirmation = confirm('Are you sure you want to delete this repository?');
+    if (confirmation !== false) {
+      const {owner, name} = this.props.params;
+      this.props.dispatch(deleteRepository(owner, name));
+
+      browserHistory.push('/');
+    }
   }
 }
 

@@ -92,3 +92,24 @@ export function updateRepository(owner, name, data) {
       });
   };
 }
+
+export function deleteRepository(owner, name) {
+  return dispatch => {
+    Request.del(`/api/repos/${owner}/${name}`)
+      .end((err, response) => {
+        if (err != null) {
+          console.error(err); // TODO: Add ui error handling
+        }
+
+        dispatch(repositoryDeleted({owner, name}));
+      });
+  };
+}
+
+export const REPOSITORY_DELETED = 'REPOSITORY_DELETED';
+export function repositoryDeleted(params) {
+  return {
+    type: REPOSITORY_DELETED,
+    params
+  };
+}
