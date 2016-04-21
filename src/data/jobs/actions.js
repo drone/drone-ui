@@ -7,7 +7,7 @@ export const jobSchema = new Schema('job');
 
 export function cancelJob(owner, name, build, job) {
   return dispatch => {
-    Request.delete(`/api/repos/${owner}/${name}/builds/${build}/${job}`)
+    Request.del(`/api/repos/${owner}/${name}/builds/${build}/${job}`)
       .end((err, response) => {
         if (err != null) {
           console.error(err); // TODO: Add ui error handling
