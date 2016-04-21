@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import { Grid, Cell, IconButton, Menu, MenuItem, Textfield } from 'react-mdl';
 
 import './header.less';
@@ -27,7 +27,7 @@ class Header extends React.Component {
             <div style={{display: 'inline-block', position: 'relative'}}>
               <IconButton name="more_vert" id="drone-header-menu-right" />
               <Menu target="drone-header-menu-right" align="right">
-                <MenuItem onClick={(event) => {console.log(event);}}>Profile</MenuItem>
+                <MenuItem onClick={() => {browserHistory.push('/account/profile')}}>Profile</MenuItem>
                 <MenuItem>People</MenuItem>
                 <MenuItem>Logout</MenuItem>
               </Menu>
