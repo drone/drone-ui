@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { Grid, Cell, IconButton, Textfield } from 'react-mdl';
+import { Grid, Cell, IconButton, Menu, MenuItem, Textfield } from 'react-mdl';
 
 import './header.less';
 
@@ -24,7 +24,14 @@ class Header extends React.Component {
             <Link to="/account/profile">
               <Avatar src={user.get('avatar_url')} circle/>
             </Link>
-            <IconButton name="more_vert"/>
+            <div style={{display: 'inline-block', position: 'relative'}}>
+              <IconButton name="more_vert" id="drone-header-menu-right" />
+              <Menu target="drone-header-menu-right" align="right">
+                <MenuItem onClick={(event) => {console.log(event);}}>Profile</MenuItem>
+                <MenuItem>People</MenuItem>
+                <MenuItem>Logout</MenuItem>
+              </Menu>
+            </div>
           </Cell>
         </Grid>
       </header>
