@@ -78,8 +78,8 @@ class Log extends React.Component {
       this.scrollToPageBottom();
     };
 
-    this.eventSource.onerror = (event) => {
-      console.log('user event stream closed due to error.', event); // TODO: Create UI feedback for error
+    this.eventSource.onerror = () => {
+      this.eventSource.close();
     };
   }
 
@@ -92,7 +92,6 @@ class Log extends React.Component {
   }
 
   scrollToPageBottom() {
-    console.log(this.state.follow);
     if (this.state.follow) {
       window.scrollTo(0, document.body.scrollHeight);
     }
