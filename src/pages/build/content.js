@@ -54,7 +54,7 @@ class Content extends React.Component {
                 <hr/>
                 {job.get('status') == PENDING || job.get('status') == RUNNING ?
                   <Button raised ripple onClick={this.handleJobCancel}>Cancel</Button> :
-                  <Button raised ripple primary onClick={this.handleJobRestart}>Restart</Button>
+                  <Button raised ripple onClick={this.handleJobRestart}>Restart</Button>
                 }
               </div>
             </Sticky>

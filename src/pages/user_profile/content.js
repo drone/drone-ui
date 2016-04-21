@@ -45,7 +45,7 @@ class Content extends React.Component {
           <Cell phone={12} col={3}>Token</Cell>
           <Cell phone={12} col={9}>
             {this.state.token == '' ?
-              <Button raised ripple primary onClick={this.handleShowToken}>Show Token</Button> :
+              <Button raised ripple onClick={this.handleShowToken}>Show Token</Button> :
               <pre>{this.state.token}</pre>
             }
           </Cell>
