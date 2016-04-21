@@ -1,5 +1,6 @@
 import React from 'react';
 import Request from 'superagent';
+import { FABButton, Icon} from 'react-mdl';
 
 import { RUNNING } from '../../components/status';
 
@@ -11,8 +12,11 @@ class Log extends React.Component {
     this.eventSource = null;
 
     this.state = {
-      text: ''
+      text: '',
+      follow: false
     };
+
+    this.handleFollow = this.handleFollow.bind(this);
   }
 
   componentDidMount() {
@@ -33,8 +37,17 @@ class Log extends React.Component {
   }
 
   render() {
+    const { job } = this.props;
+
     return (
-      <div>{this.state.text}</div>
+      <div>
+        {job.get('status') == RUNNING ?
+          <FABButton mini onClick={this.handleFollow}>
+            <Icon name={this.state.follow ? 'pause' : 'expand_more'}/>
+          </FABButton> :
+          null}
+        <div>{this.state.text}</div>
+      </div>
     );
   }
 
@@ -61,10 +74,27 @@ class Log extends React.Component {
       this.setState({
         text: this.state.text + event.data
       });
+
+      this.scrollToPageBottom();
     };
 
     this.eventSource.onerror = (event) => {
       console.log('user event stream closed due to error.', event); // TODO: Create UI feedback for error
     };
+  }
+
+  handleFollow() {
+    this.setState({
+      follow: !this.state.follow
+    }, () => {
+      this.scrollToPageBottom();
+    });
+  }
+
+  scrollToPageBottom() {
+    console.log(this.state.follow);
+    if (this.state.follow) {
+      window.scrollTo(0, document.body.scrollHeight);
+    }
   }
 }
