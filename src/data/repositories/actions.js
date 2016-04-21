@@ -52,10 +52,10 @@ export function repositoryReceived(params, repository) {
   };
 }
 
-export function updateRepository(owner, name, body) {
+export function updateRepository(owner, name, data) {
   return dispatch => {
     Request.patch(`/api/repos/${owner}/${name}`)
-      .send(body)
+      .send(data)
       .end((err, response) => {
         if (err != null) {
           console.error(err); // TODO: Add ui error handling
