@@ -34,7 +34,7 @@ class Content extends React.Component {
 
     repositories = repositories.toList()
       .filter((repository) => { // filter repositories for names that match the filtered name
-        return repository.get('name').indexOf(this.state.filter) > -1;
+        return repository.get('name').toLowerCase().indexOf(this.state.filter.toLowerCase()) > -1;
       })
       .sort((a, b) => { // sort repositories by name ascending
         return a.get('name').localeCompare(b.get('name'));
