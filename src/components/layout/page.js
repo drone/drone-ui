@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import {Cell} from 'react-mdl';
 
-import Header from './header/index';
+import Header from './header';
 import Subnav from './subnav';
 
 import { fetchWindowUser } from '../../data/user/actions';

@@ -2,9 +2,9 @@ import React from 'react';
 import { Link } from 'react-router';
 import { Grid, Cell, IconButton, Textfield } from 'react-mdl';
 
-import './index.less';
+import './header.less';
 
-import Avatar from '../../avatar';
+import Avatar from '../avatar';
 
 export default
 class Header extends React.Component {
