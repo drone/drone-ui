@@ -6,7 +6,7 @@ import './index.less';
 
 import PageContent from '../../components/layout/content';
 
-import { getRepository, updateRepository } from '../../data/repositories/actions';
+import { getRepository, getRepositoryKey, updateRepository } from '../../data/repositories/actions';
 
 class Content extends React.Component {
   constructor(props) {
@@ -24,6 +24,7 @@ class Content extends React.Component {
   componentDidMount() {
     const {owner, name} = this.props.params;
     this.props.dispatch(getRepository(owner, name));
+    this.props.dispatch(getRepositoryKey(owner, name));
   }
 
   componentWillReceiveProps(nextProps) {
@@ -92,7 +93,7 @@ class Content extends React.Component {
         <Grid>
           <Cell phone={12} col={3}>Public Key</Cell>
           <Cell phone={12} col={9}>
-            <pre>ssh-rsa</pre>
+            <pre>{repository.get('key')}</pre>
           </Cell>
         </Grid>
       </PageContent>

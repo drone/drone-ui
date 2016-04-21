@@ -52,6 +52,30 @@ export function repositoryReceived(params, repository) {
   };
 }
 
+export function getRepositoryKey(owner, name) {
+  return dispatch => {
+    Request.get(`/api/repos/${owner}/${name}/key`)
+      .end((err, response) => {
+        if (err != null) {
+          console.error(err); // TODO: Add ui error handling
+        }
+
+        const key = response.text;
+
+        dispatch(repositoryKeyReceived({owner, name}, key));
+      });
+  };
+}
+
+export const REPOSITORY_KEY_RECEIVED = 'REPOSITORY_KEY_RECEIVED';
+export function repositoryKeyReceived(params, key) {
+  return {
+    type: REPOSITORY_KEY_RECEIVED,
+    params,
+    key
+  };
+}
+
 export function updateRepository(owner, name, data) {
   return dispatch => {
     Request.patch(`/api/repos/${owner}/${name}`)
