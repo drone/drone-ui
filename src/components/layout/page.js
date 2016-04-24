@@ -6,7 +6,7 @@ import {Cell} from 'react-mdl';
 import Header from './header';
 import Subnav from './subnav';
 
-import { fetchWindowUser } from '../../data/user/actions';
+import { fetchWindowUser } from '../../data/users/actions';
 
 class Page extends React.Component {
   componentDidMount() {
