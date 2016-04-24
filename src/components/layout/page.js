@@ -10,11 +10,17 @@ import { fetchWindowUser } from '../../data/user/actions';
 
 class Page extends React.Component {
   componentDidMount() {
-    this.props.dispatch(fetchWindowUser()); // TODO move to another global component
+    this.props.dispatch(fetchWindowUser());
   }
 
   render() {
     const {pageHead, pageContent, user} = this.props;
+
+    if (user == null) {
+      return (
+        <div>Loading...</div>
+      );
+    }
 
     return (
       <div className="page">
@@ -30,7 +36,14 @@ class Page extends React.Component {
 }
 
 export default connect(
-  state => ({
-    user: state.drone.user
-  })
+  (state) => {
+    if (state.drone.users.size == 0) {
+      return {};
+    }
+
+    const userID = state.drone.users.get('user_id');
+    return {
+      user: state.drone.users.get('entities').get(userID.toString())
+    };
+  }
 )(Page);

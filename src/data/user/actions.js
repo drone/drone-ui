@@ -1,9 +1,12 @@
 import Immutable from 'immutable';
+import { normalize, Schema } from 'normalizr';
+
+export const userSchema = new Schema('user');
 
 export function fetchWindowUser() {
   return dispatch => {
-    let user = window.STATE_FROM_SERVER.user;
-    dispatch(userListUpdate(Immutable.fromJS(user)));
+    const stateFromServer = normalize(window.STATE_FROM_SERVER.user, userSchema);
+    dispatch(userListUpdate(Immutable.fromJS(stateFromServer.entities.user)));
   };
 }
 
