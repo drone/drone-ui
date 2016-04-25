@@ -25,10 +25,10 @@ class Header extends React.Component {
               <Avatar src={user.get('avatar_url')} circle/>
             </Link>
             <div style={{display: 'inline-block', position: 'relative'}}>
-              <IconButton name="more_vert" id="drone-header-menu-right" />
+              <IconButton name="more_vert" id="drone-header-menu-right"/>
               <Menu target="drone-header-menu-right" align="right">
                 <MenuItem onClick={() => {browserHistory.push('/account/profile')}}>Profile</MenuItem>
-                <MenuItem>People</MenuItem>
+                <MenuItem onClick={() => {browserHistory.push('/system/users')}}>Users</MenuItem>
                 <MenuItem>Logout</MenuItem>
               </Menu>
             </div>
