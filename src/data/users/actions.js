@@ -1,5 +1,6 @@
 import Immutable from 'immutable';
-import { normalize, Schema } from 'normalizr';
+import Request from 'superagent';
+import { normalize, arrayOf, Schema } from 'normalizr';
 
 export const userSchema = new Schema('user');
 
@@ -15,5 +16,27 @@ export function userListUpdate(user) {
   return {
     type: USER_UPDATE,
     user
+  };
+}
+
+export function getUsers() {
+  return dispatch => {
+    Request.get('/api/users')
+      .end((err, response) => {
+        if (err != null) {
+          console.error(err); // TODO: Add ui error handling
+        }
+
+        const users = normalize(JSON.parse(response.text), arrayOf(userSchema));
+        dispatch(usersReceived(Immutable.fromJS(users.entities.user)));
+      });
+  };
+}
+
+export const USERS_RECEIVED = 'USERS_RECEIVED';
+export function usersReceived(users) {
+  return {
+    type: USERS_RECEIVED,
+    users
   };
 }

@@ -1,6 +1,9 @@
 import Immutable from 'immutable';
 
-import { USER_UPDATE } from './actions';
+import {
+  USER_UPDATE,
+  USERS_RECEIVED
+} from './actions';
 
 let initialState = Immutable.Map();
 
@@ -11,6 +14,8 @@ function users(state = initialState, action) {
       state = state.mergeIn(['entities'], action.user);
       state = state.set('user_id', action.user.first().get('id'));
       return state;
+    case USERS_RECEIVED:
+      return state.mergeIn(['entities'], action.users);
     default:
       return state;
   }
