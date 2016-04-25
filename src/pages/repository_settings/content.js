@@ -109,7 +109,8 @@ class Content extends React.Component {
             <h4>Danger Zone</h4>
           </Cell>
           <Cell phone={12} col={3}>
-            <Button raised ripple accent onClick={this.handleDeleteRepository}>Delete</Button>
+            <Button raised ripple accent className="mdl-button--danger"
+                    onClick={this.handleDeleteRepository}>Delete</Button>
           </Cell>
           <Cell phone={12} col={9}>
             Permanently deletes the build history.<br/>
