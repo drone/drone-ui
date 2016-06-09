@@ -7,6 +7,7 @@ import './index.less';
 
 import PageContent from '../../components/layout/content';
 import BuildMeta from '../../components/build_meta';
+import BuildPanel from '../../components/build_panel';
 import JobListItem from '../../components/job_list_item';
 import Log from './log';
 import {RUNNING, PENDING} from '../../components/status';
@@ -60,6 +61,7 @@ class Content extends React.Component {
             </Sticky>
           </Cell>
           <Cell phone={12} col={9}>
+            <BuildPanel build={build} job={job} />
             <div className="log">
               <Log owner={owner} name={name} build={build} job={job}/>
             </div>

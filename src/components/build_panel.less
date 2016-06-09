@@ -1,0 +1,58 @@
+.build-panel {
+  background: #00BFA5;
+  color: #FFF;
+  display: flex;
+  padding: 30px 40px;
+  margin-bottom: 30px;
+  font-size: 15px;
+  border-radius: 2px;
+
+  &.pending,
+  &.running,
+  &.started {
+    background: #FFA000;
+  }
+  &.error,
+  &.killed,
+  &.failure {
+    background: #F50057;
+  }
+
+  em {
+    font-style: normal;
+    min-width:70px;
+    display:inline-block;
+  }
+
+  a {
+    color: #FFF;
+    text-decoration: none;
+  }
+
+  p {
+    font-size:15px;
+    margin-top:30px;
+    margin-bottom:0px;
+    overflow:hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  i ~ span {
+    vertical-align:middle;
+    line-height:24px;
+  }
+
+  i {
+    vertical-align:middle;
+    font-size: 18px;
+    margin-right:8px;
+  }
+
+  &> div:first-child {
+    flex: 1 1 auto;
+  }
+  &> div:last-child {
+    max-width: 300px;
+  }
+}

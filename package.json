@@ -4,6 +4,7 @@
   "description": "This project is a proposal for a react-based user interface for Drone.",
   "main": "webpack.config.js",
   "dependencies": {
+    "ansi_up": "^1.3.0",
     "immutable": "^3.7.6",
     "moment": "^2.12.0",
     "normalizr": "^2.0.1",

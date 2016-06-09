@@ -7,10 +7,8 @@ import Pages from './pages/index';
 export const routes = (
   <Route path="/" component={Page}>
     <IndexRoute components={{pageHead: Pages.Dashboard.Header, pageContent: Pages.Dashboard.Content}}/>
-    <Route path="/account/profile"
+    <Route path="/settings"
            components={{pageHead: Pages.UserProfile.Header, pageContent: Pages.UserProfile.Content}}/>
-    <Route path="/system/users"
-           components={{pageHead: Pages.Users.Header, pageContent: Pages.Users.Content}}/>
     <Route path="/:owner/:name"
            components={{pageHead: Pages.Repository.Header, pageContent: Pages.Repository.Content}}/>
     <Route path="/:owner/:name/settings"

@@ -20,15 +20,14 @@ class Header extends React.Component {
             </Link>
           </Cell>
           <Cell phone={2} tablet={4} col={6} className="header-right">
-            <Textfield label="Search..."/>
-            <Link to="/account/profile">
+            <Link to="/settings">
               <Avatar src={user.get('avatar_url')} circle/>
             </Link>
             <div style={{display: 'inline-block', position: 'relative'}}>
               <IconButton name="more_vert" id="drone-header-menu-right"/>
               <Menu target="drone-header-menu-right" align="right">
-                <MenuItem onClick={() => {browserHistory.push('/account/profile')}}>Profile</MenuItem>
-                <MenuItem onClick={() => {browserHistory.push('/system/users')}}>Users</MenuItem>
+                <MenuItem onClick={() => {browserHistory.push('/')}}>Dashboard</MenuItem>
+                <MenuItem onClick={() => {browserHistory.push('/settings')}}>Settings</MenuItem>
                 <MenuItem>Logout</MenuItem>
               </Menu>
             </div>

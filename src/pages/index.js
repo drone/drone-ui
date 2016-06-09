@@ -4,7 +4,6 @@ import Repository from './repository/index';
 import RepositoryBadge from './repository_badge/index';
 import RepositorySettings from './repository_settings/index';
 import UserProfile from './user_profile/index';
-import Users from './users/index';
 
 export default {
   Build,
@@ -12,6 +11,5 @@ export default {
   Repository,
   RepositoryBadge,
   RepositorySettings,
-  UserProfile,
-  Users
+  UserProfile
 };

@@ -1,0 +1,48 @@
+.term {
+  display: block;
+
+  summary {
+    padding: 15px 5px;
+    color: #212121;
+    font-size: 15px;
+    font-weight: normal;
+    text-transform: capitalize;
+	  border-bottom:1px solid #EEE;
+    display: block;
+    outline: none;
+    cursor: pointer;
+    -webkit-user-select: none;
+            user-select: none;
+
+    &:after {
+      text-transform: none;
+      content: "keyboard_arrow_down";
+      float: right;
+      font-family: "Material Icons";
+      font-weight: 400;
+      font-size:22px;
+    }
+  }
+
+  summary::-webkit-details-marker {
+    display:none;
+  }
+
+  &:last-child summary {
+  	border-bottom: none !important;
+  }
+
+  &[open] summary {
+  	border-bottom: none;
+    &:after {
+    	content: "keyboard_arrow_up";
+      font-family: "Material Icons";
+    }
+  }
+
+  &> div {
+    padding: 20px;
+    border-radius: 2px;
+    background: #EEE;
+  }
+}

@@ -2,6 +2,7 @@ import React from 'react';
 import Request from 'superagent';
 import { FABButton, Icon} from 'react-mdl';
 
+import Term from '../../components/term';
 import { RUNNING } from '../../components/status';
 
 export default
@@ -12,7 +13,7 @@ class Log extends React.Component {
     this.eventSource = null;
 
     this.state = {
-      text: '',
+      group: {},
       follow: false
     };
 
@@ -38,6 +39,14 @@ class Log extends React.Component {
 
   render() {
     const { job } = this.props;
+    let terms = [];
+
+    for (var prop in this.state.groups) {
+      terms.push(
+        <Term key={prop} name={prop}
+          lines={this.state.groups[prop].lines}></Term>
+      );
+    }
 
     return (
       <div>
@@ -46,7 +55,7 @@ class Log extends React.Component {
             <Icon name={this.state.follow ? 'pause' : 'expand_more'}/>
           </FABButton> :
           null}
-        <div>{this.state.text}</div>
+        <div>{terms}</div>
       </div>
     );
   }
@@ -58,8 +67,25 @@ class Log extends React.Component {
           console.error(err); // TODO: Add ui error handling
         }
 
+        var groups = {};
+        var lines = JSON.parse(response.text);
+        lines.map(function(line, i) {
+          if (!line.proc) {
+            return;
+          }
+          var group = groups[line.proc]
+          if (!group) {
+            group = {
+              name: line.proc,
+              lines: [],
+            };
+            groups[line.proc] = group;
+          }
+          group.lines.push(line);
+        });
+
         this.setState({
-          text: response.text
+          groups: groups
         });
       });
   }
@@ -71,8 +97,19 @@ class Log extends React.Component {
     );
 
     this.eventSource.onmessage = (event) => {
+      var line = JSON.parse(event.data);
+      var groups = this.state.groups;
+      var group = this.state.groups[line.proc]
+      if (!group) {
+        group = {
+          name: line.proc,
+          lines: [],
+        };
+        groups[line.proc] = group;
+      }
+      group.lines.push(line);
       this.setState({
-        text: this.state.text + event.data
+        groups: groups
       });
 
       this.scrollToPageBottom();
