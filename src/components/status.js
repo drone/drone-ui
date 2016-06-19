@@ -27,7 +27,7 @@ class Status extends React.Component {
     state == PENDING && classes.push(PENDING);
 
     return (
-      <div className={classes.join(' ')}>{state}</div>
+      <div className={classes.join(' ')}></div>
     );
   }
 }

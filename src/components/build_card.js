@@ -18,10 +18,13 @@ class BuildCard extends React.Component {
         </div>
         <div className="card-block">
           <div>
-            <Status state={build.get('status')}/>
             <h3>{build.get('message')}</h3>
           </div>
-            <BuildMeta build={build}/>
+          <BuildMeta build={build}/>
+        </div>
+        <div className="card-footer">
+          <div>{build.get('number')}</div>
+          <Status state={build.get('status')}/>
         </div>
       </div>
     );

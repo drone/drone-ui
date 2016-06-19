@@ -1,49 +1,47 @@
 .status {
   display: inline-block;
-  width: 100px;
-  padding: 0 15px;
-  margin-right: 10px;
-  border-radius: 2px;
-  font-size: 11px;
-  line-height: 22px;
-  text-align: center;
-  text-transform: uppercase;
-  color: #FFF;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+
+  &:before {
+    width: 25px;
+    line-height: 24px;
+    display: inline-block;
+    text-align: center;
+    font-family: "Material Icons";
+    font-size: 18px;
+  }
 
   &.error, &.killed, &.failure {
-    background: #bf616a;
+    color: #F50057;
+    border-color: #F50057;
+    &:before {
+      content: "close";
+    }
   }
 
   &.success {
-    background: #a3be8c;
+    color: #00BFA5;
+    border-color: #00BFA5;
+    &:before {
+      content: "check";
+    }
   }
 
   &.pending, &.running {
-    background: #ebcb8b;
-    animation: horizontal 2s ease infinite;
+    color: #FFA000;
+    border-color: #FFA000;
+    &:before {
+      content: "refresh";
+      animation: spinner 1.2s ease infinite;
+    }
   }
+}
 
-  @keyframes horizontal {
-    0% {
-      transform: translate(0, 0);
-    }
-    6% {
-      transform: translate(5px, 0);
-    }
-    12% {
-      transform: translate(0, 0);
-    }
-    18% {
-      transform: translate(5px, 0);
-    }
-    24% {
-      transform: translate(0, 0);
-    }
-    30% {
-      transform: translate(5px, 0);
-    }
-    36%, 100% {
-      transform: translate(0, 0);
-    }
-  }
+@keyframes spinner {
+  0%{transform:rotate(0deg)}
+  100%{transform:rotate(359deg)}
 }

@@ -2,30 +2,59 @@
 
 .card {
   display: flex;
-  margin-bottom: 8px;
   border: none;
   border-radius: 0;
   text-decoration: none;
-  color: #2b303b;
+  color: #212121;
+  padding: 30px 0px 20px 0px;
 }
 
 .card .card-header {
   width: 48px;
   padding: 0;
-  padding-top: 32px;
   border: none;
   background: #FFF;
+
+  .avatar {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+.card .card-footer {
+  width: 100px;
+  text-align: right;
+  white-space: nowrap;
+
+  :first-child {
+    vertical-align: middle;
+    display: inline-block;
+    line-height: 26px;
+    color: #9E9E9E;
+    padding-right:15px;
+    font-size: 14px;
+
+    &:before {
+      content: "#";
+      padding-right: 5px;
+    }
+  }
+  :last-child {
+    vertical-align: middle;
+  }
 }
 
 .card .card-block {
   flex: 1 1 auto;
-  padding: @layout-margin / 2;
-  padding-top: @layout-margin;
 
   h3 {
     display: inline-block;
     margin: 0;
-    line-height: 22px;
-    font-size: 18px;
+    line-height: 28px;
+    font-size: 16px;
+    max-width: 600px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }

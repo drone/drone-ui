@@ -29,27 +29,12 @@ class Content extends React.Component {
     }
 
     return (
-      <PageContent className="repository timeline">
-        {builds.toList().reverse().map((dayBuilds, index) => {
-          dayBuilds = dayBuilds.toList().sort((a, b) => {
-            return a.get('id') < b.get('id') ? 1 : -1;
-          });
-
-          const date = new Date(dayBuilds.first().get('created_at') * 1000);
-
+      <PageContent className="repository history">
+        {builds.toList().reverse().map((build, index) => {
           return (
-            <div key={index} className="group">
-              <div className="group-title">
-                Commits on {moment(date).format('MMM Do YYYY')}
-              </div>
-              {dayBuilds.map((build) => {
-                return (
-                  <Link key={build.get('number')} to={`/${owner}/${name}/${build.get('number')}`}>
-                    <BuildCard build={build}/>
-                  </Link>
-                );
-              })}
-            </div>
+            <Link key={build.get('number')} to={`/${owner}/${name}/${build.get('number')}`}>
+              <BuildCard build={build}/>
+            </Link>
           );
         })}
       </PageContent>
@@ -74,12 +59,8 @@ export default connect(
 
         return repository.get('builds').includes(build.get('id')); // If this build belongs to repo's builds
       })
-      .groupBy((build) => { // group all builds by day of date
-        const date = new Date(build.get('created_at') * 1000);
-        return `${date.getFullYear()}-${('0' + date.getMonth()).slice(-2)}-${('0' + date.getDate()).slice(-2)}`;
-      })
       .sort((a, b) => { // sort all grouped builds descending
-        return a.first().get('id') > b.first().get('id') ? 1 : -1;
+        return a.get('id') < b.get('id') ? -1 : 1;
       });
 
     return {

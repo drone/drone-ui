@@ -6,7 +6,6 @@ import Sticky from 'react-stickynode';
 import './index.less';
 
 import PageContent from '../../components/layout/content';
-import BuildMeta from '../../components/build_meta';
 import BuildPanel from '../../components/build_panel';
 import JobListItem from '../../components/job_list_item';
 import Log from './log';
@@ -45,13 +44,6 @@ class Content extends React.Component {
           <Cell phone={12} col={3}>
             <Sticky top={32} enabled={true}>
               <div className="information">
-                <h4>
-                  {build.get('message').trim()}
-                  <a className="material-icons" href={build.get('link_url')} target="_blank">link</a>
-                </h4>
-                <BuildMeta build={build}/>
-                <hr/>
-                <JobListItem job={job}/>
                 <hr/>
                 {job.get('status') == PENDING || job.get('status') == RUNNING ?
                   <Button raised ripple onClick={this.handleJobCancel}>Cancel</Button> :
