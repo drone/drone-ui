@@ -20,9 +20,18 @@ class Page extends React.Component {
   render() {
     const {pageHead, pageContent, pageToolbar, user} = this.props;
 
-    if (user == null) {
-      return (
-        <div>Loading...</div>
+    var pageMenu;
+    if (user && user != null) {
+      pageMenu = (
+        <div>
+          <Avatar src={user.get('avatar_url')} circle/>
+          <IconButton name="more_vert" id="drone-header-menu-right"/>
+          <Menu target="drone-header-menu-right" align="right">
+            <MenuItem onClick={() => {browserHistory.push('/')}}>Dashboard</MenuItem>
+            <MenuItem onClick={() => {browserHistory.push('/settings')}}>Settings</MenuItem>
+            <MenuItem>Logout</MenuItem>
+          </Menu>
+        </div>
       );
     }
 
@@ -31,15 +40,7 @@ class Page extends React.Component {
           <Layout fixedHeader fixedDrawer>
               <Header>
                 <div>{pageHead}</div>
-                <div>
-                  <Avatar src={user.get('avatar_url')} circle/>
-                  <IconButton name="more_vert" id="drone-header-menu-right"/>
-                  <Menu target="drone-header-menu-right" align="right">
-                    <MenuItem onClick={() => {browserHistory.push('/')}}>Dashboard</MenuItem>
-                    <MenuItem onClick={() => {browserHistory.push('/settings')}}>Settings</MenuItem>
-                    <MenuItem>Logout</MenuItem>
-                  </Menu>
-                </div>
+                {pageMenu}
               </Header>
               <Drawer>
                 <div className="brand">
