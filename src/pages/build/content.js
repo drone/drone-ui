@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Grid, Cell, Button } from 'react-mdl';
+import { Button } from 'react-mdl';
 import Sticky from 'react-stickynode';
 
 import './index.less';
@@ -25,7 +25,7 @@ class Content extends React.Component {
   componentDidMount() {
     const {owner, name, number} = this.props.params;
 
-    this.props.dispatch(getBuild(owner, name, number)); // TODO: Add setInterval to check every minute
+    this.props.dispatch(getBuild(owner, name, number));
   }
 
   render() {
@@ -40,25 +40,23 @@ class Content extends React.Component {
 
     return (
       <PageContent fluid className="build">
-        <Grid>
-          <Cell phone={12} col={3}>
+
+          <div style={{display: "none"}}>
             <Sticky top={32} enabled={true}>
               <div className="information">
-                <hr/>
                 {job.get('status') == PENDING || job.get('status') == RUNNING ?
                   <Button raised ripple onClick={this.handleJobCancel}>Cancel</Button> :
                   <Button raised ripple onClick={this.handleJobRestart}>Restart</Button>
                 }
               </div>
             </Sticky>
-          </Cell>
-          <Cell phone={12} col={9}>
+          </div>
+
             <BuildPanel build={build} job={job} />
             <div className="log">
               <Log owner={owner} name={name} build={build} job={job}/>
             </div>
-          </Cell>
-        </Grid>
+
       </PageContent>
     );
   }

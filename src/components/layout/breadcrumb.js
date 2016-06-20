@@ -13,7 +13,7 @@ class Breadcrumb extends React.Component {
     const {elements} = this.props;
 
     return (
-      <Cell col={12} className="breadcrumb">
+      <div className="breadcrumb">
         <ol>
           {elements.map((element, index) => {
             return (
@@ -21,7 +21,7 @@ class Breadcrumb extends React.Component {
             );
           })}
         </ol>
-      </Cell>
+      </div>
     );
   }
 }

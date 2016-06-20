@@ -1,32 +1,25 @@
 @import "../../variables";
 
 .tabs {
-  position: absolute;
-  bottom: -(@layout-margin / 2) - 1px;
-  right: @layout-margin / 2;
   margin: 0;
-  padding: 0;
+  padding: 0px 40px;
   border-bottom: 1px solid #eee;
   list-style: none;
 
   .tab {
-    float: left;
-    margin-bottom: 5px;
+    display: inline-block;
   }
 
   a {
-    padding: 10px 20px;
-    border: none;
-    color: #C7CCD1;
-    font-size: 13px;
-    text-transform: uppercase;
+    display: inline-block;
+    line-height: 49px;
+    padding-right: 20px;
     text-decoration: none;
+    color: #212121;
+    font-size: 15px;
 
     &.active {
-      border: 1px solid #eee;
-      border-bottom: 1px solid #fff;
-      border-radius: 0.25rem 0.25rem 0 0;
-      color: #2b303b;
+      color: #00BFA5;
     }
   }
 }

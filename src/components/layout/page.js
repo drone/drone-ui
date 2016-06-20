@@ -1,12 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import {Cell} from 'react-mdl';
-
-import Header from './header';
+// import Header from './header';
 import Subnav from './subnav';
 
+import { Layout, Header, Textfield, Drawer, Navigation, Content } from 'react-mdl';
+
 import { fetchWindowUser } from '../../data/users/actions';
+
+import './page.less';
 
 class Page extends React.Component {
   componentDidMount() {
@@ -14,7 +16,7 @@ class Page extends React.Component {
   }
 
   render() {
-    const {pageHead, pageContent, user} = this.props;
+    const {pageHead, pageContent, pageToolbar, user} = this.props;
 
     if (user == null) {
       return (
@@ -23,15 +25,40 @@ class Page extends React.Component {
     }
 
     return (
-      <div className="page">
-        <Header user={user}/>
-        <Subnav>
-          {pageHead}
-        </Subnav>
-        <hr/>
-        {pageContent}
+      <div style={{minHeight: '100vh', position: 'relative'}}>
+          <Layout fixedHeader fixedDrawer>
+              <Header>
+                {pageHead}
+              </Header>
+              <Drawer>
+                <div>LOGO</div>
+                  <Navigation>
+                      <a href="">Link</a>
+                      <a href="">Link</a>
+                      <a href="">Link</a>
+                      <a href="">Link 111</a>
+                  </Navigation>
+              </Drawer>
+              <Content>
+                {pageToolbar}
+                <div className="content">
+                  {pageContent}
+                </div>
+              </Content>
+          </Layout>
       </div>
     );
+
+    // return (
+    //   <div className="page">
+    //     <Header user={user}/>
+    //     <Subnav>
+    //       {pageHead}
+    //     </Subnav>
+    //     <hr/>
+    //     {pageContent}
+    //   </div>
+    // );
   }
 }
 

@@ -6,16 +6,33 @@ import Pages from './pages/index';
 
 export const routes = (
   <Route path="/" component={Page}>
-    <IndexRoute components={{pageHead: Pages.Dashboard.Header, pageContent: Pages.Dashboard.Content}}/>
-    <Route path="/settings"
-           components={{pageHead: Pages.UserProfile.Header, pageContent: Pages.UserProfile.Content}}/>
-    <Route path="/:owner/:name"
-           components={{pageHead: Pages.Repository.Header, pageContent: Pages.Repository.Content}}/>
-    <Route path="/:owner/:name/settings"
-           components={{pageHead: Pages.RepositorySettings.Header, pageContent: Pages.RepositorySettings.Content}}/>
-    <Route path="/:owner/:name/settings/badges"
-           components={{pageHead: Pages.RepositoryBadge.Header, pageContent: Pages.RepositoryBadge.Content}}/>
-    <Route path="/:owner/:name/:number"
-           components={{pageHead: Pages.Build.Header, pageContent: Pages.Build.Content}}/>
+    <IndexRoute components={{
+      pageHead: Pages.Dashboard.Header,
+      pageContent: Pages.Dashboard.Content,
+    }}/>
+    <Route path="/settings" components={{
+      pageHead: Pages.UserProfile.Header,
+      pageContent: Pages.UserProfile.Content,
+    }}/>
+    <Route path="/:owner/:name" components={{
+      pageHead: Pages.Repository.Header,
+      pageContent: Pages.Repository.Content,
+      pageToolbar: Pages.Repository.Toolbar,
+    }}/>
+    <Route path="/:owner/:name/settings" components={{
+      pageHead: Pages.RepositorySettings.Header,
+      pageContent: Pages.RepositorySettings.Content,
+      pageToolbar: Pages.Repository.Toolbar,
+    }}/>
+    <Route path="/:owner/:name/settings/badges" components={{
+      pageHead: Pages.RepositoryBadge.Header,
+      pageContent: Pages.RepositoryBadge.Content,
+      pageToolbar: Pages.Repository.Toolbar,
+    }}/>
+    <Route path="/:owner/:name/:number" components={{
+      pageHead: Pages.Build.Header,
+      pageContent: Pages.Build.Content,
+      pageToolbar: Pages.Repository.Toolbar,
+    }}/>
   </Route>
 );

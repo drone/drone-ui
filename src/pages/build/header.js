@@ -12,7 +12,7 @@ class Header extends React.Component {
       <Breadcrumb elements={[
         <Link to={`/${owner}/${name}`}>{owner} / {name}</Link>,
         SEPARATOR,
-        number
+        <Link to={`/${owner}/${name}/${number}`}>{number}</Link>
       ]}/>
     );
   }
