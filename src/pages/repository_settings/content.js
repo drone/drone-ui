@@ -90,7 +90,7 @@ class Content extends React.Component {
           );
         })}
         <Grid>
-          <Cell phone={12} col={3}>Timeout in Minutes</Cell>
+          <Cell phone={12} col={3}>Timeout</Cell>
           <Cell phone={12} col={9}>
             <div style={{float: 'right'}}>{this.state.timeout} minutes</div>
             <Slider min={0} max={900} value={this.state.timeout} onChange={this.handleTimeout}/>
