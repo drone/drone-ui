@@ -96,14 +96,7 @@ class Content extends React.Component {
             <Slider min={0} max={900} value={this.state.timeout} onChange={this.handleTimeout}/>
           </Cell>
         </Grid>
-        <hr/>
-        <Grid>
-          <Cell phone={12} col={3}>Public Key</Cell>
-          <Cell phone={12} col={9}>
-            <pre>{repository.get('key')}</pre>
-          </Cell>
-        </Grid>
-        <hr/>
+        {/*
         <Grid className="danger-zone">
           <Cell col={12}>
             <h4>Danger Zone</h4>
@@ -116,7 +109,7 @@ class Content extends React.Component {
             Permanently deletes the build history.<br/>
             <strong>This action cannot be undone.</strong>
           </Cell>
-        </Grid>
+        </Grid>*/}
       </PageContent>
     );
   }
