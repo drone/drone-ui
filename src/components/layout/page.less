@@ -56,6 +56,19 @@
 
 }
 
+.mdl-layout__header-row {
+  padding-right: 10px;
+
+  &> div:first-child {
+    flex: 1 1 auto;
+    -webkit-flex: 1 1 auto;
+  }
+
+  &> div:last-child {
+    white-space: nowrap;
+  }
+}
+
 @media screen and (min-width: 1025px) {
   .mdl-layout--fixed-drawer > .mdl-layout__inner-container > .mdl-layout__header .mdl-layout__header-row {
     padding-left: (@drawer-width - 200);

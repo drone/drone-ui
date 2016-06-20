@@ -6,7 +6,7 @@ import { Link } from 'react-router';
 import Subnav from './subnav';
 import Avatar from '../avatar';
 
-import { Layout, Header, Textfield, Drawer, Navigation, Content } from 'react-mdl';
+import { Layout, Header, Textfield, Drawer, Navigation, Content, IconButton, Menu, MenuItem} from 'react-mdl';
 
 import { fetchWindowUser } from '../../data/users/actions';
 
@@ -30,7 +30,16 @@ class Page extends React.Component {
       <div style={{minHeight: '100vh', position: 'relative'}}>
           <Layout fixedHeader fixedDrawer>
               <Header>
-                {pageHead}
+                <div>{pageHead}</div>
+                <div>
+                  <Avatar src={user.get('avatar_url')} circle/>
+                  <IconButton name="more_vert" id="drone-header-menu-right"/>
+                  <Menu target="drone-header-menu-right" align="right">
+                    <MenuItem onClick={() => {browserHistory.push('/')}}>Dashboard</MenuItem>
+                    <MenuItem onClick={() => {browserHistory.push('/settings')}}>Settings</MenuItem>
+                    <MenuItem>Logout</MenuItem>
+                  </Menu>
+                </div>
               </Header>
               <Drawer>
                 <div className="brand">
