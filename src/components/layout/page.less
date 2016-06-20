@@ -5,7 +5,9 @@
   background: #FFF;
   box-shadow: none;
   border-bottom: 1px solid #EEE;
+  height: 80px;
   min-height:80px;
+  max-height:80px;
 
   .mdl-layout-title {
     color: #212121;
@@ -57,5 +59,19 @@
 @media screen and (min-width: 1025px) {
   .mdl-layout--fixed-drawer > .mdl-layout__inner-container > .mdl-layout__header .mdl-layout__header-row {
     padding-left: (@drawer-width - 200);
+  }
+}
+
+.brand {
+  height: 80px;
+  min-height:80px;
+  max-height:80px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #EEE;
+
+  a {
+    display:inline-block;
+    margin-top: 10px;
+    margin-left: 15px;
   }
 }

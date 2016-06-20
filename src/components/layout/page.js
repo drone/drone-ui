@@ -1,8 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 
 // import Header from './header';
 import Subnav from './subnav';
+import Avatar from '../avatar';
 
 import { Layout, Header, Textfield, Drawer, Navigation, Content } from 'react-mdl';
 
@@ -31,13 +33,17 @@ class Page extends React.Component {
                 {pageHead}
               </Header>
               <Drawer>
-                <div>LOGO</div>
-                  <Navigation>
-                      <a href="">Link</a>
-                      <a href="">Link</a>
-                      <a href="">Link</a>
-                      <a href="">Link 111</a>
-                  </Navigation>
+                <div className="brand">
+                  <Link to="/">
+                      <Avatar className="logo" src="/static/drone.svg"/>
+                  </Link>
+                </div>
+                <Navigation>
+                    <a href="">Link</a>
+                    <a href="">Link</a>
+                    <a href="">Link</a>
+                    <a href="">Link 111</a>
+                </Navigation>
               </Drawer>
               <Content>
                 {pageToolbar}
