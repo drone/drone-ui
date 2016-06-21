@@ -8,7 +8,7 @@ class RepoListItem extends React.Component {
   render() {
     const {repo} = this.props;
 
-    let start = repo.get('created_at') * 1000;
+    let start = repo.get('started_at') * 1000;
     let finished = repo.get('finished_at') * 1000;
     let duration = finished - start;
 
@@ -21,11 +21,11 @@ class RepoListItem extends React.Component {
         <div className="repo-list-item-body">
           <div>
             <i className="material-icons">timelapse</i>
-            <span>{moment.duration(duration).humanize()}</span>
+            <span>{!duration ? "--" : moment.duration(duration).humanize()}</span>
           </div>
           <div>
             <i className="material-icons">access_time</i>
-            <span>{moment(start).fromNow()}</span>
+            <span>{!start ? "--" : moment(start).fromNow()}</span>
           </div>
         </div>
       </div>

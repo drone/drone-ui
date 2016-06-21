@@ -9,7 +9,6 @@ import PageContent from '../../components/layout/content';
 
 import {
   getRepository,
-  getRepositoryKey,
   updateRepository,
   deleteRepository
 } from '../../data/repositories/actions';
@@ -31,7 +30,6 @@ class Content extends React.Component {
   componentDidMount() {
     const {owner, name} = this.props.params;
     this.props.dispatch(getRepository(owner, name));
-    this.props.dispatch(getRepositoryKey(owner, name));
   }
 
   componentWillReceiveProps(nextProps) {
