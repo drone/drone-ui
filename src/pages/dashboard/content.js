@@ -1,74 +1,41 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { Grid, Cell, Textfield, List, ListItem } from 'react-mdl';
 
 import './index.less';
-
-import { getUserRepositories } from '../../data/repositories/actions';
-import RepoListItem from '../../components/repo_list_item';
 
 import PageContent from '../../components/layout/content';
 
 class Content extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      filter: ''
-    };
-
-    this.onFilter = this.onFilter.bind(this);
-  }
-
-  componentDidMount() {
-    this.props.dispatch(getUserRepositories());
-  }
 
   render() {
-    let {repositories} = this.props;
+    let {user} = this.props;
 
-    if (repositories.size == 0) {
-      return <div>Loading...</div>;
+    if (!user || !user.get('login')) {
+      return (
+        <PageContent fluid className="dashboard">
+          <div className="alert">Welcome to Drone. Please <a href="/login">login</a> to proceed.</div>
+        </PageContent>
+      );
     }
 
-    repositories = repositories.toList()
-      .filter((repository) => { // filter repositories for names that match the filtered name
-        return repository.get('name').toLowerCase().indexOf(this.state.filter.toLowerCase()) > -1;
-      })
-      .sort((a, b) => { // sort repositories by name ascending
-        return a.get('name').localeCompare(b.get('name'));
-      });
-
     return (
-      <PageContent className="dashboard">
-        <Grid>
-          <Cell col={12}>
-            <Textfield label="Filter..." onChange={this.onFilter}/>
-
-            {repositories.map((repo, index) => {
-              return (
-                <Link key={repo.get('id')} to={`/${repo.get('owner')}/${repo.get('name')}`}>
-                  <RepoListItem repo={repo}/>
-                  {index < repositories.size - 1 ? <hr/> : null}
-                </Link>
-              );
-            })}
-          </Cell>
-        </Grid>
+      <PageContent fluid className="dashboard">
+        <div className="alert">Welcome to Drone.</div>
       </PageContent>
     );
-  }
-
-  onFilter(event) {
-    this.setState({
-      filter: event.target.value
-    });
   }
 }
 
 export default connect(
-  state => ({
-    repositories: state.drone.repositories
-  })
+  (state) => {
+    if (state.drone.users.size == 0) {
+      return {};
+    }
+
+    const userID = state.drone.users.get('user_id');
+    return {
+      user: state.drone.users.get('entities').get(userID.toString())
+    };
+  }
 )(Content);

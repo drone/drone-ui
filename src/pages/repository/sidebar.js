@@ -18,7 +18,17 @@ class Sidebar extends React.Component {
   }
 
   render() {
-    let {repositories} = this.props;
+    let {repositories, user} = this.props;
+
+    if (!user) {
+      return (
+        <div className="repository-sidebar">
+          <div className="alert">
+            <a href="/login">Login</a> to view your repository list.
+          </div>
+        </div>
+      );
+    }
 
     if (repositories.size == 0) {
       return <div>Loading...</div>;
@@ -66,7 +76,15 @@ class Sidebar extends React.Component {
 }
 
 export default connect(
-  state => ({
-    repositories: state.drone.feed
-  })
+  (state) => {
+    if (state.drone.users.size == 0) {
+      return { repositories: state.drone.feed };
+    }
+
+    const userID = state.drone.users.get('user_id');
+    return {
+      repositories: state.drone.feed,
+      user: state.drone.users.get('entities').get(userID.toString())
+    };
+  }
 )(Sidebar);

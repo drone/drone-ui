@@ -7,7 +7,6 @@ import Pages from './pages/index';
 export const routes = (
   <Route path="/" component={Page}>
     <IndexRoute components={{
-      pageHead: Pages.Dashboard.Header,
       pageContent: Pages.Dashboard.Content,
       pageSidebar: Pages.Repository.Sidebar,
     }}/>
