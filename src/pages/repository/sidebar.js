@@ -33,7 +33,9 @@ class Sidebar extends React.Component {
       });
     return (
       <div>
-        <Textfield label="Filter..." onChange={this.onFilter}/>
+        <div className="repository-search">
+          <input type="search" placeholder="Filter..." onChange={this.onFilter}/>
+        </div>
         {repositories.map((repo, index) => {
           return (
             <Link key={repo.get('full_name')} to={`/${repo.get('owner')}/${repo.get('name')}`}>
