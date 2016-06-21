@@ -10,7 +10,7 @@ class RepoListItem extends React.Component {
     return (
       <div className="repo-list-item">
         <Avatar src={repo.get('avatar_url')}/>
-        <span>{repo.get('name')}</span>
+        <span>{repo.get('full_name')}</span>
       </div>
     );
   }

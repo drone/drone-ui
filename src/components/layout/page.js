@@ -18,7 +18,7 @@ class Page extends React.Component {
   }
 
   render() {
-    const {pageHead, pageContent, pageToolbar, user} = this.props;
+    const {pageHead, pageContent, pageToolbar, pageSidebar, user} = this.props;
 
     var pageMenu;
     if (user && user != null) {
@@ -49,10 +49,7 @@ class Page extends React.Component {
                   </Link>
                 </div>
                 <Navigation>
-                    <a href="">Link</a>
-                    <a href="">Link</a>
-                    <a href="">Link</a>
-                    <a href="">Link 111</a>
+                  {pageSidebar}
                 </Navigation>
               </Drawer>
               <Content>
