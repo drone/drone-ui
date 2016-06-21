@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory, Link } from 'react-router';
 
-import { getUserRepositories } from '../../data/repositories/actions';
+import { getFeed } from '../../data/feed/actions';
 import RepoListItem from '../../components/repo_list_item';
 import { Grid, Cell, Textfield, List, ListItem } from 'react-mdl';
 
@@ -36,7 +36,7 @@ class Sidebar extends React.Component {
         <Textfield label="Filter..." onChange={this.onFilter}/>
         {repositories.map((repo, index) => {
           return (
-            <Link key={repo.get('id')} to={`/${repo.get('owner')}/${repo.get('name')}`}>
+            <Link key={repo.get('full_name')} to={`/${repo.get('owner')}/${repo.get('name')}`}>
               <RepoListItem repo={repo}/>
               {index < repositories.size - 1 ? <hr/> : null}
             </Link>
@@ -47,7 +47,7 @@ class Sidebar extends React.Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(getUserRepositories());
+    this.props.dispatch(getFeed());
     // open websocket
   }
 
@@ -64,6 +64,6 @@ class Sidebar extends React.Component {
 
 export default connect(
   state => ({
-    repositories: state.drone.repositories
+    repositories: state.drone.feed
   })
 )(Sidebar);

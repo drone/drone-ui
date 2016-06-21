@@ -1,7 +1,5 @@
 import React from 'react';
 
-import Avatar from './avatar';
-
 export default
 class RepoListItem extends React.Component {
   render() {
@@ -9,7 +7,6 @@ class RepoListItem extends React.Component {
 
     return (
       <div className="repo-list-item">
-        <Avatar src={repo.get('avatar_url')}/>
         <span>{repo.get('full_name')}</span>
       </div>
     );
