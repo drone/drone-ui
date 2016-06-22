@@ -31,12 +31,15 @@ class Content extends React.Component {
     }
 
     repositories = repositories.toList()
-      .filter((a) => {
-        return params.account && params.account == a.get('owner');
-      })
       .sort((a, b) => { // sort repositories by name ascending
         return a.get('full_name').localeCompare(b.get('full_name'));
       });
+
+    if (params.account) {
+      repositories = repositories.filter((a) => {
+        return params.account == a.get('owner');
+      })
+    }
 
     return (
       <PageContent className="user-profile">

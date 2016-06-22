@@ -28,7 +28,7 @@ class Page extends React.Component {
           <IconButton name="more_vert" id="drone-header-menu-right"/>
           <Menu target="drone-header-menu-right" align="right">
             <MenuItem onClick={() => {browserHistory.push('/')}}>Dashboard</MenuItem>
-            <MenuItem onClick={() => {browserHistory.push('/settings')}}>Settings</MenuItem>
+            <MenuItem onClick={() => {browserHistory.push('/account')}}>Account</MenuItem>
             <MenuItem onClick={() => {window.location.href='/logout'}}>Logout</MenuItem>
           </Menu>
         </div>
