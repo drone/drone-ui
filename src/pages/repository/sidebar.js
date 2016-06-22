@@ -39,7 +39,7 @@ class Sidebar extends React.Component {
         return repository.get('full_name').toLowerCase().indexOf(this.state.filter.toLowerCase()) > -1;
       })
       .sort((a, b) => { // sort repositories by name ascending
-        return a.get('name').localeCompare(b.get('name'));
+        return (b.get('started_at') || 0) - (a.get('started_at') || 0);
       });
     return (
       <div className="repository-sidebar">
