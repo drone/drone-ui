@@ -25,12 +25,15 @@ class Content extends React.Component {
   }
 
   render() {
-    let {user, repositories} = this.props;
+    let {user, repositories, params} = this.props;
     if (!user || !repositories) {
       return <div>Loading ...</div>;
     }
 
     repositories = repositories.toList()
+      .filter((a) => {
+        return params.account && params.account == a.get('owner');
+      })
       .sort((a, b) => { // sort repositories by name ascending
         return a.get('full_name').localeCompare(b.get('full_name'));
       });
