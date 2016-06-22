@@ -18,7 +18,7 @@ class Sidebar extends React.Component {
   }
 
   render() {
-    let {user, repositories} = this.props;
+    let {user, repositories, params} = this.props;
     if (!user || !repositories) {
       return <div>Loading ...</div>;
     }
@@ -36,7 +36,7 @@ class Sidebar extends React.Component {
     let items = [];
     orgs.forEach((value, key) => {
       items.push(
-        <Link key={key} to={`/account/${key}`}>
+        <Link key={key} to={`/account/${key}`} className={params.account == key ? "active": ""}>
           <div>{key}</div>
         </Link>
       );

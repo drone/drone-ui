@@ -15,9 +15,34 @@
 
     -webkit-user-select: none;
 
+    &.active,
     &:hover {
       background:#EEE;
     }
   }
 
+}
+
+.mdl-button {
+  display: block;
+  width: 100%;
+  background: #FFF;
+  border:none;
+  box-shadow: none;
+  text-align: left;
+  padding-left:30px;
+  &:first-child {
+    margin-top:20px;
+  }
+}
+.mdl-button .mdl-button__ripple-container {
+  margin: 0px;
+  display: block;
+  font-size: 14px;
+  text-align: left;
+  text-transform: uppercase;
+  border-radius: 0px;
+  margin-bottom: 5px;
+  outline: none;
+  cursor: pointer;
 }
