@@ -1,12 +1,24 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router';
 
-import Breadcrumb from '../../components/layout/breadcrumb';
+import Breadcrumb, {SEPARATOR} from '../../components/layout/breadcrumb';
 
-export default
 class Header extends React.Component {
   render() {
+    const {account} = this.props.params;
+    if (!account) {
+      return <Breadcrumb elements={['Account']}/>
+    }
+
     return (
-      <Breadcrumb elements={['Account Profile']}/>
+      <Breadcrumb elements={[
+        <Link to={`/account`}>Account</Link>,
+        SEPARATOR,
+        <Link to={`/account/${account}`}>{account}</Link>
+      ]}/>
     );
   }
 }
+
+export default connect()(Header);

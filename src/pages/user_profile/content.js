@@ -38,7 +38,7 @@ class Content extends React.Component {
     return (
       <PageContent className="user-profile">
         {repositories.map((repo) => {
-          return <div>{repo.get('full_name')}</div>;
+          return <div key={repo.get('full_name')}>{repo.get('full_name')}</div>;
         })}
       </PageContent>
     );

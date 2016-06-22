@@ -15,6 +15,11 @@ export const routes = (
       pageContent: Pages.UserProfile.Content,
       pageSidebar: Pages.UserProfile.Sidebar,
     }}/>
+    <Route path="/account/:account" components={{
+      pageHead: Pages.UserProfile.Header,
+      pageContent: Pages.UserProfile.Content,
+      pageSidebar: Pages.UserProfile.Sidebar,
+    }}/>
     <Route path="/:owner/:name" components={{
       pageHead: Pages.Repository.Header,
       pageContent: Pages.Repository.Content,
