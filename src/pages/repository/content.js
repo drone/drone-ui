@@ -63,6 +63,7 @@ export default connect(
         return a.get('id') < b.get('id') ? -1 : 1;
       });
 
+    console.log(repository, builds)
     return {
       repository,
       builds

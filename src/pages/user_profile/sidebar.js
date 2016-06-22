@@ -46,7 +46,9 @@ class Sidebar extends React.Component {
       <PageContent className="user-profile">
         <Button raised ripple onClick={this.handleShowToken}>Show Token</Button>
         <Button raised ripple>Sync List</Button>
-        {items}
+        <div className="org-list">
+          {items}
+        </div>
         {this.state.token != '' ? <pre>{this.state.token}</pre>:<noscript/>}
       </PageContent>
     );
