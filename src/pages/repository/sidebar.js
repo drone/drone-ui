@@ -38,7 +38,7 @@ class Sidebar extends React.Component {
       .filter((repository) => { // filter repositories for names that match the filtered name
         return repository.get('full_name').toLowerCase().indexOf(this.state.filter.toLowerCase()) > -1;
       })
-      .sort((a, b) => { // sort repositories by name ascending
+      .sort((a, b) => { // sort repositories by latest build
         return (b.get('started_at') || 0) - (a.get('started_at') || 0);
       });
     return (

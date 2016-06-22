@@ -1,15 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Request from 'superagent';
-import { Grid, Cell, Button } from 'react-mdl';
+import { Button } from 'react-mdl';
 import { Link } from 'react-router';
 
-import './index.less';
-
-import { getUserRepositories } from '../../data/repositories/actions';
 import PageContent from '../../components/layout/content';
 
-class Content extends React.Component {
+class Sidebar extends React.Component {
   constructor(props) {
     super(props);
 
@@ -18,10 +15,6 @@ class Content extends React.Component {
     };
 
     this.handleShowToken = this.handleShowToken.bind(this);
-  }
-
-  componentDidMount() {
-    this.props.dispatch(getUserRepositories());
   }
 
   render() {
@@ -35,11 +28,26 @@ class Content extends React.Component {
         return a.get('full_name').localeCompare(b.get('full_name'));
       });
 
+    let orgs = new Map();
+    repositories.map(function(repo) { // extract unique accounts from list
+      orgs.set(repo.get('owner'));
+    });
+
+    let items = [];
+    orgs.forEach((value, key) => {
+      items.push(
+        <Link key={key} to={`/account/${key}`}>
+          <div>{key}</div>
+        </Link>
+      );
+    });
+
     return (
       <PageContent className="user-profile">
-        {repositories.map((repo) => {
-          return <div>{repo.get('full_name')}</div>;
-        })}
+        <Button raised ripple onClick={this.handleShowToken}>Show Token</Button>
+        <Button raised ripple>Sync List</Button>
+        {items}
+        {this.state.token != '' ? <pre>{this.state.token}</pre>:<noscript/>}
       </PageContent>
     );
   }
@@ -70,4 +78,4 @@ export default connect(
       user: state.drone.users.get('entities').get(userID.toString())
     };
   }
-)(Content);
+)(Sidebar);

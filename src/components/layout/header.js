@@ -26,8 +26,8 @@ class Header extends React.Component {
             <div style={{display: 'inline-block', position: 'relative'}}>
               <IconButton name="more_vert" id="drone-header-menu-right"/>
               <Menu target="drone-header-menu-right" align="right">
-                <MenuItem onClick={() => {browserHistory.push('/')}}>Dashboard</MenuItem>
-                <MenuItem onClick={() => {browserHistory.push('/settings')}}>Settings</MenuItem>
+                <MenuItem onClick={() => {browserHistory.push('/')}}>Builds</MenuItem>
+                <MenuItem onClick={() => {browserHistory.push('/account')}}>Account</MenuItem>
                 <MenuItem>Logout</MenuItem>
               </Menu>
             </div>

@@ -2,11 +2,11 @@ import Immutable from 'immutable';
 import Request from 'superagent';
 import { normalize, arrayOf, Schema } from 'normalizr';
 
-export const repositorySchema = new Schema('repository');
+export const repositorySchema = new Schema('repository',  { idAttribute: 'full_name' });
 
 export function getUserRepositories() {
   return dispatch => {
-    Request.get('/api/user/repos')
+    Request.get('/api/user/repos?all=true')
       .end((err, response) => {
         if (err != null) {
           console.error(err); // TODO: Add ui error handling

@@ -10,9 +10,10 @@ export const routes = (
       pageContent: Pages.Dashboard.Content,
       pageSidebar: Pages.Repository.Sidebar,
     }}/>
-    <Route path="/settings" components={{
+    <Route path="/account" components={{
       pageHead: Pages.UserProfile.Header,
       pageContent: Pages.UserProfile.Content,
+      pageSidebar: Pages.UserProfile.Sidebar,
     }}/>
     <Route path="/:owner/:name" components={{
       pageHead: Pages.Repository.Header,
