@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Request from 'superagent';
-import { Button } from 'react-mdl';
+import { Button, Dialog, DialogContent, DialogActions } from 'react-mdl';
 import { Link } from 'react-router';
 
 import PageContent from '../../components/layout/content';
@@ -15,6 +15,8 @@ class Sidebar extends React.Component {
     };
 
     this.handleShowToken = this.handleShowToken.bind(this);
+    this.handleOpenDialog = this.handleOpenDialog.bind(this);
+    this.handleCloseDialog = this.handleCloseDialog.bind(this);
   }
 
   render() {
@@ -36,7 +38,7 @@ class Sidebar extends React.Component {
     let items = [];
     orgs.forEach((value, key) => {
       items.push(
-        <Link key={key} to={`/account/${key}`} className={params.account == key ? "active": ""}>
+        <Link key={key} to={`/account/${key}`} className={params.account == key ?'active': ''}>
           <div>{key}</div>
         </Link>
       );
@@ -51,10 +53,31 @@ class Sidebar extends React.Component {
         <div className="account-list">
           {items}
         </div>
-        {this.state.token != '' ? <pre>{this.state.token}</pre>:<noscript/>}
+
+        <Dialog open={this.state.openDialog}>
+          <DialogContent>
+            <p>Your user account token:</p>
+            <pre>{this.state.token}</pre>
+          </DialogContent>
+          <DialogActions>
+            <Button type='button' onClick={this.handleCloseDialog}>Close</Button>
+          </DialogActions>
+        </Dialog>
       </div>
     );
   }
+
+  handleOpenDialog() {
+     this.setState({
+       openDialog: true
+     });
+   }
+
+   handleCloseDialog() {
+     this.setState({
+       openDialog: false
+     });
+   }
 
   handleShowToken() {
     Request.post(`/api/user/token`)
@@ -64,6 +87,7 @@ class Sidebar extends React.Component {
         }
 
         this.setState({
+          openDialog: true,
           token: response.text
         });
       });
