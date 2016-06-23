@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { browserHistory, Link } from 'react-router';
 
 import { getFeed } from '../../data/feed/actions';
+import { dispatchEvent } from '../../data/events/actions';
 import RepoListItem from '../../components/repo_list_item';
 import { Grid, Cell, Textfield, List, ListItem } from 'react-mdl';
 
@@ -61,11 +62,42 @@ class Sidebar extends React.Component {
 
   componentDidMount() {
     this.props.dispatch(getFeed());
-    // open websocket
+
+    ////////////////////////////////////////////////////////////////////////////
+    // TESTING ONLY. REMOVE
+    var i = 999;
+    setInterval(function() {
+      i++
+      this.props.dispatch(dispatchEvent({
+        repo: {
+          owner: "drone",
+          name: "drone",
+          full_name: "drone/drone"
+        },
+        build: {
+          number: i,
+          started_at: Math.round(new Date().getTime()/1000),
+          finished_at: Math.round(new Date().getTime()/1000)+180,
+          status: (i % 2 == 0)? "running": "failure",
+        }
+      }));
+    }.bind(this), 1000*5);
+    ////////////////////////////////////////////////////////////////////////////
+
+    this.ws = this.createWebSocket();
+    this.ws.onmessage = function(message) {
+      let event = JSON.parse(message.data);
+      this.props.dispatch(dispatchEvent(event));
+    }.bind(this)
   }
 
   componentWillUnmount() {
-    // close websocket
+    this.ws.close();
+  }
+
+  createWebSocket() {
+      let proto = (window.location.protocol === 'https:') ? 'wss:' : 'ws:';
+      return new WebSocket(proto + '//' + window.location.host + '/ws/feed');
   }
 
   onFilter(event) {

@@ -2,7 +2,7 @@ import Immutable from 'immutable';
 
 import { BUILDS_RECEIVED, BUILD_RECEIVED } from './actions';
 import { JOB_RESTARTED } from '../jobs/actions';
-
+import { EVENT_RECEIVED } from '../events/actions';
 
 let initialState = Immutable.Map();
 
@@ -15,6 +15,10 @@ function builds(state = initialState, action) {
       return state.merge(action.build);
     case JOB_RESTARTED:
       return state.merge(action.build);
+    case EVENT_RECEIVED:
+      // update existing build
+      // update existing job
+      return state;
     default:
       return state;
   }
