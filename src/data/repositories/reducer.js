@@ -3,7 +3,6 @@ import Immutable from 'immutable';
 import {
   USER_REPOSITORIES_RECEIVED,
   REPOSITORY_RECEIVED,
-  REPOSITORY_KEY_RECEIVED
 } from './actions';
 
 import {BUILDS_RECEIVED} from '../builds/actions';
@@ -19,13 +18,6 @@ function repositories(state = initialState, action) {
       return action.repositories;
     case REPOSITORY_RECEIVED:
       return state.merge(action.repository);
-    case REPOSITORY_KEY_RECEIVED:
-      repository = repositoryByOwnerName(state, action.params.owner, action.params.name);
-      if (repository == null) { // this can only happen, if the repository page is request at first
-        console.error('Repository was null while trying to add a key to it');
-        return state;
-      }
-      return state.setIn([repository.get('id').toString(), 'key'], action.key);
     case BUILDS_RECEIVED:
       repository = repositoryByOwnerName(state, action.params.owner, action.params.name);
       if (repository == null) { // this can only happen, if the repository page is request at first

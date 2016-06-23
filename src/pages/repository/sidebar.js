@@ -77,14 +77,9 @@ class Sidebar extends React.Component {
 
 export default connect(
   (state) => {
-    if (state.drone.users.size == 0) {
-      return { repositories: state.drone.feed };
-    }
-
-    const userID = state.drone.users.get('user_id');
     return {
       repositories: state.drone.feed,
-      user: state.drone.users.get('entities').get(userID.toString())
+      user: state.drone.user,
     };
   }
 )(Sidebar);

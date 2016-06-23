@@ -66,14 +66,9 @@ class Content extends React.Component {
 
 export default connect(
   (state) => {
-    if (state.drone.users.size == 0) {
-      return {};
-    }
-
-    const userID = state.drone.users.get('user_id');
     return {
       repositories: state.drone.repositories,
-      user: state.drone.users.get('entities').get(userID.toString())
+      user: state.drone.user,
     };
   }
 )(Content);

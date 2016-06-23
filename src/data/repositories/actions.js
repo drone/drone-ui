@@ -67,15 +67,6 @@ export function getRepositoryKey(owner, name) {
   };
 }
 
-export const REPOSITORY_KEY_RECEIVED = 'REPOSITORY_KEY_RECEIVED';
-export function repositoryKeyReceived(params, key) {
-  return {
-    type: REPOSITORY_KEY_RECEIVED,
-    params,
-    key
-  };
-}
-
 export function updateRepository(owner, name, data) {
   return dispatch => {
     Request.patch(`/api/repos/${owner}/${name}`)

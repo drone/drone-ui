@@ -8,7 +8,7 @@ import Avatar from '../avatar';
 
 import { Layout, Header, Textfield, Drawer, Navigation, Content, IconButton, Menu, MenuItem} from 'react-mdl';
 
-import { fetchWindowUser } from '../../data/users/actions';
+import { fetchWindowUser } from '../../data/user/actions';
 
 import './page.less';
 
@@ -77,13 +77,6 @@ class Page extends React.Component {
 
 export default connect(
   (state) => {
-    if (state.drone.users.size == 0) {
-      return {};
-    }
-
-    const userID = state.drone.users.get('user_id');
-    return {
-      user: state.drone.users.get('entities').get(userID.toString())
-    };
+    return { user: state.drone.user };
   }
 )(Page);

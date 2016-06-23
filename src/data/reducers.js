@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import users from './users/reducer';
+import user from './user/reducer';
 import feed from './feed/reducer';
 import jobs from './jobs/reducer';
 import repositories from './repositories/reducer';
@@ -11,5 +11,5 @@ export const drone = combineReducers({
   feed,
   jobs,
   repositories,
-  users
+  user,
 });
