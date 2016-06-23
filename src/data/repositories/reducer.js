@@ -24,7 +24,7 @@ function repositories(state = initialState, action) {
         console.error('Repository was null while trying to add builds to it');
         return state;
       }
-      return state.setIn([repository.get('id').toString(), 'builds'], action.buildIDs);
+      return state.setIn([repository.get('full_name').toString(), 'builds'], action.buildIDs);
     default:
       return state;
   }

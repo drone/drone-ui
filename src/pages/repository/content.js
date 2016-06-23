@@ -50,10 +50,13 @@ export default connect(
         repository.get('name') == ownProps.params.name
       );
     });
+    if (!repository) {
+      return {};
+    }
 
     const builds = state.drone.builds
       .filter((build) => { // filter builds for this repository
-        if (repository == null || repository.get('builds') == null) { // If there are no builds don't return any builds (=loading)
+        if (repository.get('builds') == null) { // If there are no builds don't return any builds (=loading)
           return false;
         }
 
