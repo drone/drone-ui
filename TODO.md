@@ -7,7 +7,6 @@
 
 1. hook up to websocket
 2. show alert when no repos in the list
-3. clicking item in feed doesn't update repository page, if already displayed
 
 ### Repository:
 

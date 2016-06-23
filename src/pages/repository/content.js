@@ -25,27 +25,21 @@ class Content extends React.Component {
       nextProps.dispatch(getBuilds(owner, name));
     }
   }
-  //
-  // shouldComponentUpdate(nextProps) {
-  //   console.log(this.props.params, nextProps.params)
-  //   return nextProps.params.owner != this.props.params.owner
-  //     || nextProps.params.name != this.props.params.name;
-  // }
-  //
-  // componentWillUpdate(nextProps) {
-  //   const {owner, name} = nextProps.params;
-  //   this.props.dispatch(getRepository(owner, name));
-  //   this.props.dispatch(getBuilds(owner, name));
-  // }
 
   render() {
     const {owner, name} = this.props.params;
     let {repository, builds} = this.props;
 
-    if (repository == null && builds == null) {
+    if (!repository || !builds) {
       return (
         <div>Loading...</div>
       );
+    }
+
+    if (builds.size === 0) {
+        return (
+          <div className="alert alert-empty">This repository does not have any builds yet.</div>
+        );
     }
 
     return (
