@@ -14,15 +14,15 @@ class Content extends React.Component {
   componentDidMount() {
     const {owner, name} = this.props.params;
 
-    this.props.dispatch(getRepository(owner, name));
     this.props.dispatch(getBuilds(owner, name));
+    this.props.dispatch(getRepository(owner, name));
   }
 
   componentWillReceiveProps(nextProps) {
     const {owner, name} = nextProps.params;
     if (owner != this.props.params.owner || name != this.props.params.name) {
-      nextProps.dispatch(getRepository(owner, name));
       nextProps.dispatch(getBuilds(owner, name));
+      nextProps.dispatch(getRepository(owner, name));
     }
   }
 
