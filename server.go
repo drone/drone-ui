@@ -1,3 +1,14 @@
+// Use this server to run Polymer in standalone mode to avoid having to
+// re-compile your Go code every and re-launch Drone every time you make a
+// code change.
+//
+// This server proxies all traffic to a running Drone instance. This can be a
+// local drone instance, or a remote drone instance, so you can develop against
+// real world data.
+//
+//     go run server.go --scheme=http --host=drone.server.com --token=<token>
+//
+
 package main
 
 import (
@@ -7,9 +18,11 @@ import (
 	"log"
 	"net/http"
 	"net/http/httputil"
+	"net/url"
 	"strings"
 
 	"github.com/drone/drone-go/drone"
+	"github.com/koding/websocketproxy"
 )
 
 var (
@@ -67,6 +80,18 @@ func main() {
 			req.Header.Set("X-Forwarded-Proto", *scheme)
 			req.Header.Set("Authorization", "Bearer "+*token)
 		},
+	})
+
+	// proxy all websockets
+	http.HandleFunc("/ws/", func(rw http.ResponseWriter, req *http.Request) {
+		target, _ := url.Parse(req.URL.String())
+		target.Host = *host
+		target.Scheme = "ws"
+		if *scheme == "https" {
+			target.Scheme = "wss"
+		}
+		target.RawQuery = "access_token=" + *token
+		websocketproxy.NewProxy(target).ServeHTTP(rw, req)
 	})
 
 	http.ListenAndServe(":9000", nil)
