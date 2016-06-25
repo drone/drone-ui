@@ -63,27 +63,6 @@ class Sidebar extends React.Component {
   componentDidMount() {
     this.props.dispatch(getFeed());
 
-    ////////////////////////////////////////////////////////////////////////////
-    // TESTING ONLY. REMOVE
-    var i = 999;
-    setInterval(function() {
-      i++
-      this.props.dispatch(dispatchEvent({
-        repo: {
-          owner: "drone",
-          name: "drone",
-          full_name: "drone/drone"
-        },
-        build: {
-          number: i,
-          started_at: Math.round(new Date().getTime()/1000),
-          finished_at: Math.round(new Date().getTime()/1000)+180,
-          status: (i % 2 == 0)? "running": "failure",
-        }
-      }));
-    }.bind(this), 1000*5);
-    ////////////////////////////////////////////////////////////////////////////
-
     this.ws = this.createWebSocket();
     this.ws.onmessage = function(message) {
       let event = JSON.parse(message.data);
@@ -96,8 +75,8 @@ class Sidebar extends React.Component {
   }
 
   createWebSocket() {
-      let proto = (window.location.protocol === 'https:') ? 'wss:' : 'ws:';
-      return new WebSocket(proto + '//' + window.location.host + '/ws/feed');
+    let proto = (window.location.protocol === 'https:') ? 'wss:' : 'ws:';
+    return new WebSocket(proto + '//' + window.location.host + '/ws/feed');
   }
 
   onFilter(event) {

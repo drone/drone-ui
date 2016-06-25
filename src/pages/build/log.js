@@ -10,7 +10,7 @@ class Log extends React.Component {
   constructor(props) {
     super(props);
 
-    this.eventSource = null;
+    this.ws = null;
 
     this.state = {
       group: {},
@@ -31,9 +31,9 @@ class Log extends React.Component {
   }
 
   componentWillUnmount() {
-    if (this.eventSource != null) {
-      console.log('Closing the eventSource');
-      this.eventSource.close();
+    if (this.ws != null) {
+      console.log('Closing the websocket');
+      this.ws.close();
     }
   }
 
@@ -91,12 +91,12 @@ class Log extends React.Component {
   }
 
   requestStream(owner, name, build, job) {
-    this.eventSource = new EventSource(
-      `/api/stream/${owner}/${name}/${build.get('number')}/${job.get('number')}`,
-      {withCredentials: true}
-    );
+    this.ws = this.createWebSocket(owner, name, build.get('number'), job.get('number'));
+    this.setState({
+      groups: {}
+    });
 
-    this.eventSource.onmessage = (event) => {
+    this.ws.onmessage = (event) => {
       var line = JSON.parse(event.data);
       var groups = this.state.groups;
       var group = this.state.groups[line.proc]
@@ -115,9 +115,15 @@ class Log extends React.Component {
       this.scrollToPageBottom();
     };
 
-    this.eventSource.onerror = () => {
-      this.eventSource.close();
+    this.ws.onerror = () => {
+      this.ws.close();
     };
+  }
+
+  createWebSocket(owner, name, build, job) {
+    let proto = (window.location.protocol === 'https:') ? 'wss:' : 'ws:';
+    let path = `/ws/logs/${owner}/${name}/${build}/${job}`;
+    return new WebSocket(proto + '//' + window.location.host + path);
   }
 
   handleFollow() {
@@ -130,7 +136,11 @@ class Log extends React.Component {
 
   scrollToPageBottom() {
     if (this.state.follow) {
-      window.scrollTo(0, document.body.scrollHeight);
+      // TODO this assumes mdl-layout__content exists as the parent. While this
+      // is true it feels like it breaks the spirit of individual components
+      // having a specific parental dependency. Revisit this.
+      document.querySelector(".mdl-layout__content").scrollTo(0,
+        document.querySelector(".mdl-layout__content").scrollHeight);
     }
   }
 }

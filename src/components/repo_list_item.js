@@ -21,7 +21,7 @@ class RepoListItem extends React.Component {
         <div className="repo-list-item-body">
           <div>
             <i className="material-icons">timelapse</i>
-            <span>{!duration ? "--" : moment.duration(duration).humanize()}</span>
+            <span>{duration == NaN ? "--" : moment.duration(duration).humanize()}</span>
           </div>
           <div>
             <i className="material-icons">access_time</i>

@@ -17,7 +17,6 @@ export function getBuilds(owner, name) {
         response = normalize(JSON.parse(response.text), arrayOf(buildSchema));
         let builds = Immutable.fromJS(response.entities.build);
         let buildIDs = Immutable.fromJS(response.result);
-
         dispatch(buildsReceived({owner, name}, builds, buildIDs));
       });
   };

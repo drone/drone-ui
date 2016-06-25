@@ -16,9 +16,7 @@ function builds(state = initialState, action) {
     case JOB_RESTARTED:
       return state.merge(action.build);
     case EVENT_RECEIVED:
-      // update existing build
-      // update existing job
-      return state;
+      return state.merge(action.event.build);
     default:
       return state;
   }

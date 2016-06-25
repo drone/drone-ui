@@ -5,6 +5,7 @@ import {
   REPOSITORY_RECEIVED,
 } from './actions';
 
+import {EVENT_RECEIVED} from '../events/actions';
 import {BUILDS_RECEIVED} from '../builds/actions';
 
 let initialState = Immutable.Map();
@@ -25,6 +26,19 @@ function repositories(state = initialState, action) {
         return state;
       }
       return state.setIn([repository.get('full_name').toString(), 'builds'], action.buildIDs);
+    case EVENT_RECEIVED:
+      const {params} = action;
+      repository = repositoryByOwnerName(state, params.owner, params.name);
+      if (repository == null) {
+        return state;
+      }
+      // TODO figure out how to append the build ID into the repository if
+      // is doesn't already exist in the index.
+
+      // let buildIds = Immutable.fromJS([params.number]);
+      // repository = repository.mergeIn('builds', buildIds);
+      // return state.merge(repository)
+      return state;
     default:
       return state;
   }
