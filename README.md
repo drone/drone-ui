@@ -37,3 +37,26 @@ http://localhost:9000
 * dashboard
 * repository dashboard 
 * build output page
+
+## Setup a Development Environment
+
+If you don't have a drone v0.5 setup and running you can do so with `docker-compose`.
+At first you need to make sure that docker and docker-compose are installed and running.
+
+Just run `docker-compose up` in a separate terminal and it will start [Gogs](https://github.com/gogits/gogs) and drone v0.5.
+
+#### Gogs
+
+Now you have to setup Gogs. Gogs runs on `http://localhost:10081`. Just open that in your browser.
+All you need to change is to set the _Database Type_ to SQLite3 and _Application URL_ to `http://localhost:10081/`.
+Don't forget to create an admin account at the bottom of the page to be able to login. You can use simple credentials for development.
+
+#### drone
+
+Open `localhost:10080` in your browser and login with the Gogs credentials.
+Get your personal token at `http://localhost:10080/settings/profile`.
+
+Now start the proxy to run the app like:
+```
+go run server.go --host=localhost:10080 --token=DRONE_TOKEN
+```
