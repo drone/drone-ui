@@ -47,16 +47,16 @@ Just run `docker-compose up` in a separate terminal and it will start [Gogs](htt
 
 #### Gogs
 
-Now you have to setup Gogs. Gogs runs on `http://localhost:10081`. Just open that in your browser.
-All you need to change is to set the _Database Type_ to SQLite3 and _Application URL_ to `http://localhost:10081/`.
+Now you have to setup Gogs. Gogs runs on `http://localhost:3000`. Just open that in your browser.
+All you need to change is to set the _Database Type_ to SQLite3.
 Don't forget to create an admin account at the bottom of the page to be able to login. You can use simple credentials for development.
 
 #### drone
 
-Open `localhost:10080` in your browser and login with the Gogs credentials.
-Get your personal token at `http://localhost:10080/settings/profile`.
+Open `localhost:8000` in your browser and login with the Gogs credentials.
+Get your personal token at `http://localhost:8000/settings/profile`.
 
 Now start the proxy to run the app like:
 ```
-go run server.go --host=localhost:10080 --token=DRONE_TOKEN
+go run server.go --host=localhost:8000 --token=DRONE_TOKEN
 ```
