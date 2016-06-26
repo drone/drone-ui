@@ -1,19 +1,21 @@
 
+### Bugs
+
+1. build logs reset after streaming completes, shows "Loading ..."
+2. sometimes switching between repos results in "Repository was null while trying to add builds to it"
+3. new builds received from websocket not correctly appended to build history
+
 ### Overall:
 
 1. set page titles
 
 ### Feed / Aside:
 
-1. hook up to websocket
-2. show alert when no repos in the list
+1. show alert when no repos in the list
 
 ### Repository:
 
-1. subscribe to the same websocket as the feed (share same websocket)
-2. using websocket, update build list. add or udpdate items
-3. show alert when no builds in the list
-4. show settings tab iff user is authenticated and has write access
+1. show settings tab iff user is authenticated and has write access (requires API change)
 
 ### Repository Settings:
 
@@ -21,14 +23,12 @@
 
 ### Build:
 
-1. subscribe to the same websocket as the feed (share same websocket)
-2. use the websocket to update the build details, start streaming, etc
-3. if matrix build, show a list of jobs. otherwise go right to logs
-4. make sure we can still stream the build after changes brad made
-5. make sure cancel, restart, follow are hooked back up
+1. if matrix build, show a list of jobs. otherwise go right to logs
+2. hook up cancel, restart
+3. add link external link to commit on build-panel
 
 ### Repository Settings:
 
-1. add refresh button to refresh the repository list
-2. show a repository list, with switches, to enable / disable the repository
+1. hook up refresh button to refresh the repository list
+2. style the repository list and add toggles to enable / disable
 3. use the snackbar to show the repository was enabled, disabled, error
