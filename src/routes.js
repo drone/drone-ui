@@ -44,5 +44,11 @@ export const routes = (
       pageSidebar: Pages.Repository.Sidebar,
       pageToolbar: Pages.Repository.Toolbar,
     }}/>
+    <Route path="/:owner/:name/:number/:job" components={{
+      pageHead: Pages.Build.Header,
+      pageContent: Pages.Build.Content,
+      pageSidebar: Pages.Repository.Sidebar,
+      pageToolbar: Pages.Repository.Toolbar,
+    }}/>
   </Route>
 );
