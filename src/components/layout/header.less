@@ -1,0 +1,18 @@
+@import "../../variables";
+@import "../../mixins";
+
+.header {
+  .clearfix();
+
+  .header-right {
+    text-align: right;
+
+    .mdl-textfield {
+      margin: -20px;
+    }
+
+    a, .mdl-textfield {
+      margin-right: @layout-margin / 2;
+    }
+  }
+}

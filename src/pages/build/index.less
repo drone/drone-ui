@@ -1,0 +1,35 @@
+@import "../../variables";
+
+.build {
+  .information {
+    padding-top: @layout-margin;
+    padding-bottom: @layout-margin;
+    background-color: white;
+
+    hr {
+      margin: (@layout-margin / 2) 0;
+    }
+  }
+
+  h4 {
+    margin-top: 0;
+
+    a {
+      vertical-align: middle;
+      text-decoration: none;
+      color: #ADB3BA;
+      font-size: 20px;
+      padding-left: 5px;
+    }
+  }
+
+  .mdl-button--fab {
+    position: fixed;
+    bottom: @layout-margin / 2;
+    right: @layout-margin / 2;
+
+    .material-icons {
+      color: rgba(255, 255, 255, 0.5);
+    }
+  }
+}

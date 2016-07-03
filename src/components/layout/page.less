@@ -1,0 +1,94 @@
+
+@drawer-width: 320px;
+
+.mdl-layout__header {
+  background: #FFF;
+  box-shadow: none;
+  border-bottom: 1px solid #EEE;
+  height: 80px;
+  min-height:80px;
+  max-height:80px;
+
+  .mdl-layout-title {
+    color: #212121;
+    font-size: 22px;
+  }
+
+  .material-icons {
+    color: #212121;
+  }
+}
+
+.mdl-layout__content {
+
+
+  &> .content {
+    padding: 40px;
+  }
+}
+
+.mdl-layout__drawer .mdl-navigation {
+  padding-top:0px;
+}
+
+.mdl-layout__drawer {
+  width: @drawer-width;
+  background: #FFF;
+  border-right: 1px solid #EEE;
+  box-shadow: 2px 2px 2px rgba(0,0,0,0.05);
+}
+
+// by default the mdl layout container fits the page and the header is fixed
+// when scrolling. This disables this default behavior.
+.mdl-layout__inner-container {
+  // height: auto;
+  // min-height: 100vh;
+}
+
+.mdl-layout--fixed-drawer > .mdl-layout__inner-container > .mdl-layout__content {
+  margin-left: @drawer-width;
+}
+
+@media screen and (max-width: 1024px) {
+    .mdl-layout--fixed-drawer > .mdl-layout__inner-container > .mdl-layout__content {
+      margin-left:0px;
+    }
+    .mdl-layout__drawer {
+      -webkit-transform: translateX(-@drawer-width);
+      transform: translateX(-@drawer-width);
+    }
+
+}
+
+.mdl-layout__header-row {
+  padding-right: 10px;
+
+  &> div:first-child {
+    flex: 1 1 auto;
+    -webkit-flex: 1 1 auto;
+  }
+
+  &> div:last-child {
+    white-space: nowrap;
+  }
+}
+
+@media screen and (min-width: 1025px) {
+  .mdl-layout--fixed-drawer > .mdl-layout__inner-container > .mdl-layout__header .mdl-layout__header-row {
+    padding-left: (@drawer-width - 200);
+  }
+}
+
+.brand {
+  height: 80px;
+  min-height:80px;
+  max-height:80px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #EEE;
+
+  a {
+    display:inline-block;
+    margin-top: 10px;
+    margin-left: 15px;
+  }
+}

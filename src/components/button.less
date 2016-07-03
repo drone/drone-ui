@@ -1,0 +1,18 @@
+@import "../variables";
+
+.button {
+  margin-right: @layout-margin / 4;
+  padding: (@layout-margin / 4) (@layout-margin / 2);
+  border: 1px solid @color-button;
+  border-radius: 2px;
+  outline: none;
+  text-transform: uppercase;
+  font-size: 11px;
+  background: white;
+  color: @color-button;
+
+  &.button--danger {
+    color: @color-danger;
+    border-color: @color-danger;
+  }
+}

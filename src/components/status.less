@@ -1,0 +1,55 @@
+.status {
+  display: inline-block;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+
+  &:before {
+    width: 25px;
+    line-height: 24px;
+    display: inline-block;
+    text-align: center;
+    font-family: "Material Icons";
+    font-size: 18px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "liga" 1;
+  }
+
+  &.error, &.killed, &.failure {
+    color: #F50057;
+    border-color: #F50057;
+    &:before {
+      content: "close";
+    }
+  }
+
+  &.success {
+    color: #00BFA5;
+    border-color: #00BFA5;
+    &:before {
+      content: "check";
+    }
+  }
+
+  &.pending, &.running {
+    color: #FFA000;
+    border-color: #FFA000;
+    &:before {
+      content: "refresh";
+      animation: spinner 1.2s ease infinite;
+    }
+  }
+
+  &.unknown {
+    display: none;
+  }
+}
+
+@keyframes spinner {
+  0%{transform:rotate(0deg)}
+  100%{transform:rotate(359deg)}
+}
