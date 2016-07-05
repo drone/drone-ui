@@ -18,13 +18,14 @@ To test the experimental user interface with Drone we have created a simple prox
 
 ```
 go get github.com/drone/drone-go/drone
+go get github.com/koding/websocketproxy
 ```
 
 To run the proxy server you must provide the location of your drone server (scheme and hostname) and your Drone API token for authentication. You can get your Drone API token from your profile page.
 
 ```
 go run server.go --scheme <drone scheme>  \
-                 --addr   <drone address> \
+                 --host   <drone address> \
                  --token  <drone api token>
 ```
 
