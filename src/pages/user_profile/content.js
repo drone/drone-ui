@@ -1,28 +1,17 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import Request from 'superagent';
-import { Grid, Cell, Button } from 'react-mdl';
-import { Link } from 'react-router';
+import {Grid, Cell, Button} from 'react-mdl';
+import {Link} from 'react-router';
 import {branch} from 'baobab-react/higher-order';
 
 import './index.less';
 
-import { getUserRepositories } from '../../data/repositories/actions';
+import {events, GET_REPO_LIST} from '../../actions/events';
 import PageContent from '../../components/layout/content';
 
 class Content extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      token: ''
-    };
-
-    this.handleShowToken = this.handleShowToken.bind(this);
-  }
 
   componentDidMount() {
-    // this.props.dispatch(getUserRepositories());
+    events.emit(GET_REPO_LIST);
   }
 
   render() {
@@ -53,19 +42,6 @@ class Content extends React.Component {
         {repos.map(repoList)}
       </PageContent>
     );
-  }
-
-  handleShowToken() {
-    Request.post(`/api/user/token`)
-      .end((err, response) => {
-        if (err != null) {
-          console.error(err); // TODO: Add ui error handling
-        }
-
-        this.setState({
-          token: response.text
-        });
-      });
   }
 }
 

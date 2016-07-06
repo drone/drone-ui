@@ -23,7 +23,7 @@ class Log extends React.Component {
   componentDidMount() {
     const {owner, name, build, job} = this.props;
 
-    if (job.get('status') == RUNNING) {
+    if (job.status == RUNNING) {
       this.requestStream(owner, name, build, job);
     } else {
       this.requestLog(owner, name, build, job);
@@ -50,7 +50,7 @@ class Log extends React.Component {
 
     return (
       <div>
-        {job.get('status') == RUNNING ?
+        {job.status == RUNNING ?
           <FABButton mini onClick={this.handleFollow}>
             <Icon name={this.state.follow ? 'pause' : 'expand_more'}/>
           </FABButton> :
@@ -61,7 +61,7 @@ class Log extends React.Component {
   }
 
   requestLog(owner, name, build, job) {
-    Request.get(`/api/repos/${owner}/${name}/logs/${build.get('number')}/${job.get('number')}`)
+    Request.get(`/api/repos/${owner}/${name}/logs/${build.number}/${job.number}`)
       .end((err, response) => {
         if (err != null) {
           console.error(err); // TODO: Add ui error handling
@@ -91,7 +91,7 @@ class Log extends React.Component {
   }
 
   requestStream(owner, name, build, job) {
-    this.ws = this.createWebSocket(owner, name, build.get('number'), job.get('number'));
+    this.ws = this.createWebSocket(owner, name, build.number, job.number);
     this.setState({
       groups: {}
     });

@@ -1,6 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import {Link} from 'react-router';
+import {branch} from 'baobab-react/higher-order';
 
 import { Tabs, Tab }from '../../components/layout/tabs';
 
@@ -19,7 +19,7 @@ class Toolbar extends React.Component {
         {tabs.map((tab, index) => {
           return (
             <Tab key={index}>
-              <Link to={tab.url} className={tab.url == this.props.pathname ? 'active' : ''}>{tab.text}</Link>
+              <Link to={tab.url} className={tab.url == this.props.location.pathname ? 'active' : ''}>{tab.text}</Link>
             </Tab>
           );
         })}
@@ -28,8 +28,7 @@ class Toolbar extends React.Component {
   }
 }
 
-export default connect(
-  (state, ownProps) => ({
-    pathname: ownProps.location.pathname
-  })
-)(Toolbar);
+
+export default branch({
+  location: ['location']
+}, Toolbar);

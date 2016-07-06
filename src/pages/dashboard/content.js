@@ -1,6 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import {Link} from 'react-router';
 import {branch} from 'baobab-react/higher-order';
 
 import './index.less';

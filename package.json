@@ -7,7 +7,8 @@
     "ansi_up": "^1.3.0",
     "baobab": "2.3.3",
     "baobab-react": "2.1.1",
-    
+    "emmett": "^3.1.1",
+
     "immutable": "^3.7.6",
     "moment": "^2.12.0",
     "normalizr": "^2.0.1",

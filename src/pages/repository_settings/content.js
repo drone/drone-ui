@@ -1,10 +1,11 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { browserHistory } from 'react-router';
-import { Grid, Cell, Button, Slider, Switch } from 'react-mdl';
+import {browserHistory} from 'react-router';
+import {branch} from 'baobab-react/higher-order';
+import {Grid, Cell, Button, Slider, Switch} from 'react-mdl';
 
 import './index.less';
 
+import {events, GET_REPO} from '../../actions/events';
 import PageContent from '../../components/layout/content';
 
 import {
@@ -29,13 +30,18 @@ class Content extends React.Component {
 
   componentDidMount() {
     const {owner, name} = this.props.params;
-    this.props.dispatch(getRepository(owner, name));
+    events.emit(GET_REPO, {owner, name});
   }
 
-  componentWillReceiveProps(nextProps) {
+  shouldComponentUpdate(nextProps) {
+    const {repository} = this.props;
+    return repository != nextProps.repository;
+  }
+
+  componentWillUpdate(nextProps) {
     if (nextProps.repository) {
       this.setState({
-        timeout: nextProps.repository.get('timeout')
+        timeout: nextProps.repository.timeout
       });
     }
   }
@@ -80,7 +86,7 @@ class Content extends React.Component {
               <Grid>
                 <Cell phone={12} col={3}>{switcher.text}</Cell>
                 <Cell phone={12} col={9}>
-                  <Switch checked={repository.get(switcher.key)} onChange={this.handleSwitch.bind(this, switcher.key)}/>
+                  <Switch checked={repository[switcher.key]} onChange={this.handleSwitch.bind(this, switcher.key)}/>
                 </Cell>
               </Grid>
               <hr/>
@@ -147,13 +153,9 @@ class Content extends React.Component {
   }
 }
 
-export default connect(
-  (state, ownProps) => ({
-    repository: state.drone.repositories.find((repository) => { // find the correct repository by owner & name
-      return (
-        repository.get('owner') == ownProps.params.owner &&
-        repository.get('name') == ownProps.params.name
-      );
-    })
-  })
-)(Content);
+export default branch((props, context) => {
+  const {owner, name} = props.params;
+  return {
+    repository: ['repos', owner, name]
+  }
+}, Content);

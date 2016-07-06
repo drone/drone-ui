@@ -1,6 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Grid, Cell } from 'react-mdl';
+import {branch} from 'baobab-react/higher-order';
+import {Grid, Cell} from 'react-mdl';
 
 import './index.less';
 
@@ -47,4 +47,9 @@ class Content extends React.Component {
   }
 }
 
-export default connect()(Content);
+export default branch((props, context) => {
+  const {owner, name} = props.params;
+  return {
+    repository: ['repos', owner, name]
+  }
+}, Content);

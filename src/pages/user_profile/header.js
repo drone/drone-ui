@@ -1,6 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import {Link} from 'react-router';
+import {branch} from 'baobab-react/higher-order';
 
 import Breadcrumb, {SEPARATOR} from '../../components/layout/breadcrumb';
 
@@ -21,4 +21,4 @@ class Header extends React.Component {
   }
 }
 
-export default connect()(Header);
+export default branch({}, Header);

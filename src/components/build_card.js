@@ -14,17 +14,17 @@ class BuildCard extends React.Component {
     return (
       <div className="card">
         <div className="card-header">
-          <Avatar src={build.get('author_avatar')}/>
+          <Avatar src={build.author_avatar}/>
         </div>
         <div className="card-block">
           <div>
-            <h3>{build.get('message')}</h3>
+            <h3>{build.message}</h3>
           </div>
           <BuildMeta build={build}/>
         </div>
         <div className="card-footer">
-          <div>{build.get('number')}</div>
-          <Status state={build.get('status')}/>
+          <div>{build.number}</div>
+          <Status state={build.status}/>
         </div>
       </div>
     );

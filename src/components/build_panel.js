@@ -7,19 +7,19 @@ class BuildPanel extends React.Component {
   render() {
     const {build, job} = this.props;
 
-    let start = build.get('created_at') * 1000;
-    let finished = build.get('finished_at') * 1000;
+    let start = build.created_at * 1000;
+    let finished = build.finished_at * 1000;
     let duration = finished - start;
 
-    let classes = ["build-panel", job.get('status')];
+    let classes = ["build-panel", job.status];
 
     return (
      <div className={classes.join(' ')}>
         <div>
-          <div><em>Branch:</em> {build.get('branch')}</div>
-          <div><em>Commit:</em> {build.get('commit').substr(0,8)}</div>
-          <div><em>Author:</em> {build.get('author')}</div>
-          <p>{build.get('message')}</p>
+          <div><em>Branch:</em> {build.branch}</div>
+          <div><em>Commit:</em> {build.commit.substr(0,8)}</div>
+          <div><em>Author:</em> {build.author}</div>
+          <p>{build.message}</p>
         </div>
         <div>
           <div>

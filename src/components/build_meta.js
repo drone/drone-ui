@@ -10,9 +10,9 @@ class BuildMeta extends React.Component {
 
     return (
       <p className="build-meta">
-        <em>{build.get('author')}</em>
+        <em>{build.author}</em>
         <span>pushed to</span>
-        <em>{build.get('branch')}</em>
+        <em>{build.branch}</em>
       </p>
     );
   }

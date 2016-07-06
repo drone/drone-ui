@@ -1,28 +1,32 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import {Link} from 'react-router';
+import {branch} from 'baobab-react/higher-order';
 import moment from 'moment';
 
 import './index.less';
 
-import { getRepository } from '../../data/repositories/actions';
-import { getBuilds } from '../../data/builds/actions';
+import {events, GET_REPO, GET_BUILD_LIST} from '../../actions/events';
 import PageContent from '../../components/layout/content';
 import BuildCard from '../../components/build_card';
 
 class Content extends React.Component {
   componentDidMount() {
     const {owner, name} = this.props.params;
+    events.emit(GET_REPO, {owner, name});
+    events.emit(GET_BUILD_LIST, {owner, name});
+  }
 
-    this.props.dispatch(getBuilds(owner, name));
-    this.props.dispatch(getRepository(owner, name));
+  shouldComponentUpdate(nextProps) {
+    const {repository, builds} = this.props;
+    return repository != nextProps.repository || builds != nextProps.builds;
   }
 
   componentWillReceiveProps(nextProps) {
-    const {owner, name} = nextProps.params;
-    if (owner != this.props.params.owner || name != this.props.params.name) {
-      nextProps.dispatch(getBuilds(owner, name));
-      nextProps.dispatch(getRepository(owner, name));
+    const {owner, name} = this.props.params;
+    const {owner: nextOwner, name: nextName} = nextProps.params;
+    if (nextOwner != owner || nextName != name) {
+      events.emit(GET_REPO, nextProps.params);
+      events.emit(GET_BUILD_LIST, nextProps.params);
     }
   }
 
@@ -36,53 +40,34 @@ class Content extends React.Component {
       );
     }
 
-    if (builds.size === 0) {
+    if (!builds || Object.keys(builds).length == 0) {
         return (
           <div className="alert alert-empty">This repository does not have any builds yet.</div>
         );
     }
 
+
+    function buildItem(number) {
+      const build = builds[number];
+      return (
+        <Link key={build.number} to={`/${owner}/${name}/${build.number}`}>
+          <BuildCard build={build}/>
+        </Link>
+      );
+    }
+
     return (
       <PageContent className="repository history">
-        {builds.toList().reverse().map((build, index) => {
-          return (
-            <Link key={build.get('number')} to={`/${owner}/${name}/${build.get('number')}`}>
-              <BuildCard build={build}/>
-            </Link>
-          );
-        })}
+        {Object.keys(builds).sort((a, b) => {return b - a;}).map(buildItem)}
       </PageContent>
     );
   }
 }
 
-export default connect(
-  (state, ownProps) => {
-    const repository = state.drone.repositories.find((repository) => { // find the correct repository by owner & name
-      return (
-        repository.get('owner') == ownProps.params.owner &&
-        repository.get('name') == ownProps.params.name
-      );
-    });
-    if (!repository) {
-      return {};
-    }
-
-    const builds = state.drone.builds
-      .filter((build) => { // filter builds for this repository
-        if (repository.get('builds') == null) { // If there are no builds don't return any builds (=loading)
-          return false;
-        }
-
-        return repository.get('builds').includes(build.get('id')); // If this build belongs to repo's builds
-      })
-      .sort((a, b) => { // sort all grouped builds descending
-        return a.get('id') < b.get('id') ? -1 : 1;
-      });
-
-    return {
-      repository,
-      builds
-    };
+export default branch((props, context) => {
+  const {owner, name} = props.params;
+  return {
+    repository: ['repos', owner, name],
+    builds: ['builds', owner, name]
   }
-)(Content);
+}, Content);

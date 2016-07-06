@@ -1,12 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { browserHistory, Link } from 'react-router';
+import {browserHistory, Link} from 'react-router';
 import {branch} from 'baobab-react/higher-order';
+import {events, GET_FEED} from '../../actions/events';
 
-import { getFeed } from '../../data/feed/actions';
-import { dispatchEvent } from '../../data/events/actions';
 import RepoListItem from '../../components/repo_list_item';
-import { Grid, Cell, Textfield, List, ListItem } from 'react-mdl';
+import {Grid, Cell, Textfield, List, ListItem} from 'react-mdl';
 
 class Sidebar extends React.Component {
   constructor(props) {
@@ -61,15 +59,15 @@ class Sidebar extends React.Component {
     );
   }
 
-  // componentDidMount() {
-  //   this.props.dispatch(getFeed());
-  //
-  //   this.ws = this.createWebSocket();
-  //   this.ws.onmessage = function(message) {
-  //     let event = JSON.parse(message.data);
-  //     this.props.dispatch(dispatchEvent(event));
-  //   }.bind(this)
-  // }
+  componentDidMount() {
+    // this.props.dispatch(getFeed());
+    events.emit(GET_FEED);
+    // this.ws = this.createWebSocket();
+    // this.ws.onmessage = function(message) {
+    //   let event = JSON.parse(message.data);
+    //   this.props.dispatch(dispatchEvent(event));
+    // }.bind(this)
+  }
   //
   // componentWillUnmount() {
   //   this.ws.close();
@@ -86,16 +84,6 @@ class Sidebar extends React.Component {
     });
   }
 }
-
-// export default connect(
-//   (state) => {
-//     return {
-//       repositories: state.drone.feed,
-//       user: state.drone.user,
-//     };
-//   }
-// )(Sidebar);
-
 
 export default branch({
   feed: ['feed'],

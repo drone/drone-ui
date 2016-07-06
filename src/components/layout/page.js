@@ -1,6 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { browserHistory, Link } from 'react-router';
+
+import {branch} from 'baobab-react/higher-order';
+import {browserHistory, Link} from 'react-router';
 
 // import Header from './header';
 import Subnav from './subnav';
@@ -8,14 +9,9 @@ import Avatar from '../avatar';
 
 import { Layout, Header, Textfield, Drawer, Navigation, Content, IconButton, Menu, MenuItem} from 'react-mdl';
 
-import { fetchWindowUser } from '../../data/user/actions';
-
 import './page.less';
 
 class Page extends React.Component {
-  componentDidMount() {
-    this.props.dispatch(fetchWindowUser());
-  }
 
   render() {
     const {pageHead, pageContent, pageToolbar, pageSidebar, user} = this.props;
@@ -24,7 +20,7 @@ class Page extends React.Component {
     if (user && user != null) {
       pageMenu = (
         <div>
-          <Avatar src={user.get('avatar_url')} circle/>
+          <Avatar src={user.avatar_url} circle/>
           <IconButton name="more_vert" id="drone-header-menu-right"/>
           <Menu target="drone-header-menu-right" align="right">
             <MenuItem onClick={() => {browserHistory.push('/')}}>Dashboard</MenuItem>
@@ -75,8 +71,6 @@ class Page extends React.Component {
   }
 }
 
-export default connect(
-  (state) => {
-    return { user: state.drone.user };
-  }
-)(Page);
+export default branch({
+  user: ['user']
+}, Page);
