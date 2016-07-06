@@ -1,11 +1,11 @@
 import React from 'react';
 import {browserHistory} from 'react-router';
 import {branch} from 'baobab-react/higher-order';
-import {Grid, Cell, Button, Slider, Switch} from 'react-mdl';
+import {Grid, Cell, Slider, Switch} from 'react-mdl';
 
 import './index.less';
 
-import {events, GET_REPO} from '../../actions/events';
+import {events, GET_REPO, PATCH_REPO} from '../../actions/events';
 import PageContent from '../../components/layout/content';
 
 import {
@@ -25,7 +25,7 @@ class Content extends React.Component {
     this.handleTimeoutTimeout = null;
     this.handleSwitch = this.handleSwitch.bind(this);
     this.handleTimeout = this.handleTimeout.bind(this);
-    this.handleDeleteRepository = this.handleDeleteRepository.bind(this);
+    // this.handleDeleteRepository = this.handleDeleteRepository.bind(this);
   }
 
   componentDidMount() {
@@ -33,12 +33,14 @@ class Content extends React.Component {
     events.emit(GET_REPO, {owner, name});
   }
 
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate(nextProps, nextState) {
     const {repository} = this.props;
-    return repository != nextProps.repository;
+    const {timeout} = this.state;
+    return repository != nextProps.repository || timeout != nextState.timeout;
   }
 
-  componentWillUpdate(nextProps) {
+  componentWillUpdate(nextProps, nextState) {
+    if (nextState.timeout > 0) return;
     if (nextProps.repository) {
       this.setState({
         timeout: nextProps.repository.timeout
@@ -73,7 +75,7 @@ class Content extends React.Component {
         text: 'Deploy Hook'
       },
       {
-        key: 'private',
+        key: 'trusted',
         text: 'Trusted'
       }
     ];
@@ -100,20 +102,6 @@ class Content extends React.Component {
             <Slider min={0} max={900} value={this.state.timeout} onChange={this.handleTimeout}/>
           </Cell>
         </Grid>
-        {/*
-        <Grid className="danger-zone">
-          <Cell col={12}>
-            <h4>Danger Zone</h4>
-          </Cell>
-          <Cell phone={12} col={3}>
-            <Button raised ripple accent className="mdl-button--danger"
-                    onClick={this.handleDeleteRepository}>Delete</Button>
-          </Cell>
-          <Cell phone={12} col={9}>
-            Permanently deletes the build history.<br/>
-            <strong>This action cannot be undone.</strong>
-          </Cell>
-        </Grid>*/}
       </PageContent>
     );
   }
@@ -121,10 +109,9 @@ class Content extends React.Component {
   handleSwitch(key, event) {
     const {owner, name} = this.props.params;
 
-    let data = {};
+    let data = {owner, name};
     data[key] = event.target.checked;
-
-    this.props.dispatch(updateRepository(owner, name, data));
+    events.emit(PATCH_REPO, data);
   }
 
   handleTimeout(event) {
@@ -138,19 +125,19 @@ class Content extends React.Component {
     });
 
     this.handleTimeoutTimeout = setTimeout(() => {
-      this.props.dispatch(updateRepository(owner, name, {timeout}));
+      events.emit(PATCH_REPO, {owner, name, timeout});
     }, 500);
   }
 
-  handleDeleteRepository() {
-    var confirmation = confirm('Are you sure you want to delete this repository?');
-    if (confirmation !== false) {
-      const {owner, name} = this.props.params;
-      this.props.dispatch(deleteRepository(owner, name));
-
-      browserHistory.push('/');
-    }
-  }
+  // handleDeleteRepository() {
+  //   var confirmation = confirm('Are you sure you want to delete this repository?');
+  //   if (confirmation !== false) {
+  //     const {owner, name} = this.props.params;
+  //     this.props.dispatch(deleteRepository(owner, name));
+  //
+  //     browserHistory.push('/');
+  //   }
+  // }
 }
 
 export default branch((props, context) => {

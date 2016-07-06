@@ -54,6 +54,29 @@ events.on(GET_REPO, function(event) {
     });
 });
 
+export const PATCH_REPO = "PATCH_REPO";
+events.on(PATCH_REPO, function(event) {
+  const {owner, name} = event.data;
+
+  // there is a bug where the input parameter names differ from
+  // the output parameter names. This attempts to resolve.
+  if (event.data.allow_deploys !== undefined) {
+    event.data['allow_deploy'] = event.data.allow_deploys;
+  }
+  if (event.data.allow_tags !== undefined) {
+    event.data['allow_tag'] = event.data.allow_tags;
+  }
+
+  Request.patch(`/api/repos/${owner}/${name}`)
+    .send(event.data)
+    .end((err, response) => {
+      if (err != null) {
+        console.error(err); // TODO: Add ui error handling
+      }
+      let repo = JSON.parse(response.text);
+      tree.set(['repos', owner, name], repo);
+    });
+});
 
 export const GET_BUILD_LIST = "GET_BUILD_LIST";
 events.on(GET_BUILD_LIST, function(event) {
@@ -111,7 +134,9 @@ events.on(GET_BUILD_LOGS, function(event) {
     });
 });
 
-export const PUT_REPO       = "PUT_REPO";
+
+
+
 export const DEL_REPO       = "DEL_REPO";
 export const POST_REPO      = "POST_REPO";
 export const POST_BUILD     = "POST_BUILD";
