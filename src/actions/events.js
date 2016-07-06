@@ -138,3 +138,18 @@ export const HIDE_TOKEN = "HIDE_TOKEN";
 events.on(HIDE_TOKEN, function(event) {
   tree.set(['pages', 'account', 'token'], false);
 });
+
+export const FILTER = "FILTER";
+events.on(FILTER, function(event) {
+  const data = event.data.toLowerCase();
+  if (data === '') {
+    tree.unset(['pages', 'repo', 'filter']);
+  } else {
+    tree.set(['pages', 'repo', 'filter'], data);
+  }
+});
+
+export const FILTER_CLEAR = "FILTER_CLEAR";
+events.on(FILTER_CLEAR, function(event) {
+  tree.unset(['pages', 'repo', 'filter']);
+});

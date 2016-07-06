@@ -1,24 +1,19 @@
 import React from 'react';
-import {browserHistory, Link} from 'react-router';
+import {Link} from 'react-router';
 import {branch} from 'baobab-react/higher-order';
-import {events, GET_FEED} from '../../actions/events';
+import {events, GET_FEED, FILTER, FILTER_CLEAR} from '../../actions/events';
 
 import RepoListItem from '../../components/repo_list_item';
-import {Grid, Cell, Textfield, List, ListItem} from 'react-mdl';
 
 class Sidebar extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      filter: ''
-    };
-
     this.onFilter = this.onFilter.bind(this);
   }
 
   render() {
-    let {feed, user} = this.props;
+    let {feed, user, state} = this.props;
 
     if (!user) {
       return (
@@ -34,17 +29,16 @@ class Sidebar extends React.Component {
       return <div>Loading...</div>;
     }
 
-    // repositories = repositories.toList()
-    //   .filter((repository) => { // filter repositories for names that match the filtered name
-    //     return repository.get('full_name').toLowerCase().indexOf(this.state.filter.toLowerCase()) > -1;
-    //   })
-    //   .sort((a, b) => { // sort repositories by latest build
-    //     return (b.get('started_at') || 0) - (a.get('started_at') || 0);
-    //   });
+    if (state.filter) {
+      feed = feed.filter((item) => {
+        return item.full_name.toLowerCase().indexOf(state.filter) > -1;
+      });
+    }
+
     return (
       <div className="repository-sidebar">
         <div className="repository-search">
-          <input type="search" placeholder="Filter..." onChange={this.onFilter}/>
+          <input type="search" placeholder="Filter..." onChange={this.onFilter} spellcheck="off" />
         </div>
         <div>
         {feed.map((repo, index) => {
@@ -60,7 +54,6 @@ class Sidebar extends React.Component {
   }
 
   componentDidMount() {
-    // this.props.dispatch(getFeed());
     events.emit(GET_FEED);
     // this.ws = this.createWebSocket();
     // this.ws.onmessage = function(message) {
@@ -68,10 +61,11 @@ class Sidebar extends React.Component {
     //   this.props.dispatch(dispatchEvent(event));
     // }.bind(this)
   }
-  //
-  // componentWillUnmount() {
-  //   this.ws.close();
-  // }
+
+  componentWillUnmount() {
+    // this.ws.close();
+    events.emit(FILTER_CLEAR);
+  }
   //
   // createWebSocket() {
   //   let proto = (window.location.protocol === 'https:') ? 'wss:' : 'ws:';
@@ -79,13 +73,12 @@ class Sidebar extends React.Component {
   // }
 
   onFilter(event) {
-    this.setState({
-      filter: event.target.value
-    });
+    events.emit(FILTER, event.target.value);
   }
 }
 
 export default branch({
   feed: ['feed'],
-  user: ['user']
+  user: ['user'],
+  state: ['pages', 'repo']
 }, Sidebar);
