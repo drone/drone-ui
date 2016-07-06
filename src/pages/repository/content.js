@@ -46,7 +46,6 @@ class Content extends React.Component {
         );
     }
 
-
     function buildItem(number) {
       const build = builds[number];
       return (
