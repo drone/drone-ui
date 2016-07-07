@@ -2,19 +2,23 @@ import React from 'react';
 
 import {branch} from 'baobab-react/higher-order';
 import {browserHistory, Link} from 'react-router';
+import {events, CLEAR_TOAST} from '../../actions/events';
 
 // import Header from './header';
 import Subnav from './subnav';
 import Avatar from '../avatar';
 
-import { Layout, Header, Textfield, Drawer, Navigation, Content, IconButton, Menu, MenuItem} from 'react-mdl';
+import { Layout, Header, Textfield, Drawer, Navigation, Content, IconButton, Menu, MenuItem, Snackbar} from 'react-mdl';
 
 import './page.less';
 
 class Page extends React.Component {
+  handleTimeout() {
+    events.emit(CLEAR_TOAST)
+  }
 
   render() {
-    const {pageHead, pageContent, pageToolbar, pageSidebar, user} = this.props;
+    const {pageHead, pageContent, pageToolbar, pageSidebar, user, state} = this.props;
 
     var pageMenu;
     if (user && user != null) {
@@ -33,6 +37,7 @@ class Page extends React.Component {
 
     return (
       <div style={{minHeight: '100vh', position: 'relative'}}>
+          <Snackbar active={state.toast !== undefined} onTimeout={this.handleTimeout}>{state.toast}</Snackbar>
           <Layout fixedHeader fixedDrawer>
               <Header>
                 <div>{pageHead}</div>
@@ -72,5 +77,6 @@ class Page extends React.Component {
 }
 
 export default branch({
-  user: ['user']
+  user: ['user'],
+  state: ['pages']
 }, Page);

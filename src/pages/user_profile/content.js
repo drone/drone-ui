@@ -38,9 +38,11 @@ class Content extends React.Component {
     }
 
     return (
-      <PageContent className="user-profile">
-        {repos.map(repoList)}
-      </PageContent>
+      <span>
+        <PageContent className="user-profile">
+          {repos.map(repoList)}
+        </PageContent>
+      </span>
     );
   }
 }

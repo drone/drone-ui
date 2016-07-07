@@ -5,12 +5,13 @@ import {Link} from 'react-router';
 import {branch} from 'baobab-react/higher-order';
 
 import PageContent from '../../components/layout/content';
-import {events, GET_TOKEN, SHOW_TOKEN, HIDE_TOKEN} from '../../actions/events';
+import {events, GET_TOKEN, SHOW_TOKEN, HIDE_TOKEN, SYNC_REPO_LIST} from '../../actions/events';
 
 class Sidebar extends React.Component {
   constructor(props) {
     super(props);
 
+    this.handleSync = this.handleSync.bind(this);
     this.handleShowToken = this.handleShowToken.bind(this);
     this.handleHideToken = this.handleHideToken.bind(this);
   }
@@ -39,7 +40,7 @@ class Sidebar extends React.Component {
       <div>
         <div className="account-actions">
           <Button raised ripple onClick={this.handleShowToken}>Show Token</Button>
-          <Button raised ripple>Sync List</Button>
+          <Button raised ripple onClick={this.handleSync}>Sync List</Button>
         </div>
         <div className="account-list">
           {items}
@@ -51,11 +52,15 @@ class Sidebar extends React.Component {
             <pre>{token}</pre>
           </DialogContent>
           <DialogActions>
-            <Button type='button' onClick={this.handleHideToken}>Close</Button>
+            <Button type='button' onClick={this.handleHideToken} onTimeout={this.handleTimeout}>Close</Button>
           </DialogActions>
         </Dialog>
       </div>
     );
+  }
+
+  handleSync() {
+    events.emit(SYNC_REPO_LIST);
   }
 
   handleHideToken() {

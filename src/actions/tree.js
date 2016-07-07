@@ -51,11 +51,12 @@ export const tree = new Baobab({
   // in the application, including dialag state, snackbar state, etc.
   pages: {
     account: {
-      token: false,
-      error: null
+      token: false
     },
     repo: {
       filter: undefined
-    }
+    },
+    loading: false,
+    toast: undefined
   }
 });

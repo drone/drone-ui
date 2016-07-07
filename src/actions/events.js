@@ -36,6 +36,25 @@ events.once(GET_REPO_LIST, function(event) {
     });
 });
 
+export const SYNC_REPO_LIST = "SYNC_REPO_LIST";
+events.on(SYNC_REPO_LIST, function(event) {
+  Request.get('/api/user/repos?all=true&flush=true')
+    .end((err, response) => {
+      if (err != null) {
+        tree.set(['pages', 'toast'], 'Error syncing repository list');
+        return;
+      }
+      let repos = JSON.parse(response.text);
+      repos.sort(function(a, b) {
+        if(a.full_name < b.full_name) return -1;
+        if(a.full_name > b.full_name) return 1;
+        return 0;
+      });
+      tree.set(['user', 'repos'], repos);
+      tree.set(['pages', 'toast'], 'Successfully synchronized repository list');
+    });
+});
+
 export const GET_REPO = "GET_REPO";
 events.on(GET_REPO, function(event) {
   const {owner, name} = event.data;
@@ -135,12 +154,56 @@ events.on(GET_BUILD_LOGS, function(event) {
 });
 
 
+export const DEL_REPO = "DEL_REPO";
+events.on(DEL_REPO, (event) => {
+  const {owner, name} = event.data;
+
+  Request.del(`/api/repos/${owner}/${name}`)
+    .end((err, response) => {
+      if (err != null) {
+        console.error(err); // TODO: Add ui error handling
+      }
+
+      tree.unset(['repos'], owner, name);
+      tree.unset(['builds'], owner, name);
+
+      tree.apply(['user', 'repos'], (repo) => {
+        if (repo.owner != owner || repo.name != name) return repo;
+        delete repo.id;
+        return repo;
+      });
+
+      // TODO remove from feed
+    });
+});
 
 
-export const DEL_REPO       = "DEL_REPO";
-export const POST_REPO      = "POST_REPO";
-export const POST_BUILD     = "POST_BUILD";
-export const DEL_BUILD      = "DEL_BUILD";
+export const POST_REPO = "POST_REPO";
+events.on(POST_REPO, (event) => {
+  const {owner, name} = event.data;
+
+  Request.post(`/api/repos/${owner}/${name}`)
+    .end((err, response) => {
+      if (err != null) {
+        console.error(err); // TODO: Add ui error handling
+      }
+
+      let repo = JSON.parse(response.text);
+
+      // update the repositroy index to include this repository.
+      tree.set(['repos', owner, name], repo);
+
+      // update the repository in the user repository list, iterate
+      // through the cursor to find the entry.
+      tree.apply(['user', 'repos'], (item) => {
+        if (item.owner != owner || item.name != name) return item;
+        return repo;
+      });
+
+      // append the repsotiroy to the feed.
+      tree.push(['feed'], repo);
+    });
+});
 
 export const GET_TOKEN = "GET_TOKEN";
 events.once(GET_TOKEN, function(event) {
@@ -178,3 +241,11 @@ export const FILTER_CLEAR = "FILTER_CLEAR";
 events.on(FILTER_CLEAR, function(event) {
   tree.unset(['pages', 'repo', 'filter']);
 });
+
+export const CLEAR_TOAST = "CLEAR_TOAST";
+events.on(CLEAR_TOAST, function(event) {
+  tree.unset(['pages', 'toast']);
+});
+
+export const POST_BUILD     = "POST_BUILD";
+export const DEL_BUILD      = "DEL_BUILD";
