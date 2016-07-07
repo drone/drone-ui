@@ -28,7 +28,7 @@ class Content extends React.Component {
       return <div>Loading ...</div>;
     }
 
-    if (repos.length == 0) {
+    if (repos.length === 0) {
         return (
           <div className="alert alert-empty">Your repository list is empty.</div>
         );

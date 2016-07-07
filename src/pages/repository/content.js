@@ -34,7 +34,6 @@ class Content extends React.Component {
     const {owner, name} = this.props.params;
     let {repository, builds} = this.props;
 
-    console.log(builds)
     if (!repository || !builds) {
       return (
         <div>Loading...</div>
