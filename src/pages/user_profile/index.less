@@ -34,7 +34,7 @@
     box-shadow: none;
     text-align: left;
     padding-left:30px;
-    
+
     .mdl-button__ripple-container {
       margin: 0px;
       display: block;
@@ -46,5 +46,50 @@
       outline: none;
       cursor: pointer;
     }
+  }
+}
+
+.user-profile {
+  &> div {
+    display: flex;
+    display: -webkit-flex;
+    border-bottom: 1px solid #EEE;
+    padding: 10px 0px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+
+    &> div {
+      white-space:nowrap;
+  		line-height:42px;
+  		vertical-align: middle;
+      padding-right:20px;
+    }
+  }
+  h3 {
+		flex: 1 1 auto;
+		font-size: 16px;
+		font-weight: normal;
+		color: #212121;
+		line-height:42px;
+		vertical-align: middle;
+		display: block;
+		margin:0px;
+	}
+  a {
+    text-decoration: none;
+    font-size: 16px;
+    line-height:42px;
+    display: inline-block;
+    vertical-align: middle;
+    color: #212121;
+    padding-right:20px;
+    padding-left:20px;
+    max-height:42px !important; /*DAMNIT*/
+  }
+  i {
+    color: #BDBDBD;
+    font-size:22px;
+    line-height:42px;
   }
 }

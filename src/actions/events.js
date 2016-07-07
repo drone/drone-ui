@@ -4,7 +4,25 @@ import {tree} from './tree';
 
 export const events = new Emmett();
 
-export const GET_FEED = "GET_FEED";
+export const GET_FEED = 'GET_FEED';
+export const GET_REPO = 'GET_REPO';
+export const DEL_REPO = 'DEL_REPO';
+export const PATCH_REPO = 'PATCH_REPO';
+export const POST_REPO = 'POST_REPO';
+export const GET_REPO_LIST = 'GET_REPO_LIST';
+export const SYNC_REPO_LIST = 'SYNC_REPO_LIST';
+export const GET_BUILD = 'GET_BUILD';
+export const POST_BUILD = 'POST_BUILD';
+export const DEL_BUILD = 'DEL_BUILD';
+export const GET_BUILD_LIST = 'GET_BUILD_LIST';
+export const GET_BUILD_LOGS = 'GET_BUILD_LOGS';
+export const FILTER = 'FILTER';
+export const FILTER_CLEAR = 'FILTER_CLEAR';
+export const GET_TOKEN = 'GET_TOKEN';
+export const SHOW_TOKEN = 'SHOW_TOKEN';
+export const HIDE_TOKEN = 'HIDE_TOKEN';
+export const CLEAR_TOAST = 'CLEAR_TOAST';
+
 events.once(GET_FEED, function(event) {
   Request.get('/api/user/feed?latest=true')
     .end((err, response) => {
@@ -19,7 +37,6 @@ events.once(GET_FEED, function(event) {
     });
 });
 
-export const GET_REPO_LIST = "GET_REPO_LIST";
 events.once(GET_REPO_LIST, function(event) {
   Request.get('/api/user/repos?all=true')
     .end((err, response) => {
@@ -36,7 +53,6 @@ events.once(GET_REPO_LIST, function(event) {
     });
 });
 
-export const SYNC_REPO_LIST = "SYNC_REPO_LIST";
 events.on(SYNC_REPO_LIST, function(event) {
   Request.get('/api/user/repos?all=true&flush=true')
     .end((err, response) => {
@@ -55,7 +71,6 @@ events.on(SYNC_REPO_LIST, function(event) {
     });
 });
 
-export const GET_REPO = "GET_REPO";
 events.on(GET_REPO, function(event) {
   const {owner, name} = event.data;
   Request.get(`/api/repos/${owner}/${name}`)
@@ -73,7 +88,6 @@ events.on(GET_REPO, function(event) {
     });
 });
 
-export const PATCH_REPO = "PATCH_REPO";
 events.on(PATCH_REPO, function(event) {
   const {owner, name} = event.data;
 
@@ -90,14 +104,16 @@ events.on(PATCH_REPO, function(event) {
     .send(event.data)
     .end((err, response) => {
       if (err != null) {
-        console.error(err); // TODO: Add ui error handling
+        console.error(err);
+        tree.set(['pages', 'toast'], 'Error updating repository settings');
+        return
       }
       let repo = JSON.parse(response.text);
       tree.set(['repos', owner, name], repo);
+      tree.set(['pages', 'toast'], 'Successfully updated repository settings');
     });
 });
 
-export const GET_BUILD_LIST = "GET_BUILD_LIST";
 events.on(GET_BUILD_LIST, function(event) {
   const {owner, name} = event.data;
   Request.get(`/api/repos/${owner}/${name}/builds`)
@@ -113,7 +129,6 @@ events.on(GET_BUILD_LIST, function(event) {
 });
 
 
-export const GET_BUILD = "GET_BUILD";
 events.on(GET_BUILD, function(event) {
   const {owner, name, number} = event.data;
   Request.get(`/api/repos/${owner}/${name}/builds/${number}`)
@@ -127,7 +142,6 @@ events.on(GET_BUILD, function(event) {
     });
 });
 
-export const GET_BUILD_LOGS = "GET_BUILD_LOGS";
 events.on(GET_BUILD_LOGS, function(event) {
   const {owner, name, number, job} = event.data;
   Request.get(`/api/repos/${owner}/${name}/logs/${number}/${job}`)
@@ -153,39 +167,56 @@ events.on(GET_BUILD_LOGS, function(event) {
     });
 });
 
-
-export const DEL_REPO = "DEL_REPO";
 events.on(DEL_REPO, (event) => {
   const {owner, name} = event.data;
+
+  tree.select(['user','repos']).map((cursor, i) => {
+    var selected = cursor.get();
+    if (selected.owner == owner && selected.name == name) {
+      cursor.unset(['id']);
+    }
+  });
 
   Request.del(`/api/repos/${owner}/${name}`)
     .end((err, response) => {
       if (err != null) {
-        console.error(err); // TODO: Add ui error handling
+        console.error(err);
+        tree.set(['pages', 'toast'], `Error disabling ${owner}/${name}`);
+        return
       }
 
-      tree.unset(['repos'], owner, name);
-      tree.unset(['builds'], owner, name);
+      tree.unset(['repos', owner, name]);
+      tree.unset(['builds', owner, name]);
 
-      tree.apply(['user', 'repos'], (repo) => {
-        if (repo.owner != owner || repo.name != name) return repo;
-        delete repo.id;
-        return repo;
-      });
+      // tree.select(['user','repos']).map((cursor, i) => {
+      //   var selected = cursor.get();
+      //   if (selected.owner == owner && selected.name == name) {
+      //     cursor.unset(['id']);
+      //   }
+      // });
 
       // TODO remove from feed
+
+      tree.set(['pages', 'toast'], `Successfully disabled ${owner}/${name}`);
     });
 });
 
-
-export const POST_REPO = "POST_REPO";
 events.on(POST_REPO, (event) => {
   const {owner, name} = event.data;
+
+  tree.select(['user','repos']).map((cursor, i) => {
+    var selected = cursor.get();
+    if (selected.owner == owner && selected.name == name) {
+      cursor.set(['id'], -1);
+    }
+  });
 
   Request.post(`/api/repos/${owner}/${name}`)
     .end((err, response) => {
       if (err != null) {
-        console.error(err); // TODO: Add ui error handling
+        console.error(err);
+        tree.set(['pages', 'toast'], `Error activating ${repo.full_name}`);
+        return
       }
 
       let repo = JSON.parse(response.text);
@@ -195,17 +226,19 @@ events.on(POST_REPO, (event) => {
 
       // update the repository in the user repository list, iterate
       // through the cursor to find the entry.
-      tree.apply(['user', 'repos'], (item) => {
-        if (item.owner != owner || item.name != name) return item;
-        return repo;
+      tree.select(['user','repos']).map((cursor, i) => {
+        var selected = cursor.get();
+        if (selected.owner == owner && selected.name == name) {
+          cursor.merge(repo)
+        }
       });
 
       // append the repsotiroy to the feed.
       tree.push(['feed'], repo);
+      tree.set(['pages', 'toast'], `Successfully activated ${repo.full_name}`);
     });
 });
 
-export const GET_TOKEN = "GET_TOKEN";
 events.once(GET_TOKEN, function(event) {
   Request.post(`/api/user/token`)
     .end((err, response) => {
@@ -217,17 +250,14 @@ events.once(GET_TOKEN, function(event) {
     });
 });
 
-export const SHOW_TOKEN = "SHOW_TOKEN";
 events.on(SHOW_TOKEN, function(event) {
   tree.set(['pages', 'account', 'token'], true);
 });
 
-export const HIDE_TOKEN = "HIDE_TOKEN";
 events.on(HIDE_TOKEN, function(event) {
   tree.set(['pages', 'account', 'token'], false);
 });
 
-export const FILTER = "FILTER";
 events.on(FILTER, function(event) {
   const data = event.data.toLowerCase();
   if (data === '') {
@@ -237,15 +267,10 @@ events.on(FILTER, function(event) {
   }
 });
 
-export const FILTER_CLEAR = "FILTER_CLEAR";
 events.on(FILTER_CLEAR, function(event) {
   tree.unset(['pages', 'repo', 'filter']);
 });
 
-export const CLEAR_TOAST = "CLEAR_TOAST";
 events.on(CLEAR_TOAST, function(event) {
   tree.unset(['pages', 'toast']);
 });
-
-export const POST_BUILD     = "POST_BUILD";
-export const DEL_BUILD      = "DEL_BUILD";

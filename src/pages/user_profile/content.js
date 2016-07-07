@@ -1,17 +1,25 @@
 import React from 'react';
-import {Grid, Cell, Button} from 'react-mdl';
+import {Grid, Cell, Button, Switch} from 'react-mdl';
 import {Link} from 'react-router';
 import {branch} from 'baobab-react/higher-order';
 
 import './index.less';
 
-import {events, GET_REPO_LIST} from '../../actions/events';
+import {events, GET_REPO_LIST, POST_REPO, DEL_REPO} from '../../actions/events';
 import PageContent from '../../components/layout/content';
 
 class Content extends React.Component {
 
   componentDidMount() {
     events.emit(GET_REPO_LIST);
+  }
+
+  handleSwitch(repo) {
+    if (repo.id > 0) {
+      events.emit(DEL_REPO, repo);
+    } else {
+      events.emit(POST_REPO, repo);
+    }
   }
 
   render() {
@@ -34,13 +42,27 @@ class Content extends React.Component {
     }
 
     function repoList(repo) {
-      return <div key={repo.full_name}>{repo.full_name}</div>;
-    }
+      var link;
+      if (!!repo.id) {
+        link = (
+          <Link to={`/${repo.owner}/${repo.name}/settings`}><i className="material-icons">settings</i></Link>
+        );
+      }
+      return (
+        <div key={repo.full_name}>
+          <h3>{repo.full_name}</h3>
+          <div>
+            {link}
+            <Switch checked={!!repo.id} onChange={this.handleSwitch.bind(this, repo)}/>
+          </div>
+        </div>
+      );
+    };
 
     return (
       <span>
         <PageContent className="user-profile">
-          {repos.map(repoList)}
+          {repos.map(repoList.bind(this))}
         </PageContent>
       </span>
     );
