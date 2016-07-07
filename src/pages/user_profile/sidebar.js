@@ -51,7 +51,7 @@ class Sidebar extends React.Component {
             <pre>{token}</pre>
           </DialogContent>
           <DialogActions>
-            <Button type='button' onClick={this.handleHideToken} onTimeout={this.handleTimeout}>Close</Button>
+            <Button type='button' onClick={this.handleHideToken}>Close</Button>
           </DialogActions>
         </Dialog>
       </div>

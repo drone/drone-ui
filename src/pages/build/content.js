@@ -11,7 +11,7 @@ import BuildPanel from '../../components/build_panel';
 import {RUNNING, PENDING} from '../../components/status';
 
 import {events, GET_BUILD, GET_BUILD_LOGS, CLEAR_BUILD_LOGS} from '../../actions/events';
-import { cancelJob, restartJob } from '../../data/jobs/actions';
+// import { cancelJob, restartJob } from '../../data/jobs/actions';
 
 class Content extends React.Component {
   constructor(props) {

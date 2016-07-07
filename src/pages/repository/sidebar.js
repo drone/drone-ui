@@ -38,7 +38,7 @@ class Sidebar extends React.Component {
     return (
       <div className="repository-sidebar">
         <div className="repository-search">
-          <input type="search" placeholder="Filter..." onChange={this.onFilter} spellcheck="off" />
+          <input type="search" placeholder="Filter..." onChange={this.onFilter} spellCheck="off" />
         </div>
         <div>
         {feed.map((repo, index) => {

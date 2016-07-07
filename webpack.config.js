@@ -1,4 +1,5 @@
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var webpack = require('webpack');
 
 module.exports = {
   entry: './src/index.js',
@@ -26,14 +27,11 @@ module.exports = {
     ]
   },
   externals: {
-    'immutable': 'Immutable',
-    'moment': 'moment',
-    'react': 'React',
-    'react-dom': 'ReactDOM',
-    'react-redux': 'ReactRedux',
-    'react-router': 'ReactRouter',
-    'redux': 'Redux',
-    'superagent': 'superagent'
+    // 'moment': 'moment',
+    // 'react': 'React',
+    // 'react-dom': 'ReactDOM',
+    // 'react-router': 'ReactRouter',
+    // 'superagent': 'superagent'
   },
   resolve: {
     extensions: ['', '.js', '.jsx']
@@ -42,3 +40,21 @@ module.exports = {
     new ExtractTextPlugin('./dist/app.css')
   ]
 };
+
+
+if (process.env.NODE_ENV === 'production') {
+  module.exports.devtool = '#source-map'
+  module.exports.plugins = (module.exports.plugins || []).concat([
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: '"production"'
+      }
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    }),
+    new webpack.optimize.OccurenceOrderPlugin()
+  ])
+}

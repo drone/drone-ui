@@ -8,12 +8,6 @@ import './index.less';
 import {events, GET_REPO, PATCH_REPO} from '../../actions/events';
 import PageContent from '../../components/layout/content';
 
-import {
-  getRepository,
-  updateRepository,
-  deleteRepository
-} from '../../data/repositories/actions';
-
 class Content extends React.Component {
   constructor(props) {
     super(props);

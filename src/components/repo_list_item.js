@@ -1,5 +1,6 @@
 import React from 'react';
 import Status from './status';
+import moment from 'moment';
 
 import './repo_list_item.less';
 
