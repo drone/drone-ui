@@ -4,6 +4,7 @@ import {tree} from './tree';
 
 export const events = new Emmett();
 
+export const STREAM_FEED = 'STREAM_FEED';
 export const GET_FEED = 'GET_FEED';
 export const GET_REPO = 'GET_REPO';
 export const DEL_REPO = 'DEL_REPO';
@@ -28,6 +29,7 @@ events.once(GET_FEED, function(event) {
     .end((err, response) => {
       if (err != null) {
         console.error(err);
+        return;
       }
       let feed = JSON.parse(response.text);
       feed.sort(function(a, b) {
@@ -35,6 +37,25 @@ events.once(GET_FEED, function(event) {
       });
       tree.set('feed', feed);
     });
+});
+
+events.once(STREAM_FEED, function(event) {
+  let proto = (window.location.protocol === 'https:') ? 'wss:' : 'ws:';
+  let ws = new WebSocket(proto + '//' + window.location.host + '/ws/feed');
+  ws.onmessage = function(message) {
+    let {repo, build} = JSON.parse(message.data);
+
+    // merge the item into the feed
+    tree.select(['feed']).map((cursor, i) => {
+      var selected = cursor.get();
+      if (selected.owner == repo.owner && selected.name == repo.name) {
+        cursor.merge(build);
+      }
+    });
+
+    // merge the item into the build cache
+    tree.set(['builds', repo.owner, repo.name, build.number], build);
+  }
 });
 
 events.once(GET_REPO_LIST, function(event) {
@@ -122,6 +143,10 @@ events.on(GET_BUILD_LIST, function(event) {
         console.error(err);
       }
       let builds = JSON.parse(response.text);
+      if (builds.length == 0) {
+        tree.set(['builds', owner, name], {});
+      }
+
       builds.map(function(build) {
         tree.set(['builds', owner, name, build.number], build);
       });

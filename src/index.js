@@ -48,6 +48,7 @@ class App extends React.Component {
     );
   }
 }
+
 window.tree = tree;
 // binds the application to our data tree.
 const RootedApp = root(tree, App);

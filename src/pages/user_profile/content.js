@@ -28,6 +28,12 @@ class Content extends React.Component {
       return <div>Loading ...</div>;
     }
 
+    if (repos.length == 0) {
+        return (
+          <div className="alert alert-empty">Your repository list is empty.</div>
+        );
+    }
+
     // sort repositories by name ascending
     // TODO move this to the data handler
     repos.slice(0).sort((a, b) => {

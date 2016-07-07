@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
 import {branch} from 'baobab-react/higher-order';
-import {events, GET_FEED, FILTER, FILTER_CLEAR} from '../../actions/events';
+import {events, GET_FEED, FILTER, FILTER_CLEAR, STREAM_FEED} from '../../actions/events';
 
 import RepoListItem from '../../components/repo_list_item';
 
@@ -55,22 +55,12 @@ class Sidebar extends React.Component {
 
   componentDidMount() {
     events.emit(GET_FEED);
-    // this.ws = this.createWebSocket();
-    // this.ws.onmessage = function(message) {
-    //   let event = JSON.parse(message.data);
-    //   this.props.dispatch(dispatchEvent(event));
-    // }.bind(this)
+    events.emit(STREAM_FEED);
   }
 
   componentWillUnmount() {
-    // this.ws.close();
     events.emit(FILTER_CLEAR);
   }
-  //
-  // createWebSocket() {
-  //   let proto = (window.location.protocol === 'https:') ? 'wss:' : 'ws:';
-  //   return new WebSocket(proto + '//' + window.location.host + '/ws/feed');
-  // }
 
   onFilter(event) {
     events.emit(FILTER, event.target.value);
