@@ -7,39 +7,28 @@ This codebase will eventually be moved to the [drone/drone](https://github.com/d
 ## Building
 
 ```bash
-make
+npm install
+npm run build
 ```
 
 This is currently being tested on `node v5.5.0`
 
 ## Running
 
-To test the experimental user interface with Drone we have created a simple proxy server. This will proxy requests from the react application to a real Drone instance. Before running the proxy server you must download dependencies:
+* Log into your drone account on your drone host and obaint a personal token.
+* Copy the `drone.json.sample` to `drone.json`.
+* Enter your drone data into the `drone.json`, that is the host, token, id, username and email.
+* Install node dependencies with `npm install`.
+* Start webpack dev server with `npm start`.
+* Open [http://localhost:9000](http://localhost:9000).
 
-```
-go get github.com/drone/drone-go/drone
-go get github.com/koding/websocketproxy
-```
+You will see the
 
-To run the proxy server you must provide the location of your drone server (scheme and hostname) and your Drone API token for authentication. You can get your Drone API token from your profile page.
+* dashboard,
+* repository dashboard and
+* build output page.
 
-```
-go run server.go --scheme <drone scheme>  \
-                 --host   <drone address> \
-                 --token  <drone api token>
-```
-
-When the server is running you can open the following url in your browser:
-
-```
-http://localhost:9000
-```
-
-* dashboard
-* repository dashboard 
-* build output page
-
-## Setup a Development Environment
+## Setup Gogs and drone with docker for development
 
 If you don't have a drone v0.5 setup and running you can do so with `docker-compose`.
 At first you need to make sure that docker and docker-compose are installed and running.
@@ -56,8 +45,3 @@ Don't forget to create an admin account at the bottom of the page to be able to 
 
 Open `localhost:8000` in your browser and login with the Gogs credentials.
 Get your personal token at `http://localhost:8000/settings/profile`.
-
-Now start the proxy to run the app like:
-```
-go run server.go --host=localhost:8000 --token=DRONE_TOKEN
-```

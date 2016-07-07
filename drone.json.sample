@@ -1,0 +1,11 @@
+{
+  "host": "http://host:port",
+  "token": "token",
+  "user": {
+    "id": 1,
+    "login": "username",
+    "email": "email",
+    "avatar_url": "https://secure.gravatar.com/avatar/f84d37ce99493155ee296c2b746191d0",
+    "active": true
+  }
+}
