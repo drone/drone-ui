@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router';
 
 import BuildPanel from '../../components/build_panel';
 import PageContent from '../../components/layout/content';
@@ -11,7 +12,9 @@ export class Matrix extends React.Component {
 
     function renderJob(job) {
       return (
-        <JobListItem key={job.number} repo={repo} build={build} job={job} />
+        <Link key={job.number} to={`/${repo.owner}/${repo.name}/${build.number}/${job.number}`}>
+          <JobListItem repo={repo} build={build} job={job} />
+        </Link>
       );
     }
 

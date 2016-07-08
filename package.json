@@ -8,6 +8,7 @@
     "baobab": "2.3.3",
     "baobab-react": "2.1.1",
     "emmett": "^3.1.1",
+    "lodash.debounce": "^4.0.6",
     "moment": "^2.12.0",
     "react": "^15.0.0",
     "react-dom": "^15.0.0",

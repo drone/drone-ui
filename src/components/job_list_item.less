@@ -1,10 +1,52 @@
 @import "../variables";
 
 .job-list-item {
-  color: #747C84;
-  font-size: 15px;
+  text-decoration: none;
+  color: #212121;
+  display: flex;
+  border-bottom: 1px solid #EEE;
+  padding:25px 0px;
+  box-sizing: border-box;
+
+  span {
+    font-size:14px;
+    color: #9E9E9E;
+    line-height:40px;
+  }
+
+  em {
+    font-size:14px;
+    font-style: normal;
+  }
+
+  h3 {
+    font-weight: normal;
+    font-size: 16px;
+    margin: 0px;
+    padding-right:20px;
+    max-width: 600px;
+    white-space: nowrap;
+    flex: 1 0 auto;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    min-width: 0px;
+  }
+
+  &> div:first-child {
+    padding-left:10px;
+    flex: 1 1 auto;
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+  }
+
+  &> div:last-child {
+    padding-right:10px;
+    white-space:nowrap;
+  }
 
   .status {
-    margin-bottom: @layout-margin / 4;
+    vertical-align: middle;
+    margin-left:10px;
   }
 }
