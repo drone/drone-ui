@@ -4,8 +4,6 @@ import Request from 'superagent';
 import { Button, Dialog, DialogContent, DialogActions } from 'react-mdl';
 import { Link } from 'react-router';
 
-import PageContent from '../../components/layout/content';
-
 class Sidebar extends React.Component {
   constructor(props) {
     super(props);
@@ -68,19 +66,19 @@ class Sidebar extends React.Component {
   }
 
   handleOpenDialog() {
-     this.setState({
-       openDialog: true
-     });
-   }
+    this.setState({
+      openDialog: true
+    });
+  }
 
-   handleCloseDialog() {
-     this.setState({
-       openDialog: false
-     });
-   }
+  handleCloseDialog() {
+    this.setState({
+      openDialog: false
+    });
+  }
 
   handleShowToken() {
-    Request.post(`/api/user/token`)
+    Request.post('/api/user/token')
       .end((err, response) => {
         if (err != null) {
           console.error(err); // TODO: Add ui error handling
@@ -98,7 +96,7 @@ export default connect(
   (state) => {
     return {
       repositories: state.drone.repositories,
-      user: state.drone.user,
+      user: state.drone.user
     };
   }
 )(Sidebar);

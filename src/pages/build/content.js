@@ -7,7 +7,6 @@ import './index.less';
 
 import PageContent from '../../components/layout/content';
 import BuildPanel from '../../components/build_panel';
-import JobListItem from '../../components/job_list_item';
 import Log from './log';
 import {RUNNING, PENDING} from '../../components/status';
 
@@ -41,7 +40,7 @@ class Content extends React.Component {
     return (
       <PageContent fluid className="build">
 
-          <div style={{display: "none"}}>
+          <div style={{display: 'none'}}>
             <Sticky top={32} enabled={true}>
               <div className="information">
                 {job.get('status') == PENDING || job.get('status') == RUNNING ?
@@ -52,7 +51,7 @@ class Content extends React.Component {
             </Sticky>
           </div>
 
-            <BuildPanel build={build} job={job} />
+            <BuildPanel build={build} job={job}/>
             <div className="log">
               <Log owner={owner} name={name} build={build} job={job}/>
             </div>

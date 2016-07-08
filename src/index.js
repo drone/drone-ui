@@ -7,6 +7,7 @@ import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 
+import 'react-mdl/extra/material';
 import './index.less';
 
 import { drone } from './data/reducers';

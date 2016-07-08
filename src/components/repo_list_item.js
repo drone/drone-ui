@@ -1,6 +1,5 @@
 import React from 'react';
 import Status from './status';
-
 import './repo_list_item.less';
 
 export default
@@ -16,16 +15,16 @@ class RepoListItem extends React.Component {
       <div className="repo-list-item">
         <div className="repo-list-item-header">
           <span>{repo.get('full_name')}</span>
-          <Status state={repo.get('status')} />
+          <Status state={repo.get('status')}/>
         </div>
         <div className="repo-list-item-body">
           <div>
             <i className="material-icons">timelapse</i>
-            <span>{duration == NaN ? "--" : moment.duration(duration).humanize()}</span>
+            <span>{isNaN(duration) ? '--' : moment.duration(duration).humanize()}</span>
           </div>
           <div>
             <i className="material-icons">access_time</i>
-            <span>{!start ? "--" : moment(start).fromNow()}</span>
+            <span>{!start ? '--' : moment(start).fromNow()}</span>
           </div>
         </div>
       </div>

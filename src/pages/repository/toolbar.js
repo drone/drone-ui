@@ -6,7 +6,7 @@ import { Tabs, Tab }from '../../components/layout/tabs';
 
 class Toolbar extends React.Component {
   render() {
-    const {owner, name, number} = this.props.params;
+    const {owner, name} = this.props.params;
 
     const tabs = [
       {url: `/${owner}/${name}`, text: 'Builds'},

@@ -1,11 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { browserHistory, Link } from 'react-router';
+import { Link } from 'react-router';
 
 import { getFeed } from '../../data/feed/actions';
 import { dispatchEvent } from '../../data/events/actions';
 import RepoListItem from '../../components/repo_list_item';
-import { Grid, Cell, Textfield, List, ListItem } from 'react-mdl';
 
 class Sidebar extends React.Component {
   constructor(props) {
@@ -48,7 +47,7 @@ class Sidebar extends React.Component {
           <input type="search" placeholder="Filter..." onChange={this.onFilter}/>
         </div>
         <div>
-        {repositories.map((repo, index) => {
+        {repositories.map((repo) => {
           return (
             <Link key={repo.get('full_name')} to={`/${repo.get('owner')}/${repo.get('name')}`}>
               <RepoListItem repo={repo}/>
@@ -67,7 +66,7 @@ class Sidebar extends React.Component {
     this.ws.onmessage = function(message) {
       let event = JSON.parse(message.data);
       this.props.dispatch(dispatchEvent(event));
-    }.bind(this)
+    }.bind(this);
   }
 
   componentWillUnmount() {
@@ -90,7 +89,7 @@ export default connect(
   (state) => {
     return {
       repositories: state.drone.feed,
-      user: state.drone.user,
+      user: state.drone.user
     };
   }
 )(Sidebar);

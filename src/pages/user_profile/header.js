@@ -8,12 +8,12 @@ class Header extends React.Component {
   render() {
     const {account} = this.props.params;
     if (!account) {
-      return <Breadcrumb elements={['Account']}/>
+      return <Breadcrumb elements={['Account']}/>;
     }
 
     return (
       <Breadcrumb elements={[
-        <Link to={`/account`}>Account</Link>,
+        <Link to={'/account'}>Account</Link>,
         SEPARATOR,
         <Link to={`/account/${account}`}>{account}</Link>
       ]}/>

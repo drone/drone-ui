@@ -11,5 +11,5 @@ export const drone = combineReducers({
   feed,
   jobs,
   repositories,
-  user,
+  user
 });

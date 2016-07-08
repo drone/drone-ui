@@ -9,15 +9,15 @@ let initialState = Immutable.Map();
 export default
 function builds(state = initialState, action) {
   switch (action.type) {
-    case BUILDS_RECEIVED:
-      return state.merge(action.builds);
-    case BUILD_RECEIVED:
-      return state.merge(action.build);
-    case JOB_RESTARTED:
-      return state.merge(action.build);
-    case EVENT_RECEIVED:
-      return state.merge(action.event.build);
-    default:
-      return state;
+  case BUILDS_RECEIVED:
+    return state.merge(action.builds);
+  case BUILD_RECEIVED:
+    return state.merge(action.build);
+  case JOB_RESTARTED:
+    return state.merge(action.build);
+  case EVENT_RECEIVED:
+    return state.merge(action.event.build);
+  default:
+    return state;
   }
 }
