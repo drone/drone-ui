@@ -6,13 +6,17 @@ import { Tabs, Tab }from '../../components/layout/tabs';
 
 class Toolbar extends React.Component {
   render() {
+    const {user} = this.props;
     const {owner, name, number} = this.props.params;
 
     const tabs = [
       {url: `/${owner}/${name}`, text: 'Builds'},
-      {url: `/${owner}/${name}/settings/badges`, text: 'Badges'},
-      {url: `/${owner}/${name}/settings/`, text: 'Settings'}
+      {url: `/${owner}/${name}/settings/badges`, text: 'Badges'}
     ];
+
+    if (user) {
+      tabs.push({url: `/${owner}/${name}/settings/`, text: 'Settings'});
+    }
 
     return (
       <Tabs>
@@ -30,5 +34,6 @@ class Toolbar extends React.Component {
 
 
 export default branch({
+  user: ['user'],
   location: ['location']
 }, Toolbar);
