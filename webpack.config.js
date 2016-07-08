@@ -1,4 +1,5 @@
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 var webpack = require('webpack');
 
 module.exports = {
@@ -37,7 +38,10 @@ module.exports = {
     extensions: ['', '.js', '.jsx']
   },
   plugins: [
-    new ExtractTextPlugin('./dist/app.css')
+    new ExtractTextPlugin('./dist/app.css'),
+    new CopyWebpackPlugin([
+        { from: 'images', to: 'dist' }
+    ])
   ]
 };
 
