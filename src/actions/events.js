@@ -131,7 +131,7 @@ events.on(PATCH_REPO, function(event) {
   }
 
   Request.patch(`/api/repos/${owner}/${name}`)
-    .set('X-CSRF_TOKEN', token)
+    .set('X-CSRF-TOKEN', token)
     .send(event.data)
     .end((err, response) => {
       if (err != null) {
@@ -250,7 +250,7 @@ events.on(DEL_REPO, (event) => {
   });
 
   Request.del(`/api/repos/${owner}/${name}`)
-    .set('X-CSRF_TOKEN', token)
+    .set('X-CSRF-TOKEN', token)
     .end((err, response) => {
       if (err != null) {
         console.error(err);
@@ -285,7 +285,7 @@ events.on(POST_REPO, (event) => {
   });
 
   Request.post(`/api/repos/${owner}/${name}`)
-    .set('X-CSRF_TOKEN', token)
+    .set('X-CSRF-TOKEN', token)
     .end((err, response) => {
       if (err != null) {
         console.error(err);
@@ -315,7 +315,7 @@ events.on(POST_REPO, (event) => {
 
 events.once(GET_TOKEN, function(event) {
   Request.post(`/api/user/token`)
-    .set('X-CSRF_TOKEN', token)
+    .set('X-CSRF-TOKEN', token)
     .end((err, response) => {
       if (err != null) {
         console.error(err); // TODO: Add ui error handling
