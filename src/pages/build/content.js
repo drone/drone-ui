@@ -38,6 +38,14 @@ class Content extends React.Component {
     }
   }
 
+  componentDidUpdate() {
+    const {state} = this.props;
+    if (state.follow) {
+      // document.querySelector(".mdl-layout__content").scrollTo(0,
+      //   document.querySelector(".mdl-layout__content").scrollHeight);
+    }
+  }
+
   render() {
     const {owner, name, number, job} = this.props.params;
     const {repository, build, logs} = this.props;
@@ -93,6 +101,7 @@ class Content extends React.Component {
 export default branch((props, context) => {
   const {owner, name, number} = props.params;
   return {
+    state: ['pages', 'build'],
     repository: ['repos', owner, name],
     build: ['builds', owner, name, number],
     logs: ['logs']

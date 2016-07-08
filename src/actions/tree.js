@@ -1,8 +1,7 @@
 import Baobab from 'baobab';
 
 // loads the user from the server state.
-const user = window.STATE_FROM_SERVER &&
-  window.STATE_FROM_SERVER.user;
+const user = window.STATE_FROM_SERVER && window.STATE_FROM_SERVER.user;
 
 // loads the window location from the browser.
 const location = window && window.location;
@@ -55,6 +54,9 @@ export const tree = new Baobab({
     },
     repo: {
       filter: undefined
+    },
+    build: {
+      follow: false
     },
     loading: false,
     toast: undefined
