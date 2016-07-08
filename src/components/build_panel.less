@@ -1,10 +1,18 @@
 .build-panel {
   background: #00BFA5;
   color: #FFF;
-  display: flex;
   padding: 30px 40px;
   font-size: 15px;
   border-radius: 2px;
+
+  code {
+    background: rgba(255,255,255,0.2);
+    line-height: 24px;
+    border-radius: 3px;
+    padding:0px 10px;
+    margin-right:10px;
+    display:inline-block;
+  }
 
   &.pending,
   &.running,
@@ -16,6 +24,31 @@
   &.failure {
     background: #F50057;
   }
+
+  .alert {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius:3px;
+    background: rgba(255,255,255,0.2);
+    position: relative;
+
+    span {
+      line-height: 24px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    i {
+      font-size:18px;
+      line-height: 24px;
+      vertical-align: middle;
+      margin-right: 5px;
+    }
+  }
+}
+
+.build-panel-detail {
+  display: flex;
 
   em {
     font-style: normal;
@@ -35,6 +68,7 @@
     overflow:hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    line-height: 24px;
   }
 
   i ~ span {
@@ -53,5 +87,11 @@
   }
   &> div:last-child {
     max-width: 300px;
+  }
+
+  .commit-link {
+    vertical-align: text-bottom;
+    margin-left: 7px;
+    color: rgba(255,255,255,0.7);
   }
 }

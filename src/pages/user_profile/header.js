@@ -5,6 +5,11 @@ import {branch} from 'baobab-react/higher-order';
 import Breadcrumb, {SEPARATOR} from '../../components/layout/breadcrumb';
 
 class Header extends React.Component {
+
+  componentDidMount() {
+    document.title = "account | drone";
+  }
+
   render() {
     const {account} = this.props.params;
     if (!account) {

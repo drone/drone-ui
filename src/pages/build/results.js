@@ -83,9 +83,27 @@ export class Results extends React.Component {
       });
     }
 
+    var alerts = [];
+    if (build.signed && !build.verified) {
+      alerts.push(
+        <div className="alert warning">
+          <i className="material-icons">warning</i>
+          <span>Unable to verify the Yaml signature.</span>
+        </div>
+      );
+    }
+    if (job.error && job.error != '') {
+      alerts.push(
+        <div className="alert error">
+          <i className="material-icons">error_outline</i>
+          <span>{job.error}</span>
+        </div>
+      );
+    }
+
     return (
       <PageContent fluid className="build">
-        <BuildPanel repo={repo} build={build} job={job} />
+        <BuildPanel repo={repo} build={build} job={job}>{alerts}</BuildPanel>
         <div className="log">{term}</div>
       </PageContent>
     );
