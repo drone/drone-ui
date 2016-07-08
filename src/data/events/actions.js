@@ -1,5 +1,5 @@
 import Immutable from 'immutable';
-import { normalize, arrayOf, Schema } from 'normalizr';
+import { normalize } from 'normalizr';
 
 import {feedSchema} from '../feed/actions';
 import {jobSchema} from '../jobs/actions';
@@ -16,7 +16,7 @@ export function dispatchEvent(event) {
       number: event.build.number,
       started_at: event.build.started_at,
       finished_at: event.build.finished_at,
-      status: event.build.status,
+      status: event.build.status
     }, feedSchema).entities.feed);
     let repo = Immutable.fromJS(normalize(event.repo, repositorySchema).entities.repository);
     let build = Immutable.fromJS(normalize(event.build, buildSchema).entities.build);
@@ -26,13 +26,13 @@ export function dispatchEvent(event) {
       owner: event.repo.owner,
       name: event.repo.name,
       number: event.build.number,
-      job: event.job ? event.job.number : 0,
-    }
+      job: event.job ? event.job.number : 0
+    };
     dispatch(eventReceived(params, {
       activity,
       repo,
       build,
-      job,
+      job
     }));
   };
 }

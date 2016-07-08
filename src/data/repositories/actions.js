@@ -72,7 +72,7 @@ export function updateRepository(owner, name, data) {
 export function deleteRepository(owner, name) {
   return dispatch => {
     Request.del(`/api/repos/${owner}/${name}`)
-      .end((err, response) => {
+      .end((err) => {
         if (err != null) {
           console.error(err); // TODO: Add ui error handling
         }

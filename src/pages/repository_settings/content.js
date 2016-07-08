@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-import { Grid, Cell, Button, Slider, Switch } from 'react-mdl';
+import { Grid, Cell, Slider, Switch } from 'react-mdl';
 
 import './index.less';
 

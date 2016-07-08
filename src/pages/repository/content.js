@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import moment from 'moment';
 
 import './index.less';
 
@@ -37,14 +36,14 @@ class Content extends React.Component {
     }
 
     if (builds.size === 0) {
-        return (
+      return (
           <div className="alert alert-empty">This repository does not have any builds yet.</div>
         );
     }
 
     return (
       <PageContent className="repository history">
-        {builds.toList().reverse().map((build, index) => {
+        {builds.toList().reverse().map((build) => {
           return (
             <Link key={build.get('number')} to={`/${owner}/${name}/${build.get('number')}`}>
               <BuildCard build={build}/>

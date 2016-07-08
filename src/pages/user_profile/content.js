@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Request from 'superagent';
-import { Grid, Cell, Button } from 'react-mdl';
-import { Link } from 'react-router';
 
 import './index.less';
 
@@ -38,7 +36,7 @@ class Content extends React.Component {
     if (params.account) {
       repositories = repositories.filter((a) => {
         return params.account == a.get('owner');
-      })
+      });
     }
 
     return (
@@ -51,7 +49,7 @@ class Content extends React.Component {
   }
 
   handleShowToken() {
-    Request.post(`/api/user/token`)
+    Request.post('/api/user/token')
       .end((err, response) => {
         if (err != null) {
           console.error(err); // TODO: Add ui error handling
@@ -68,7 +66,7 @@ export default connect(
   (state) => {
     return {
       repositories: state.drone.repositories,
-      user: state.drone.user,
+      user: state.drone.user
     };
   }
 )(Content);

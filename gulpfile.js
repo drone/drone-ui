@@ -4,7 +4,6 @@
 const gulp = require('gulp');
 const gulpUtil = require('gulp-util');
 
-// TODO use when all eslint errors have been resolved
 gulp.task('lint', function () {
   const gulpEslint = require('gulp-eslint');
 

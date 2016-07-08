@@ -11,7 +11,7 @@ class BuildPanel extends React.Component {
     let finished = build.get('finished_at') * 1000;
     let duration = finished - start;
 
-    let classes = ["build-panel", job.get('status')];
+    let classes = ['build-panel', job.get('status')];
 
     return (
      <div className={classes.join(' ')}>

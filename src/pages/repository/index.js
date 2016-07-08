@@ -7,5 +7,5 @@ export default {
   Header,
   Content,
   Toolbar,
-  Sidebar,
+  Sidebar
 };

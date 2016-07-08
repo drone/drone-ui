@@ -4,7 +4,8 @@
   "description": "This project is a proposal for a react-based user interface for Drone.",
   "scripts": {
     "start": "gulp",
-    "build": "gulp build"
+    "build": "gulp build",
+    "test": "gulp lint"
   },
   "dependencies": {
     "ansi_up": "1.3.0",

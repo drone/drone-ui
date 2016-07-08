@@ -69,15 +69,15 @@ class Log extends React.Component {
 
         var groups = {};
         var lines = JSON.parse(response.text);
-        lines.map(function(line, i) {
+        lines.map(function(line) {
           if (!line.proc) {
             return;
           }
-          var group = groups[line.proc]
+          var group = groups[line.proc];
           if (!group) {
             group = {
               name: line.proc,
-              lines: [],
+              lines: []
             };
             groups[line.proc] = group;
           }
@@ -99,11 +99,11 @@ class Log extends React.Component {
     this.ws.onmessage = (event) => {
       var line = JSON.parse(event.data);
       var groups = this.state.groups;
-      var group = this.state.groups[line.proc]
+      var group = this.state.groups[line.proc];
       if (!group) {
         group = {
           name: line.proc,
-          lines: [],
+          lines: []
         };
         groups[line.proc] = group;
       }
@@ -139,8 +139,8 @@ class Log extends React.Component {
       // TODO this assumes mdl-layout__content exists as the parent. While this
       // is true it feels like it breaks the spirit of individual components
       // having a specific parental dependency. Revisit this.
-      document.querySelector(".mdl-layout__content").scrollTo(0,
-        document.querySelector(".mdl-layout__content").scrollHeight);
+      document.querySelector('.mdl-layout__content').scrollTo(0,
+        document.querySelector('.mdl-layout__content').scrollHeight);
     }
   }
 }

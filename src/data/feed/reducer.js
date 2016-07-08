@@ -8,12 +8,13 @@ let initialState = Immutable.Map();
 export default
 function feed(state = initialState, action) {
   switch (action.type) {
-    case EVENT_RECEIVED:
-      let {event} = action;
-      return state.merge(event.activity);
-    case FEED_RECEIVED:
-      return action.feed;
-    default:
-      return state;
+  case EVENT_RECEIVED: {
+    let {event} = action;
+    return state.merge(event.activity);
+  }
+  case FEED_RECEIVED:
+    return action.feed;
+  default:
+    return state;
   }
 }

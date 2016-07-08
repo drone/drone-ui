@@ -2,11 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory, Link } from 'react-router';
 
-// import Header from './header';
-import Subnav from './subnav';
 import Avatar from '../avatar';
 
-import { Layout, Header, Textfield, Drawer, Navigation, Content, IconButton, Menu, MenuItem} from 'react-mdl';
+import { Layout, Header, Drawer, Navigation, Content, IconButton, Menu, MenuItem} from 'react-mdl';
 
 import { fetchWindowUser } from '../../data/user/actions';
 
@@ -27,9 +25,9 @@ class Page extends React.Component {
           <Avatar src={user.get('avatar_url')} circle/>
           <IconButton name="more_vert" id="drone-header-menu-right"/>
           <Menu target="drone-header-menu-right" align="right">
-            <MenuItem onClick={() => {browserHistory.push('/')}}>Dashboard</MenuItem>
-            <MenuItem onClick={() => {browserHistory.push('/account')}}>Account</MenuItem>
-            <MenuItem onClick={() => {window.location.href='/logout'}}>Logout</MenuItem>
+            <MenuItem onClick={() => {browserHistory.push('/');}}>Dashboard</MenuItem>
+            <MenuItem onClick={() => {browserHistory.push('/account');}}>Account</MenuItem>
+            <MenuItem onClick={() => {window.location.href='/logout';}}>Logout</MenuItem>
           </Menu>
         </div>
       );

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Cell } from 'react-mdl';
 
 import './breadcrumb.less';
 
