@@ -13,27 +13,14 @@ npm install
 npm run build
 ```
 
-To watch for changes and (re)create css and javascript assets:
-
-```bash
-npm run watch
-```
-
 ## Running
 
-To test the user interface with Drone we have created a simple proxy server. This will proxy requests from the react application to a real Drone instance. Before running the proxy server you must download dependencies:
+To run a devserver with watching, hotreloading and proxy to drone server:
 
-```
-go get github.com/drone/drone-go/drone
-go get github.com/koding/websocketproxy
-```
-
-To run the proxy server you must provide the location of your drone server (scheme and hostname) and your Drone API token for authentication. You can get your Drone API token from your profile page.
-
-```
-go run server.go --scheme <drone scheme> \
-                 --host   <drone host> \
-                 --token  <drone api token>
+```bash
+npm start -- --scheme <drone scheme> \
+             --host   <drone host> \
+             --token  <drone api token>
 ```
 
 When the server is running you can open the following url in your browser:

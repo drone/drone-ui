@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router, browserHistory} from 'react-router';
-
+import superagent from 'superagent';
 import {root} from 'baobab-react/higher-order';
 
 import './index.less';
@@ -28,4 +28,15 @@ const RootedApp = root(tree, App);
 window.tree=tree;
 window.events=events;
 
-ReactDOM.render(<RootedApp />, document.querySelector('#app'));
+// this is 'hardcoded' with webpack define plugin and the unused
+// branch will be erased by dead code elimination
+if (process.env.NODE_ENV === 'production') {
+  ReactDOM.render(<RootedApp />, document.querySelector('#app'));
+} else {
+  superagent.get('/api/user').then((res) => {
+    const user = JSON.parse(res.text);
+    window.STATE_FROM_SERVER = {user};
+
+    ReactDOM.render(<RootedApp />, document.querySelector('#app'));
+  });
+}
