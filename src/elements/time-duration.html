@@ -1,0 +1,27 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<script src="../../bower_components/humanize-duration/humanize-duration.js"></script>
+
+<dom-module id="time-duration">
+	<template>
+		[[_value]]
+	</template>
+
+	<script>
+		Polymer({
+			is: "time-duration",
+			properties: {
+				seconds: {
+					type: Number,
+				},
+				_value: {
+					type: String,
+					computed: '_computeOutput(seconds)'
+				}
+			},
+			_computeOutput(seconds) {
+				return humanizeDuration(seconds*1000);
+			}
+		});
+	</script>
+</dom-module>
