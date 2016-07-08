@@ -2,15 +2,15 @@ import React from 'react';
 import {branch} from 'baobab-react/higher-order';
 import {Button} from 'react-mdl';
 
-import Term from '../../components/term';
+import {Matrix} from './matrix';
+import {Results} from './results';
 
 import './index.less';
 
 import PageContent from '../../components/layout/content';
 import BuildPanel from '../../components/build_panel';
-import {RUNNING, PENDING} from '../../components/status';
 
-import {events, GET_BUILD, GET_BUILD_LOGS, CLEAR_BUILD_LOGS} from '../../actions/events';
+import {events, GET_BUILD} from '../../actions/events';
 // import { cancelJob, restartJob } from '../../data/jobs/actions';
 
 class Content extends React.Component {
@@ -25,10 +25,10 @@ class Content extends React.Component {
     const {owner, name, number} = this.props.params;
     events.emit(GET_BUILD, {owner, name, number});
   }
-
-  shouldComponentUpdate(nextProps) {
-    return this.props.build != nextProps.build || this.props.logs != nextProps.logs;
-  }
+  //
+  // shouldComponentUpdate(nextProps) {
+  //   return this.props.build != nextProps.build || this.props.logs != nextProps.logs;
+  // }
 
   componentWillReceiveProps(nextProps) {
     const {owner, name, number} = this.props.params;
@@ -36,15 +36,11 @@ class Content extends React.Component {
     if (nextOwner != owner || nextName != name || nextNumber != number) {
       events.emit(GET_BUILD, {owner, name, number});
     }
-    if (nextProps.build && nextProps.build.status != 'pending' &&
-      nextProps.build.status != 'running' && !nextProps.logs) {
-      events.emit(GET_BUILD_LOGS, {owner, name, number, job: 1});
-    }
   }
 
   render() {
     const {owner, name, number, job} = this.props.params;
-    const {build, logs} = this.props;
+    const {repository, build, logs} = this.props;
 
     if (!build || !build.jobs) {
       return (
@@ -52,27 +48,19 @@ class Content extends React.Component {
       );
     }
 
-    const job_ = build.jobs[job ? job-1 : 0];
-
-    let term = [];
-    if (logs) {
-      Object.keys(logs).map(function(group) {
-        const lines = logs[group];
-        term.push(
-          <Term key={group} name={group} lines={lines}></Term>
-        );
-      });
+    if (build.jobs.length != 1 && !job) {
+      return (
+        <Matrix repo={{owner: owner, name: name}} build={build}></Matrix>
+      );
     }
 
     return (
-      <PageContent fluid className="build">
-
-
-
-          <BuildPanel build={build} job={job_} />
-          <div className="log">{term}</div>
-
-      </PageContent>
+      <Results
+        repo={{owner: owner, name: name}}
+        build={build}
+        job={build.jobs[job ? job-1 : 0]}
+        logs={logs}>
+      </Results>
     );
   }
 

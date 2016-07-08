@@ -5,6 +5,8 @@ import {tree} from './tree';
 export const events = new Emmett();
 
 export const STREAM_FEED = 'STREAM_FEED';
+export const OPEN_LOG_STREAM = 'OPEN_LOG_STREAM';
+export const CLOSE_LOG_STREAM = 'CLOSE_LOG_STREAM';
 export const GET_FEED = 'GET_FEED';
 export const GET_REPO = 'GET_REPO';
 export const DEL_REPO = 'DEL_REPO';
@@ -17,6 +19,7 @@ export const POST_BUILD = 'POST_BUILD';
 export const DEL_BUILD = 'DEL_BUILD';
 export const GET_BUILD_LIST = 'GET_BUILD_LIST';
 export const GET_BUILD_LOGS = 'GET_BUILD_LOGS';
+export const DEL_BUILD_LOGS = 'DEL_BUILD_LOGS';
 export const FILTER = 'FILTER';
 export const FILTER_CLEAR = 'FILTER_CLEAR';
 export const GET_TOKEN = 'GET_TOKEN';
@@ -25,9 +28,9 @@ export const HIDE_TOKEN = 'HIDE_TOKEN';
 export const CLEAR_TOAST = 'CLEAR_TOAST';
 
 let token = function() {
-  var meta = document.querySelector("meta[name=csrf-token]");
-  if (meta) { return meta.getAttribute("content") }
-  else return "";
+  var meta = document.querySelector('meta[name=csrf-token]');
+  if (meta) { return meta.getAttribute('content') }
+  else return '';
 }();
 
 events.once(GET_FEED, function(event) {
@@ -197,6 +200,43 @@ events.on(GET_BUILD_LOGS, function(event) {
 
       tree.set('logs', procs);
     });
+});
+
+events.on(DEL_BUILD_LOGS, function(event) {
+  tree.unset('logs');
+});
+
+var ws;
+
+events.on(OPEN_LOG_STREAM, function(event) {
+  if (this.ws) {
+    this.ws.close();
+  }
+
+  const {owner, name, number, job} = event.data;
+  console.log(OPEN_LOG_STREAM, owner, name, number, job)
+
+  const proto = (window.location.protocol === 'https:') ? 'wss:' : 'ws:';
+  const path = ['/ws/logs', owner, name, number, job].join('/');
+
+  tree.set('logs', {});
+
+  this.ws = new WebSocket(proto + '//' + window.location.host + path);
+  this.ws.onmessage = function(message) {
+    let event = JSON.parse(message.data);
+    if (!event || !event.proc || !event.out) return;
+
+    if (!tree.exists(['logs', event.proc])) tree.set(['logs', event.proc], []);
+    tree.select(['logs', event.proc]).push(event);
+  }
+});
+
+events.on(CLOSE_LOG_STREAM, function(event) {
+  console.log(CLOSE_LOG_STREAM)
+  if (this.ws) {
+    this.ws.close();
+    this.ws = null;
+  }
 });
 
 events.on(DEL_REPO, (event) => {
