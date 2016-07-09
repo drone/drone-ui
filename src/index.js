@@ -10,6 +10,8 @@ import {routes} from './routes';
 import {tree} from './actions/tree';
 import {events} from './actions/events';
 
+import 'material-design-lite';
+
 // Creating our top-level component
 class App extends React.Component {
   render() {
