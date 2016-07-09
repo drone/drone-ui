@@ -26,15 +26,19 @@
     "eslint": "^2.5.3",
     "eslint-plugin-react": "^4.2.3",
     "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.9.0",
     "less": "^2.6.1",
     "less-loader": "^2.2.3",
-    "webpack": "^1.12.14"
+    "webpack": "^1.12.14",
+    "webpack-dev-server": "^1.14.1",
+    "yargs": "^4.7.1"
   },
   "scripts": {
-    "build": "NODE_ENV=production ./node_modules/.bin/webpack",
+    "start": "node ./webpack.devserver.js",
+    "build": "NODE_ENV=production webpack",
     "embed": "go-bindata-assetfs -o dist/app.go -ignore 'map|go' -pkg dist -nocompress=true dist/...",
-    "lint": "./node_modules/.bin/eslint src/",
-    "watch": "./node_modules/.bin/webpack -w"
+    "lint": "eslint src/",
+    "watch": "webpack -w"
   },
   "repository": {
     "type": "git",

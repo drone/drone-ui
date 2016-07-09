@@ -1,8 +1,5 @@
-/dist/*.js
-/dist/*.css
-/dist/*.ico
-/dist/*.map
-/dist/*.svg
+/dist/index.html
+/dist/static/
 /node_modules/
 .DS_Store
 .docker

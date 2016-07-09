@@ -1,11 +1,20 @@
+/* eslint-env node */
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
+var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: {
+    app: [
+      './index.html',
+      './src/index.js'
+    ]
+  },
   output: {
-    filename: './dist/app.js'
+    filename: 'static/app.js',
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/'
   },
   devtool: 'source-map',
   module: {
@@ -24,6 +33,10 @@ module.exports = {
           'css?sourceMap!' +
           'less?sourceMap'
         )
+      },
+      {
+        test: /index\.html$/,
+        loader: 'file?name=[name].[ext]'
       }
     ]
   },
@@ -38,27 +51,28 @@ module.exports = {
     extensions: ['', '.js', '.jsx']
   },
   plugins: [
-    new ExtractTextPlugin('./dist/app.css'),
+    new ExtractTextPlugin('static/app.css'),
     new CopyWebpackPlugin([
-        { from: 'images', to: 'dist' }
-    ])
+        { from: 'images', to: 'static' }
+    ]),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+    })
   ]
 };
 
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports.devtool = '#source-map'
+  module.exports.devtool = '#source-map';
   module.exports.plugins = (module.exports.plugins || []).concat([
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: '"production"'
-      }
-    }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
+      },
+      output: {
+        semicolons: false
       }
     }),
     new webpack.optimize.OccurenceOrderPlugin()
-  ])
+  ]);
 }
