@@ -35,7 +35,7 @@ if (process.env.NODE_ENV === 'production') {
 } else {
   superagent.get('/api/user').then((res) => {
     const user = JSON.parse(res.text);
-    window.STATE_FROM_SERVER = {user};
+    tree.set(['user'], user);
 
     ReactDOM.render(<RootedApp />, document.querySelector('#app'));
   });
