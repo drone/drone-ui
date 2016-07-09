@@ -29,8 +29,6 @@ When the server is running you can open the following url in your browser:
 http://localhost:9000
 ```
 
-__Note__ this proxy server currently requires front-end developers have Go installed and configured. We are interested in contributions that replace the Go implementation with a pure javascript implementation, limiting this potential barrier to entry.
-
 ## Bundling
 
 To bundle and embed the code in a Go source file install the following command line utilities:
