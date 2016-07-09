@@ -11,6 +11,8 @@ import {tree} from './actions/tree';
 import {Router, browserHistory} from 'react-router';
 /*eslint-enable */
 
+import 'material-design-lite';
+
 // Creating our top-level component
 class App extends React.Component {
   render() {

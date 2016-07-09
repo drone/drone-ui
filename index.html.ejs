@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta content="ie=edge" http-equiv="x-ua-compatible"/>
+  <% if (htmlWebpackPlugin.options.goTemplate) { %>
+  {{ if .csrf }}<meta name="csrf-token" content="{{ .csrf }}" />{{ end }}
+  <% } %>
+  <link href="/static/favicon.ico" rel="icon" type="image/x-icon"/>
+  <% for (var i = 0; i < htmlWebpackPlugin.files.css.length; i++) { %>
+  <link href="<%= htmlWebpackPlugin.files.css[i] %>" rel="stylesheet"/>
+  <% } %>
+</head>
+<body>
+<div id="app"></div>
+<% if (htmlWebpackPlugin.options.goTemplate) { %>
+<script>
+  window.STATE_FROM_SERVER = {{ . | json }};
+</script>
+<% } else { %>
+<script>
+  window.STATE_FROM_SERVER = {};
+</script>
+<% } %>
+<% for (var i = 0; i < htmlWebpackPlugin.files.js.length; i++) { %>
+<script src="<%= htmlWebpackPlugin.files.js[i] %>"></script>
+<% } %>
+</body>
+</html>
