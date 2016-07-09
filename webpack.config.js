@@ -35,6 +35,10 @@ module.exports = {
         )
       },
       {
+        test: /\/(fonts|iconfont)\/(.*)\.(eot|svg|ttf|woff2?)(\?.*)?$/,
+        loader: 'file?name=static/[name]-[hash].[ext]'
+      },
+      {
         test: /index\.html$/,
         loader: 'file?name=[name].[ext]'
       }
