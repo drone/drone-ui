@@ -1,18 +1,18 @@
 /* eslint-env node */
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
   entry: {
     app: [
-      './index.html',
       './src/index.js'
     ]
   },
   output: {
-    filename: 'static/app.js',
+    filename: 'static/app-[hash].js',
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/'
   },
@@ -51,10 +51,18 @@ module.exports = {
     extensions: ['', '.js', '.jsx']
   },
   plugins: [
-    new ExtractTextPlugin('static/app.css'),
+    new ExtractTextPlugin('static/app-[hash].css'),
     new CopyWebpackPlugin([
         { from: 'images', to: 'static' }
     ]),
+    new HtmlWebpackPlugin({
+      template: './index.html.ejs',
+      inject: false,
+      minify: {
+        collapseWhitespace: true,
+        minifyCSS: true
+      }
+    }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
     })
