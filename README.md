@@ -31,6 +31,16 @@ http://localhost:9000
 
 __Note__ this proxy server currently requires front-end developers have Go installed and configured. We are interested in contributions that replace the Go implementation with a pure javascript implementation, limiting this potential barrier to entry.
 
+## Drone and gogs in docker
+
+If you don't have a drone 0.5 instance running somewhere to test against, you can use docker-comopse to start it up locally. Just run
+
+```bash
+docker-compose up -d
+```
+
+Then you can access gogs at `http://{docker-host}:3000` and drone at `http:{{docker-host}:8000`.
+
 ## Bundling
 
 To bundle and embed the code in a Go source file install the following command line utilities:
