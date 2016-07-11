@@ -1,11 +1,10 @@
-import React from 'react';
 import {branch} from 'baobab-react/higher-order';
+import PageContent from '../../components/layout/content';
+import React from 'react';
+import {events, GET_REPO, PATCH_REPO} from '../../actions/events';
 import {Grid, Cell, Slider, Switch} from 'react-mdl';
 
 import './index.less';
-
-import {events, GET_REPO, PATCH_REPO} from '../../actions/events';
-import PageContent from '../../components/layout/content';
 
 class Content extends React.Component {
   constructor(props) {

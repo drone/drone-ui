@@ -1,12 +1,11 @@
+import {branch} from 'baobab-react/higher-order';
+import {Link} from 'react-router';
+import PageContent from '../../components/layout/content';
 import React from 'react';
 import {Switch} from 'react-mdl';
-import {Link} from 'react-router';
-import {branch} from 'baobab-react/higher-order';
+import {events, GET_REPO_LIST, POST_REPO, DEL_REPO} from '../../actions/events';
 
 import './index.less';
-
-import {events, GET_REPO_LIST, POST_REPO, DEL_REPO} from '../../actions/events';
-import PageContent from '../../components/layout/content';
 
 class Content extends React.Component {
 

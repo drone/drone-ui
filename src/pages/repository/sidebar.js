@@ -1,9 +1,8 @@
-import React from 'react';
-import {Link} from 'react-router';
 import {branch} from 'baobab-react/higher-order';
-import {events, GET_FEED, FILTER, FILTER_CLEAR, STREAM_FEED} from '../../actions/events';
-
+import {Link} from 'react-router';
+import React from 'react';
 import RepoListItem from '../../components/repo_list_item';
+import {events, GET_FEED, FILTER, FILTER_CLEAR, STREAM_FEED} from '../../actions/events';
 
 class Sidebar extends React.Component {
   constructor(props) {

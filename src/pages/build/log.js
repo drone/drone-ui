@@ -1,9 +1,8 @@
 import React from 'react';
 import Request from 'superagent';
-import { FABButton, Icon} from 'react-mdl';
-
+import {RUNNING} from '../../components/status';
 import Term from '../../components/term';
-import { RUNNING } from '../../components/status';
+import {FABButton, Icon} from 'react-mdl';
 
 export default
 class Log extends React.Component {

@@ -1,10 +1,9 @@
-import React from 'react';
 import {branch} from 'baobab-react/higher-order';
+import PageContent from '../../components/layout/content';
+import React from 'react';
 import {Grid, Cell} from 'react-mdl';
 
 import './index.less';
-
-import PageContent from '../../components/layout/content';
 
 class Content extends React.Component {
   render() {

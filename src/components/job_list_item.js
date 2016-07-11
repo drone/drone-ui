@@ -1,8 +1,7 @@
 import React from 'react';
+import Status from './status';
 
 import './job_list_item.less';
-
-import Status from './status';
 
 export default
 class JobListItem extends React.Component {

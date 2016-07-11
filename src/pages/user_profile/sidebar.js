@@ -1,8 +1,7 @@
+import {branch} from 'baobab-react/higher-order';
+import {Link} from 'react-router';
 import React from 'react';
 import {Button, Dialog, DialogContent, DialogActions} from 'react-mdl';
-import {Link} from 'react-router';
-import {branch} from 'baobab-react/higher-order';
-
 import {events, GET_TOKEN, SHOW_TOKEN, HIDE_TOKEN, SYNC_REPO_LIST} from '../../actions/events';
 
 class Sidebar extends React.Component {

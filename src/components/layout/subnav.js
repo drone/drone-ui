@@ -1,5 +1,5 @@
+import {Grid} from 'react-mdl';
 import React from 'react';
-import { Grid } from 'react-mdl';
 
 import './subnav.less';
 

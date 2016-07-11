@@ -1,11 +1,11 @@
-import Header from './header';
 import Content from './content';
+import Header from './header';
 import Sidebar from './sidebar';
 import Toolbar from './toolbar';
 
 export default {
-  Header,
   Content,
+  Header,
   Toolbar,
   Sidebar
 };

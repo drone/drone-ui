@@ -1,9 +1,8 @@
-import React from 'react';
-import {Link} from 'react-router';
-
 import BuildPanel from '../../components/build_panel';
-import PageContent from '../../components/layout/content';
 import JobListItem from '../../components/job_list_item';
+import {Link} from 'react-router';
+import PageContent from '../../components/layout/content';
+import React from 'react';
 
 export class Matrix extends React.Component {
 

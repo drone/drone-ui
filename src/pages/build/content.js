@@ -1,13 +1,11 @@
-import React from 'react';
 import {branch} from 'baobab-react/higher-order';
-
 import {Matrix} from './matrix';
+import React from 'react';
 import {Results} from './results';
+import {events, GET_BUILD} from '../../actions/events';
 
 import './index.less';
 
-
-import {events, GET_BUILD} from '../../actions/events';
 // import { cancelJob, restartJob } from '../../data/jobs/actions';
 
 class Content extends React.Component {

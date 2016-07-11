@@ -1,10 +1,8 @@
-import React from 'react';
 import {branch} from 'baobab-react/higher-order';
-
 import Breadcrumb from '../../components/layout/breadcrumb';
+import React from 'react';
 
 class Header extends React.Component {
-
   componentDidMount() {
     const {owner, name} = this.props.params;
     document.title = `${owner}/${name} | drone`;

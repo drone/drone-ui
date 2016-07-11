@@ -1,7 +1,7 @@
-import Header from '../repository/header';
 import Content from './content';
+import Header from '../repository/header';
 
 export default {
-  Header,
-  Content
+  Content,
+  Header
 };

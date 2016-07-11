@@ -1,8 +1,7 @@
-import React from 'react';
-
 import Avatar from './avatar';
-import Status from './status';
 import BuildMeta from './build_meta';
+import React from 'react';
+import Status from './status';
 
 import './build_card.less';
 

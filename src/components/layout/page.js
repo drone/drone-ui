@@ -1,13 +1,9 @@
-import React from 'react';
-
+import Avatar from '../avatar';
 import {branch} from 'baobab-react/higher-order';
+import React from 'react';
 import {browserHistory, Link} from 'react-router';
 import {events, CLEAR_TOAST} from '../../actions/events';
-
-// import Header from './header';
-import Avatar from '../avatar';
-
-import { Layout, Header, Drawer, Navigation, Content, IconButton, Menu, MenuItem, Snackbar} from 'react-mdl';
+import {Layout, Header, Drawer, Navigation, Content, IconButton, Menu, MenuItem, Snackbar} from 'react-mdl';
 
 import './page.less';
 

@@ -1,10 +1,9 @@
+import Avatar from '../avatar';
 import React from 'react';
-import { Link, browserHistory } from 'react-router';
-import { Grid, Cell, IconButton, Menu, MenuItem } from 'react-mdl';
+import {Grid, Cell, IconButton, Menu, MenuItem} from 'react-mdl';
+import {Link, browserHistory} from 'react-router';
 
 import './header.less';
-
-import Avatar from '../avatar';
 
 export default
 class Header extends React.Component {

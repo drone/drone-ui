@@ -1,12 +1,11 @@
-import React from 'react';
-import {Link} from 'react-router';
 import {branch} from 'baobab-react/higher-order';
+import BuildCard from '../../components/build_card';
+import {Link} from 'react-router';
+import PageContent from '../../components/layout/content';
+import React from 'react';
+import {events, GET_REPO, GET_BUILD_LIST} from '../../actions/events';
 
 import './index.less';
-
-import {events, GET_REPO, GET_BUILD_LIST} from '../../actions/events';
-import PageContent from '../../components/layout/content';
-import BuildCard from '../../components/build_card';
 
 class Content extends React.Component {
   componentDidMount() {
