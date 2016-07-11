@@ -38,17 +38,9 @@ class Content extends React.Component {
     }
   }
 
-  componentDidUpdate() {
-    const {state} = this.props;
-    if (state.follow) {
-      // document.querySelector(".mdl-layout__content").scrollTo(0,
-      //   document.querySelector(".mdl-layout__content").scrollHeight);
-    }
-  }
-
   render() {
     const {owner, name, number, job} = this.props.params;
-    const {repository, build, logs} = this.props;
+    const {repository, build, logs, state} = this.props;
 
     if (!build || !build.jobs) {
       return (
@@ -67,6 +59,7 @@ class Content extends React.Component {
         repo={{owner: owner, name: name}}
         build={build}
         job={build.jobs[job ? job-1 : 0]}
+        follow={state.follow}
         logs={logs}>
       </Results>
     );

@@ -46,6 +46,11 @@ export const tree = new Baobab({
   // of the latest activity per repository.
   feed: [],
 
+  // the selected tree tracks the selected repository, build and job.
+  // repo: undefined,
+  // build: undefined,
+  // job: undefined,
+
   // the pages branch of the tree maintains miscellanous state for the pages
   // in the application, including dialag state, snackbar state, etc.
   pages: {

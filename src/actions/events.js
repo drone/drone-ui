@@ -26,6 +26,8 @@ export const GET_TOKEN = 'GET_TOKEN';
 export const SHOW_TOKEN = 'SHOW_TOKEN';
 export const HIDE_TOKEN = 'HIDE_TOKEN';
 export const CLEAR_TOAST = 'CLEAR_TOAST';
+export const FOLLOW_LOGS = 'FOLLOW_LOGS';
+export const UNFOLLOW_LOGS = 'UNFOLLOW_LOGS';
 
 let token = function() {
   var meta = document.querySelector('meta[name=csrf-token]');
@@ -331,6 +333,14 @@ events.on(SHOW_TOKEN, function(event) {
 
 events.on(HIDE_TOKEN, function(event) {
   tree.set(['pages', 'account', 'token'], false);
+});
+
+events.on(FOLLOW_LOGS, function(event) {
+  tree.set(['pages', 'build', 'follow'], true);
+});
+
+events.on(UNFOLLOW_LOGS, function(event) {
+  tree.set(['pages', 'build', 'follow'], false);
 });
 
 events.on(FILTER, function(event) {
