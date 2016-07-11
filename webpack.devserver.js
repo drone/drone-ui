@@ -7,7 +7,6 @@ const webpack = require('webpack');
 const webpackConfig = require('./webpack.config.js');
 const WebpackDevServer = require('webpack-dev-server');
 
-const proxy = require('http-proxy').createProxyServer();
 const port = 9000;
 const drone = {
   scheme: argv.scheme,
@@ -54,10 +53,14 @@ const server = new WebpackDevServer(compiler, {
 });
 
 // proxy to drone websocket
+const proxy = require('http-proxy').createProxyServer();
+proxy.on('error', function () {
+  // ignore errors (like websocket connection reset from drone) and just continue
+});
 server.listeningApp.on('upgrade', function (req, socket) {
   if (req.url.match(/^\/ws\//)) {
     proxy.ws(req, socket, {
-      target: `${drone.wsServer}${req.url}?access_token=${drone.token}`,
+      target: drone.wsServer,
       headers: {
         'Authorization': `Bearer ${drone.token}`
       },
