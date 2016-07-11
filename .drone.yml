@@ -2,6 +2,6 @@ pipeline:
   build:
     image: node:4.4
     commands:
-      - npm install
+      - npm install --quiet
       - npm run lint
       - npm run build
