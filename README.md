@@ -23,13 +23,25 @@ npm start -- --scheme <drone scheme> \
              --token  <drone api token>
 ```
 
-When the server is running you can open the following url in your browser:
+For example:
+
+```
+npm start -- --scheme http \
+             --host   localhost:8080 \
+             --token  eyJhbGciOiJIUzI1NiIsInR5cCI....
+```
+
+Note you will need to retrieve your drone api token from your account settings screen in the drone user interface. When the server is running you can open the following url in your browser:
 
 ```
 http://localhost:9000
 ```
 
-## Bundling
+## Contributing
+
+Please discuss changes and enhancements in our [gitter room](https://gitter.im/drone/drone) prior to submitting a pull request. If your pull request alters the visual appearance of the user interface please include screenshots.
+
+## Releases
 
 To bundle and embed the code in a Go source file install the following command line utilities:
 
