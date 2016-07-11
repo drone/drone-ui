@@ -1,5 +1,5 @@
-import React from 'react';
 import ansi_up from 'ansi_up';
+import React from 'react';
 
 import './term_row.less';
 

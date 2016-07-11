@@ -1,8 +1,7 @@
-import React from 'react';
-import { IndexRoute, Route } from 'react-router';
-
 import Page from './components/layout/page';
 import Pages from './pages/index';
+import React from 'react';
+import {IndexRoute, Route} from 'react-router';
 
 export const routes = (
   <Route path="/" component={Page}>

@@ -1,11 +1,7 @@
-import React from 'react';
-
 import BuildPanel from '../../components/build_panel';
 import PageContent from '../../components/layout/content';
+import React from 'react';
 import Term from '../../components/term';
-
-import {RUNNING, PENDING} from '../../components/status';
-
 import {
   events,
   GET_BUILD_LOGS,
@@ -13,9 +9,9 @@ import {
   OPEN_LOG_STREAM,
   CLOSE_LOG_STREAM
 } from '../../actions/events';
+import {RUNNING, PENDING} from '../../components/status';
 
 export class Results extends React.Component {
-
   componentDidMount() {
     const {repo, build, job, logs} = this.props;
 

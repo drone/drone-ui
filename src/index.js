@@ -1,14 +1,13 @@
+import {events} from './actions/events';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Router, browserHistory} from 'react-router';
-import superagent from 'superagent';
 import {root} from 'baobab-react/higher-order';
+import {routes} from './routes';
+import superagent from 'superagent';
+import {tree} from './actions/tree';
+import {Router, browserHistory} from 'react-router';
 
 import './index.less';
-
-import {routes} from './routes';
-import {tree} from './actions/tree';
-import {events} from './actions/events';
 
 // Creating our top-level component
 class App extends React.Component {

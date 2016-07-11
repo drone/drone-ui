@@ -1,8 +1,7 @@
-import React from 'react';
-import {Link} from 'react-router';
 import {branch} from 'baobab-react/higher-order';
-
-import { Tabs, Tab }from '../../components/layout/tabs';
+import {Link} from 'react-router';
+import React from 'react';
+import {Tabs, Tab}from '../../components/layout/tabs';
 
 class Toolbar extends React.Component {
   render() {
