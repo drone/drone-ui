@@ -4,10 +4,4 @@ pipeline:
     commands:
       - npm install
       - npm run build
-
-  embed:
-    image: golang:1.6
-    commands:
-      - go get github.com/jteeuwen/go-bindata/...
-      - go get github.com/elazarl/go-bindata-assetfs/...
-      - go-bindata-assetfs -o dist/app.go -ignore 'map|go' -pkg dist -nocompress=true dist/...
+#      - npm run lint
