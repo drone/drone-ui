@@ -47,9 +47,9 @@ class Content extends React.Component {
   }
 }
 
-export default branch((props, context) => {
+export default branch((props) => {
   const {owner, name} = props.params;
   return {
     repository: ['repos', owner, name]
-  }
+  };
 }, Content);

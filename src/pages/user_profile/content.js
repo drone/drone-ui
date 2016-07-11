@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid, Cell, Button, Switch} from 'react-mdl';
+import {Switch} from 'react-mdl';
 import {Link} from 'react-router';
 import {branch} from 'baobab-react/higher-order';
 
@@ -23,13 +23,13 @@ class Content extends React.Component {
   }
 
   render() {
-    let {user, repos, token, params} = this.props;
+    let {user, repos, params} = this.props;
     if (!user || !repos) {
       return <div>Loading ...</div>;
     }
 
     if (repos.length === 0) {
-        return (
+      return (
           <div className="alert alert-empty">Your repository list is empty.</div>
         );
     }
@@ -37,19 +37,19 @@ class Content extends React.Component {
     // sort repositories by name ascending
     // TODO move this to the data handler
     repos.slice(0).sort((a, b) => {
-        return a.full_name.localeCompare(b.full_name);
-      });
+      return a.full_name.localeCompare(b.full_name);
+    });
 
     // filter repositories by owner
     if (params.account) {
       repos = repos.filter((repo) => {
         return params.account == repo.owner;
-      })
+      });
     }
 
     function repoList(repo) {
       var link;
-      if (!!repo.id) {
+      if (repo.id) {
         link = (
           <Link to={`/${repo.owner}/${repo.name}/settings`}><i className="material-icons">settings</i></Link>
         );
@@ -63,7 +63,7 @@ class Content extends React.Component {
           </div>
         </div>
       );
-    };
+    }
 
     return (
       <span>

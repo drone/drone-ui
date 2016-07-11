@@ -1,7 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
 import {branch} from 'baobab-react/higher-order';
-import moment from 'moment';
 
 import './index.less';
 
@@ -41,7 +40,7 @@ class Content extends React.Component {
     }
 
     if (!builds || Object.keys(builds).length == 0) {
-        return (
+      return (
           <div className="alert alert-empty">This repository does not have any builds yet.</div>
         );
     }
@@ -63,10 +62,10 @@ class Content extends React.Component {
   }
 }
 
-export default branch((props, context) => {
+export default branch((props) => {
   const {owner, name} = props.params;
   return {
     repository: ['repos', owner, name],
     builds: ['builds', owner, name]
-  }
+  };
 }, Content);

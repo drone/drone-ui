@@ -12,7 +12,7 @@ class Term extends React.Component {
     let rows = [];
     for (var i=0;i < lines.length; i++) {
       let line = lines[i];
-      rows.push(<TermRow line={line} key={i} />)
+      rows.push(<TermRow line={line} key={i} />);
     }
 
     return (

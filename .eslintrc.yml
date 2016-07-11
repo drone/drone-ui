@@ -11,19 +11,15 @@ parserOptions:
 plugins:
   - react
 rules:
-  indent:
-    - 2
-    - 2
-  linebreak-style:
-    - 2
-    - unix
-  quotes:
-    - 2
-    - single
-  semi:
-    - 2
-    - always
+  indent: [2, 2]
+  linebreak-style: [2, unix]
+  no-alert: 0
+  no-console: 0
+  quotes: [2, single]
   react/jsx-uses-react: 1
   react/jsx-uses-vars: 1
+  semi: [2, always]
+  # TODO enable
+  # sort-imports: [2, {ignoreCase: true, ignoreMemberSort: true, memberSyntaxSortOrder: [all, single, multiple, none]}]
 globals:
   process: true

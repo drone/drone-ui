@@ -1,5 +1,4 @@
 import React from 'react';
-import {browserHistory} from 'react-router';
 import {branch} from 'baobab-react/higher-order';
 import {Grid, Cell, Slider, Switch} from 'react-mdl';
 
@@ -134,9 +133,9 @@ class Content extends React.Component {
   // }
 }
 
-export default branch((props, context) => {
+export default branch((props) => {
   const {owner, name} = props.params;
   return {
     repository: ['repos', owner, name]
-  }
+  };
 }, Content);

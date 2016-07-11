@@ -41,7 +41,7 @@ class Sidebar extends React.Component {
           <input type="search" placeholder="Filter..." onChange={this.onFilter} spellCheck="off" />
         </div>
         <div>
-        {feed.map((repo, index) => {
+        {feed.map((repo) => {
           return (
             <Link key={repo.full_name} to={`/${repo.owner}/${repo.name}`}>
               <RepoListItem repo={repo}/>

@@ -4,7 +4,7 @@ import {branch} from 'baobab-react/higher-order';
 class Header extends React.Component {
 
   componentDidMount() {
-    document.title = "welcome | drone";
+    document.title = 'welcome | drone';
   }
 
   render() {
