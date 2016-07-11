@@ -3,7 +3,7 @@ import ansi_up from 'ansi_up';
 
 import './term_row.less';
 
-const opts = {use_classes: true}
+const opts = {use_classes: true};
 
 export default
 class TermRow extends React.Component {

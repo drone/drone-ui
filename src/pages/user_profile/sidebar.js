@@ -3,7 +3,6 @@ import {Button, Dialog, DialogContent, DialogActions} from 'react-mdl';
 import {Link} from 'react-router';
 import {branch} from 'baobab-react/higher-order';
 
-import PageContent from '../../components/layout/content';
 import {events, GET_TOKEN, SHOW_TOKEN, HIDE_TOKEN, SYNC_REPO_LIST} from '../../actions/events';
 
 class Sidebar extends React.Component {
@@ -76,5 +75,5 @@ export default branch({
   user: ['user'],
   token: ['token'],
   repositories: ['user', 'repos'],
-  state: ['pages', 'account'],
+  state: ['pages', 'account']
 }, Sidebar);

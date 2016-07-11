@@ -2,7 +2,6 @@ import React from 'react';
 
 import BuildPanel from '../../components/build_panel';
 import PageContent from '../../components/layout/content';
-import JobListItem from '../../components/job_list_item';
 import Term from '../../components/term';
 
 import {RUNNING, PENDING} from '../../components/status';
@@ -12,9 +11,7 @@ import {
   GET_BUILD_LOGS,
   DEL_BUILD_LOGS,
   OPEN_LOG_STREAM,
-  CLOSE_LOG_STREAM,
-  FOLLOW_LOGS,
-  UNFOLLOW_LOGS,
+  CLOSE_LOG_STREAM
 } from '../../actions/events';
 
 export class Results extends React.Component {
@@ -76,8 +73,8 @@ export class Results extends React.Component {
     const {follow, job} = this.props;
     if (follow && job && job.status == RUNNING) {
       // HACK fix this hacky code
-      const pane = document.querySelector(".mdl-layout__content");
-      pane.scrollTop = pane.scrollHeight
+      const pane = document.querySelector('.mdl-layout__content');
+      pane.scrollTop = pane.scrollHeight;
     }
   }
 

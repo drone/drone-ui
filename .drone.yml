@@ -3,5 +3,5 @@ pipeline:
     image: node:4.4
     commands:
       - npm install
+      - npm run lint
       - npm run build
-#      - npm run lint

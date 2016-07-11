@@ -12,7 +12,7 @@ class BuildPanel extends React.Component {
     let finished = build.finished_at * 1000;
     let duration = finished - start;
 
-    let classes = ["build-panel", job.status];
+    let classes = ['build-panel', job.status];
 
     let environs = [];
     if (job && job.environment) {

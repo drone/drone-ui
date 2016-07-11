@@ -31,11 +31,11 @@ export const UNFOLLOW_LOGS = 'UNFOLLOW_LOGS';
 
 let token = function() {
   var meta = document.querySelector('meta[name=csrf-token]');
-  if (meta) { return meta.getAttribute('content') }
+  if (meta) { return meta.getAttribute('content'); }
   else return '';
 }();
 
-events.once(GET_FEED, function(event) {
+events.once(GET_FEED, function() {
   Request.get('/api/user/feed?latest=true')
     .end((err, response) => {
       if (err != null) {
@@ -50,14 +50,14 @@ events.once(GET_FEED, function(event) {
     });
 });
 
-events.once(STREAM_FEED, function(event) {
+events.once(STREAM_FEED, function() {
   let proto = (window.location.protocol === 'https:') ? 'wss:' : 'ws:';
   let ws = new WebSocket(proto + '//' + window.location.host + '/ws/feed');
   ws.onmessage = function(message) {
     let {repo, build} = JSON.parse(message.data);
 
     // merge the item into the feed
-    tree.select(['feed']).map((cursor, i) => {
+    tree.select(['feed']).map((cursor) => {
       var selected = cursor.get();
       if (selected.owner == repo.owner && selected.name == repo.name) {
         cursor.merge(build);
@@ -66,10 +66,10 @@ events.once(STREAM_FEED, function(event) {
 
     // merge the item into the build cache
     tree.set(['builds', repo.owner, repo.name, build.number], build);
-  }
+  };
 });
 
-events.once(GET_REPO_LIST, function(event) {
+events.once(GET_REPO_LIST, function() {
   Request.get('/api/user/repos?all=true')
     .end((err, response) => {
       if (err != null) {
@@ -85,7 +85,7 @@ events.once(GET_REPO_LIST, function(event) {
     });
 });
 
-events.on(SYNC_REPO_LIST, function(event) {
+events.on(SYNC_REPO_LIST, function() {
   Request.get('/api/user/repos?all=true&flush=true')
     .end((err, response) => {
       if (err != null) {
@@ -139,7 +139,7 @@ events.on(PATCH_REPO, function(event) {
       if (err != null) {
         console.error(err);
         tree.set(['pages', 'toast'], 'Error updating repository settings');
-        return
+        return;
       }
       let repo = JSON.parse(response.text);
       tree.set(['repos', owner, name], repo);
@@ -204,11 +204,9 @@ events.on(GET_BUILD_LOGS, function(event) {
     });
 });
 
-events.on(DEL_BUILD_LOGS, function(event) {
+events.on(DEL_BUILD_LOGS, function() {
   tree.unset('logs');
 });
-
-var ws;
 
 events.on(OPEN_LOG_STREAM, function(event) {
   if (this.ws) {
@@ -216,7 +214,7 @@ events.on(OPEN_LOG_STREAM, function(event) {
   }
 
   const {owner, name, number, job} = event.data;
-  console.log(OPEN_LOG_STREAM, owner, name, number, job)
+  console.log(OPEN_LOG_STREAM, owner, name, number, job);
 
   const proto = (window.location.protocol === 'https:') ? 'wss:' : 'ws:';
   const path = ['/ws/logs', owner, name, number, job].join('/');
@@ -230,11 +228,11 @@ events.on(OPEN_LOG_STREAM, function(event) {
 
     if (!tree.exists(['logs', event.proc])) tree.set(['logs', event.proc], []);
     tree.select(['logs', event.proc]).push(event);
-  }
+  };
 });
 
-events.on(CLOSE_LOG_STREAM, function(event) {
-  console.log(CLOSE_LOG_STREAM)
+events.on(CLOSE_LOG_STREAM, function() {
+  console.log(CLOSE_LOG_STREAM);
   if (this.ws) {
     this.ws.close();
     this.ws = null;
@@ -244,7 +242,7 @@ events.on(CLOSE_LOG_STREAM, function(event) {
 events.on(DEL_REPO, (event) => {
   const {owner, name} = event.data;
 
-  tree.select(['user','repos']).map((cursor, i) => {
+  tree.select(['user','repos']).map((cursor) => {
     var selected = cursor.get();
     if (selected.owner == owner && selected.name == name) {
       cursor.unset(['id']);
@@ -253,11 +251,11 @@ events.on(DEL_REPO, (event) => {
 
   Request.del(`/api/repos/${owner}/${name}`)
     .set('X-CSRF-TOKEN', token)
-    .end((err, response) => {
+    .end((err) => {
       if (err != null) {
         console.error(err);
         tree.set(['pages', 'toast'], `Error disabling ${owner}/${name}`);
-        return
+        return;
       }
 
       tree.unset(['repos', owner, name]);
@@ -279,7 +277,7 @@ events.on(DEL_REPO, (event) => {
 events.on(POST_REPO, (event) => {
   const {owner, name} = event.data;
 
-  tree.select(['user','repos']).map((cursor, i) => {
+  tree.select(['user','repos']).map((cursor) => {
     var selected = cursor.get();
     if (selected.owner == owner && selected.name == name) {
       cursor.set(['id'], -1);
@@ -292,7 +290,7 @@ events.on(POST_REPO, (event) => {
       if (err != null) {
         console.error(err);
         tree.set(['pages', 'toast'], `Error activating ${repo.full_name}`);
-        return
+        return;
       }
 
       let repo = JSON.parse(response.text);
@@ -302,10 +300,10 @@ events.on(POST_REPO, (event) => {
 
       // update the repository in the user repository list, iterate
       // through the cursor to find the entry.
-      tree.select(['user','repos']).map((cursor, i) => {
+      tree.select(['user','repos']).map((cursor) => {
         var selected = cursor.get();
         if (selected.owner == owner && selected.name == name) {
-          cursor.merge(repo)
+          cursor.merge(repo);
         }
       });
 
@@ -315,8 +313,8 @@ events.on(POST_REPO, (event) => {
     });
 });
 
-events.once(GET_TOKEN, function(event) {
-  Request.post(`/api/user/token`)
+events.once(GET_TOKEN, function() {
+  Request.post('/api/user/token')
     .set('X-CSRF-TOKEN', token)
     .end((err, response) => {
       if (err != null) {
@@ -327,19 +325,19 @@ events.once(GET_TOKEN, function(event) {
     });
 });
 
-events.on(SHOW_TOKEN, function(event) {
+events.on(SHOW_TOKEN, function() {
   tree.set(['pages', 'account', 'token'], true);
 });
 
-events.on(HIDE_TOKEN, function(event) {
+events.on(HIDE_TOKEN, function() {
   tree.set(['pages', 'account', 'token'], false);
 });
 
-events.on(FOLLOW_LOGS, function(event) {
+events.on(FOLLOW_LOGS, function() {
   tree.set(['pages', 'build', 'follow'], true);
 });
 
-events.on(UNFOLLOW_LOGS, function(event) {
+events.on(UNFOLLOW_LOGS, function() {
   tree.set(['pages', 'build', 'follow'], false);
 });
 
@@ -352,10 +350,10 @@ events.on(FILTER, function(event) {
   }
 });
 
-events.on(FILTER_CLEAR, function(event) {
+events.on(FILTER_CLEAR, function() {
   tree.unset(['pages', 'repo', 'filter']);
 });
 
-events.on(CLEAR_TOAST, function(event) {
+events.on(CLEAR_TOAST, function() {
   tree.unset(['pages', 'toast']);
 });

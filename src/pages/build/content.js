@@ -1,14 +1,11 @@
 import React from 'react';
 import {branch} from 'baobab-react/higher-order';
-import {Button} from 'react-mdl';
 
 import {Matrix} from './matrix';
 import {Results} from './results';
 
 import './index.less';
 
-import PageContent from '../../components/layout/content';
-import BuildPanel from '../../components/build_panel';
 
 import {events, GET_BUILD} from '../../actions/events';
 // import { cancelJob, restartJob } from '../../data/jobs/actions';
@@ -39,8 +36,8 @@ class Content extends React.Component {
   }
 
   render() {
-    const {owner, name, number, job} = this.props.params;
-    const {repository, build, logs, state} = this.props;
+    const {owner, name, job} = this.props.params;
+    const {build, logs, state} = this.props;
 
     if (!build || !build.jobs) {
       return (
@@ -91,12 +88,12 @@ class Content extends React.Component {
   // }
 }
 
-export default branch((props, context) => {
+export default branch((props) => {
   const {owner, name, number} = props.params;
   return {
     state: ['pages', 'build'],
     repository: ['repos', owner, name],
     build: ['builds', owner, name, number],
     logs: ['logs']
-  }
+  };
 }, Content);

@@ -3,5 +3,5 @@ import Content from './content';
 
 export default {
   Content,
-  Header,
+  Header
 };
