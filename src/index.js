@@ -1,3 +1,6 @@
+/*eslint-disable */
+import './index.less';
+
 import {events} from './actions/events';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -6,8 +9,7 @@ import {routes} from './routes';
 import superagent from 'superagent';
 import {tree} from './actions/tree';
 import {Router, browserHistory} from 'react-router';
-
-import './index.less';
+/*eslint-enable */
 
 // Creating our top-level component
 class App extends React.Component {
