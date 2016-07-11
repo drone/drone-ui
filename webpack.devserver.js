@@ -7,11 +7,13 @@ const webpack = require('webpack');
 const webpackConfig = require('./webpack.config.js');
 const WebpackDevServer = require('webpack-dev-server');
 
+const proxy = require('http-proxy').createProxyServer();
 const port = 9000;
 const drone = {
   scheme: argv.scheme,
   host: argv.host,
   server: `${argv.scheme}://${argv.host}`,
+  wsServer: `${argv.scheme === 'https' ? 'wss' : 'ws'}://${argv.host}`,
   token: argv.token
 };
 
@@ -32,16 +34,6 @@ const server = new WebpackDevServer(compiler, {
       },
       xfwd: true,
       changeOrigin: true
-    },
-    // proxy to drone websockets
-    '/ws/*': {
-      target: drone.server,
-      headers: {
-        'Authorization': `Bearer ${drone.token}`
-      },
-      xfwd: true,
-      ws: true,
-      changeOrigin: true
     }
   },
   // reduce the console noise
@@ -60,6 +52,18 @@ const server = new WebpackDevServer(compiler, {
     children: false
   }
 });
+
+// proxy to drone websocket
+server.listeningApp.on('upgrade', function (req, socket) {
+  if (req.url.match(/^\/ws\//)) {
+    proxy.ws(req, socket, {
+      target: `${drone.wsServer}${req.url}?access_token=${drone.token}`,
+      ws: true,
+      changeOrigin: true
+    });
+  }
+});
+
 server.listen(9000, (err) => {
   if (err) return console.err(err);
   console.log(`Now listening on http://localhost:${port}`);
