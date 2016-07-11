@@ -58,6 +58,9 @@ server.listeningApp.on('upgrade', function (req, socket) {
   if (req.url.match(/^\/ws\//)) {
     proxy.ws(req, socket, {
       target: `${drone.wsServer}${req.url}?access_token=${drone.token}`,
+      headers: {
+        'Authorization': `Bearer ${drone.token}`
+      },
       ws: true,
       changeOrigin: true
     });
