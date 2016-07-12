@@ -50,6 +50,10 @@
 .build-panel-detail {
   display: flex;
 
+  @media screen and (max-width : 600px) {
+    flex-direction: column;
+	}
+
   em {
     font-style: normal;
     min-width:70px;
@@ -86,6 +90,11 @@
   }
   &> div:last-child {
     max-width: 300px;
+    white-space: nowrap;
+
+    @media screen and (max-width : 600px) {
+      margin-top:30px;
+  	}
   }
 
   .commit-link {
