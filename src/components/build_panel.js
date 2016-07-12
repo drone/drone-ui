@@ -39,12 +39,12 @@ class BuildPanel extends React.Component {
           </div>
           <div>
             <div>
-              <i className="material-icons">timelapse</i>
-              <span>{moment.duration(duration).humanize()}</span>
-            </div>
-            <div>
               <i className="material-icons">access_time</i>
               <span>{moment(start).fromNow()}</span>
+            </div>
+            <div>
+              <i className="material-icons">timelapse</i>
+              <span>{moment.duration(duration).humanize()}</span>
             </div>
           </div>
         </div>
