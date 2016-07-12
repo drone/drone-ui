@@ -16,5 +16,3 @@ class BuildMeta extends React.Component {
     );
   }
 }
-
-// <em>{moment(build.get('created_at') * 1000).fromNow()}</em>

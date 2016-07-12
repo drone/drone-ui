@@ -1,5 +1,6 @@
-import moment from 'moment';
+import Humanize from './humanize';
 import React from 'react';
+import TimeAgo from 'react-timeago';
 
 import './build_panel.less';
 
@@ -7,10 +8,6 @@ export default
 class BuildPanel extends React.Component {
   render() {
     const {build, job} = this.props;
-
-    let start = build.created_at * 1000;
-    let finished = build.finished_at * 1000;
-    let duration = finished - start;
 
     let classes = ['build-panel', job.status];
 
@@ -40,11 +37,17 @@ class BuildPanel extends React.Component {
           <div>
             <div>
               <i className="material-icons">access_time</i>
-              <span>{moment(start).fromNow()}</span>
+              {job.started_at ?
+                <TimeAgo date={(job.started_at || job.created_at) * 1000} /> :
+                <span>--</span>
+              }
             </div>
             <div>
               <i className="material-icons">timelapse</i>
-              <span>{moment.duration(duration).humanize()}</span>
+              {job.finished_at ?
+                <Humanize finished={job.finished_at} start={job.started_at} /> :
+                <TimeAgo date={(job.started_at || job.created_at) * 1000} />
+              }
             </div>
           </div>
         </div>
@@ -53,3 +56,4 @@ class BuildPanel extends React.Component {
     );
   }
 }
+/**/

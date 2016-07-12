@@ -1,6 +1,7 @@
-import moment from 'moment';
+import Humanize from './humanize';
 import React from 'react';
 import Status from './status';
+import TimeAgo from 'react-timeago';
 
 import './repo_list_item.less';
 
@@ -8,10 +9,6 @@ export default
 class RepoListItem extends React.Component {
   render() {
     const {repo} = this.props;
-
-    let start = repo.started_at * 1000;
-    let finished = repo.finished_at * 1000;
-    let duration = finished - start;
 
     return (
       <div className="repo-list-item">
@@ -22,11 +19,19 @@ class RepoListItem extends React.Component {
         <div className="repo-list-item-body">
           <div>
             <i className="material-icons">access_time</i>
-            <span>{!start ? '--' : moment(start).fromNow()}</span>
+            {repo.started_at || repo.created_at ?
+              <TimeAgo date={(repo.started_at || repo.created_at) * 1000} /> :
+              <span>--</span>
+            }
           </div>
           <div>
             <i className="material-icons">timelapse</i>
-            <span>{isNaN(duration) ? '--' : moment.duration(duration).humanize()}</span>
+            {repo.finished_at ?
+              <Humanize finished={repo.finished_at} start={repo.started_at} /> :
+              repo.started_at ?
+                <TimeAgo date={(repo.started_at || repo.created_at) * 1000} /> :
+                <span>--</span>
+            }
           </div>
         </div>
       </div>
