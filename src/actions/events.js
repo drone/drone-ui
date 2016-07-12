@@ -179,6 +179,28 @@ events.on(GET_BUILD, function(event) {
     });
 });
 
+events.on(POST_BUILD, function(event) {
+  const {owner, name, number} = event.data;
+  Request.post(`/api/repos/${owner}/${name}/builds/${number}`)
+    .set('X-CSRF-TOKEN', token)
+    .end((err) => {
+      if (err != null) {
+        console.error(err);
+      }
+    });
+});
+
+events.on(DEL_BUILD, function(event) {
+  const {owner, name, number, job} = event.data;
+  Request.delete(`/api/repos/${owner}/${name}/builds/${number}/${job}`)
+    .set('X-CSRF-TOKEN', token)
+    .end((err) => {
+      if (err != null) {
+        console.error(err);
+      }
+    });
+});
+
 events.on(GET_BUILD_LOGS, function(event) {
   const {owner, name, number, job} = event.data;
   Request.get(`/api/repos/${owner}/${name}/logs/${number}/${job}`)
