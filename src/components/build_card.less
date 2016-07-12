@@ -14,6 +14,7 @@
   padding: 0;
   border: none;
   background: #FFF;
+  min-width: 48px;
 
   .avatar {
     width: 28px;
@@ -23,6 +24,7 @@
 
 .card .card-footer {
   width: 100px;
+  min-width: 100px;
   text-align: right;
   white-space: nowrap;
 
@@ -51,10 +53,16 @@
     display: inline-block;
     margin: 0;
     line-height: 28px;
+    min-height:28px;
     font-size: 16px;
-    max-width: 600px;
-    white-space: nowrap;
+    // max-width: 600px;
+    // white-space: nowrap;
+    // overflow: hidden;
+    // text-overflow: ellipsis;
+
     overflow: hidden;
-    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
   }
 }
