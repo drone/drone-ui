@@ -14,6 +14,10 @@ class Sidebar extends React.Component {
   render() {
     let {feed, user, state} = this.props;
 
+    feed = feed.slice().sort(function(a, b) {
+      return (b.started_at || b.created_at || -1) - (a.started_at || a.created_at || -1);
+    });
+
     if (!user) {
       return (
         <div className="repository-sidebar">

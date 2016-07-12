@@ -44,7 +44,7 @@ events.once(GET_FEED, function() {
       }
       let feed = JSON.parse(response.text);
       feed.sort(function(a, b) {
-        return b.started_at - a.started_at;
+        return (b.started_at || b.created_at || -1) - (a.started_at || a.created_at || -1);
       });
       tree.set('feed', feed);
     });
