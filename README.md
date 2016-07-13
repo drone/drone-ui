@@ -1,3 +1,5 @@
+[![Build Status](http://beta.drone.io/api/badges/drone/drone-ui/status.svg)](http://beta.drone.io/drone/drone-ui)
+
 # drone-ui
 
 This project contains the source code for the drone user interface. The generated javascript and css assets are embedded into a Go source file which is imported into the main drone application, using `go get`.

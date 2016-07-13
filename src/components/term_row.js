@@ -15,7 +15,7 @@ class TermRow extends React.Component {
        <div className="term-row term-row-exit-code">
         <div>exit code {out}</div>
        </div>
-      )
+      );
     }
 
     let html = ansi_up.escape_for_html(out || '');
