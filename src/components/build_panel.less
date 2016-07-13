@@ -50,9 +50,13 @@
     font-size:15px;
     margin-top:30px;
     margin-bottom:0px;
-    overflow:hidden;
-    text-overflow: ellipsis;
     line-height: 24px;
+
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
   }
 
   i ~ span {
