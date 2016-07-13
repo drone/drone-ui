@@ -8,7 +8,15 @@ const opts = {use_classes: true};
 export default
 class TermRow extends React.Component {
   render() {
-    const {pos, out, time} = this.props.line;
+    const {pos, out, time, type} = this.props.line;
+
+    if (type === 2) {
+      return (
+       <div className="term-row term-row-exit-code">
+        <div>exit code {out}</div>
+       </div>
+      )
+    }
 
     let html = ansi_up.escape_for_html(out || '');
     html = ansi_up.ansi_to_html(html, opts);
