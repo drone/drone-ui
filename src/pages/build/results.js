@@ -1,7 +1,7 @@
 import BuildPanel from '../../components/build_panel';
+import {Button} from 'react-mdl';
 import PageContent from '../../components/layout/content';
 import React from 'react';
-import {Button} from 'react-mdl';
 import Term from '../../components/term';
 import {
   events,
