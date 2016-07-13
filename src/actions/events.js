@@ -100,8 +100,12 @@ events.once(GET_REPO_LIST, function() {
 });
 
 events.on(SYNC_REPO_LIST, function() {
+  tree.set(['pages', 'account', 'syncing'], true);
+
   Request.get('/api/user/repos?all=true&flush=true')
     .end((err, response) => {
+      tree.set(['pages', 'account', 'syncing'], false);
+
       if (err != null) {
         tree.set(['pages', 'toast'], 'Error syncing repository list');
         return;

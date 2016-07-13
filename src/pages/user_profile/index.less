@@ -35,6 +35,11 @@
     text-align: left;
     padding-left:30px;
 
+    i {
+      font-size: 20px;
+      margin-right: 7px;
+    }
+
     .mdl-button__ripple-container {
       margin: 0px;
       display: block;
@@ -46,6 +51,12 @@
       outline: none;
       cursor: pointer;
     }
+  }
+
+  .mdl-button--raised[disabled][disabled],
+  .mdl-button--raised.mdl-button--disabled.mdl-button--disabled {
+    color: #BDBDBD;
+    background: #FFF;
   }
 }
 

@@ -55,7 +55,8 @@ export const tree = new Baobab({
   // in the application, including dialag state, snackbar state, etc.
   pages: {
     account: {
-      token: false
+      token: false,
+      syncing: false
     },
     repo: {
       filter: undefined

@@ -1,7 +1,7 @@
 import {branch} from 'baobab-react/higher-order';
 import {Link} from 'react-router';
 import React from 'react';
-import {Button, Dialog, DialogContent, DialogActions} from 'react-mdl';
+import {Button, Dialog, DialogContent, DialogActions, Icon} from 'react-mdl';
 import {events, GET_TOKEN, SHOW_TOKEN, HIDE_TOKEN, SYNC_REPO_LIST} from '../../actions/events';
 
 class Sidebar extends React.Component {
@@ -36,8 +36,8 @@ class Sidebar extends React.Component {
     return (
       <div>
         <div className="account-actions">
-          <Button raised ripple onClick={this.handleShowToken}>Show Token</Button>
-          <Button raised ripple onClick={this.handleSync}>Sync List</Button>
+          <Button raised ripple onClick={this.handleShowToken}><Icon name="visibility" /> Show Token</Button>
+          <Button raised ripple disabled={state.syncing} onClick={this.handleSync}><Icon name="cached" /> Sync List</Button>
         </div>
         <div className="account-list">
           {items}
