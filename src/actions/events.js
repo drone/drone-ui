@@ -122,8 +122,14 @@ events.on(GET_REPO, function(event) {
   Request.get(`/api/repos/${owner}/${name}`)
     .end((err, response) => {
       if (err != null) {
-        console.error(err);
+        Object.assign({
+          statusCode: response.statusCode,
+          statusText: response.statusText
+        }, err);
+        tree.set(['repos', owner, name], err);
+        return;
       }
+
       let repo = JSON.parse(response.text);
       let cursor = tree.select(['repos', owner, name]);
       if (cursor.get()) {
@@ -185,11 +191,16 @@ events.on(GET_BUILD, function(event) {
   Request.get(`/api/repos/${owner}/${name}/builds/${number}`)
     .end((err, response) => {
       if (err != null) {
-        console.error(err);
+        Object.assign({
+          statusCode: response.statusCode,
+          statusText: response.statusText
+        }, err);
+        tree.set(['builds', owner, name, number], err);
+        return;
       }
       let build = JSON.parse(response.text);
       tree.unset('logs');
-      tree.set(['builds', owner, name, build.number], build);
+      tree.set(['builds', owner, name, number], build);
     });
 });
 

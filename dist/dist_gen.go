@@ -81,7 +81,7 @@ func distIndexHtml() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "dist/index.html", size: 771, mode: os.FileMode(420), modTime: time.Unix(1468380481, 0)}
+	info := bindataFileInfo{name: "dist/index.html", size: 771, mode: os.FileMode(420), modTime: time.Unix(1468386712, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -99,7 +99,7 @@ func distStaticAppCss() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "dist/static/app.css", size: 148197, mode: os.FileMode(420), modTime: time.Unix(1468380481, 0)}
+	info := bindataFileInfo{name: "dist/static/app.css", size: 148197, mode: os.FileMode(420), modTime: time.Unix(1468386713, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -239,7 +239,7 @@ var n=JSON.parse(t.text)
 n.sort(function(e,t){return e.full_name<t.full_name?-1:e.full_name>t.full_name?1:0}),s.tree.set(["user","repos"],n)})}),l.on(g,function(){u["default"].get("/api/user/repos?all=true&flush=true").end(function(e,t){if(null!=e)return void s.tree.set(["pages","toast"],"Error syncing repository list")
 var n=JSON.parse(t.text)
 n.sort(function(e,t){return e.full_name<t.full_name?-1:e.full_name>t.full_name?1:0}),s.tree.set(["user","repos"],n),s.tree.set(["pages","toast"],"Successfully synchronized repository list")})}),l.on(h,function(e){var t=e.data,n=t.owner,r=t.name
-u["default"].get("/api/repos/"+n+"/"+r).end(function(e,t){null!=e&&console.error(e)
+u["default"].get("/api/repos/"+n+"/"+r).end(function(e,t){if(null!=e)return Object.assign({statusCode:t.statusCode,statusText:t.statusText},e),void s.tree.set(["repos",n,r],e)
 var o=JSON.parse(t.text),a=s.tree.select(["repos",n,r])
 a.get()?a.merge(o):s.tree.set(["repos",n,r],o)})}),l.on(y,function(e){var t=e.data,n=t.owner,r=t.name
 void 0!==e.data.allow_deploys&&(e.data.allow_deploy=e.data.allow_deploys),void 0!==e.data.allow_tags&&(e.data.allow_tag=e.data.allow_tags),u["default"].patch("/api/repos/"+n+"/"+r).set("X-CSRF-TOKEN",A).send(e.data).end(function(e,t){if(null!=e)return console.error(e),void s.tree.set(["pages","toast"],"Error updating repository settings")
@@ -248,9 +248,9 @@ s.tree.set(["repos",n,r],o),s.tree.set(["pages","toast"],"Successfully updated r
 u["default"].get("/api/repos/"+n+"/"+r+"/builds").end(function(e,t){null!=e&&console.error(e)
 var o=JSON.parse(t.text)
 0==o.length&&s.tree.set(["builds",n,r],{}),o.map(function(e){s.tree.set(["builds",n,r,e.number],e)})})}),l.on(_,function(e){var t=e.data,n=t.owner,r=t.name,o=t.number
-u["default"].get("/api/repos/"+n+"/"+r+"/builds/"+o).end(function(e,t){null!=e&&console.error(e)
-var o=JSON.parse(t.text)
-s.tree.unset("logs"),s.tree.set(["builds",n,r,o.number],o)})}),l.on(O,function(e){var t=e.data,n=t.owner,r=t.name,o=t.number
+u["default"].get("/api/repos/"+n+"/"+r+"/builds/"+o).end(function(e,t){if(null!=e)return Object.assign({statusCode:t.statusCode,statusText:t.statusText},e),void s.tree.set(["builds",n,r,o],e)
+var a=JSON.parse(t.text)
+s.tree.unset("logs"),s.tree.set(["builds",n,r,o],a)})}),l.on(O,function(e){var t=e.data,n=t.owner,r=t.name,o=t.number
 u["default"].post("/api/repos/"+n+"/"+r+"/builds/"+o).set("X-CSRF-TOKEN",A).end(function(e){null!=e&&console.error(e)})}),l.on(w,function(e){var t=e.data,n=t.owner,r=t.name,o=t.number,a=t.job
 u["default"]["delete"]("/api/repos/"+n+"/"+r+"/builds/"+o+"/"+a).set("X-CSRF-TOKEN",A).end(function(e){null!=e&&console.error(e)})}),l.on(E,function(e){var t=e.data,n=t.owner,r=t.name,o=t.number,a=t.job
 u["default"].get("/api/repos/"+n+"/"+r+"/logs/"+o+"/"+a).end(function(e,t){null!=e&&console.error(e)
@@ -1676,7 +1676,7 @@ n(207)
 var h=function(e){function t(e){return o(this,t),a(this,Object.getPrototypeOf(t).call(this,e))}return i(t,e),u(t,[{key:"componentDidMount",value:function(){var e=this.props.params,t=e.owner,n=e.name,r=e.number
 d.events.emit(d.GET_BUILD,{owner:t,name:n,number:r})}},{key:"componentWillReceiveProps",value:function(e){var t=this.props.params,n=t.owner,r=t.name,o=t.number,a=e.params,i=a.owner,u=a.name,s=a.number
 i==n&&u==r&&s==o||d.events.emit(d.GET_BUILD,{owner:n,name:r,number:o})}},{key:"render",value:function(){var e=this.props.params,t=e.owner,n=e.name,r=e.job,o=this.props,a=o.build,i=o.logs,u=o.state
-return a&&a.jobs?1==a.jobs.length||r?f["default"].createElement(p.Results,{repo:{owner:t,name:n},build:a,job:a.jobs[r?r-1:0],follow:u.follow,logs:i}):f["default"].createElement(l.Matrix,{repo:{owner:t,name:n},build:a}):f["default"].createElement("div",null,"Loading...")}}]),t}(f["default"].Component)
+return a instanceof Error?f["default"].createElement("div",{className:"alert alert-empty"},"This build is Not Found"):a&&a.jobs?1==a.jobs.length||r?f["default"].createElement(p.Results,{repo:{owner:t,name:n},build:a,job:a.jobs[r?r-1:0],follow:u.follow,logs:i}):f["default"].createElement(l.Matrix,{repo:{owner:t,name:n},build:a}):f["default"].createElement("div",null,"Loading...")}}]),t}(f["default"].Component)
 t["default"]=(0,s.branch)(function(e){var t=e.params,n=t.owner,r=t.name,o=t.number
 return{state:["pages","build"],repository:["repos",n,r],build:["builds",n,r,o],logs:["logs"]}},h)},function(e,t,n){"use strict"
 function r(e){return e&&e.__esModule?e:{"default":e}}function o(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function a(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called")
@@ -1743,8 +1743,8 @@ var v=function(e){function t(){return o(this,t),a(this,Object.getPrototypeOf(t).
 y.events.emit(y.GET_REPO,{owner:t,name:n}),y.events.emit(y.GET_BUILD_LIST,{owner:t,name:n})}},{key:"shouldComponentUpdate",value:function(e){var t=this.props,n=t.repository,r=t.builds
 return n!=e.repository||r!=e.builds}},{key:"componentWillReceiveProps",value:function(e){var t=this.props.params,n=t.owner,r=t.name,o=e.params,a=o.owner,i=o.name
 a==n&&i==r||(y.events.emit(y.GET_REPO,e.params),y.events.emit(y.GET_BUILD_LIST,e.params))}},{key:"render",value:function(){function e(e){var t=i[e]
-return m["default"].createElement(f.Link,{key:t.number,to:"/"+n+"/"+r+"/"+t.number},m["default"].createElement(c["default"],{build:t}))}var t=this.props.params,n=t.owner,r=t.name,o=this.props,a=o.repository,i=o.builds
-return a&&i?i&&0!=Object.keys(i).length?m["default"].createElement(d["default"],{className:"repository history"},Object.keys(i).sort(function(e,t){return t-e}).map(e)):m["default"].createElement("div",{className:"alert alert-empty"},"This repository does not have any builds yet."):m["default"].createElement("div",null,"Loading...")}}]),t}(m["default"].Component)
+return t instanceof Error?null:m["default"].createElement(f.Link,{key:t.number,to:"/"+n+"/"+r+"/"+t.number},m["default"].createElement(c["default"],{build:t}))}var t=this.props.params,n=t.owner,r=t.name,o=this.props,a=o.repository,i=o.builds
+return a instanceof Error?m["default"].createElement("div",{className:"alert alert-empty"},"This repository is Not Found"):a&&i?i&&0!=Object.keys(i).length?m["default"].createElement(d["default"],{className:"repository history"},Object.keys(i).sort(function(e,t){return t-e}).map(e)):m["default"].createElement("div",{className:"alert alert-empty"},"This repository does not have any builds yet."):m["default"].createElement("div",null,"Loading...")}}]),t}(m["default"].Component)
 t["default"]=(0,s.branch)(function(e){var t=e.params,n=t.owner,r=t.name
 return{repository:["repos",n,r],builds:["builds",n,r]}},v)},function(e,t,n){"use strict"
 function r(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(t,"__esModule",{value:!0})
@@ -3216,7 +3216,7 @@ func distStaticAppJs() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "dist/static/app.js", size: 432414, mode: os.FileMode(420), modTime: time.Unix(1468380481, 0)}
+	info := bindataFileInfo{name: "dist/static/app.js", size: 432845, mode: os.FileMode(420), modTime: time.Unix(1468386713, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -3326,7 +3326,7 @@ func distStaticDroneSvg() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "dist/static/drone.svg", size: 3499, mode: os.FileMode(420), modTime: time.Unix(1468380481, 0)}
+	info := bindataFileInfo{name: "dist/static/drone.svg", size: 3499, mode: os.FileMode(420), modTime: time.Unix(1468386713, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -3343,7 +3343,7 @@ func distStaticFaviconIco() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "dist/static/favicon.ico", size: 1150, mode: os.FileMode(420), modTime: time.Unix(1468380481, 0)}
+	info := bindataFileInfo{name: "dist/static/favicon.ico", size: 1150, mode: os.FileMode(420), modTime: time.Unix(1468386713, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }

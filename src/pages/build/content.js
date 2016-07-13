@@ -37,6 +37,12 @@ class Content extends React.Component {
     const {owner, name, job} = this.props.params;
     const {build, logs, state} = this.props;
 
+    if (build instanceof Error) {
+      return (
+        <div className="alert alert-empty">This build is Not Found</div>
+      );
+    }
+
     if (!build || !build.jobs) {
       return (
         <div>Loading...</div>

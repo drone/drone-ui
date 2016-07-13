@@ -32,6 +32,12 @@ class Content extends React.Component {
     const {owner, name} = this.props.params;
     let {repository, builds} = this.props;
 
+    if (repository instanceof Error) {
+      return (
+        <div className="alert alert-empty">This repository is Not Found</div>
+      );
+    }
+
     if (!repository || !builds) {
       return (
         <div>Loading...</div>
@@ -40,12 +46,13 @@ class Content extends React.Component {
 
     if (!builds || Object.keys(builds).length == 0) {
       return (
-          <div className="alert alert-empty">This repository does not have any builds yet.</div>
-        );
+        <div className="alert alert-empty">This repository does not have any builds yet.</div>
+      );
     }
 
     function buildItem(number) {
       const build = builds[number];
+      if (build instanceof Error) return null;
       return (
         <Link key={build.number} to={`/${owner}/${name}/${build.number}`}>
           <BuildCard build={build}/>
