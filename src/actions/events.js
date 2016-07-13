@@ -54,7 +54,7 @@ events.once(STREAM_FEED, function() {
   let proto = (window.location.protocol === 'https:') ? 'wss:' : 'ws:';
   let ws = new WebSocket(proto + '//' + window.location.host + '/ws/feed');
   ws.onmessage = function(message) {
-    let {repo, build} = JSON.parse(message.data);
+    let {repo, build, job} = JSON.parse(message.data);
 
     // merge the item into the feed
     tree.select(['feed']).map((cursor) => {
@@ -64,8 +64,22 @@ events.once(STREAM_FEED, function() {
       }
     });
 
-    // merge the item into the build cache
-    tree.set(['builds', repo.owner, repo.name, build.number], build);
+    const cursor = tree.select(['builds', repo.owner, repo.name, build.number]);
+    if (cursor && cursor.get()) {
+      const previous = cursor.get();
+      if (previous.jobs) {
+        build.jobs = previous.jobs.slice();
+      } else {
+        build.jobs = [];
+      }
+      if (job) build.jobs[job.number-1] = job;
+      cursor.set(build);
+    }
+
+    // append the build to the index if not exists.
+    if (!tree.exists(['builds', repo.owner, repo.name, build.number])) {
+      tree.set(['builds', repo.owner, repo.name, build.number], build);
+    }
   };
 });
 

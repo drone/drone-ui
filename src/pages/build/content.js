@@ -59,31 +59,6 @@ class Content extends React.Component {
       </Results>
     );
   }
-
-/*
-<div style={{display: "none"}}>
-  <Sticky top={32} enabled={true}>
-    <div className="information">
-      {job_.status == PENDING || job_.status == RUNNING ?
-        <Button raised ripple onClick={this.handleJobCancel}>Cancel</Button> :
-        <Button raised ripple onClick={this.handleJobRestart}>Restart</Button>
-      }
-    </div>
-  </Sticky>
-</div>
-*/
-
-  // handleJobCancel() {
-  //   const {owner, name} = this.props.params;
-  //   const {build, job} = this.props;
-  //   this.props.dispatch(cancelJob(owner, name, build.number, job.number));
-  // }
-  //
-  // handleJobRestart() {
-  //   const {owner, name} = this.props.params;
-  //   const {build} = this.props;
-  //   this.props.dispatch(restartJob(owner, name, build.number));
-  // }
 }
 
 export default branch((props) => {
