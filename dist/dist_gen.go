@@ -81,7 +81,7 @@ func distIndexHtml() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "dist/index.html", size: 771, mode: os.FileMode(420), modTime: time.Unix(1468370811, 0)}
+	info := bindataFileInfo{name: "dist/index.html", size: 771, mode: os.FileMode(420), modTime: time.Unix(1468380481, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -99,7 +99,7 @@ func distStaticAppCss() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "dist/static/app.css", size: 148197, mode: os.FileMode(420), modTime: time.Unix(1468370811, 0)}
+	info := bindataFileInfo{name: "dist/static/app.css", size: 148197, mode: os.FileMode(420), modTime: time.Unix(1468380481, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -229,9 +229,12 @@ return e?e.getAttribute("content"):""}()
 l.once(d,function(){u["default"].get("/api/user/feed?latest=true").end(function(e,t){if(null!=e)return void console.error(e)
 var n=JSON.parse(t.text)
 n.sort(function(e,t){return(t.started_at||t.created_at||-1)-(e.started_at||e.created_at||-1)}),s.tree.set("feed",n)})}),l.once(c,function(){var e="https:"===window.location.protocol?"wss:":"ws:",t=new WebSocket(e+"//"+window.location.host+"/ws/feed")
-t.onmessage=function(e){var t=JSON.parse(e.data),n=t.repo,r=t.build
+t.onmessage=function(e){var t=JSON.parse(e.data),n=t.repo,r=t.build,o=t.job
 s.tree.select(["feed"]).map(function(e){var t=e.get()
-t.owner==n.owner&&t.name==n.name&&e.merge(r)}),s.tree.set(["builds",n.owner,n.name,r.number],r)}}),l.once(b,function(){u["default"].get("/api/user/repos?all=true").end(function(e,t){null!=e&&console.error(e)
+t.owner==n.owner&&t.name==n.name&&e.merge(r)})
+var a=s.tree.select(["builds",n.owner,n.name,r.number])
+if(a&&a.get()){var i=a.get()
+i.jobs?r.jobs=i.jobs.slice():r.jobs=[],o&&(r.jobs[o.number-1]=o),a.set(r)}s.tree.exists(["builds",n.owner,n.name,r.number])||s.tree.set(["builds",n.owner,n.name,r.number],r)}}),l.once(b,function(){u["default"].get("/api/user/repos?all=true").end(function(e,t){null!=e&&console.error(e)
 var n=JSON.parse(t.text)
 n.sort(function(e,t){return e.full_name<t.full_name?-1:e.full_name>t.full_name?1:0}),s.tree.set(["user","repos"],n)})}),l.on(g,function(){u["default"].get("/api/user/repos?all=true&flush=true").end(function(e,t){if(null!=e)return void s.tree.set(["pages","toast"],"Error syncing repository list")
 var n=JSON.parse(t.text)
@@ -1697,7 +1700,7 @@ function r(e){return e&&e.__esModule?e:{"default":e}}function o(e,t){if(!(e inst
 return!t||"object"!=typeof t&&"function"!=typeof t?e:t}function i(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function, not "+typeof t)
 e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)}Object.defineProperty(t,"__esModule",{value:!0}),t.Results=void 0
 var u=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n]
-r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),s=n(98),l=r(s),c=n(27),f=r(c),p=n(1),d=r(p),h=n(32),m=n(164),y=r(m),v=n(21),b=n(45)
+r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),s=n(98),l=r(s),c=n(32),f=n(27),p=r(f),d=n(1),h=r(d),m=n(164),y=r(m),v=n(21),b=n(45)
 t.Results=function(e){function t(e){o(this,t)
 var n=a(this,Object.getPrototypeOf(t).call(this,e))
 return n.handleCancel=n.handleCancel.bind(n),n.handleRestart=n.handleRestart.bind(n),n}return i(t,e),u(t,[{key:"componentDidMount",value:function(){var e=this.props,t=e.repo,n=e.build,r=e.job,o=e.logs
@@ -1708,7 +1711,7 @@ r.scrollTop=r.scrollHeight}}},{key:"handleCancel",value:function(){var e=this.pr
 v.events.emit(v.DEL_BUILD,{owner:t.owner,name:t.name,number:n.number,job:r.number})}},{key:"handleFollow",value:function(){v.events.emit(v.FOLLOW_LOGS)}},{key:"handleUnfollow",value:function(){v.events.emit(v.UNFOLLOW_LOGS)}},{key:"handleRestart",value:function(){var e=this.props,t=e.repo,n=e.build
 v.events.emit(v.POST_BUILD,{owner:t.owner,name:t.name,number:n.number})}},{key:"render",value:function(){var e=this.props,t=e.repo,n=e.build,r=e.job,o=e.logs,a=e.follow,i=[]
 return o&&Object.keys(o).map(function(e){var t=o[e]
-i.push(d["default"].createElement(y["default"],{key:e,name:e,lines:t}))}),d["default"].createElement(f["default"],{fluid:!0,className:"build"},d["default"].createElement(l["default"],{repo:t,build:n,job:r},d["default"].createElement("details",null,d["default"].createElement("summary",null),d["default"].createElement("div",null,r.status==b.RUNNING?d["default"].createElement(h.Button,{ripple:!0,onClick:this.handleCancel},"cancel"):d["default"].createElement("noscript",null),a?d["default"].createElement("noscript",null):d["default"].createElement(h.Button,{ripple:!0,onClick:this.handleFollow},"Follow"),a?d["default"].createElement(h.Button,{ripple:!0,onClick:this.handleUnfollow},"Unfollow"):d["default"].createElement("noscript",null),n.status!=b.RUNNING&&r.status!=b.PENDING?d["default"].createElement(h.Button,{ripple:!0,onClick:this.handleRestart},"restart"):d["default"].createElement("noscript",null)))),n.signed&&!n.verified?d["default"].createElement("div",{className:"alert warning"},d["default"].createElement("i",{className:"material-icons"},"warning"),d["default"].createElement("span",null,"WARNING: unable to verify the Yaml signature.")):d["default"].createElement("noscript",null),r.error&&""!=r.error?d["default"].createElement("div",{className:"alert error"},d["default"].createElement("i",{className:"material-icons"},"error_outline"),d["default"].createElement("span",null,"ERROR: ",r.error)):d["default"].createElement("noscript",null),d["default"].createElement("div",{className:"log"},i),r.status==b.RUNNING?d["default"].createElement("div",{className:"build-toolbar"},d["default"].createElement(h.Button,{ripple:!0,onClick:this.handleCancel},"Cancel"),a?d["default"].createElement("noscript",null):d["default"].createElement(h.Button,{ripple:!0,onClick:this.handleFollow},"Follow"),a?d["default"].createElement(h.Button,{ripple:!0,onClick:this.handleUnfollow},"Unfollow"):d["default"].createElement("noscript",null)):d["default"].createElement("noscript",null))}}]),t}(d["default"].Component)},function(e,t,n){"use strict"
+i.push(h["default"].createElement(y["default"],{key:e,name:e,lines:t}))}),h["default"].createElement(p["default"],{fluid:!0,className:"build"},h["default"].createElement(l["default"],{repo:t,build:n,job:r},h["default"].createElement("details",null,h["default"].createElement("summary",null),h["default"].createElement("div",null,r.status==b.RUNNING?h["default"].createElement(c.Button,{ripple:!0,onClick:this.handleCancel},"cancel"):h["default"].createElement("noscript",null),a?h["default"].createElement("noscript",null):h["default"].createElement(c.Button,{ripple:!0,onClick:this.handleFollow},"Follow"),a?h["default"].createElement(c.Button,{ripple:!0,onClick:this.handleUnfollow},"Unfollow"):h["default"].createElement("noscript",null),n.status!=b.RUNNING&&r.status!=b.PENDING?h["default"].createElement(c.Button,{ripple:!0,onClick:this.handleRestart},"restart"):h["default"].createElement("noscript",null)))),n.signed&&!n.verified?h["default"].createElement("div",{className:"alert warning"},h["default"].createElement("i",{className:"material-icons"},"warning"),h["default"].createElement("span",null,"WARNING: unable to verify the Yaml signature.")):h["default"].createElement("noscript",null),r.error&&""!=r.error?h["default"].createElement("div",{className:"alert error"},h["default"].createElement("i",{className:"material-icons"},"error_outline"),h["default"].createElement("span",null,"ERROR: ",r.error)):h["default"].createElement("noscript",null),h["default"].createElement("div",{className:"log"},i),r.status==b.RUNNING?h["default"].createElement("div",{className:"build-toolbar"},h["default"].createElement(c.Button,{ripple:!0,onClick:this.handleCancel},"Cancel"),a?h["default"].createElement("noscript",null):h["default"].createElement(c.Button,{ripple:!0,onClick:this.handleFollow},"Follow"),a?h["default"].createElement(c.Button,{ripple:!0,onClick:this.handleUnfollow},"Unfollow"):h["default"].createElement("noscript",null)):h["default"].createElement("noscript",null))}}]),t}(h["default"].Component)},function(e,t,n){"use strict"
 function r(e){return e&&e.__esModule?e:{"default":e}}function o(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function a(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called")
 return!t||"object"!=typeof t&&"function"!=typeof t?e:t}function i(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function, not "+typeof t)
 e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)}Object.defineProperty(t,"__esModule",{value:!0})
@@ -3213,7 +3216,7 @@ func distStaticAppJs() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "dist/static/app.js", size: 432196, mode: os.FileMode(420), modTime: time.Unix(1468370811, 0)}
+	info := bindataFileInfo{name: "dist/static/app.js", size: 432414, mode: os.FileMode(420), modTime: time.Unix(1468380481, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -3323,7 +3326,7 @@ func distStaticDroneSvg() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "dist/static/drone.svg", size: 3499, mode: os.FileMode(420), modTime: time.Unix(1468370811, 0)}
+	info := bindataFileInfo{name: "dist/static/drone.svg", size: 3499, mode: os.FileMode(420), modTime: time.Unix(1468380481, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -3340,7 +3343,7 @@ func distStaticFaviconIco() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "dist/static/favicon.ico", size: 1150, mode: os.FileMode(420), modTime: time.Unix(1468370811, 0)}
+	info := bindataFileInfo{name: "dist/static/favicon.ico", size: 1150, mode: os.FileMode(420), modTime: time.Unix(1468380481, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
