@@ -2,6 +2,7 @@ import BuildPanel from '../../components/build_panel';
 import {Button} from 'react-mdl';
 import PageContent from '../../components/layout/content';
 import React from 'react';
+import Status from '../../components/status';
 import Term from '../../components/term';
 import {
   events,
@@ -157,6 +158,7 @@ export class Results extends React.Component {
         {job.status == RUNNING ?
           (
             <div className="build-toolbar">
+              <Status state={job.status} />
               <Button ripple onClick={this.handleCancel}>Cancel</Button>
               {!follow ? <Button ripple onClick={this.handleFollow}>Follow</Button> : <noscript />}
               {follow ? <Button ripple onClick={this.handleUnfollow}>Unfollow</Button> : <noscript />}
