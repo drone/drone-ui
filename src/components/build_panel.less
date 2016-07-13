@@ -4,6 +4,7 @@
   padding: 30px 40px;
   font-size: 15px;
   border-radius: 2px;
+  position: relative;
 
   code {
     background: rgba(255,255,255,0.2);
@@ -24,31 +25,11 @@
   &.failure {
     background: #F50057;
   }
-
-  .alert {
-    margin-top: 20px;
-    padding: 10px;
-    border-radius:3px;
-    background: rgba(255,255,255,0.2);
-    position: relative;
-
-    span {
-      line-height: 24px;
-      display: inline-block;
-      vertical-align: middle;
-    }
-
-    i {
-      font-size:18px;
-      line-height: 24px;
-      vertical-align: middle;
-      margin-right: 5px;
-    }
-  }
 }
 
 .build-panel-detail {
   display: flex;
+  position: relative;
 
   @media screen and (max-width : 600px) {
     flex-direction: column;

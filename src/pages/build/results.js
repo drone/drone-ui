@@ -1,6 +1,7 @@
 import BuildPanel from '../../components/build_panel';
 import PageContent from '../../components/layout/content';
 import React from 'react';
+import {Button} from 'react-mdl';
 import Term from '../../components/term';
 import {
   events,
@@ -113,7 +114,7 @@ export class Results extends React.Component {
   }
 
   render() {
-    const {repo, build, job, logs} = this.props;
+    const {repo, build, job, logs, follow} = this.props;
 
     let term = [];
     if (logs) {
@@ -125,32 +126,43 @@ export class Results extends React.Component {
       });
     }
 
-    var alerts = [];
-    if (build.signed && !build.verified) {
-      alerts.push(
-        <div className="alert warning">
-          <i className="material-icons">warning</i>
-          <span>Unable to verify the Yaml signature.</span>
-        </div>
-      );
-    }
-    if (job.error && job.error != '') {
-      alerts.push(
-        <div className="alert error">
-          <i className="material-icons">error_outline</i>
-          <span>{job.error}</span>
-        </div>
-      );
-    }
-
     return (
       <PageContent fluid className="build">
-        <BuildPanel repo={repo} build={build} job={job}>{alerts}</BuildPanel>
+        <BuildPanel repo={repo} build={build} job={job}>
+          <details>
+            <summary></summary>
+            <div>
+              {job.status == RUNNING ? <Button ripple onClick={this.handleCancel}>cancel</Button> : <noscript />}
+              {!follow ? <Button ripple onClick={this.handleFollow}>Follow</Button> : <noscript />}
+              {follow ? <Button ripple onClick={this.handleUnfollow}>Unfollow</Button> : <noscript />}
+              {build.status != RUNNING && job.status != PENDING ? <Button ripple onClick={this.handleRestart}>restart</Button>: <noscript />}
+            </div>
+          </details>
+        </BuildPanel>
+        {build.signed && !build.verified ?
+          <div className="alert warning">
+            <i className="material-icons">warning</i>
+            <span>WARNING: unable to verify the Yaml signature.</span>
+          </div> :
+          <noscript />
+        }
+        {job.error && job.error != '' ?
+          <div className="alert error">
+            <i className="material-icons">error_outline</i>
+            <span>ERROR: {job.error}</span>
+          </div> :
+          <noscript />
+        }
         <div className="log">{term}</div>
-        {job.status == RUNNING ? <button onClick={this.handleFollow}>follow</button> : <noscript />}
-        {job.status == RUNNING ? <button onClick={this.handleUnfollow}>un-follow</button> : <noscript />}
-        {job.status == RUNNING ? <button onClick={this.handleCancel}>cancel</button>: <noscript />}
-        {build.status != RUNNING && job.status != PENDING ? <button onClick={this.handleRestart}>restart</button>: <noscript />}
+        {job.status == RUNNING ?
+          (
+            <div className="build-toolbar">
+              <Button ripple onClick={this.handleCancel}>Cancel</Button>
+              {!follow ? <Button ripple onClick={this.handleFollow}>Follow</Button> : <noscript />}
+              {follow ? <Button ripple onClick={this.handleUnfollow}>Unfollow</Button> : <noscript />}
+            </div>
+          ) : <noscript/>
+        }
       </PageContent>
     );
   }

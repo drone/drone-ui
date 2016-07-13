@@ -36,4 +36,104 @@
   a {
     text-decoration: none;
   }
+
+  .alert {
+    margin-top: 10px;
+    padding: 20px 40px;
+    border-radius:3px;
+    background: #EEE;
+    color: #F50057;
+    font-family: 'Roboto Mono';
+    font-size:13px;
+
+    span {
+      line-height: 24px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    i {
+      font-size:18px;
+      line-height: 24px;
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+  }
+}
+
+.build-toolbar {
+  background: #FFA000;
+  margin-top: 20px;
+  text-align: right;
+  padding: 10px;
+  border-radius:3px;
+
+  button {
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    margin-left:10px;
+    font-size: 12px;
+    line-height: 12px;
+    &:hover {
+      background: rgba(255,255,255,0.3);
+    }
+  }
+}
+
+.build-panel {
+  details {
+    button {
+      color: #FFF;
+      background: rgba(255,255,255,0.2);
+      margin-right:10px;
+
+      &:hover {
+        background: rgba(255,255,255,0.3);
+      }
+    }
+
+    &[open] summary {
+      background: transparent;
+      &:before {
+      	content: "keyboard_arrow_up";
+        font-family: "Material Icons";
+      }
+    }
+
+    &[open] {
+      margin-top:20px
+    }
+  }
+
+  summary {
+    position:absolute;
+    bottom:20px;
+    right:20px;
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    background: rgba(255,255,255,0.2);
+    text-align: center;
+    line-height: 30px;
+    display:block;
+
+    outline: none;
+    cursor: pointer;
+    -webkit-user-select: none;
+            user-select: none;
+
+    &:before {
+      text-transform: none;
+      content: "keyboard_arrow_down";
+      font-family: "Material Icons";
+      font-weight: 400;
+      font-size:22px;
+      line-height: 30px;
+      vertical-align: middle;
+    }
+  }
+
+  summary::-webkit-details-marker {
+    display:none;
+  }
 }
