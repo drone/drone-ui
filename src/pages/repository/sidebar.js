@@ -1,4 +1,5 @@
 import {branch} from 'baobab-react/higher-order';
+import { Button } from 'react-mdl';
 import {Link} from 'react-router';
 import React from 'react';
 import RepoListItem from '../../components/repo_list_item';
@@ -29,7 +30,18 @@ class Sidebar extends React.Component {
     }
 
     if (feed.length == 0) {
-      return <div>Loading...</div>;
+      return (
+        <div className="repository-sidebar">
+          <div className="sidebar__empty">
+            <p>Looks like your list is empty<br />
+              <small>Let's start by adding some repositories</small>
+            </p>
+            <Link to="/account">
+              <Button raised colored>Configure Repositories</Button>
+            </Link>
+          </div>
+        </div>
+      );
     }
 
     if (state.filter) {
