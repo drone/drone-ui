@@ -1,5 +1,4 @@
 import {branch} from 'baobab-react/higher-order';
-import { Button } from 'react-mdl';
 import {Link} from 'react-router';
 import React from 'react';
 import RepoListItem from '../../components/repo_list_item';
@@ -36,9 +35,7 @@ class Sidebar extends React.Component {
             <p>Looks like your list is empty<br />
               <small>Let's start by adding some repositories</small>
             </p>
-            <Link to="/account">
-              <Button raised colored>Configure Repositories</Button>
-            </Link>
+            <Link to="/account">Configure Repositories</Link>
           </div>
         </div>
       );
