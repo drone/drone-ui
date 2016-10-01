@@ -18,6 +18,14 @@ class Sidebar extends React.Component {
       return (b.started_at || b.created_at || -1) - (a.started_at || a.created_at || -1);
     });
 
+    if (state.loading) {
+      return (
+        <div className="repository-sidebar">
+          <div className="alert">Loading...</div>
+        </div>
+      );
+    }
+
     if (!user) {
       return (
         <div className="repository-sidebar">
@@ -28,7 +36,7 @@ class Sidebar extends React.Component {
       );
     }
 
-    if (feed.length == 0) {
+    if (!state.loading && feed.length === 0) {
       return (
         <div className="repository-sidebar">
           <div className="sidebar__empty">

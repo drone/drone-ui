@@ -59,7 +59,8 @@ export const tree = new Baobab({
       syncing: false
     },
     repo: {
-      filter: undefined
+      filter: undefined,
+      loading: undefined
     },
     build: {
       follow: false
