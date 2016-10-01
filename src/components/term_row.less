@@ -11,16 +11,25 @@
 
   display: flex;
 
-  &> div:first-child {
+  &> .row-line-number,
+  &> .row-time {
+    -webkit-user-select: none;
+            user-select: none;
+  }
+
+  &> .row-line-number {
+    min-width: 2em;
+    text-align: right;
+
     padding-right:20px;
     color:rgba(0,0,0,0.3);
   }
 
-  &> div:nth-child(2) {
+  &> .row-output {
     flex: 1 1 auto;
   }
 
-  &> div:last-child {
+  &> .row-time {
     padding-left:20px;
     color:rgba(0,0,0,0.3);
   }
