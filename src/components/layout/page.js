@@ -28,6 +28,16 @@ class Page extends React.Component {
           </Menu>
         </div>
       );
+    } else {
+      pageMenu = (
+        <div>
+          <Avatar src="/static/drone.svg" circle/>
+          <IconButton name="more_vert" id="drone-header-menu-right"/>
+          <Menu target="drone-header-menu-right" align="right">
+            <MenuItem onClick={() => {browserHistory.push('/login');}}>Login</MenuItem>
+          </Menu>
+        </div>
+      );
     }
 
     return (
