@@ -4,7 +4,11 @@ import Baobab from 'baobab';
 const user = window.STATE_FROM_SERVER && window.STATE_FROM_SERVER.user;
 
 // loads the window location from the browser.
-const location = window && window.location;
+const location = window && window.location ? {
+  href: window.location.href,
+  origin: window.location.origin,
+  pathname: window.location.pathname,
+} : {};
 
 // tree stores the global state of the application.
 export const tree = new Baobab({
