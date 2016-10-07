@@ -7,7 +7,7 @@ const user = window.STATE_FROM_SERVER && window.STATE_FROM_SERVER.user;
 const location = window && window.location ? {
   href: window.location.href,
   origin: window.location.origin,
-  pathname: window.location.pathname,
+  pathname: window.location.pathname
 } : {};
 
 // tree stores the global state of the application.
