@@ -33,6 +33,5 @@ class Toolbar extends React.Component {
 
 
 export default branch({
-  user: ['user'],
-  location: ['location']
+  user: ['user']
 }, Toolbar);

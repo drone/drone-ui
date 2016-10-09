@@ -3,22 +3,11 @@ import Baobab from 'baobab';
 // loads the user from the server state.
 const user = window.STATE_FROM_SERVER && window.STATE_FROM_SERVER.user;
 
-// loads the window location from the browser.
-const location = window && window.location ? {
-  href: window.location.href,
-  origin: window.location.origin,
-  pathname: window.location.pathname
-} : {};
-
 // tree stores the global state of the application.
 export const tree = new Baobab({
   // the user branch of the tree maintains the currently authenticated user
   // information, sourced from the STATE_FROM_SERVER global variable.
   user: user,
-
-  // the location branch of the tree maintains the browser location, sourced
-  // from the window.location global variable.
-  location: location,
 
   // the repos branch of the tree maintains an index of repository nodes
   // organized by repository owner and repository name. For example:
