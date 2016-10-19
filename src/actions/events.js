@@ -1,3 +1,4 @@
+import * as FilterUtils from '../utils/filter';
 import Emmett from 'emmett';
 import Request from 'superagent';
 import {tree} from './tree';
@@ -22,6 +23,9 @@ export const GET_BUILD_LOGS = 'GET_BUILD_LOGS';
 export const DEL_BUILD_LOGS = 'DEL_BUILD_LOGS';
 export const FILTER = 'FILTER';
 export const FILTER_CLEAR = 'FILTER_CLEAR';
+export const BUILD_FILTER = 'BUILD_FILTER';
+export const BUILD_FILTER_CLEAR = 'BUILD_FILTER_CLEAR';
+export const BUILD_FILTER_SUGGESTIONS_CLEAR = 'BUILD_FILTER_SUGGESTIONS_CLEAR';
 export const GET_TOKEN = 'GET_TOKEN';
 export const SHOW_TOKEN = 'SHOW_TOKEN';
 export const HIDE_TOKEN = 'HIDE_TOKEN';
@@ -186,6 +190,11 @@ events.on(GET_BUILD_LIST, function(event) {
       builds.map(function(build) {
         tree.set(['builds', owner, name, build.number], build);
       });
+
+      // populate filter suggestions for fetched build list
+      FilterUtils.setSuggestions(builds);
+      // sets filtered_builds facet to dynamically select builds matching filter criteria
+      FilterUtils.filteredBuilds(owner, name);
     });
 });
 
@@ -403,6 +412,23 @@ events.on(FILTER, function(event) {
 
 events.on(FILTER_CLEAR, function() {
   tree.unset(['pages', 'repo', 'filter']);
+});
+
+events.on(BUILD_FILTER, function(event) {
+  const value = event.data;
+  if (value === '') {
+    tree.unset(['pages', 'repo', 'build_filter']);
+  } else {
+    tree.set(['pages', 'repo', 'build_filter'], value);
+  }
+});
+
+events.on(BUILD_FILTER_CLEAR, function() {
+  tree.unset(['pages', 'repo', 'build_filter']);
+});
+
+events.on(BUILD_FILTER_SUGGESTIONS_CLEAR, function() {
+  tree.unset(['pages', 'repo', 'suggestions']);
 });
 
 events.on(CLEAR_TOAST, function() {

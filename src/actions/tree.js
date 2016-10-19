@@ -21,8 +21,8 @@ export const tree = new Baobab({
   //
   repos: {},
 
-  // the build branch of the tree maintains an index of builds nodes organized
-  // by repository owner, name, and build number. For example:
+  // the build branch of the tree maintains an unfiltered index of builds nodes 
+  // organized by repository owner, name, and build number. For example:
   //
   // {
   //   "octocat": {
@@ -34,6 +34,11 @@ export const tree = new Baobab({
   // }
   //
   builds: {},
+
+  // the filtered_builds branch of the tree maintains a filtered index of builds nodes
+  // organized by repository owner, name and build number. Only nodes which meet filter
+  // criteria are included.
+  filtered_builds: {},
 
   // the feed branch of the tree maintains an activity feed array, consisting
   // of the latest activity per repository.
