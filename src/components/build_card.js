@@ -22,7 +22,7 @@ class BuildCard extends React.Component {
           <BuildMeta build={build}/>
         </div>
         <div className="card-footer">
-          <div>{build.number}</div>
+          <div>{build.number}{(build.parent > 0) ? ` < # ${build.parent}` : ''}</div>
           <Status state={build.status}/>
         </div>
       </div>

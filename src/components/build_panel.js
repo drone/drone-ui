@@ -6,6 +6,21 @@ import './build_panel.less';
 
 export default
 class BuildPanel extends React.Component {
+
+  renderParentLink(parent) {
+    const {repo} = this.props;
+    if (parent > 0) {
+      return (
+        <div>
+          <em>Parent:</em> #{parent}
+          <a href={`/${repo.owner}/${repo.name}/${parent}`} className="parent-link">
+            <i className="material-icons">insert_link</i>
+          </a>
+        </div>
+      );
+    }
+  }
+
   render() {
     const {build, job} = this.props;
 
@@ -32,6 +47,7 @@ class BuildPanel extends React.Component {
               </a>
             </div>
             <div><em>Author:</em> {build.author}</div>
+            {this.renderParentLink(build.parent)}
             <p>{environs}{build.message}</p>
           </div>
           <div>
