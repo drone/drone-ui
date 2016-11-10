@@ -28,6 +28,10 @@ export const HIDE_TOKEN = 'HIDE_TOKEN';
 export const CLEAR_TOAST = 'CLEAR_TOAST';
 export const FOLLOW_LOGS = 'FOLLOW_LOGS';
 export const UNFOLLOW_LOGS = 'UNFOLLOW_LOGS';
+export const ADD_CUSTOM_PARAM = 'ADD_CUSTOM_PARAM';
+export const REMOVE_CUSTOM_PARAM = 'REMOVE_CUSTOM_PARAM';
+export const UPDATE_CUSTOM_PARAM = 'UPDATE_CUSTOM_PARAM';
+export const CLEAR_CUSTOM_PARAMS = 'CLEAR_CUSTOM_PARAMS';
 
 let token = function() {
   var meta = document.querySelector('meta[name=csrf-token]');
@@ -209,8 +213,8 @@ events.on(GET_BUILD, function(event) {
 });
 
 events.on(POST_BUILD, function(event) {
-  const {owner, name, number} = event.data;
-  Request.post(`/api/repos/${owner}/${name}/builds/${number}`)
+  const {owner, name, number, params} = event.data;
+  Request.post(`/api/repos/${owner}/${name}/builds/${number}?${params}`)
     .set('X-CSRF-TOKEN', token)
     .end((err) => {
       if (err != null) {
@@ -407,4 +411,33 @@ events.on(FILTER_CLEAR, function() {
 
 events.on(CLEAR_TOAST, function() {
   tree.unset(['pages', 'toast']);
+});
+
+events.on(ADD_CUSTOM_PARAM, function(event) {
+  const data = event.data;
+  if (!tree.exists(['pages', 'build', 'custom_params'])) {
+    tree.set(['pages', 'build', 'custom_params'], []); // initialize
+  }
+  tree.push(['pages', 'build', 'custom_params'], data);
+});
+
+events.on(REMOVE_CUSTOM_PARAM, function(event) {
+  const index = event.data;
+  let param = tree.get(['pages', 'build', 'custom_params', index]);
+  if(param.value) {
+    // if params exists we flag it for removal
+    tree.merge(['pages', 'build', 'custom_params', index], {removed: true});
+  } else {
+    // it was empty so it's safe to remove it entirely
+    tree.splice(['pages', 'build', 'custom_params'], [index, 1]);
+  }
+});
+
+events.on(UPDATE_CUSTOM_PARAM, function(event) {
+  const {index, value} = event.data;
+  tree.merge(['pages', 'build', 'custom_params', index], {value: value});
+});
+
+events.on(CLEAR_CUSTOM_PARAMS, function() {
+  tree.unset(['pages', 'build', 'custom_params']);
 });

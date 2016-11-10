@@ -87,4 +87,39 @@
     margin-left: 7px;
     color: rgba(255,255,255,0.7);
   }
+
+  .input-group {
+    button.add-param {
+      display: block;
+      color: #FFF;
+      background: rgba(255,255,255,0.2);
+      margin-right:10px;
+      margin-top: 10px;
+
+      &:hover {
+        background: rgba(255,255,255,0.3);
+      }
+    }
+
+    .custom-param {
+      padding: 5px 0;
+
+      label {
+        top: 10px;
+      }
+
+      label:after {
+        background-color: rgba(0,0,0,0.12);
+        bottom: 5px;
+      }
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    button.remove-param {
+      vertical-align: bottom;
+    }
+  }
 }

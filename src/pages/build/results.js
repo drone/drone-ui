@@ -4,6 +4,7 @@ import PageContent from '../../components/layout/content';
 import React from 'react';
 import Status from '../../components/status';
 import Term from '../../components/term';
+import {tree} from '../../actions/tree';
 import {
   events,
   GET_BUILD_LOGS,
@@ -106,11 +107,25 @@ export class Results extends React.Component {
   }
 
   handleRestart() {
+    const customParams = tree.get(['pages', 'build', 'custom_params']) || [];
+
+    let params = customParams
+      .filter(p => (p.value !== ''))
+      .reduce((customParams, param) => {
+        if (param.removed) { // unsetting value for removed params
+          customParams.push(param.value.replace(/(.*)=.*/, '$1='));
+        } else {
+          customParams.push(param.value);
+        }
+        return customParams;
+      }, []).join('&');
+
     const {repo, build} = this.props;
     events.emit(POST_BUILD, {
       owner: repo.owner,
       name: repo.name,
-      number: build.number
+      number: build.number,
+      params: params
     });
   }
 
