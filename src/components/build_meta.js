@@ -1,4 +1,5 @@
 import React from 'react';
+import TimeAgo from 'react-timeago';
 
 import './build_meta.less';
 
@@ -34,6 +35,7 @@ class BuildMeta extends React.Component {
         <em>{build.author}</em>
         <span>{eventDesc}</span>
         <em>{eventDest}</em>
+        <TimeAgo date={(build.created_at || build.enqueued_at) * 1000} />
       </p>
     );
   }
