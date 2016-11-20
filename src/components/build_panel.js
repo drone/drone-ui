@@ -35,11 +35,14 @@ class BuildPanel extends React.Component {
       });
     }
 
+    let branch = (build.refspec != '' && build.event == 'pull_request') ?
+      build.refspec : build.branch;
+
     return (
       <div className={classes.join(' ')}>
         <div className="build-panel-detail">
           <div>
-            <div><em>Branch:</em> {build.branch}</div>
+            <div><em>Branch:</em> {branch}</div>
             <div>
               <em>Commit:</em> {build.commit.substr(0,8)}
               <a href={build.link_url} target="_blank" className="commit-link">

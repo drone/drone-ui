@@ -17,8 +17,9 @@ class BuildMeta extends React.Component {
       eventDest = build.branch;
       break;
     case 'pull_request':
-      eventDesc = 'opened pull request to';
-      eventDest = build.branch;
+      eventDesc = 'pushed to pull request';
+      eventDest = (build.refspec != '') ?
+            build.refspec : build.branch;
       break;
     case 'tag':
       eventDesc = 'pushed tag';
