@@ -39,7 +39,7 @@ class Content extends React.Component {
 
     if (build instanceof Error) {
       return (
-        <div className="alert alert-empty">This build is Not Found</div>
+        <div className="alert alert-empty">This build is Not Found. Are you <a href="/login">logged in</a>?</div>
       );
     }
 
