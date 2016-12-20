@@ -20,7 +20,6 @@ class TermRow extends React.Component {
 
     let html = ansi_up.escape_for_html(out || '');
     html = ansi_up.ansi_to_html(html, opts);
-    html = ansi_up.linkify(html);
 
     return (
      <div className="term-row">
