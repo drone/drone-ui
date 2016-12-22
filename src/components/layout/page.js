@@ -8,6 +8,14 @@ import {Layout, Header, Drawer, Navigation, Content, IconButton, Menu, MenuItem,
 import './page.less';
 
 class Page extends React.Component {
+  componentDidMount() {
+    this.historyUnlisten = browserHistory.listen(resetScrollOnLocation);
+  }
+
+  componentWillUnmount() {
+    this.historyUnlisten();
+  }
+
   handleTimeout() {
     events.emit(CLEAR_TOAST);
   }
@@ -68,6 +76,19 @@ class Page extends React.Component {
     //     {pageContent}
     //   </div>
     // );
+  }
+}
+
+/**
+ * Resets the scroll position back to 0 when navigating. Scroll position is not
+ * reset when the history location action is `POP` (back button). See the below
+ * GitHub issue for why we cannot use `window` here.
+ *
+ * See https://github.com/react-mdl/react-mdl/issues/262
+ */
+function resetScrollOnLocation(location) {
+  if (location.action !== 'POP') {
+    document.querySelector('.mdl-layout__content').scrollTop = 0;
   }
 }
 
