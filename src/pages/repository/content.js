@@ -3,20 +3,39 @@ import BuildCard from '../../components/build_card';
 import {Link} from 'react-router';
 import PageContent from '../../components/layout/content';
 import React from 'react';
-import {events, GET_REPO, GET_BUILD_LIST} from '../../actions/events';
+import Select from 'react-select';
+import {events, GET_REPO, GET_BUILD_LIST, BUILD_FILTER, BUILD_FILTER_CLEAR,
+        BUILD_FILTER_SUGGESTIONS_CLEAR} from '../../actions/events';
 
 import './index.less';
 
 class Content extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.onFilter = this.onFilter.bind(this);
+  }
+
   componentDidMount() {
     const {owner, name} = this.props.params;
     events.emit(GET_REPO, {owner, name});
     events.emit(GET_BUILD_LIST, {owner, name});
+    // if filter param is present in query string then use it
+    // e.g. ?filter=status:success;author:foo;event:deployment
+    const value = this.props.location.query.filter;
+    if(value) {
+      events.emit(BUILD_FILTER, value);
+    }
+  }
+
+  componentWillUnmount() {
+    events.emit(BUILD_FILTER_CLEAR);
+    events.emit(BUILD_FILTER_SUGGESTIONS_CLEAR);
   }
 
   shouldComponentUpdate(nextProps) {
-    const {repository, builds} = this.props;
-    return repository != nextProps.repository || builds != nextProps.builds;
+    const {repository, builds, state} = this.props;
+    return repository != nextProps.repository || builds != nextProps.builds || state != nextProps.state;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -25,12 +44,17 @@ class Content extends React.Component {
     if (nextOwner != owner || nextName != name) {
       events.emit(GET_REPO, nextProps.params);
       events.emit(GET_BUILD_LIST, nextProps.params);
+      events.emit(BUILD_FILTER_CLEAR);
     }
+  }
+
+  onFilter(value) {
+    events.emit(BUILD_FILTER, value);
   }
 
   render() {
     const {owner, name} = this.props.params;
-    let {repository, builds} = this.props;
+    let {repository, builds, filtered_builds, state} = this.props;
 
     if (repository instanceof Error) {
       return (
@@ -62,16 +86,25 @@ class Content extends React.Component {
 
     return (
       <PageContent className="repository history">
-        {Object.keys(builds).sort((a, b) => {return b - a;}).map(buildItem)}
+        <Select multi simpleValue
+          value={(state && state.build_filter) ? state.build_filter : ''}
+          placeholder='Filter build history...' 
+          options={(state && state.suggestions) ? state.suggestions : []} 
+          delimiter=';'
+          onChange={this.onFilter} />
+        {Object.keys(filtered_builds).sort((a, b) => {return b - a;}).map(buildItem)}
       </PageContent>
     );
   }
+
 }
 
 export default branch((props) => {
   const {owner, name} = props.params;
   return {
     repository: ['repos', owner, name],
-    builds: ['builds', owner, name]
+    builds: ['builds', owner, name],
+    filtered_builds: ['filtered_builds', owner, name],
+    state: ['pages', 'repo']
   };
 }, Content);
