@@ -130,7 +130,7 @@ export class Results extends React.Component {
     return (
       <PageContent fluid className="build">
         <BuildPanel repo={repo} build={build} job={job}>
-          <details>
+          <details open>
             <summary></summary>
             <div>
               {job.status == RUNNING ? <Button ripple onClick={this.handleCancel}>cancel</Button> : <noscript />}
