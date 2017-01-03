@@ -26,6 +26,10 @@
     }
 }
 
+.history a:nth-child(2) {
+  border-top: 0;
+}
+
 .alert.alert-empty {
   background: #eee;
   padding: 50px;
@@ -56,4 +60,68 @@
 
 ::-webkit-input-placeholder {
   color: #BDBDBD;
+}
+
+//
+// Select control
+//
+
+.Select-control {
+  border: 1px solid #EEE !important;
+  border-radius: 0px;
+  box-shadow: none;
+  margin-bottom:10px;
+  height: 45px;
+
+  &:hover {
+    box-shadow: none;
+  }
+}
+
+.Select-menu-outer {
+  border: 1px solid #EEE !important;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.05) !important;
+  border-radius: 0px;
+}
+
+.Select--multi .Select-value {
+  background: #FFA000;
+  border: 1px solid #EEE;
+  color: #FFF;
+  border-radius:25px;
+
+  .Select-value-icon {
+    border-right: none;
+    margin-left:5px;
+    &:hover {
+      color:#FFF;
+      background:none;
+    }
+  }
+}
+
+.Select--multi .Select-value-label {
+  padding: 7px 10px;
+}
+
+.Select-option {
+  color: #000;
+
+  &.is-focused,
+	&.is-selected {
+		background-color: #f7f7f7;
+		color: #000;
+	}
+}
+
+.Select-placeholder {
+  line-height: 45px;
+}
+.Select-input {
+
+  &> input {
+    height: 40px;
+    padding: 0px;
+    line-height: 40px;
+  }
 }
