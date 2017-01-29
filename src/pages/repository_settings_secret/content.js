@@ -115,6 +115,7 @@ class Content extends React.Component {
       name: secretKey,
       value: this.state[secretKey],
       event: ['push', 'tag', 'deployment'],
+      image:['*'],
       skip_verify: false
     };
     events.emit(POST_REPO_SECRET, { owner, name, secret });
@@ -126,6 +127,7 @@ class Content extends React.Component {
       name: this.state.addKey,
       value: this.state.addValue,
       event: ['push', 'tag', 'deployment'],
+      image:['*'],
       skip_verify: false
     };
     events.emit(POST_REPO_SECRET, { owner, name, secret });
