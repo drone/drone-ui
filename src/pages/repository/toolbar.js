@@ -15,7 +15,7 @@ class Toolbar extends React.Component {
 
     if (user) {
       tabs.push({url: `/${owner}/${name}/settings/`, text: 'Settings'});
-      tabs.push({url: `/${owner}/${name}/settings/secrets/`, text: 'Secrets'});
+      tabs.push({url: `/${owner}/${name}/settings/secret/`, text: 'Secrets'});
     }
 
     return (
