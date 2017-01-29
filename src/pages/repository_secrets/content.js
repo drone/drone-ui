@@ -11,8 +11,8 @@ class Content extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      addKey: "",
-      addValue: "",
+      addKey: '',
+      addValue: ''
     };
     this.handleAdd = this.handleAdd.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
@@ -27,7 +27,6 @@ class Content extends React.Component {
   render() {
 
     const { owner, name } = this.props.params;
-    const host = window.location.origin;
     const { secrets } = this.props;
     if (!secrets) {
       return (
@@ -66,10 +65,10 @@ class Content extends React.Component {
                 >
                   <Icon name="update"/>
                 </FABButton>
-                <Switch id="push" disabled={true} checked={ secret.event.indexOf("push") !== -1}>Push</Switch>
-                <Switch id="tag" disabled={true} checked={ secret.event.indexOf("tag") !== -1}>Tag</Switch>
-                <Switch id="deployment" disabled={true} checked={ secret.event.indexOf("deployment") !== -1}>Deployment</Switch>
-                <Switch id="pull_request" disabled={true} checked={ secret.event.indexOf("pull_request") !== -1}>Pull request</Switch>
+                <Switch id="push" disabled={true} checked={ secret.event.indexOf('push') !== -1}>Push</Switch>
+                <Switch id="tag" disabled={true} checked={ secret.event.indexOf('tag') !== -1}>Tag</Switch>
+                <Switch id="deployment" disabled={true} checked={ secret.event.indexOf('deployment') !== -1}>Deployment</Switch>
+                <Switch id="pull_request" disabled={true} checked={ secret.event.indexOf('pull_request') !== -1}>Pull request</Switch>
                 <hr/>
               </div>
             );
@@ -109,46 +108,41 @@ class Content extends React.Component {
 
   handleUpdateSecret(owner, name, secretKey) {
     //TODO: need to handle skip_verify and what events
-    var secret = {
+    let secret = {
       name: secretKey,
       value: this.state[secretKey],
-      event: ["push", "tag", "deployment"],
+      event: ['push', 'tag', 'deployment'],
       skip_verify: false
     };
     console.log(secret);
-    events.emit(POST_REPO_SECRET, { owner, name, secret })
+    events.emit(POST_REPO_SECRET, { owner, name, secret });
   }
 
   handleAdd(owner, name) {
     //TODO: need to handle skip_verify and what events
-    var secret = {
+    let secret = {
       name: this.state.addKey,
       value: this.state.addValue,
-      event: ["push", "tag", "deployment"],
+      event: ['push', 'tag', 'deployment'],
       skip_verify: false
     };
     events.emit(POST_REPO_SECRET, { owner, name, secret });
-    this.setState({ addKey: "", addValue: "" });
+    this.setState({ addKey: '', addValue: '' });
 
   }
 
   handleAddKeyChange(addKey) {
-    this.setState({ addKey })
+    this.setState({ addKey });
   }
 
   handleAddSecretChange(addValue) {
-    this.setState({ addValue })
+    this.setState({ addValue });
   }
-
-
 
   handleSecretChange(secret_name, value) {
     this.setState({ [secret_name]: value });
-    console.log(this.state[secret_name]);
-    console.log(!this.state[secret_name])
   }
 }
-
 
 export default branch((props) => {
   const { owner, name } = props.params;

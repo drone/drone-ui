@@ -439,7 +439,7 @@ events.on(GET_REPO_SECRETS, function(event) {
       }
       let secrets = JSON.parse(response.text);
       if (secrets.length === 0){
-        tree.set(['secrets', owner, name], {})
+        tree.set(['secrets', owner, name], {});
       } else {
         tree.set(['secrets', owner, name], secrets);
       }
