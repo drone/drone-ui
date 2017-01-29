@@ -39,43 +39,43 @@ class Content extends React.Component {
         {
           secrets
             .map((secret, index) => {
-            return (
+              return (
 
-              <div key={index}>
-                <Textfield
-                  label="Secret Name"
-                  floatingLabel
-                  style={{ width: '300px' }}
-                  value={secret.name}
-                  disabled={true}
-                />
-                <Textfield
-                  label="Update Secret Value"
-                  floatingLabel
-                  style={{ width: '300px' }}
-                  value={this.state[secret.name]}
-                  onChange={(field) => this.handleSecretChange(secret.name, field.target.value)}
-                />
-                <FABButton ripple mini
-                           onClick={this.handleDelete.bind(this, owner, name, secret.name)}
-                >
-                  <Icon name="delete"/>
-                </FABButton>
-                <FABButton ripple mini disabled={!this.state[secret.name]}
-                           onClick={this.handleUpdateSecret.bind(this, owner, name, secret.name)}
-                >
-                  <Icon name="update"/>
-                </FABButton>
-                <Switch id="push" disabled={true} checked={ secret.event.indexOf('push') !== -1}>Push</Switch>
-                <Switch id="tag" disabled={true} checked={ secret.event.indexOf('tag') !== -1}>Tag</Switch>
-                <Switch id="deployment" disabled={true}
-                        checked={ secret.event.indexOf('deployment') !== -1}>Deployment</Switch>
-                <Switch id="pull_request" disabled={true} checked={ secret.event.indexOf('pull_request') !== -1}>Pull
-                  request</Switch>
-                <hr/>
-              </div>
-            );
-          })
+                <div key={index}>
+                  <Textfield
+                    label="Secret Name"
+                    floatingLabel
+                    style={{ width: '300px' }}
+                    value={secret.name}
+                    disabled={true}
+                  />
+                  <Textfield
+                    label="Update Secret Value"
+                    floatingLabel
+                    style={{ width: '300px' }}
+                    value={this.state[secret.name]}
+                    onChange={(field) => this.handleSecretChange(secret.name, field.target.value)}
+                  />
+                  <FABButton ripple mini
+                             onClick={this.handleDelete.bind(this, owner, name, secret.name)}
+                  >
+                    <Icon name="delete"/>
+                  </FABButton>
+                  <FABButton ripple mini disabled={!this.state[secret.name]}
+                             onClick={this.handleUpdateSecret.bind(this, owner, name, secret.name)}
+                  >
+                    <Icon name="update"/>
+                  </FABButton>
+                  <Switch id="push" disabled={true} checked={ secret.event.indexOf('push') !== -1}>Push</Switch>
+                  <Switch id="tag" disabled={true} checked={ secret.event.indexOf('tag') !== -1}>Tag</Switch>
+                  <Switch id="deployment" disabled={true}
+                          checked={ secret.event.indexOf('deployment') !== -1}>Deployment</Switch>
+                  <Switch id="pull_request" disabled={true} checked={ secret.event.indexOf('pull_request') !== -1}>Pull
+                    request</Switch>
+                  <hr/>
+                </div>
+              );
+            })
         }
 
 
@@ -115,7 +115,7 @@ class Content extends React.Component {
       name: secretKey,
       value: this.state[secretKey],
       event: ['push', 'tag', 'deployment'],
-      image:['*'],
+      image: ['*'],
       skip_verify: false
     };
     events.emit(POST_REPO_SECRET, { owner, name, secret });
@@ -127,7 +127,7 @@ class Content extends React.Component {
       name: this.state.addKey,
       value: this.state.addValue,
       event: ['push', 'tag', 'deployment'],
-      image:['*'],
+      image: ['*'],
       skip_verify: false
     };
     events.emit(POST_REPO_SECRET, { owner, name, secret });
