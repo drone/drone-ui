@@ -67,8 +67,10 @@ class Content extends React.Component {
                 </FABButton>
                 <Switch id="push" disabled={true} checked={ secret.event.indexOf('push') !== -1}>Push</Switch>
                 <Switch id="tag" disabled={true} checked={ secret.event.indexOf('tag') !== -1}>Tag</Switch>
-                <Switch id="deployment" disabled={true} checked={ secret.event.indexOf('deployment') !== -1}>Deployment</Switch>
-                <Switch id="pull_request" disabled={true} checked={ secret.event.indexOf('pull_request') !== -1}>Pull request</Switch>
+                <Switch id="deployment" disabled={true}
+                        checked={ secret.event.indexOf('deployment') !== -1}>Deployment</Switch>
+                <Switch id="pull_request" disabled={true} checked={ secret.event.indexOf('pull_request') !== -1}>Pull
+                  request</Switch>
                 <hr/>
               </div>
             );

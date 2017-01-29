@@ -438,8 +438,8 @@ events.on(GET_REPO_SECRETS, function(event) {
         console.error(err);
       }
       let secrets = JSON.parse(response.text);
-      if (secrets.length === 0){
-        tree.set(['secrets', owner, name], {});
+      if (secrets === null){
+        tree.set(['secrets', owner, name], []);
       } else {
         tree.set(['secrets', owner, name], secrets);
       }
