@@ -241,7 +241,7 @@ events.on(POST_REPO_SECRET, function(event) {
       if (err != null) {
         console.error(err);
       }
-      events.emit(GET_REPO_SECRETS, { owner, name });
+      tree.push(['secrets', owner, name], secret);
     });
 });
 
@@ -264,7 +264,9 @@ events.on(DEL_REPO_SECRET, function(event) {
       if (err != null) {
         console.error(err);
       }
-      events.emit(GET_REPO_SECRETS, { owner, name });
+      let removedList = tree.get(['secrets', owner, name]).filter(removeItem => removeItem.name !== secret);
+      tree.set(['secrets', owner, name], removedList);
+
     });
 });
 
@@ -349,6 +351,7 @@ events.on(DEL_REPO, (event) => {
 
       tree.unset(['repos', owner, name]);
       tree.unset(['builds', owner, name]);
+      tree.unset(['secrets', owner, name]);
 
       // tree.select(['user','repos']).map((cursor, i) => {
       //   var selected = cursor.get();

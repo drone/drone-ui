@@ -37,7 +37,8 @@ class Content extends React.Component {
     return (
       <PageContent className="repository-secrets">
         {
-          secrets.map((secret, index) => {
+          secrets
+            .map((secret, index) => {
             return (
 
               <div key={index}>
@@ -116,7 +117,6 @@ class Content extends React.Component {
       event: ['push', 'tag', 'deployment'],
       skip_verify: false
     };
-    console.log(secret);
     events.emit(POST_REPO_SECRET, { owner, name, secret });
   }
 
