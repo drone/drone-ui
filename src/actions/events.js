@@ -32,6 +32,9 @@ export const HIDE_TOKEN = 'HIDE_TOKEN';
 export const CLEAR_TOAST = 'CLEAR_TOAST';
 export const FOLLOW_LOGS = 'FOLLOW_LOGS';
 export const UNFOLLOW_LOGS = 'UNFOLLOW_LOGS';
+export const GET_REPO_SECRETS = 'GET_REPO_SECRETS';
+export const POST_REPO_SECRET = 'POST_REPO_SECRET';
+export const DEL_REPO_SECRET = 'DEL_REPO_SECRET';
 
 let token = function() {
   var meta = document.querySelector('meta[name=csrf-token]');
@@ -228,6 +231,20 @@ events.on(POST_BUILD, function(event) {
     });
 });
 
+
+events.on(POST_REPO_SECRET, function(event) {
+  const {owner, name, secret} = event.data;
+  Request.post(`/api/repos/${owner}/${name}/secrets`)
+    .set('X-CSRF-TOKEN', token)
+    .send(secret)
+    .end((err) => {
+      if (err != null) {
+        console.error(err);
+      }
+      events.emit(GET_REPO_SECRETS, { owner, name });
+    });
+});
+
 events.on(DEL_BUILD, function(event) {
   const {owner, name, number, job} = event.data;
   Request.delete(`/api/repos/${owner}/${name}/builds/${number}/${job}`)
@@ -236,6 +253,18 @@ events.on(DEL_BUILD, function(event) {
       if (err != null) {
         console.error(err);
       }
+    });
+});
+
+events.on(DEL_REPO_SECRET, function(event) {
+  const {owner, name, secret} = event.data;
+  Request.delete(`/api/repos/${owner}/${name}/secrets/${secret}`)
+    .set('X-CSRF-TOKEN', token)
+    .end((err) => {
+      if (err != null) {
+        console.error(err);
+      }
+      events.emit(GET_REPO_SECRETS, { owner, name });
     });
 });
 
@@ -399,6 +428,22 @@ events.on(FOLLOW_LOGS, function() {
 
 events.on(UNFOLLOW_LOGS, function() {
   tree.set(['pages', 'build', 'follow'], false);
+});
+
+events.on(GET_REPO_SECRETS, function(event) {
+  const {owner, name} = event.data;
+  Request.get(`/api/repos/${owner}/${name}/secrets`)
+    .end((err, response) => {
+      if (err != null) {
+        console.error(err);
+      }
+      let secrets = JSON.parse(response.text);
+      if (secrets.length === 0){
+        tree.set(['secrets', owner, name], {})
+      } else {
+        tree.set(['secrets', owner, name], secrets);
+      }
+    });
 });
 
 events.on(FILTER, function(event) {

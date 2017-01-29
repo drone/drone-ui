@@ -3,6 +3,7 @@ import Dashboard from './dashboard/index';
 import Repository from './repository/index';
 import RepositoryBadge from './repository_badge/index';
 import RepositorySettings from './repository_settings/index';
+import RepositorySecrets from './repository_secrets/index';
 import UserProfile from './user_profile/index';
 
 export default {
@@ -11,5 +12,6 @@ export default {
   Repository,
   RepositoryBadge,
   RepositorySettings,
+  RepositorySecrets,
   UserProfile
 };

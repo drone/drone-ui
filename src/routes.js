@@ -32,6 +32,12 @@ export const routes = (
       pageSidebar: Pages.Repository.Sidebar,
       pageToolbar: Pages.Repository.Toolbar
     }}/>
+    <Route path="/:owner/:name/settings/secrets" components={{
+      pageHead: Pages.RepositorySecrets.Header,
+      pageContent: Pages.RepositorySecrets.Content,
+      pageSideBar: Pages.Repository.Sidebar,
+      pageToolBar: Pages.Repository.Toolbar
+    }}/>
     <Route path="/:owner/:name/settings/badges" components={{
       pageHead: Pages.RepositoryBadge.Header,
       pageContent: Pages.RepositoryBadge.Content,
