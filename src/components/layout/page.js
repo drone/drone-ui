@@ -41,7 +41,7 @@ class Page extends React.Component {
               <Drawer>
                 <div className="brand">
                   <Link to="/">
-                      <Avatar className="logo" src="/static/drone.svg"/>
+                      <img className="logo" src="/static/drone.svg"/>
                   </Link>
                 </div>
                 <Navigation>
