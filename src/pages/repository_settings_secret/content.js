@@ -120,6 +120,7 @@ class Content extends React.Component {
         />
         <FABButton ripple mini
                    onClick={this.handleAdd.bind(this, owner, name)}
+                   disabled={ this.state.addSecret.name === '' || this.state.addSecret.value === ''}
         >
           <Icon name="add"/>
         </FABButton>
