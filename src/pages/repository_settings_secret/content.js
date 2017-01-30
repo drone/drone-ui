@@ -130,7 +130,7 @@ class Content extends React.Component {
               {
                 eventTypes.map(eventType => {
                   return (
-                    <Switch id={eventType.value} onChange={ (field) => this.handleAddEventSwitch(field) }
+                    <Switch key={eventType.value} id={eventType.value} onChange={ (field) => this.handleAddEventSwitch(field) }
                             checked={ this.state.addSecret.event.indexOf(eventType.value) !== -1}>{eventType.label}</Switch>
                   );
                 })
