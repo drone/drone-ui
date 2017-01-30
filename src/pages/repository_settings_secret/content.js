@@ -6,12 +6,12 @@ import { Textfield, FABButton, Icon, Switch, Grid, Cell, Checkbox } from 'react-
 
 import './index.less';
 
-//TODO: replace the switch items as a common piece
-// const eventTypes = [{ label: 'Push', value: 'push' }, { label: 'Tag', value: 'tag' }, {
-//   label: 'Development',
-//   value: 'development'
-// }, { label: 'Pull Request', value: 'pull_request' }];
-
+const eventTypes = [
+  { label: 'Push', value: 'push' },
+  { label: 'Tag', value: 'tag' },
+  { label: 'Deployment', value: 'deployment' },
+  { label: 'Pull Request', value: 'pull_request' }
+];
 
 class Content extends React.Component {
   constructor(props) {
@@ -84,13 +84,13 @@ class Content extends React.Component {
                   <div style={{ width: '100%', margin: 'auto' }}>
                     <Grid className="secret-properties">
                       <Cell col={6}>
-                        <Switch id="push" disabled={true} checked={ secret.event.indexOf('push') !== -1}>Push</Switch>
-                        <Switch id="tag" disabled={true} checked={ secret.event.indexOf('tag') !== -1}>Tag</Switch>
-                        <Switch id="deployment" disabled={true}
-                                checked={ secret.event.indexOf('deployment') !== -1}>Deployment</Switch>
-                        <Switch id="pull_request" disabled={true}
-                                checked={ secret.event.indexOf('pull_request') !== -1}>Pull request
-                        </Switch>
+                        {
+                          eventTypes.map(eventType => {
+                            return (
+                              <Switch key={eventType.value} id={eventType.value} disabled={true} checked={ secret.event.indexOf(eventType.value) !== -1}>{eventType.label}</Switch>
+                            );
+                          })
+                        }
                       </Cell>
                       <Cell col={6}>
                         <Checkbox label="Skip Verify" disabled={true} checked={ secret.skip_verify }/>
@@ -127,15 +127,14 @@ class Content extends React.Component {
         <div style={{ width: '100%', margin: 'auto' }}>
           <Grid className="secret-properties">
             <Cell col={6}>
-              <Switch id="push" onChange={ (field) => this.handleAddEventSwitch(field) }
-                      checked={ this.state.addSecret.event.indexOf('push') !== -1}>Push</Switch>
-              <Switch id="tag" onChange={ (field) => this.handleAddEventSwitch(field) }
-                      checked={ this.state.addSecret.event.indexOf('tag') !== -1}>Tag</Switch>
-              <Switch id="deployment" onChange={ (field) => this.handleAddEventSwitch(field) }
-                      checked={ this.state.addSecret.event.indexOf('deployment') !== -1}>Deployment</Switch>
-              <Switch id="pull_request" onChange={ (field) => this.handleAddEventSwitch(field) }
-                      checked={ this.state.addSecret.event.indexOf('pull_request') !== -1}>Pull request
-              </Switch>
+              {
+                eventTypes.map(eventType => {
+                  return (
+                    <Switch id={eventType.value} onChange={ (field) => this.handleAddEventSwitch(field) }
+                            checked={ this.state.addSecret.event.indexOf(eventType.value) !== -1}>{eventType.label}</Switch>
+                  );
+                })
+              }
             </Cell>
             <Cell col={6}>
               <Checkbox id="skip_verify" label="Skip Verify" onChange={(field) => this.handleOptionalChange(field)}
