@@ -2,21 +2,37 @@ import { branch } from 'baobab-react/higher-order';
 import PageContent from '../../components/layout/content';
 import React from 'react';
 import { events, GET_REPO_SECRETS, DEL_REPO_SECRET, POST_REPO_SECRET } from '../../actions/events';
-import { Textfield, FABButton, Icon, Switch } from 'react-mdl';
+import { Textfield, FABButton, Icon, Switch, Grid, Cell, Checkbox } from 'react-mdl';
 
 import './index.less';
 
-class Content extends React.Component {
+//TODO: replace the switch items as a common piece
+// const eventTypes = [{ label: 'Push', value: 'push' }, { label: 'Tag', value: 'tag' }, {
+//   label: 'Development',
+//   value: 'development'
+// }, { label: 'Pull Request', value: 'pull_request' }];
 
+
+class Content extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      addKey: '',
-      addValue: ''
+      addSecret: this.defaultEvent()
     };
     this.handleAdd = this.handleAdd.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleUpdateSecret = this.handleUpdateSecret.bind(this);
+  }
+
+  defaultEvent() {
+    return {
+      name: '',
+      value: '',
+      image: ['*'],
+      event: ['push', 'tag', 'deployment'],
+      skip_verify: false,
+      conceal: false
+    };
   }
 
   componentDidMount() {
@@ -25,7 +41,6 @@ class Content extends React.Component {
   }
 
   render() {
-
     const { owner, name } = this.props.params;
     const { secrets } = this.props;
     if (!secrets) {
@@ -66,44 +81,73 @@ class Content extends React.Component {
                   >
                     <Icon name="update"/>
                   </FABButton>
-                  <Switch id="push" disabled={true} checked={ secret.event.indexOf('push') !== -1}>Push</Switch>
-                  <Switch id="tag" disabled={true} checked={ secret.event.indexOf('tag') !== -1}>Tag</Switch>
-                  <Switch id="deployment" disabled={true}
-                          checked={ secret.event.indexOf('deployment') !== -1}>Deployment</Switch>
-                  <Switch id="pull_request" disabled={true} checked={ secret.event.indexOf('pull_request') !== -1}>Pull
-                    request</Switch>
+                  <div style={{ width: '100%', margin: 'auto' }}>
+                    <Grid className="secret-properties">
+                      <Cell col={6}>
+                        <Switch id="push" disabled={true} checked={ secret.event.indexOf('push') !== -1}>Push</Switch>
+                        <Switch id="tag" disabled={true} checked={ secret.event.indexOf('tag') !== -1}>Tag</Switch>
+                        <Switch id="deployment" disabled={true}
+                                checked={ secret.event.indexOf('deployment') !== -1}>Deployment</Switch>
+                        <Switch id="pull_request" disabled={true}
+                                checked={ secret.event.indexOf('pull_request') !== -1}>Pull request
+                        </Switch>
+                      </Cell>
+                      <Cell col={6}>
+                        <Checkbox label="Skip Verify" disabled={true} checked={ secret.skip_verify }/>
+                        <Checkbox label="Conceal" disabled={true} checked={ secret.conceal}/>
+                      </Cell>
+                    </Grid>
+                  </div>
                   <hr/>
                 </div>
               );
             })
         }
 
-
         <Textfield
           label="Secret Name"
           floatingLabel
           style={{ width: '300px' }}
           onChange={(field) => this.handleAddKeyChange(field.target.value)}
-          value={this.state.addKey}
+          value={this.state.addSecret.name}
         />
         <Textfield
           label="Secret Value"
           floatingLabel
           style={{ width: '300px' }}
           onChange={(field) => this.handleAddSecretChange(field.target.value)}
-          value={this.state.addValue}
+          value={this.state.addSecret.value}
         />
         <FABButton ripple mini
                    onClick={this.handleAdd.bind(this, owner, name)}
         >
           <Icon name="add"/>
         </FABButton>
-        <hr/>
+        <div style={{ width: '100%', margin: 'auto' }}>
+          <Grid className="secret-properties">
+            <Cell col={6}>
+              <Switch id="push" onChange={ (field) => this.handleAddEventSwitch(field) }
+                      checked={ this.state.addSecret.event.indexOf('push') !== -1}>Push</Switch>
+              <Switch id="tag" onChange={ (field) => this.handleAddEventSwitch(field) }
+                      checked={ this.state.addSecret.event.indexOf('tag') !== -1}>Tag</Switch>
+              <Switch id="deployment" onChange={ (field) => this.handleAddEventSwitch(field) }
+                      checked={ this.state.addSecret.event.indexOf('deployment') !== -1}>Deployment</Switch>
+              <Switch id="pull_request" onChange={ (field) => this.handleAddEventSwitch(field) }
+                      checked={ this.state.addSecret.event.indexOf('pull_request') !== -1}>Pull request
+              </Switch>
+            </Cell>
+            <Cell col={6}>
+              <Checkbox id="skip_verify" label="Skip Verify" onChange={(field) => this.handleOptionalChange(field)}
+                        checked={ this.state.addSecret.skip_verify }/>
+              <Checkbox id="conceal" label="Conceal" onChange={(field) => this.handleOptionalChange(field)}
+                        checked={ this.state.addSecret.conceal }/>
+            </Cell>
+          </Grid>
+        </div>
 
       </PageContent>
     );
   }
-
 
   handleDelete(owner, name, secret) {
     events.emit(DEL_REPO_SECRET, { owner, name, secret });
@@ -122,25 +166,37 @@ class Content extends React.Component {
   }
 
   handleAdd(owner, name) {
-    //TODO: need to handle skip_verify and what events
-    let secret = {
-      name: this.state.addKey,
-      value: this.state.addValue,
-      event: ['push', 'tag', 'deployment'],
-      image: ['*'],
-      skip_verify: false
-    };
-    events.emit(POST_REPO_SECRET, { owner, name, secret });
-    this.setState({ addKey: '', addValue: '' });
-
+    events.emit(POST_REPO_SECRET, { owner, name, secret: this.state.addSecret });
+    this.setState({ addSecret: this.defaultEvent() });
   }
 
+  handleAddEventSwitch(item) {
+    let tempSecret = this.state.addSecret;
+    if (!item.target.checked) {
+      tempSecret.event = tempSecret.event.filter(o => o !== item.target.id);
+    } else {
+      tempSecret.event.push(item.target.id);
+    }
+    this.setState({ addSecret: tempSecret });
+  }
+
+  handleOptionalChange(item) {
+    let tempSecret = this.state.addSecret;
+    tempSecret[item.target.id] = item.target.checked;
+    this.setState(tempSecret);
+  }
+
+
   handleAddKeyChange(addKey) {
-    this.setState({ addKey });
+    let tempSecret = this.state.addSecret;
+    tempSecret.name = addKey;
+    this.setState({ addSecret: tempSecret });
   }
 
   handleAddSecretChange(addValue) {
-    this.setState({ addValue });
+    let tempSecret = this.state.addSecret;
+    tempSecret.value = addValue;
+    this.setState({ addSecret: tempSecret });
   }
 
   handleSecretChange(secret_name, value) {
