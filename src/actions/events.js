@@ -241,7 +241,9 @@ events.on(POST_REPO_SECRET, function(event) {
       if (err != null) {
         console.error(err);
       }
-      tree.push(['secrets', owner, name], secret);
+      let removedList = tree.get(['secrets', owner, name]).filter(removeItem => removeItem.name !== secret.name);
+      removedList.push(secret);
+      tree.set(['secrets', owner, name], removedList);
     });
 });
 
