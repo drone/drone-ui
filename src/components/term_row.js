@@ -1,9 +1,10 @@
-import ansi_up from 'ansi_up';
+import aha from 'aha';
+import {Buffer} from 'buffer';
 import React from 'react';
 
 import './term_row.less';
 
-const opts = {use_classes: true};
+const opts = {no_header: true, stylesheet: true};
 
 export default
 class TermRow extends React.Component {
@@ -18,8 +19,7 @@ class TermRow extends React.Component {
       );
     }
 
-    let html = ansi_up.escape_for_html(out || '');
-    html = ansi_up.ansi_to_html(html, opts);
+    let html = aha(Buffer.from(out || ''), opts);
 
     return (
      <div className="term-row">
