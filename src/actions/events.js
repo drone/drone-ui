@@ -51,6 +51,7 @@ events.once(GET_FEED, function() {
         return (b.started_at || b.created_at || -1) - (a.started_at || a.created_at || -1);
       });
       tree.set('feed', feed);
+      tree.set('feedGotResults', true);
     });
 });
 

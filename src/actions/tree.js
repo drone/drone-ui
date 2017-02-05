@@ -43,6 +43,7 @@ export const tree = new Baobab({
   // the feed branch of the tree maintains an activity feed array, consisting
   // of the latest activity per repository.
   feed: [],
+  feedGotResults: false,
 
   // the selected tree tracks the selected repository, build and job.
   // repo: undefined,
