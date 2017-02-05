@@ -12,7 +12,7 @@ class Sidebar extends React.Component {
   }
 
   render() {
-    let {feed, feedGotResults, user, state} = this.props;
+    let {feed, loading, user, state} = this.props;
 
     feed = feed.slice().sort(function(a, b) {
       return (b.started_at || b.created_at || -1) - (a.started_at || a.created_at || -1);
@@ -27,11 +27,11 @@ class Sidebar extends React.Component {
         </div>
       );
     }
-    if (feedGotResults === false){
+    if (loading === true){
       return <div>Loading...</div>;
     }
 
-    if (feedGotResults !== false && feed.length == 0) {
+    if (loading === false && feed.length == 0) {
       return <div>No repos enabled</div>;
     }
 
@@ -75,7 +75,7 @@ class Sidebar extends React.Component {
 
 export default branch({
   feed: ['feed'],
-  feedGotResults: ['feedGotResults'],
   user: ['user'],
+  loading: ['pages', 'loading'],
   state: ['pages', 'repo']
 }, Sidebar);
