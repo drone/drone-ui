@@ -28,7 +28,7 @@ class Sidebar extends React.Component {
       );
     }
     if (feedGotResults === false){
-      return <div>Loading...</div>
+      return <div>Loading...</div>;
     }
 
     if (feedGotResults !== false && feed.length == 0) {
