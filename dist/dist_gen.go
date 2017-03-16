@@ -81,7 +81,7 @@ func distIndexHtml() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "dist/index.html", size: 808, mode: os.FileMode(420), modTime: time.Unix(1488684582, 0)}
+	info := bindataFileInfo{name: "dist/index.html", size: 808, mode: os.FileMode(420), modTime: time.Unix(1489663490, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -99,7 +99,7 @@ func distStaticAppCss() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "dist/static/app.css", size: 157222, mode: os.FileMode(420), modTime: time.Unix(1488684582, 0)}
+	info := bindataFileInfo{name: "dist/static/app.css", size: 157222, mode: os.FileMode(420), modTime: time.Unix(1489663490, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -1832,7 +1832,7 @@ e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,wri
 var u=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n]
 r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),s=n(101),l=r(s),c=n(165),p=r(c),f=n(16),d=n(27),h=r(d),m=n(1),y=r(m)
 t.Matrix=function(e){function t(){return o(this,t),a(this,Object.getPrototypeOf(t).apply(this,arguments))}return i(t,e),u(t,[{key:"render",value:function(){function e(e){return y["default"].createElement(f.Link,{key:e.number,to:"/"+n.owner+"/"+n.name+"/"+r.number+"/"+e.number},y["default"].createElement(p["default"],{repo:n,build:r,job:e}))}var t=this.props,n=t.repo,r=t.build
-return y["default"].createElement(h["default"],{fluid:!0,className:"build"},y["default"].createElement(l["default"],{build:r,job:r}),y["default"].createElement("div",null,r.jobs.map(e)))}}]),t}(y["default"].Component)},function(e,t,n){"use strict"
+return y["default"].createElement(h["default"],{fluid:!0,className:"build"},y["default"].createElement(l["default"],{build:r,job:r}),r.error&&""!=r.error?y["default"].createElement("div",{className:"alert error"},y["default"].createElement("i",{className:"material-icons"},"error_outline"),y["default"].createElement("span",null,"ERROR: ",r.error)):y["default"].createElement("noscript",null),y["default"].createElement("div",null,r.jobs.map(e)))}}]),t}(y["default"].Component)},function(e,t,n){"use strict"
 function r(e){return e&&e.__esModule?e:{"default":e}}function o(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function a(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called")
 return!t||"object"!=typeof t&&"function"!=typeof t?e:t}function i(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function, not "+typeof t)
 e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)}Object.defineProperty(t,"__esModule",{value:!0}),t.Results=void 0
@@ -3436,7 +3436,7 @@ func distStaticAppJs() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "dist/static/app.js", size: 482701, mode: os.FileMode(420), modTime: time.Unix(1488684582, 0)}
+	info := bindataFileInfo{name: "dist/static/app.js", size: 482961, mode: os.FileMode(420), modTime: time.Unix(1489663490, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -3546,7 +3546,7 @@ func distStaticDroneSvg() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "dist/static/drone.svg", size: 3499, mode: os.FileMode(420), modTime: time.Unix(1488684582, 0)}
+	info := bindataFileInfo{name: "dist/static/drone.svg", size: 3499, mode: os.FileMode(420), modTime: time.Unix(1489663490, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -3563,7 +3563,7 @@ func distStaticFaviconIco() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "dist/static/favicon.ico", size: 1150, mode: os.FileMode(420), modTime: time.Unix(1488684582, 0)}
+	info := bindataFileInfo{name: "dist/static/favicon.ico", size: 1150, mode: os.FileMode(420), modTime: time.Unix(1489663490, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
