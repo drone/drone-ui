@@ -25,6 +25,8 @@ export class Results extends React.Component {
 
     this.handleCancel = this.handleCancel.bind(this);
     this.handleRestart = this.handleRestart.bind(this);
+    this.handleApprove = this.handleApprove.bind(this);
+    this.handleDecline = this.handleDecline.bind(this);
   }
 
   componentDidMount() {
@@ -108,11 +110,21 @@ export class Results extends React.Component {
   }
 
   handleApprove() {
-    events.emit(APPROVE_BUILD);
+    const {repo, build} = this.props;
+    events.emit(APPROVE_BUILD, {
+      owner: repo.owner,
+      name: repo.name,
+      number: build.number
+    });
   }
 
   handleDecline() {
-    events.emit(DECLINE_BUILD);
+    const {repo, build} = this.props;
+    events.emit(DECLINE_BUILD, {
+      owner: repo.owner,
+      name: repo.name,
+      number: build.number
+    });
   }
 
   handleRestart() {
@@ -146,9 +158,9 @@ export class Results extends React.Component {
               {build.status == BLOCKED ? <Button ripple onClick={this.handleApprove}>approve</Button> : <noscript />}
               {build.status == BLOCKED ? <Button ripple onClick={this.handleDecline}>decline</Button> : <noscript />}
               {job.status == RUNNING ? <Button ripple onClick={this.handleCancel}>cancel</Button> : <noscript />}
-              {!follow ? <Button ripple onClick={this.handleFollow}>Follow</Button> : <noscript />}
-              {follow ? <Button ripple onClick={this.handleUnfollow}>Unfollow</Button> : <noscript />}
-              {build.status != RUNNING && job.status != PENDING ? <Button ripple onClick={this.handleRestart}>restart</Button>: <noscript />}
+              {build.status != BLOCKED && !follow ? <Button ripple onClick={this.handleFollow}>Follow</Button> : <noscript />}
+              {build.status != BLOCKED && follow ? <Button ripple onClick={this.handleUnfollow}>Unfollow</Button> : <noscript />}
+              {build.status != RUNNING && job.status != PENDING && job.status != BLOCKED ? <Button ripple onClick={this.handleRestart}>restart</Button>: <noscript />}
             </div>
           </details>
         </BuildPanel>
@@ -156,6 +168,13 @@ export class Results extends React.Component {
           <div className="alert warning">
             <i className="material-icons">warning</i>
             <span>WARNING: unable to verify the Yaml signature.</span>
+          </div> :
+          <noscript />
+        }
+        {build.error && build.error != '' ?
+          <div className="alert error">
+            <i className="material-icons">error_outline</i>
+            <span>ERROR: {build.error}</span>
           </div> :
           <noscript />
         }
