@@ -6,6 +6,8 @@ import Status from '../../components/status';
 import Term from '../../components/term';
 import {
   events,
+  APPROVE_BUILD,
+  DECLINE_BUILD,
   GET_BUILD_LOGS,
   DEL_BUILD_LOGS,
   DEL_BUILD,
@@ -15,7 +17,7 @@ import {
   FOLLOW_LOGS,
   UNFOLLOW_LOGS
 } from '../../actions/events';
-import {RUNNING, PENDING} from '../../components/status';
+import {RUNNING, PENDING, BLOCKED} from '../../components/status';
 
 export class Results extends React.Component {
   constructor(props) {
@@ -105,6 +107,14 @@ export class Results extends React.Component {
     events.emit(UNFOLLOW_LOGS);
   }
 
+  handleApprove() {
+    events.emit(APPROVE_BUILD);
+  }
+
+  handleDecline() {
+    events.emit(DECLINE_BUILD);
+  }
+
   handleRestart() {
     const {repo, build} = this.props;
     events.emit(POST_BUILD, {
@@ -133,6 +143,8 @@ export class Results extends React.Component {
           <details open>
             <summary></summary>
             <div>
+              {build.status == BLOCKED ? <Button ripple onClick={this.handleApprove}>approve</Button> : <noscript />}
+              {build.status == BLOCKED ? <Button ripple onClick={this.handleDecline}>decline</Button> : <noscript />}
               {job.status == RUNNING ? <Button ripple onClick={this.handleCancel}>cancel</Button> : <noscript />}
               {!follow ? <Button ripple onClick={this.handleFollow}>Follow</Button> : <noscript />}
               {follow ? <Button ripple onClick={this.handleUnfollow}>Unfollow</Button> : <noscript />}
@@ -151,6 +163,13 @@ export class Results extends React.Component {
           <div className="alert error">
             <i className="material-icons">error_outline</i>
             <span>ERROR: {job.error}</span>
+          </div> :
+          <noscript />
+        }
+        {build.status === 'declined' ?
+          <div className="alert error">
+            <i className="material-icons">error_outline</i>
+            <span>Build declined by {build.approved_by}</span>
           </div> :
           <noscript />
         }

@@ -32,6 +32,8 @@ export const HIDE_TOKEN = 'HIDE_TOKEN';
 export const CLEAR_TOAST = 'CLEAR_TOAST';
 export const FOLLOW_LOGS = 'FOLLOW_LOGS';
 export const UNFOLLOW_LOGS = 'UNFOLLOW_LOGS';
+export const APPROVE_BUILD = 'APPROVE_BUILD';
+export const DECLINE_BUILD = 'DECLINE_BUILD';
 
 let token = function() {
   var meta = document.querySelector('meta[name=csrf-token]');
@@ -231,6 +233,28 @@ events.on(POST_BUILD, function(event) {
 events.on(DEL_BUILD, function(event) {
   const {owner, name, number, job} = event.data;
   Request.delete(`/api/repos/${owner}/${name}/builds/${number}/${job}`)
+    .set('X-CSRF-TOKEN', token)
+    .end((err) => {
+      if (err != null) {
+        console.error(err);
+      }
+    });
+});
+
+events.on(APPROVE_BUILD, function(event) {
+  const {owner, name, number} = event.data;
+  Request.post(`/api/repos/${owner}/${name}/builds/${number}/approve`)
+    .set('X-CSRF-TOKEN', token)
+    .end((err) => {
+      if (err != null) {
+        console.error(err);
+      }
+    });
+});
+
+events.on(DECLINE_BUILD, function(event) {
+  const {owner, name, number} = event.data;
+  Request.post(`/api/repos/${owner}/${name}/builds/${number}/decline`)
     .set('X-CSRF-TOKEN', token)
     .end((err) => {
       if (err != null) {
