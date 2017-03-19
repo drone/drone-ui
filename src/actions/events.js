@@ -35,6 +35,8 @@ export const UNFOLLOW_LOGS = 'UNFOLLOW_LOGS';
 export const GET_REPO_SECRETS = 'GET_REPO_SECRETS';
 export const POST_REPO_SECRET = 'POST_REPO_SECRET';
 export const DEL_REPO_SECRET = 'DEL_REPO_SECRET';
+export const APPROVE_BUILD = 'APPROVE_BUILD';
+export const DECLINE_BUILD = 'DECLINE_BUILD';
 
 let token = function() {
   var meta = document.querySelector('meta[name=csrf-token]');
@@ -268,7 +270,29 @@ events.on(DEL_REPO_SECRET, function(event) {
       }
       let removedList = tree.get(['secrets', owner, name]).filter(removeItem => removeItem.name !== secret);
       tree.set(['secrets', owner, name], removedList);
+    });
+});
 
+
+events.on(APPROVE_BUILD, function (event) {
+  const { owner, name, number } = event.data;
+  Request.post(`/api/repos/${owner}/${name}/builds/${number}/approve`)
+    .set('X-CSRF-TOKEN', token)
+    .end((err) => {
+      if (err != null) {
+        console.error(err);
+      }
+    });
+});
+
+events.on(DECLINE_BUILD, function(event) {
+  const {owner, name, number} = event.data;
+  Request.post(`/api/repos/${owner}/${name}/builds/${number}/decline`)
+    .set('X-CSRF-TOKEN', token)
+    .end((err) => {
+      if (err != null) {
+        console.error(err);
+      }
     });
 });
 
