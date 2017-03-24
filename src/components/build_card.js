@@ -17,7 +17,7 @@ class BuildCard extends React.Component {
         </div>
         <div className="card-block">
           <div>
-            <h3>{build.message}</h3>
+            <h3>{build.message.split('\n')[0]}</h3>
           </div>
           <BuildMeta build={build}/>
         </div>

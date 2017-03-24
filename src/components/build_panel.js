@@ -38,6 +38,10 @@ class BuildPanel extends React.Component {
     let branch = (build.refspec != '' && build.event == 'pull_request') ?
       build.refspec : build.branch;
 
+    const lines = build.message.split('\n');
+    const header = lines[0];
+    const description = lines.slice(1).join('\n');
+
     return (
       <div className={classes.join(' ')}>
         <div className="build-panel-detail">
@@ -51,7 +55,8 @@ class BuildPanel extends React.Component {
             </div>
             <div><em>Author:</em> {build.author}</div>
             {this.renderParentLink(build.parent)}
-            <p>{environs}{build.message}</p>
+            <p>{environs}{header}</p>
+            <pre>{description}</pre>
           </div>
           <div>
             <div>
