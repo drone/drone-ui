@@ -1,9 +1,9 @@
+import {BLOCKED} from '../../components/status';
 import {branch} from 'baobab-react/higher-order';
 import {Matrix} from './matrix';
 import React from 'react';
 import {Results} from './results';
 import {events, GET_BUILD} from '../../actions/events';
-import {BLOCKED} from '../../components/status';
 
 import './index.less';
 
