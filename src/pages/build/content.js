@@ -3,6 +3,7 @@ import {Matrix} from './matrix';
 import React from 'react';
 import {Results} from './results';
 import {events, GET_BUILD} from '../../actions/events';
+import {BLOCKED} from '../../components/status';
 
 import './index.less';
 
@@ -46,6 +47,18 @@ class Content extends React.Component {
     if (!build || !build.jobs) {
       return (
         <div>Loading...</div>
+      );
+    }
+
+    if (build.status == BLOCKED || build.error != '') {
+      return (
+        <Results
+          repo={{owner: owner, name: name}}
+          build={build}
+          job={{number:0, status: build.status}}
+          follow={state.follow}
+          logs={logs}>
+        </Results>
       );
     }
 

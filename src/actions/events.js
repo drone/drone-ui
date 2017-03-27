@@ -32,6 +32,11 @@ export const HIDE_TOKEN = 'HIDE_TOKEN';
 export const CLEAR_TOAST = 'CLEAR_TOAST';
 export const FOLLOW_LOGS = 'FOLLOW_LOGS';
 export const UNFOLLOW_LOGS = 'UNFOLLOW_LOGS';
+export const GET_REPO_SECRETS = 'GET_REPO_SECRETS';
+export const POST_REPO_SECRET = 'POST_REPO_SECRET';
+export const DEL_REPO_SECRET = 'DEL_REPO_SECRET';
+export const APPROVE_BUILD = 'APPROVE_BUILD';
+export const DECLINE_BUILD = 'DECLINE_BUILD';
 
 let token = function() {
   var meta = document.querySelector('meta[name=csrf-token]');
@@ -228,9 +233,61 @@ events.on(POST_BUILD, function(event) {
     });
 });
 
+
+events.on(POST_REPO_SECRET, function(event) {
+  const {owner, name, secret} = event.data;
+  Request.post(`/api/repos/${owner}/${name}/secrets`)
+    .set('X-CSRF-TOKEN', token)
+    .send(secret)
+    .end((err) => {
+      if (err != null) {
+        console.error(err);
+      }
+      let removedList = tree.get(['secrets', owner, name]).filter(removeItem => removeItem.name !== secret.name);
+      removedList.push(secret);
+      tree.set(['secrets', owner, name], removedList);
+    });
+});
+
 events.on(DEL_BUILD, function(event) {
   const {owner, name, number, job} = event.data;
   Request.delete(`/api/repos/${owner}/${name}/builds/${number}/${job}`)
+    .set('X-CSRF-TOKEN', token)
+    .end((err) => {
+      if (err != null) {
+        console.error(err);
+      }
+    });
+});
+
+events.on(DEL_REPO_SECRET, function(event) {
+  const {owner, name, secret} = event.data;
+  Request.delete(`/api/repos/${owner}/${name}/secrets/${secret}`)
+    .set('X-CSRF-TOKEN', token)
+    .end((err) => {
+      if (err != null) {
+        console.error(err);
+      }
+      let removedList = tree.get(['secrets', owner, name]).filter(removeItem => removeItem.name !== secret);
+      tree.set(['secrets', owner, name], removedList);
+    });
+});
+
+
+events.on(APPROVE_BUILD, function (event) {
+  const { owner, name, number } = event.data;
+  Request.post(`/api/repos/${owner}/${name}/builds/${number}/approve`)
+    .set('X-CSRF-TOKEN', token)
+    .end((err) => {
+      if (err != null) {
+        console.error(err);
+      }
+    });
+});
+
+events.on(DECLINE_BUILD, function(event) {
+  const {owner, name, number} = event.data;
+  Request.post(`/api/repos/${owner}/${name}/builds/${number}/decline`)
     .set('X-CSRF-TOKEN', token)
     .end((err) => {
       if (err != null) {
@@ -320,6 +377,7 @@ events.on(DEL_REPO, (event) => {
 
       tree.unset(['repos', owner, name]);
       tree.unset(['builds', owner, name]);
+      tree.unset(['secrets', owner, name]);
 
       // tree.select(['user','repos']).map((cursor, i) => {
       //   var selected = cursor.get();
@@ -399,6 +457,22 @@ events.on(FOLLOW_LOGS, function() {
 
 events.on(UNFOLLOW_LOGS, function() {
   tree.set(['pages', 'build', 'follow'], false);
+});
+
+events.on(GET_REPO_SECRETS, function(event) {
+  const {owner, name} = event.data;
+  Request.get(`/api/repos/${owner}/${name}/secrets`)
+    .end((err, response) => {
+      if (err != null) {
+        console.error(err);
+      }
+      let secrets = JSON.parse(response.text);
+      if (secrets === null){
+        tree.set(['secrets', owner, name], []);
+      } else {
+        tree.set(['secrets', owner, name], secrets);
+      }
+    });
 });
 
 events.on(FILTER, function(event) {

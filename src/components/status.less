@@ -19,7 +19,7 @@
     font-feature-settings: "liga" 1;
   }
 
-  &.error, &.killed, &.failure {
+  &.error, &.killed, &.failure, &.declined {
     color: #F50057;
     border-color: #F50057;
     &:before {
@@ -32,6 +32,14 @@
     border-color: #00BFA5;
     &:before {
       content: "check";
+    }
+  }
+
+  &.blocked {
+    color: #FFA000;
+    border-color: #FFA000;
+    &:before {
+      content: "block";
     }
   }
 
