@@ -8,6 +8,11 @@ import {events, GET_REPO_LIST, POST_REPO, DEL_REPO} from '../../actions/events';
 import './index.less';
 
 class Content extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { key: Math.random() };
+  }
+
 
   componentDidMount() {
     events.emit(GET_REPO_LIST);
@@ -15,7 +20,14 @@ class Content extends React.Component {
 
   handleSwitch(repo) {
     if (repo.id > 0) {
-      events.emit(DEL_REPO, repo);
+      let confirmMsg = 'Are you sure you want to disable ' + repo.full_name + '?' +
+                       '  This will DELETE the webhook, secrets and logs for this repo!';
+      if (confirm(confirmMsg)) {
+        events.emit(DEL_REPO, repo);
+      } else {
+        // Force refresh so doesn't "uncheck"
+        this.setState({ key: Math.random() });
+      }
     } else {
       events.emit(POST_REPO, repo);
     }
@@ -58,7 +70,7 @@ class Content extends React.Component {
           <h3>{repo.full_name}</h3>
           <div>
             {link}
-            <Switch checked={!!repo.id} onChange={this.handleSwitch.bind(this, repo)}/>
+            <Switch key={this.state.key} checked={!!repo.id} onChange={this.handleSwitch.bind(this, repo)}/>
           </div>
         </div>
       );
