@@ -59,7 +59,7 @@ class Content extends React.Component {
 
     if (repository instanceof Error) {
       return (
-        <div className="alert alert-empty">This repository is Not Found</div>
+        <div className="alert alert-empty">This repository is not found. You might need to login first.</div>
       );
     }
 
