@@ -3,7 +3,7 @@ import BuildCard from '../../components/build_card';
 import {Link} from 'react-router';
 import PageContent from '../../components/layout/content';
 import React from 'react';
-import Select from 'react-select';
+// import Select from 'react-select';
 import {events, GET_REPO, GET_BUILD_LIST, BUILD_FILTER, BUILD_FILTER_CLEAR,
         BUILD_FILTER_SUGGESTIONS_CLEAR} from '../../actions/events';
 
@@ -54,7 +54,8 @@ class Content extends React.Component {
 
   render() {
     const {owner, name} = this.props.params;
-    let {repository, builds, filtered_builds, state} = this.props;
+    // let {repository, builds, filtered_builds, state} = this.props;
+    let {repository, builds} = this.props;
 
     if (repository instanceof Error) {
       return (
@@ -86,13 +87,18 @@ class Content extends React.Component {
 
     return (
       <PageContent className="repository history">
-        <Select multi simpleValue
+        {/* TODO this needs to be re-enabled. It was failing with errors
+            and temporarily commented out.
+
+          <Select multi simpleValue
           value={(state && state.build_filter) ? state.build_filter : ''}
-          placeholder='Filter build history...' 
-          options={(state && state.suggestions) ? state.suggestions : []} 
+          placeholder='Filter build history...'
+          options={(state && state.suggestions) ? state.suggestions : []}
           delimiter=';'
           onChange={this.onFilter} />
         {Object.keys(filtered_builds).sort((a, b) => {return b - a;}).map(buildItem)}
+        */}
+        {Object.keys(builds).sort((a, b) => {return b - a;}).map(buildItem)}
       </PageContent>
     );
   }
