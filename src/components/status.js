@@ -12,6 +12,7 @@ export const PENDING = 'pending';
 export const BLOCKED = 'blocked';
 export const DECLINED = 'declined';
 export const UNKNOWN = 'unknown';
+export const SKIPPED = 'skipped';
 
 export default
 class Status extends React.Component {
