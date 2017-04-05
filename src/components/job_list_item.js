@@ -12,16 +12,16 @@ class JobListItem extends React.Component {
       <div className="job-list-item">
         <div>
           <h3>
-            {Object.keys(job.environment).map((key) => {
+            {Object.keys(job.environ || {}).map((key) => {
               return (
-                <div key={key}>{key}={job.environment[key]}</div>
+                <div key={key}>{key}={job.environ[key]}</div>
               );
             })}
           </h3>
         </div>
         <div>
-          <span># {job.number}</span>
-          <Status state={job.status} />
+          <span># {job.pid}</span>
+          <Status state={job.state} />
         </div>
       </div>
     );

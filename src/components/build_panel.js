@@ -24,13 +24,13 @@ class BuildPanel extends React.Component {
   render() {
     const {build, job} = this.props;
 
-    let classes = ['build-panel', job.status];
+    let classes = ['build-panel', job.state || job.status];
 
     let environs = [];
-    if (job && job.environment) {
-      Object.keys(job.environment).map((key) => {
+    if (job && job.environ) {
+      Object.keys(job.environ).map((key) => {
         environs.push(
-          <code key={key}>{key}={job.environment[key]}</code>
+          <code key={key}>{key}={job.environ[key]}</code>
         );
       });
     }
@@ -75,4 +75,3 @@ class BuildPanel extends React.Component {
     );
   }
 }
-/**/

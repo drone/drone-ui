@@ -19,8 +19,6 @@ export const GET_BUILD = 'GET_BUILD';
 export const POST_BUILD = 'POST_BUILD';
 export const DEL_BUILD = 'DEL_BUILD';
 export const GET_BUILD_LIST = 'GET_BUILD_LIST';
-export const GET_BUILD_LOGS = 'GET_BUILD_LOGS';
-export const DEL_BUILD_LOGS = 'DEL_BUILD_LOGS';
 export const FILTER = 'FILTER';
 export const FILTER_CLEAR = 'FILTER_CLEAR';
 export const BUILD_FILTER = 'BUILD_FILTER';
@@ -37,6 +35,8 @@ export const POST_REPO_SECRET = 'POST_REPO_SECRET';
 export const DEL_REPO_SECRET = 'DEL_REPO_SECRET';
 export const APPROVE_BUILD = 'APPROVE_BUILD';
 export const DECLINE_BUILD = 'DECLINE_BUILD';
+
+
 
 let token = function() {
   var meta = document.querySelector('meta[name=csrf-token]');
@@ -63,7 +63,7 @@ events.once(STREAM_FEED, function() {
   let proto = (window.location.protocol === 'https:') ? 'wss:' : 'ws:';
   let ws = new WebSocket(proto + '//' + window.location.host + '/ws/feed');
   ws.onmessage = function(message) {
-    let {repo, build, job} = JSON.parse(message.data);
+    let {repo, build} = JSON.parse(message.data);
 
     // merge the item into the feed
     tree.select(['feed']).map((cursor) => {
@@ -73,22 +73,8 @@ events.once(STREAM_FEED, function() {
       }
     });
 
-    const cursor = tree.select(['builds', repo.owner, repo.name, build.number]);
-    if (cursor && cursor.get()) {
-      const previous = cursor.get();
-      if (previous.jobs) {
-        build.jobs = previous.jobs.slice();
-      } else {
-        build.jobs = [];
-      }
-      if (job) build.jobs[job.number-1] = job;
-      cursor.set(build);
-    }
-
     // append the build to the index if not exists.
-    if (!tree.exists(['builds', repo.owner, repo.name, build.number])) {
-      tree.set(['builds', repo.owner, repo.name, build.number], build);
-    }
+    tree.set(['builds', repo.owner, repo.name, build.number], build);
   };
 });
 
@@ -205,7 +191,7 @@ events.on(GET_BUILD_LIST, function(event) {
 
 
 events.on(GET_BUILD, function(event) {
-  const {owner, name, number} = event.data;
+  let {owner, name, number, pid} = event.data;
   Request.get(`/api/repos/${owner}/${name}/builds/${number}`)
     .end((err, response) => {
       if (err != null) {
@@ -219,6 +205,23 @@ events.on(GET_BUILD, function(event) {
       let build = JSON.parse(response.text);
       tree.unset('logs');
       tree.set(['builds', owner, name, number], build);
+      if (!build.procs || !build.procs.length || build.procs.length === 0) {
+        tree.set(['builds', owner, name, number, 'procs'], []);
+        return;
+      }
+
+      pid = pid || 1;
+      for (var i=0; i<build.procs.length; i++) {
+        const proc = build.procs[i];
+        if (proc.pid == pid) {
+          // tree.set(['proc'], proc);
+          for (var ii=0; ii<proc.children.length; ii++) {
+            var child = proc.children[ii];
+            tree.set(['logs', child.name], { open: false, auto: true, lines: [], loading: true });
+          }
+          break;
+        }
+      }
     });
 });
 
@@ -296,35 +299,6 @@ events.on(DECLINE_BUILD, function(event) {
     });
 });
 
-events.on(GET_BUILD_LOGS, function(event) {
-  const {owner, name, number, job} = event.data;
-  Request.get(`/api/repos/${owner}/${name}/logs/${number}/${job}`)
-    .end((err, response) => {
-      if (err != null) {
-        console.error(err);
-      }
-      let lines = JSON.parse(response.text);
-      let procs = {};
-
-      // this code groups the lines of output by process.
-      lines.map(function(line) {
-        if (!line || !line.proc || !line.out) return;
-        let proc = procs[line.proc];
-        if (!proc) {
-          proc=[];
-          procs[line.proc]=proc;
-        }
-        proc.push(line);
-      });
-
-      tree.set('logs', procs);
-    });
-});
-
-events.on(DEL_BUILD_LOGS, function() {
-  tree.unset('logs');
-});
-
 events.on(OPEN_LOG_STREAM, function(event) {
   if (this.ws) {
     this.ws.close();
@@ -336,15 +310,17 @@ events.on(OPEN_LOG_STREAM, function(event) {
   const proto = (window.location.protocol === 'https:') ? 'wss:' : 'ws:';
   const path = ['/ws/logs', owner, name, number, job].join('/');
 
-  tree.set('logs', {});
-
   this.ws = new WebSocket(proto + '//' + window.location.host + path);
   this.ws.onmessage = function(message) {
-    let event = JSON.parse(message.data);
-    if (!event || !event.proc || !event.out) return;
+    let data = JSON.parse(message.data);
+    if (!data || !data.proc || !data.out) return;
 
-    if (!tree.exists(['logs', event.proc])) tree.set(['logs', event.proc], []);
-    tree.select(['logs', event.proc]).push(event);
+    if (!tree.exists(['logs', data.proc])) {
+      tree.set(['logs', data.proc], { open: false, auto: true, lines: [] });
+    }
+
+    tree.set(['logs', data.proc, 'loading'], false);
+    tree.select(['logs', data.proc, 'lines']).push(data);
   };
 });
 
@@ -379,6 +355,7 @@ events.on(DEL_REPO, (event) => {
       tree.unset(['builds', owner, name]);
       tree.unset(['secrets', owner, name]);
 
+      // TODO dead code?
       // tree.select(['user','repos']).map((cursor, i) => {
       //   var selected = cursor.get();
       //   if (selected.owner == owner && selected.name == name) {
@@ -507,4 +484,48 @@ events.on(BUILD_FILTER_SUGGESTIONS_CLEAR, function() {
 
 events.on(CLEAR_TOAST, function() {
   tree.unset(['pages', 'toast']);
+});
+
+//
+// manage logs for completed builds
+//
+
+export const LOG_EXPAND = 'LOG_EXPAND';
+export const LOG_COLLAPSE = 'LOG_COLLAPSE';
+export const LOG_RESET = 'LOG_RESET';
+
+events.on(LOG_COLLAPSE, function() {
+  const {proc} = event.data;
+  tree.set(['logs', proc.name, 'open'], false);
+  tree.set(['logs', proc.name, 'auto'], false);
+});
+
+events.on(LOG_EXPAND, function(event) {
+  const {owner, name, number, proc} = event.data;
+  tree.set(['logs', proc.name, 'open'], true);
+  tree.set(['logs', proc.name, 'auto'], false);
+
+  let loading = tree.get(['logs', proc.name, 'loading']);
+  if (loading === false) {
+    return;
+  }
+
+  tree.set(['logs', proc.name, 'loading'], true);
+  tree.set(['logs', proc.name, 'lines'], []);
+
+  Request.get(`/api/repos/${owner}/${name}/logs/${number}/${proc.ppid}/${proc.name}`)
+    .end((err, response) => {
+      if (err != null) {
+        console.error(err);
+        return;
+      }
+
+      const lines = JSON.parse(response.text) || [];
+      tree.set(['logs', proc.name, 'lines'], lines);
+      tree.set(['logs', proc.name, 'loading'], false);
+    });
+});
+
+events.on(LOG_RESET, function() {
+  tree.unset(['logs']);
 });
