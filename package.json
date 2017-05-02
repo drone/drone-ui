@@ -16,7 +16,8 @@
     "react-router": "^2.0.1",
     "react-timeago": "^3.1.1",
     "superagent": "^1.8.3",
-    "react-select": "1.0.0-rc.2"
+    "react-select": "1.0.0-rc.2",
+    "material": "0.1.1"
   },
   "devDependencies": {
     "babel-core": "^6.7.4",

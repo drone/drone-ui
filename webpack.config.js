@@ -7,6 +7,7 @@ var webpack = require('webpack');
 module.exports = {
   entry: {
     app: [
+      'react-mdl/extra/material.min.js',
       './index.html',
       './src/index.js'
     ]
