@@ -1,6 +1,8 @@
 /*eslint-disable */
 import './index.less';
 
+const Material = require('material-design-lite')
+
 import {events} from './actions/events';
 import React from 'react';
 import ReactDOM from 'react-dom';
