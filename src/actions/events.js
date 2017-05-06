@@ -384,7 +384,7 @@ events.on(POST_REPO, (event) => {
     .end((err, response) => {
       if (err != null) {
         console.error(err);
-        tree.set(['pages', 'toast'], `Error activating ${repo.full_name}`);
+        tree.set(['pages', 'toast'], `Error activating ${owner}/${name}`);
         return;
       }
 
@@ -402,7 +402,7 @@ events.on(POST_REPO, (event) => {
         }
       });
 
-      // append the repsotiroy to the feed.
+      // append the repository to the feed.
       tree.push(['feed'], repo);
       tree.set(['pages', 'toast'], `Successfully activated ${repo.full_name}`);
     });
