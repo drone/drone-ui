@@ -494,7 +494,7 @@ export const LOG_EXPAND = 'LOG_EXPAND';
 export const LOG_COLLAPSE = 'LOG_COLLAPSE';
 export const LOG_RESET = 'LOG_RESET';
 
-events.on(LOG_COLLAPSE, function() {
+events.on(LOG_COLLAPSE, function(event) {
   const {proc} = event.data;
   tree.set(['logs', proc.name, 'open'], false);
   tree.set(['logs', proc.name, 'auto'], false);
