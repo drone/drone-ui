@@ -18,6 +18,14 @@ class Sidebar extends React.Component {
       return (b.started_at || b.created_at || -1) - (a.started_at || a.created_at || -1);
     });
 
+    if (state.loading) {
+      return (
+        <div className="repository-sidebar">
+          <div className="alert">Loading...</div>
+        </div>
+      );
+    }
+
     if (!user) {
       return (
         <div className="repository-sidebar">
@@ -28,8 +36,17 @@ class Sidebar extends React.Component {
       );
     }
 
-    if (feed.length == 0) {
-      return <div>Loading...</div>;
+    if (!state.loading && feed.length === 0) {
+      return (
+        <div className="repository-sidebar">
+          <div className="sidebar__empty">
+            <p>Looks like your list is empty<br />
+              <small>Let's start by adding some repositories</small>
+            </p>
+            <Link to="/account">Configure Repositories</Link>
+          </div>
+        </div>
+      );
     }
 
     if (state.filter) {
