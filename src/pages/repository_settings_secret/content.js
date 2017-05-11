@@ -29,7 +29,6 @@ class Content extends React.Component {
       name: '',
       value: '',
       event: ['push', 'tag', 'deployment'],
-      skip_verify: false,
       conceal: false
     };
   }
@@ -92,7 +91,6 @@ class Content extends React.Component {
                         }
                       </Cell>
                       <Cell col={6}>
-                        <Checkbox label="Skip Verify" disabled={true} checked={ secret.skip_verify }/>
                         <Checkbox label="Conceal" disabled={true} checked={ secret.conceal}/>
                       </Cell>
                     </Grid>
@@ -136,8 +134,6 @@ class Content extends React.Component {
               }
             </Cell>
             <Cell col={6}>
-              <Checkbox id="skip_verify" label="Skip Verify" onChange={(field) => this.handleOptionalChange(field)}
-                        checked={ this.state.addSecret.skip_verify }/>
               <Checkbox id="conceal" label="Conceal" onChange={(field) => this.handleOptionalChange(field)}
                         checked={ this.state.addSecret.conceal }/>
             </Cell>
@@ -153,12 +149,11 @@ class Content extends React.Component {
   }
 
   handleUpdateSecret(owner, name, secretKey) {
-    //TODO: need to handle skip_verify and what events
+    //TODO: need to handle what events
     let secret = {
       name: secretKey,
       value: this.state[secretKey],
-      event: ['push', 'tag', 'deployment'],
-      skip_verify: false
+      event: ['push', 'tag', 'deployment']
     };
     events.emit(POST_REPO_SECRET, { owner, name, secret });
   }
