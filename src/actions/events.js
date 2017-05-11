@@ -45,6 +45,7 @@ let token = function() {
 }();
 
 events.once(GET_FEED, function() {
+  tree.set(['pages', 'loading'], true);
   Request.get('/api/user/feed?latest=true')
     .end((err, response) => {
       if (err != null) {
@@ -56,6 +57,7 @@ events.once(GET_FEED, function() {
         return (b.started_at || b.created_at || -1) - (a.started_at || a.created_at || -1);
       });
       tree.set('feed', feed);
+      tree.set(['pages', 'loading'], false);
     });
 });
 
