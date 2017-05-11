@@ -307,7 +307,6 @@ events.on(OPEN_LOG_STREAM, function(event) {
   }
 
   const {owner, name, number, job} = event.data;
-  console.log(OPEN_LOG_STREAM, owner, name, number, job);
 
   const proto = (window.location.protocol === 'https:') ? 'wss:' : 'ws:';
   const path = ['/ws/logs', owner, name, number, job].join('/');
@@ -327,7 +326,6 @@ events.on(OPEN_LOG_STREAM, function(event) {
 });
 
 events.on(CLOSE_LOG_STREAM, function() {
-  console.log(CLOSE_LOG_STREAM);
   if (this.ws) {
     this.ws.close();
     this.ws = null;
