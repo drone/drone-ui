@@ -28,11 +28,25 @@ class Sidebar extends React.Component {
       );
     }
     if (loading === true){
-      return <div>Loading...</div>;
+      return (
+        <div className="repository-sidebar">
+          <div className="alert">
+            Loading...
+          </div>
+        </div>
+      );
     }
 
     if (loading === false && feed.length == 0) {
-      return <div>No repos enabled</div>;
+      return (
+        <div className="repository-sidebar">
+          <div className="alert">
+            <Link to={"/account"}>
+              Activate
+            </Link> your repositories to get started.
+          </div>
+        </div>
+      );
     }
 
     if (state.filter) {
