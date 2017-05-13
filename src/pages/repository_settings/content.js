@@ -69,6 +69,10 @@ class Content extends React.Component {
       {
         key: 'trusted',
         text: 'Trusted'
+      },
+      {
+        key: 'gated',
+        text: 'Gated'
       }
     ];
 

@@ -1,3 +1,4 @@
+import {BLOCKED} from '../../components/status';
 import {branch} from 'baobab-react/higher-order';
 import {Matrix} from './matrix';
 import React from 'react';
@@ -6,30 +7,26 @@ import {events, GET_BUILD} from '../../actions/events';
 
 import './index.less';
 
-// import { cancelJob, restartJob } from '../../data/jobs/actions';
-
 class Content extends React.Component {
   constructor(props) {
     super(props);
-
-    // this.handleJobCancel = this.handleJobCancel.bind(this);
-    // this.handleJobRestart = this.handleJobRestart.bind(this);
   }
 
   componentDidMount() {
     const {owner, name, number} = this.props.params;
     events.emit(GET_BUILD, {owner, name, number});
   }
-  //
-  // shouldComponentUpdate(nextProps) {
-  //   return this.props.build != nextProps.build || this.props.logs != nextProps.logs;
-  // }
 
   componentWillReceiveProps(nextProps) {
     const {owner, name, number} = this.props.params;
-    const {owner: nextOwner, name: nextName, number: nextNumber} = nextProps.params;
+    const {owner: nextOwner, name: nextName, number: nextNumber, job: nextProc} = nextProps.params;
     if (nextOwner != owner || nextName != name || nextNumber != number) {
-      events.emit(GET_BUILD, {owner, name, number});
+      events.emit(GET_BUILD, {
+        owner: nextOwner,
+        name: nextName,
+        number: nextNumber,
+        pid: nextProc
+      });
     }
   }
 
@@ -43,13 +40,25 @@ class Content extends React.Component {
       );
     }
 
-    if (!build || !build.jobs) {
+    if (!build) {
       return (
         <div>Loading...</div>
       );
     }
 
-    if (build.jobs.length != 1 && !job) {
+    if (build.status == BLOCKED || build.error != '') {
+      return (
+        <Results
+          repo={{owner: owner, name: name}}
+          build={build}
+          job={{number:0, status: build.status}}
+          follow={state.follow}
+          logs={logs}>
+        </Results>
+      );
+    }
+
+    if (!build.procs || (build.procs.length != 1 && !job)) {
       return (
         <Matrix repo={{owner: owner, name: name}} build={build}></Matrix>
       );
@@ -59,7 +68,7 @@ class Content extends React.Component {
       <Results
         repo={{owner: owner, name: name}}
         build={build}
-        job={build.jobs[job ? job-1 : 0]}
+        job={build.procs[job ? job-1 : 0]}
         follow={state.follow}
         logs={logs}>
       </Results>

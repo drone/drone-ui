@@ -4,7 +4,9 @@
   display: block;
 
   summary {
-    padding: 15px 5px;
+    padding: 10px 5px;
+    display: flex;
+
     color: #212121;
     font-size: 15px;
     font-weight: normal;
@@ -12,7 +14,7 @@
     font-family: @font-family-mono;
     font-size: 14px;
 	  border-bottom:1px solid #EEE;
-    display: block;
+    // display: block;
     outline: none;
     cursor: pointer;
     -webkit-user-select: none;
@@ -25,6 +27,13 @@
       font-family: "Material Icons";
       font-weight: 400;
       font-size:22px;
+      line-height:28px;
+    }
+
+    span {
+      display:inline-block;
+      flex: 1 1 auto;
+      line-height:28px;
     }
   }
 
@@ -48,5 +57,11 @@
     padding: 20px;
     border-radius: 2px;
     background: #EEE;
+  }
+
+  .status {
+    vertical-align: middle;
+    margin: 0px 5px;
+    border: none;
   }
 }

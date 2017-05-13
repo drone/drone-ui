@@ -15,11 +15,13 @@
     display:inline-block;
   }
 
+  &.blocked,
   &.pending,
   &.running,
   &.started {
     background: #FFA000;
   }
+  &.declined,
   &.error,
   &.killed,
   &.failure {

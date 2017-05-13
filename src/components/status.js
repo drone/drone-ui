@@ -9,7 +9,10 @@ export const KILLED = 'killed';
 export const ERROR = 'error';
 export const RUNNING = 'running';
 export const PENDING = 'pending';
+export const BLOCKED = 'blocked';
+export const DECLINED = 'declined';
 export const UNKNOWN = 'unknown';
+export const SKIPPED = 'skipped';
 
 export default
 class Status extends React.Component {
@@ -26,6 +29,8 @@ class Status extends React.Component {
     state == ERROR && classes.push(ERROR);
     state == RUNNING && classes.push(RUNNING);
     state == PENDING && classes.push(PENDING);
+    state == BLOCKED && classes.push(BLOCKED);
+    state == DECLINED && classes.push(DECLINED);
     state == UNKNOWN && classes.push(UNKNOWN);
 
     return (

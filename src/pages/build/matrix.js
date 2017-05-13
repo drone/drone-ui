@@ -9,10 +9,10 @@ export class Matrix extends React.Component {
   render() {
     const {repo, build} = this.props;
 
-    function renderJob(job) {
+    function renderProc(proc) {
       return (
-        <Link key={job.number} to={`/${repo.owner}/${repo.name}/${build.number}/${job.number}`}>
-          <JobListItem repo={repo} build={build} job={job} />
+        <Link key={proc.pid} to={`/${repo.owner}/${repo.name}/${build.number}/${proc.pid}`}>
+          <JobListItem repo={repo} build={build} job={proc} />
         </Link>
       );
     }
@@ -21,7 +21,7 @@ export class Matrix extends React.Component {
       <PageContent fluid className="build">
         <BuildPanel build={build} job={build} />
         <div>
-          {build.jobs.map(renderJob)}
+          {build.procs && build.procs.map(renderProc)}
         </div>
       </PageContent>
     );
