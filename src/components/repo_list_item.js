@@ -25,7 +25,7 @@ class RepoListItem extends React.Component {
             }
           </div>
           <div>
-            <i className="material-icons" title="Took">timelapse</i>
+            <i className="material-icons" title="Duration">timelapse</i>
             {repo.finished_at ?
               <Humanize finished={repo.finished_at} start={repo.started_at} /> :
               repo.started_at ?
