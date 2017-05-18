@@ -56,8 +56,8 @@ class BuildPanel extends React.Component {
           <div>
             <div>
               <i className="material-icons">access_time</i>
-              {job.started_at ?
-                <TimeAgo date={(job.started_at || build.created_at) * 1000} /> :
+              {job.end_time ?
+                <Humanize finished={job.end_time} start={job.start_time} /> :
                 <span>--</span>
               }
             </div>
