@@ -1,7 +1,7 @@
 import { branch } from 'baobab-react/higher-order';
 import PageContent from '../../components/layout/content';
 import React from 'react';
-import { events, GET_REPO_SECRETS, DEL_REPO_SECRET, POST_REPO_SECRET } from '../../actions/events';
+import { events, GET_REPO_SECRETS, DEL_REPO_SECRET, POST_REPO_SECRET, UPDATE_REPO_SECRET } from '../../actions/events';
 import { Textfield, FABButton, Icon, Switch, Grid, Cell, Checkbox } from 'react-mdl';
 
 import './index.less';
@@ -59,6 +59,7 @@ class Content extends React.Component {
                     label="Secret Name"
                     floatingLabel
                     style={{ width: '300px' }}
+                    rows={1}
                     value={secret.name}
                     disabled={true}
                   />
@@ -66,6 +67,7 @@ class Content extends React.Component {
                     label="Update Secret Value"
                     floatingLabel
                     style={{ width: '300px' }}
+                    rows={1}
                     value={this.state[secret.name]}
                     onChange={(field) => this.handleSecretChange(secret.name, field.target.value)}
                   />
@@ -100,11 +102,11 @@ class Content extends React.Component {
               );
             })
         }
-
         <Textfield
           label="Secret Name"
           floatingLabel
           style={{ width: '300px' }}
+          rows={1}
           onChange={(field) => this.handleAddKeyChange(field.target.value)}
           value={this.state.addSecret.name}
         />
@@ -112,6 +114,7 @@ class Content extends React.Component {
           label="Secret Value"
           floatingLabel
           style={{ width: '300px' }}
+          rows={1}
           onChange={(field) => this.handleAddSecretChange(field.target.value)}
           value={this.state.addSecret.value}
         />
@@ -150,12 +153,13 @@ class Content extends React.Component {
 
   handleUpdateSecret(owner, name, secretKey) {
     //TODO: need to handle what events
+    console.log(this.state[secretKey]);
     let secret = {
       name: secretKey,
       value: this.state[secretKey],
       event: ['push', 'tag', 'deployment']
     };
-    events.emit(POST_REPO_SECRET, { owner, name, secret });
+    events.emit(UPDATE_REPO_SECRET, { owner, name, secret });
   }
 
   handleAdd(owner, name) {
