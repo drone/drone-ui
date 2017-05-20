@@ -261,7 +261,6 @@ events.on(UPDATE_REPO_SECRET, function(event) {
     .set('X-CSRF-TOKEN', token)
     .send(secret)
     .end((err, value) => {
-    console.log(value);
       if (err != null) {
         console.error(err);
       }
