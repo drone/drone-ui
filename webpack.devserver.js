@@ -4,7 +4,6 @@
 
 const argv = require('yargs').argv;
 const webpack = require('webpack');
-const webpackConfig = require('./webpack.config.js');
 const WebpackDevServer = require('webpack-dev-server');
 
 const port = 9000;
@@ -17,9 +16,14 @@ const drone = {
 };
 
 const config = require('./webpack.config.js');
-config.entry.app.unshift(`webpack-dev-server/client?http://localhost:${port}/`, 'webpack/hot/dev-server');
+const debugEntry = ['react-hot-loader/patch',
+  'webpack-dev-server/client?http://localhost:'+port,
+  'webpack/hot/only-dev-server'];
+const finalEntry = debugEntry.concat(config.entry);
+config.entry = finalEntry;
+
 config.plugins.unshift(new webpack.HotModuleReplacementPlugin());
-const compiler = webpack(webpackConfig);
+const compiler = webpack(config);
 const server = new WebpackDevServer(compiler, {
   hot: true,
   inline: true,
@@ -70,7 +74,7 @@ server.listeningApp.on('upgrade', function (req, socket) {
   }
 });
 
-server.listen(9000, (err) => {
+server.listen(port, (err) => {
   if (err) return console.err(err);
   console.log(`Now listening on http://localhost:${port}`);
 });

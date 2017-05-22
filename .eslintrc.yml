@@ -23,3 +23,4 @@ rules:
   sort-imports: [2, {ignoreCase: true, ignoreMemberSort: true, memberSyntaxSortOrder: [all, single, multiple, none]}]
 globals:
   process: true
+  module: true
