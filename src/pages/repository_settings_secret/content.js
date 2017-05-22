@@ -2,7 +2,7 @@ import { branch } from 'baobab-react/higher-order';
 import PageContent from '../../components/layout/content';
 import React from 'react';
 import { events, GET_REPO_SECRETS, DEL_REPO_SECRET, POST_REPO_SECRET } from '../../actions/events';
-import { Textfield, FABButton, Icon, Switch, Grid, Cell, Checkbox } from 'react-mdl';
+import { Textfield, FABButton, Icon, Switch, Grid, Cell } from 'react-mdl';
 
 import './index.less';
 
@@ -28,8 +28,7 @@ class Content extends React.Component {
     return {
       name: '',
       value: '',
-      event: ['push', 'tag', 'deployment'],
-      conceal: false
+      event: ['push', 'tag', 'deployment']
     };
   }
 
@@ -90,9 +89,7 @@ class Content extends React.Component {
                           })
                         }
                       </Cell>
-                      <Cell col={6}>
-                        <Checkbox label="Conceal" disabled={true} checked={ secret.conceal}/>
-                      </Cell>
+                      <Cell col={6}></Cell>
                     </Grid>
                   </div>
                   <hr/>
@@ -133,10 +130,7 @@ class Content extends React.Component {
                 })
               }
             </Cell>
-            <Cell col={6}>
-              <Checkbox id="conceal" label="Conceal" onChange={(field) => this.handleOptionalChange(field)}
-                        checked={ this.state.addSecret.conceal }/>
-            </Cell>
+            <Cell col={6}></Cell>
           </Grid>
         </div>
 
