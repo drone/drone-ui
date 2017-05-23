@@ -19,7 +19,7 @@ export class Matrix extends React.Component {
 
     return (
       <PageContent fluid className="build">
-        <BuildPanel build={build} job={build} />
+        <BuildPanel repo={repo} build={build} job={build} />
         <div>
           {build.procs && build.procs.map(renderProc)}
         </div>
