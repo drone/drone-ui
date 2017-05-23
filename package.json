@@ -42,7 +42,7 @@
   "scripts": {
     "start": "node ./webpack.devserver.js",
     "build": "NODE_ENV=production webpack",
-    "embed": "go-bindata-assetfs -o dist/dist_gen.go -ignore 'map|go' -pkg dist -nocompress=true dist/...",
+    "embed": "go-bindata-assetfs -o dist/dist_gen.go -ignore 'map|go' -pkg dist -nocompress=true dist/static/...",
     "lint": "eslint src/",
     "watch": "webpack -w"
   },
