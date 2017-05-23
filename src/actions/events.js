@@ -260,7 +260,7 @@ events.on(UPDATE_REPO_SECRET, function(event) {
   Request.patch(`/api/repos/${owner}/${name}/secrets/${secret.name}`)
     .set('X-CSRF-TOKEN', token)
     .send(secret)
-    .end((err, value) => {
+    .end((err) => {
       if (err != null) {
         console.error(err);
       }
