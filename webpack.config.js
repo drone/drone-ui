@@ -1,64 +1,90 @@
 /* eslint-env node */
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
-var path = require('path');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 var webpack = require('webpack');
 
+const DEBUG = !process.env.NODE_ENV === 'production';
+
 module.exports = {
-  entry: {
-    app: [
-      './index.html',
-      './src/index.js'
-    ]
-  },
+  entry: [
+    `${__dirname}/src/index.js`
+  ],
   output: {
-    filename: 'static/app.js',
-    path: path.resolve(__dirname, 'dist'),
-    publicPath: '/'
+    filename: 'app.js',
+    path: `${__dirname}/dist/static`,
+    publicPath: '/',
+    sourcePrefix: '  '
   },
   devtool: 'source-map',
-  module: {
-    loaders: [
-      {
-        test: /\.js?$/,
-        exclude: /node_modules/,
-        loader: 'babel',
-        query: {
-          presets: ['react', 'es2015']
-        }
-      },
-      {
-        test: /\.less$/,
-        loader: ExtractTextPlugin.extract(
-          'css?sourceMap!' +
-          'less?sourceMap'
-        )
-      },
-      {
-        test: /index\.html$/,
-        loader: 'file?name=[name].[ext]'
-      }
-    ]
-  },
-  externals: {
-    // 'moment': 'moment',
-    // 'react': 'React',
-    // 'react-dom': 'ReactDOM',
-    // 'react-router': 'ReactRouter',
-    // 'superagent': 'superagent'
-  },
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['.js', '.jsx']
   },
   plugins: [
-    new ExtractTextPlugin('static/app.css'),
+    new HtmlWebpackPlugin({
+      template: 'index.html'
+    }),
     new CopyWebpackPlugin([
-        { from: 'images', to: 'static' }
+      { from: 'images/favicon.ico', to: 'favicon.ico' }
     ]),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
-    })
-  ]
+    }),
+    new webpack.NamedModulesPlugin()
+
+  ],
+  context: `${__dirname}/src`,
+  module: {
+    rules: [
+      {
+        test: /\.js?$/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            babelrc: false,
+            presets: [
+              ['es2015', { modules: false }],
+              'react'
+            ],
+            plugins: [
+              'react-hot-loader/babel'
+            ],
+            cacheDirectory: DEBUG
+          }
+        },
+        include: [
+          `${__dirname}/src`
+        ]
+      },
+      {
+        test: /\.css$/,
+        use: [{
+          loader: 'style-loader'
+        }, {
+          loader: 'css-loader'
+        }]
+      },
+      {
+        test: /\.less$/,
+        use: [{
+          loader: 'style-loader'
+        }, {
+          loader: 'css-loader'
+        }, {
+          loader: 'less-loader', options: {
+            strictMath: true,
+            noIeCompat: true
+          }
+        }]
+      },
+      {
+        test: /\.svg$/,
+        use: {
+          loader: 'file-loader'
+        }
+      }
+
+    ]
+  }
 };
 
 
@@ -72,7 +98,6 @@ if (process.env.NODE_ENV === 'production') {
       output: {
         semicolons: false
       }
-    }),
-    new webpack.optimize.OccurenceOrderPlugin()
+    })
   ]);
 }

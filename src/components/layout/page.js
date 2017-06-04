@@ -1,5 +1,6 @@
 import Avatar from '../avatar';
 import {branch} from 'baobab-react/higher-order';
+import droneImage from '../../images/drone.svg';
 import React from 'react';
 import {browserHistory, Link} from 'react-router';
 import {events, CLEAR_TOAST} from '../../actions/events';
@@ -41,7 +42,7 @@ class Page extends React.Component {
               <Drawer>
                 <div className="brand">
                   <Link to="/">
-                      <img className="logo" src="/static/drone.svg"/>
+                      <img className="logo" src={droneImage}/>
                   </Link>
                 </div>
                 <Navigation>
