@@ -32,6 +32,7 @@ export const FOLLOW_LOGS = 'FOLLOW_LOGS';
 export const UNFOLLOW_LOGS = 'UNFOLLOW_LOGS';
 export const GET_REPO_SECRETS = 'GET_REPO_SECRETS';
 export const POST_REPO_SECRET = 'POST_REPO_SECRET';
+export const UPDATE_REPO_SECRET = 'UPDATE_REPO_SECRET';
 export const DEL_REPO_SECRET = 'DEL_REPO_SECRET';
 export const APPROVE_BUILD = 'APPROVE_BUILD';
 export const DECLINE_BUILD = 'DECLINE_BUILD';
@@ -242,6 +243,21 @@ events.on(POST_BUILD, function(event) {
 events.on(POST_REPO_SECRET, function(event) {
   const {owner, name, secret} = event.data;
   Request.post(`/api/repos/${owner}/${name}/secrets`)
+    .set('X-CSRF-TOKEN', token)
+    .send(secret)
+    .end((err) => {
+      if (err != null) {
+        console.error(err);
+      }
+      let removedList = tree.get(['secrets', owner, name]).filter(removeItem => removeItem.name !== secret.name);
+      removedList.push(secret);
+      tree.set(['secrets', owner, name], removedList);
+    });
+});
+
+events.on(UPDATE_REPO_SECRET, function(event) {
+  const {owner, name, secret} = event.data;
+  Request.patch(`/api/repos/${owner}/${name}/secrets/${secret.name}`)
     .set('X-CSRF-TOKEN', token)
     .send(secret)
     .end((err) => {
