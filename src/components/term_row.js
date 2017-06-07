@@ -15,9 +15,9 @@ class TermRow extends React.Component {
 
     return (
      <div className="term-row">
-      <div>{pos+1}</div>
-      <div dangerouslySetInnerHTML={{__html: html}}></div>
-      <div>{time || 0}s</div>
+      <div className="row-num">{pos+1}</div>
+      <div className="row-line" dangerouslySetInnerHTML={{__html: html}}></div>
+      <div className="row-time">{time || 0}s</div>
      </div>
     );
   }
