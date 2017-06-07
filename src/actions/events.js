@@ -86,7 +86,7 @@ events.once(GET_REPO_LIST, function() {
       if (err != null) {
         console.error(err);
       }
-      let repos = JSON.parse(response.text);
+      let repos = JSON.parse(response.text) || [];
       repos.sort(function(a, b) {
         if(a.full_name < b.full_name) return -1;
         if(a.full_name > b.full_name) return 1;
@@ -107,7 +107,7 @@ events.on(SYNC_REPO_LIST, function() {
         tree.set(['pages', 'toast'], 'Error syncing repository list');
         return;
       }
-      let repos = JSON.parse(response.text);
+      let repos = JSON.parse(response.text) || [];
       repos.sort(function(a, b) {
         if(a.full_name < b.full_name) return -1;
         if(a.full_name > b.full_name) return 1;
