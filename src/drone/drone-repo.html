@@ -1,0 +1,496 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../../bower_components/app-layout/app-layout.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/iron-iconset-svg/iron-iconset-svg.html">
+<link rel="import" href="../../bower_components/iron-icons/social-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/hardware-icons.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+
+<link rel="import" href="./drone-state.html">
+<link rel="import" href="./drone-feed.html">
+<link rel="import" href="./dummy-feed.html">
+<link rel="import" href="./drone-registry.html">
+<link rel="import" href="./drone-build.html">
+<link rel="import" href="./drone-builds.html">
+<link rel="import" href="./drone-secrets.html">
+<link rel="import" href="./drone-repo-list.html">
+<link rel="import" href="./drone-repo-menu.html">
+<link rel="import" href="./drone-repo-settings.html">
+<link rel="import" href="./drone-token.html">
+<link rel="import" href="./drone-badges.html">
+<link rel="import" href="./drone-proc.html">
+
+<iron-iconset-svg name="app" size="24">
+	<svg>
+		<defs>
+			<g id="menu">
+				<path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+			</g>
+			<g id="logo" viewBox="0 0 256 218" width="256px" height="218px">
+				<path d="M128.224307,0.72249586 C32.0994301,0.72249586 0.394430682,84.5663333 0.394430682,115.221578 L78.3225537,115.221578 C78.3225537,115.221578 89.3644231,75.2760497 128.224307,75.2760497 C167.08419,75.2760497 178.130047,115.221578 178.130047,115.221578 L255.605569,115.221578 C255.605569,84.5623457 224.348186,0.72249586 128.224307,0.72249586"></path>
+				<path d="M227.043854,135.175898 L178.130047,135.175898 C178.130047,135.175898 169.579477,175.122423 128.224307,175.122423 C86.8691361,175.122423 78.3225537,135.175898 78.3225537,135.175898 L30.2571247,135.175898 C30.2571247,145.426215 67.9845088,217.884246 128.699837,217.884246 C189.414168,217.884246 227.043854,158.280482 227.043854,135.175898"></path>
+				<circle cx="128" cy="126.076531" r="32.7678394"></circle>
+			</g>
+
+
+
+			<!-- By Sam Herbert (@sherb), for everyone. More @ http://goo.gl/7AJzbL -->
+			<g width="120" height="30" viewBox="0 0 120 30" id="spinner">
+					<circle cx="15" cy="15" r="15">
+							<animate attributeName="r" from="15" to="15"
+											 begin="0s" dur="0.8s"
+											 values="15;9;15" calcMode="linear"
+											 repeatCount="indefinite" />
+							<animate attributeName="fill-opacity" from="1" to="1"
+											 begin="0s" dur="0.8s"
+											 values="1;.5;1" calcMode="linear"
+											 repeatCount="indefinite" />
+					</circle>
+					<circle cx="60" cy="15" r="9" fill-opacity="0.3">
+							<animate attributeName="r" from="9" to="9"
+											 begin="0s" dur="0.8s"
+											 values="9;15;9" calcMode="linear"
+											 repeatCount="indefinite" />
+							<animate attributeName="fill-opacity" from="0.5" to="0.5"
+											 begin="0s" dur="0.8s"
+											 values=".5;1;.5" calcMode="linear"
+											 repeatCount="indefinite" />
+					</circle>
+					<circle cx="105" cy="15" r="15">
+							<animate attributeName="r" from="15" to="15"
+											 begin="0s" dur="0.8s"
+											 values="15;9;15" calcMode="linear"
+											 repeatCount="indefinite" />
+							<animate attributeName="fill-opacity" from="1" to="1"
+											 begin="0s" dur="0.8s"
+											 values="1;.5;1" calcMode="linear"
+											 repeatCount="indefinite" />
+					</circle>
+			</g>
+
+		</defs>
+	</svg>
+</iron-iconset-svg>
+
+<dom-module id="drone-repo">
+	<template>
+		<style include="drone-theme">
+			:host {
+				--app-drawer-width: 320px;
+			}
+
+			app-drawer section {
+				height: 100%;
+				overflow-y: auto;
+				-webkit-overflow-scrolling: touch;
+				border-right: 1px solid #eee;
+				position:relative;
+				/*box-shadow: 2px 2px 2px rgba(0,0,0,.05);*/
+			}
+
+			app-drawer hr {
+				border: none;
+				border-bottom: 1px solid #EEE;
+			}
+			app-drawer paper-item {
+				font-size: 16px;
+
+				--paper-item-min-height: 34px;
+				--paper-item-focused: {
+					background-color: #F4F4F4;
+				};
+				--paper-item-focused-before: {
+					opacity: 0;
+				};
+			}
+			app-drawer a {
+				color: #000;
+				text-decoration: none;
+			}
+
+
+
+			app-toolbar {
+				padding-right: 5px;
+				border-bottom:1px solid #EEE;
+				box-sizing: border-box;
+				height:80px;
+				max-height:80px;
+				min-height:80px;
+				align-items: flex-start;
+			}
+
+			app-toolbar img {
+				width: 32px;
+				height: 32px;
+				border-radius: 50%;
+				vertical-align: middle;
+				cursor: pointer;
+				margin-right:10px;
+			}
+
+			.logo {
+				width: 50px;
+				height: 50px;
+				margin-top: 5px;
+				margin-left: 7px;
+				color:#222;
+			}
+
+			.menu {
+				box-sizing: border-box;
+				padding-top:10px;
+			}
+			.menu a {
+				display:block;
+				line-height:42px;
+				padding:0px 20px;
+			}
+
+			app-drawer-layout:not([narrow]) [drawer-toggle] {
+				display: none;
+			}
+
+			.drawer-toggle {
+				display:none !important;
+			}
+
+			app-drawer-layout[narrow] [main-title] {
+				padding-left:10px;
+			}
+
+			main {
+				padding: 40px;
+				position:relative;
+			}
+			[main-title] {
+				line-height:65px;
+				padding-left:25px;
+				font-size: 22px;
+			}
+			[main-menu] {
+				padding-top:12px;
+			}
+
+			[drawer-toggle] {
+				margin-top:13px;
+				margin-left:15px;
+			}
+
+			.repos {
+				height: 100%;
+			}
+
+			.logo-wrapper {
+				height:80px;
+				min-height:80px;
+				max-height:80px;
+				box-sizing:border-box;
+				border-bottom:1px solid #EEE;
+			}
+
+			[main-menu] paper-icon-button {
+				margin-left:-6px;
+			}
+
+			.expand-wrapper {
+				position:absolute;
+				top: 12px;
+				right:10px;
+
+			}
+			.expand-wrapper paper-icon-button {
+				width:42px;
+				height:42px;
+				transition-property: transform;
+				transition-duration: 0.2s;
+			}
+
+			.visible {
+				transform: rotate(180deg);
+			}
+
+			[back-button] {
+				margin-top: 13px;
+				margin-left: 15px;
+			}
+			app-toolbar a {
+				color: #212121;
+			}
+
+			.login-button {
+				text-decoration:none;
+				margin-right:10px;
+				margin-top:5px;
+				display: inline-block;
+			}
+			.login-button paper-button {
+				font-size:14px;
+				border:1px solid #212121;
+				border-radius:0px;
+				padding:6px 12px;
+			}
+			app-drawer .login-button {
+				margin:0px 30px;
+				margin-top:20px;
+				display:block;
+			}
+			app-drawer  .login-button paper-button  {
+				display:block;
+				text-align: center;
+				position: absolute;
+bottom: 20px;
+left: 20px;
+right: 20px;
+			}
+		</style>
+
+		<app-drawer-layout fullbleed force-narrow=[[_forceNarrow]]>
+			<app-drawer slot="drawer">
+				<section>
+					<div class="logo-wrapper">
+						<paper-icon-button icon="app:logo" class="logo"></paper-icon-button>
+					</div>
+					<div class="expand-wrapper">
+						<template is="dom-if" if="[[user.data]]">
+							<paper-icon-button icon="hardware:keyboard-arrow-down" on-click="handleSidebar" class$="[[_sidebarButtonStyle]]"></paper-icon-button>
+						</template>
+					</div>
+					<div>
+						<template is="dom-if" if="[[menu]]">
+							<div class="menu">
+								<a href="/account/repos">Repositories</a>
+								<a href="/account/token">Tokens</a>
+								<hr />
+								<a href="/logout" rel="external">Logout</a>
+							</div>
+						</template>
+						<template is="dom-if" if="[[!menu]]">
+							<template is="dom-if" if=[[user.data]]>
+								<template is="dom-if" if="[[feed.loading]]">
+									<dummy-feed feed=[[feed]] user=[[user]]></dummy-feed>
+								</template>
+								<template is="dom-if" if="[[!feed.loading]]">
+									<drone-feed feed=[[feed]] user=[[user]]></drone-feed>
+								</template>
+							</template>
+
+							<template is="dom-if" if="[[!user.data]]">
+								<a href="/login" tabindex="-1" class="login-button" target="_self">
+									<paper-button>Login</paper-button>
+								</a>
+							</template>
+						</template>
+					</div>
+				</section>
+			</app-drawer>
+
+			<app-header-layout>
+				<app-header slot="header">
+					<app-toolbar>
+						<template is="dom-if" if="[[_forceNarrow]]">
+							<paper-icon-button icon="hardware:keyboard-backspace" back-button on-click="_handleBack"></paper-icon-button>
+						</template>
+						<template is="dom-if" if="[[!_forceNarrow]]">
+							<paper-icon-button icon="app:menu" drawer-toggle></paper-icon-button>
+						</template>
+						<div main-title>
+							<iron-pages selected="[[route.name]]" attr-for-selected="path">
+								<div path="repo">
+									[[route.data.owner]] / [[route.data.repo]]
+								</div>
+								<div path="build">
+									[[route.data.owner]] / [[route.data.repo]]
+								</div>
+								<div path="proc">
+									[[route.data.owner]] / [[route.data.repo]]
+								</div>
+								<div path="secrets">
+									[[route.data.owner]] / [[route.data.repo]]
+								</div>
+								<div path="registry">
+									[[route.data.owner]] / [[route.data.repo]]
+								</div>
+								<div path="settings">
+									[[route.data.owner]] / [[route.data.repo]]
+								</div>
+								<div path="badges">
+									[[route.data.owner]] / [[route.data.repo]]
+								</div>
+								<div path="repos">Account Repositories</div>
+								<div path="tokens">Account Tokens</div>
+							</iron-pages>
+						</div>
+						<div main-menu>
+							<template is="dom-if" if="[[user.data]]">
+								<img src="[[ user.data.avatar_url ]]" />
+							</template>
+							<template is="dom-if" if="[[!user.data]]">
+								<a href="/login" tabindex="-1" class="login-button" target="_self">
+									<paper-button>Login</paper-button>
+								</a>
+							</template>
+						</div>
+					</app-toolbar>
+				</app-header>
+
+				<template is="dom-if" if=[[_showRepoSubmenu]]>
+					<drone-repo-menu
+						repo=[[repo]]
+						route=[[route]]>
+					</drone-repo-menu>
+				</template>
+
+				<iron-pages
+					selected="[[route.name]]"
+					attr-for-selected="path"
+					fallback-selection="fallback">
+
+					<drone-builds
+						path="repo"
+						user=[[user]]
+						feed=[[feed]]
+						route=[[route]]
+						repo=[[repo]]>
+					</drone-builds>
+
+					<drone-build
+						path="build"
+						user=[[user]]
+						route=[[route]]
+						repo=[[repo]]>
+					</drone-build>
+
+					<drone-proc
+						path="proc"
+						user=[[user]]
+						route=[[route]]
+						repo=[[repo]]>
+					</drone-proc>
+
+					<drone-secrets
+						path="secrets"
+						user=[[user]]
+						feed=[[feed]]
+						route=[[route]]
+						repo=[[repo]]>
+					</drone-secrets>
+
+					<drone-registry
+						path="registry"
+						user=[[user]]
+						feed=[[feed]]
+						route=[[route]]
+						repo=[[repo]]>
+					</drone-registry>
+
+					<drone-repo-settings
+						path="settings"
+						user=[[user]]
+						repo=[[repo]]>
+					</drone-repo-settings>
+
+					<drone-badges
+						path="badges"
+						location=[[location]]
+						repo=[[repo]]
+						route=[[route]]
+						user=[[user]]>
+					</drone-badges>
+
+					<drone-repos
+						path="repos"
+						user=[[user]]>
+					</drone-repos>
+
+					<drone-token
+						path="tokens"
+						location=[[location]]>
+					</drone-token>
+
+					<div path="root" style="padding:30px;">
+						<template is="dom-if" if=[[user.data]]>
+							<div class="alert alert-empty">Welcome to Drone.</div>
+						</template>
+						<template is="dom-if" if=[[!user.data]]>
+							<div class="alert alert-empty">Welcome to Drone. Please <a href="/login">login</a> to proceed.</div>
+						</template>
+					</div>
+
+					<div path="fallback">
+						Page not found
+					</div>
+				</iron-pages>
+			</app-header-layout>
+		</app-drawer-layout>
+	</template>
+
+	<script>
+		class DroneRepo extends DroneMixin(Polymer.Element) {
+			static get is() { return 'drone-repo'; }
+			static get properties() {
+				return {
+					user: {
+						type: Object
+					},
+					route: {
+						type: Object
+					},
+					repo: {
+						type: Object,
+						path: ['repo']
+					},
+					feed: {
+						type: Object,
+						path: ['feed']
+					},
+					location: {
+						type: Object,
+						path: ['location']
+					},
+					menu: {
+						value: false,
+						path: ['menu']
+					},
+					_forceNarrow: {
+						computed: '_computeNarrow(route)'
+					},
+					_sidebarButtonStyle: {
+						computed: '_computeSidebarButtonStyle(menu)'
+					},
+					_showRepoSubmenu: {
+						computed: '_computeShowRepoSubmenu(route, repo)'
+					},
+				};
+			}
+			_computeNarrow(route) {
+				return route && route.path && route.path.startsWith('/:owner/:repo/:build/:proc');
+			}
+			_computeSidebarButtonStyle(menu) {
+				return menu ? 'visible' : 'hidden';
+			}
+			_computeShowRepoSubmenu(route) {
+				return route && route.path && route.path.startsWith('/:owner/:repo');
+			}
+			_handleBack() {
+				if (this.repo && this.repo.data) {
+					var path = [this.route.data.owner, this.route.data.repo ];
+					if (this.route.name === 'proc') {
+						path.push(this.route.data.build);
+					}
+					window.history.pushState({}, null, '/'+path.join('/'));
+					window.dispatchEvent(new CustomEvent('location-changed'));
+				}
+			}
+			handleSidebar() {
+				this.dispatch((tree) => {
+					tree.set('menu', !tree.get('menu'));
+				});
+			}
+		}
+
+		window.customElements.define(DroneRepo.is, DroneRepo);
+	</script>
+</dom-module>

@@ -1,0 +1,80 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="./drone-theme.html">
+
+<dom-module id="drone-matrix-item">
+	<template>
+		<style include="drone-theme">
+			:host {
+				display:block;
+				box-sizing:border-box;
+				border-bottom-color: var(--matrix-item-border-color, #EEE);
+				border-bottom-style: var(--matrix-item-border-style, solid);
+				border-bottom-width: var(--matrix-item-border-width, 1px);
+			}
+			:host .summary {
+				display:flex;
+				padding:10px 10px;
+				border-bottom:1px solid #EEE;
+			}
+			:host .summary h3 {
+				margin:0px;
+				padding:0px;
+				font-weight:normal;
+				font-size:14px;
+				font-family:'Roboto Mono',monospace;
+				flex:1 1 auto;
+			}
+			.detail {
+				box-sizing:border-box;
+				padding-left:20px;
+				padding-bottom:20px;
+			}
+			:host [mini] {
+				--status-icon-border-width:0px;
+				--status-icon-padding:0px;
+				--status-icon-height:20px;
+				--status-icon-width:20px;
+			}
+		</style>
+
+		<div class="summary">
+			<h3>[[axis]]</h3>
+			<status-icon status=[[proc.state]] mini></status-icon>
+		</div>
+		<div class="detail">
+			<drone-proc-list repo=[[repo]] build=[[build]] proc=[[proc]]></drone-proc-list>
+		</div>
+	</template>
+
+	<script>
+		class DroneMatrixItem extends Polymer.Element {
+			static get is() { return 'drone-matrix-item'; }
+			static get properties() {
+				return {
+					repo: {
+						type: Object
+					},
+					build: {
+						type: Object
+					},
+					proc: {
+						type: Object
+					},
+					axis: {
+						type: Array,
+						computed: '_computeAxis(proc)'
+					}
+				}
+			}
+			_computeAxis(proc) {
+				let items = [];
+				Object.keys(proc.environ).forEach((key) => {
+					items.push(key.toUpperCase()+"="+proc.environ[key]);
+				});
+				return items;
+			}
+		};
+
+		window.customElements.define(DroneMatrixItem.is, DroneMatrixItem);
+	</script>
+</dom-module>

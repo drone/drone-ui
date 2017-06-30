@@ -1,0 +1,169 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-toggle-button/paper-toggle-button.html">
+<link rel="import" href="../../bower_components/paper-radio-button/paper-radio-button.html">
+<link rel="import" href="../../bower_components/paper-radio-group/paper-radio-group.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
+
+<link rel="import" href="./drone-error.html">
+<link rel="import" href="./drone-theme.html">
+<link rel="import" href="./actions/drone-repo-actions.html">
+
+<dom-module id="drone-repo-settings">
+	<template>
+		<style include="drone-theme">
+			:host {
+				display: block;
+				padding:20px 40px;
+			}
+			paper-toggle-button {
+				--paper-toggle-button-checked-bar-color:  #00BFA5;
+				--paper-toggle-button-checked-button-color:  #00BFA5;
+				--paper-toggle-button-checked-ink-color: #00BFA5;
+				--paper-toggle-button-unchecked-bar-color:  #BDBDBD;
+				--paper-toggle-button-unchecked-button-color:  #BDBDBD;
+				--paper-toggle-button-unchecked-ink-color: #00BFA5;
+
+				--paper-toggle-button-checked-button: {
+					box-shadow:none;
+				}
+
+				--paper-toggle-button-unchecked-button: {
+					box-shadow:none;
+				}
+			}
+
+			paper-radio-button {
+				--paper-radio-button-checked-color: #00BFA5;
+				--paper-radio-button-unchecked-color: #BDBDBD;
+				font-size:16px;
+			}
+
+			paper-radio-group paper-radio-button {
+				padding-top:0px;
+				padding-bottom:0px;
+			}
+
+			paper-checkbox {
+				--paper-checkbox-checked-color: #00BFA5;
+				--paper-checkbox-unchecked-color: #BDBDBD;
+				--paper-checkbox-label-spacing: 10px;
+				margin-left: 10px;
+				margin-right: 15px;
+			}
+		</style>
+
+		<drone-error repo=[[repo]]></drone-error>
+
+		<div id="content">
+			<dl>
+				<dt>Repository Hooks</dt>
+				<dd>
+					<paper-checkbox
+						checked="[[repo.data.allow_push]]"
+						on-change="handlePushChange">Push</paper-checkbox>
+
+					<paper-checkbox
+						checked="[[repo.data.allow_pr]]"
+						on-change="handlePullChange">Pull Request</paper-checkbox>
+
+					<paper-checkbox
+						checked="[[repo.data.allow_tags]]"
+						on-change="handleTagChange">Tag</paper-checkbox>
+
+					<paper-checkbox
+						checked="[[repo.data.allow_deploys]]"
+						on-change="handleDeployChange">Deployment</paper-checkbox>
+				</dd>
+
+				<dt>Project Settings</dt>
+				<dd>
+					<paper-checkbox
+						checked="[[repo.data.gated]]"
+						on-change="handleProtectedChange">Protected</paper-checkbox>
+
+					<paper-checkbox
+						checked="[[repo.data.trusted]]"
+						on-change="handleTrustedChange">Trusted</paper-checkbox>
+				</dd>
+
+				<dt>Project Visibility</dt>
+				<dd>
+					<paper-radio-group selected="[[repo.data.visibility]]" on-change="handleVisibilityChange">
+						<paper-radio-button name="public">Public</paper-radio-button>
+						<paper-radio-button name="private">Private</paper-radio-button>
+						<paper-radio-button name="internal">Internal</paper-radio-button>
+					</paper-radio-group>
+				</dd>
+
+				<dt>Project Timeout</dt>
+				<dd>
+					<paper-radio-group selected="[[repo.data.timeout]]" fallback-selection="other" on-change="handleTimeoutChange">
+						<paper-radio-button name="30">30 min</paper-radio-button>
+						<paper-radio-button name="60">60 min</paper-radio-button>
+						<paper-radio-button name="120">120 min</paper-radio-button>
+						<paper-radio-button name="other" disabled>Other</paper-radio-button>
+					</paper-radio-group>
+				</dd>
+			</dl>
+		</div>
+	</template>
+
+	<script>
+		class DroneRepoSettings extends DroneMixin(Polymer.Element) {
+			static get is() { return 'drone-repo-settings'; }
+			static get properties() {
+				return {
+					user: {
+						type: Object
+					},
+					repo: {
+						type: Object
+					}
+				};
+			}
+
+			handlePushChange(e) {
+				this.handleChange('allow_push', e.target.checked);
+			}
+
+			handlePullChange(e) {
+				this.handleChange('allow_pr', e.target.checked);
+			}
+
+			handleTagChange(e) {
+				this.handleChange('allow_tag', e.target.checked);
+			}
+
+			handleDeployChange(e) {
+				this.handleChange('allow_deploy', e.target.checked);
+			}
+
+			handleTrustedChange(e) {
+				this.handleChange('trusted', e.target.checked);
+			}
+
+			handleProtectedChange(e) {
+				this.handleChange('gated', e.target.checked);
+			}
+
+			handleVisibilityChange(e) {
+				this.handleChange('visibility', e.target.name);
+			}
+
+			handleTimeoutChange(e) {
+				this.handleChange('timeout', parseInt(e.target.name));
+			}
+
+			handleChange(prop, value) {
+				this.dispatch(updateRepoProp, {
+					repo: this.repo.data,
+					prop: prop,
+					value: value
+				});
+			}
+		}
+
+		window.customElements.define(DroneRepoSettings.is, DroneRepoSettings);
+	</script>
+</dom-module>

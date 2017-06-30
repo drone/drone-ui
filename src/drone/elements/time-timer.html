@@ -1,0 +1,62 @@
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="x-stopwatch">
+	<template>
+		[[_value]]
+	</template>
+
+	<script>
+		class Stopwatch extends Polymer.Element {
+			static get is() { return 'x-stopwatch'; }
+			static get properties() {
+				return {
+					start: {
+						type: Number
+					},
+					end: {
+						type: Number
+					},
+					live: {
+						type: Boolean,
+						observer: '_observeLive'
+					},
+					_value: {
+						type: String
+					},
+				}
+			}
+			static get observers() {
+			  return [ '_observeTime(start, end)' ]
+			}
+
+			detached() {
+				clearInterval(this._interval);
+			}
+
+			_observeLive(newValue, oldValue) {
+				clearInterval(this._interval);
+				if (!!newValue) {
+					this._interval = setInterval(function() {
+						this.set('_value', this._computeValue(this.start, this.end));
+					}.bind(this), 1000);
+				}
+			}
+
+			_observeTime(start, end) {
+				this.set('_value', this._computeValue(start, end));
+			}
+
+			_computeValue(start, finish) {
+				const stop = finish || ~~(Date.now() / 1000);
+				const diff = stop - start;
+
+				var date = new Date(null);
+				date.setSeconds(diff);
+				return diff > 3600 ?
+					date.toISOString().substr(11, 8):
+					date.toISOString().substr(14, 5);
+			}
+		};
+		window.customElements.define(Stopwatch.is, Stopwatch);
+	</script>
+</dom-module>

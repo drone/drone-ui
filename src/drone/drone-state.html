@@ -1,0 +1,216 @@
+<link rel="import" href="../../bower_components/polymer-baobab/polymer-baobab.html">
+
+<script>
+  const state = {
+    // User store.
+    user: {
+      data: window.USER,
+      error: undefined,
+      loading: false
+    },
+
+    // Feed store.
+    feed: {
+      data: {},
+      error: undefined,
+      loading: true,
+      list: Baobab.monkey(
+        ['feed', 'data'],
+        function(feed) {
+          return feed && Object.values(feed).sort((a, b) => {
+            return (b.started_at || b.created_at || -1) - (a.started_at || a.created_at || -1);
+          });
+        }
+      )
+    },
+
+    // Repository store.
+    repos: {
+      data: {},
+      error: undefined,
+      loading: true,
+      list: Baobab.monkey(
+        ['repos', 'data'],
+        function(repos) {
+          return repos && Object.values(repos).sort((a, b) => {
+            return a.full_name == b.full_name ? 0 : +(a.full_name > b.full_name) || -1;
+          });
+        }
+      )
+    },
+
+    // Selected repository (computed).
+    repo: {
+      data: Baobab.monkey(
+        ['repos', 'data'],
+        ['repo', 'active'],
+        function(repos, active) {
+          return repos && repos[active];
+        }
+      ),
+      error: undefined,
+      active: undefined,
+      loading: true
+    },
+
+    // Secret store.
+    secrets: {
+      loading: true,
+      error: undefined,
+      data: {},
+      list: Baobab.monkey(
+        ['repo', 'active'],
+        ['secrets', 'data'],
+        function(repo, secrets) {
+          return secrets && secrets[repo] && Object.values(secrets[repo]);
+        }
+      ),
+    },
+
+    // Registry store.
+    registry: {
+      error: undefined,
+      loading: true,
+      data: {},
+      list: Baobab.monkey(
+        ['repo', 'active'],
+        ['registry', 'data'],
+        function(repo, registry) {
+          return registry && registry[repo] && Object.values(registry[repo]);
+        }
+      ),
+    },
+
+    // Build store.
+    builds: {
+      loading: false,
+      data: {},
+      list: Baobab.monkey(
+        ['repo', 'active'],
+        ['builds', 'data'],
+        function(repo, builds) {
+          return builds && builds[repo] && Object.values(builds[repo]).sort((a, b) => {
+            return b.number - a.number;
+          });
+        }
+      ),
+    },
+
+    // Selected build (computed).
+    build: {
+      data: Baobab.monkey(
+        ['repo', 'active'],
+        ['builds', 'data'],
+        ['build', 'active'],
+        function(repo, builds, number) {
+          return builds && builds[repo] && builds[repo][number];
+        }
+      ),
+      proc: {
+        // active: undefined,
+        // parent: Baobab.monkey(),
+        // tree: Baobab.monkey(),
+        data: Baobab.monkey(
+          ['route'],
+          ['builds', 'data'],
+          function(route, builds) {
+            if (!route || !route.data) return;
+            const { owner, repo, build, proc, step } = route.data;
+            const build_ = builds && builds[owner+'/'+repo] && builds[owner+'/'+repo][build];
+            if (!build_ || !build_.procs) return;
+            const proc_ = build_.procs[proc-1];
+            if (!proc_ || !proc_.children) return;
+            var step_;
+            for (var i=0; i<proc_.children.length; i++) {
+              step_ = proc_.children[i];
+              if (step_.name === step) {
+                return step_;
+              }
+            }
+            return;
+          }
+        ),
+        parent: Baobab.monkey(
+          ['route'],
+          ['builds', 'data'],
+          function(route, builds) {
+            if (!route || !route.data) return;
+            const { owner, repo, build, proc } = route.data;
+            return builds &&
+              builds[owner+'/'+repo] &&
+              builds[owner+'/'+repo][build] &&
+              builds[owner+'/'+repo][build].procs &&
+              builds[owner+'/'+repo][build].procs[proc-1];
+          }
+        ),
+        // list: Baobab.monkey(
+        //   ['build', 'data', 'procs'],
+        //   function(build) {
+        //     return;
+        //   }
+        // ),
+      },
+      active: undefined,
+      error: undefined,
+      loading: true
+    },
+
+    logs: {
+      follow: false,
+      loading: true,
+      error: false,
+      data: []
+    },
+
+    token: {
+      value: undefined,
+      error: undefined,
+      loading: false
+    },
+
+    message: {
+      show: false,
+      text: undefined,
+      error: false,
+    },
+
+    route: {
+      name: undefined,
+      path: undefined,
+      data: undefined,
+      title: Baobab.monkey(
+        ['route', 'name'],
+        ['route', 'data'],
+        ['route', 'path'],
+        // TODO move this to a webcomponent for i18n support
+        (name, data, path) => {
+          switch (name) {
+          case 'repo':
+          case 'badges':
+          case 'secrets':
+          case 'registry':
+          case 'settings':
+          case 'build':
+          case 'proc':
+            return data.repo;
+          case 'tokens':
+            return 'tokens';
+          case 'repos':
+            return 'repos';
+          }
+          return '';
+        }
+      ),
+    },
+
+    location: {
+      base: undefined,
+      host: window.location.host,
+      hostname: window.location.hostname,
+      protocol: window.location.protocol
+    }
+  };
+
+  const tree = new Baobab(state);
+  const DroneMixin = BaobabMixin(tree);
+</script>

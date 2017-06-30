@@ -1,0 +1,89 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/maps-icons.html">
+<link rel="import" href="./drone-theme.html">
+
+<dom-module id="status-icon">
+	<template>
+		<style include="drone-theme">
+			:host iron-icon {
+				padding: var(--status-icon-padding, 3px);
+				border-width: var(--status-icon-border-width, 2px);
+				border-style: solid;
+				border-radius: 50%;
+				--iron-icon-width: var(--status-icon-width, 18px);
+				--iron-icon-height: var(--status-icon-height, 18px);
+			}
+			:host iron-icon.skipped {
+				color: var(--status-failure-color);
+			}
+			:host iron-icon.pending,
+			:host iron-icon.running,
+			:host iron-icon.blocked {
+				color: var(--status-icon-color, var(--status-running-color));
+			}
+			:host iron-icon.running {
+				animation: spinner 1.2s ease infinite;
+			}
+			:host iron-icon.pending {
+				animation: wrench 2.5s ease infinite;
+			}
+			:host iron-icon.declined,
+			:host iron-icon.error,
+			:host iron-icon.killed,
+			:host iron-icon.failure {
+				color: var(--status-icon-color, var(--status-failure-color));
+			}
+			:host iron-icon.success {
+				color: var(--status-icon-color, var(--status-success-color));
+				border-color: var(--status-success-color);
+			}
+			:host iron-icon.skipped {
+				color: #BDBDBD;
+				border-color: #BDBDBD;
+			}
+		</style>
+		<iron-icon icon="[[_icon]]" class$="[[status]]"></iron-icon>
+	</template>
+
+	<script>
+		class StatusIcon extends Polymer.Element {
+			static get is() { return 'status-icon'; }
+			static get properties() {
+				return {
+					status: {
+						type: String
+					},
+					_icon: {
+						type: String,
+						computed: '_computeIcon(status)'
+					}
+				}
+			}
+			_computeIcon(status) {
+				switch (status) {
+				case 'skipped':
+					return 'icons:remove';
+				case 'pending':
+					return 'icons:alarm';
+				case 'running':
+					return 'refresh';
+				case 'success':
+					return 'icons:check';
+				case 'failure':
+					return 'icons:close';
+				case 'killed':
+					return 'icons:close';
+				case 'error':
+					return 'icons:close';
+				case 'blocked':
+					return 'icons:close';
+				case 'declined':
+					return 'icons:close';
+				}
+			}
+		};
+
+		window.customElements.define(StatusIcon.is, StatusIcon);
+	</script>
+</dom-module>

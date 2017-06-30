@@ -1,0 +1,60 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<dom-module id="drone-login">
+	<template>
+		<style>
+			:host {
+				display: block;
+				height: 100%;
+			}
+
+			section {
+				margin:0px auto;
+				max-width: 350px;
+				margin-top: 100px;
+			}
+
+			form {
+				border-top: 0px;
+				padding: 0px 20px;
+			}
+
+			p {
+				margin: 0px;
+				padding: 0px 20px;
+				text-align: center;
+				color: #999;
+				margin-bottom:20px;
+			}
+		</style>
+		<section>
+			<p>Login using your version control system username and password</p>
+			<form action="/authorize" method="POST">
+				<paper-input name="username" label="Username"></paper-input>
+				<paper-input name="password" label="Password" type="password"></paper-input>
+				<paper-button>Submit</paper-button>
+			</form>
+		</section>
+	</template>
+
+	<script>
+		class DroneLogin extends Polymer.Element {
+			static get is() { return 'drone-login'; }
+			static get properties() {
+				return {
+					user: {
+						type: Object
+					},
+					route: {
+						type: Object
+					}
+				};
+			}
+		}
+
+		window.customElements.define(DroneLogin.is, DroneLogin);
+	</script>
+</dom-module>

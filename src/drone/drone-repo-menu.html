@@ -1,0 +1,103 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
+
+<dom-module id="drone-repo-menu">
+	<template>
+		<style>
+			:host {
+				display:block;
+				box-sizing: border-box;
+				display:block;
+				border-bottom:1px solid #EEE;
+				padding: 0 30px;
+			}
+
+			[spacer] {
+				border-right: 1px solid #EEE;
+				padding-right:20px;
+				margin-right:10px;
+			}
+
+			.iron-selected {
+				color: #00bfa5;
+			}
+
+			a {
+				line-height: 49px;
+				padding: 0 8px;
+				text-decoration: none;
+				color: #212121;
+				font-size: 15px;
+				display: inline-block;
+			}
+
+			a:hover {
+				color: #00bfa5;
+			}
+		</style>
+
+		<template is="dom-if" if="[[!repo.error]]">
+			<iron-selector attr-for-selected="name" selected="[[route.name]]">
+				<a href="/[[repo.data.full_name]]" name="repo">
+					{{localize('builds')}}
+				</a>
+
+				<a href="/[[repo.data.full_name]]/badges" name="badges">
+					{{localize('badges')}}
+				</a>
+
+				<a href="/[[repo.data.full_name]]/secrets" name="secrets">
+					{{localize('secrets')}}
+				</a>
+
+				<a href="/[[repo.data.full_name]]/registry" name="registry">
+					{{localize('registry')}}
+				</a>
+
+				<a href="/[[repo.data.full_name]]/settings" name="settings">
+					{{localize('settings')}}
+				</a>
+			</iron-selector>
+		</template>
+	</template>
+
+	<script>
+		class DroneRepoMenu extends Polymer.mixinBehaviors(Polymer.LocalizationBehavior, Polymer.Element) {
+			static get is() { return 'drone-repo-menu'; }
+			static get properties() {
+				return {
+					route: {
+						type: Object
+					},
+					repo: {
+						type: Object
+					},
+					resources: {
+						value() {
+							return {
+								'en': {
+									'back': 'Back',
+									'badges': 'Badges',
+									'builds': 'Builds',
+									'secrets': 'Secrets',
+									'registry': 'Registry',
+									'settings': 'Settings',
+								},
+								'es': {
+									'back': 'Back',
+									'badges': 'Badges',
+									'builds': 'Builds',
+									'secrets': 'Secrets',
+									'registry': 'Registry',
+									'settings': 'Ajustes',
+								}
+							}
+						}
+					}
+				};
+			}
+		}
+
+		window.customElements.define(DroneRepoMenu.is, DroneRepoMenu);
+	</script>
+</dom-module>

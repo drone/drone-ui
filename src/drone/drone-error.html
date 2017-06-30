@@ -1,0 +1,58 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+
+<link rel="import" href="./drone-theme.html">
+
+<dom-module id="drone-error">
+	<template>
+		<style include="drone-theme">
+			:host {
+				display:block;
+			}
+		</style>
+		<template is="dom-if" if="[[_error]]">
+			<iron-pages
+				selected="[[_error.status]]"
+				attr-for-selected="status"
+				fallback-selection="fallback">
+
+				<div class="alert alert-error" status="404">404. The repository is not found.</div>
+				<div class="alert alert-error" status="401">404. The repository is not found.</div>
+				<div class="alert alert-error" status="fallback">
+					[[_error.message]]
+				</div>
+			</iron-pages>
+		</template>
+	</template>
+
+	<script>
+		class DroneError extends Polymer.Element {
+			static get is() { return 'drone-error'; }
+			static get properties() {
+				return {
+					repo: {
+						type: Object
+					},
+					builds: {
+						type: Object
+					},
+					_error: {
+						type: Object,
+						computed: '_computeError(repo, builds)'
+					}
+				}
+			}
+			_computeError(repo, builds) {
+				if (repo && repo.error) {
+					return repo.error;
+				}
+				if (builds && builds.error) {
+					return builds.error;
+				}
+				return;
+			}
+		};
+
+		window.customElements.define(DroneError.is, DroneError);
+	</script>
+</dom-module>

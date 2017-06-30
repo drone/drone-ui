@@ -1,0 +1,154 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="dummy-feed">
+	<template>
+		<style>
+		:host {
+			display: block;
+		}
+		.item {
+			border-bottom: 1px solid #F5F5F5;
+			height: 127px;
+			max-height:127px;
+			min-height:127px;
+			display: block;
+			padding: 20px;
+			box-sizing: border-box;
+		}
+		.header {
+			margin-bottom: 10px;
+			display: flex;
+		}
+		.title {
+			font-size: 16px;
+			line-height: 26px;
+			flex: 1 1 auto;
+		}
+		.title span {
+			background: #F5F5F5;
+			display:inline-block;
+			width:200px;
+			line-height:16px;
+			vertical-align: middle;
+		}
+		.body > div {
+			height: 24px;
+		}
+		.body span {
+			background: #F5F5F5;
+			display:inline-block;
+			width:150px;
+			line-height:14px;
+			vertical-align: middle;
+		}
+		.search {
+			box-sizing: border-box;
+			border-bottom:1px solid #EEE;
+			max-height: 50px;
+			min-height: 50px;
+			height: 50px;
+		}
+		.search input {
+			border: none;
+			width:100%;
+			box-sizing: border-box;
+			outline: none;
+			line-height:49px;
+			font-size: 16px;
+			padding:0px 20px;
+		}
+		::-moz-input-placeholder {
+			color: #BDBDBD;
+			font-weight:300;
+			font-size:15px;
+		}
+		::-webkit-input-placeholder {
+			color: #BDBDBD;
+			font-weight:300;
+			font-size:15px;
+		}
+		::-webkit-search-cancel-button {
+			display: none;
+		}
+		</style>
+
+		<div class="search">
+			<input disabled
+				type="search"
+				placeholder="Search ..."
+				autocomplete="off"
+				autocorrect="off"
+				autocapitalize="off"
+				spellcheck="false" />
+		</div>
+
+		<div class="item">
+			<div class="header">
+				<div class="title">
+					<span>&nbsp;</span>
+				</div>
+			</div>
+			<div class="body">
+				<div>
+					<span>&nbsp;</span>
+				</div>
+				<div>
+					<span>&nbsp;</span>
+				</div>
+			</div>
+		</div>
+		<div class="item">
+			<div class="header">
+				<div class="title">
+					<span>&nbsp;</span>
+				</div>
+			</div>
+			<div class="body">
+				<div>
+					<span>&nbsp;</span>
+				</div>
+				<div>
+					<span>&nbsp;</span>
+				</div>
+			</div>
+		</div>
+		<div class="item">
+			<div class="header">
+				<div class="title">
+					<span>&nbsp;</span>
+				</div>
+			</div>
+			<div class="body">
+				<div>
+					<span>&nbsp;</span>
+				</div>
+				<div>
+					<span>&nbsp;</span>
+				</div>
+			</div>
+		</div>
+		<div class="item">
+			<div class="header">
+				<div class="title">
+					<span>&nbsp;</span>
+				</div>
+			</div>
+			<div class="body">
+				<div>
+					<span>&nbsp;</span>
+				</div>
+				<div>
+					<span>&nbsp;</span>
+				</div>
+			</div>
+		</div>
+	</template>
+
+	<script>
+		class DummyFeed extends Polymer.Element {
+			static get is() { return 'dummy-feed'; }
+		}
+
+		window.customElements.define(DummyFeed.is, DummyFeed);
+	</script>
+</dom-module>

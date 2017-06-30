@@ -1,0 +1,76 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+
+<link rel="import" href="./drone-state.html">
+<link rel="import" href="./drone-build-item.html">
+<link rel="import" href="./drone-error.html">
+
+<dom-module id="drone-builds">
+	<template>
+
+		<style include="drone-theme">
+			:host {
+				display: block;
+				padding:20px 40px;
+			}
+
+			:host drone-build-item:first-of-type {
+				--border-width: 0px;
+			}
+
+			a {
+				color: #000;
+				text-decoration: none;
+			}
+		</style>
+
+		<template is="dom-if" if="[[isLoading(repo, builds)]]">
+			<!-- TODO loading -->
+		</template>
+
+		<drone-error repo=[[repo]] builds=[[builds]]></drone-error>
+
+		<template is="dom-if" if="[[isEmpty(repo, builds)]]">
+			<div class="alert alert-empty">This repository does not have any builds yet.</div>
+		</template>
+
+		<template is="dom-repeat" items="[[builds.list]]">
+			<drone-build-item build=[[item]] repo=[[repo.data]]></drone-build-item>
+		</template>
+
+	</template>
+
+	<script>
+		class DroneBuilds extends DroneMixin(Polymer.Element) {
+			static get is() { return 'drone-builds'; }
+			static get properties() {
+				return {
+					repo: {
+						type: Object
+					},
+					builds: {
+						type: Object,
+						path: ['builds']
+					},
+				};
+			}
+			isError(repo, builds) {
+				return builds && builds.error;
+			}
+			isLoading(repo, builds) {
+				return builds && (builds.loading === true);
+			}
+			isEmpty(repo, builds) {
+				return !builds.loading && builds.list && !builds.list.length;
+			}
+			is403(status) {
+				return status === 403;
+			}
+			is404(status) {
+				return status === 404;
+			}
+		}
+
+		window.customElements.define(DroneBuilds.is, DroneBuilds);
+	</script>
+</dom-module>

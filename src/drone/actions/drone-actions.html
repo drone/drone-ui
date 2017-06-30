@@ -1,0 +1,214 @@
+<script>
+
+const client = new DroneClient(
+	window.ENV.server,
+	window.ENV.token,
+	window.ENV.csrf,
+);
+
+if (window.ENV.token && !window.ENV.user) {
+	client.getSelf().then((result) => {
+		tree.set(['user', 'data'], result);
+	});
+}
+
+function showToken(tree) {
+	tree.set(['token', 'opened'], true);
+}
+
+function hideToken(tree) {
+	tree.set(['token', 'opened'], false);
+}
+
+function updateRoute(tree, route) {
+	// const route = { name: event.name, path: event.path, data: event.data };
+
+	// loads the selected repository
+	switch (route.name) {
+	case 'settings':
+	case 'badges':
+	case 'secrets':
+	case 'registry':
+	case 'proc':
+	case 'build':
+	case 'repo':
+		const repo = route.data.owner + '/' + route.data.repo;
+		if (tree.get(['repo', 'active']) !== repo) {
+			requestRepo(tree, route.data);
+		}
+		// requestRepoMaybe(tree, route.data);
+	}
+
+	// loads the selected builds
+	switch (route.name) {
+	case 'proc':
+	case 'build':
+		const number = route.data.build
+		if (!tree.get(['build', 'data', ]) || !tree.get(['build', 'data', 'procs'])) {
+			requestBuild(tree, route.data);
+		}
+		// requestBuildMaybe(tree, route.data);
+	}
+
+	switch (route.name) {
+	case 'repo':
+		requestBuilds(tree, route.data);
+		break;
+	case 'secrets':
+		tree.unset(['secrets', 'error']);
+		requestSecretList(tree, route.data);
+		break;
+	case 'registry':
+		tree.unset(['registry', 'error']);
+		requestRegistryList(tree, route.data);
+		break;
+	case 'proc':
+		requestLogs(tree, route.data);
+		break;
+	case 'repos':
+		requestRepoList(tree);
+		break;
+	case 'tokens':
+		requestToken(tree);
+		break;
+	case 'root':
+		break;
+	}
+
+	tree.set(['route', 'name'], route.name );
+	tree.set(['route', 'data'], route.data );
+	tree.set(['route', 'path'], route.path );
+
+	// request the default feed on initialization.
+	requestFeed(tree);
+	subscribeFeed(tree);
+}
+
+function requestFeed(tree) {
+	// only execute once
+	if (requestFeed.fired) { return; }
+	requestFeed.fired = true;
+
+	// ignore if no use session
+	if (!tree.exists('user','data')) { return ;}
+
+	// set loading state
+	tree.set(['feed', 'loading'], true);
+
+	client.getBuildFeed({latest:true}).then((results)=>{
+		var items = {};
+		results.map((item) => {
+			items[item.full_name] = item;
+		});
+
+		// reset loading state
+		tree.set(['feed', 'data'], items);
+		tree.set(['feed', 'loading'], false);
+	});
+}
+
+function subscribeFeed(tree) {
+	// only execute once
+	if (subscribeFeed.fired) { return; }
+	subscribeFeed.fired = true;
+
+	// subscribe to the websocket feed.
+	client.on((data) => {
+		const {repo, build} = data;
+
+		// merge the build data into the feed
+		if (tree.exists('feed', 'data', repo.full_name)) {
+			const cursor = tree.select(['feed', 'data', repo.full_name]);
+			cursor.merge(build);
+		}
+
+		// merge the build data into the build list
+		if (tree.exists('builds', 'data', repo.full_name)) {
+			tree.set(['builds', 'data', repo.full_name, build.number], build);
+		}
+
+		// updateActiveBuildMaybe(tree, build);
+	});
+}
+
+function subscribeLogs(tree, data) {
+	if (subscribeLogs.ws) {
+		subscribeLogs.ws.close();
+	}
+	const {repo, build, proc} = data;
+	const opts = {use_classes: true};
+	tree.set(['logs', 'data'], []);
+	subscribeLogs.ws = client.stream(repo.full_name, build.number, proc.ppid, (item) => {
+		if (item.proc == proc.name) {
+			item.pos = item.pos+1;
+			item.out = ansi_up.escape_for_html(item.out || '');
+			item.out = item.out.startsWith('+ ') ? item.out : ansi_up.ansi_to_html(item.out, opts);
+			item.time = item.time || 0;
+			tree.push(['logs', 'data'], item);
+		}
+		if (tree.get(['logs', 'follow'])) {
+			scrollToBottom();
+		}
+	});
+}
+
+function requestToken() {
+	// only execute once
+	if (requestToken.fired) { return; }
+	requestToken.fired = true;
+
+	client.getToken().then((data) => {
+		tree.set(['token', 'value'], data);
+	});
+}
+
+
+function requestLogs(tree, data) {
+	const {owner, repo, build, proc, step} = data;
+	const opts = {use_classes: true};
+
+	tree.set(['logs', 'loading'], true);
+	tree.set(['logs', 'data'], []);
+	client.getLogs(owner+'/'+repo, build, proc, step).then((results) => {
+		results.map((item) => {
+			if (item.out) {
+				item.pos = item.pos+1;
+				item.out = ansi_up.escape_for_html(item.out || '');
+				item.out = item.out.startsWith('+ ') ? item.out : ansi_up.ansi_to_html(item.out, opts);
+			}
+			item.time = item.time || 0;
+		});
+		tree.set(['logs', 'loading'], false);
+		tree.set(['logs', 'data'], results);
+	});
+}
+
+function followLogs(tree) {
+	tree.set(['logs', 'follow'], true);
+	scrollToBottom();
+}
+
+function unfollowLogs(tree) {
+	tree.set(['logs', 'follow'], false);
+}
+
+function scrollToBottom() {
+	setTimeout(() => {
+		window.scrollTo(0,document.body.scrollHeight);
+	}, 50);
+}
+
+function displayMessage(tree, data) {
+	tree.set(['message', 'text'], data.text);
+	tree.set(['message', 'error'], !!data.error);
+	tree.set(['message', 'show'], true);
+
+	// HACK instead of automatically hiding we should prompt
+	// the user to close. Upon close we should display the
+	// next message in the queue if exists.
+	setTimeout(() => {
+		tree.set(['message', 'show'], false);
+	}, 2000);
+}
+
+</script>

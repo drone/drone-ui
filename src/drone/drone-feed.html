@@ -1,0 +1,142 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+
+<link rel="import" href="./drone-feed-item.html">
+
+<dom-module id="drone-feed">
+	<template>
+		<style>
+		:host {
+			display: block;
+		}
+
+		:host > drone-feed-item:first-of-type {
+			--border-width: 0px;
+		}
+
+		.search {
+			box-sizing: border-box;
+			border-bottom:1px solid #EEE;
+			max-height: 50px;
+			min-height: 50px;
+			height: 50px;
+		}
+
+		input {
+			border: none;
+			width:100%;
+			box-sizing: border-box;
+			outline: none;
+			line-height:49px;
+			font-size: 16px;
+			padding:0px 20px;
+		}
+
+		::-moz-input-placeholder {
+			color: #BDBDBD;
+			font-weight:300;
+			font-size:15px;
+		}
+
+		::-webkit-input-placeholder {
+			color: #BDBDBD;
+			font-weight:300;
+			font-size:15px;
+		}
+
+		::-webkit-search-cancel-button {
+			display: none;
+		}
+		</style>
+
+		<div class="search">
+			<input id="search"
+				type="search"
+				value="{{query::input}}"
+				placeholder="{{localize('search')}}"
+				autocomplete="off"
+				autocorrect="off"
+				autocapitalize="off"
+				spellcheck="false" />
+		</div>
+
+		<template is="dom-if" if="[[_error]]">
+			[[feed.error]]
+		</template>
+
+		<template is="dom-if" if="[[_empty]]">
+			Got some sort of empty list.
+		</template>
+
+		<template is="dom-repeat" items="[[_list]]">
+			<drone-feed-item item="[[item]]"></drone-feed-item>
+		</template>
+	</template>
+
+	<script>
+		class DroneFeed extends Polymer.mixinBehaviors(Polymer.LocalizationBehavior, Polymer.Element) {
+			static get is() { return 'drone-feed'; }
+			static get properties() {
+				return {
+					feed: {
+						type: Object
+					},
+					query: {
+						type: String,
+						value: ''
+					},
+					_list: {
+						type: Array,
+						computed: '_computeList(feed, query)'
+					},
+					_loading: {
+						type: Boolean,
+						computed: '_computeLoading(feed)'
+					},
+					_error: {
+						type: Boolean,
+						computed: '_computeError(feed)'
+					},
+					_empty: {
+						type: Boolean,
+						computed: '_computeEmpty(_empty)'
+					},
+					resources: {
+						value() {
+							return {
+								'en': {
+									'search': 'Search ...'
+								},
+								'es': {
+									'search': 'Buscar ...'
+								},
+								'fr': {
+									'search': 'Chercher ...'
+								}
+							}
+						}
+					}
+				};
+			}
+			_computeLoading(feed) {
+				return feed.loading;
+			}
+			_computeError(feed) {
+				return feed.error;
+			}
+			_computeEmpty(feed) {
+				return !feed.loading && feed.data.length === 0;
+			}
+			_computeList(feed, query) {
+				if (query === '') {
+					return feed && feed.list;
+				}
+				return feed && feed.list && feed.list.filter((item) => {
+					return item.full_name.indexOf(query) !== -1;
+				});
+			}
+		}
+
+		window.customElements.define(DroneFeed.is, DroneFeed);
+	</script>
+</dom-module>

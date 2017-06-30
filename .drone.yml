@@ -1,0 +1,5 @@
+pipeline:
+  build:
+    image: node
+    commands:
+      - echo todo

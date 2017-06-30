@@ -1,0 +1,177 @@
+<script src="../../bower_components/baobab/build/baobab.min.js"></script>
+<script src="../../bower_components/ansi_up/ansi_up.js"></script>
+<script src="./actions/drone.js"></script>
+
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/page-title/page-title.html">
+<link rel="import" href="../../bower_components/app-localize-behavior/app-localize-behavior.html">
+
+<link rel="import" href="./actions/drone-actions.html">
+<link rel="import" href="./actions/drone-repo-actions.html">
+<link rel="import" href="./actions/drone-build-actions.html">
+<link rel="import" href="./actions/drone-secret-actions.html">
+<link rel="import" href="./actions/drone-registry-actions.html">
+<link rel="import" href="./drone-locale.html">
+
+<link rel="import" href="./drone-state.html">
+<link rel="import" href="./drone-builds.html">
+<link rel="import" href="./drone-feed.html">
+<link rel="import" href="./drone-build.html">
+<link rel="import" href="./drone-repo.html">
+<link rel="import" href="./drone-login.html">
+<link rel="import" href="./drone-secrets.html">
+<link rel="import" href="./drone-registry.html">
+<link rel="import" href="./drone-repo.html">
+<link rel="import" href="./elements/app-router.html">
+<link rel="import" href="./elements/app-route.html">
+
+<dom-module id="drone-app">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+			* {
+				font-family: Roboto;
+			}
+
+			paper-toast {
+				text-align: center;
+				font-size:16px;
+			}
+			paper-toast[error] {
+				--paper-toast-background-color: red;
+				--paper-toast-color: white;
+			}
+		</style>
+
+		<page-title base-title="drone" page-title="[[route.title]]"></page-title>
+
+		<app-location
+			route="{{_route}}"
+			url-space-regex="^(?!(\/logout|\/login)).*">
+		</app-location>
+
+		<app-router route="{{_route}}" on-route-changed="_onRouteChanged">
+			<app-route
+				name='root'
+				path='/'>
+			</app-route>
+
+			<app-route
+				name='login'
+				path='/login/form'>
+			</app-route>
+
+			<app-route
+				name='repos'
+				path='/account/repos'>
+			</app-route>
+
+			<app-route
+				name='tokens'
+				path='/account/token'>
+			</app-route>
+
+			<app-route
+				name='repo'
+				path='/:owner/:repo'>
+			</app-route>
+
+			<app-route
+				name='badges'
+				path='/:owner/:repo/badges'>
+			</app-route>
+
+			<app-route
+				name='settings'
+				path='/:owner/:repo/settings'>
+			</app-route>
+
+			<app-route
+				name='secrets'
+				path='/:owner/:repo/secrets'>
+			</app-route>
+
+			<app-route
+				name='registry'
+				path='/:owner/:repo/registry'>
+			</app-route>
+
+			<app-route
+				name='build'
+				path='/:owner/:repo/:build'>
+			</app-route>
+
+			<app-route
+				name='proc'
+				path='/:owner/:repo/:build/:proc/:step'>
+			</app-route>
+		</app-router>
+
+		<paper-toast
+			opened="[[message.show]]"
+			always-on-top
+			duration="0"
+			class="fit-bottom"
+			error$="[[message.error]]"
+			text="[[message.text]]">
+		</paper-toast>
+
+		<iron-pages selected="[[route.name]]" attr-for-selected="page-name" fallback-selection="fallback">
+			<div page-name="login">
+				<drone-login user=[[user]] route=[[route]]></drone-login>
+			</div>
+			<div page-name="fallback">
+				<drone-repo user=[[user]] route=[[route]]></drone-repo>
+			</div>
+		</iron-pages>
+	</template>
+
+	<script>
+		class DroneApp extends DroneMixin(Polymer.Element) {
+			static get is() { return 'drone-app'; }
+			static get properties() {
+				return {
+					route: {
+						type: Object,
+						path: ['route']
+					},
+					user: {
+						type: Object,
+						path: ['user']
+					},
+					token: {
+						type: Object,
+						path: ['token']
+					},
+					message: {
+						type: Object,
+						path: ['message']
+					},
+					language: {
+						value: 'en'
+					}
+				};
+			}
+
+			_onRouteChanged(e) {
+				this.dispatch(updateRoute, {
+					name: e.detail.name,
+					path: e.detail.path,
+					data: e.detail.data,
+				});
+			}
+
+			handleTokenClose() {
+				this.dispatch(hideToken);
+			}
+		}
+
+		window.customElements.define(DroneApp.is, DroneApp);
+	</script>
+</dom-module>

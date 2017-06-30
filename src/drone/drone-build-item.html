@@ -1,0 +1,159 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/maps-icons.html">
+
+<link rel="import" href="./elements/time-duration.html">
+<link rel="import" href="./elements/time-since.html">
+<link rel="import" href="./drone-status.html">
+
+<dom-module id="drone-build-item">
+	<template>
+		<style>
+			:host {
+				--border-width: 1px;
+				display:block;
+				border-top: var(--border-width) solid #EEE;
+			}
+
+			a {
+				text-decoration: none;
+				color: #000;
+				display:flex;
+				padding:30px 0px;
+			}
+
+			h3 {
+				margin: 0;
+				line-height: 28px;
+				min-height: 28px;
+				font-size: 16px;
+				font-weight:normal;
+				overflow: hidden;
+				display: -webkit-box;
+				-webkit-line-clamp: 1;
+				-webkit-box-orient: vertical;
+			}
+			em {
+				font-style: normal;
+				font-size: 14px;
+			}
+			span {
+				margin: 0 3px;
+				font-size: 14px;
+				color: #9e9e9e;
+			}
+			.icon {
+				width: 48px;
+				min-width: 48px;
+				max-width: 48px;
+			}
+			.icon img {
+				border-radius: 50%;
+				width:28px;
+				height:28px;
+			}
+			.status {
+				width: 100px;
+				min-width: 100px;
+				max-width: 100px;
+		    text-align: right;
+		    white-space: nowrap;
+			}
+			.body {
+				flex: 1 1 auto;
+			}
+			time {
+				font-size: 12px;
+				display: block;
+				margin: 5px 0;
+				color: #9e9e9e;
+			}
+		</style>
+
+		<a href="/[[ repo.full_name ]]/[[ build.number ]]">
+			<div class="icon">
+				<img src="[[ build.author_avatar ]]" />
+			</div>
+			<div class="body">
+				<h3>[[ build.message ]]</h3>
+
+				<!-- push description -->
+				<template is="dom-if" if="[[ isPush(build.event) ]]">
+					<div class="description">
+						<em>[[ build.author ]]</em>
+						<span>pushed to</span>
+						<em>[[ build.branch ]]</em>
+					</div>
+				</template>
+
+				<!-- pull_request description -->
+				<template is="dom-if" if="[[ isPull(build.event) ]]">
+					<div class="description">
+						<em>[[ build.author ]]</em>
+						<span>opened pull request to</span>
+						<em>[[ build.branch ]]</em>
+					</div>
+				</template>
+
+				<!-- tag description -->
+				<template is="dom-if" if="[[ isTag(build.event) ]]">
+					<div class="description">
+						<em>[[ build.author ]]</em>
+						<span>pushed tag</span>
+						<em>[[ build.ref ]]</em>
+					</div>
+				</template>
+
+				<!-- deployment description -->
+				<template is="dom-if" if="[[ isDeploy(build.event) ]]">
+					<div class="description">
+						<em>[[ build.author ]]</em>
+						<span>deployed to</span>
+						<em>[[ build.deploy_to ]]</em>
+					</div>
+				</template>
+
+				<time>
+					<time-since unix="[[build.created_at]]"></time-since>
+				</time>
+			</div>
+			<div class="status">
+				<span style="padding-right:10px;"># [[ build.number ]]</span>
+				<status-icon status="[[ build.status ]]"></status-icon>
+			</div>
+		</a>
+	</template>
+
+	<script>
+		class DroneBuildItem extends Polymer.Element {
+			static get is() { return 'drone-build-item'; }
+			static get properties() {
+				return {
+					repo: {
+						type: Object
+					},
+					build: {
+						type: Object
+					}
+				}
+			}
+			isPush(string) {
+				return string === "push";
+			}
+			isPull(string) {
+				return string === "pull_request";
+			}
+			isTag(string) {
+				return string === "tag";
+			}
+			isDeploy(string) {
+				return string === "deployment";
+			}
+			toUnix(number) {
+				return number * 1000;
+			}
+		};
+
+		window.customElements.define(DroneBuildItem.is, DroneBuildItem);
+	</script>
+</dom-module>

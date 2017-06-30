@@ -1,0 +1,120 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/device-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/image-icons.html">
+
+<link rel="import" href="elements/time-duration.html">
+<link rel="import" href="elements/time-since.html">
+<link rel="import" href="./drone-status.html">
+
+<dom-module id="drone-feed-item">
+	<template>
+		<style>
+			:host {
+				--border-width: 1px;
+				display:block;
+			}
+			:host a {
+				border-top:0px solid #EEE;
+				border-top-width: var(--border-width);
+				display: block;
+				padding: 20px;
+				text-decoration: none;
+			}
+			:host .header {
+				margin-bottom: 10px;
+				display: flex;
+			}
+			:host .title {
+				font-size: 16px;
+				line-height:26px;
+				color: #222;
+				flex: 1 1 auto;
+			}
+			:host .icon {
+				width: 28px;
+				min-width: 28px;
+				max-width: 28px;
+			}
+			:host .body div {
+				color: #9e9e9e;
+				font-size:13px;
+				line-height:24px;
+				vertical-align: middle;
+			}
+			:host .body iron-icon {
+				vertical-align: middle;
+				--iron-icon-width: 15px;
+				--iron-icon-height: 15px;
+				margin-right:5px;
+				line-height:22px;
+			}
+		</style>
+
+		<a href="/[[item.full_name]]">
+			<div class="header">
+				<div class="title">[[item.full_name]]</div>
+				<div class="icon">
+					<template is="dom-if" if="[[item.status]]">
+						<status-icon status=[[item.status]]></status-icon>
+					</template>
+				</div>
+			</div>
+			<div class="body">
+				<div>
+					<iron-icon icon="device:access-time"></iron-icon>
+					<template is="dom-if" if="[[_time]]">
+						<time-since unix=[[_time]]></time-since>
+					</template>
+					<template is="dom-if" if="[[!_time]]">
+						--
+					</template>
+				</div>
+				<div>
+					<iron-icon icon="image:timelapse"></iron-icon>
+					<template is="dom-if" if="[[_duration]]">
+						<time-duration seconds=[[_duration]]></time-duration>
+					</template>
+					<template is="dom-if" if="[[!_duration]]">
+						<template is="dom-if" if="[[item.started_at]]">
+							<time-since unix=[[_time]]></time-since>
+						</template>
+						<template is="dom-if" if="[[!item.started_at]]">
+							--
+						</template>
+					</template>
+				</div>
+			</div>
+		</a>
+	</template>
+
+	<script>
+		class DroneFeedItem extends Polymer.Element {
+			static get is() { return 'drone-feed-item'; }
+			static get properties() {
+				return {
+					item: {
+						type: Object
+					},
+					_time: {
+						type: Number,
+						computed: '_getTime(item)'
+					},
+					_duration: {
+						type: Number,
+						computed: '_getDuration(item)'
+					}
+				};
+			}
+			_getTime(item) {
+				return item.started_at;
+			}
+			_getDuration(item) {
+				return item.finished_at ? item.finished_at - item.started_at : undefined;
+			}
+		}
+
+		window.customElements.define(DroneFeedItem.is, DroneFeedItem);
+	</script>
+</dom-module>

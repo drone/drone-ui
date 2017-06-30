@@ -1,0 +1,110 @@
+<script>
+
+function requestBuild(tree, data) {
+	const {owner, repo, build} = data;
+
+	tree.set(['build', 'loading'], true);
+	tree.unset(['build', 'error'])
+	// tree.unset(['build', 'data']);
+	tree.unset(['build', 'active'])
+
+	client.getBuild({owner: owner, name: repo}, build).then((result) => {
+		tree.unset(['build', 'error'])
+		tree.set(['build', 'active'], build);
+		tree.set(['build', 'loading'], false);
+		tree.set(['builds', 'data', owner+'/'+repo, build], result);
+		// updateActiveBuild(tree, result);
+	});
+}
+
+function requestBuilds(tree, data) {
+	const {owner, repo} = data;
+
+	tree.set(['builds', 'loading'], true);
+	tree.unset(['builds', 'error']);
+
+	client.getBuildList({owner: owner, name: repo}).then((result) => {
+		let items = {};
+		result.map((item) => {
+			items[item.number] = item;
+		});
+
+		tree.set(['builds', 'loading'], false);
+		tree.set(['builds', 'data', owner+'/'+repo], items);
+	}).catch((error) => {
+		tree.set(['builds', 'loading'], false);
+		tree.set(['builds', 'error'], error);
+	});
+}
+
+function cancelBuild(tree, data) {
+	const {repo, build, proc} = data;
+
+	client.cancelBuild(repo.full_name, build.number, proc.ppid).then((result) => {
+
+	}).catch((error) => {
+
+	});
+}
+
+function restartBuild(tree, data) {
+	const {repo, build} = data;
+
+	client.restartBuild(repo.full_name, build.number).then((result) => {
+		tree.set(['builds', 'data', repo.full_name, build.number], result);
+	}).catch((error) => {
+
+	});
+}
+
+function approveBuild(tree, data) {
+	const {repo, build} = data;
+
+	tree.set(['builds', 'data', repo.full_name, build.number, 'status'], 'pending');
+	client.approveBuild(repo.full_name, build.number).then((result) => {
+		tree.set(['builds', 'data', repo.full_name, build.number], result);
+		displayMessage(tree, { text: 'The build has been approved' });
+	}).catch((error) => {
+		displayMessage(tree, { error: true, text: 'Failed to approve the build. '+error.message });
+	});
+}
+
+function declineBuild(tree, data) {
+	const {repo, build} = data;
+
+	tree.set(['builds', 'data', repo.full_name, build.number, 'status'], 'declined');
+	client.declineBuild(repo.full_name, build.number).then((result) => {
+		tree.set(['builds', 'data', repo.full_name, build.number], result);
+		displayMessage(tree, { text: 'The build has been declined' });
+	}).catch((error) => {
+		console.log(error)
+		displayMessage(tree, { error: true, text: 'Failed to decline the build. '+error.message });
+	});
+}
+
+
+function requestBuildMaybe(tree, data) {
+	const repo = tree.get(['repo', 'data']);
+	const build = tree.get(['build', 'data'])
+
+	if (
+		!repo ||
+		!build ||
+		repo.owner !== data.owner ||
+		repo.name !== data.repo ||
+		build.number != data.build
+	) {
+		requestBuild(tree, data);
+	}
+}
+
+function updateActiveBuildMaybe(tree, build) {
+	if (tree.get(['build', 'data', 'id']) === build.id) {
+		tree.set(['build', 'data'], build);
+	}
+}
+
+function updateActiveBuild(tree, build) {
+	tree.set(['build', 'data'], build);
+}
+</script>

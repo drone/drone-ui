@@ -1,0 +1,14 @@
+{
+  "shell": "src/drone/drone-app.html",
+  "fragments": [
+
+  ],
+  "lint": {
+    "rules": [
+      "polymer-2"
+    ],
+    "ignoreWarnings": [
+
+    ]
+  }
+}

@@ -1,0 +1,43 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="./drone-theme.html">
+
+<dom-module id="drone-proc-list">
+	<template>
+		<style include="drone-theme">
+			:host {
+				display: block;
+			}
+			:host drone-proc-list-item:last-of-type {
+				--proc-list-item-border-width: 0px;
+			}
+		</style>
+
+		<template is="dom-repeat" items="[[proc.children]]">
+			<drone-proc-list-item repo="[[repo]]" build="[[build]]" proc="[[item]]" selected="[[selected]]"></drone-proc-list-item>
+		</template>
+	</template>
+
+	<script>
+		class DroneProcList extends Polymer.Element {
+			static get is() { return 'drone-proc-list'; }
+			static get properties() {
+				return {
+					repo: {
+						type: Object
+					},
+					build: {
+						type: Object
+					},
+					proc: {
+						type: Object
+					},
+					selected: {
+						type: Object
+					}
+				}
+			}
+		};
+
+		window.customElements.define(DroneProcList.is, DroneProcList);
+	</script>
+</dom-module>

@@ -1,0 +1,78 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="./drone-theme.html">
+
+<dom-module id="drone-badges">
+	<template>
+		<style include="drone-theme">
+			:host {
+				display: block;
+				padding: 20px 40px;
+			}
+
+			@media only screen and (max-width: 900px) {
+				dd {
+					padding-left: 20px;
+					margin:20px 0px;
+					padding-bottom:20px;
+				}
+				dt {
+					padding-left:0px;
+					float:none;
+				}
+				pre {
+					word-wrap: break-word;
+				}
+			}
+		</style>
+
+		<dl>
+			<dt>{{localize('markdown')}}</dt>
+			<dd>
+				<pre>[![Build Status]({{location.protocol}}//{{location.host}}/api/badges/{{repo.data.full_name}}/status.svg)]({{location.protocol}}//{{location.host}}/{{repo.data.full_name}})</pre>
+			</dd>
+			<dt>{{localize('markup')}}</dt>
+			<dd>
+				<pre>&lt;a href=&quot;{{location.protocol}}//{{location.host}}/{{repo.data.full_name}}&quot;&gt;&lt;img src=&quot;{{location.protocol}}//{{location.host}}/api/badges/{{repo.data.full_name}}/status.svg&quot; /&gt;&lt;/a&gt;</pre>
+			</dd>
+			<dt>{{localize('ccmenu')}}</dt>
+			<dd>
+				<pre>{{location.protocol}}//{{location.host}}/api/badges/{{repo.data.full_name}}/cc.xml</pre>
+			</dd>
+		</dl>
+	</template>
+
+	<script>
+		class DroneBadges extends Polymer.mixinBehaviors(Polymer.LocalizationBehavior, Polymer.Element) {
+			static get is() { return 'drone-badges'; }
+			static get properties() {
+				return {
+					location: {
+						type: Object
+					},
+					repo: {
+						type: Object
+					},
+					resources: {
+						value() {
+							return {
+								'en': {
+									'markdown': 'Markdown',
+									'markup': 'Markup',
+									'ccmenu': 'CCMenu'
+								},
+								'es': {
+									'markdown': 'Markdown',
+									'markup': 'Markup',
+									'ccmenu': 'CCMenu'
+								}
+							}
+						}
+					}
+				};
+			}
+		}
+
+		window.customElements.define(DroneBadges.is, DroneBadges);
+	</script>
+</dom-module>

@@ -1,0 +1,298 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../../bower_components/paper-drawer-panel/paper-drawer-panel.html">
+
+<link rel="import" href="./drone-state.html">
+<link rel="import" href="./drone-proc-card.html">
+<link rel="import" href="./drone-repo-menu.html">
+
+<dom-module id="drone-proc">
+	<template>
+		<style include="drone-theme">
+		:host {
+			position:relative;
+			box-sizing: border-box;
+		}
+		:host .wrapper {
+			display:flex;
+			flex-direction: row;
+			overflow:hidden;
+		}
+		div[slot="main"] {
+			box-sizing:border-box;
+			padding:40px;
+			flex:1 1 auto;
+			overflow:hidden;
+		}
+		div[slot="drawer"] {
+			padding:40px 20px;
+			box-sizing:border-box;
+			border-left:1px solid #EEE;
+			width:320px;
+			min-width:320px;
+			max-width:320px;
+		}
+		drone-proc-list {
+			--proc-list-item-padding:10px;
+			--proc-list-item-border-width:0px;
+		}
+		.term {
+			margin-top:30px;
+			padding: 20px;
+			border-radius: 2px;
+			background: #eee;
+		}
+		.term-row{
+			color: #212121;
+			font-size: 12px;
+			line-height: 19px;
+			white-space: pre-wrap;
+			word-wrap: break-word;
+			font-family: Roboto Mono,monospace;
+			display: flex;
+			max-width:100%;
+		}
+		.term-row>div:first-child {
+		    padding-right: 20px;
+				min-width: 20px;
+		    color: rgba(0,0,0,.3);
+		    -webkit-user-select: none;
+		    user-select: none;
+		}
+		.term-row>div:nth-child(2) {
+			flex: 1 1 auto;
+			min-width: 0;
+		}
+		.term-row>div:last-child {
+			padding-left: 20px;
+			color: rgba(0,0,0,.3);
+			-webkit-user-select: none;
+			user-select: none;
+		}
+		.term-row.term-row-exit-code>div:first-child {
+		    margin-top: 10px;
+		    padding: 0;
+		}
+		.footer {
+			background: #FFA000;
+			margin-top:20px;
+			border-radius: 2px;
+			padding: 10px;
+			text-align: right;
+		}
+		.footer button {
+			border:none;
+			background:rgba(255,255,255,0.2);
+			color:#FFF;
+			border-radius:2px;
+			font-size:12px;
+			margin-left: 5px;
+			text-transform: uppercase;
+			line-height: 36px;
+			padding:0px 15px;
+			cursor: pointer;
+		}
+		status-icon {
+			float:left;
+			color: #FFF;
+	    border: none;
+	    opacity: 0.8;
+			margin-top:2px;
+			--status-icon-border-width: 0px;
+			--status-icon-color: #FFF;
+			--status-icon-width: 24px;
+			--status-icon-height: 24px;
+		}
+		menu {
+			padding:0px;
+			margin:0px;
+			margin-top:20px;
+		}
+		menu button {
+			border:none;
+			background:rgba(255,255,255,0.2);
+			color:#FFF;
+			border-radius:2px;
+			font-size:12px;
+			margin-right: 5px;
+			text-transform: uppercase;
+			line-height: 36px;
+			padding:0px 15px;
+			cursor: pointer;
+		}
+		</style>
+			<div class="wrapper">
+				<div slot="main">
+					<template is="dom-if" if=[[build]]>
+						<drone-proc-card
+							repo=[[repo]]
+							build=[[build.data]]
+							proc=[[build.proc.data]]
+							status=[[build.proc.data.state]]>
+							<template is="dom-if" if="[[_procRunning(build.proc.data)]]">
+								<menu>
+									<button on-click="_handleCancel">Cancel</button>
+									<template is="dom-if" if=[[!logs.follow]]>
+										<button on-click="_handleFollow">Follow</button>
+									</template>
+									<template is="dom-if" if=[[logs.follow]]>
+										<button on-click="_handleUnfollow">Unfollow</button>
+									</template>
+								</menu>
+							</template>
+						</drone-proc-card>
+					</template>
+
+					<template is="dom-if" if=[[build.proc.data.error]]>
+						<div class="alert alert-exception">[[build.proc.data.error]]</div>
+					</template>
+
+
+					<template is="dom-if" if=[[_loading]]>
+						<div class="term" style="text-align: center;">
+							<template is="dom-if" if="[[_procSkipped(build.proc.data)]]">
+								This step was skipped.
+							</template>
+							<template is="dom-if" if="[[!_procSkipped(build.proc.data)]]">
+								<iron-icon icon="app:spinner"></iron-icon>
+							</template>
+						</div>
+					</template>
+					<template is="dom-if" if=[[!_loading]]>
+						<div class="term">
+							<template is="dom-repeat" items="[[logs.data]]">
+								<div class="term-row">
+									<div>[[item.pos]]</div>
+									<div inner-h-t-m-l=[[item.out]]></div>
+									<div>[[item.time]]s</div>
+								</div>
+							</template>
+							<template is="dom-if" if="[[_procFinished(build.proc.data)]]">
+								<div class="term-row term-row-exit-code">
+									<div>exit code [[build.proc.data.exit_code]]</div>
+								</div>
+							</template>
+						</div>
+					</template>
+
+					<template is="dom-if" if="[[_procRunning(build.proc.data)]]">
+						<div class="footer">
+							<status-icon status="running"></status-icon>
+							<div>
+								<button on-click="_handleCancel">Cancel</button>
+								<template is="dom-if" if=[[!logs.follow]]>
+									<button on-click="_handleFollow">Follow</button>
+								</template>
+								<template is="dom-if" if=[[logs.follow]]>
+									<button on-click="_handleUnfollow">Unfollow</button>
+								</template>
+							</div>
+						</div>
+					</template>
+				</div>
+
+				<div slot="drawer">
+					<drone-proc-list
+						repo=[[repo]]
+						build=[[build]]
+						proc=[[build.proc.parent]]
+						selected=[[build.proc.data]]>
+					</drone-proc-list>
+				</div>
+		</div>
+	</template>
+
+	<script>
+		class DroneProc extends DroneMixin(Polymer.Element) {
+			static get is() { return 'drone-proc'; }
+			static get properties() {
+				return {
+					route: {
+						type: Object
+					},
+					repo: {
+						type: Object
+					},
+					build: {
+						type: Object,
+						path: ['build']
+					},
+					logs: {
+						type: Object,
+						path: ['logs']
+					},
+					_loading: {
+						type: Boolean,
+						computed: '_computeLoading(logs)'
+					},
+					// HACK see issue https://github.com/Yomguithereal/baobab/issues/448
+					_build: {
+						type: Object,
+						path: ['build', 'data']
+					},
+					_parent: {
+						type: Object,
+						path: ['build', 'proc', 'parent']
+					},
+					_proc: {
+						type: Object,
+						path: ['build', 'proc', 'data'],
+						observer: '_procChanged'
+					}
+				};
+			}
+			_procChanged(newValue, oldValue) {
+				if (newValue && newValue.state === 'running') {
+					if (oldValue && oldValue.state === 'running' && oldValue.pid === newValue.pid) {
+						return; // do nothing
+					}
+					this.dispatch(subscribeLogs, {
+						repo: this.repo.data,
+						build: this.build.data,
+						proc: newValue,
+					});
+				}
+			}
+
+			_procRunning(proc) {
+				return proc &&
+					proc.state === 'running';
+			}
+
+			_procSkipped(proc) {
+				return proc &&
+					proc.state === 'skipped';
+			}
+
+			_procFinished(proc) {
+				return proc &&
+					proc.state !== 'skipped' &&
+					proc.state !== 'blocked' &&
+					proc.state !== 'running' &&
+					proc.state !== 'pending';
+			}
+
+			_computeLoading(logs) {
+				return (logs && logs.loading && (!logs.data || logs.data.length === 0));
+			}
+
+			_handleCancel() {
+				this.dispatch(cancelBuild, {
+					repo: this.repo.data,
+					build: this.build.data,
+					proc: this.build.proc.data,
+				})
+			}
+
+			_handleFollow() {
+				this.dispatch(followLogs);
+			}
+
+			_handleUnfollow() {
+				this.dispatch(unfollowLogs);
+			}
+		}
+
+		window.customElements.define(DroneProc.is, DroneProc);
+	</script>
+</dom-module>

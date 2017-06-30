@@ -1,0 +1,177 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/maps-icons.html">
+
+<link rel="import" href="./elements/time-duration.html">
+<link rel="import" href="./elements/time-since.html">
+
+<link rel="import" href="./drone-theme.html">
+
+<dom-module id="drone-build-card">
+	<template>
+		<style include="drone-theme">
+		* {
+			font-size: 15px;
+		}
+		.card {
+			color: #FFF;
+			padding: 40px 40px;
+			border-radius:2px;
+		}
+		.inner {
+			display:flex;
+			flex-direction: row;
+		}
+		.card.pending,
+		.card.running,
+		.card.blocked {
+			background: var(--status-running-color);
+		}
+		.card.declined,
+		.card.error,
+		.card.killed,
+		.card.failure {
+			background: var(--status-failure-color);
+		}
+		.card.success {
+			background: var(--status-success-color);
+		}
+		.card.skipped {
+			background:#E0E0E0;
+		}
+		.meta {
+			flex: 1 1 auto;
+		}
+		.time {
+			max-width: 300px;
+		}
+		p {
+			margin:0px;
+			margin-top:20px;
+		}
+		iron-icon {
+			color: #FFF;
+			--iron-icon-width: 18px;
+			--iron-icon-height: 18px;
+			margin-right: 7px;
+		}
+		.commit iron-icon {
+			margin-left: 7px;
+			color: hsla(0,0%,100%,.7);
+		}
+		em {
+			font-style: normal;
+			display:inline-block;
+			min-width: 70px;
+		}
+		.inner > div > div {
+			line-height: 21px;
+			margin-bottom: 0px;
+		}
+		</style>
+		<div class$="card [[ status ]]">
+			<div class="inner">
+				<div class="meta">
+					<div><em>Branch:</em> [[ build.branch ]]</div>
+					<div class="commit">
+						<em>Commit:</em>
+						<span>[[ substr(build.commit) ]]</span>
+						<a href="[[ build.link_url ]]" target="_blank">
+							<iron-icon icon="icons:link"></iron-icon>
+						</a>
+					</div>
+					<div><em>Author:</em> [[ build.author ]]</div>
+					<p>[[ build.message ]]</p>
+				</div>
+
+				<div class="time">
+					<div>
+						<iron-icon icon="image:timelapse"></iron-icon>
+						<template is="dom-if" if="[[ elapsed ]]">
+							<span>
+								<time-duration seconds="[[ elapsed ]]"></time-duration>
+							</span>
+						</template>
+						<template is="dom-if" if="[[ !elapsed ]]">
+							<template is="dom-if" if="[[ timestamp ]]">
+								<span>
+									<time-since unix="[[ timestamp ]]"></time-since>
+								</span>
+							</template>
+							<template is="dom-if" if="[[ !timestamp ]]">
+								<span>--</span>
+							</template>
+						</template>
+					</div>
+					<div>
+						<iron-icon icon="device:access-time"></iron-icon>
+						<template is="dom-if" if="[[ timestamp ]]">
+							<span>
+								<time-since unix="[[ timestamp ]]"></time-since>
+							</span>
+						</template>
+						<template is="dom-if" if="[[ !timestamp ]]">
+							<span>--</span>
+						</template>
+					</div>
+				</div>
+			</div>
+			<slot></slot>
+		</div>
+	</template>
+
+	<script>
+		class DroneBuildCard extends Polymer.Element {
+			static get is() { return 'drone-build-card'; }
+			static get properties() {
+				return {
+					repo: {
+						type: Object
+					},
+					build: {
+						type: Object
+					},
+					proc: {
+						type: Object
+					},
+					status: {
+						type: String
+					},
+					elapsed: {
+						type: Number,
+						computed: '_computeElapsed(build, proc)'
+					},
+					timestamp: {
+						type: Number,
+						computed: '_computeTimestamp(build, proc)'
+					}
+				}
+			}
+			substr(str) {
+				return str && str.substr(0, 8)
+			}
+			duration(build) {
+				return (
+						build.finished_at > 0
+						? build.finished_at
+						: this._now()
+					) - (
+						build.started_at > 0
+						? build.started_at
+						: build.created_at
+					);
+			}
+			_computeElapsed(build, proc) {
+				return build && build.finished_at && this.duration(build);
+			}
+			_computeTimestamp(build, proc) {
+				return build && build.started_at;
+			}
+			_now() {
+				return Math.floor(new Date().getTime() / 1000);
+			}
+		};
+
+		window.customElements.define(DroneBuildCard.is, DroneBuildCard);
+	</script>
+</dom-module>

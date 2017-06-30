@@ -1,0 +1,144 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+
+<link rel="import" href="./drone-state.html">
+<link rel="import" href="./drone-repo-list-item.html">
+
+<dom-module id="drone-repos">
+	<template>
+
+		<style>
+			:host {
+				display:block;
+				box-sizing: border-box;
+			}
+
+			.search {
+				box-sizing: border-box;
+				border-bottom:1px solid #EEE;
+				border-top-width: 0px;
+				display:flex;
+			}
+
+			.search input {
+				border: none;
+				width:100%;
+				box-sizing: border-box;
+				outline: none;
+				line-height:49px;
+				font-size: 16px;
+				padding:0px 30px;
+				height: 49px;
+				min-height: 49px;
+				max-height: 49px;
+				flex: 1 1 auto;
+			}
+
+			.search paper-button {
+				white-space: nowrap;
+				height:35px;
+				margin-top:7px;
+				margin-right:5px;
+				font-size:15px;
+				border:1px solid #EEE;
+				padding: 0px 10px;
+				--paper-button-ink-color: #BDBDBD;
+			}
+
+			.search iron-icon {
+				--iron-icon-height: 32px;
+				--iron-icon-width: 48px;
+				margin-right:10px;
+			}
+
+			.list {
+				padding: 20px 30px;
+			}
+
+			::-webkit-input-placeholder {
+				font-weight:300;
+				color: #BDBDBD;
+			}
+
+		</style>
+
+			<div class="search">
+				<input id="search" type="search" value="{{query::input}}" placeholder="{{localize('filter')}}" />
+				<paper-button on-click="handleRefresh">
+					<iron-icon icon="icons:autorenew"></iron-icon>
+					<span>Refresh List</span>
+				</paper-button>
+			</div>
+			<div class="list">
+				<template is="dom-repeat" items="[[list]]">
+					<drone-repo-list-item repo=[[item]] on-toggle="handleToggle"></drone-repo-list-item>
+				</template>
+			</div>
+	</template>
+
+	<script>
+		class DroneRepos extends DroneMixin(Polymer.mixinBehaviors(Polymer.LocalizationBehavior, Polymer.Element)) {
+			static get is() { return 'drone-repos'; }
+			static get properties() {
+				return {
+					repos: {
+						type: Array,
+						path: ['repos']
+					},
+					query: {
+						type: String,
+						value: ''
+					},
+					list: {
+						type: Array,
+						computed: '_computeList(repos, query)'
+					},
+					resources: {
+						value() {
+							return {
+								'en': {
+									'filter': 'Filter ...'
+								},
+								'es': {
+									'fitler': 'Filtrar ...'
+								},
+								'fr': {
+									'fitler': 'Filtre ...'
+								}
+							}
+						}
+					}
+				};
+			}
+			focus() {
+				setTimeout(()=>{
+					this.$.search.focus();
+				}, 500);
+			}
+			_computeList(repos, query) {
+				if (query === '') {
+					return repos && repos.list;
+				}
+				return repos && repos.list && repos.list.filter((repo) => {
+					return repo.full_name.indexOf(query) !== -1;
+				});
+			}
+			handleToggle(e) {
+				if (!!e.detail.repo.id) {
+					this.dispatch(deactivateRepo, {
+						name: e.detail.repo.full_name,
+					});
+				} else {
+					this.dispatch(activateRepo, {
+						name: e.detail.repo.full_name,
+					});
+				}
+			}
+			handleRefresh(e) {
+				this.dispatch(syncRepoList);
+			}
+		}
+
+		window.customElements.define(DroneRepos.is, DroneRepos);
+	</script>
+</dom-module>

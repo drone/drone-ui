@@ -1,0 +1,15 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/app-localize-behavior/app-localize-behavior.html">
+
+<script>
+	Polymer.DroneLocalizationBehavior = {
+		attached() {
+			this.language = "en";
+		}
+	};
+
+	Polymer.LocalizationBehavior = [
+		Polymer.AppLocalizeBehavior,
+		Polymer.DroneLocalizationBehavior,
+	];
+</script>
