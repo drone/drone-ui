@@ -31,9 +31,11 @@ class Term extends React.Component {
     const {proc, lines, open} = this.props;
 
     let rows = [];
-    for (var i=0;i < lines.length; i++) {
-      let line = lines[i];
-      rows.push(<TermRow line={line} key={i} />);
+    if (open) {
+      for (var i = 0; i < lines.length; i++) {
+        let line = lines[i];
+        rows.push(<TermRow line={line} key={i}/>);
+      }
     }
     if (proc.end_time && proc.end_time != 0) {
       rows.push(
