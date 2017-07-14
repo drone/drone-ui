@@ -73,7 +73,7 @@
 				</a>
 			</template>
 
-			<paper-toggle-button checked="[[_active]]" on-change="_handleChange"></paper-toggle-button>
+			<paper-toggle-button checked="[[repo.active]]" on-change="_handleChange"></paper-toggle-button>
 		</div>
 	</template>
 
@@ -84,15 +84,8 @@
 				return {
 					repo: {
 						type: Object
-					},
-					_active: {
-						type: Boolean,
-						computed: '_computeActive(repo)'
 					}
 				}
-			}
-			_computeActive(repo) {
-				return !!repo.id;
 			}
 			_handleChange() {
 				this.dispatchEvent(new CustomEvent('toggle', {

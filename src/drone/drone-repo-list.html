@@ -124,7 +124,7 @@
 				});
 			}
 			handleToggle(e) {
-				if (!!e.detail.repo.id) {
+				if (e.detail.repo.active) {
 					this.dispatch(deactivateRepo, {
 						name: e.detail.repo.full_name,
 					});
