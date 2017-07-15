@@ -32,6 +32,19 @@
 			padding:0px 20px;
 		}
 
+		.empty {
+			padding: 60px;
+			color: #9e9e9e;
+			font-size: 15px;
+			text-align: center;
+			margin-top: 80px;
+		}
+
+		.empty a {
+			text-decoration: none;
+			color: #222;
+		}
+
 		::-moz-input-placeholder {
 			color: #BDBDBD;
 			font-weight:300;
@@ -65,7 +78,9 @@
 		</template>
 
 		<template is="dom-if" if="[[_empty]]">
-			Got some sort of empty list.
+			<div class="empty">
+				<a href="/account/repos">Activate</a> your repositories to get started
+			</div>
 		</template>
 
 		<template is="dom-repeat" items="[[_list]]">
@@ -99,7 +114,7 @@
 					},
 					_empty: {
 						type: Boolean,
-						computed: '_computeEmpty(_empty)'
+						computed: '_computeEmpty(feed)'
 					},
 					resources: {
 						value() {
@@ -125,7 +140,7 @@
 				return feed.error;
 			}
 			_computeEmpty(feed) {
-				return !feed.loading && feed.data.length === 0;
+				return !feed.loading && feed.data && Object.values(feed.data).length === 0;
 			}
 			_computeList(feed, query) {
 				if (query === '') {
