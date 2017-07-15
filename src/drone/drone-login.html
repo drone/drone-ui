@@ -1,8 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 
-<link rel="import" href="../../bower_components/paper-input/paper-input.html">
-<link rel="import" href="../../bower_components/paper-button/paper-button.html">
-
 <dom-module id="drone-login">
 	<template>
 		<style>
@@ -29,13 +26,46 @@
 				color: #999;
 				margin-bottom:20px;
 			}
+
+			input {
+				border:1px solid #EEE;
+				font-size:14px;
+				padding:10px;
+				display:block;
+				width:100%;
+				margin-bottom:20px;
+				box-sizing: border-box;
+			}
+
+			button {
+				font-size:14px;
+				border:1px solid #212121;
+				border-radius:0px;
+				padding:6px 12px;
+				background:#FFF;
+				text-transform: uppercase;
+				box-sizing: border-box;
+				width:100%;
+			}
+
+			::-moz-input-placeholder {
+				color: #BDBDBD;
+				font-weight:300;
+				font-size:15px;
+			}
+
+			::-webkit-input-placeholder {
+				color: #BDBDBD;
+				font-weight:300;
+				font-size:15px;
+			}
 		</style>
 		<section>
 			<p>Login using your version control system username and password</p>
 			<form action="/authorize" method="post">
-				<paper-input name="username" label="Username"></paper-input>
-				<paper-input name="password" label="Password" type="password"></paper-input>
-				<paper-button type="submit">Submit</paper-button>
+				<input type="text" name="username" placeholder="Username" spellcheck="off"></paper-input>
+				<input type="password" name="password" placeholder="Password" type="password"></paper-input>
+				<button type="submit">Login</button>
 			</form>
 		</section>
 	</template>
