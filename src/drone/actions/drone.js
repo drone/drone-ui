@@ -10,8 +10,8 @@ class DroneClient {
 	 * Returns the user repository list.
 	 */
 	getRepoList(opts) {
-		const query = this._query(opts);
-		const endpoint = ["/api/user/repos", query].join("");
+		var query = this._query(opts);
+		var endpoint = ["/api/user/repos", query].join("");
 		return this._get(endpoint);
 	}
 
@@ -21,7 +21,7 @@ class DroneClient {
 	 * @param {string} repository name.
 	 */
 	getRepo(owner, name) {
-		const endpoint = ["/api/repos", owner, name].join("/");
+		var endpoint = ["/api/repos", owner, name].join("/");
 		return this._get(endpoint);
 	}
 
@@ -30,7 +30,7 @@ class DroneClient {
 	 * @param {string} repository name.
 	 */
 	activateRepo(repo) {
-		const endpoint = ["/api/repos", repo].join("/");
+		var endpoint = ["/api/repos", repo].join("/");
 		return this._post(endpoint);
 	}
 
@@ -39,7 +39,7 @@ class DroneClient {
 	 * @param {Object} repository object.
 	 */
 	updateRepo(repo) {
-		const endpoint = ["/api/repos", repo.owner, repo.name].join("/");
+		var endpoint = ["/api/repos", repo.owner, repo.name].join("/");
 		return this._patch(endpoint, repo);
 	}
 
@@ -48,7 +48,7 @@ class DroneClient {
 	 * @param {string} repository name.
 	 */
 	deleteRepo(repo) {
-		const endpoint = ["/api/repos", repo].join("/");
+		var endpoint = ["/api/repos", repo].join("/");
 		return this._delete(endpoint);
 	}
 
@@ -58,7 +58,7 @@ class DroneClient {
 	 * @param {Object} request options.
 	 */
 	getBuildList(repo, opts) {
-		const endpoint = ["/api/repos", repo.owner, repo.name, "builds"].join("/");
+		var endpoint = ["/api/repos", repo.owner, repo.name, "builds"].join("/");
 		return this._get(endpoint);
 	}
 
@@ -78,7 +78,7 @@ class DroneClient {
 	 * @param {number} build number.
 	 */
 	getBuild(repo, number) {
-		const endpoint = ["/api/repos", repo.owner, repo.name, "builds", number].join("/");
+		var endpoint = ["/api/repos", repo.owner, repo.name, "builds", number].join("/");
 		return this._get(endpoint);
 	}
 
@@ -89,7 +89,7 @@ class DroneClient {
 	 * @param {number} process number.
 	 */
 	cancelBuild(repo, number, ppid) {
-		const endpoint = ["/api/repos", repo, "builds", number, ppid].join("/");
+		var endpoint = ["/api/repos", repo, "builds", number, ppid].join("/");
 		return this._delete(endpoint);
 	}
 
@@ -99,7 +99,7 @@ class DroneClient {
 	 * @param {number} build number.
 	 */
 	approveBuild(repo, number) {
-		const endpoint = ["/api/repos", repo, "builds", number, "approve"].join("/");
+		var endpoint = ["/api/repos", repo, "builds", number, "approve"].join("/");
 		return this._post(endpoint);
 	}
 
@@ -109,7 +109,7 @@ class DroneClient {
 	 * @param {number} build number.
 	 */
 	declineBuild(repo, number) {
-		const endpoint = ["/api/repos", repo, "builds", number, "decline"].join("/");
+		var endpoint = ["/api/repos", repo, "builds", number, "decline"].join("/");
 		return this._post(endpoint);
 	}
 
@@ -119,7 +119,7 @@ class DroneClient {
 	 * @param {number} build number.
 	 */
 	restartBuild(repo, number) {
-		const endpoint = ["/api/repos", repo, "builds", number].join("/");
+		var endpoint = ["/api/repos", repo, "builds", number].join("/");
 		return this._post(endpoint);
 	}
 
@@ -131,7 +131,7 @@ class DroneClient {
 	 * @param {String} step name.
 	 */
 	getLogs(repo, build, proc, step) {
-		const endpoint = ["/api/repos", repo, "logs", build, proc, step].join("/");
+		var endpoint = ["/api/repos", repo, "logs", build, proc, step].join("/");
 		return this._get(endpoint)
 	}
 
@@ -139,7 +139,7 @@ class DroneClient {
 	 * Returns the repository secret list.
 	 */
 	getSecretList(owner, repo) {
-		const endpoint = ["/api/repos", owner, repo, "secrets"].join("/");
+		var endpoint = ["/api/repos", owner, repo, "secrets"].join("/");
 		return this._get(endpoint);
 	}
 
@@ -149,7 +149,7 @@ class DroneClient {
 	 * @param {number} secret details.
 	 */
 	createSecret(repo, secret) {
-		const endpoint = ["/api/repos", repo, "secrets"].join("/");
+		var endpoint = ["/api/repos", repo, "secrets"].join("/");
 		return this._post(endpoint, secret);
 	}
 
@@ -159,7 +159,7 @@ class DroneClient {
 	 * @param {number} registry address.
 	 */
 	deleteSecret(repo, secret) {
-		const endpoint = ["/api/repos", repo, "secrets", secret].join("/");
+		var endpoint = ["/api/repos", repo, "secrets", secret].join("/");
 		return this._delete(endpoint);
 	}
 
@@ -167,7 +167,7 @@ class DroneClient {
 	 * Returns the repository registry list.
 	 */
 	getRegistryList(owner, repo) {
-		const endpoint = ["/api/repos", owner, repo, "registry"].join("/");
+		var endpoint = ["/api/repos", owner, repo, "registry"].join("/");
 		return this._get(endpoint);
 	}
 
@@ -177,7 +177,7 @@ class DroneClient {
 	 * @param {number} registry details.
 	 */
 	createRegistry(repo, registry) {
-		const endpoint = ["/api/repos", repo, "registry"].join("/");
+		var endpoint = ["/api/repos", repo, "registry"].join("/");
 		return this._post(endpoint, registry);
 	}
 
@@ -187,7 +187,7 @@ class DroneClient {
 	 * @param {number} registry address.
 	 */
 	deleteRegistry(repo, address) {
-		const endpoint = ["/api/repos", repo, "registry", address].join("/");
+		var endpoint = ["/api/repos", repo, "registry", address].join("/");
 		return this._delete(endpoint);
 	}
 
@@ -213,17 +213,15 @@ class DroneClient {
 	 * @return {Object} websocket
 	 */
 	on(receiver) {
-		let endpoint = [this.server, "/ws/feed"].join("")
-						.replace("http://", "ws://")
-						.replace("https://", "wss://");
-
+		var endpoint = [this.server, "/stream/events"].join("");
 		endpoint = this.token ? endpoint+'?access_token='+this.token : endpoint;
-		let ws = new WebSocket(endpoint);
-		ws.onmessage = function(message) {
-			const data = JSON.parse(message.data);
+
+		var events = new EventSource(endpoint);
+		events.onmessage = function(event) {
+			var data = JSON.parse(event.data);
 			receiver(data);
-		};
-		return ws;
+		}
+		return events;
 	}
 
 	/*
