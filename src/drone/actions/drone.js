@@ -232,8 +232,20 @@ class DroneClient {
 	 * @return {Object} websocket
 	 */
 	stream(repo, build, proc, receiver) {
-		var endpoint = ["/ws/logs", repo, build, proc].join("/")
-		return this._ws(endpoint, receiver);
+		var endpoint = ["/stream/logs", repo, build, proc].join("/");
+		endpoint = this.token ? endpoint+'?access_token='+this.token : endpoint;
+
+		var events = new EventSource(endpoint);
+		events.onerror = function(err) {
+			if (err.data === 'eof') {
+				events.close();
+			}
+		}
+		events.onmessage = function(event) {
+			var data = JSON.parse(event.data);
+			receiver(data);
+		}
+		return events;
 	}
 
 	/**
@@ -282,26 +294,6 @@ class DroneClient {
 	 */
 	_delete(path) {
 		return this._request("DELETE", path, null);
-	}
-
-	/**
-	 * Subscribes to a websocket stream and emits events to the
-	 * callback receiver.
-	 *
-	 * @private
-	 * @param {string} request path.
-	 * @param {Function} callback function.
-	*/
-	_ws(path, receiver) {
-		var endpoint = [this.server, path].join("");
-		endpoint = endpoint.replace("http://", "ws://").replace("https://", "wss://");
-		endpoint = this.token ? endpoint+'?access_token='+this.token : endpoint;
-		var ws = new WebSocket(endpoint);
-		ws.onmessage = function(message) {
-			const data = JSON.parse(message.data);
-			receiver(data);
-		};
-		return ws;
 	}
 
 	/**
