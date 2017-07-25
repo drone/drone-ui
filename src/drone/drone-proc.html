@@ -147,6 +147,9 @@
 						<div class="alert alert-exception">[[build.proc.data.error]]</div>
 					</template>
 
+					<template is="dom-if" if=[[build.proc.parent.error]]>
+						<div class="alert alert-exception">[[build.proc.parent.error]]</div>
+					</template>
 
 					<template is="dom-if" if=[[_loading]]>
 						<div class="term" style="text-align: center;">

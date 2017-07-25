@@ -117,7 +117,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "ansi_up.js",
 					size:    11014,
-					modTime: time.Unix(1500957847, 0),
+					modTime: time.Unix(1501004464, 0),
 				},
 			},
 			"/bower_components/app-layout/app-box/app-box.html": {
@@ -125,7 +125,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "app-box.html",
 					size:    6950,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/app-layout/app-drawer/app-drawer.html": {
@@ -133,7 +133,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "app-drawer.html",
 					size:    20155,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/app-layout/app-drawer-layout/app-drawer-layout.html": {
@@ -141,7 +141,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "app-drawer-layout.html",
 					size:    8205,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/app-layout/app-grid/app-grid-style.html": {
@@ -149,7 +149,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "app-grid-style.html",
 					size:    6403,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/app-layout/app-header/app-header.html": {
@@ -157,7 +157,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "app-header.html",
 					size:    20844,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/app-layout/app-header-layout/app-header-layout.html": {
@@ -165,7 +165,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "app-header-layout.html",
 					size:    6447,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/app-layout/app-layout-behavior/app-layout-behavior.html": {
@@ -173,7 +173,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "app-layout-behavior.html",
 					size:    2678,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/app-layout/app-layout.html": {
@@ -181,7 +181,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "app-layout.html",
 					size:    964,
-					modTime: time.Unix(1500957850, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/app-layout/app-scroll-effects/app-scroll-effects-behavior.html": {
@@ -189,7 +189,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "app-scroll-effects-behavior.html",
 					size:    12053,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/app-layout/app-toolbar/app-toolbar.html": {
@@ -197,7 +197,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "app-toolbar.html",
 					size:    3121,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/app-layout/helpers/helpers.html": {
@@ -205,7 +205,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "helpers.html",
 					size:    5381,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/app-localize-behavior/app-localize-behavior.html": {
@@ -213,7 +213,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "app-localize-behavior.html",
 					size:    8265,
-					modTime: time.Unix(1500957848, 0),
+					modTime: time.Unix(1501004466, 0),
 				},
 			},
 			"/bower_components/app-route/app-location.html": {
@@ -221,7 +221,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "app-location.html",
 					size:    6528,
-					modTime: time.Unix(1500957848, 0),
+					modTime: time.Unix(1501004465, 0),
 				},
 			},
 			"/bower_components/app-route/app-route-converter-behavior.html": {
@@ -229,7 +229,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "app-route-converter-behavior.html",
 					size:    3238,
-					modTime: time.Unix(1500957849, 0),
+					modTime: time.Unix(1501004467, 0),
 				},
 			},
 			"/bower_components/baobab/build/baobab.min.js": {
@@ -237,7 +237,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "baobab.min.js",
 					size:    33647,
-					modTime: time.Unix(1500957847, 0),
+					modTime: time.Unix(1501004464, 0),
 				},
 			},
 			"/bower_components/font-roboto/roboto.html": {
@@ -245,7 +245,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "roboto.html",
 					size:    690,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/humanize-duration/humanize-duration.js": {
@@ -253,7 +253,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "humanize-duration.js",
 					size:    20423,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/intl-messageformat/dist/intl-messageformat.min.js": {
@@ -261,7 +261,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "intl-messageformat.min.js",
 					size:    16323,
-					modTime: time.Unix(1500957849, 0),
+					modTime: time.Unix(1501004467, 0),
 				},
 			},
 			"/bower_components/iron-a11y-announcer/iron-a11y-announcer.html": {
@@ -269,7 +269,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "iron-a11y-announcer.html",
 					size:    3369,
-					modTime: time.Unix(1500957849, 0),
+					modTime: time.Unix(1501004467, 0),
 				},
 			},
 			"/bower_components/iron-a11y-keys-behavior/iron-a11y-keys-behavior.html": {
@@ -277,7 +277,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "iron-a11y-keys-behavior.html",
 					size:    15900,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/iron-ajax/iron-ajax.html": {
@@ -285,7 +285,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "iron-ajax.html",
 					size:    15368,
-					modTime: time.Unix(1500957849, 0),
+					modTime: time.Unix(1501004467, 0),
 				},
 			},
 			"/bower_components/iron-ajax/iron-request.html": {
@@ -293,7 +293,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "iron-request.html",
 					size:    13826,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html": {
@@ -301,7 +301,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "iron-autogrow-textarea.html",
 					size:    10053,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/iron-behaviors/iron-button-state.html": {
@@ -309,7 +309,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "iron-button-state.html",
 					size:    6191,
-					modTime: time.Unix(1500957850, 0),
+					modTime: time.Unix(1501004468, 0),
 				},
 			},
 			"/bower_components/iron-behaviors/iron-control-state.html": {
@@ -317,7 +317,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "iron-control-state.html",
 					size:    3472,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/iron-checked-element-behavior/iron-checked-element-behavior.html": {
@@ -325,7 +325,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "iron-checked-element-behavior.html",
 					size:    3575,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/iron-fit-behavior/iron-fit-behavior.html": {
@@ -333,7 +333,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "iron-fit-behavior.html",
 					size:    21214,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004468, 0),
 				},
 			},
 			"/bower_components/iron-flex-layout/iron-flex-layout.html": {
@@ -341,7 +341,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "iron-flex-layout.html",
 					size:    9972,
-					modTime: time.Unix(1500957849, 0),
+					modTime: time.Unix(1501004467, 0),
 				},
 			},
 			"/bower_components/iron-form-element-behavior/iron-form-element-behavior.html": {
@@ -349,7 +349,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "iron-form-element-behavior.html",
 					size:    2457,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/iron-icon/iron-icon.html": {
@@ -357,7 +357,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "iron-icon.html",
 					size:    6231,
-					modTime: time.Unix(1500957850, 0),
+					modTime: time.Unix(1501004468, 0),
 				},
 			},
 			"/bower_components/iron-icons/communication-icons.html": {
@@ -365,7 +365,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "communication-icons.html",
 					size:    13414,
-					modTime: time.Unix(1500957850, 0),
+					modTime: time.Unix(1501004468, 0),
 				},
 			},
 			"/bower_components/iron-icons/device-icons.html": {
@@ -373,7 +373,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "device-icons.html",
 					size:    20586,
-					modTime: time.Unix(1500957849, 0),
+					modTime: time.Unix(1501004467, 0),
 				},
 			},
 			"/bower_components/iron-icons/hardware-icons.html": {
@@ -381,7 +381,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "hardware-icons.html",
 					size:    9948,
-					modTime: time.Unix(1500957850, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/iron-icons/image-icons.html": {
@@ -389,7 +389,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "image-icons.html",
 					size:    46462,
-					modTime: time.Unix(1500957849, 0),
+					modTime: time.Unix(1501004467, 0),
 				},
 			},
 			"/bower_components/iron-icons/iron-icons.html": {
@@ -397,7 +397,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "iron-icons.html",
 					size:    75611,
-					modTime: time.Unix(1500957848, 0),
+					modTime: time.Unix(1501004466, 0),
 				},
 			},
 			"/bower_components/iron-icons/maps-icons.html": {
@@ -405,7 +405,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "maps-icons.html",
 					size:    19000,
-					modTime: time.Unix(1500957848, 0),
+					modTime: time.Unix(1501004466, 0),
 				},
 			},
 			"/bower_components/iron-icons/social-icons.html": {
@@ -413,7 +413,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "social-icons.html",
 					size:    10241,
-					modTime: time.Unix(1500957850, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/iron-iconset-svg/iron-iconset-svg.html": {
@@ -421,7 +421,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "iron-iconset-svg.html",
 					size:    8280,
-					modTime: time.Unix(1500957850, 0),
+					modTime: time.Unix(1501004468, 0),
 				},
 			},
 			"/bower_components/iron-input/iron-input.html": {
@@ -429,7 +429,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "iron-input.html",
 					size:    12353,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/iron-location/iron-location.html": {
@@ -437,7 +437,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "iron-location.html",
 					size:    12471,
-					modTime: time.Unix(1500957849, 0),
+					modTime: time.Unix(1501004467, 0),
 				},
 			},
 			"/bower_components/iron-location/iron-query-params.html": {
@@ -445,7 +445,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "iron-query-params.html",
 					size:    2559,
-					modTime: time.Unix(1500957849, 0),
+					modTime: time.Unix(1501004467, 0),
 				},
 			},
 			"/bower_components/iron-media-query/iron-media-query.html": {
@@ -453,7 +453,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "iron-media-query.html",
 					size:    2720,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/iron-menu-behavior/iron-menu-behavior.html": {
@@ -461,7 +461,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "iron-menu-behavior.html",
 					size:    12373,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/iron-menu-behavior/iron-menubar-behavior.html": {
@@ -469,7 +469,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "iron-menubar-behavior.html",
 					size:    2119,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/iron-meta/iron-meta.html": {
@@ -477,7 +477,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "iron-meta.html",
 					size:    5007,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/iron-overlay-behavior/iron-focusables-helper.html": {
@@ -485,7 +485,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "iron-focusables-helper.html",
 					size:    8578,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/iron-overlay-behavior/iron-overlay-backdrop.html": {
@@ -493,7 +493,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "iron-overlay-backdrop.html",
 					size:    4392,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/iron-overlay-behavior/iron-overlay-behavior.html": {
@@ -501,7 +501,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "iron-overlay-behavior.html",
 					size:    20561,
-					modTime: time.Unix(1500957849, 0),
+					modTime: time.Unix(1501004467, 0),
 				},
 			},
 			"/bower_components/iron-overlay-behavior/iron-overlay-manager.html": {
@@ -509,7 +509,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "iron-overlay-manager.html",
 					size:    10897,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/iron-pages/iron-pages.html": {
@@ -517,7 +517,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "iron-pages.html",
 					size:    2179,
-					modTime: time.Unix(1500957847, 0),
+					modTime: time.Unix(1501004465, 0),
 				},
 			},
 			"/bower_components/iron-resizable-behavior/iron-resizable-behavior.html": {
@@ -525,7 +525,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "iron-resizable-behavior.html",
 					size:    7259,
-					modTime: time.Unix(1500957848, 0),
+					modTime: time.Unix(1501004466, 0),
 				},
 			},
 			"/bower_components/iron-scroll-target-behavior/iron-scroll-target-behavior.html": {
@@ -533,7 +533,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "iron-scroll-target-behavior.html",
 					size:    7298,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/iron-selector/iron-multi-selectable.html": {
@@ -541,7 +541,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "iron-multi-selectable.html",
 					size:    4731,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/iron-selector/iron-selectable.html": {
@@ -549,7 +549,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "iron-selectable.html",
 					size:    11383,
-					modTime: time.Unix(1500957849, 0),
+					modTime: time.Unix(1501004467, 0),
 				},
 			},
 			"/bower_components/iron-selector/iron-selection.html": {
@@ -557,7 +557,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "iron-selection.html",
 					size:    3449,
-					modTime: time.Unix(1500957850, 0),
+					modTime: time.Unix(1501004468, 0),
 				},
 			},
 			"/bower_components/iron-selector/iron-selector.html": {
@@ -565,7 +565,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "iron-selector.html",
 					size:    2549,
-					modTime: time.Unix(1500957850, 0),
+					modTime: time.Unix(1501004468, 0),
 				},
 			},
 			"/bower_components/iron-validatable-behavior/iron-validatable-behavior.html": {
@@ -573,7 +573,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "iron-validatable-behavior.html",
 					size:    4587,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/page-title/page-title.html": {
@@ -581,7 +581,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "page-title.html",
 					size:    2406,
-					modTime: time.Unix(1500957848, 0),
+					modTime: time.Unix(1501004466, 0),
 				},
 			},
 			"/bower_components/paper-behaviors/paper-button-behavior.html": {
@@ -589,7 +589,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "paper-button-behavior.html",
 					size:    2946,
-					modTime: time.Unix(1500957849, 0),
+					modTime: time.Unix(1501004467, 0),
 				},
 			},
 			"/bower_components/paper-behaviors/paper-checked-element-behavior.html": {
@@ -597,7 +597,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "paper-checked-element-behavior.html",
 					size:    2012,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/paper-behaviors/paper-inky-focus-behavior.html": {
@@ -605,7 +605,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "paper-inky-focus-behavior.html",
 					size:    1690,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/paper-behaviors/paper-ripple-behavior.html": {
@@ -613,7 +613,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "paper-ripple-behavior.html",
 					size:    4068,
-					modTime: time.Unix(1500957850, 0),
+					modTime: time.Unix(1501004468, 0),
 				},
 			},
 			"/bower_components/paper-button/paper-button.html": {
@@ -621,7 +621,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "paper-button.html",
 					size:    6203,
-					modTime: time.Unix(1500957847, 0),
+					modTime: time.Unix(1501004465, 0),
 				},
 			},
 			"/bower_components/paper-checkbox/paper-checkbox.html": {
@@ -629,7 +629,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "paper-checkbox.html",
 					size:    11283,
-					modTime: time.Unix(1500957850, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/paper-drawer-panel/paper-drawer-panel.html": {
@@ -637,7 +637,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "paper-drawer-panel.html",
 					size:    23611,
-					modTime: time.Unix(1500957850, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/paper-icon-button/paper-icon-button.html": {
@@ -645,7 +645,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "paper-icon-button.html",
 					size:    5519,
-					modTime: time.Unix(1500957850, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/paper-input/paper-input-addon-behavior.html": {
@@ -653,7 +653,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "paper-input-addon-behavior.html",
 					size:    1518,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/paper-input/paper-input-behavior.html": {
@@ -661,7 +661,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "paper-input-behavior.html",
 					size:    17990,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/paper-input/paper-input-char-counter.html": {
@@ -669,7 +669,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "paper-input-char-counter.html",
 					size:    2643,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/paper-input/paper-input-container.html": {
@@ -677,7 +677,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "paper-input-container.html",
 					size:    21990,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/paper-input/paper-input-error.html": {
@@ -685,7 +685,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "paper-input-error.html",
 					size:    2665,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/paper-input/paper-input.html": {
@@ -693,7 +693,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "paper-input.html",
 					size:    9497,
-					modTime: time.Unix(1500957850, 0),
+					modTime: time.Unix(1501004468, 0),
 				},
 			},
 			"/bower_components/paper-input/paper-textarea.html": {
@@ -701,7 +701,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "paper-textarea.html",
 					size:    4108,
-					modTime: time.Unix(1500957850, 0),
+					modTime: time.Unix(1501004468, 0),
 				},
 			},
 			"/bower_components/paper-item/paper-item-behavior.html": {
@@ -709,7 +709,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "paper-item-behavior.html",
 					size:    1209,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/paper-item/paper-item-shared-styles.html": {
@@ -717,7 +717,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "paper-item-shared-styles.html",
 					size:    2055,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/paper-item/paper-item.html": {
@@ -725,7 +725,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "paper-item.html",
 					size:    4018,
-					modTime: time.Unix(1500957850, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/paper-radio-button/paper-radio-button.html": {
@@ -733,7 +733,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "paper-radio-button.html",
 					size:    8531,
-					modTime: time.Unix(1500957850, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/paper-radio-group/paper-radio-group.html": {
@@ -741,7 +741,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "paper-radio-group.html",
 					size:    5112,
-					modTime: time.Unix(1500957850, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/paper-ripple/paper-ripple.html": {
@@ -749,7 +749,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "paper-ripple.html",
 					size:    20596,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/paper-styles/color.html": {
@@ -757,7 +757,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "color.html",
 					size:    10951,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/paper-styles/default-theme.html": {
@@ -765,7 +765,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "default-theme.html",
 					size:    2894,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/paper-styles/element-styles/paper-material-styles.html": {
@@ -773,7 +773,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "paper-material-styles.html",
 					size:    2527,
-					modTime: time.Unix(1500957849, 0),
+					modTime: time.Unix(1501004467, 0),
 				},
 			},
 			"/bower_components/paper-styles/shadow.html": {
@@ -781,7 +781,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "shadow.html",
 					size:    2560,
-					modTime: time.Unix(1500957850, 0),
+					modTime: time.Unix(1501004468, 0),
 				},
 			},
 			"/bower_components/paper-styles/typography.html": {
@@ -789,7 +789,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "typography.html",
 					size:    4410,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/paper-toast/paper-toast.html": {
@@ -797,7 +797,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "paper-toast.html",
 					size:    9590,
-					modTime: time.Unix(1500957847, 0),
+					modTime: time.Unix(1501004465, 0),
 				},
 			},
 			"/bower_components/paper-toggle-button/paper-toggle-button.html": {
@@ -805,7 +805,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "paper-toggle-button.html",
 					size:    9681,
-					modTime: time.Unix(1500957850, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/polymer/lib/elements/array-selector.html": {
@@ -813,7 +813,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "array-selector.html",
 					size:    13488,
-					modTime: time.Unix(1500957850, 0),
+					modTime: time.Unix(1501004468, 0),
 				},
 			},
 			"/bower_components/polymer/lib/elements/custom-style.html": {
@@ -821,7 +821,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "custom-style.html",
 					size:    2737,
-					modTime: time.Unix(1500957850, 0),
+					modTime: time.Unix(1501004468, 0),
 				},
 			},
 			"/bower_components/polymer/lib/elements/dom-bind.html": {
@@ -829,7 +829,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "dom-bind.html",
 					size:    4247,
-					modTime: time.Unix(1500957850, 0),
+					modTime: time.Unix(1501004468, 0),
 				},
 			},
 			"/bower_components/polymer/lib/elements/dom-if.html": {
@@ -837,7 +837,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "dom-if.html",
 					size:    9448,
-					modTime: time.Unix(1500957850, 0),
+					modTime: time.Unix(1501004468, 0),
 				},
 			},
 			"/bower_components/polymer/lib/elements/dom-module.html": {
@@ -845,7 +845,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "dom-module.html",
 					size:    4733,
-					modTime: time.Unix(1500957849, 0),
+					modTime: time.Unix(1501004467, 0),
 				},
 			},
 			"/bower_components/polymer/lib/elements/dom-repeat.html": {
@@ -853,7 +853,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "dom-repeat.html",
 					size:    25131,
-					modTime: time.Unix(1500957848, 0),
+					modTime: time.Unix(1501004466, 0),
 				},
 			},
 			"/bower_components/polymer/lib/legacy/class.html": {
@@ -861,7 +861,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "class.html",
 					size:    13428,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/polymer/lib/legacy/legacy-element-mixin.html": {
@@ -869,7 +869,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "legacy-element-mixin.html",
 					size:    33825,
-					modTime: time.Unix(1500957850, 0),
+					modTime: time.Unix(1501004468, 0),
 				},
 			},
 			"/bower_components/polymer/lib/legacy/mutable-data-behavior.html": {
@@ -877,7 +877,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "mutable-data-behavior.html",
 					size:    6910,
-					modTime: time.Unix(1500957850, 0),
+					modTime: time.Unix(1501004468, 0),
 				},
 			},
 			"/bower_components/polymer/lib/legacy/polymer-fn.html": {
@@ -885,7 +885,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "polymer-fn.html",
 					size:    1620,
-					modTime: time.Unix(1500957850, 0),
+					modTime: time.Unix(1501004468, 0),
 				},
 			},
 			"/bower_components/polymer/lib/legacy/polymer.dom.html": {
@@ -893,7 +893,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "polymer.dom.html",
 					size:    10030,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/polymer/lib/legacy/templatizer-behavior.html": {
@@ -901,7 +901,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "templatizer-behavior.html",
 					size:    6215,
-					modTime: time.Unix(1500957850, 0),
+					modTime: time.Unix(1501004468, 0),
 				},
 			},
 			"/bower_components/polymer/lib/mixins/element-mixin.html": {
@@ -909,7 +909,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "element-mixin.html",
 					size:    33554,
-					modTime: time.Unix(1500957848, 0),
+					modTime: time.Unix(1501004466, 0),
 				},
 			},
 			"/bower_components/polymer/lib/mixins/gesture-event-listeners.html": {
@@ -917,7 +917,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "gesture-event-listeners.html",
 					size:    2063,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/polymer/lib/mixins/mutable-data.html": {
@@ -925,7 +925,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "mutable-data.html",
 					size:    8349,
-					modTime: time.Unix(1500957849, 0),
+					modTime: time.Unix(1501004468, 0),
 				},
 			},
 			"/bower_components/polymer/lib/mixins/property-accessors.html": {
@@ -933,7 +933,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "property-accessors.html",
 					size:    22315,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/polymer/lib/mixins/property-effects.html": {
@@ -941,7 +941,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "property-effects.html",
 					size:    103871,
-					modTime: time.Unix(1500957849, 0),
+					modTime: time.Unix(1501004467, 0),
 				},
 			},
 			"/bower_components/polymer/lib/mixins/template-stamp.html": {
@@ -949,7 +949,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "template-stamp.html",
 					size:    20023,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/polymer/lib/utils/array-splice.html": {
@@ -957,7 +957,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "array-splice.html",
 					size:    10067,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/polymer/lib/utils/async.html": {
@@ -965,7 +965,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "async.html",
 					size:    6530,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/polymer/lib/utils/boot.html": {
@@ -973,7 +973,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "boot.html",
 					size:    2681,
-					modTime: time.Unix(1500957849, 0),
+					modTime: time.Unix(1501004467, 0),
 				},
 			},
 			"/bower_components/polymer/lib/utils/case-map.html": {
@@ -981,7 +981,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "case-map.html",
 					size:    1921,
-					modTime: time.Unix(1500957849, 0),
+					modTime: time.Unix(1501004467, 0),
 				},
 			},
 			"/bower_components/polymer/lib/utils/debounce.html": {
@@ -989,7 +989,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "debounce.html",
 					size:    3864,
-					modTime: time.Unix(1500957849, 0),
+					modTime: time.Unix(1501004468, 0),
 				},
 			},
 			"/bower_components/polymer/lib/utils/flattened-nodes-observer.html": {
@@ -997,7 +997,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "flattened-nodes-observer.html",
 					size:    8834,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/polymer/lib/utils/flush.html": {
@@ -1005,7 +1005,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "flush.html",
 					size:    1691,
-					modTime: time.Unix(1500957849, 0),
+					modTime: time.Unix(1501004468, 0),
 				},
 			},
 			"/bower_components/polymer/lib/utils/gestures.html": {
@@ -1013,7 +1013,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "gestures.html",
 					size:    28789,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/polymer/lib/utils/import-href.html": {
@@ -1021,7 +1021,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "import-href.html",
 					size:    3807,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/polymer/lib/utils/mixin.html": {
@@ -1029,7 +1029,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "mixin.html",
 					size:    2527,
-					modTime: time.Unix(1500957849, 0),
+					modTime: time.Unix(1501004467, 0),
 				},
 			},
 			"/bower_components/polymer/lib/utils/path.html": {
@@ -1037,7 +1037,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "path.html",
 					size:    8335,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/polymer/lib/utils/render-status.html": {
@@ -1045,7 +1045,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "render-status.html",
 					size:    3837,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/polymer/lib/utils/resolve-url.html": {
@@ -1053,7 +1053,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "resolve-url.html",
 					size:    3389,
-					modTime: time.Unix(1500957849, 0),
+					modTime: time.Unix(1501004467, 0),
 				},
 			},
 			"/bower_components/polymer/lib/utils/settings.html": {
@@ -1061,7 +1061,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "settings.html",
 					size:    2026,
-					modTime: time.Unix(1500957849, 0),
+					modTime: time.Unix(1501004467, 0),
 				},
 			},
 			"/bower_components/polymer/lib/utils/style-gather.html": {
@@ -1069,7 +1069,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "style-gather.html",
 					size:    5361,
-					modTime: time.Unix(1500957849, 0),
+					modTime: time.Unix(1501004467, 0),
 				},
 			},
 			"/bower_components/polymer/lib/utils/templatize.html": {
@@ -1077,7 +1077,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "templatize.html",
 					size:    21809,
-					modTime: time.Unix(1500957849, 0),
+					modTime: time.Unix(1501004467, 0),
 				},
 			},
 			"/bower_components/polymer/lib/utils/unresolved.html": {
@@ -1085,7 +1085,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "unresolved.html",
 					size:    951,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/polymer/polymer-element.html": {
@@ -1093,7 +1093,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "polymer-element.html",
 					size:    1425,
-					modTime: time.Unix(1500957847, 0),
+					modTime: time.Unix(1501004465, 0),
 				},
 			},
 			"/bower_components/polymer/polymer.html": {
@@ -1101,7 +1101,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "polymer.html",
 					size:    1205,
-					modTime: time.Unix(1500957848, 0),
+					modTime: time.Unix(1501004466, 0),
 				},
 			},
 			"/bower_components/polymer-baobab/polymer-baobab.html": {
@@ -1109,7 +1109,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "polymer-baobab.html",
 					size:    1352,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/shadycss/apply-shim.html": {
@@ -1117,7 +1117,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "apply-shim.html",
 					size:    554,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/shadycss/apply-shim.min.js": {
@@ -1125,7 +1125,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "apply-shim.min.js",
 					size:    9153,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/shadycss/custom-style-interface.html": {
@@ -1133,7 +1133,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "custom-style-interface.html",
 					size:    566,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/shadycss/custom-style-interface.min.js": {
@@ -1141,7 +1141,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "custom-style-interface.min.js",
 					size:    2708,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/bower_components/webcomponentsjs/custom-elements-es5-adapter.js": {
@@ -1229,7 +1229,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "index.html",
 					size:    1299,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/actions/drone-actions.html": {
@@ -1237,7 +1237,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "drone-actions.html",
 					size:    5043,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/actions/drone-build-actions.html": {
@@ -1245,7 +1245,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "drone-build-actions.html",
 					size:    2939,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/actions/drone-log-actions.html": {
@@ -1253,7 +1253,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "drone-log-actions.html",
 					size:    21,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/actions/drone-page-actions.html": {
@@ -1261,7 +1261,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "drone-page-actions.html",
 					size:    20,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/actions/drone-registry-actions.html": {
@@ -1269,7 +1269,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "drone-registry-actions.html",
 					size:    1094,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/actions/drone-repo-actions.html": {
@@ -1277,7 +1277,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "drone-repo-actions.html",
 					size:    2999,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/actions/drone-secret-actions.html": {
@@ -1285,7 +1285,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "drone-secret-actions.html",
 					size:    1230,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/actions/drone-user-actions.html": {
@@ -1293,7 +1293,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "drone-user-actions.html",
 					size:    20,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/actions/drone.js": {
@@ -1309,7 +1309,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "drone-app.html",
 					size:    4246,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/drone-badges.html": {
@@ -1317,7 +1317,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "drone-badges.html",
 					size:    1891,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/drone-build-card.html": {
@@ -1325,7 +1325,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "drone-build-card.html",
 					size:    3963,
-					modTime: time.Unix(1500957851, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/drone-build-item.html": {
@@ -1333,7 +1333,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "drone-build-item.html",
 					size:    3535,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/drone-build.html": {
@@ -1341,7 +1341,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "drone-build.html",
 					size:    4868,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/drone-builds.html": {
@@ -1349,7 +1349,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "drone-builds.html",
 					size:    1785,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/drone-error.html": {
@@ -1357,7 +1357,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "drone-error.html",
 					size:    1367,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/drone-feed-item.html": {
@@ -1365,7 +1365,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "drone-feed-item.html",
 					size:    3037,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/drone-feed.html": {
@@ -1373,7 +1373,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "drone-feed.html",
 					size:    3088,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/drone-locale.html": {
@@ -1381,7 +1381,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "drone-locale.html",
 					size:    392,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/drone-login.html": {
@@ -1389,7 +1389,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "drone-login.html",
 					size:    1714,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/drone-matrix-item.html": {
@@ -1397,7 +1397,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "drone-matrix-item.html",
 					size:    1876,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/drone-matrix.html": {
@@ -1405,7 +1405,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "drone-matrix.html",
 					size:    945,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/drone-proc-card.html": {
@@ -1413,7 +1413,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "drone-proc-card.html",
 					size:    3870,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/drone-proc-list-item.html": {
@@ -1421,7 +1421,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "drone-proc-list-item.html",
 					size:    2594,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/drone-proc-list.html": {
@@ -1429,15 +1429,15 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "drone-proc-list.html",
 					size:    968,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/drone-proc.html": {
 				data: file165,
 				FileInfo: &fileInfo{
 					name:    "drone-proc.html",
-					size:    7181,
-					modTime: time.Unix(1500957852, 0),
+					size:    7334,
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/drone-registry.html": {
@@ -1445,7 +1445,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "drone-registry.html",
 					size:    3882,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/drone-repo-list-item.html": {
@@ -1453,7 +1453,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "drone-repo-list-item.html",
 					size:    2112,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/drone-repo-list.html": {
@@ -1461,7 +1461,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "drone-repo-list.html",
 					size:    3086,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/drone-repo-menu.html": {
@@ -1469,7 +1469,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "drone-repo-menu.html",
 					size:    2246,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/drone-repo-settings.html": {
@@ -1477,7 +1477,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "drone-repo-settings.html",
 					size:    4726,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/drone-repo.html": {
@@ -1485,7 +1485,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "drone-repo.html",
 					size:    12985,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/drone-secrets.html": {
@@ -1493,7 +1493,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "drone-secrets.html",
 					size:    5386,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/drone-state.html": {
@@ -1501,7 +1501,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "drone-state.html",
 					size:    5325,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/drone-status.html": {
@@ -1509,7 +1509,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "drone-status.html",
 					size:    2366,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/drone-theme.html": {
@@ -1517,7 +1517,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "drone-theme.html",
 					size:    4727,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/drone-token.html": {
@@ -1525,7 +1525,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "drone-token.html",
 					size:    1567,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/dummy-feed.html": {
@@ -1533,7 +1533,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "dummy-feed.html",
 					size:    2688,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/elements/app-route.html": {
@@ -1541,7 +1541,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "app-route.html",
 					size:    1555,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/elements/app-router.html": {
@@ -1549,7 +1549,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "app-router.html",
 					size:    1338,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/elements/time-duration.html": {
@@ -1557,7 +1557,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "time-duration.html",
 					size:    699,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/elements/time-since.html": {
@@ -1565,7 +1565,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "time-since.html",
 					size:    2552,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 			"/src/drone/elements/time-timer.html": {
@@ -1573,7 +1573,7 @@ func New() http.FileSystem {
 				FileInfo: &fileInfo{
 					name:    "time-timer.html",
 					size:    1342,
-					modTime: time.Unix(1500957852, 0),
+					modTime: time.Unix(1501004469, 0),
 				},
 			},
 		},
@@ -43737,8 +43737,6 @@ var file165 = []byte(`<link rel="import" href="../../bower_components/polymer/po
 			color: #212121;
 			font-size: 12px;
 			line-height: 19px;
-			white-space: pre-wrap;
-			word-wrap: break-word;
 			font-family: Roboto Mono,monospace;
 			display: flex;
 			max-width:100%;
@@ -43753,6 +43751,8 @@ var file165 = []byte(`<link rel="import" href="../../bower_components/polymer/po
 		.term-row>div:nth-child(2) {
 			flex: 1 1 auto;
 			min-width: 0;
+			white-space: pre-wrap;
+			word-wrap: break-word;
 		}
 		.term-row>div:last-child {
 			padding-left: 20px;
@@ -43834,6 +43834,9 @@ var file165 = []byte(`<link rel="import" href="../../bower_components/polymer/po
 						<div class="alert alert-exception">[[build.proc.data.error]]</div>
 					</template>
 
+					<template is="dom-if" if="[[build.proc.parent.error]]">
+						<div class="alert alert-exception">[[build.proc.parent.error]]</div>
+					</template>
 
 					<template is="dom-if" if="[[_loading]]">
 						<div class="term" style="text-align: center;">
