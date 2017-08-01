@@ -244,14 +244,27 @@
 					}
 				};
 			}
+
 			_procChanged(newValue, oldValue) {
 				if (newValue && newValue.state === 'running') {
-					if (oldValue && oldValue.state === 'running' && oldValue.pid === newValue.pid) {
+					if (oldValue && oldValue.state === 'running' && oldValue.id === newValue.id) {
 						return; // do nothing
 					}
 					this.dispatch(subscribeLogs, {
 						repo: this.repo.data,
 						build: this.build.data,
+						proc: newValue,
+					});
+				} else if (
+					newValue &&
+					newValue.state !== 'running' &&
+					newValue.state !== 'pending' &&
+					this.route.data
+				) {
+					// HACK
+					this.dispatch(requestLogs, {
+						repo: {full_name: this.route.data.owner+'/'+this.route.data.repo},
+						build: {number: this.route.data.build },
 						proc: newValue,
 					});
 				}

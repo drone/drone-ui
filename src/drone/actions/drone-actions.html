@@ -23,6 +23,10 @@ function hideToken(tree) {
 function updateRoute(tree, route) {
 	// const route = { name: event.name, path: event.path, data: event.data };
 
+	tree.set(['route', 'name'], route.name );
+	tree.set(['route', 'data'], route.data );
+	tree.set(['route', 'path'], route.path );
+
 	// loads the selected repository
 	switch (route.name) {
 	case 'settings':
@@ -63,7 +67,7 @@ function updateRoute(tree, route) {
 		requestRegistryList(tree, route.data);
 		break;
 	case 'proc':
-		requestLogs(tree, route.data);
+		// requestLogs(tree, route.data);
 		break;
 	case 'repos':
 		requestRepoList(tree);
@@ -75,9 +79,7 @@ function updateRoute(tree, route) {
 		break;
 	}
 
-	tree.set(['route', 'name'], route.name );
-	tree.set(['route', 'data'], route.data );
-	tree.set(['route', 'path'], route.path );
+
 
 	// request the default feed on initialization.
 	requestFeed(tree);
@@ -164,12 +166,12 @@ function requestToken() {
 
 
 function requestLogs(tree, data) {
-	const {owner, repo, build, proc, step} = data;
+	const {repo, build, proc} = data;
 	const opts = {use_classes: true};
 
 	tree.set(['logs', 'loading'], true);
 	tree.set(['logs', 'data'], []);
-	client.getLogs(owner+'/'+repo, build, proc, step).then((results) => {
+	client.getLogs(repo.full_name, build.number, proc.ppid, proc.name).then((results) => {
 		results.map((item) => {
 			if (item.out) {
 				item.pos = item.pos+1;
