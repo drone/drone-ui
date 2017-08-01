@@ -1,18 +1,25 @@
 {
-  "shell": "src/drone/drone-app.html",
-  "fragments": [
+	"lint": {
+		"rules": [
+			"polymer-2"
+		]
+	},
+	"entrypoint": "index.html",
+	"shell": "src/drone/drone-app.html",
+	"fragments": [
 
-  ],
-  "extraDependencies": [
-    "favicon-16x16.png",
-    "favicon-32x32.png"
-  ],
-  "lint": {
-    "rules": [
-      "polymer-2"
-    ],
-    "ignoreWarnings": [
-
-    ]
-  }
+	],
+	"extraDependencies": [
+		"favicon-16x16.png",
+		"favicon-32x32.png"
+	],
+	"builds": [{
+		"bundle": true,
+		"js": {"minify": false, "compile": false},
+		"css": {"minify": false},
+		"html": {"minify": false},
+		"addServiceWorker": false,
+		"addPushManifest": false,
+		"insertPrefetchLinks": false
+	}]
 }
