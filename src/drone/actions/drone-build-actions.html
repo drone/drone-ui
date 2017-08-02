@@ -5,15 +5,29 @@ function requestBuild(tree, data) {
 
 	tree.set(['build', 'loading'], true);
 	tree.unset(['build', 'error'])
-	// tree.unset(['build', 'data']);
 	tree.unset(['build', 'active'])
 
 	client.getBuild({owner: owner, name: repo}, build).then((result) => {
+
+		// ugly
+		if (result.files) {
+			for (var i=0; i<result.files.length; i++) {
+				var file = result.files[i];
+				for (var ii = 0; ii < result.procs.length; ii++) {
+					var proc = result.procs[ii];
+					for (var iii = 0; iii < proc.children.length; iii++) {
+						var child = proc.children[iii];
+						if (child.pid === file.pid) {
+							child.report = file;
+						}
+					}
+				}
+			}
+		}
 		tree.unset(['build', 'error'])
 		tree.set(['build', 'active'], build);
 		tree.set(['build', 'loading'], false);
 		tree.set(['builds', 'data', owner+'/'+repo, build], result);
-		// updateActiveBuild(tree, result);
 	});
 }
 

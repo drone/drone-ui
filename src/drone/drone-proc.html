@@ -5,6 +5,7 @@
 <link rel="import" href="./drone-state.html">
 <link rel="import" href="./drone-proc-card.html">
 <link rel="import" href="./drone-repo-menu.html">
+<link rel="import" href="./drone-unit-test.html">
 
 <dom-module id="drone-proc">
 	<template>
@@ -141,6 +142,17 @@
 								</menu>
 							</template>
 						</drone-proc-card>
+					</template>
+
+					<template is="dom-if" if="[[build.proc.data.report]]">
+						<div>
+							<drone-unit-test
+								repo="[[repo]]"
+								build="[[build]]"
+								proc="[[build.proc.data]]"
+								report="[[build.proc.data.report]]">
+							</drone-unit-test>
+						</div>
 					</template>
 
 					<template is="dom-if" if=[[build.proc.data.error]]>
