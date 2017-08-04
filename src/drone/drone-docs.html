@@ -1,0 +1,40 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/maps-icons.html">
+<link rel="import" href="./drone-theme.html">
+
+<dom-module id="drone-docs">
+	<template>
+		<style include="drone-theme">
+			:host {
+				display: block;
+				padding: 40px;
+			}
+			pre {
+				background: #f5f5f5;
+				padding:20px;
+				white-space: pre-line;
+				word-wrap: break-word;
+				font-family: Roboto Mono,monospace;
+				max-width: 650px;
+				margin-bottom:40px;
+				font-size:13px;
+			}
+			h2 {
+				font-weight: normal;
+				font-size: 16px;
+			}
+		</style>
+
+		<h2>Drone Documentation:</h2>
+		<a href="http://docs.drone.io/">http://docs.drone.io</a>
+	</template>
+
+	<script>
+		class DroneDocs extends DroneMixin(Polymer.Element) {
+			static get is() { return 'drone-docs'; }
+		};
+
+		window.customElements.define(DroneDocs.is, DroneDocs);
+	</script>
+</dom-module>
