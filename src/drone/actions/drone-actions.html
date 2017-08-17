@@ -196,7 +196,7 @@ function unfollowLogs(tree) {
 
 function scrollToBottom() {
 	setTimeout(() => {
-		window.scrollTo(0,document.body.scrollHeight);
+		window.scrollTo(0,Math.max(document.body.scrollHeight, document.documentElement.scrollHeight));
 	}, 50);
 }
 
