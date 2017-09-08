@@ -52,7 +52,6 @@ export default class Output extends Component {
 		}
 
 		if (assertProcFinished(nextProps.proc)) {
-			console.log("fetch logs", nextProps.proc.pid);
 			return this.props.dispatch(
 				fetchLogs,
 				nextProps.drone,
@@ -64,7 +63,6 @@ export default class Output extends Component {
 		}
 
 		if (assertProcRunning(nextProps.proc) && (!logs || routeChange)) {
-			console.log("stream logs", nextProps.proc.pid);
 			this.props.dispatch(
 				subscribeToLogs,
 				nextProps.drone,

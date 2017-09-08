@@ -28,7 +28,7 @@ export function fetchLogs(tree, client, owner, repo, build, proc) {
 	client
 		.getLogs(owner, repo, build, proc)
 		.then(results => {
-			tree.set(["logs", "data", slug, build, proc, "data"], results);
+			tree.set(["logs", "data", slug, build, proc, "data"], results || []);
 			tree.set(["logs", "data", slug, build, proc, "loading"], false);
 			tree.set(["logs", "data", slug, build, proc, "eof"], true);
 		})
