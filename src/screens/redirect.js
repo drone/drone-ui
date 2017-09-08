@@ -16,7 +16,8 @@ export default class RedirectRoot extends Component {
 	}
 
 	render() {
-		const { latest, loaded, user } = this.props.feed;
+		const { user } = this.props;
+		const { latest, loaded } = this.props.feed;
 
 		return !loaded ? (
 			undefined
