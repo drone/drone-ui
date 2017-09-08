@@ -1,0 +1,49 @@
+.host {
+	padding: 0px 20px;
+	padding-bottom: 20px;
+	padding-right:0px;
+
+	.columns {
+		display: flex;
+
+		.left {
+			flex: 1;
+			padding-top: 20px;
+			padding-right: 20px;
+			min-width: 0px;
+			box-sizing: border-box;
+		}
+
+		.right {
+			box-sizing: border-box;
+			padding-top: 20px;
+			padding-right: 20px;
+			flex: 0 0 350px;
+			min-width: 0px;
+
+			&> section {
+				border-top: 1px solid #ECEFF1;
+				padding-top:20px;
+			}
+		}
+	}
+}
+
+section.sticky {
+	position: sticky;
+	top: 0px;
+
+	&:stuck {
+		border-top-width: 0px;
+	}
+}
+
+.logerror {
+	background: #ECEFF1;
+	color: #fc4758;
+	padding: 20px;
+	display: block;
+	border-radius:2px;
+	font-size: 14px;
+	margin-bottom:10px;
+}

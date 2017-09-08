@@ -1,0 +1,79 @@
+@snackbar-margin: 20px;
+@snackbar-min-width: 500px;
+
+// wrapper for the css transition group
+.root {
+  position: absolute;
+  top: -1000px;
+  bottom: -1000px;
+  width:0px;
+  height:0px;
+}
+
+.snackbar {
+  z-index:2;
+  position: fixed;
+  min-width: @snackbar-min-width;
+
+  left: @snackbar-margin;
+  bottom: @snackbar-margin;
+  background: #303030;
+  display: none;
+  flex-direction: row;
+  align-items: stretch;
+
+  box-shadow:
+    0px 3px 5px -1px rgba(0, 0, 0, 0.2),
+    0px 6px 10px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+
+  &.open {
+    display: flex;
+  }
+
+  &> :first-child {
+    flex: 1;
+    line-height: 24px;
+    vertical-align: middle;
+    color: #FFF;
+    font-size: 14px;
+    padding: 10px 20px;
+  }
+
+  button {
+    display: flex;
+    flex: 0 0 24px;
+    margin: 0px;
+    padding: 0px;
+    border: none;
+    background: transparent;
+    outline: none;
+    cursor: pointer;
+    margin-right: 10px;
+    svg {
+      align-items: center;
+      height: 24px;
+      fill: #FFF;
+    }
+  }
+}
+
+:global {
+  .slideup-enter {
+    bottom: -50px;
+  }
+
+  .slideup-enter.slideup-enter-active {
+    bottom: @snackbar-margin;
+    transition: bottom 200ms linear;
+  }
+
+  .slideup-leave {
+    bottom: @snackbar-margin;
+  }
+
+  .slideup-leave.slideup-leave-active {
+    bottom: -50px;
+    transition: bottom 200ms linear;
+  }
+}

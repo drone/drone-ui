@@ -1,0 +1,56 @@
+@green: #4dc89a;
+@red: #fc4758;
+@yellow: #fdb835;
+
+.root {
+	display: inline-block;
+	border-width: 2px;
+	border-style: solid;
+	border-radius: 2px;
+	text-align: center;
+	line-height: 20px;
+	min-width: 65px;
+	font-size: 14px;
+
+	//
+	// success
+	//
+
+	&.success {
+		border-color: @green;
+		color: @green;
+	}
+
+	//
+	// failure
+	//
+
+	&.declined,
+	&.failure,
+	&.killed,
+	&.error {
+		color: @red;
+		border-color: @red;
+	}
+
+	//
+	// pending
+	//
+
+	&.blocked,
+	&.running,
+	&.started,
+	&.pending {
+		color: @yellow;
+		border-color: @yellow;
+	}
+
+	//
+	// skipped
+	//
+
+	&.skipped {
+		color: #BDBDBD;
+		border-color: #BDBDBD;
+	}
+}

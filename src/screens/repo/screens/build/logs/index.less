@@ -1,0 +1,104 @@
+.loading {
+	padding: 20px;
+	border-radius: 2px;
+	background: #ECEFF1;
+	font-family: 'Roboto Mono', monospace;
+	font-size: 12px;
+}
+
+.error {
+	background: #ECEFF1;
+	color: #fc4758;
+	padding: 20px;
+	border-radius:2px;
+	font-size: 14px;
+	margin-bottom:10px;
+}
+
+.actions {
+	position: fixed;
+	bottom: 30px;
+	right: 30px;
+	display:flex;
+	flex-direction: row;
+
+	button {
+		background: #FFF;
+		border: none;
+		outline: none;
+		border: 1px solid #CFD8DC;
+		margin-left:-1px;
+		padding:0px;
+		display:flex;
+		flex-direction: row;
+		align-items: center;
+		padding:2px;
+		cursor: pointer;
+		color: #546E7A;
+		justify-content: center;
+		min-width: 32px;
+		min-height: 32px;
+
+		&.bottom svg {
+			transform: rotate(180deg);
+		}
+
+		&.follow svg,
+		&.unfollow svg {
+			width: 18px;
+			height: 18px;
+		}
+	}
+
+	svg {
+		fill: #546E7A;
+	}
+}
+
+
+
+
+.logactions {
+	position: fixed;
+	bottom: 30px;
+	right: 30px;
+	display:flex;
+
+	div {
+		display: flex;
+	}
+
+	button {
+		background: #FFF;
+		border: none;
+		outline: none;
+		border: 1px solid #CFD8DC;
+		margin-left:-1px;
+		padding:0px;
+		display:flex;
+		flex-direction: row;
+		align-items: center;
+		padding:2px;
+		cursor: pointer;
+		color: #546E7A;
+		justify-content: center;
+		min-width: 32px;
+		min-height: 32px;
+
+		svg {
+			fill: #546E7A;
+		}
+
+		&.gotoTop {
+			transform: rotate(180deg);
+		}
+
+		&.followButton {
+			svg { width: 18px; height: 18px; }
+		}
+
+		&.unfollowButton {
+			svg { width: 18px; height: 18px; }
+		}
+	}
+}

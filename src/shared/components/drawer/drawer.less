@@ -1,0 +1,183 @@
+
+//
+// backdrop
+//
+
+.backdrop {
+  position: fixed;
+  top: 0px;
+  bottom:0px;
+  left: 0px;
+  right: 0px;
+  background-color: rgba(0, 0, 0, 0.54);
+}
+
+//
+// drawer wrapper
+//
+
+.inner {
+  background: #FFF;
+  width: 300px;
+  // border-right: 1px solid #EEE;
+  box-sizing: border-box;
+  position:absolute;
+  display: flex;
+  flex-direction: column;
+  transition: left ease-in 0.15s;
+  overflow: hidden;
+  position: fixed;
+  top: 0px;
+  bottom:0px;
+  left: 0px;
+  right: 0px;
+  box-shadow:
+    0px 8px 10px -5px rgba(0, 0, 0, 0.2),
+    0px 16px 24px 2px rgba(0, 0, 0, 0.14),
+    0px 6px 30px 5px rgba(0, 0, 0, 0.12);
+}
+
+//
+// drawer
+//
+
+.drawer {
+  position:fixed;
+  width:0px;
+  height:0px;
+  left:-1000px;
+  top:-1000px;
+  display: none;
+
+  &.open {
+    display: flex;
+
+    .inner {
+      left: 0px;
+      transition: left ease-in 0.15s;
+    }
+  }
+
+  &.right {
+    .inner {
+      left: auto;
+      right: 0px;
+    }
+  }
+}
+
+//
+// close button
+//
+
+.close {
+  width: 100%;
+  border: none;
+  background: transparent;
+  text-align: right;
+  padding: 10px 10px;
+  margin: 0px;
+  outline: none;
+  cursor: pointer;
+  align-items: center;
+  display: flex;
+
+  svg {
+    fill: #999;
+  }
+}
+
+.right .close {
+  flex-direction: row-reverse;
+}
+
+//
+// menu
+//
+
+.drawer ul {
+  border-top:1px solid #EEE;
+  padding: 10px 0px;
+  margin: 0px;
+
+  li {
+    padding:0px;
+    margin: 0px;
+    padding: 0px 10px;
+    display: block;
+  }
+
+  a {
+    color:#212121;
+    padding: 0px 10px;
+    line-height: 32px;
+    text-decoration: none;
+    display:block;
+
+    &:hover {
+      background:#EEE;
+    }
+  }
+
+  button {
+    background:#FFF;
+    border:none;
+    margin:0px;
+    padding:0px 10px;
+    width: 100%;
+    cursor: pointer;
+    display:flex;
+    align-items: center;
+
+    &:hover {
+      background: #EEE;
+    }
+    &[disabled] {
+      color: #EEE;
+      cursor:wait;
+      &:hover {
+        background: #FFF;
+      }
+      svg {
+        fill:#EEE;
+      }
+    }
+
+    span {
+      flex: 1;
+      line-height: 32px;
+      text-align: left;
+      padding-left:10px;
+    }
+
+    svg {
+      width: 22px;
+      height: 22px;
+      display:inline-block;
+    }
+  }
+}
+
+.drawer > section:first-of-type ul {
+  border-top: none;
+}
+
+:global {
+  .fade-enter {
+    opacity: 0.01;
+  }
+
+  .fade-enter.fade-enter-active {
+    opacity: 1;
+    transition: opacity 150ms ease-in;
+  }
+
+  .fade-leave {
+    opacity: 1;
+  }
+
+  .fade-leave.fade-leave-active {
+    opacity: 0.01;
+    transition: opacity 150ms ease-in;
+  }
+}

@@ -1,0 +1,158 @@
+// colors from https://atom.io/themes/dash-ui
+@green: #4dc89a;
+@red: #fc4758;
+@yellow: #fdb835;
+
+.root {
+	width:23px;
+	height:23px;
+	border-width: 2px;
+	border-style: solid;
+	border-radius: 50%;
+	box-sizing: border-box;
+	display: flex;
+	align-content: center;
+	padding:2px;
+
+	//
+	// success
+	//
+
+	&.success {
+		border-color: @green;
+		svg {
+			fill: @green;
+		}
+	}
+
+	//
+	// failure
+	//
+
+	&.declined,
+	&.failure,
+	&.killed,
+	&.error {
+		border-color: @red;
+		svg {
+			fill: @red;
+		}
+	}
+
+	//
+	// pending
+	//
+
+	&.blocked,
+	&.running,
+	&.started,
+	&.pending {
+		border-color: @yellow;
+		svg {
+			fill: @yellow;
+		}
+	}
+
+	&.pending svg {
+		animation: wrench 2.5s ease infinite;
+		transform-origin: center 54%;
+	}
+
+	&.started svg,
+	&.running svg {
+		animation: spinner 1.2s ease infinite;
+	}
+
+	//
+	// skipped
+	//
+
+	&.skipped {
+		border-color: #BDBDBD;
+		svg {
+			fill: #BDBDBD;
+		}
+	}
+}
+
+@keyframes spinner {
+	0%{transform:rotate(0deg)}
+	100%{transform:rotate(359deg)}
+}
+
+@keyframes wrench {
+	0%{transform:rotate(-12deg)}
+	8%{transform:rotate(12deg)}
+	10%{transform:rotate(24deg)}
+	18%{transform:rotate(-24deg)}
+	20%{transform:rotate(-24deg)}
+	28%{transform:rotate(24deg)}
+	30%{transform:rotate(24deg)}
+	38%{transform:rotate(-24deg)}
+	40%{transform:rotate(-24deg)}
+	48%{transform:rotate(24deg)}
+	50%{transform:rotate(24deg)}
+	58%{transform:rotate(-24deg)}
+	60%{transform:rotate(-24deg)}
+	68%{transform:rotate(24deg)}
+	75%,100%{transform:rotate(0deg)}
+}
+
+
+@green: #4dc89a;
+@red: #fc4758;
+@yellow: #fdb835;
+
+.label {
+	display: flex;
+	padding: 10px 20px;
+	border-radius: 2px;
+	background-color: #00BFA5;
+	color: #FFFFFF;
+	text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+
+	div {
+		flex: 1;
+		vertical-align: middle;
+		line-height: 22px;
+		font-size: 15px;
+	}
+
+	//
+	// success
+	//
+
+	&.success {
+		background-color: @green;
+	}
+
+	//
+	// failure
+	//
+
+	&.declined,
+	&.failure,
+	&.killed,
+	&.error {
+		background-color: @red;
+	}
+
+	//
+	// pending
+	//
+
+	&.blocked,
+	&.running,
+	&.started,
+	&.pending {
+		background-color: @yellow;
+	}
+
+	//
+	// skipped
+	//
+
+	&.skipped {
+		background-color: #BDBDBD;
+	}
+}

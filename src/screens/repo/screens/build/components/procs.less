@@ -1,0 +1,43 @@
+.list {
+	a {
+		display:block;
+		text-decoration: none;
+		color: #212121;
+	}
+}
+
+.item {
+	box-sizing:border-box;
+	display:flex;
+	padding: 0px 10px;
+	background: #FFF;
+
+	&.selected,
+	&:hover {
+		background: #ECEFF1;
+	}
+
+	time {
+		color: #BDBDBD;
+		font-size: 13px;
+		line-height: 32px;
+		display: inline-block;
+		margin-right: 15px;
+		vertical-align: middle;
+	}
+
+	h3 {
+		margin: 0px;
+		padding: 0px;
+		font-weight: normal;
+		font-size: 14px;
+		line-height: 36px;
+		vertical-align: middle;
+		flex:1 1 auto;
+	}
+
+	&:last-child {
+		display: flex;
+		align-items: center;
+	}
+}

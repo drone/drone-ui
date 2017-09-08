@@ -1,0 +1,41 @@
+.item {
+	display: flex;
+	border-bottom: 1px solid #ECEFF1;
+	padding:10px 10px;
+
+	&:last-child {
+		border-bottom-width: 0px;
+	}
+
+	&> div:first-child {
+		flex: 1 1 auto;
+		line-height:24px;
+	}
+
+	&> div:nth-child(2) {
+
+	}
+
+	&> div:nth-child(3) {
+		text-align: right;
+		display: flex;
+		align-content: stretch;
+		justify-content: center;
+		flex-direction: column;
+	}
+
+	a {
+		margin-right:20px;
+		width:100px;
+
+		svg {
+			width:20px;
+			height:20px;
+			fill: #CFD8DC;
+		}
+	}
+
+	.inactive {
+		display: none;
+	}
+}

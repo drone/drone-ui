@@ -1,0 +1,122 @@
+.list {
+	a {
+		display: block;
+		text-decoration: none;
+		color: #222;
+		padding: 20px 0px;
+		border-bottom: 1px solid #EEE;
+		box-sizing: border-box;
+
+		&:last-child {
+			border-bottom: none;
+		}
+	}
+}
+
+.root a {
+  display: block;
+  text-decoration: none;
+  color: #000;
+  padding:20px 0px;
+  border-top: 1px solid #ECEFF1;
+}
+
+.root {
+  display:block;
+  display:flex;
+}
+
+.root h3 {
+  margin: 0;
+  line-height: 22px;
+  min-height: 22px;
+  font-size: 15px;
+  font-weight:normal;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.root em {
+  font-style: normal;
+  font-size: 14px;
+}
+.root span {
+  margin: 0 5px;
+  font-size: 14px;
+  color: #9e9e9e;
+}
+.icon {
+  width: 22px;
+  min-width: 22px;
+  max-width: 22px;
+  margin-right:20px;
+  margin-left:10px;
+}
+.icon img {
+  border-radius: 50%;
+  width:22px;
+  height:22px;
+}
+.status {
+  // width: 125px;
+  // min-width: 125px;
+  // max-width: 125px;
+  text-align: right;
+  white-space: nowrap;
+  display:inline-block;
+}
+.status span {
+  /*padding-right:10px;
+  line-height: 28px;*/
+  display: inline-block;
+  color:  #4dc89a;
+  border: 2px solid #4dc89a;
+      text-align: center;
+      border-radius: 2px;
+      line-height: 20px;
+      min-width:65px;
+      margin-right:10px;
+}
+/*.status span:before {
+  content:'#';
+  padding-right:7px;
+}*/
+.status div {
+  vertical-align: middle;
+  display:inline-block;
+
+  &:last-child {
+    margin-left: 20px;
+  }
+}
+.body {
+  flex: 1;
+}
+// .root time {
+//   font-size: 12px;
+//   display: block;
+//   margin: 5px 0;
+//   color: #9e9e9e;
+// }
+
+.meta {
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  border-left:1px solid #ECEFF1;
+  border-right:1px solid #ECEFF1;
+  box-sizing: border-box;
+  min-width: 200px;
+  flex: 0 0 200px;
+}
+
+.time {
+  padding-right: 20px;
+  margin-right: 20px;
+  // border-right:1px solid #ECEFF1;
+  box-sizing: border-box;
+  min-width: 200px;
+  flex: 0 0 200px;
+}

@@ -1,0 +1,68 @@
+.root {
+	padding:20px;
+
+	section {
+		flex: 1 1 auto;
+		border-bottom: 1px solid #ECEFF1;
+		padding: 20px 10px;
+		display: flex;
+
+		&> div {
+			flex: 1;
+		}
+
+		&:first-child {
+			padding-top: 0px;
+		}
+
+		&:last-child {
+			border-bottom-width: 0px;
+		}
+
+		@media (max-width: 600px) {
+			display: flex;
+			flex-direction: column;
+			h2 {
+				margin-bottom:20px;
+				flex: none;
+			}
+
+			&> :last-child {
+				padding-left: 20px;
+			}
+		}
+	}
+
+	h2 {
+		flex: 0 0 200px;
+		padding: 0px;
+		margin: 0px;
+		font-weight: normal;
+		font-size: 15px;
+		line-height: 26px;
+	}
+
+	label {
+		display: block;
+		padding: 0px;
+		span {
+			font-size: 15px;
+		}
+	}
+
+	input[type=checkbox],
+	input[type=radio] {
+		margin-right:10px;
+	}
+
+	input[type=number] {
+		border: 1px solid #ECEFF1;
+		padding: 5px 10px;
+		font-size: 15px;
+		width: 50px;
+	}
+
+	.minutes {
+		margin-left: 5px;
+	}
+}

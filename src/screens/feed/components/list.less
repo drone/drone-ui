@@ -1,0 +1,56 @@
+.list {
+	a {
+		display:block;
+		border-top:1px solid #ECEFF1;
+		text-decoration: none;
+		&:first-of-type {
+			border-top-width: 0px;
+		}
+	}
+}
+
+.item {
+	display: flex;
+	flex-direction: column;
+	padding: 20px;
+	text-decoration: none;
+
+	.header {
+		margin-bottom: 10px;
+		display: flex;
+	}
+
+	.title {
+		font-size: 15px;
+		line-height:22px;
+		color: #222;
+		flex: 1 1 auto;
+		max-width:250px;
+		overflow: hidden;
+			padding-right: 20px;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+	}
+
+	.body div time {
+		font-size: 13px !important;
+		color: #212121;
+	}
+
+	.body time {
+		color: #212121;
+		font-size:13px;
+		line-height:22px;
+		vertical-align: middle;
+		display: inline-block;
+		padding:0px;
+		margin:0px;
+	}
+
+	.body svg {
+		fill: #212121;
+		vertical-align: middle;
+		margin-right:10px;
+		line-height:22px;
+	}
+}

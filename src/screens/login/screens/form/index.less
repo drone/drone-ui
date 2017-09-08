@@ -1,0 +1,67 @@
+@font: "Roboto";
+
+.login {
+	margin-top: 50px;
+
+	p {
+		color: #424242;
+		padding: 0px;
+		margin: 0px;
+		margin-bottom: 30px;
+		text-align: center;
+		line-height: 22px;
+		font-family: @font;
+		user-select: none;
+	}
+
+	input {
+		outline: none;
+		display: block;
+		width: 100%;
+		box-sizing: border-box;
+
+		&[type=password],
+		&[type=text] {
+			padding: 10px;
+			margin-bottom: 20px;
+			border: 1px solid #ECEFF1;
+			background: #FFF;
+			font-family: @font;
+
+			&:focus {
+				border: 1px solid #424242;
+			}
+		}
+
+		&[type=submit] {
+			color: #FFF;
+			border: none;
+			background: #424242;
+			line-height: 36px;
+			font-family: @font;
+			user-select: none;
+		}
+	}
+
+	form {
+		margin:0px auto;
+		min-width: 400px;
+		max-width: 400px;
+		padding: 30px;
+		box-sizing: border-box;
+	}
+
+	::-moz-input-placeholder {
+		color: #CFD8DC;
+		font-weight:300;
+		font-size:16px;
+		user-select: none;
+	}
+
+	::-webkit-input-placeholder {
+		color: #CFD8DC;
+		font-weight:300;
+		font-size:16px;
+		user-select: none;
+	}
+}

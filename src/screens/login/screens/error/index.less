@@ -1,0 +1,35 @@
+@font: "Roboto";
+@red: #fc4758;
+@yellow: #fdb835;
+
+.root {
+	margin:50px auto;
+	min-width: 400px;
+	max-width: 400px;
+	padding: 30px;
+	box-sizing: border-box;
+
+	.alert {
+		margin-bottom: 20px;
+		text-align: left;
+		display: block;
+		color: #FFF;
+		background: @yellow;
+		padding: 20px;
+		display:flex;
+
+		&> :last-child {
+			padding-top: 2px;
+			padding-left: 10px;
+			line-height: 20px;
+			font-family: @font;
+			font-size: 15px;
+		}
+	}
+
+	svg {
+		fill: #FFF;
+		width: 26px;
+		height: 26px;
+	}
+}

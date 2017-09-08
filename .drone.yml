@@ -1,5 +1,6 @@
 pipeline:
   build:
-    image: node
+    image: node:8
     commands:
-      - echo todo
+      - yarn install
+      - yarn run build
