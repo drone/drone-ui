@@ -1,6 +1,5 @@
 node_modules
 dist/files
-*_gen.go
 NOTES.md
 *.log
 .env
