@@ -38,7 +38,8 @@ if (tree.exists(["user", "data"])) {
 }
 
 client.onerror = error => {
-	if (error.status === 403) {
+	console.error(error);
+	if (error.status === 401) {
 		tree.unset(["user", "data"]);
 	}
 };

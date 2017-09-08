@@ -16,27 +16,27 @@ export class Item extends Component {
 	render() {
 		const { build } = this.props;
 
-		let eventDesc;
-		let eventDest;
-
-		switch (build.event) {
-			case "push":
-				eventDesc = "pushed to";
-				eventDest = build.branch;
-				break;
-			case "pull_request":
-				eventDesc = "updated pull request";
-				eventDest = build.refspec != "" ? build.refspec : build.branch;
-				break;
-			case "tag":
-				eventDesc = "pushed tag";
-				eventDest = build.ref;
-				break;
-			case "deployment":
-				eventDesc = "deployed to";
-				eventDest = build.deploy_to;
-				break;
-		}
+		// let eventDesc;
+		// let eventDest;
+		//
+		// switch (build.event) {
+		// 	case "push":
+		// 		eventDesc = "pushed to";
+		// 		eventDest = build.branch;
+		// 		break;
+		// 	case "pull_request":
+		// 		eventDesc = "updated pull request";
+		// 		eventDest = build.refspec != "" ? build.refspec : build.branch;
+		// 		break;
+		// 	case "tag":
+		// 		eventDesc = "pushed tag";
+		// 		eventDest = build.ref;
+		// 		break;
+		// 	case "deployment":
+		// 		eventDesc = "deployed to";
+		// 		eventDest = build.deploy_to;
+		// 		break;
+		// }
 
 		return (
 			<div className={styles.root}>
@@ -45,12 +45,6 @@ export class Item extends Component {
 				</div>
 				<div className={styles.body}>
 					<h3>{build.message}</h3>
-
-					<div className={styles.description} style={{ display: "none" }}>
-						<em>{build.author}</em>
-						<span>{eventDesc}</span>
-						<em>{eventDest}</em>
-					</div>
 				</div>
 
 				<div className={styles.meta}>
@@ -59,6 +53,9 @@ export class Item extends Component {
 						event={build.event}
 						commit={build.commit}
 						branch={build.branch}
+						target={build.deploy_to}
+						refspec={build.refspec}
+						refs={build.ref}
 					/>
 				</div>
 

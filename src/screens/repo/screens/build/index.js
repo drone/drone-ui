@@ -117,7 +117,7 @@ export default class BuildLogs extends Component {
 	render() {
 		const { repo, build, match, follow } = this.props;
 
-		if (!build) {
+		if (!build || !repo) {
 			return this.renderLoading();
 		}
 

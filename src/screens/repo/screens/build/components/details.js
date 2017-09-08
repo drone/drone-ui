@@ -28,6 +28,9 @@ export class Details extends Component {
 						event={build.event}
 						commit={build.commit}
 						branch={build.branch}
+						target={build.deploy_to}
+						refspec={build.refspec}
+						refs={build.ref}
 					/>
 				</section>
 			</div>
