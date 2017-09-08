@@ -14,10 +14,13 @@ export default class RedirectRoot extends Component {
 			window.location.href = "/login";
 		}
 	}
+
 	render() {
-		const { latest, loaded } = this.props.feed;
-		console.log(latest, loaded);
+		const { latest, loaded, user } = this.props.feed;
+
 		return !loaded ? (
+			undefined
+		) : !user ? (
 			undefined
 		) : !latest ? (
 			<Redirect to="/account/repos" />

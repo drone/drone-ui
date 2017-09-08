@@ -3,4 +3,5 @@ pipeline:
     image: node:8
     commands:
       - yarn install
+      - yarn run test
       - yarn run build
