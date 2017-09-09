@@ -15,34 +15,12 @@ export const List = ({ children }) => (
 export class Item extends Component {
 	render() {
 		const { build } = this.props;
-
-		// let eventDesc;
-		// let eventDest;
-		//
-		// switch (build.event) {
-		// 	case "push":
-		// 		eventDesc = "pushed to";
-		// 		eventDest = build.branch;
-		// 		break;
-		// 	case "pull_request":
-		// 		eventDesc = "updated pull request";
-		// 		eventDest = build.refspec != "" ? build.refspec : build.branch;
-		// 		break;
-		// 	case "tag":
-		// 		eventDesc = "pushed tag";
-		// 		eventDest = build.ref;
-		// 		break;
-		// 	case "deployment":
-		// 		eventDesc = "deployed to";
-		// 		eventDest = build.deploy_to;
-		// 		break;
-		// }
-
 		return (
-			<div className={styles.root}>
+			<div className={styles.item}>
 				<div className={styles.icon}>
 					<img src={build.author_avatar} />
 				</div>
+
 				<div className={styles.body}>
 					<h3>{build.message}</h3>
 				</div>
@@ -58,6 +36,8 @@ export class Item extends Component {
 						refs={build.ref}
 					/>
 				</div>
+
+				<div className={styles.break} />
 
 				<div className={styles.time}>
 					<BuildTime
