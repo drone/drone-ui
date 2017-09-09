@@ -11,7 +11,7 @@ import styles from "./build_event.less";
 
 export default class BuildEvent extends Component {
 	render() {
-		const { event, branch, commit, refs, refspec, link } = this.props;
+		const { event, branch, commit, refs, refspec, link, target } = this.props;
 
 		return (
 			<div className={styles.host}>
