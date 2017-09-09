@@ -3,6 +3,7 @@ import {
 	BranchIcon,
 	CommitIcon,
 	DeployIcon,
+	LaunchIcon,
 	MergeIcon,
 	TagIcon,
 } from "shared/components/icons/index";
@@ -44,6 +45,9 @@ export default class BuildEvent extends Component {
 						)}
 					</div>
 				</div>
+				<a href={link} target="_blank">
+					<LaunchIcon />
+				</a>
 			</div>
 		);
 	}
