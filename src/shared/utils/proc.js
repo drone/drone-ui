@@ -1,3 +1,8 @@
+import {
+	STATUS_PENDING,
+	STATUS_RUNNING
+} from "shared/constants/status";
+
 /**
  * Returns a process from the process tree with the
  * matching process number.
@@ -28,7 +33,7 @@ export const findChildProcess = (tree, pid) => {
  * @returns {boolean}
  */
 export const assertProcFinished = proc => {
-	return proc.state !== "running" && proc.state !== "pending";
+	return proc.state !== STATUS_RUNNING && proc.state !== STATUS_PENDING;
 };
 
 /**
@@ -38,5 +43,5 @@ export const assertProcFinished = proc => {
  * @returns {boolean}
  */
 export const assertProcRunning = proc => {
-	return proc.state === "running";
+	return proc.state === STATUS_RUNNING;
 };

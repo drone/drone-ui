@@ -1,5 +1,9 @@
 import { repositorySlug } from "./repository";
 import { displayMessage } from "./message";
+import {
+	STATUS_PENDING,
+	STATUS_RUNNING
+} from "shared/constants/status";
 
 /**
  * Gets the build for the named repository and stores
@@ -172,7 +176,7 @@ export const compareBuild = (a, b) => {
  * @returns {boolean}
  */
 export const assertBuildFinished = build => {
-	return build.status !== "running" && build.status !== "pending";
+	return build.status !== STATUS_RUNNING && build.status !== STATUS_PENDING;
 };
 
 /**
