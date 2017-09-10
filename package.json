@@ -15,6 +15,7 @@
       "jsx"
     ],
     "moduleDirectories": [
+      "src",
       "node_modules"
     ],
     "moduleNameMapper": {

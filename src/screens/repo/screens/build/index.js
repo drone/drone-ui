@@ -8,6 +8,11 @@ import {
 	declineBuild,
 	assertBuildMatrix,
 } from "shared/utils/build";
+import {
+	STATUS_BLOCKED,
+	STATUS_DECLINED,
+	STATUS_ERROR
+} from "shared/constants/status";
 
 import { findChildProcess } from "shared/utils/proc";
 import { fetchRepository } from "shared/utils/repository";
@@ -121,11 +126,11 @@ export default class BuildLogs extends Component {
 			return this.renderLoading();
 		}
 
-		if (build.status === "declined" || build.status === "error") {
+		if (build.status === STATUS_DECLINED || build.status === STATUS_ERROR) {
 			return this.renderError();
 		}
 
-		if (build.status === "blocked") {
+		if (build.status === STATUS_BLOCKED) {
 			return this.renderBlocked();
 		}
 
@@ -179,7 +184,7 @@ export default class BuildLogs extends Component {
 					</div>
 					<div className={styles.left}>
 						<div className={styles.logerror}>
-							{build.status === "error" ? (
+							{build.status === STATUS_ERROR ? (
 								build.error
 							) : (
 								"Pipeline execution was declined"
@@ -266,8 +271,7 @@ export default class BuildLogs extends Component {
 							{build.procs.map(child => {
 								return (
 									<Link
-										to={`/${repo.full_name}/${build.number}/${child.children[0]
-											.pid}`}
+										to={`/${repo.full_name}/${build.number}/${child.children[0].pid}`}
 									>
 										<MatrixItem
 											number={child.pid}

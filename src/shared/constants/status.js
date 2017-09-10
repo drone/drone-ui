@@ -1,21 +1,23 @@
+const STATUS_BLOCKED = "blocked";
+const STATUS_DECLINED = "declined";
+const STATUS_ERROR = "error";
+const STATUS_FAILURE = "failure";
+const STATUS_KILLED = "killed";
+const STATUS_PENDING = "pending";
+const STATUS_RUNNING = "running";
 const STATUS_SKIPPED = "skipped";
-const STATUS_Pending = "pending";
-const STATUS_Running = "running";
-const STATUS_Success = "success";
-const STATUS_Failure = "failure";
-const STATUS_Killed = "killed";
-const STATUS_Error = "error";
-const STATUS_Blocked = "blocked";
-const STATUS_Declined = "declined";
+const STATUS_STARTED = "started";
+const STATUS_SUCCESS = "success";
 
 export {
+	STATUS_BLOCKED,
+	STATUS_DECLINED,
+	STATUS_ERROR,
+	STATUS_FAILURE,
+	STATUS_KILLED,
+	STATUS_PENDING,
+	STATUS_RUNNING,
 	STATUS_SKIPPED,
-	STATUS_Pending,
-	STATUS_Running,
-	STATUS_Success,
-	STATUS_Failure,
-	STATUS_Killed,
-	STATUS_Error,
-	STATUS_Blocked,
-	STATUS_Declined,
+	STATUS_SUCCESS,
+	STATUS_STARTED,
 };
