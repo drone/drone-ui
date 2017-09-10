@@ -1,10 +1,12 @@
+@import "~shared/styles/colors.less";
+
 @font: "Roboto";
 
 .login {
 	margin-top: 50px;
 
 	p {
-		color: #424242;
+		color: @gray-dark;
 		padding: 0px;
 		margin: 0px;
 		margin-bottom: 30px;
@@ -24,19 +26,19 @@
 		&[type=text] {
 			padding: 10px;
 			margin-bottom: 20px;
-			border: 1px solid #ECEFF1;
-			background: #FFF;
+			border: 1px solid @gray-light;
+			background: @white;
 			font-family: @font;
 
 			&:focus {
-				border: 1px solid #424242;
+				border: 1px solid @gray-dark;
 			}
 		}
 
 		&[type=submit] {
-			color: #FFF;
+			color: @white;
 			border: none;
-			background: #424242;
+			background: @gray;
 			line-height: 36px;
 			font-family: @font;
 			user-select: none;
@@ -52,14 +54,14 @@
 	}
 
 	::-moz-input-placeholder {
-		color: #CFD8DC;
+		color: @gray;
 		font-weight:300;
 		font-size:16px;
 		user-select: none;
 	}
 
 	::-webkit-input-placeholder {
-		color: #CFD8DC;
+		color: @gray;
 		font-weight:300;
 		font-size:16px;
 		user-select: none;

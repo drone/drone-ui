@@ -1,8 +1,10 @@
+@import "~shared/styles/colors.less";
+
 .list {
 	a {
 		display:block;
 		text-decoration: none;
-		color: #212121;
+		color: @gray-dark;
 	}
 }
 
@@ -10,15 +12,15 @@
 	box-sizing:border-box;
 	display:flex;
 	padding: 0px 10px;
-	background: #FFF;
+	background: @white;
 
 	&.selected,
 	&:hover {
-		background: #ECEFF1;
+		background: @gray-light;
 	}
 
 	time {
-		color: #BDBDBD;
+		color: @gray;
 		font-size: 13px;
 		line-height: 32px;
 		display: inline-block;

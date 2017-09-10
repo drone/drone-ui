@@ -1,11 +1,12 @@
+@import "~shared/styles/colors.less";
 @import "~shared/styles/utils.less";
 
 .list {
 	a {
 		display:block;
-		border-top:1px solid #ECEFF1;
+		border-top:1px solid @gray-light;
 		text-decoration: none;
-		color: #212121;
+		color: @gray-dark;
 		&:first-of-type {
 			border-top-width: 0px;
 		}
@@ -26,7 +27,7 @@
 	.title {
 		font-size: 15px;
 		line-height:22px;
-		color: #222;
+		color: @gray-dark;
 		flex: 1 1 auto;
 		max-width:250px;
 		padding-right: 20px;
@@ -35,11 +36,11 @@
 
 	.body div time {
 		font-size: 13px !important;
-		color: #212121;
+		color: @gray-dark;
 	}
 
 	.body time {
-		color: #212121;
+		color: @gray-dark;
 		font-size:13px;
 		line-height:22px;
 		vertical-align: middle;
@@ -49,7 +50,7 @@
 	}
 
 	.body svg {
-		fill: #212121;
+		fill: @gray-dark;
 		vertical-align: middle;
 		margin-right:10px;
 		line-height:22px;

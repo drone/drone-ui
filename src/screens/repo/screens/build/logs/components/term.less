@@ -1,7 +1,9 @@
+@import "~shared/styles/colors.less";
+
 .term {
 	padding: 20px;
 	border-radius: 2px;
-	background: #ECEFF1;
+	background: @gray-light;
 
 	.exitcode {
 		margin-top: 10px;
@@ -19,7 +21,7 @@
 
 
 .line {
-	color: #212121;
+	color: @gray-dark;
 	line-height: 19px;
 	display: flex;
 	max-width:100%;
@@ -56,15 +58,15 @@
 .loading {
 	padding: 20px;
 	border-radius: 2px;
-	background: #ECEFF1;
+	background: @gray-light;
 	font-family: 'Roboto Mono', monospace;
 	font-size: 13px;
 }
 
 // log error message
 .error {
-	background: #ECEFF1;
-	color: #fc4758;
+	background: @gray-light;
+	color: @red;
 	padding: 20px;
 	border-radius:2px;
 	font-size: 14px;

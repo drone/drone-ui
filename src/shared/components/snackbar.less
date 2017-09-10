@@ -1,3 +1,5 @@
+@import "~shared/styles/colors.less";
+
 @snackbar-margin: 20px;
 @snackbar-min-width: 500px;
 
@@ -17,7 +19,7 @@
 
   left: @snackbar-margin;
   bottom: @snackbar-margin;
-  background: #303030;
+  background: @gray;
   display: none;
   flex-direction: row;
   align-items: stretch;
@@ -35,7 +37,7 @@
     flex: 1;
     line-height: 24px;
     vertical-align: middle;
-    color: #FFF;
+    color: @white;
     font-size: 14px;
     padding: 10px 20px;
   }
@@ -53,7 +55,7 @@
     svg {
       align-items: center;
       height: 24px;
-      fill: #FFF;
+      fill: @white;
     }
   }
 }
