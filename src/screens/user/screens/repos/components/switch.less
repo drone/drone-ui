@@ -1,3 +1,5 @@
+@import "../../../../../shared/styles/colors.less";
+
 .switch {
 
 	label {
@@ -28,7 +30,7 @@
 
 	input[type=checkbox]::before {
 	  width: 250%;
-	  background-color: #EEEEEE;
+	  background-color: @gray-extralight;
 	  transform: translate(-25%, 0);
 	  border-radius: 30px;
 	  height: 100%;
@@ -40,7 +42,7 @@
 	  height: 150%;
 	  margin-top: -25%;
 	  margin-left: 10%;
-	  background-color: #E0E0E0;
+	  background-color: @gray-extralight;
 	  border-radius: 30px;
 	  transform: translate(-60%, 0);
 	  transition: all 0.2s;
@@ -53,10 +55,10 @@
 	input[type=checkbox]:checked::after {
 	  transform: scale(0.75, 0.75);
 	  transform: translate(25%, 0);
-	  background-color: #4dc89a;
+	  background-color: @green;
 	}
 
 	input[type=checkbox]:checked::before {
-	  background-color: #90e0c6;
+	  background-color: @green;
 	}
 }

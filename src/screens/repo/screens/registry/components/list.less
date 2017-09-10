@@ -1,13 +1,8 @@
-@delete-button-color: #fc4758;
-@save-button-color: #212121;
-
-.list {
-
-}
+@import "../../../../../shared/styles/colors.less";
 
 .item {
 	display: flex;
-	border-bottom: 1px solid #ECEFF1;
+	border-bottom: 1px solid @gray-extralight;
 	padding:10px 10px;
 	padding-bottom:20px;
 
@@ -36,9 +31,9 @@
 	}
 
 	button {
-		background: #fff;
-		color: @delete-button-color;
-		border: 1px solid @delete-button-color;
+		background: @white;
+		color: @gray-dark;
+		border: 1px solid @gray-dark;
 		text-decoration: none;
 		text-align: center;
 		border-radius:2px;

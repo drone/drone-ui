@@ -1,7 +1,4 @@
-// colors from https://atom.io/themes/dash-ui
-@green: #4dc89a;
-@red: #fc4758;
-@yellow: #fdb835;
+@import "../styles/colors.less";
 
 .root {
 	width:23px;
@@ -68,9 +65,9 @@
 	//
 
 	&.skipped {
-		border-color: #BDBDBD;
+		border-color: @gray;
 		svg {
-			fill: #BDBDBD;
+			fill: @gray;
 		}
 	}
 }
@@ -98,17 +95,12 @@
 	75%,100%{transform:rotate(0deg)}
 }
 
-
-@green: #4dc89a;
-@red: #fc4758;
-@yellow: #fdb835;
-
 .label {
 	display: flex;
 	padding: 10px 20px;
 	border-radius: 2px;
-	background-color: #00BFA5;
-	color: #FFFFFF;
+	background-color: @green;
+	color: @white;
 	text-shadow: 0 1px 2px rgba(0,0,0,0.1);
 
 	div {
@@ -153,6 +145,6 @@
 	//
 
 	&.skipped {
-		background-color: #BDBDBD;
+		background-color: @gray;
 	}
 }

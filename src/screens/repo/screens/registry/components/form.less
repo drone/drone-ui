@@ -1,6 +1,8 @@
+@import "../../../../../shared/styles/colors.less";
+
 .form {
 	input {
-		border: 1px solid #ECEFF1;
+		border: 1px solid @gray-extralight;
 		display: block;
 		width: 100%;
 		box-sizing: border-box;
@@ -9,13 +11,13 @@
 		margin-bottom:20px;
 
 		&:focus {
-			border: 1px solid #212121;
+			border: 1px solid @gray-dark;
 		}
 	}
 
 	textarea {
 		box-sizing: border-box;
-		border: 1px solid #ECEFF1;
+		border: 1px solid @gray-extralight;
 		display: block;
 		width: 100%;
 		outline: none;
@@ -24,7 +26,7 @@
 		height: 100px;
 
 		&:focus {
-			border: 1px solid #212121;
+			border: 1px solid @gray-dark;
 		}
 	}
 
@@ -34,9 +36,9 @@
 
 	button {
 		outline: none;
-		color: #212121;
-		border: 1px solid #212121;
-		background: #FFF;
+		color: @gray-dark;
+		border: 1px solid @gray-dark;
+		background: @white;
 		line-height: 28px;
 		padding:0px 20px;
 		font-family: "Roboto";
@@ -48,14 +50,14 @@
 	}
 
 	::-moz-input-placeholder {
-		color: #CFD8DC;
+		color: @gray-light;
 		font-weight:300;
 		font-size:15px;
 		user-select: none;
 	}
 
 	::-webkit-input-placeholder {
-		color: #CFD8DC;
+		color: @gray-light;
 		font-weight:300;
 		font-size:15px;
 		user-select: none;

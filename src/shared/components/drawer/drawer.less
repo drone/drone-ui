@@ -1,3 +1,4 @@
+@import "../../styles/colors.less";
 
 //
 // backdrop
@@ -17,9 +18,8 @@
 //
 
 .inner {
-  background: #FFF;
+  background: @white;
   width: 300px;
-  // border-right: 1px solid #EEE;
   box-sizing: border-box;
   position:absolute;
   display: flex;
@@ -83,7 +83,7 @@
   display: flex;
 
   svg {
-    fill: #999;
+    fill: @gray-extralight;
   }
 }
 
@@ -96,7 +96,7 @@
 //
 
 .drawer ul {
-  border-top:1px solid #EEE;
+  border-top:1px solid @gray-extralight;
   padding: 10px 0px;
   margin: 0px;
 
@@ -108,19 +108,19 @@
   }
 
   a {
-    color:#212121;
+    color:@gray-dark;
     padding: 0px 10px;
     line-height: 32px;
     text-decoration: none;
     display:block;
 
     &:hover {
-      background:#EEE;
+      background:@gray-extralight;
     }
   }
 
   button {
-    background:#FFF;
+    background:@white;
     border:none;
     margin:0px;
     padding:0px 10px;
@@ -130,16 +130,16 @@
     align-items: center;
 
     &:hover {
-      background: #EEE;
+      background: @gray;
     }
     &[disabled] {
-      color: #EEE;
+      color: @gray;
       cursor:wait;
       &:hover {
-        background: #FFF;
+        background: @gray;
       }
       svg {
-        fill:#EEE;
+        fill:@gray;
       }
     }
 

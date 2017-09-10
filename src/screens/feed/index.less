@@ -1,3 +1,5 @@
+@import "../../shared/styles/colors.less";
+
 .feed {
 	width: 300px;
 
@@ -11,17 +13,17 @@
 		height: 45px;
 		font-size: 15px;
 		padding:0px 20px;
-		border-bottom:1px solid #ECEFF1;
+		border-bottom:1px solid @gray-extralight;
 	}
 
 	::-moz-input-placeholder {
-		color: #BDBDBD;
+		color: @gray-light;
 		font-weight:300;
 		font-size:15px;
 	}
 
 	::-webkit-input-placeholder {
-		color: #BDBDBD;
+		color: @gray-light;
 		font-weight:300;
 		font-size:15px;
 	}
@@ -29,7 +31,7 @@
 
 .message {
 	padding: 20px;
-	color: #BDBDBD;
+	color: @gray-light;
 	font-size: 15px;
 	margin-top: 50px;
 	text-align: center;
@@ -39,12 +41,12 @@
 	height: 60px;
 	padding:0px 20px;
 	box-sizing: border-box;
-	border-bottom:1px solid #ECEFF1;
+	border-bottom:1px solid @gray-extralight;
 	display: flex;
 	align-items: center;
 
 	svg {
 		width: 30px;
-		fill: #212121;
+		fill: @gray-dark;
 	}
 }

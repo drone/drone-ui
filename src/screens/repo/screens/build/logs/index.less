@@ -1,14 +1,16 @@
+@import "../../../../../shared/styles/colors.less";
+
 .loading {
 	padding: 20px;
 	border-radius: 2px;
-	background: #ECEFF1;
+	background: @gray-extralight;
 	font-family: 'Roboto Mono', monospace;
 	font-size: 12px;
 }
 
 .error {
-	background: #ECEFF1;
-	color: #fc4758;
+	background: @gray-extralight;
+	color: @red;
 	padding: 20px;
 	border-radius:2px;
 	font-size: 14px;
@@ -23,10 +25,10 @@
 	flex-direction: row;
 
 	button {
-		background: #FFF;
+		background: @white;
 		border: none;
 		outline: none;
-		border: 1px solid #CFD8DC;
+		border: 1px solid @gray;
 		margin-left:-1px;
 		padding:0px;
 		display:flex;
@@ -34,7 +36,7 @@
 		align-items: center;
 		padding:2px;
 		cursor: pointer;
-		color: #546E7A;
+		color: @gray-midblue;
 		justify-content: center;
 		min-width: 32px;
 		min-height: 32px;
@@ -51,12 +53,9 @@
 	}
 
 	svg {
-		fill: #546E7A;
+		fill: @gray-midblue;
 	}
 }
-
-
-
 
 .logactions {
 	position: fixed;
@@ -69,10 +68,10 @@
 	}
 
 	button {
-		background: #FFF;
+		background: @white;
 		border: none;
 		outline: none;
-		border: 1px solid #CFD8DC;
+		border: 1px solid @gray-extralight;
 		margin-left:-1px;
 		padding:0px;
 		display:flex;
@@ -80,13 +79,13 @@
 		align-items: center;
 		padding:2px;
 		cursor: pointer;
-		color: #546E7A;
+		color: @gray-midblue;;
 		justify-content: center;
 		min-width: 32px;
 		min-height: 32px;
 
 		svg {
-			fill: #546E7A;
+			fill: @gray-midblue;;
 		}
 
 		&.gotoTop {

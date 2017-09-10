@@ -1,10 +1,12 @@
+@import "../../../../../shared/styles/colors.less";
+
 .list {
 	&> a {
 		display: block;
 		text-decoration: none;
-		color: #222;
+		color: @gray-dark;
 		padding: 20px 0px;
-		border-bottom: 1px solid #EEE;
+		border-bottom: 1px solid @gray-extralight;
 		box-sizing: border-box;
 
 		&:last-child {
@@ -73,14 +75,6 @@
 	}
 }
 
-// .item a {
-// 	display: block;
-// 	text-decoration: none;
-// 	color: #000;
-// 	padding:20px 0px;
-// 	border-top: 1px solid #ECEFF1;
-// }
-
 .item h3 {
 	margin: 0;
 	line-height: 22px;
@@ -99,7 +93,7 @@
 .item span {
 	margin: 0 5px;
 	font-size: 14px;
-	color: #9e9e9e;
+	color: @gray;
 }
 .icon {
 	width: 22px;
@@ -114,29 +108,20 @@
 	height:22px;
 }
 .status {
-	// width: 125px;
-	// min-width: 125px;
-	// max-width: 125px;
 	text-align: right;
 	white-space: nowrap;
 	display:inline-block;
 }
 .status span {
-	/*padding-right:10px;
-	line-height: 28px;*/
 	display: inline-block;
-	color:  #4dc89a;
-	border: 2px solid #4dc89a;
-			text-align: center;
-			border-radius: 2px;
-			line-height: 20px;
-			min-width:65px;
-			margin-right:10px;
+	color:  @green;
+	border: 2px solid @green;
+	text-align: center;
+	border-radius: 2px;
+	line-height: 20px;
+	min-width:65px;
+	margin-right:10px;
 }
-/*.status span:before {
-	content:'#';
-	padding-right:7px;
-}*/
 .status div {
 	vertical-align: middle;
 	display:inline-block;
@@ -148,20 +133,14 @@
 .body {
 	flex: 1;
 }
-// .item time {
-//   font-size: 12px;
-//   display: block;
-//   margin: 5px 0;
-//   color: #9e9e9e;
-// }
 
 .meta {
 	padding-left: 20px;
 	padding-right: 20px;
 	margin-left: 20px;
 	margin-right: 20px;
-	border-left:1px solid #ECEFF1;
-	border-right:1px solid #ECEFF1;
+	border-left:1px solid @gray-extralight;
+	border-right:1px solid @gray-extralight;
 	box-sizing: border-box;
 	min-width: 200px;
 	flex: 0 0 200px;
@@ -170,7 +149,6 @@
 .time {
 	padding-right: 20px;
 	margin-right: 20px;
-	// border-right:1px solid #ECEFF1;
 	box-sizing: border-box;
 	min-width: 200px;
 	flex: 0 0 200px;
