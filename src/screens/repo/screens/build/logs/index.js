@@ -121,22 +121,22 @@ export default class Output extends Component {
 const Actions = ({ following, running, onfollow, onunfollow }) => (
 	<div className={styles.actions}>
 		{running && !following ? (
-			<button onclick={onfollow} className={styles.follow}>
+			<button onClick={onfollow} className={styles.follow}>
 				<PlayIcon />
 			</button>
 		) : null}
 
 		{running && following ? (
-			<button onclick={onunfollow} className={styles.unfollow}>
+			<button onClick={onunfollow} className={styles.unfollow}>
 				<PauseIcon />
 			</button>
 		) : null}
 
-		<button onclick={scrollToTop} className={styles.bottom}>
+		<button onClick={scrollToTop} className={styles.bottom}>
 			<ExpandIcon />
 		</button>
 
-		<button onclick={scrollToBottom} className={styles.top}>
+		<button onClick={scrollToBottom} className={styles.top}>
 			<ExpandIcon />
 		</button>
 	</div>

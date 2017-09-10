@@ -1,7 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Title from "react-title-component";
 
+// @see https://github.com/yannickcr/eslint-plugin-react/issues/512
+// eslint-disable-next-line react/display-name
 export default function() {
 	return (
 		<Switch>

@@ -4,4 +4,5 @@ pipeline:
     commands:
       - yarn install
       - yarn run test
+      - yarn run lint
       - yarn run build

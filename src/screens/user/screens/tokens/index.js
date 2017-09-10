@@ -29,7 +29,7 @@ export default class Tokens extends Component {
 	}
 
 	render() {
-		const { user, location, token } = this.props;
+		const { location, token } = this.props;
 
 		if (!location || !token) {
 			return <div>Loading</div>;

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import style from "./avatar.less";
+import styles from "./avatar.less";
 
 export default class Avatar extends Component {
 	render() {
@@ -7,6 +7,6 @@ export default class Avatar extends Component {
 		const style = {
 			backgroundImage: `url(${image})`,
 		};
-		return <div className={style.avatar} style={style} />;
+		return <div className={styles.avatar} style={style} />;
 	}
 }

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import TimeAgo from "react-timeago";
 
 import Status from "shared/components/status";
 import StatusNumber from "shared/components/status_number";

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import RepoMenu from "../builds/menu";
 import { RefreshIcon, CloseIcon } from "shared/components/icons";
 
@@ -49,8 +48,7 @@ export default class BuildMenu extends Component {
 	}
 
 	render() {
-		const { build, match } = this.props;
-		const { owner, repo } = this.props.match;
+		const { build } = this.props;
 		return (
 			<div>
 				{!build ? (
@@ -60,12 +58,12 @@ export default class BuildMenu extends Component {
 						<ul>
 							<li>
 								{build.status === "peding" || build.status === "running" ? (
-									<button onclick={this.handleCancel}>
+									<button onClick={this.handleCancel}>
 										<CloseIcon />
 										<span>Cancel</span>
 									</button>
 								) : (
-									<button onclick={this.handleRestart}>
+									<button onClick={this.handleRestart}>
 										<RefreshIcon />
 										<span>Restart Build</span>
 									</button>

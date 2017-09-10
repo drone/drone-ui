@@ -6,7 +6,7 @@ export class Switch extends Component {
 		const { checked, onchange } = this.props;
 		return (
 			<label className={styles.switch}>
-				<input type="checkbox" checked={checked} onchange={onchange} />
+				<input type="checkbox" checked={checked} onChange={onchange} />
 			</label>
 		);
 	}

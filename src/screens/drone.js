@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { root, branch } from "baobab-react/higher-order";
+import { root } from "baobab-react/higher-order";
 import tree from "config/state";
 import client from "config/client";
 import { drone } from "config/client/inject";
@@ -10,8 +10,9 @@ import Layout from "./layout";
 import RedirectRoot from "./redirect";
 import { fetchFeedOnce, subscribeToFeedOnce } from "shared/utils/feed";
 
-import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
+// eslint-disable-next-line no-unused-vars
 import styles from "./drone.less";
 
 class App extends Component {

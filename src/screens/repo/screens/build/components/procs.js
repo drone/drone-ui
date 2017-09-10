@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import classnames from "classnames";
 
 import Status from "shared/components/status";

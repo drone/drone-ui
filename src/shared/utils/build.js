@@ -90,7 +90,7 @@ export const cancelBuild = (tree, client, owner, repo, build, proc) => {
 		.then(result => {
 			displayMessage(tree, "Successfully cancelled your build");
 		})
-		.catch(error => {
+		.catch(() => {
 			displayMessage(tree, "Failed to cancel your build");
 		});
 };
@@ -110,7 +110,7 @@ export const restartBuild = (tree, client, owner, repo, build) => {
 		.then(result => {
 			displayMessage(tree, "Successfully restarted your build");
 		})
-		.catch(error => {
+		.catch(() => {
 			displayMessage(tree, "Failed to restart your build");
 		});
 };
@@ -130,7 +130,7 @@ export const approveBuild = (tree, client, owner, repo, build) => {
 		.then(result => {
 			displayMessage(tree, "Successfully processed your approval decision");
 		})
-		.catch(error => {
+		.catch(() => {
 			displayMessage(tree, "Failed to process your approval decision");
 		});
 };
@@ -150,7 +150,7 @@ export const declineBuild = (tree, client, owner, repo, build) => {
 		.then(result => {
 			displayMessage(tree, "Successfully processed your decline decision");
 		})
-		.catch(error => {
+		.catch(() => {
 			displayMessage(tree, "Failed to process your decline decision");
 		});
 };

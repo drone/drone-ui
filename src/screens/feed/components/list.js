@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 
 import Status from "shared/components/status";
-import Duration from "shared/components/duration";
-
 import BuildTime from "shared/components/build_time";
 
 import styles from "./list.less";

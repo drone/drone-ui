@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import styles from "./list.less";
 
 export const List = ({ children }) => (
@@ -9,7 +9,7 @@ export const Item = props => (
 	<div className={styles.item} key={props.name}>
 		<div>{props.name}</div>
 		<div>
-			<button onclick={props.ondelete}>delete</button>
+			<button onClick={props.ondelete}>delete</button>
 		</div>
 	</div>
 );

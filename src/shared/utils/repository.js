@@ -112,7 +112,7 @@ export const updateRepository = (tree, client, owner, name, data) => {
 			tree.set(["repos", "data", repo.full_name], repo);
 			displayMessage(tree, "Successfully updated the repository settings");
 		})
-		.catch(error => {
+		.catch(() => {
 			displayMessage(tree, "Failed to update the repository settings");
 		});
 };
@@ -133,7 +133,7 @@ export const enableRepository = (tree, client, owner, name) => {
 			displayMessage(tree, "Successfully activated your repository");
 			tree.set(["repos", "data", result.full_name, "active"], true);
 		})
-		.catch(error => {
+		.catch(() => {
 			displayMessage(tree, "Failed to activate your repository");
 		});
 };
@@ -154,7 +154,7 @@ export const disableRepository = (tree, client, owner, name) => {
 			displayMessage(tree, "Successfully disabled your repository");
 			tree.set(["repos", "data", result.full_name, "active"], false);
 		})
-		.catch(error => {
+		.catch(() => {
 			displayMessage(tree, "Failed to disabled your repository");
 		});
 };

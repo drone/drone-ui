@@ -30,7 +30,7 @@ export default class UserReposMenu extends Component {
 			<section>
 				<ul>
 					<li>
-						<button disabled={!loaded} onclick={this.handleClick}>
+						<button disabled={!loaded} onClick={this.handleClick}>
 							<SyncIcon />
 							<span>Synchronize</span>
 						</button>

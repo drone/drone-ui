@@ -9,6 +9,7 @@ import styles from "./details.less";
 export class Details extends Component {
 	render() {
 		const { build } = this.props;
+
 		return (
 			<div className={styles.info}>
 				<StatusLabel status={build.status} />

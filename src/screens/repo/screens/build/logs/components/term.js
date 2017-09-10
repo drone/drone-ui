@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import ansi_up from "ansi_up";
+import AnsiUp from "ansi_up";
 import style from "./term.less";
 
-let formatter = new ansi_up();
+let formatter = new AnsiUp();
 formatter.use_classes = true;
 
 class Term extends Component {

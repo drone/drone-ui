@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-import styles from "./menu.less";
-
 export default class RepoMenu extends Component {
 	render() {
 		const { owner, repo } = this.props.match.params;

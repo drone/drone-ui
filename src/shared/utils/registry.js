@@ -45,7 +45,7 @@ export const createRegistry = (tree, client, owner, name, registry) => {
 			tree.set(["registry", "data", slug, registry.address], result);
 			displayMessage(tree, "Successfully stored the registry credentials");
 		})
-		.catch(error => {
+		.catch(() => {
 			displayMessage(tree, "Failed to store the registry credentials");
 		});
 };
@@ -69,7 +69,7 @@ export const deleteRegistry = (tree, client, owner, name, registry) => {
 			tree.unset(["registry", "data", slug, registry]);
 			displayMessage(tree, "Successfully deleted the registry credentials");
 		})
-		.catch(error => {
+		.catch(() => {
 			displayMessage(tree, "Failed to delete the registry credentials");
 		});
 };

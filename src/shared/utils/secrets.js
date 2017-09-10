@@ -45,7 +45,7 @@ export const createSecret = (tree, client, owner, name, secret) => {
 			tree.set(["secrets", "data", slug, secret.name], result);
 			displayMessage(tree, "Successfully added the secret");
 		})
-		.catch(error => {
+		.catch(() => {
 			displayMessage(tree, "Failed to create the secret");
 		});
 };
@@ -69,8 +69,7 @@ export const deleteSecret = (tree, client, owner, name, secret) => {
 			tree.unset(["secrets", "data", slug, secret]);
 			displayMessage(tree, "Successfully removed the secret");
 		})
-		.catch(error => {
-			console.error(error.message ? error.message : error);
+		.catch(() => {
 			displayMessage(tree, "Failed to remove the secret");
 		});
 };
