@@ -24,17 +24,47 @@ import {
 
 const defaultIconSize = 15;
 
-const messages = {
-	STATUS_BLOCKED: "Pending Approval",
-	STATUS_DECLINED: "Declined",
-	STATUS_ERROR: "Error",
-	STATUS_FAILURE: "Failure",
-	STATUS_KILLED: "Cancelled",
-	STATUS_PENDING: "Pending",
-	STATUS_RUNNING: "Running",
-	STATUS_SKIPPED: "Skipped",
-	STATUS_STARTED: "Running",
-	STATUS_SUCCESS: "Successful",
+const statusLabel = (status) => {
+    switch (status) {
+        case STATUS_BLOCKED:
+            return "Pending Approval";
+        case STATUS_DECLINED:
+            return "Declined";
+        case STATUS_ERROR:
+            return "Error";
+        case STATUS_FAILURE:
+            return "Failure";
+        case STATUS_KILLED:
+            return "Cancelled";
+        case STATUS_PENDING:
+            return "Pending";
+        case STATUS_RUNNING:
+            return "Running";
+        case STATUS_SKIPPED:
+            return "Skipped";
+        case STATUS_STARTED:
+            return "Running";
+        case STATUS_SUCCESS:
+            return "Successful";
+        default:
+            return ""
+    }
+};
+
+const renderIcon = (status, size) => {
+    switch (status) {
+        case STATUS_SKIPPED:
+            return <RemoveIcon size={size} />;
+        case STATUS_PENDING:
+            return <ClockIcon size={size} />;
+        case STATUS_RUNNING:
+        case STATUS_STARTED:
+            return <RefreshIcon size={size} />;
+        case STATUS_SUCCESS:
+            return <CheckIcon size={size} />;
+        default:
+            return <CloseIcon size={size} />;
+    }
 };
 
 export default class Status extends Component {
@@ -50,24 +80,8 @@ export default class Status extends Component {
 	}
 }
 
-const renderIcon = (status, size) => {
-	switch (status) {
-		case STATUS_SKIPPED:
-			return <RemoveIcon size={size} />;
-		case STATUS_PENDING:
-			return <ClockIcon size={size} />;
-		case STATUS_RUNNING:
-		case STATUS_STARTED:
-			return <RefreshIcon size={size} />;
-		case STATUS_SUCCESS:
-			return <CheckIcon size={size} />;
-		default:
-			return <CloseIcon size={size} />;
-	}
+export const StatusLabel = ({ status }) => {
+	return (<div className={classnames(style.label, style[status])}>
+		<div>{statusLabel(status)}</div>
+	</div>);
 };
-
-export const StatusLabel = ({ status }) => (
-	<div className={classnames(style.label, style[status])}>
-		<div>{messages[status]}</div>
-	</div>
-);
