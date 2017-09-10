@@ -7,6 +7,12 @@ import {
 	MergeIcon,
 	TagIcon,
 } from "shared/components/icons/index";
+import {
+	EVENT_TAG,
+	EVENT_PULL_REQUEST,
+	EVENT_DEPLOY
+} from "shared/constants/events";
+
 import styles from "./build_event.less";
 
 export default class BuildEvent extends Component {
@@ -23,22 +29,22 @@ export default class BuildEvent extends Component {
 				</div>
 				<div className={styles.row}>
 					<div>
-						{event === "tag" ? (
+						{event === EVENT_TAG ? (
 							<TagIcon />
-						) : event === "pull_request" ? (
+						) : event === EVENT_PULL_REQUEST ? (
 							<MergeIcon />
-						) : event === "deployment" ? (
+						) : event === EVENT_DEPLOY ? (
 							<DeployIcon />
 						) : (
 							<BranchIcon />
 						)}
 					</div>
 					<div>
-						{event === "tag" && refs ? (
+						{event === EVENT_TAG && refs ? (
 							trimTagRef(refs)
-						) : event === "pull_request" && refspec ? (
+						) : event === EVENT_PULL_REQUEST && refspec ? (
 							trimMergeRef(refs)
-						) : event === "deployment" && target ? (
+						) : event === EVENT_DEPLOY && target ? (
 							target
 						) : (
 							branch
