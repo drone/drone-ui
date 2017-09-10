@@ -3,18 +3,18 @@
 .switch {
 
 	label {
-	  display: flex;
-	  align-items: center;
-	  margin-bottom: 10px;
-	  cursor: pointer;
+		display: flex;
+		align-items: center;
+		margin-bottom: 10px;
+		cursor: pointer;
 	}
 
 	input[type=checkbox] {
-	  cursor: pointer;
-	  width: 12px;
-	  height: 12px;
-	  margin-right: 30px;
-	  position: relative;
+		cursor: pointer;
+		width: 12px;
+		height: 12px;
+		margin-right: 30px;
+		position: relative;
 		appearance:none;
 		-webkit-appearance: none;
 		-moz-appearance: none;
@@ -24,28 +24,28 @@
 
 	input[type=checkbox]::before,
 	input[type=checkbox]::after {
-	  content: "";
-	  position: absolute;
+		content: "";
+		position: absolute;
 	}
 
 	input[type=checkbox]::before {
-	  width: 250%;
-	  background-color: @gray-extralight;
-	  transform: translate(-25%, 0);
-	  border-radius: 30px;
-	  height: 100%;
-	  transition: all 0.25s ease-in-out;
+		width: 250%;
+		background-color: lighten(@gray-light, 15%);
+		transform: translate(-25%, 0);
+		border-radius: 30px;
+		height: 100%;
+		transition: all 0.25s ease-in-out;
 	}
 
 	input[type=checkbox]::after {
-	  width: 150%;
-	  height: 150%;
-	  margin-top: -25%;
-	  margin-left: 10%;
-	  background-color: @gray-extralight;
-	  border-radius: 30px;
-	  transform: translate(-60%, 0);
-	  transition: all 0.2s;
+		width: 150%;
+		height: 150%;
+		margin-top: -25%;
+		margin-left: 10%;
+		background-color: @gray-light;
+		border-radius: 30px;
+		transform: translate(-60%, 0);
+		transition: all 0.2s;
 	}
 
 	//
@@ -53,12 +53,12 @@
 	//
 
 	input[type=checkbox]:checked::after {
-	  transform: scale(0.75, 0.75);
-	  transform: translate(25%, 0);
-	  background-color: @green;
+		transform: scale(0.75, 0.75);
+		transform: translate(25%, 0);
+		background-color: @green;
 	}
 
 	input[type=checkbox]:checked::before {
-	  background-color: @green;
+		background-color: lighten(@green, 15%);
 	}
 }
