@@ -1,11 +1,7 @@
 import React, { Component } from "react";
 
 import { repositorySlug } from "shared/utils/repository";
-import {
-	EVENT_PUSH,
-	EVENT_TAG,
-	EVENT_DEPLOY
-} from "shared/constants/events";
+import { EVENT_PUSH, EVENT_TAG, EVENT_DEPLOY } from "shared/constants/events";
 import {
 	fetchSecretList,
 	createSecret,

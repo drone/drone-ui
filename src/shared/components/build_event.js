@@ -10,7 +10,7 @@ import {
 import {
 	EVENT_TAG,
 	EVENT_PULL_REQUEST,
-	EVENT_DEPLOY
+	EVENT_DEPLOY,
 } from "shared/constants/events";
 
 import styles from "./build_event.less";

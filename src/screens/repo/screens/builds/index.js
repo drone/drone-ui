@@ -79,6 +79,10 @@ export default class Main extends Component {
 			return <div>Loading</div>;
 		}
 
+		if (!repo) {
+			return <div>Loading</div>;
+		}
+
 		if (list.length === 0) {
 			return <div>Build list is empty</div>;
 		}

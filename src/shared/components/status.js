@@ -10,7 +10,7 @@ import {
 	STATUS_RUNNING,
 	STATUS_SKIPPED,
 	STATUS_SUCCESS,
-	STATUS_STARTED
+	STATUS_STARTED,
 } from "shared/constants/status";
 import style from "./status.less";
 

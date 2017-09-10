@@ -11,6 +11,7 @@ export function subscribeToLogs(tree, client, owner, repo, build, proc) {
 
 	subscribeToLogs.ws = client.stream(owner, repo, build, proc.ppid, item => {
 		if (item.proc == proc.name) {
+			// eslint-disable-line
 			tree.push(["logs", "data", slug, build, proc.pid, "data"], item);
 		}
 	});

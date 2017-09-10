@@ -9,15 +9,17 @@ import Status from "../status";
 import {
 	STATUS_FAILURE,
 	STATUS_RUNNING,
-	STATUS_SUCCESS
+	STATUS_SUCCESS,
 } from "shared/constants/status";
 
 describe("Status component", () => {
 	test("updates on status change", () => {
 		const status = mount(<Status status={STATUS_FAILURE} />);
 		const instance = status.instance();
-		expect(instance.shouldComponentUpdate({ status: STATUS_FAILURE })).to.be.false;
-		expect(instance.shouldComponentUpdate({ status: STATUS_SUCCESS })).to.be.true;
+		expect(instance.shouldComponentUpdate({ status: STATUS_FAILURE })).to.be
+			.false;
+		expect(instance.shouldComponentUpdate({ status: STATUS_SUCCESS })).to.be
+			.true;
 		expect(status.hasClass("failure")).to.be.true;
 	});
 

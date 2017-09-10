@@ -1,7 +1,4 @@
-import {
-	STATUS_PENDING,
-	STATUS_RUNNING
-} from "shared/constants/status";
+import { STATUS_PENDING, STATUS_RUNNING } from "shared/constants/status";
 
 /**
  * Returns a process from the process tree with the
@@ -15,11 +12,13 @@ export const findChildProcess = (tree, pid) => {
 	for (var i = 0; i < tree.length; i++) {
 		const parent = tree[i];
 		if (parent.pid == pid) {
+			// eslint-disable-line
 			return parent;
 		}
 		for (var ii = 0; ii < parent.children.length; ii++) {
 			const child = parent.children[ii];
 			if (child.pid == pid) {
+				// eslint-disable-line
 				return child;
 			}
 		}

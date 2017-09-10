@@ -11,7 +11,7 @@ import {
 import {
 	STATUS_BLOCKED,
 	STATUS_DECLINED,
-	STATUS_ERROR
+	STATUS_ERROR,
 } from "shared/constants/status";
 
 import { findChildProcess } from "shared/utils/proc";
@@ -271,7 +271,8 @@ export default class BuildLogs extends Component {
 							{build.procs.map(child => {
 								return (
 									<Link
-										to={`/${repo.full_name}/${build.number}/${child.children[0].pid}`}
+										to={`/${repo.full_name}/${build.number}/${child.children[0]
+											.pid}`}
 									>
 										<MatrixItem
 											number={child.pid}

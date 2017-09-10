@@ -1,9 +1,6 @@
 import { repositorySlug } from "./repository";
 import { displayMessage } from "./message";
-import {
-	STATUS_PENDING,
-	STATUS_RUNNING
-} from "shared/constants/status";
+import { STATUS_PENDING, STATUS_RUNNING } from "shared/constants/status";
 
 /**
  * Gets the build for the named repository and stores
