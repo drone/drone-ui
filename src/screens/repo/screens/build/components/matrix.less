@@ -1,18 +1,18 @@
-@import "../../../../../shared/styles/colors.less";
+@import "~shared/styles/colors.less";
 
 .list {
 	a {
 		text-decoration: none;
-		border-bottom: 1px solid @gray-extralight;
+		border-bottom: 1px solid @gray-light;
 		display:block;
 		padding: 20px 10px;
 		color: @gray-dark;
 		cursor: pointer;
 
 		&:hover {
-			background: @gray-extralight;
+			background: @gray-light;
 			.body {
-				border-color: @gray-light;
+				border-color: @gray;
 			}
 		}
 
@@ -42,7 +42,7 @@
 }
 
 .body {
-	border-left: 1px solid @gray-extralight;
+	border-left: 1px solid @gray-light;
 	padding-left:20px;
 	flex: 0 0 200px;
 }

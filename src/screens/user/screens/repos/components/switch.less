@@ -1,4 +1,4 @@
-@import "../../../../../shared/styles/colors.less";
+@import "~shared/styles/colors.less";
 
 .switch {
 
@@ -30,7 +30,7 @@
 
 	input[type=checkbox]::before {
 		width: 250%;
-		background-color: lighten(@gray-light, 15%);
+		background-color: lighten(@gray, 15%);
 		transform: translate(-25%, 0);
 		border-radius: 30px;
 		height: 100%;
@@ -42,7 +42,7 @@
 		height: 150%;
 		margin-top: -25%;
 		margin-left: 10%;
-		background-color: @gray-light;
+		background-color: @gray;
 		border-radius: 30px;
 		transform: translate(-60%, 0);
 		transition: all 0.2s;
