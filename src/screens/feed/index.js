@@ -6,7 +6,7 @@ import { compareFeedItem } from "shared/utils/feed";
 import { branch } from "baobab-react/higher-order";
 import { inject } from "config/client/inject";
 
-import DroenIcon from "shared/components/logo";
+import DroneIcon from "shared/components/logo";
 import { List, Item } from "./components";
 
 import style from "./index.less";
@@ -87,7 +87,7 @@ const renderItem = item => {
 
 const LOGO = (
 	<div className={style.brand}>
-		<DroenIcon />
+		<DroneIcon />
 	</div>
 );
 
