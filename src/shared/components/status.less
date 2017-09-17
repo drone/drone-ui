@@ -37,22 +37,16 @@
 	}
 
 	//
-	// pending
+	// blocked, running, started
 	//
 
 	&.blocked,
 	&.running,
-	&.started,
-	&.pending {
+	&.started {
 		border-color: @yellow;
 		svg {
 			fill: @yellow;
 		}
-	}
-
-	&.pending svg {
-		animation: wrench 2.5s ease infinite;
-		transform-origin: center 54%;
 	}
 
 	&.started svg,
@@ -61,14 +55,20 @@
 	}
 
 	//
-	// skipped
+	// pending, skipped
 	//
 
+	&.pending,
 	&.skipped {
 		border-color: @gray;
 		svg {
 			fill: @gray;
 		}
+	}
+
+	&.pending svg {
+		animation: wrench 2.5s ease infinite;
+		transform-origin: center 54%;
 	}
 }
 
@@ -130,20 +130,20 @@
 	}
 
 	//
-	// pending
+	// blocked, running, started
 	//
 
 	&.blocked,
 	&.running,
-	&.started,
-	&.pending {
+	&.started {
 		background-color: @yellow;
 	}
 
 	//
-	// skipped
+	// pending, skipped
 	//
 
+	&.pending,
 	&.skipped {
 		background-color: @gray;
 	}
