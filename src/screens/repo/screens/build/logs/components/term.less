@@ -1,5 +1,6 @@
-@import '~shared/styles/colors';
 @import '~shared/styles/ansi';
+@import '~shared/styles/colors';
+@import '~shared/styles/fonts';
 
 .term {
 	background: @gray-light;
@@ -10,7 +11,7 @@
 		-moz-user-select: none;
 		-webkit-user-select: none;
 		color: rgba(0, 0, 0, 0.3);
-		font-family: 'Roboto Mono', monospace;
+		font-family: @font-monospaced;
 		font-size: 13px;
 		margin-top: 10px;
 		min-width: 20px;
@@ -28,7 +29,7 @@
 
 	span,
 	div {
-		font-family: 'Roboto Mono', monospace;
+		font-family: @font-monospaced;
 		font-size: 12px;
 	}
 
@@ -59,7 +60,7 @@
 .loading {
 	background: @gray-light;
 	border-radius: 2px;
-	font-family: 'Roboto Mono', monospace;
+	font-family: @font-monospaced;
 	font-size: 13px;
 	padding: 20px;
 }
