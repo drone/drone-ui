@@ -1,32 +1,34 @@
-@import "~shared/styles/colors.less";
+@import '~shared/styles/colors';
 
 .root {
-	padding: 20px;
 	display: flex;
+	padding: 20px;
 }
 
 .left {
 	flex: 1;
-	margin-right:20px;
+	margin-right: 20px;
 }
 
 .right {
-	flex: 1;
 	border-left: 1px solid @gray-light;
-	padding-left:20px;
-	padding-top:10px;
+	flex: 1;
+	padding-left: 20px;
+	padding-top: 10px;
 }
 
 @media (max-width: 960px) {
 	.root {
 		flex-direction: column;
 	}
+
 	.list {
 		margin-right: 0px;
 	}
+
 	.right {
-		border-left: none;
-		padding-left:0px;
-		padding-top:20px;
+		border-left: 0px;
+		padding-left: 0px;
+		padding-top: 20px;
 	}
 }

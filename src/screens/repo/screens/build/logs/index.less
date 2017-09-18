@@ -1,45 +1,43 @@
-@import "~shared/styles/colors.less";
+@import '~shared/styles/colors';
 
 .loading {
-	padding: 20px;
-	border-radius: 2px;
 	background: @gray-light;
+	border-radius: 2px;
 	font-family: 'Roboto Mono', monospace;
 	font-size: 12px;
+	padding: 20px;
 }
 
 .error {
 	background: @gray-light;
+	border-radius: 2px;
 	color: @red;
-	padding: 20px;
-	border-radius:2px;
 	font-size: 14px;
-	margin-bottom:10px;
+	margin-bottom: 10px;
+	padding: 20px;
 }
 
 .actions {
-	position: fixed;
 	bottom: 30px;
-	right: 30px;
-	display:flex;
+	display: flex;
 	flex-direction: row;
+	position: fixed;
+	right: 30px;
 
 	button {
-		background: @white;
-		border: none;
-		outline: none;
-		border: 1px solid @gray;
-		margin-left:-1px;
-		padding:0px;
-		display:flex;
-		flex-direction: row;
 		align-items: center;
-		padding:2px;
-		cursor: pointer;
+		background: @white;
+		border: 1px solid @gray;
 		color: @gray-dark;
+		cursor: pointer;
+		display: flex;
+		flex-direction: row;
 		justify-content: center;
-		min-width: 32px;
+		margin-left: -1px;
 		min-height: 32px;
+		min-width: 32px;
+		outline: none;
+		padding: 2px;
 
 		&.bottom svg {
 			transform: rotate(180deg);
@@ -47,8 +45,8 @@
 
 		&.follow svg,
 		&.unfollow svg {
-			width: 18px;
 			height: 18px;
+			width: 18px;
 		}
 	}
 
@@ -58,31 +56,29 @@
 }
 
 .logactions {
-	position: fixed;
 	bottom: 30px;
+	display: flex;
+	position: fixed;
 	right: 30px;
-	display:flex;
 
 	div {
 		display: flex;
 	}
 
 	button {
-		background: @white;
-		border: none;
-		outline: none;
-		border: 1px solid @gray-light;
-		margin-left:-1px;
-		padding:0px;
-		display:flex;
-		flex-direction: row;
 		align-items: center;
-		padding:2px;
-		cursor: pointer;
+		background: @white;
+		border: 1px solid @gray-light;
 		color: @gray-dark;
+		cursor: pointer;
+		display: flex;
+		flex-direction: row;
 		justify-content: center;
-		min-width: 32px;
+		margin-left: -1px;
 		min-height: 32px;
+		min-width: 32px;
+		outline: none;
+		padding: 2px;
 
 		svg {
 			fill: @gray-dark;
@@ -93,11 +89,17 @@
 		}
 
 		&.followButton {
-			svg { width: 18px; height: 18px; }
+			svg {
+				height: 18px;
+				width: 18px;
+			}
 		}
 
 		&.unfollowButton {
-			svg { width: 18px; height: 18px; }
+			svg {
+				height: 18px;
+				width: 18px;
+			}
 		}
 	}
 }

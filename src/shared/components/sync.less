@@ -1,42 +1,46 @@
-@import "~shared/styles/colors.less";
+@import '~shared/styles/colors';
 
-@font: "Roboto";
+@font: 'Roboto';
 
 .root {
-	margin:50px auto;
-	min-width: 400px;
-	max-width: 400px;
-	padding: 30px;
 	box-sizing: border-box;
+	margin: 50px auto;
+	max-width: 400px;
+	min-width: 400px;
+	padding: 30px;
 
 	.alert {
-		margin-bottom: 20px;
-		text-align: left;
-		display: block;
-		color: @white;
 		background: @yellow;
-		padding: 20px;
-		display:flex;
 		border-radius: 2px;
+		color: @white;
+		display: flex;
+		margin-bottom: 20px;
+		padding: 20px;
+		text-align: left;
 
 		&> :last-child {
-			padding-top: 2px;
-			padding-left: 10px;
-			line-height: 20px;
 			font-family: @font;
 			font-size: 15px;
+			line-height: 20px;
+			padding-left: 10px;
+			padding-top: 2px;
 		}
 	}
 
 	svg {
-		fill: @white;
-		width: 26px;
-		height: 26px;
 		animation: spinner 1.2s ease infinite;
+		fill: @white;
+		height: 26px;
+		width: 26px;
 	}
 }
 
 @keyframes spinner {
-	0%{transform:rotate(0deg)}
-	100%{transform:rotate(359deg)}
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(359deg);
+	}
 }

@@ -1,81 +1,78 @@
-@import "~shared/styles/colors.less";
+@import '~shared/styles/colors';
 
 @snackbar-margin: 20px;
 @snackbar-min-width: 500px;
 
 // wrapper for the css transition group
 .root {
-  position: absolute;
-  top: -1000px;
-  bottom: -1000px;
-  width:0px;
-  height:0px;
+	bottom: -1000px;
+	height: 0px;
+	position: absolute;
+	top: -1000px;
+	width: 0px;
 }
 
 .snackbar {
-  z-index:2;
-  position: fixed;
-  min-width: @snackbar-min-width;
+	align-items: stretch;
+	background: @gray-dark;
+	bottom: @snackbar-margin;
+	box-shadow: rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px
+		18px 0px rgba(0, 0, 0, 0.12);
+	display: none;
+	flex-direction: row;
+	left: @snackbar-margin;
+	min-width: @snackbar-min-width;
+	position: fixed;
+	z-index: 2;
 
-  left: @snackbar-margin;
-  bottom: @snackbar-margin;
-  background: @gray-dark;
-  display: none;
-  flex-direction: row;
-  align-items: stretch;
+	&.open {
+		display: flex;
+	}
 
-  box-shadow:
-    0px 3px 5px -1px rgba(0, 0, 0, 0.2),
-    0px 6px 10px 0px rgba(0, 0, 0, 0.14),
-    0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+	&> :first-child {
+		color: @white;
+		flex: 1;
+		font-size: 14px;
+		line-height: 24px;
+		padding: 10px 20px;
+		vertical-align: middle;
+	}
 
-  &.open {
-    display: flex;
-  }
+	button {
+		background: transparent;
+		border: 0px;
+		cursor: pointer;
+		display: flex;
+		flex: 0 0 24px;
+		margin: 0px;
+		margin-right: 10px;
+		outline: none;
+		padding: 0px;
 
-  &> :first-child {
-    flex: 1;
-    line-height: 24px;
-    vertical-align: middle;
-    color: @white;
-    font-size: 14px;
-    padding: 10px 20px;
-  }
-
-  button {
-    display: flex;
-    flex: 0 0 24px;
-    margin: 0px;
-    padding: 0px;
-    border: none;
-    background: transparent;
-    outline: none;
-    cursor: pointer;
-    margin-right: 10px;
-    svg {
-      align-items: center;
-      height: 24px;
-      fill: @white;
-    }
-  }
+		svg {
+			align-items: center;
+			fill: @white;
+			height: 24px;
+		}
+	}
 }
 
 :global {
-  .slideup-enter {
-    bottom: -50px;
-  }
+	.slideup-enter {
+		bottom: -50px;
+	}
 
-  .slideup-enter.slideup-enter-active {
-    bottom: @snackbar-margin;
-    transition: bottom 200ms linear;
-  }
+	.slideup-enter.slideup-enter-active {
+		bottom: @snackbar-margin;
+		transition: bottom 200ms linear;
+	}
 
-  .slideup-leave {
-    bottom: @snackbar-margin;
-  }
+	.slideup-leave {
+		bottom: @snackbar-margin;
+	}
 
-  .slideup-leave.slideup-leave-active {
-    bottom: -50px;
-    transition: bottom 200ms linear;
-  }
+	.slideup-leave.slideup-leave-active {
+		bottom: -50px;
+		transition: bottom 200ms linear;
+	}
 }

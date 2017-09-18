@@ -1,14 +1,14 @@
-@import "~shared/styles/colors.less";
+@import '~shared/styles/colors';
 
 .root {
-	display: inline-block;
-	border-width: 2px;
-	border-style: solid;
 	border-radius: 2px;
-	text-align: center;
+	border-style: solid;
+	border-width: 2px;
+	display: inline-block;
+	font-size: 14px;
 	line-height: 20px;
 	min-width: 65px;
-	font-size: 14px;
+	text-align: center;
 
 	//
 	// success
@@ -27,8 +27,8 @@
 	&.failure,
 	&.killed,
 	&.error {
-		color: @red;
 		border-color: @red;
+		color: @red;
 	}
 
 	//
@@ -38,8 +38,8 @@
 	&.blocked,
 	&.running,
 	&.started {
-		color: @yellow;
 		border-color: @yellow;
+		color: @yellow;
 	}
 
 	//
@@ -48,7 +48,7 @@
 
 	&.pending,
 	&.skipped {
-		color: @gray;
 		border-color: @gray;
+		color: @gray;
 	}
 }

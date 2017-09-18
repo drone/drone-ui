@@ -1,69 +1,69 @@
-@import "~shared/styles/colors.less";
+@import '~shared/styles/colors';
 
-@font: "Roboto";
+@font: 'Roboto';
 
 .login {
 	margin-top: 50px;
 
 	p {
 		color: @gray-dark;
-		padding: 0px;
+		font-family: @font;
+		line-height: 22px;
 		margin: 0px;
 		margin-bottom: 30px;
+		padding: 0px;
 		text-align: center;
-		line-height: 22px;
-		font-family: @font;
 		user-select: none;
 	}
 
 	input {
-		outline: none;
-		display: block;
-		width: 100%;
 		box-sizing: border-box;
+		display: block;
+		outline: none;
+		width: 100%;
 
-		&[type=password],
-		&[type=text] {
-			padding: 10px;
-			margin-bottom: 20px;
-			border: 1px solid @gray-light;
+		&[type='password'],
+		&[type='text'] {
 			background: @white;
+			border: 1px solid @gray-light;
 			font-family: @font;
+			margin-bottom: 20px;
+			padding: 10px;
 
 			&:focus {
 				border: 1px solid @gray-dark;
 			}
 		}
 
-		&[type=submit] {
-			color: @white;
-			border: none;
+		&[type='submit'] {
 			background: @gray-dark;
-			line-height: 36px;
+			border: 0px;
+			color: @white;
 			font-family: @font;
+			line-height: 36px;
 			user-select: none;
 		}
 	}
 
 	form {
-		margin:0px auto;
-		min-width: 400px;
-		max-width: 400px;
-		padding: 30px;
 		box-sizing: border-box;
+		margin: 0px auto;
+		max-width: 400px;
+		min-width: 400px;
+		padding: 30px;
 	}
 
 	::-moz-input-placeholder {
 		color: @gray;
-		font-weight:300;
-		font-size:16px;
+		font-size: 16px;
+		font-weight: 300;
 		user-select: none;
 	}
 
 	::-webkit-input-placeholder {
 		color: @gray;
-		font-weight:300;
-		font-size:16px;
+		font-size: 16px;
+		font-weight: 300;
 		user-select: none;
 	}
 }

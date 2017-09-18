@@ -1,18 +1,18 @@
-@import "~shared/styles/utils.less";
+@import '~shared/styles/utils';
 
 .host {
-	position:relative;
+	position: relative;
 
 	svg {
-		width: 18px;
 		height: 18px;
+		width: 18px;
 	}
 
 	a {
 		display: block;
 		position: absolute;
-		top: 0px;
 		right: 0px;
+		top: 0px;
 	}
 }
 
@@ -20,15 +20,15 @@
 	display: flex;
 
 	:first-child {
-		display: flex;
 		align-items: center;
+		display: flex;
 		margin-right: 5px;
 	}
 
 	:last-child {
 		flex: 1;
-		line-height: 24px;
 		font-size: 14px;
+		line-height: 24px;
 		.text-ellipsis
 	}
 }
