@@ -1,6 +1,7 @@
 import Baobab from "baobab";
 
 const user = window.DRONE_USER;
+const sync = window.DRONE_SYNC;
 
 const state = {
 	follow: false,
@@ -10,6 +11,7 @@ const state = {
 		data: user,
 		error: undefined,
 		loaded: true,
+		syncing: sync,
 	},
 
 	feed: {

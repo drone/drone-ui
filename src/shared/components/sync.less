@@ -1,0 +1,42 @@
+@import "~shared/styles/colors.less";
+
+@font: "Roboto";
+
+.root {
+	margin:50px auto;
+	min-width: 400px;
+	max-width: 400px;
+	padding: 30px;
+	box-sizing: border-box;
+
+	.alert {
+		margin-bottom: 20px;
+		text-align: left;
+		display: block;
+		color: @white;
+		background: @yellow;
+		padding: 20px;
+		display:flex;
+		border-radius: 2px;
+
+		&> :last-child {
+			padding-top: 2px;
+			padding-left: 10px;
+			line-height: 20px;
+			font-family: @font;
+			font-size: 15px;
+		}
+	}
+
+	svg {
+		fill: @white;
+		width: 26px;
+		height: 26px;
+		animation: spinner 1.2s ease infinite;
+	}
+}
+
+@keyframes spinner {
+	0%{transform:rotate(0deg)}
+	100%{transform:rotate(359deg)}
+}

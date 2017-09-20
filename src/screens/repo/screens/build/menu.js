@@ -56,9 +56,7 @@ export default class BuildMenu extends Component {
 		const { build, match } = this.props;
 		const { proc } = match.params;
 
-		const showCancel = assertBuildMatrix(build)
-			? proc === undefined ? false : true
-			: true;
+		const hideCancel = assertBuildMatrix(build) && !proc;
 
 		return (
 			<div>
@@ -69,7 +67,7 @@ export default class BuildMenu extends Component {
 						<ul>
 							<li>
 								{build.status === "peding" ||
-								build.status === "running" ? showCancel ? (
+								build.status === "running" ? !hideCancel ? (
 									<button onClick={this.handleCancel}>
 										<CloseIcon />
 										<span>Cancel</span>
