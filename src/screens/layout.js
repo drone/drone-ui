@@ -177,8 +177,13 @@ export default class Default extends Component {
 							component={undefined}
 						/>BuildMenu
 						<Route
+							path="/:owner/:repo/:build(\d*)/:proc(\d*)"
+							exact={true}
+							component={BuildMenu}
+						/>
+						<Route
 							path="/:owner/:repo/:build(\d*)"
-							exact={false}
+							exact={true}
 							component={BuildMenu}
 						/>
 						<Route path="/:owner/:repo" exact={false} component={RepoMenu} />
