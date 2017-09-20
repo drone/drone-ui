@@ -62,12 +62,6 @@ export default class UserRepos extends Component {
 		);
 	}
 
-	handleFilter(e) {
-		this.setState({
-			search: e.target.value,
-		});
-	}
-
 	render() {
 		const { repos, loaded, error } = this.props;
 		const { search } = this.state;
@@ -79,6 +73,10 @@ export default class UserRepos extends Component {
 
 		if (!loaded) {
 			return LOADING;
+		}
+
+		if (list.length === 0) {
+			return EMPTY;
 		}
 
 		const filter = repo => {
@@ -93,7 +91,7 @@ export default class UserRepos extends Component {
 					<input
 						type="text"
 						placeholder="Search …"
-						onchange={this.handleFilter}
+						onChange={this.handleFilter}
 					/>
 				</div>
 				<div className={styles.root}>
@@ -126,6 +124,7 @@ const NO_MATCHES = <div>No matches found</div>;
 
 const ERROR = <div>Error</div>;
 
+/* eslint-disable react/jsx-key */
 export class UserRepoTitle extends Component {
 	render() {
 		return (
@@ -135,3 +134,4 @@ export class UserRepoTitle extends Component {
 		);
 	}
 }
+/* eslint-enable react/jsx-key */

@@ -1,21 +1,15 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-
-import Breadcrumb, {
-	SEPARATOR,
-	BACK_BUTTON,
-} from "shared/components/breadcrumb";
-
-import style from "./header.less";
+import Breadcrumb from "shared/components/breadcrumb";
 
 export default class Header extends Component {
 	render() {
-		const { owner, repo, build } = this.props.match.params;
+		const { owner, repo } = this.props.match.params;
 		return (
 			<div>
 				<Breadcrumb
 					elements={[
-						<Link to={`/${owner}/${repo}`}>
+						<Link to={`/${owner}/${repo}`} key={`${owner}-${repo}`}>
 							{owner} / {repo}
 						</Link>,
 					]}

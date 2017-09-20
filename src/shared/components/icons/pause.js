@@ -4,7 +4,7 @@ export default class PauseIcon extends Component {
 	render() {
 		return (
 			<svg
-				class={this.props.className}
+				className={this.props.className}
 				width={this.props.size || 24}
 				height={this.props.size || 24}
 				viewBox="0 0 24 24"

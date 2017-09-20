@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 import Status from "shared/components/status";
 import StatusNumber from "shared/components/status_number";

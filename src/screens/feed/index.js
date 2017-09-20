@@ -55,7 +55,7 @@ export default class Sidebar extends Component {
 				<input
 					type="text"
 					placeholder="Search …"
-					onchange={this.handleFilter}
+					onChange={this.handleFilter}
 				/>
 				{feed.loaded === false ? (
 					LOADING

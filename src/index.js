@@ -1,7 +1,6 @@
-require("babel-polyfill");
-
-import React, { Component } from "react";
-import ReactDOM, { render } from "react-dom";
+import "babel-polyfill";
+import React from "react";
+import { render } from "react-dom";
 
 let root;
 

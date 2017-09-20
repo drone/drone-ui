@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
 import { Link } from "react-router-dom";
 
 import {
@@ -17,17 +16,7 @@ import {
 import { findChildProcess } from "shared/utils/proc";
 import { fetchRepository } from "shared/utils/repository";
 
-import Breadcrumb, {
-	SEPARATOR,
-	BACK_BUTTON,
-} from "shared/components/breadcrumb";
-
-import {
-	Top,
-	Bottom,
-	scrollToTop,
-	scrollToBottom,
-} from "./logs/components/anchor";
+import Breadcrumb, { SEPARATOR } from "shared/components/breadcrumb";
 
 import {
 	Approval,
@@ -46,10 +35,9 @@ import Output from "./logs";
 import styles from "./index.less";
 
 const binding = (props, context) => {
-	const { owner, repo, build, proc } = props.match.params;
+	const { owner, repo, build } = props.match.params;
 	const slug = `${owner}/${repo}`;
 	const number = parseInt(build);
-	const pid = parseInt(proc || 2);
 
 	return {
 		repo: ["repos", "data", slug],
@@ -120,7 +108,7 @@ export default class BuildLogs extends Component {
 	}
 
 	render() {
-		const { repo, build, match, follow } = this.props;
+		const { repo, build } = this.props;
 
 		if (!build || !repo) {
 			return this.renderLoading();
@@ -197,7 +185,7 @@ export default class BuildLogs extends Component {
 	}
 
 	renderSimple() {
-		const { repo, build, match, follow } = this.props;
+		const { repo, build, match } = this.props;
 		const proc = findChildProcess(build.procs || [], match.params.proc || 2);
 		const parent = findChildProcess(build.procs, proc.ppid);
 
@@ -219,6 +207,7 @@ export default class BuildLogs extends Component {
 									return (
 										<Link
 											to={`/${repo.full_name}/${build.number}/${child.pid}`}
+											key={`${repo.full_name}-${build.number}-${child.pid}`}
 										>
 											<ProcListItem
 												key={child.pid}
@@ -254,9 +243,9 @@ export default class BuildLogs extends Component {
 	}
 
 	renderMatrix() {
-		const { repo, build, match, follow } = this.props;
+		const { repo, build, match } = this.props;
 
-		if (this.props.match.params.proc) {
+		if (match.params.proc) {
 			return this.renderSimple();
 		}
 
@@ -272,6 +261,8 @@ export default class BuildLogs extends Component {
 								return (
 									<Link
 										to={`/${repo.full_name}/${build.number}/${child.children[0]
+											.pid}`}
+										key={`${repo.full_name}-${build.number}-${child.children[0]
 											.pid}`}
 									>
 										<MatrixItem
@@ -298,11 +289,16 @@ export class BuildLogsTitle extends Component {
 		return (
 			<Breadcrumb
 				elements={[
-					<Link to={`/${owner}/${repo}`}>
+					<Link to={`/${owner}/${repo}`} key={`${owner}-${repo}`}>
 						{owner} / {repo}
 					</Link>,
 					SEPARATOR,
-					<Link to={`/${owner}/${repo}/${build}`}>{build}</Link>,
+					<Link
+						to={`/${owner}/${repo}/${build}`}
+						key={`${owner}-${repo}-${build}`}
+					>
+						{build}
+					</Link>,
 				]}
 			/>
 		);

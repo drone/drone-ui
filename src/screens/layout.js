@@ -20,17 +20,12 @@ import RedirectRoot from "./redirect";
 import RepoHeader from "screens/repo/screens/builds/header";
 
 import UserReposMenu from "screens/user/screens/repos/menu";
-import BuildMenu from "screens/repo/screens/build/menu";
 import BuildLogs, { BuildLogsTitle } from "screens/repo/screens/build";
-import RepoMenu from "screens/repo/screens/build/menu";
+import BuildMenu from "screens/repo/screens/build/menu";
+import RepoMenu from "screens/repo/screens/builds/menu";
 
 import { Snackbar } from "shared/components/snackbar";
-import {
-	Drawer,
-	CloseButton,
-	DOCK_RIGHT,
-	DOCK_LEFT,
-} from "shared/components/drawer/drawer";
+import { Drawer, DOCK_RIGHT } from "shared/components/drawer/drawer";
 
 import styles from "./layout.less";
 

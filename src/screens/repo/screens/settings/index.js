@@ -57,7 +57,6 @@ export default class Settings extends Component {
 
 	render() {
 		const { repo } = this.props;
-		const { user } = this.props;
 
 		if (!repo) {
 			return undefined;
@@ -72,7 +71,7 @@ export default class Settings extends Component {
 							<input
 								type="checkbox"
 								checked={repo.allow_push}
-								onchange={this.handlePushChange}
+								onChange={this.handlePushChange}
 							/>
 							<span>push</span>
 						</label>
@@ -80,7 +79,7 @@ export default class Settings extends Component {
 							<input
 								type="checkbox"
 								checked={repo.allow_pr}
-								onchange={this.handlePullChange}
+								onChange={this.handlePullChange}
 							/>
 							<span>pull request</span>
 						</label>
@@ -88,7 +87,7 @@ export default class Settings extends Component {
 							<input
 								type="checkbox"
 								checked={repo.allow_tags}
-								onchange={this.handleTagChange}
+								onChange={this.handleTagChange}
 							/>
 							<span>tag</span>
 						</label>
@@ -96,7 +95,7 @@ export default class Settings extends Component {
 							<input
 								type="checkbox"
 								checked={repo.allow_deploys}
-								onchange={this.handleDeployChange}
+								onChange={this.handleDeployChange}
 							/>
 							<span>deployment</span>
 						</label>
@@ -110,7 +109,7 @@ export default class Settings extends Component {
 							<input
 								type="checkbox"
 								checked={repo.gated}
-								onchange={this.handleProtectedChange}
+								onChange={this.handleProtectedChange}
 							/>
 							<span>Protected</span>
 						</label>
@@ -118,7 +117,7 @@ export default class Settings extends Component {
 							<input
 								type="checkbox"
 								checked={repo.trusted}
-								onchange={this.handleTrustedChange}
+								onChange={this.handleTrustedChange}
 							/>
 							<span>Trusted</span>
 						</label>
@@ -134,7 +133,7 @@ export default class Settings extends Component {
 								name="visibility"
 								value="public"
 								checked={repo.visibility === VISIBILITY_PUBLIC}
-								onchange={this.handleVisibilityChange}
+								onChange={this.handleVisibilityChange}
 							/>
 							<span>Public</span>
 						</label>
@@ -144,7 +143,7 @@ export default class Settings extends Component {
 								name="visibility"
 								value="private"
 								checked={repo.visibility === VISIBILITY_PRIVATE}
-								onchange={this.handleVisibilityChange}
+								onChange={this.handleVisibilityChange}
 							/>
 							<span>Private</span>
 						</label>
@@ -154,7 +153,7 @@ export default class Settings extends Component {
 								name="visibility"
 								value="internal"
 								checked={repo.visibility === VISIBILITY_INTERNAL}
-								onchange={this.handleVisibilityChange}
+								onChange={this.handleVisibilityChange}
 							/>
 							<span>Internal</span>
 						</label>
@@ -167,7 +166,7 @@ export default class Settings extends Component {
 						<input
 							type="number"
 							value={repo.timeout}
-							onblur={this.handleTimeoutChange}
+							onBlur={this.handleTimeoutChange}
 						/>
 						<span className={styles.minutes}>minutes</span>
 					</div>

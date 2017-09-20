@@ -13,7 +13,7 @@ export const generateToken = (tree, client) => {
 		.then(token => {
 			tree.set(["token"], token);
 		})
-		.catch(error => {
+		.catch(() => {
 			displayMessage(tree, "Failed to retrieve your personal access token");
 		});
 };

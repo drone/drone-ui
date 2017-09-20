@@ -10,7 +10,7 @@ export function subscribeToLogs(tree, client, owner, repo, build, proc) {
 	tree.set(["logs", "data", slug, build, proc.pid], init);
 
 	subscribeToLogs.ws = client.stream(owner, repo, build, proc.ppid, item => {
-		if (item.proc == proc.name) {
+		if (item.proc === proc.name) {
 			tree.push(["logs", "data", slug, build, proc.pid, "data"], item);
 		}
 	});
@@ -32,7 +32,7 @@ export function fetchLogs(tree, client, owner, repo, build, proc) {
 			tree.set(["logs", "data", slug, build, proc, "loading"], false);
 			tree.set(["logs", "data", slug, build, proc, "eof"], true);
 		})
-		.catch(error => {
+		.catch(() => {
 			tree.set(["logs", "data", slug, build, proc, "loading"], false);
 			tree.set(["logs", "data", slug, build, proc, "eof"], true);
 		});

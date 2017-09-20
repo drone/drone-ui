@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import CloseIcon from "shared/components/icons/close";
 import styles from "./drawer.less";
 import { CSSTransitionGroup } from "react-transition-group";
@@ -6,9 +6,9 @@ import { CSSTransitionGroup } from "react-transition-group";
 export const DOCK_LEFT = styles.left;
 export const DOCK_RIGHT = styles.right;
 
-export class Drawer extends React.Component {
+export class Drawer extends Component {
 	render() {
-		const { open, backdrop, position } = this.props;
+		const { open, position } = this.props;
 
 		let classes = [styles.drawer];
 		if (open) {
@@ -41,7 +41,7 @@ export class Drawer extends React.Component {
 	}
 }
 
-export class CloseButton extends React.Component {
+export class CloseButton extends Component {
 	render() {
 		return (
 			<button className={styles.close} onClick={this.props.onClick}>
@@ -51,7 +51,7 @@ export class CloseButton extends React.Component {
 	}
 }
 
-export class MenuButton extends React.Component {
+export class MenuButton extends Component {
 	render() {
 		return (
 			<button className={styles.close} onClick={this.props.onClick}>
