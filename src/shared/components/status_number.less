@@ -32,21 +32,21 @@
 	}
 
 	//
-	// pending
+	// blocked, running, started
 	//
 
 	&.blocked,
 	&.running,
-	&.started,
-	&.pending {
+	&.started {
 		color: @yellow;
 		border-color: @yellow;
 	}
 
 	//
-	// skipped
+	// pending, skipped
 	//
 
+	&.pending,
 	&.skipped {
 		color: @gray;
 		border-color: @gray;
