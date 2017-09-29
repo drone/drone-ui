@@ -35,7 +35,7 @@ export default class UserRepos extends Component {
 
 	handleFilter(e) {
 		this.setState({
-			filter: e.target.value,
+			search: e.target.value,
 		});
 	}
 
