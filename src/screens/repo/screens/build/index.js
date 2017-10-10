@@ -267,6 +267,7 @@ export default class BuildLogs extends Component {
 									>
 										<MatrixItem
 											number={child.pid}
+											create={child.created_at}
 											start={child.start_time}
 											finish={child.end_time}
 											status={child.state}

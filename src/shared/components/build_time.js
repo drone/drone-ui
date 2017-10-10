@@ -8,14 +8,16 @@ import styles from "./build_time.less";
 
 export default class Runtime extends Component {
 	render() {
-		const { start, finish } = this.props;
+		const { create, start, finish } = this.props;
 		return (
 			<div className={styles.host}>
 				<div className={styles.row}>
 					<div>
 						<ScheduleIcon />
 					</div>
-					<div>{start ? <TimeAgo date={start * 1000} /> : <span>--</span>}</div>
+					<div>
+						{create ? <TimeAgo date={create * 1000} /> : <span>--</span>}
+					</div>
 				</div>
 				<div className={styles.row}>
 					<div>

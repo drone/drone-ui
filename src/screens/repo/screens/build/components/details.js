@@ -18,7 +18,8 @@ export class Details extends Component {
 
 				<section>
 					<BuildTime
-						start={build.started_at || build.created_at}
+						create={build.created_at}
+						start={build.started_at}
 						finish={build.finished_at}
 					/>
 				</section>
