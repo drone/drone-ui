@@ -1,18 +1,18 @@
-@import "~shared/styles/colors.less";
+@import '~shared/styles/colors';
 
 .list {
 	a {
-		display:block;
-		text-decoration: none;
 		color: @gray-dark;
+		display: block;
+		text-decoration: none;
 	}
 }
 
 .item {
-	box-sizing:border-box;
-	display:flex;
-	padding: 0px 10px;
 	background: @white;
+	box-sizing: border-box;
+	display: flex;
+	padding: 0px 10px;
 
 	&.selected,
 	&:hover {
@@ -21,25 +21,25 @@
 
 	time {
 		color: @gray;
+		display: inline-block;
 		font-size: 13px;
 		line-height: 32px;
-		display: inline-block;
 		margin-right: 15px;
 		vertical-align: middle;
 	}
 
 	h3 {
+		flex: 1 1 auto;
+		font-size: 14px;
+		font-weight: normal;
+		line-height: 36px;
 		margin: 0px;
 		padding: 0px;
-		font-weight: normal;
-		font-size: 14px;
-		line-height: 36px;
 		vertical-align: middle;
-		flex:1 1 auto;
 	}
 
 	&:last-child {
-		display: flex;
 		align-items: center;
+		display: flex;
 	}
 }

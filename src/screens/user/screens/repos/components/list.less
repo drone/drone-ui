@@ -1,9 +1,9 @@
-@import "~shared/styles/colors.less";
+@import '~shared/styles/colors';
 
 .item {
-	display: flex;
 	border-bottom: 1px solid @gray-light;
-	padding:10px 10px;
+	display: flex;
+	padding: 10px 10px;
 
 	&:last-child {
 		border-bottom-width: 0px;
@@ -11,29 +11,25 @@
 
 	&> div:first-child {
 		flex: 1 1 auto;
-		line-height:24px;
-	}
-
-	&> div:nth-child(2) {
-
+		line-height: 24px;
 	}
 
 	&> div:nth-child(3) {
-		text-align: right;
-		display: flex;
 		align-content: stretch;
-		justify-content: center;
+		display: flex;
 		flex-direction: column;
+		justify-content: center;
+		text-align: right;
 	}
 
 	a {
-		margin-right:20px;
-		width:100px;
+		margin-right: 20px;
+		width: 100px;
 
 		svg {
-			width:20px;
-			height:20px;
 			fill: @gray;
+			height: 20px;
+			width: 20px;
 		}
 	}
 

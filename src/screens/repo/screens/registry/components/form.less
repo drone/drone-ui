@@ -1,14 +1,14 @@
-@import "~shared/styles/colors.less";
+@import '~shared/styles/colors';
 
 .form {
 	input {
 		border: 1px solid @gray-light;
-		display: block;
-		width: 100%;
 		box-sizing: border-box;
+		display: block;
+		margin-bottom: 20px;
 		outline: none;
 		padding: 10px;
-		margin-bottom:20px;
+		width: 100%;
 
 		&:focus {
 			border: 1px solid @gray-dark;
@@ -16,14 +16,14 @@
 	}
 
 	textarea {
-		box-sizing: border-box;
 		border: 1px solid @gray-light;
+		box-sizing: border-box;
 		display: block;
-		width: 100%;
+		height: 100px;
+		margin-bottom: 20px;
 		outline: none;
 		padding: 10px;
-		margin-bottom:20px;
-		height: 100px;
+		width: 100%;
 
 		&:focus {
 			border: 1px solid @gray-dark;
@@ -35,31 +35,31 @@
 	}
 
 	button {
-		outline: none;
-		color: @gray-dark;
-		border: 1px solid @gray-dark;
 		background: @white;
-		line-height: 28px;
-		padding:0px 20px;
-		font-family: "Roboto";
-		user-select: none;
-		font-size: 14px;
-		text-transform: uppercase;
+		border: 1px solid @gray-dark;
 		border-radius: 2px;
+		color: @gray-dark;
 		cursor: pointer;
+		font-family: 'Roboto';
+		font-size: 14px;
+		line-height: 28px;
+		outline: none;
+		padding: 0px 20px;
+		text-transform: uppercase;
+		user-select: none;
 	}
 
 	::-moz-input-placeholder {
 		color: @gray;
-		font-weight:300;
-		font-size:15px;
+		font-size: 15px;
+		font-weight: 300;
 		user-select: none;
 	}
 
 	::-webkit-input-placeholder {
 		color: @gray;
-		font-weight:300;
-		font-size:15px;
+		font-size: 15px;
+		font-weight: 300;
 		user-select: none;
 	}
 }

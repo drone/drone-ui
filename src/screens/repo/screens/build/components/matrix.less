@@ -1,33 +1,34 @@
-@import "~shared/styles/colors.less";
+@import '~shared/styles/colors';
 
 .list {
 	a {
-		text-decoration: none;
 		border-bottom: 1px solid @gray-light;
-		display:block;
-		padding: 20px 10px;
 		color: @gray-dark;
 		cursor: pointer;
+		display: block;
+		padding: 20px 10px;
+		text-decoration: none;
 
 		&:hover {
 			background: @gray-light;
+
 			.body {
 				border-color: @gray;
 			}
 		}
 
 		&:first-of-type {
-			padding-top:10px;
+			padding-top: 10px;
 		}
 
 		&:last-of-type {
-			border-bottom: none;
+			border-bottom: 0px;
 		}
 	}
 }
 
 .item {
-	display:flex;
+	display: flex;
 	flex-direction: row;
 }
 
@@ -35,24 +36,24 @@
 	flex: 1;
 
 	div {
+		font-family: 'Roboto Mono';
 		font-size: 14px;
 		line-height: 26px;
-		font-family: 'Roboto Mono';
 	}
 }
 
 .body {
 	border-left: 1px solid @gray-light;
-	padding-left:20px;
 	flex: 0 0 200px;
+	padding-left: 20px;
 }
 
 .status {
-	padding-left:20px;
-	display: flex;
 	align-items: right;
+	display: flex;
+	padding-left: 20px;
 
 	&> :last-child {
-		margin-left:20px;
+		margin-left: 20px;
 	}
 }

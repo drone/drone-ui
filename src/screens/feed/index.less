@@ -1,52 +1,51 @@
-@import "~shared/styles/colors.less";
+@import '~shared/styles/colors';
 
 .feed {
 	width: 300px;
 
 	input {
-		border: none;
-		width: 100%;
+		border: 0px;
+		border-bottom: 1px solid @gray-light;
 		box-sizing: border-box;
-		outline: none;
-		line-height: 45px;
-		line-height: 24px;
-		height: 45px;
 		font-size: 15px;
-		padding:0px 20px;
-		border-bottom:1px solid @gray-light;
+		height: 45px;
+		line-height: 24px;
+		outline: none;
+		padding: 0px 20px;
+		width: 100%;
 	}
 
 	::-moz-input-placeholder {
 		color: @gray;
-		font-weight:300;
-		font-size:15px;
+		font-size: 15px;
+		font-weight: 300;
 	}
 
 	::-webkit-input-placeholder {
 		color: @gray;
-		font-weight:300;
-		font-size:15px;
+		font-size: 15px;
+		font-weight: 300;
 	}
 }
 
 .message {
-	padding: 20px;
 	color: @gray;
 	font-size: 15px;
 	margin-top: 50px;
+	padding: 20px;
 	text-align: center;
 }
 
 .brand {
-	height: 60px;
-	padding:0px 20px;
-	box-sizing: border-box;
-	border-bottom:1px solid @gray-light;
-	display: flex;
 	align-items: center;
+	border-bottom: 1px solid @gray-light;
+	box-sizing: border-box;
+	display: flex;
+	height: 60px;
+	padding: 0px 20px;
 
 	svg {
-		width: 30px;
 		fill: @gray-dark;
+		width: 30px;
 	}
 }
