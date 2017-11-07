@@ -49,9 +49,22 @@
 	width: 300px;
 }
 
+@media (max-width: 600px) {
+	.left {
+		display: none;
+	}
+}
+
 .center {
 	box-sizing: border-box;
 	padding-left: 300px;
+}
+
+@media (max-width: 600px) {
+	.center {
+		box-sizing: border-box;
+		padding-left: 0px;
+	}
 }
 
 .login {
