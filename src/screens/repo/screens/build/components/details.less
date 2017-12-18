@@ -1,17 +1,52 @@
 @import '~shared/styles/colors';
 
 .info {
-	section {
-		border-bottom: 1px solid @gray-light;
-		font-size: 14px;
-		line-height: 20px;
-		margin: 20px 0px;
-		padding: 0px 10px;
-		padding-bottom: 20px;
+  section {
+    border-bottom: 1px solid @gray-light;
+    font-size: 14px;
+    line-height: 20px;
+    margin: 20px 0px;
+    padding: 0px 10px;
+    padding-bottom: 20px;
 
-		&:last-of-type {
-			border-bottom: 0px;
-			margin-bottom: 0px;
-		}
-	}
+    &:last-of-type {
+      border-bottom: 0px;
+      margin-bottom: 0px;
+    }
+  }
+}
+
+.actions {
+  background-color: @white;
+  border-radius: 2px;
+  color: @black;
+  display: flex;
+  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
+
+  button {
+    align-items: center;
+    border: 0px;
+    cursor: pointer;
+    margin: 0px;
+    padding: 0px 0px;
+    width: 100%;
+    display: flex;
+
+    &:hover {
+      background-color: @gray-light;
+    }
+
+    svg {
+      display: inline-block;
+      height: 22px;
+      width: 22px;
+    }
+
+    span {
+      flex: 1;
+      line-height: 32px;
+      padding-left: 10px;
+      text-align: left;
+    }
+  }
 }

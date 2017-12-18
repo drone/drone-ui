@@ -2,10 +2,12 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 import {
-	fetchBuild,
 	approveBuild,
-	declineBuild,
 	assertBuildMatrix,
+	cancelBuild,
+	declineBuild,
+	fetchBuild,
+	restartBuild,
 } from "shared/utils/build";
 import {
 	STATUS_BLOCKED,
@@ -52,11 +54,32 @@ export default class BuildLogs extends Component {
 		super(props, context);
 
 		this.handleApprove = this.handleApprove.bind(this);
+		this.handleCancel = this.handleCancel.bind(this);
 		this.handleDecline = this.handleDecline.bind(this);
+		this.handleRestart = this.handleRestart.bind(this);
 	}
 
 	componentWillMount() {
 		this.synchronize(this.props);
+	}
+
+	handleCancel() {
+		const { dispatch, drone, repo, build, match } = this.props;
+		const proc = findChildProcess(build.procs, match.params.proc || 2);
+
+		dispatch(
+			cancelBuild,
+			drone,
+			repo.owner,
+			repo.name,
+			build.number,
+			proc.ppid,
+		);
+	}
+
+	handleRestart() {
+		const { dispatch, drone, repo, build } = this.props;
+		dispatch(restartBuild, drone, repo.owner, repo.name, build.number);
 	}
 
 	handleApprove() {
@@ -200,7 +223,12 @@ export default class BuildLogs extends Component {
 			<div className={styles.host}>
 				<div className={styles.columns}>
 					<div className={styles.right}>
-						<Details build={data} />
+						<Details
+							build={data}
+							match={match}
+							cancelHandler={this.handleCancel}
+							restartHandler={this.handleRestart}
+						/>
 						<section className={styles.sticky}>
 							<ProcList>
 								{parent.children.map(function(child) {

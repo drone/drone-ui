@@ -2,19 +2,43 @@ import React, { Component } from "react";
 
 import BuildMeta from "shared/components/build_event";
 import BuildTime from "shared/components/build_time";
+import { RefreshIcon, CloseIcon } from "shared/components/icons";
 import { StatusLabel } from "shared/components/status";
+import { STATUS_PENDING, STATUS_RUNNING } from "shared/constants/status";
+import { assertBuildMatrix } from "shared/utils/build";
 
 import styles from "./details.less";
 
 export class Details extends Component {
 	render() {
-		const { build } = this.props;
+		const { build, match } = this.props;
+
+		const inProgress =
+			build.status === STATUS_PENDING || build.status === STATUS_RUNNING;
+		const hideCancel = assertBuildMatrix(build) && !match.params.proc;
+		const showCancelButton = inProgress && !hideCancel;
+		const showRestartButton = !inProgress;
 
 		return (
 			<div className={styles.info}>
 				<StatusLabel status={build.status} />
 
 				<section className={styles.message}>{build.message}</section>
+
+				<section className={styles.actions}>
+					{showCancelButton && (
+						<button onClick={this.props.cancelHandler}>
+							<CloseIcon />
+							<span>Cancel</span>
+						</button>
+					)}
+					{showRestartButton && (
+						<button onClick={this.props.restartHandler}>
+							<RefreshIcon />
+							<span>Restart Build</span>
+						</button>
+					)}
+				</section>
 
 				<section>
 					<BuildTime
