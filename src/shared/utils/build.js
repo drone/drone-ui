@@ -116,6 +116,27 @@ export const restartBuild = (tree, client, owner, repo, build) => {
 };
 
 /**
+ * Promote build.
+ *
+ * @param {Object} tree - The drone state tree.
+ * @param {Object} client - The drone client.
+ * @param {string} owner - The repository owner.
+ * @param {string} name - The repository name.
+ * @param {number} build - The build number.
+ * @param {string} env - The environment deploy to.
+ */
+export const promoteBuild = (tree, client, owner, repo, build, env) => {
+	client
+		.restartBuild(owner, repo, build, { fork: true, event: "deployment", "deploy_to": env })
+		.then(result => {
+			displayMessage(tree, "Successfully promote your build");
+		})
+		.catch(() => {
+			displayMessage(tree, "Failed to promote your build");
+		});
+};
+
+/**
  * Approves the blocked build.
  *
  * @param {Object} tree - The drone state tree.
