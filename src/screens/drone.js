@@ -1,19 +1,17 @@
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { LoginError, LoginForm } from "screens/login/screens";
 import React, { Component } from "react";
-
-import { root } from "baobab-react/higher-order";
-import tree from "config/state";
-import client from "config/client";
-import { drone } from "config/client/inject";
-import { LoginForm, LoginError } from "screens/login/screens";
-import Title from "./titles";
-import Layout from "./layout";
-import RedirectRoot from "./redirect";
 import { fetchFeedOnce, subscribeToFeedOnce } from "shared/utils/feed";
 
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-
+import Layout from "./layout";
+import RedirectRoot from "./redirect";
+import Title from "./titles";
+import client from "config/client";
+import { drone } from "config/client/inject";
+import { root } from "baobab-react/higher-order";
 // eslint-disable-next-line no-unused-vars
 import styles from "./drone.less";
+import tree from "config/state";
 
 class App extends Component {
 	render() {
