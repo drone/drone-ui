@@ -14,6 +14,7 @@ import { repositorySlug } from "shared/utils/repository";
 import { branch } from "baobab-react/higher-order";
 import { inject } from "config/client/inject";
 import PlayIcon from "shared/components/icons/play";
+import { STATUS_SUCCESS } from "shared/constants/status";
 
 const binding = (props, context) => {
 	const { owner, repo, build } = props.match.params;
@@ -115,25 +116,25 @@ export default class BuildMenu extends Component {
 								)}
 							</li>
 							<li>
-								{build.status === "success" ? (
+								{build.status === STATUS_SUCCESS  ? (
 									<button onClick={this.togglePromote}>
 										<DeployIcon />
 										<span>Promote Build</span>
 									</button>
 								):null }
+                                {build.status === STATUS_SUCCESS  && this.state.togglePromote ? (
+                                    <ul class="sub">{envs.map(function(env) {
+                                        return <li><button onClick={handlePromote.bind(this, env)}><PlayIcon /><span>{env}</span></button></li>
+                                    })}
+                                    <li><button onClick={handlePromote.bind(this, this.state.customEnv)}><PlayIcon/>
+                                        <input type="text" value={this.state.customEnv}
+                                               onClick={event => event.stopPropagation()}
+                                               onChange={this.updateCustomEnv.bind(this)}
+                                               placeholder="input and then click play icon">
+                                        </input>
+                                    </button></li>
+                                </ul>) :null }
 							</li>
-							{build.status === "success" && this.state.togglePromote ? (
-								<ul class="sub">{envs.map(function(env) {
-									return <li><button onClick={handlePromote.bind(this, env)}><PlayIcon /><span>{env}</span></button></li>
-								})}
-								<li><button onClick={handlePromote.bind(this, this.state.customEnv)}><PlayIcon/>
-									<input type="text" value={this.state.customEnv}
-										   onClick={event => event.stopPropagation()}
-										   onChange={this.updateCustomEnv.bind(this)}
-										   placeholder="input and then click play icon">
-									</input>
-								</button></li>
-							</ul>) :null }
 						</ul>
 					</section>
 				)}
