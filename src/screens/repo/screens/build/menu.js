@@ -41,7 +41,7 @@ export default class BuildMenu extends Component {
 	getInitialState() {
 		return {
 			togglePromote: false,
-			customEnv: ''
+			customEnv: "",
 		};
 	}
 
@@ -51,7 +51,7 @@ export default class BuildMenu extends Component {
 	}
 
 	handlePromote(env) {
-		const {dispatch, drone, repo, build} = this.props;
+		const { dispatch, drone, repo, build } = this.props;
 		dispatch(promoteBuild, drone, repo.owner, repo.name, build.number, env);
 	}
 
@@ -89,10 +89,10 @@ export default class BuildMenu extends Component {
 		var handlePromote = this.handlePromote;
 		var envs = [];
 		if (build !== undefined && build.deploy_envs !== undefined) {
-			envs = build.deploy_envs.map(function (env) {
+			envs = build.deploy_envs.map(function(env) {
 				return env.name;
-			})
-		};
+			});
+		}
 
 		return (
 			<div>
@@ -116,24 +116,23 @@ export default class BuildMenu extends Component {
 								)}
 							</li>
 							<li>
-								{build.status === STATUS_SUCCESS  ? (
+								{build.status === STATUS_SUCCESS ? (
 									<button onClick={this.togglePromote}>
 										<DeployIcon />
 										<span>Promote Build</span>
 									</button>
-								):null }
-                                {build.status === STATUS_SUCCESS  && this.state.togglePromote ? (
-                                    <ul class="sub">{envs.map(function(env) {
-                                        return <li><button onClick={handlePromote.bind(this, env)}><PlayIcon /><span>{env}</span></button></li>
-                                    })}
-                                    <li><button onClick={handlePromote.bind(this, this.state.customEnv)}><PlayIcon/>
-                                        <input type="text" value={this.state.customEnv}
-                                               onClick={event => event.stopPropagation()}
-                                               onChange={this.updateCustomEnv.bind(this)}
-                                               placeholder="input and then click play icon">
-                                        </input>
-                                    </button></li>
-                                </ul>) :null }
+								) : null}
+								{build.status === STATUS_SUCCESS && this.state.togglePromote ? (
+									<ul className="sub">{envs.map(function(env) {
+										return <li><button onClick={handlePromote.bind(this, env)}><PlayIcon /><span>{env}</span></button></li>
+									})}
+									<li><button onClick={handlePromote.bind(this, this.state.customEnv)}><PlayIcon/>
+										<input type="text" value={this.state.customEnv}
+													onClick={event => event.stopPropagation()}
+													onChange={this.updateCustomEnv.bind(this)}
+													placeholder="Deployment target (eg: test)" />
+									</button></li>
+								</ul>) : null }
 							</li>
 						</ul>
 					</section>
