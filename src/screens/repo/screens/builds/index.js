@@ -27,11 +27,6 @@ export default class Main extends Component {
 	constructor(props, context) {
 		super(props, context);
 
-		this.state = {
-			page: 1,
-			pageSize: 50,
-		};
-
 		this.fetchNextBuildPage = this.fetchNextBuildPage.bind(this);
 	}
 
@@ -70,10 +65,9 @@ export default class Main extends Component {
 		dispatch(fetchBuildList, drone, match.params.owner, match.params.repo);
 	}
 
-	fetchNextBuildPage(page) {
+	fetchNextBuildPage(buildList) {
 		const { drone, dispatch, match } = this.props;
-
-		this.setState({ page });
+		const page = Math.floor(buildList.length / 50) + 1;
 
 		dispatch(
 			fetchBuildList,
@@ -86,8 +80,6 @@ export default class Main extends Component {
 
 	render() {
 		const { repo, builds, loaded, error } = this.props;
-		const { page, pageSize } = this.state;
-
 		const list = Object.values(builds || {});
 
 		function renderBuild(build) {
@@ -117,10 +109,9 @@ export default class Main extends Component {
 		return (
 			<div className={styles.root}>
 				<List>{list.sort(compareBuild).map(renderBuild)}</List>
-
-				{page * pageSize < repo.last_build && (
+				{list.length < repo.last_build && (
 					<button
-						onClick={() => this.fetchNextBuildPage(page + 1)}
+						onClick={() => this.fetchNextBuildPage(list)}
 						className={styles.more}
 					>
 						Show more builds
