@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
 import { repositorySlug } from "shared/utils/repository";
-import { EVENT_PUSH, EVENT_TAG, EVENT_DEPLOY } from "shared/constants/events";
 import {
 	fetchSecretList,
 	createSecret,
@@ -48,7 +47,7 @@ export default class RepoSecrets extends Component {
 		const secret = {
 			name: e.detail.name,
 			value: e.detail.value,
-			event: [EVENT_PUSH, EVENT_TAG, EVENT_DEPLOY],
+			event: e.detail.event,
 		};
 
 		dispatch(createSecret, drone, owner, repo, secret);
