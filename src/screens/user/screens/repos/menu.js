@@ -3,6 +3,7 @@ import { syncRepostoryList } from "shared/utils/repository";
 import { branch } from "baobab-react/higher-order";
 import { inject } from "config/client/inject";
 import { SyncIcon } from "shared/components/icons";
+import Menu from "shared/components/menu";
 
 const binding = (props, context) => {
 	return {
@@ -26,17 +27,15 @@ export default class UserReposMenu extends Component {
 
 	render() {
 		const { loaded } = this.props.repos;
-		return (
+		const right = (
 			<section>
-				<ul>
-					<li>
-						<button disabled={!loaded} onClick={this.handleClick}>
-							<SyncIcon />
-							<span>Synchronize</span>
-						</button>
-					</li>
-				</ul>
+				<button disabled={!loaded} onClick={this.handleClick}>
+					<SyncIcon />
+					<span>Synchronize</span>
+				</button>
 			</section>
 		);
+
+		return <Menu items={[]} right={right} />
 	}
 }

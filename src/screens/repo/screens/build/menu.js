@@ -58,31 +58,28 @@ export default class BuildMenu extends Component {
 
 		const hideCancel = assertBuildMatrix(build) && !proc;
 
+		const rightSide = !build ? (
+			undefined
+		) : (
+			<section>
+				{build.status === "peding" ||
+				build.status === "running" ? !hideCancel ? (
+					<button onClick={this.handleCancel}>
+						<CloseIcon />
+						<span>Cancel</span>
+					</button>
+				) : null : (
+					<button onClick={this.handleRestart}>
+						<RefreshIcon />
+						<span>Restart Build</span>
+					</button>
+				)}
+			</section>
+		);
+
 		return (
 			<div>
-				{!build ? (
-					undefined
-				) : (
-					<section>
-						<ul>
-							<li>
-								{build.status === "peding" ||
-								build.status === "running" ? !hideCancel ? (
-									<button onClick={this.handleCancel}>
-										<CloseIcon />
-										<span>Cancel</span>
-									</button>
-								) : null : (
-									<button onClick={this.handleRestart}>
-										<RefreshIcon />
-										<span>Restart Build</span>
-									</button>
-								)}
-							</li>
-						</ul>
-					</section>
-				)}
-				<RepoMenu {...this.props} />
+				<RepoMenu {...this.props} right={rightSide} />
 			</div>
 		);
 	}
