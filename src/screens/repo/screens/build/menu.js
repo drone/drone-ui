@@ -62,7 +62,7 @@ export default class BuildMenu extends Component {
 			undefined
 		) : (
 			<section>
-				{build.status === "peding" ||
+				{build.status === "pending" ||
 				build.status === "running" ? !hideCancel ? (
 					<button onClick={this.handleCancel}>
 						<CloseIcon />
