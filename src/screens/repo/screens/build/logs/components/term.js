@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import AnsiUp from "ansi_up";
+import Linkify from "react-linkify";
 import style from "./term.less";
 
 let formatter = new AnsiUp();
@@ -30,7 +31,9 @@ class TermLine extends Component {
 		return (
 			<div className={style.line} key={line.pos}>
 				<div>{line.pos + 1}</div>
-				<div dangerouslySetInnerHTML={{ __html: this.colored }} />
+				<Linkify>
+					<div dangerouslySetInnerHTML={{ __html: this.colored }} />
+				</Linkify>
 				<div>{line.time || 0}s</div>
 			</div>
 		);
