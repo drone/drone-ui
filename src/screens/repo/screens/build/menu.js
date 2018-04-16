@@ -123,16 +123,33 @@ export default class BuildMenu extends Component {
 									</button>
 								) : null}
 								{build.status === STATUS_SUCCESS && this.state.togglePromote ? (
-									<ul className="sub">{envs.map(function(env) {
-										return <li><button onClick={handlePromote.bind(this, env)}><PlayIcon /><span>{env}</span></button></li>
-									})}
-									<li><button onClick={handlePromote.bind(this, this.state.customEnv)}><PlayIcon/>
-										<input type="text" value={this.state.customEnv}
+									<ul className="sub">
+										{envs.map(function(env, i) {
+											return (
+												<li key={i}>
+													<button onClick={handlePromote.bind(this, env)}>
+														<PlayIcon />
+														<span>{env}</span>
+													</button>
+												</li>
+											);
+										})}
+										<li>
+											<button
+												onClick={handlePromote.bind(this, this.state.customEnv)}
+											>
+												<PlayIcon />
+												<input
+													type="text"
+													value={this.state.customEnv}
 													onClick={event => event.stopPropagation()}
 													onChange={this.updateCustomEnv.bind(this)}
-													placeholder="Deployment target (eg: test)" />
-									</button></li>
-								</ul>) : null }
+													placeholder="Deployment target (eg: test)"
+												/>
+											</button>
+										</li>
+									</ul>
+								) : null}
 							</li>
 						</ul>
 					</section>

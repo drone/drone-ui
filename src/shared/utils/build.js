@@ -127,7 +127,11 @@ export const restartBuild = (tree, client, owner, repo, build) => {
  */
 export const promoteBuild = (tree, client, owner, repo, build, env) => {
 	client
-		.restartBuild(owner, repo, build, { fork: true, event: "deployment", "deploy_to": env })
+		.restartBuild(owner, repo, build, {
+			fork: true,
+			event: "deployment",
+			deploy_to: env,
+		})
 		.then(result => {
 			displayMessage(tree, "Successfully promote your build");
 		})
