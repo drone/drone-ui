@@ -44,14 +44,14 @@ export const fetchBuild = (tree, client, owner, name, number) => {
  * @param {string} owner - The repository owner.
  * @param {string} name - The repository name.
  */
-export const fetchBuildList = (tree, client, owner, name) => {
+export const fetchBuildList = (tree, client, owner, name, page = 1) => {
 	const slug = repositorySlug(owner, name);
 
 	tree.unset(["builds", "loaded"]);
 	tree.unset(["builds", "error"]);
 
 	client
-		.getBuildList(owner, name)
+		.getBuildList(owner, name, { page: page })
 		.then(results => {
 			let list = {};
 			results.map(build => {
