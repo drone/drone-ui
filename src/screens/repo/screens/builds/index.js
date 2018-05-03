@@ -9,6 +9,7 @@ import { branch } from "baobab-react/higher-order";
 import { inject } from "config/client/inject";
 
 import styles from "./index.less";
+import RepoMenu from "screens/repo/screens/builds/menu";
 
 const binding = (props, context) => {
 	const { owner, repo } = props.match.params;
