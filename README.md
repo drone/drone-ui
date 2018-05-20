@@ -40,7 +40,39 @@ Note you will need to retrieve your drone user token from the tokens screen in t
 http://localhost:9999
 ```
 
-## Running this fork on your Drone deployment
+## Run this fork
+
+### Use a Docker image
+
+```diff
+version: '2'
+
+services:
+  drone-server:
+    image: drone/drone:0.8.5
+
+    ports:
+      - 443:443
+      - 9000:9000
+    volumes:
+      - /var/lib/drone:/var/lib/drone/
++     - drone-ui:/drone-ui
+    restart: always
+    environment:
+      ...
++     - DRONE_WWW=/drone-ui
+
++ drone-ui:
++   image: laszlocloud/drone-ui:1
++   volumes:
++     - drone-ui:/drone-ui
+
++volumes:
++ drone-ui:
+```
+
+
+### Build from source
 
 Check out and build the project:
 
