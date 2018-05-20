@@ -1,4 +1,4 @@
-https://travis-ci.org/laszlocph/drone-ui.svg?branch=master
+![builds](https://travis-ci.org/laszlocph/drone-ui.svg?branch=master)
 
 This project is an edge fork of the https://github.com/drone/drone-ui project.
 
