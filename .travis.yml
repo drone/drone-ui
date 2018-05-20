@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+  - "8.11.2"
+services:
+  - docker
+before_install:
+  - npm install -g yarn --cache-min 999999999
+install:
+- yarn install
+- yarn build
+
+script:
+- ./build-image.sh
