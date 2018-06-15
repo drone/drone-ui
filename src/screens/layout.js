@@ -115,7 +115,7 @@ export default class Default extends Component {
 						</Switch>
 						{user && user.data ? (
 							<div className={styles.avatar}>
-								<img src={user.data.avatar_url} />
+								<img src={user.data.avatar} />
 							</div>
 						) : (
 							undefined

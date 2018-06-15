@@ -1,6 +1,6 @@
 {
   "name": "drone-ui-react",
-  "version": "1.0.0",
+  "version": "0.9",
   "main": "index.js",
   "scripts": {
     "prebuild": "rm -rf dist/files",
