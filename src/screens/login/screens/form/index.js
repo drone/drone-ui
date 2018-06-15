@@ -4,7 +4,7 @@ import styles from "./index.less";
 
 const LoginForm = props => (
 	<div className={styles.login}>
-		<form method="post" action="/authorize">
+		<form method="post" action="/login">
 			<p>Login with your version control system username and password.</p>
 			<input
 				placeholder="Username"
