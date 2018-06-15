@@ -12,7 +12,7 @@ export const fetchFeed = (tree, client) => {
 			let list = {};
 			let sorted = results.sort(compareFeedItem);
 			sorted.map(repo => {
-				list[repo.full_name] = repo;
+				list[repo.slug] = repo;
 			});
 			if (sorted && sorted.length > 0) {
 				tree.set(["feed", "latest"], sorted[0]);
@@ -52,13 +52,13 @@ export const subscribeToFeed = (tree, client) => {
 	return client.on(data => {
 		const { repo, build } = data;
 
-		if (tree.exists("feed", "data", repo.full_name)) {
-			const cursor = tree.select(["feed", "data", repo.full_name]);
+		if (tree.exists("feed", "data", repo.slug)) {
+			const cursor = tree.select(["feed", "data", repo.slug]);
 			cursor.merge(build);
 		}
 
-		if (tree.exists("builds", "data", repo.full_name)) {
-			tree.set(["builds", "data", repo.full_name, build.number], build);
+		if (tree.exists("builds", "data", repo.slug)) {
+			tree.set(["builds", "data", repo.slug, build.number], build);
 		}
 	});
 };
@@ -86,6 +86,6 @@ export function subscribeToFeedOnce(tree, client) {
  */
 export const compareFeedItem = (a, b) => {
 	return (
-		(b.started_at || b.created_at || -1) - (a.started_at || a.created_at || -1)
+		(b.started || b.created || -1) - (a.started || a.created || -1)
 	);
 };

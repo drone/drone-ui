@@ -42,9 +42,9 @@ export default class UserRepos extends Component {
 	handleToggle(repo, e) {
 		const { dispatch, drone } = this.props;
 		if (e.target.checked) {
-			dispatch(enableRepository, drone, repo.owner, repo.name);
+			dispatch(enableRepository, drone, repo.namespace, repo.name);
 		} else {
-			dispatch(disableRepository, drone, repo.owner, repo.name);
+			dispatch(disableRepository, drone, repo.namespace, repo.name);
 		}
 	}
 
@@ -80,7 +80,7 @@ export default class UserRepos extends Component {
 		}
 
 		const filter = repo => {
-			return !search || repo.full_name.indexOf(search) !== -1;
+			return !search || repo.slug.indexOf(search) !== -1;
 		};
 
 		const filtered = list.filter(filter);
@@ -105,11 +105,11 @@ export default class UserRepos extends Component {
 	renderItem(repo) {
 		return (
 			<Item
-				key={repo.full_name}
-				owner={repo.owner}
+				key={repo.slug}
+				namespace={repo.namespace}
 				name={repo.name}
 				active={repo.active}
-				link={`/${repo.full_name}`}
+				link={`/${repo.slug}`}
 				onchange={this.handleToggle.bind(this, repo)}
 			/>
 		);

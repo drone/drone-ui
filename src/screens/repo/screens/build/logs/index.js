@@ -14,16 +14,17 @@ import { ExpandIcon, PauseIcon, PlayIcon } from "shared/components/icons/index";
 import styles from "./index.less";
 
 const binding = (props, context) => {
-	const { owner, repo, build, proc } = props.match.params;
-	const slug = repositorySlug(owner, repo);
+	const { namespace, name, build } = props.match.params;
+	const slug = repositorySlug(namespace, name);
 	const number = parseInt(build);
-	const pid = parseInt(proc || 2);
+	const stage = parseInt(props.match.params.stage || 1);
+	const step = parseInt(props.match.params.step || 1);
 
 	return {
-		logs: ["logs", "data", slug, number, pid, "data"],
-		eof: ["logs", "data", slug, number, pid, "eof"],
-		loading: ["logs", "data", slug, number, pid, "loading"],
-		error: ["logs", "data", slug, number, pid, "error"],
+		logs: ["logs", "data", slug, number, stage, step, "data"],
+		eof: ["logs", "data", slug, number, stage, step, "eof"],
+		loading: ["logs", "data", slug, number, stage, step, "loading"],
+		error: ["logs", "data", slug, number, stage, step, "error"],
 		follow: ["logs", "follow"],
 	};
 };
@@ -38,7 +39,7 @@ export default class Output extends Component {
 	}
 
 	componentWillMount() {
-		if (this.props.proc) {
+		if (this.props.step) {
 			this.componentWillUpdate(this.props);
 		}
 	}
@@ -51,25 +52,27 @@ export default class Output extends Component {
 			return;
 		}
 
-		if (assertProcFinished(nextProps.proc)) {
+		if (assertProcFinished(nextProps.step)) {
 			return this.props.dispatch(
 				fetchLogs,
 				nextProps.drone,
-				nextProps.match.params.owner,
-				nextProps.match.params.repo,
+				nextProps.match.params.namespace,
+				nextProps.match.params.name,
 				nextProps.build.number,
-				nextProps.proc.pid,
+				nextProps.stage.number,
+				nextProps.step.number,
 			);
 		}
 
-		if (assertProcRunning(nextProps.proc) && (!logs || routeChange)) {
+		if (assertProcRunning(nextProps.step) && (!logs || routeChange)) {
 			this.props.dispatch(
 				subscribeToLogs,
 				nextProps.drone,
-				nextProps.match.params.owner,
-				nextProps.match.params.repo,
+				nextProps.match.params.namespace,
+				nextProps.match.params.name,
 				nextProps.build.number,
-				nextProps.proc,
+				nextProps.stage.number,
+				nextProps.step.number,
 			);
 		}
 	}
@@ -85,9 +88,9 @@ export default class Output extends Component {
 	}
 
 	render() {
-		const { logs, error, proc, loading, follow } = this.props;
+		const { logs, error, step, loading, follow } = this.props;
 
-		if (loading || !proc) {
+		if (loading || !step) {
 			return <Term.Loading />;
 		}
 
@@ -100,11 +103,11 @@ export default class Output extends Component {
 				<Top />
 				<Term
 					lines={logs || []}
-					exitcode={assertProcFinished(proc) ? proc.exit_code : undefined}
+					exitcode={assertProcFinished(step) ? step.exit_code : undefined}
 				/>
 				<Bottom />
 				<Actions
-					running={assertProcRunning(proc)}
+					running={assertProcRunning(step)}
 					following={follow}
 					onfollow={this.handleFollow}
 					onunfollow={this.handleFollow}

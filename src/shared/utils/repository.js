@@ -6,17 +6,17 @@ import { displayMessage } from "./message";
  *
  * @param {Object} tree - The drone state tree.
  * @param {Object} client - The drone client.
- * @param {string} owner - The repository owner.
+ * @param {string} namespace - The repository namespace.
  * @param {string} name - The repository name.
  */
-export const fetchRepository = (tree, client, owner, name) => {
+export const fetchRepository = (tree, client, namespace, name) => {
 	tree.unset(["repo", "error"]);
 	tree.unset(["repo", "loaded"]);
 
 	client
-		.getRepo(owner, name)
+		.getRepo(namespace, name)
 		.then(repo => {
-			tree.set(["repos", "data", repo.full_name], repo);
+			tree.set(["repos", "data", repo.slug], repo);
 			tree.set(["repo", "loaded"], true);
 		})
 		.catch(error => {
@@ -41,7 +41,7 @@ export const fetchRepostoryList = (tree, client) => {
 		.then(results => {
 			let list = {};
 			results.map(repo => {
-				list[repo.full_name] = repo;
+				list[repo.slug] = repo;
 			});
 
 			const path = ["repos", "data"];
@@ -75,7 +75,7 @@ export const syncRepostoryList = (tree, client) => {
 		.then(results => {
 			let list = {};
 			results.map(repo => {
-				list[repo.full_name] = repo;
+				list[repo.slug] = repo;
 			});
 
 			const path = ["repos", "data"];
@@ -101,15 +101,15 @@ export const syncRepostoryList = (tree, client) => {
  *
  * @param {Object} tree - The drone state tree.
  * @param {Object} client - The drone client.
- * @param {string} owner - The repository owner.
+ * @param {string} namespace - The repository namespace.
  * @param {string} name - The repository name.
  * @param {Object} data - The repository updates.
  */
-export const updateRepository = (tree, client, owner, name, data) => {
+export const updateRepository = (tree, client, namespace, name, data) => {
 	client
-		.updateRepo(owner, name, data)
+		.updateRepo(namespace, name, data)
 		.then(repo => {
-			tree.set(["repos", "data", repo.full_name], repo);
+			tree.set(["repos", "data", repo.slug], repo);
 			displayMessage(tree, "Successfully updated the repository settings");
 		})
 		.catch(() => {
@@ -123,15 +123,15 @@ export const updateRepository = (tree, client, owner, name, data) => {
  *
  * @param {Object} tree - The drone state tree.
  * @param {Object} client - The drone client.
- * @param {string} owner - The repository owner.
+ * @param {string} namespace - The repository namespace.
  * @param {string} name - The repository name.
  */
-export const enableRepository = (tree, client, owner, name) => {
+export const enableRepository = (tree, client, namespace, name) => {
 	client
-		.activateRepo(owner, name)
+		.activateRepo(namespace, name)
 		.then(result => {
 			displayMessage(tree, "Successfully activated your repository");
-			tree.set(["repos", "data", result.full_name, "active"], true);
+			tree.set(["repos", "data", result.slug, "active"], true);
 		})
 		.catch(() => {
 			displayMessage(tree, "Failed to activate your repository");
@@ -144,15 +144,15 @@ export const enableRepository = (tree, client, owner, name) => {
  *
  * @param {Object} tree - The drone state tree.
  * @param {Object} client - The drone client.
- * @param {string} owner - The repository owner.
+ * @param {string} namespace - The repository namespace.
  * @param {string} name - The repository name.
  */
-export const disableRepository = (tree, client, owner, name) => {
+export const disableRepository = (tree, client, namespace, name) => {
 	client
-		.deleteRepo(owner, name)
+		.deleteRepo(namespace, name)
 		.then(result => {
 			displayMessage(tree, "Successfully disabled your repository");
-			tree.set(["repos", "data", result.full_name, "active"], false);
+			tree.set(["repos", "data", result.slug, "active"], false);
 		})
 		.catch(() => {
 			displayMessage(tree, "Failed to disabled your repository");
@@ -167,17 +167,17 @@ export const disableRepository = (tree, client, owner, name) => {
  * @returns {number}
  */
 export const compareRepository = (a, b) => {
-	if (a.full_name < b.full_name) return -1;
-	if (a.full_name > b.full_name) return 1;
+	if (a.slug < b.slug) return -1;
+	if (a.slug > b.slug) return 1;
 	return 0;
 };
 
 /**
  * Returns the repository slug.
  *
- * @param {string} owner - The repository owner.
- * @param {string} name - The process name.
+ * @param {string} namespace - The repository namespace.
+ * @param {string} name - The repository name.
  */
-export const repositorySlug = (owner, name) => {
-	return `${owner}/${name}`;
+export const repositorySlug = (namespace, name) => {
+	return `${namespace}/${name}`;
 };

@@ -103,15 +103,15 @@ export default class Default extends Component {
 						<Switch>
 							<Route path="/account/repos" component={UserRepoTitle} />
 							<Route
-								path="/:owner/:repo/:build(\d*)/:proc(\d*)"
+								path="/:namespace/:name/:build(\d*)/:stage(\d*)/:step(\d*)"
 								exact={true}
 								component={BuildLogsTitle}
 							/>
 							<Route
-								path="/:owner/:repo/:build(\d*)"
+								path="/:namespace/:name/:build(\d*)"
 								component={BuildLogsTitle}
 							/>
-							<Route path="/:owner/:repo" component={RepoHeader} />
+							<Route path="/:namespace/:name" component={RepoHeader} />
 						</Switch>
 						{user && user.data ? (
 							<div className={styles.avatar}>
@@ -133,31 +133,31 @@ export default class Default extends Component {
 						<Route path="/account/token" exact={true} component={UserTokens} />
 						<Route path="/account/repos" exact={true} component={UserRepos} />
 						<Route
-							path="/:owner/:repo/settings/secrets"
+							path="/:namespace/:name/settings/secrets"
 							exact={true}
 							component={RepoSecrets}
 						/>
 						<Route
-							path="/:owner/:repo/settings/registry"
+							path="/:namespace/:name/settings/registry"
 							exact={true}
 							component={RepoRegistry}
 						/>
 						<Route
-							path="/:owner/:repo/settings"
+							path="/:namespace/:name/settings"
 							exact={true}
 							component={RepoSettings}
 						/>
 						<Route
-							path="/:owner/:repo/:build(\d*)"
+							path="/:namespace/:name/:build(\d*)"
 							exact={true}
 							component={BuildLogs}
 						/>
 						<Route
-							path="/:owner/:repo/:build(\d*)/:proc(\d*)"
+							path="/:namespace/:name/:build(\d*)/:stage(\d*)/:step(\d*)"
 							exact={true}
 							component={BuildLogs}
 						/>
-						<Route path="/:owner/:repo" exact={true} component={RepoBuilds} />
+						<Route path="/:namespace/:name" exact={true} component={RepoBuilds} />
 						<Route path="/" exact={true} component={RedirectRoot} />
 					</Switch>
 				</div>
@@ -177,16 +177,16 @@ export default class Default extends Component {
 							component={undefined}
 						/>BuildMenu
 						<Route
-							path="/:owner/:repo/:build(\d*)/:proc(\d*)"
+							path="/:namespace/:name/:build(\d*)/:stage(\d*)/:step(\d*)"
 							exact={true}
 							component={BuildMenu}
 						/>
 						<Route
-							path="/:owner/:repo/:build(\d*)"
+							path="/:namespace/:name/:build(\d*)"
 							exact={true}
 							component={BuildMenu}
 						/>
-						<Route path="/:owner/:repo" exact={false} component={RepoMenu} />
+						<Route path="/:namespace/:name" exact={false} component={RepoMenu} />
 					</Switch>
 					<section>
 						<ul>

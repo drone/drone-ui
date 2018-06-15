@@ -15,8 +15,8 @@ import { List, Item, Form } from "./components";
 import styles from "./index.less";
 
 const binding = (props, context) => {
-	const { owner, repo } = props.match.params;
-	const slug = repositorySlug(owner, repo);
+	const { namespace, name } = props.match.params;
+	const slug = repositorySlug(namespace, name);
 	return {
 		loaded: ["secrets", "loaded"],
 		secrets: ["secrets", "data", slug],
@@ -37,26 +37,26 @@ export default class RepoSecrets extends Component {
 	}
 
 	componentWillMount() {
-		const { owner, repo } = this.props.match.params;
-		this.props.dispatch(fetchSecretList, this.props.drone, owner, repo);
+		const { namespace, name } = this.props.match.params;
+		this.props.dispatch(fetchSecretList, this.props.drone, namespace, name);
 	}
 
 	handleSave(e) {
 		const { dispatch, drone, match } = this.props;
-		const { owner, repo } = match.params;
+		const { namespace, name } = match.params;
 		const secret = {
 			name: e.detail.name,
 			value: e.detail.value,
 			event: e.detail.event,
 		};
 
-		dispatch(createSecret, drone, owner, repo, secret);
+		dispatch(createSecret, drone, namespace, name, secret);
 	}
 
 	handleDelete(secret) {
 		const { dispatch, drone, match } = this.props;
-		const { owner, repo } = match.params;
-		dispatch(deleteSecret, drone, owner, repo, secret.name);
+		const { namespace, name } = match.params;
+		dispatch(deleteSecret, drone, namespace, name, secret.name);
 	}
 
 	render() {

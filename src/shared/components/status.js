@@ -7,6 +7,7 @@ import {
 	STATUS_FAILURE,
 	STATUS_KILLED,
 	STATUS_PENDING,
+	STATUS_PLANNED,
 	STATUS_RUNNING,
 	STATUS_SKIPPED,
 	STATUS_STARTED,
@@ -38,6 +39,8 @@ const statusLabel = status => {
 			return "Cancelled";
 		case STATUS_PENDING:
 			return "Pending";
+		case STATUS_PLANNED:
+			return "Pending";
 		case STATUS_RUNNING:
 			return "Running";
 		case STATUS_SKIPPED:
@@ -56,6 +59,7 @@ const renderIcon = (status, size) => {
 		case STATUS_SKIPPED:
 			return <RemoveIcon size={size} />;
 		case STATUS_PENDING:
+		case STATUS_PLANNED:
 			return <ClockIcon size={size} />;
 		case STATUS_RUNNING:
 		case STATUS_STARTED:

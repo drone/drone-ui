@@ -10,8 +10,8 @@ import { displayMessage } from "./message";
 export const generateToken = (tree, client) => {
 	client
 		.getToken()
-		.then(token => {
-			tree.set(["token"], token);
+		.then(result => {
+			tree.set(["token"], result.token);
 		})
 		.catch(() => {
 			displayMessage(tree, "Failed to retrieve your personal access token");

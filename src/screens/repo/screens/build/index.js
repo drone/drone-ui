@@ -35,8 +35,8 @@ import Output from "./logs";
 import styles from "./index.less";
 
 const binding = (props, context) => {
-	const { owner, repo, build } = props.match.params;
-	const slug = `${owner}/${repo}`;
+	const { namespace, name, build } = props.match.params;
+	const slug = `${namespace}/${name}`;
 	const number = parseInt(build);
 
 	return {
@@ -64,7 +64,7 @@ export default class BuildLogs extends Component {
 		this.props.dispatch(
 			approveBuild,
 			drone,
-			repo.owner,
+			repo.namespace,
 			repo.name,
 			build.number,
 		);
@@ -75,7 +75,7 @@ export default class BuildLogs extends Component {
 		this.props.dispatch(
 			declineBuild,
 			drone,
-			repo.owner,
+			repo.namespace,
 			repo.name,
 			build.number,
 		);
@@ -92,16 +92,16 @@ export default class BuildLogs extends Component {
 			this.props.dispatch(
 				fetchRepository,
 				props.drone,
-				props.match.params.owner,
-				props.match.params.repo,
+				props.match.params.namespace,
+				props.match.params.name,
 			);
 		}
-		if (!props.build || !props.build.procs) {
+		if (!props.build || !props.build.stages) {
 			this.props.dispatch(
 				fetchBuild,
 				props.drone,
-				props.match.params.owner,
-				props.match.params.repo,
+				props.match.params.namespace,
+				props.match.params.name,
 				props.match.params.build,
 			);
 		}
@@ -122,7 +122,7 @@ export default class BuildLogs extends Component {
 			return this.renderBlocked();
 		}
 
-		if (!build.procs) {
+		if (!build.stages) {
 			return this.renderLoading();
 		}
 
@@ -185,15 +185,15 @@ export default class BuildLogs extends Component {
 	}
 
 	renderSimple() {
-		const { repo, build, match } = this.props;
-		const proc = findChildProcess(build.procs || [], match.params.proc || 2);
-		const parent = findChildProcess(build.procs, proc.ppid);
+		const { repo, build, stage, match } = this.props;
+		const parent = build && build.stages && build.stages[parseInt(match.params.stage)-1 || 0];
+		const step = parent && parent.steps && parent.steps[parseInt(match.params.step)-1 || 0];
 
 		let data = Object.assign({}, build);
 		if (assertBuildMatrix(data)) {
-			data.started_at = parent.start_time;
-			data.finish_at = parent.finish_time;
-			data.status = parent.state;
+			data.started = parent.started;
+			data.finished = parent.finished;
+			data.status = parent.status;
 		}
 
 		return (
@@ -203,19 +203,19 @@ export default class BuildLogs extends Component {
 						<Details build={data} />
 						<section className={styles.sticky}>
 							<ProcList>
-								{parent.children.map(function(child) {
+								{parent && parent.steps && parent.steps.map(function(child) {
 									return (
 										<Link
-											to={`/${repo.full_name}/${build.number}/${child.pid}`}
-											key={`${repo.full_name}-${build.number}-${child.pid}`}
+											to={`/${repo.slug}/${build.number}/${parent.number}/${child.number}`}
+											key={`${repo.slug}-${build.number}-${parent.number}-${child.number}`}
 										>
 											<ProcListItem
-												key={child.pid}
+												key={child.id}
 												name={child.name}
-												start={child.start_time}
-												finish={child.end_time}
-												state={child.state}
-												selected={child.pid === proc.pid}
+												started={child.started}
+												stopped={child.stopped}
+												status={child.status}
+												selected={step && child.number === step.number}
 											/>
 										</Link>
 									);
@@ -224,8 +224,8 @@ export default class BuildLogs extends Component {
 						</section>
 					</div>
 					<div className={styles.left}>
-						{proc && proc.error ? (
-							<div className={styles.logerror}>{proc.error}</div>
+						{step && step.error ? (
+							<div className={styles.logerror}>{step.error}</div>
 						) : null}
 						{parent && parent.error ? (
 							<div className={styles.logerror}>{parent.error}</div>
@@ -233,8 +233,8 @@ export default class BuildLogs extends Component {
 						<Output
 							match={this.props.match}
 							build={this.props.build}
-							parent={parent}
-							proc={proc}
+							stage={parent}
+							step={step}
 						/>
 					</div>
 				</div>
@@ -245,7 +245,7 @@ export default class BuildLogs extends Component {
 	renderMatrix() {
 		const { repo, build, match } = this.props;
 
-		if (match.params.proc) {
+		if (match.params.step) {
 			return this.renderSimple();
 		}
 
@@ -257,19 +257,18 @@ export default class BuildLogs extends Component {
 					</div>
 					<div className={styles.left}>
 						<MatrixList>
-							{build.procs.map(child => {
+							{build.stages.map(child => {
 								return (
 									<Link
-										to={`/${repo.full_name}/${build.number}/${child.children[0]
-											.pid}`}
-										key={`${repo.full_name}-${build.number}-${child.children[0]
-											.pid}`}
+										to={`/${repo.slug}/${build.number}/${child.number}/1`}
+										key={`${repo.slug}-${build.number}-${child.number}`}
 									>
 										<MatrixItem
-											number={child.pid}
-											start={child.start_time}
-											finish={child.end_time}
-											status={child.state}
+											name={child.name}
+											number={child.number}
+											start={child.started}
+											finish={child.stopped}
+											status={child.status}
 											environ={child.environ}
 										/>
 									</Link>
@@ -285,17 +284,17 @@ export default class BuildLogs extends Component {
 
 export class BuildLogsTitle extends Component {
 	render() {
-		const { owner, repo, build } = this.props.match.params;
+		const { namespace, name, build } = this.props.match.params;
 		return (
 			<Breadcrumb
 				elements={[
-					<Link to={`/${owner}/${repo}`} key={`${owner}-${repo}`}>
-						{owner} / {repo}
+					<Link to={`/${namespace}/${name}`} key={`${namespace}-${name}`}>
+						{namespace} / {name}
 					</Link>,
 					SEPARATOR,
 					<Link
-						to={`/${owner}/${repo}/${build}`}
-						key={`${owner}-${repo}-${build}`}
+						to={`/${namespace}/${name}/${build}`}
+						key={`${namespace}-${name}-${build}`}
 					>
 						{build}
 					</Link>,

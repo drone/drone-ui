@@ -15,7 +15,7 @@ export class Item extends Component {
 		return (
 			<div className={styles.item}>
 				<div className={styles.header}>
-					<div className={styles.title}>{item.full_name}</div>
+					<div className={styles.title}>{item.slug}</div>
 					<div className={styles.icon}>
 						{item.status ? <Status status={item.status} /> : <noscript />}
 					</div>
@@ -23,8 +23,8 @@ export class Item extends Component {
 
 				<div className={styles.body}>
 					<BuildTime
-						start={item.started_at || item.created_at}
-						finish={item.finished_at}
+						start={item.started || item.created}
+						finish={item.finished}
 					/>
 				</div>
 			</div>

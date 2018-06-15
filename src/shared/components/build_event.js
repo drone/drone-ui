@@ -17,7 +17,7 @@ import styles from "./build_event.less";
 
 export default class BuildEvent extends Component {
 	render() {
-		const { event, branch, commit, refs, refspec, link, target } = this.props;
+		const { event, target, after, refs, refspec, link, deployTo } = this.props;
 
 		return (
 			<div className={styles.host}>
@@ -25,7 +25,7 @@ export default class BuildEvent extends Component {
 					<div>
 						<CommitIcon />
 					</div>
-					<div>{commit && commit.substr(0, 10)}</div>
+					<div>{after && after.substr(0, 10)}</div>
 				</div>
 				<div className={styles.row}>
 					<div>
@@ -44,10 +44,10 @@ export default class BuildEvent extends Component {
 							trimTagRef(refs)
 						) : event === EVENT_PULL_REQUEST && refspec ? (
 							trimMergeRef(refs)
-						) : event === EVENT_DEPLOY && target ? (
-							target
+						) : event === EVENT_DEPLOY && deployTo ? (
+							deployTo
 						) : (
-							branch
+							target
 						)}
 					</div>
 				</div>

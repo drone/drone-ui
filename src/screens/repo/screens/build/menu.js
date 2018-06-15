@@ -14,8 +14,8 @@ import { branch } from "baobab-react/higher-order";
 import { inject } from "config/client/inject";
 
 const binding = (props, context) => {
-	const { owner, repo, build } = props.match.params;
-	const slug = repositorySlug(owner, repo);
+	const { namespace, name, build } = props.match.params;
+	const slug = repositorySlug(namespace, name);
 	const number = parseInt(build);
 	return {
 		repo: ["repos", "data", slug],
@@ -35,28 +35,24 @@ export default class BuildMenu extends Component {
 
 	handleRestart() {
 		const { dispatch, drone, repo, build } = this.props;
-		dispatch(restartBuild, drone, repo.owner, repo.name, build.number);
+		dispatch(restartBuild, drone, repo.namespace, repo.name, build.number);
 	}
 
 	handleCancel() {
-		const { dispatch, drone, repo, build, match } = this.props;
-		const proc = findChildProcess(build.procs, match.params.proc || 2);
+		const { dispatch, drone, repo, build } = this.props;
 
 		dispatch(
 			cancelBuild,
 			drone,
-			repo.owner,
+			repo.namespace,
 			repo.name,
 			build.number,
-			proc.ppid,
 		);
 	}
 
 	render() {
 		const { build, match } = this.props;
-		const { proc } = match.params;
-
-		const hideCancel = assertBuildMatrix(build) && !proc;
+		const { stage } = match.params;
 
 		return (
 			<div>
@@ -66,13 +62,14 @@ export default class BuildMenu extends Component {
 					<section>
 						<ul>
 							<li>
-								{build.status === "peding" ||
-								build.status === "running" ? !hideCancel ? (
+								{build.status === "pending" ||
+								build.status === "planned" ||
+								build.status === "running" ? (
 									<button onClick={this.handleCancel}>
 										<CloseIcon />
 										<span>Cancel</span>
 									</button>
-								) : null : (
+								) : (
 									<button onClick={this.handleRestart}>
 										<RefreshIcon />
 										<span>Restart Build</span>

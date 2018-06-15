@@ -10,7 +10,7 @@ export default function() {
 			<Route path="/account/tokens" exact={true} component={accountTitle} />
 			<Route path="/account/repos" exact={true} component={accountRepos} />
 			<Route path="/login" exact={false} component={loginTitle} />
-			<Route path="/:owner/:repo" exact={false} component={repoTitle} />
+			<Route path="/:namespace/:name" exact={false} component={repoTitle} />
 			<Route path="/" exact={false} component={defautTitle} />
 		</Switch>
 	);
@@ -23,7 +23,7 @@ const accountRepos = () => <Title render="Repositories | drone" />;
 const loginTitle = () => <Title render="Login | drone" />;
 
 const repoTitle = ({ match }) => (
-	<Title render={`${match.params.owner}/${match.params.repo} | drone`} />
+	<Title render={`${match.params.namespace}/${match.params.name} | drone`} />
 );
 
 const defautTitle = () => <Title render="Welcome | drone" />;

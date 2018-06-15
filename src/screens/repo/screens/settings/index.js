@@ -18,8 +18,8 @@ import {
 import styles from "./index.less";
 
 const binding = (props, context) => {
-	const { owner, repo } = props.match.params;
-	const slug = repositorySlug(owner, repo);
+	const { namespace, name } = props.match.params;
+	const slug = repositorySlug(namespace, name);
 	return {
 		user: ["user", "data"],
 		repo: ["repos", "data", slug],
@@ -51,7 +51,7 @@ export default class Settings extends Component {
 		const { drone, dispatch, match, repo } = this.props;
 
 		if (!repo) {
-			dispatch(fetchRepository, drone, match.params.owner, match.params.repo);
+			dispatch(fetchRepository, drone, match.params.namespace, match.params.name);
 		}
 	}
 
@@ -211,6 +211,6 @@ export default class Settings extends Component {
 		const { dispatch, drone, repo } = this.props;
 		let data = {};
 		data[prop] = value;
-		dispatch(updateRepository, drone, repo.owner, repo.name, data);
+		dispatch(updateRepository, drone, repo.namespace, repo.name, data);
 	}
 }

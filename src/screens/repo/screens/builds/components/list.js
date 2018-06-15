@@ -28,10 +28,10 @@ export class Item extends Component {
 					<BuildMeta
 						link={build.link_url}
 						event={build.event}
-						commit={build.commit}
-						branch={build.branch}
-						target={build.deploy_to}
+						after={build.after}
+						target={build.target}
 						refspec={build.refspec}
+						deployTo={build.deploy_to}
 						refs={build.ref}
 					/>
 				</div>
@@ -40,8 +40,8 @@ export class Item extends Component {
 
 				<div className={styles.time}>
 					<BuildTime
-						start={build.started_at || build.created_at}
-						finish={build.finished_at}
+						start={build.started || build.created}
+						finish={build.finished}
 					/>
 				</div>
 

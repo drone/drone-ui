@@ -15,8 +15,8 @@ import { List, Item, Form } from "./components";
 import styles from "./index.less";
 
 const binding = (props, context) => {
-	const { owner, repo } = props.match.params;
-	const slug = repositorySlug(owner, repo);
+	const { namespace, name } = props.match.params;
+	const slug = repositorySlug(namespace, name);
 	return {
 		loaded: ["registry", "loaded"],
 		registries: ["registry", "data", slug],
@@ -39,26 +39,26 @@ export default class RepoRegistry extends Component {
 
 	componentWillMount() {
 		const { dispatch, drone, match } = this.props;
-		const { owner, repo } = match.params;
-		dispatch(fetchRegistryList, drone, owner, repo);
+		const { namespace, name } = match.params;
+		dispatch(fetchRegistryList, drone, namespace, name);
 	}
 
 	handleSave(e) {
 		const { dispatch, drone, match } = this.props;
-		const { owner, repo } = match.params;
+		const { namespace, name } = match.params;
 		const registry = {
 			address: e.detail.address,
 			username: e.detail.username,
 			password: e.detail.password,
 		};
 
-		dispatch(createRegistry, drone, owner, repo, registry);
+		dispatch(createRegistry, drone, namespace, name, registry);
 	}
 
 	handleDelete(registry) {
 		const { dispatch, drone, match } = this.props;
-		const { owner, repo } = match.params;
-		dispatch(deleteRegistry, drone, owner, repo, registry.address);
+		const { namespace, name } = match.params;
+		dispatch(deleteRegistry, drone, namespace, name, registry.address);
 	}
 
 	render() {

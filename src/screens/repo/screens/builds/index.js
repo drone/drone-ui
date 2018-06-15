@@ -11,8 +11,8 @@ import { inject } from "config/client/inject";
 import styles from "./index.less";
 
 const binding = (props, context) => {
-	const { owner, repo } = props.match.params;
-	const slug = repositorySlug(owner, repo);
+	const { namespace, name } = props.match.params;
+	const slug = repositorySlug(namespace, name);
 	return {
 		repo: ["repos", "data", slug],
 		builds: ["builds", "data", slug],
@@ -59,10 +59,10 @@ export default class Main extends Component {
 		const { drone, dispatch, match, repo } = props;
 
 		if (!repo) {
-			dispatch(fetchRepository, drone, match.params.owner, match.params.repo);
+			dispatch(fetchRepository, drone, match.params.namespace, match.params.name);
 		}
 
-		dispatch(fetchBuildList, drone, match.params.owner, match.params.repo);
+		dispatch(fetchBuildList, drone, match.params.namespace, match.params.name);
 	}
 
 	fetchNextBuildPage(buildList) {
@@ -72,8 +72,8 @@ export default class Main extends Component {
 		dispatch(
 			fetchBuildList,
 			drone,
-			match.params.owner,
-			match.params.repo,
+			match.params.namespace,
+			match.params.name,
 			page,
 		);
 	}
@@ -84,7 +84,7 @@ export default class Main extends Component {
 
 		function renderBuild(build) {
 			return (
-				<Link to={`/${repo.full_name}/${build.number}`} key={build.number}>
+				<Link to={`/${repo.slug}/${build.number}`} key={build.number}>
 					<Item build={build} />
 				</Link>
 			);

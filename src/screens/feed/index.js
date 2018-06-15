@@ -44,7 +44,7 @@ export default class Sidebar extends Component {
 		const list = feed.data ? Object.values(feed.data) : [];
 
 		const filterFunc = item => {
-			return !filter || item.full_name.indexOf(filter) !== -1;
+			return !filter || item.slug.indexOf(filter) !== -1;
 		};
 
 		const filtered = list.filter(filterFunc).sort(compareFeedItem);
@@ -79,7 +79,7 @@ const renderFeed = list => {
 
 const renderItem = item => {
 	return (
-		<Link to={`/${item.full_name}`} key={item.full_name}>
+		<Link to={`/${item.slug}`} key={item.slug}>
 			<Item item={item} />
 		</Link>
 	);

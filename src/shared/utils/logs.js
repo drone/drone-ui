@@ -1,40 +1,38 @@
 import { repositorySlug } from "./repository";
 
-export function subscribeToLogs(tree, client, owner, repo, build, proc) {
+export function subscribeToLogs(tree, client, namespace, repo, build, stage, step) {
 	if (subscribeToLogs.ws) {
 		subscribeToLogs.ws.close();
 	}
-	const slug = repositorySlug(owner, repo);
+	const slug = repositorySlug(namespace, repo);
 	const init = { data: [] };
 
-	tree.set(["logs", "data", slug, build, proc.pid], init);
+	tree.set(["logs", "data", slug, build, stage, step], init);
 
-	subscribeToLogs.ws = client.stream(owner, repo, build, proc.ppid, item => {
-		if (item.proc === proc.name) {
-			tree.push(["logs", "data", slug, build, proc.pid, "data"], item);
-		}
+	subscribeToLogs.ws = client.stream(namespace, repo, build, stage, step, item => {
+		tree.push(["logs", "data", slug, build, stage, step, "data"], item);
 	});
 }
 
-export function fetchLogs(tree, client, owner, repo, build, proc) {
-	const slug = repositorySlug(owner, repo);
+export function fetchLogs(tree, client, namespace, repo, build, stage, step) {
+	const slug = repositorySlug(namespace, repo);
 	const init = {
 		data: [],
 		loading: true,
 	};
 
-	tree.set(["logs", "data", slug, build, proc], init);
+	tree.set(["logs", "data", slug, build, stage, step], init);
 
 	client
-		.getLogs(owner, repo, build, proc)
+		.getLogs(namespace, repo, build, stage, step)
 		.then(results => {
-			tree.set(["logs", "data", slug, build, proc, "data"], results || []);
-			tree.set(["logs", "data", slug, build, proc, "loading"], false);
-			tree.set(["logs", "data", slug, build, proc, "eof"], true);
+			tree.set(["logs", "data", slug, build, stage, step, "data"], results || []);
+			tree.set(["logs", "data", slug, build, stage, step, "loading"], false);
+			tree.set(["logs", "data", slug, build, stage, step, "eof"], true);
 		})
 		.catch(() => {
-			tree.set(["logs", "data", slug, build, proc, "loading"], false);
-			tree.set(["logs", "data", slug, build, proc, "eof"], true);
+			tree.set(["logs", "data", slug, build, stage, step, "loading"], false);
+			tree.set(["logs", "data", slug, build, stage, step, "eof"], true);
 		});
 }
 

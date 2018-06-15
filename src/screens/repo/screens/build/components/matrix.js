@@ -10,10 +10,10 @@ export const MatrixList = ({ children }) => (
 	<div className={styles.list}>{children}</div>
 );
 
-export const MatrixItem = ({ environ, start, finish, status, number }) => (
+export const MatrixItem = ({ environ, name, start, finish, status, number }) => (
 	<div className={styles.item}>
 		<div className={styles.header}>
-			{Object.entries(environ).map(renderEnviron)}
+			{name}
 		</div>
 		<div className={styles.body}>
 			<BuildTime start={start} finish={finish} />

@@ -8,16 +8,16 @@ import { STATUS_PENDING, STATUS_RUNNING } from "shared/constants/status";
  *
  * @param {Object} tree - The drone state tree.
  * @param {Object} client - The drone client.
- * @param {string} owner - The repository owner.
+ * @param {string} namespace - The repository namespace.
  * @param {string} name - The repository name.
  * @param {number|string} number - The build number.
  */
-export const fetchBuild = (tree, client, owner, name, number) => {
-	const slug = repositorySlug(owner, name);
+export const fetchBuild = (tree, client, namespace, name, number) => {
+	const slug = repositorySlug(namespace, name);
 
 	tree.unset(["builds", "loaded"]);
 	client
-		.getBuild(owner, name, number)
+		.getBuild(namespace, name, number)
 		.then(build => {
 			const path = ["builds", "data", slug, build.number];
 
@@ -41,17 +41,17 @@ export const fetchBuild = (tree, client, owner, name, number) => {
  *
  * @param {Object} tree - The drone state tree.
  * @param {Object} client - The drone client.
- * @param {string} owner - The repository owner.
+ * @param {string} namespace - The repository namespace.
  * @param {string} name - The repository name.
  */
-export const fetchBuildList = (tree, client, owner, name, page = 1) => {
-	const slug = repositorySlug(owner, name);
+export const fetchBuildList = (tree, client, namespace, name, page = 1) => {
+	const slug = repositorySlug(namespace, name);
 
 	tree.unset(["builds", "loaded"]);
 	tree.unset(["builds", "error"]);
 
 	client
-		.getBuildList(owner, name, { page: page })
+		.getBuildList(namespace, name, { page: page })
 		.then(results => {
 			let list = {};
 			results.map(build => {
@@ -79,14 +79,13 @@ export const fetchBuildList = (tree, client, owner, name, page = 1) => {
  *
  * @param {Object} tree - The drone state tree.
  * @param {Object} client - The drone client.
- * @param {string} owner - The repository owner.
+ * @param {string} namespace - The repository namespace.
  * @param {string} name - The repository name.
  * @param {number} build - The build number.
- * @param {number} proc - The process number.
  */
-export const cancelBuild = (tree, client, owner, repo, build, proc) => {
+export const cancelBuild = (tree, client, namespace, repo, build) => {
 	client
-		.cancelBuild(owner, repo, build, proc)
+		.cancelBuild(namespace, repo, build)
 		.then(result => {
 			displayMessage(tree, "Successfully cancelled your build");
 		})
@@ -100,13 +99,13 @@ export const cancelBuild = (tree, client, owner, repo, build, proc) => {
  *
  * @param {Object} tree - The drone state tree.
  * @param {Object} client - The drone client.
- * @param {string} owner - The repository owner.
+ * @param {string} namespace - The repository namespace.
  * @param {string} name - The repository name.
  * @param {number} build - The build number.
  */
-export const restartBuild = (tree, client, owner, repo, build) => {
+export const restartBuild = (tree, client, namespace, repo, build) => {
 	client
-		.restartBuild(owner, repo, build, { fork: true })
+		.restartBuild(namespace, repo, build, { fork: true })
 		.then(result => {
 			displayMessage(tree, "Successfully restarted your build");
 		})
@@ -120,13 +119,13 @@ export const restartBuild = (tree, client, owner, repo, build) => {
  *
  * @param {Object} tree - The drone state tree.
  * @param {Object} client - The drone client.
- * @param {string} owner - The repository owner.
+ * @param {string} namespace - The repository namespace.
  * @param {string} name - The repository name.
  * @param {number} build - The build number.
  */
-export const approveBuild = (tree, client, owner, repo, build) => {
+export const approveBuild = (tree, client, namespace, repo, build) => {
 	client
-		.approveBuild(owner, repo, build)
+		.approveBuild(namespace, repo, build)
 		.then(result => {
 			displayMessage(tree, "Successfully processed your approval decision");
 		})
@@ -140,13 +139,13 @@ export const approveBuild = (tree, client, owner, repo, build) => {
  *
  * @param {Object} tree - The drone state tree.
  * @param {Object} client - The drone client.
- * @param {string} owner - The repository owner.
+ * @param {string} namespace - The repository namespace.
  * @param {string} name - The repository name.
  * @param {number} build - The build number.
  */
-export const declineBuild = (tree, client, owner, repo, build) => {
+export const declineBuild = (tree, client, namespace, repo, build) => {
 	client
-		.declineBuild(owner, repo, build)
+		.declineBuild(namespace, repo, build)
 		.then(result => {
 			displayMessage(tree, "Successfully processed your decline decision");
 		})
@@ -183,5 +182,5 @@ export const assertBuildFinished = build => {
  * @returns {boolean}
  */
 export const assertBuildMatrix = build => {
-	return build && build.procs && build.procs.length > 1;
+	return build && build.stages && build.stages.length > 1;
 };

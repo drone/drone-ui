@@ -1,23 +1,23 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-export default class RepoMenu extends Component {
+export default class nameMenu extends Component {
 	render() {
-		const { owner, repo } = this.props.match.params;
+		const { namespace, name } = this.props.match.params;
 		return (
 			<section>
 				<ul>
 					<li>
-						<Link to={`/${owner}/${repo}`}>Builds</Link>
+						<Link to={`/${namespace}/${name}`}>Builds</Link>
 					</li>
 					<li>
-						<Link to={`/${owner}/${repo}/settings/secrets`}>Secrets</Link>
+						<Link to={`/${namespace}/${name}/settings/secrets`}>Secrets</Link>
 					</li>
 					<li>
-						<Link to={`/${owner}/${repo}/settings/registry`}>Registry</Link>
+						<Link to={`/${namespace}/${name}/settings/registry`}>Registry</Link>
 					</li>
 					<li>
-						<Link to={`/${owner}/${repo}/settings`}>Settings</Link>
+						<Link to={`/${namespace}/${name}/settings`}>Settings</Link>
 					</li>
 				</ul>
 			</section>

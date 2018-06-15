@@ -7,16 +7,16 @@ import { repositorySlug } from "./repository";
  *
  * @param {Object} tree - The drone state tree.
  * @param {Object} client - The drone client.
- * @param {string} owner - The repository owner.
+ * @param {string} namespace - The repository namespace.
  * @param {string} name - The repository name.
  */
-export const fetchSecretList = (tree, client, owner, name) => {
-	const slug = repositorySlug(owner, name);
+export const fetchSecretList = (tree, client, namespace, name) => {
+	const slug = repositorySlug(namespace, name);
 
 	tree.unset(["secrets", "loaded"]);
 	tree.unset(["secrets", "error"]);
 
-	client.getSecretList(owner, name).then(results => {
+	client.getSecretList(namespace, name).then(results => {
 		let list = {};
 		results.map(secret => {
 			list[secret.name] = secret;
@@ -32,15 +32,15 @@ export const fetchSecretList = (tree, client, owner, name) => {
  *
  * @param {Object} tree - The drone state tree.
  * @param {Object} client - The drone client.
- * @param {string} owner - The repository owner.
+ * @param {string} namespace - The repository namespace.
  * @param {string} name - The repository name.
  * @param {Object} secret - The secret object.
  */
-export const createSecret = (tree, client, owner, name, secret) => {
-	const slug = repositorySlug(owner, name);
+export const createSecret = (tree, client, namespace, name, secret) => {
+	const slug = repositorySlug(namespace, name);
 
 	client
-		.createSecret(owner, name, secret)
+		.createSecret(namespace, name, secret)
 		.then(result => {
 			tree.set(["secrets", "data", slug, secret.name], result);
 			displayMessage(tree, "Successfully added the secret");
@@ -56,15 +56,15 @@ export const createSecret = (tree, client, owner, name, secret) => {
  *
  * @param {Object} tree - The drone state tree.
  * @param {Object} client - The drone client.
- * @param {string} owner - The repository owner.
+ * @param {string} namespace - The repository namespace.
  * @param {string} name - The repository name.
  * @param {string} secret - The secret name.
  */
-export const deleteSecret = (tree, client, owner, name, secret) => {
-	const slug = repositorySlug(owner, name);
+export const deleteSecret = (tree, client, namespace, name, secret) => {
+	const slug = repositorySlug(namespace, name);
 
 	client
-		.deleteSecret(owner, name, secret)
+		.deleteSecret(namespace, name, secret)
 		.then(result => {
 			tree.unset(["secrets", "data", slug, secret]);
 			displayMessage(tree, "Successfully removed the secret");

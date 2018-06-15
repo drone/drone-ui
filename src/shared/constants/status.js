@@ -4,6 +4,7 @@ const STATUS_ERROR = "error";
 const STATUS_FAILURE = "failure";
 const STATUS_KILLED = "killed";
 const STATUS_PENDING = "pending";
+const STATUS_PLANNED = "planned";
 const STATUS_RUNNING = "running";
 const STATUS_SKIPPED = "skipped";
 const STATUS_STARTED = "started";
@@ -16,6 +17,7 @@ export {
 	STATUS_FAILURE,
 	STATUS_KILLED,
 	STATUS_PENDING,
+	STATUS_PLANNED,
 	STATUS_RUNNING,
 	STATUS_SKIPPED,
 	STATUS_SUCCESS,

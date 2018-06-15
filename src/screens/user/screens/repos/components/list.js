@@ -12,11 +12,11 @@ export const List = ({ children }) => (
 
 export class Item extends Component {
 	render() {
-		const { owner, name, active, link, onchange } = this.props;
+		const { namespace, name, active, link, onchange } = this.props;
 		return (
 			<div className={styles.item}>
 				<div>
-					{owner}/{name}
+					{namespace}/{name}
 				</div>
 				<div className={active ? styles.active : styles.inactive}>
 					<Link to={link}>
@@ -32,7 +32,7 @@ export class Item extends Component {
 
 	shouldComponentUpdate(nextProps) {
 		return (
-			this.props.owner !== nextProps.owner ||
+			this.props.namespace !== nextProps.namespace ||
 			this.props.name !== nextProps.name ||
 			this.props.active !== nextProps.active
 		);

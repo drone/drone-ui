@@ -18,18 +18,18 @@ export class Details extends Component {
 
 				<section>
 					<BuildTime
-						start={build.started_at || build.created_at}
-						finish={build.finished_at}
+						start={build.started || build.created}
+						finish={build.finished}
 					/>
 				</section>
 
 				<section>
 					<BuildMeta
-						link={build.link_url}
+						link={build.link}
 						event={build.event}
-						commit={build.commit}
-						branch={build.branch}
-						target={build.deploy_to}
+						after={build.after}
+						target={build.target}
+						deployTo={build.deploy_to}
 						refspec={build.refspec}
 						refs={build.ref}
 					/>

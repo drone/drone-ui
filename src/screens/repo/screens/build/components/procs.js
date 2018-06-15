@@ -10,16 +10,16 @@ export const ProcList = ({ children }) => (
 	<div className={styles.list}>{children}</div>
 );
 
-export const ProcListItem = ({ name, start, finish, state, selected }) => (
+export const ProcListItem = ({ name, started, stopped, status, selected }) => (
 	<div className={classnames(styles.item, selected ? styles.selected : null)}>
 		<h3>{name}</h3>
-		{finish ? (
-			<time>{formatTime(finish, start)}</time>
+		{stopped ? (
+			<time>{formatTime(stopped, started)}</time>
 		) : (
-			<Elapsed start={start} />
+			<Elapsed start={started} />
 		)}
 		<div>
-			<Status status={state} />
+			<Status status={status} />
 		</div>
 	</div>
 );

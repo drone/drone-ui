@@ -33,9 +33,9 @@ export default class RedirectRoot extends Component {
 		) : !latest ? (
 			<Redirect to="/account/repos" />
 		) : !latest.number ? (
-			<Redirect to={`/${latest.full_name}`} />
+			<Redirect to={`/${latest.slug}`} />
 		) : (
-			<Redirect to={`/${latest.full_name}/${latest.number}`} />
+			<Redirect to={`/${latest.slug}/${latest.number}`} />
 		);
 	}
 }
