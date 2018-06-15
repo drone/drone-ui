@@ -7,7 +7,7 @@
  */
 export const fetchFeed = (tree, client) => {
 	client
-		.getBuildFeed({ latest: true })
+		.getRepoList({ latest: true })
 		.then(results => {
 			let list = {};
 			let sorted = results.sort(compareFeedItem);

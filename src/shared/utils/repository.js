@@ -71,7 +71,7 @@ export const syncRepostoryList = (tree, client) => {
 	tree.unset(["repos", "error"]);
 
 	client
-		.getRepoList({ all: true, flush: true })
+		.synchronize()
 		.then(results => {
 			let list = {};
 			results.map(repo => {

@@ -17,14 +17,14 @@ export class Item extends Component {
 				<div className={styles.header}>
 					<div className={styles.title}>{item.slug}</div>
 					<div className={styles.icon}>
-						{item.status ? <Status status={item.status} /> : <noscript />}
+						{item.build ? <Status status={item.build.status} /> : <noscript />}
 					</div>
 				</div>
 
 				<div className={styles.body}>
 					<BuildTime
-						start={item.started || item.created}
-						finish={item.finished}
+						start={(item.build && item.build.started) || (item.build && item.build.created)}
+						finish={item.build && item.build.finished}
 					/>
 				</div>
 			</div>
