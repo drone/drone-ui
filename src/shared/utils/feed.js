@@ -50,15 +50,16 @@ export function fetchFeedOnce(tree, client) {
  */
 export const subscribeToFeed = (tree, client) => {
 	return client.on(data => {
-		const { repo, build } = data;
-
-		if (tree.exists("feed", "data", repo.slug)) {
-			const cursor = tree.select(["feed", "data", repo.slug]);
-			cursor.merge(build);
+		if (!data || !data.build) {
+			return;
 		}
 
-		if (tree.exists("builds", "data", repo.slug)) {
-			tree.set(["builds", "data", repo.slug, build.number], build);
+		if (tree.exists("feed", "data", data.slug)) {
+			tree.set(["feed", "data", data.slug], data)
+		}
+
+		if (tree.exists("builds", "data", data.slug)) {
+			tree.set(["builds", "data", data.slug, data.build.number], data.build);
 		}
 	});
 };
