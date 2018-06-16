@@ -2004,9 +2004,9 @@ dotenv@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-4.0.0.tgz#864ef1379aced55ce6f95debecdce179f7a0cd1d"
 
-"drone-js@git+https://github.com/drone/drone-js.git":
-  version "1.1.0"
-  resolved "git+https://github.com/drone/drone-js.git#10520d623fe8deced1479f02a68afb113ba7c799"
+drone-js@2.0.0-alpha.1:
+  version "2.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/drone-js/-/drone-js-2.0.0-alpha.1.tgz#90a18b7878e6b6d695ff2980cc5cf3e79ac5365f"
 
 ecc-jsbn@~0.1.1:
   version "0.1.1"
