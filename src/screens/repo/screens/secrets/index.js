@@ -47,7 +47,7 @@ export default class RepoSecrets extends Component {
 		const secret = {
 			name: e.detail.name,
 			value: e.detail.value,
-			event: e.detail.event,
+			policy: e.detail.policy,
 		};
 
 		dispatch(createSecret, drone, namespace, name, secret);
@@ -86,7 +86,7 @@ function renderSecret(secret) {
 	return (
 		<Item
 			name={secret.name}
-			event={secret.event}
+			policy={secret.policy}
 			ondelete={this.handleDelete.bind(this, secret)}
 		/>
 	);
