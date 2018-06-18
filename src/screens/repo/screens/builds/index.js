@@ -67,7 +67,7 @@ export default class Main extends Component {
 
 	fetchNextBuildPage(buildList) {
 		const { drone, dispatch, match } = this.props;
-		const page = Math.floor(buildList.length / 50) + 1;
+		const page = Math.floor(buildList.length / 25) + 1;
 
 		dispatch(
 			fetchBuildList,
@@ -109,7 +109,7 @@ export default class Main extends Component {
 		return (
 			<div className={styles.root}>
 				<List>{list.sort(compareBuild).map(renderBuild)}</List>
-				{list.length < repo.last_build && (
+				{list.length < repo.counter && (
 					<button
 						onClick={() => this.fetchNextBuildPage(list)}
 						className={styles.more}
