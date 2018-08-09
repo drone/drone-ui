@@ -16,7 +16,7 @@ export class Form extends Component {
 		this.state = {
 			name: "",
 			value: "",
-			event: [EVENT_PUSH, EVENT_TAG, EVENT_DEPLOY],
+			event: [EVENT_PUSH, EVENT_TAG, EVENT_PULL_REQUEST, EVENT_DEPLOY],
 		};
 
 		this._handleNameChange = this._handleNameChange.bind(this);
@@ -65,7 +65,7 @@ export class Form extends Component {
 	clear() {
 		this.setState({ name: "" });
 		this.setState({ value: "" });
-		this.setState({ event: [EVENT_PUSH, EVENT_TAG, EVENT_DEPLOY] });
+		this.setState({ event: [EVENT_PUSH, EVENT_TAG, EVENT_PULL_REQUEST, EVENT_DEPLOY] });
 	}
 
 	render() {
