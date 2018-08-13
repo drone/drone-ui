@@ -13,7 +13,6 @@ import {
 	STATUS_ERROR,
 } from "shared/constants/status";
 
-import { findChildProcess } from "shared/utils/proc";
 import { fetchRepository } from "shared/utils/repository";
 
 import Breadcrumb, { SEPARATOR } from "shared/components/breadcrumb";
@@ -114,7 +113,11 @@ export default class BuildLogs extends Component {
 			return this.renderLoading();
 		}
 
-		if (build.status === STATUS_DECLINED || build.status === STATUS_ERROR) {
+		if (build.status === STATUS_DECLINED) {
+			return this.renderError();
+		}
+
+		if (build.status === STATUS_ERROR && !build.stages) {
 			return this.renderError();
 		}
 
@@ -185,9 +188,15 @@ export default class BuildLogs extends Component {
 	}
 
 	renderSimple() {
-		const { repo, build, stage, match } = this.props;
-		const parent = build && build.stages && build.stages[parseInt(match.params.stage)-1 || 0];
-		const step = parent && parent.steps && parent.steps[parseInt(match.params.step)-1 || 0];
+		const { repo, build, match } = this.props;
+		const parent =
+			build &&
+			build.stages &&
+			build.stages[parseInt(match.params.stage) - 1 || 0];
+		const step =
+			parent &&
+			parent.steps &&
+			parent.steps[parseInt(match.params.step) - 1 || 0];
 
 		let data = Object.assign({}, build);
 		if (assertBuildMatrix(data)) {
@@ -203,23 +212,25 @@ export default class BuildLogs extends Component {
 						<Details build={data} />
 						<section className={styles.sticky}>
 							<ProcList>
-								{parent && parent.steps && parent.steps.map(function(child) {
-									return (
-										<Link
-											to={`/${repo.slug}/${build.number}/${parent.number}/${child.number}`}
-											key={`${repo.slug}-${build.number}-${parent.number}-${child.number}`}
-										>
-											<ProcListItem
-												key={child.id}
-												name={child.name}
-												started={child.started}
-												stopped={child.stopped}
-												status={child.status}
-												selected={step && child.number === step.number}
-											/>
-										</Link>
-									);
-								})}
+								{parent &&
+									parent.steps &&
+									parent.steps.map(function(child) {
+										return (
+											<Link
+												to={`/${repo.slug}/${build.number}/${parent.number}/${child.number}`}
+												key={`${repo.slug}-${build.number}-${parent.number}-${child.number}`}
+											>
+												<ProcListItem
+													key={child.id}
+													name={child.name}
+													started={child.started}
+													stopped={child.stopped}
+													status={child.status}
+													selected={step && child.number === step.number}
+												/>
+											</Link>
+										);
+									})}
 							</ProcList>
 						</section>
 					</div>

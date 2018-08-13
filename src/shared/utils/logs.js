@@ -1,6 +1,14 @@
 import { repositorySlug } from "./repository";
 
-export function subscribeToLogs(tree, client, namespace, repo, build, stage, step) {
+export function subscribeToLogs(
+	tree,
+	client,
+	namespace,
+	repo,
+	build,
+	stage,
+	step,
+) {
 	if (subscribeToLogs.ws) {
 		subscribeToLogs.ws.close();
 	}
@@ -9,9 +17,16 @@ export function subscribeToLogs(tree, client, namespace, repo, build, stage, ste
 
 	tree.set(["logs", "data", slug, build, stage, step], init);
 
-	subscribeToLogs.ws = client.stream(namespace, repo, build, stage, step, item => {
-		tree.push(["logs", "data", slug, build, stage, step, "data"], item);
-	});
+	subscribeToLogs.ws = client.stream(
+		namespace,
+		repo,
+		build,
+		stage,
+		step,
+		item => {
+			tree.push(["logs", "data", slug, build, stage, step, "data"], item);
+		},
+	);
 }
 
 export function fetchLogs(tree, client, namespace, repo, build, stage, step) {
@@ -26,7 +41,10 @@ export function fetchLogs(tree, client, namespace, repo, build, stage, step) {
 	client
 		.getLogs(namespace, repo, build, stage, step)
 		.then(results => {
-			tree.set(["logs", "data", slug, build, stage, step, "data"], results || []);
+			tree.set(
+				["logs", "data", slug, build, stage, step, "data"],
+				results || [],
+			);
 			tree.set(["logs", "data", slug, build, stage, step, "loading"], false);
 			tree.set(["logs", "data", slug, build, stage, step, "eof"], true);
 		})

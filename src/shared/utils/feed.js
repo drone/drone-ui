@@ -55,7 +55,7 @@ export const subscribeToFeed = (tree, client) => {
 		}
 
 		if (tree.exists("feed", "data", data.slug)) {
-			tree.set(["feed", "data", data.slug], data)
+			tree.set(["feed", "data", data.slug], data);
 		}
 
 		if (tree.exists("builds", "data", data.slug)) {
@@ -86,7 +86,5 @@ export function subscribeToFeedOnce(tree, client) {
  * @returns {number}
  */
 export const compareFeedItem = (a, b) => {
-	return (
-		(b.started || b.created || -1) - (a.started || a.created || -1)
-	);
+	return (b.started || b.created || -1) - (a.started || a.created || -1);
 };

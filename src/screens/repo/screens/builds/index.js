@@ -59,7 +59,12 @@ export default class Main extends Component {
 		const { drone, dispatch, match, repo } = props;
 
 		if (!repo) {
-			dispatch(fetchRepository, drone, match.params.namespace, match.params.name);
+			dispatch(
+				fetchRepository,
+				drone,
+				match.params.namespace,
+				match.params.name,
+			);
 		}
 
 		dispatch(fetchBuildList, drone, match.params.namespace, match.params.name);

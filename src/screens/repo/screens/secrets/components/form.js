@@ -25,7 +25,7 @@ export class Form extends Component {
 	}
 
 	_handlePolicyChange(event) {
-		this.setState({ policy: event.target.value });	
+		this.setState({ policy: event.target.value });
 	}
 
 	_handleValueChange(event) {

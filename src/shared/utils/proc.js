@@ -1,4 +1,8 @@
-import { STATUS_PENDING, STATUS_PLANNED, STATUS_RUNNING } from "shared/constants/status";
+import {
+	STATUS_PENDING,
+	STATUS_PLANNED,
+	STATUS_RUNNING,
+} from "shared/constants/status";
 
 /**
  * Returns a process from the process tree with the
@@ -32,9 +36,11 @@ export const findChildProcess = (tree, pid) => {
  * @returns {boolean}
  */
 export const assertProcFinished = proc => {
-	return proc.status !== STATUS_RUNNING &&
+	return (
+		proc.status !== STATUS_RUNNING &&
 		proc.status !== STATUS_PENDING &&
-		proc.status !== STATUS_PLANNED;
+		proc.status !== STATUS_PLANNED
+	);
 };
 
 /**

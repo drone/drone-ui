@@ -10,11 +10,16 @@ export const MatrixList = ({ children }) => (
 	<div className={styles.list}>{children}</div>
 );
 
-export const MatrixItem = ({ environ, name, start, finish, status, number }) => (
+export const MatrixItem = ({
+	environ,
+	name,
+	start,
+	finish,
+	status,
+	number,
+}) => (
 	<div className={styles.item}>
-		<div className={styles.header}>
-			{name}
-		</div>
+		<div className={styles.header}>{name}</div>
 		<div className={styles.body}>
 			<BuildTime start={start} finish={finish} />
 		</div>
@@ -24,11 +29,3 @@ export const MatrixItem = ({ environ, name, start, finish, status, number }) => 
 		</div>
 	</div>
 );
-
-const renderEnviron = data => {
-	return (
-		<div>
-			{data[0]}={data[1]}
-		</div>
-	);
-};

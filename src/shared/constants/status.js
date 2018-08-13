@@ -9,6 +9,7 @@ const STATUS_RUNNING = "running";
 const STATUS_SKIPPED = "skipped";
 const STATUS_STARTED = "started";
 const STATUS_SUCCESS = "success";
+const STATUS_WAITING = "waiting_on_dependencies";
 
 export {
 	STATUS_BLOCKED,
@@ -22,4 +23,5 @@ export {
 	STATUS_SKIPPED,
 	STATUS_SUCCESS,
 	STATUS_STARTED,
+	STATUS_WAITING,
 };

@@ -12,6 +12,7 @@ import {
 	STATUS_SKIPPED,
 	STATUS_STARTED,
 	STATUS_SUCCESS,
+	STATUS_WAITING,
 } from "shared/constants/status";
 import style from "./status.less";
 
@@ -27,6 +28,8 @@ const defaultIconSize = 15;
 
 const statusLabel = status => {
 	switch (status) {
+		case STATUS_WAITING:
+			return "Waiting on Dependencies";
 		case STATUS_BLOCKED:
 			return "Pending Approval";
 		case STATUS_DECLINED:
@@ -58,6 +61,7 @@ const renderIcon = (status, size) => {
 	switch (status) {
 		case STATUS_SKIPPED:
 			return <RemoveIcon size={size} />;
+		case STATUS_WAITING:
 		case STATUS_PENDING:
 		case STATUS_PLANNED:
 			return <ClockIcon size={size} />;

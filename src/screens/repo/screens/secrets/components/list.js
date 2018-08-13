@@ -7,7 +7,13 @@ export const Item = props => (
 	<div className={styles.item} key={props.name}>
 		<div>
 			{props.name}
-			<ul>{props.policy ? Object.keys(props.policy).map(key => renderDirective(key, props.policy[key])) : null}</ul>
+			<ul>
+				{props.policy ? (
+					Object.keys(props.policy).map(key =>
+						renderDirective(key, props.policy[key]),
+					)
+				) : null}
+			</ul>
 		</div>
 		<div>
 			<button onClick={props.ondelete}>delete</button>
@@ -17,7 +23,17 @@ export const Item = props => (
 
 const renderDirective = (name, directive) => {
 	if (directive.none) {
-		return <li>{name}<span>none</span></li>;		
+		return (
+			<li>
+				{name}
+				<span>none</span>
+			</li>
+		);
 	}
-	return <li>{name}<span>{directive.match.join(", ")}</span></li>;
+	return (
+		<li>
+			{name}
+			<span>{directive.match.join(", ")}</span>
+		</li>
+	);
 };

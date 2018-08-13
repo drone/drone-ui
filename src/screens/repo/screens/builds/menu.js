@@ -11,12 +11,6 @@ export default class nameMenu extends Component {
 						<Link to={`/${namespace}/${name}`}>Builds</Link>
 					</li>
 					<li>
-						<Link to={`/${namespace}/${name}/settings/secrets`}>Secrets</Link>
-					</li>
-					<li>
-						<Link to={`/${namespace}/${name}/settings/registry`}>Registry</Link>
-					</li>
-					<li>
 						<Link to={`/${namespace}/${name}/settings`}>Settings</Link>
 					</li>
 				</ul>

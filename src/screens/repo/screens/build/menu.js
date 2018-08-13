@@ -2,12 +2,7 @@ import React, { Component } from "react";
 import RepoMenu from "../builds/menu";
 import { RefreshIcon, CloseIcon } from "shared/components/icons";
 
-import {
-	cancelBuild,
-	restartBuild,
-	assertBuildMatrix,
-} from "shared/utils/build";
-import { findChildProcess } from "shared/utils/proc";
+import { cancelBuild, restartBuild } from "shared/utils/build";
 import { repositorySlug } from "shared/utils/repository";
 
 import { branch } from "baobab-react/higher-order";
@@ -41,18 +36,11 @@ export default class BuildMenu extends Component {
 	handleCancel() {
 		const { dispatch, drone, repo, build } = this.props;
 
-		dispatch(
-			cancelBuild,
-			drone,
-			repo.namespace,
-			repo.name,
-			build.number,
-		);
+		dispatch(cancelBuild, drone, repo.namespace, repo.name, build.number);
 	}
 
 	render() {
-		const { build, match } = this.props;
-		const { stage } = match.params;
+		const { build } = this.props;
 
 		return (
 			<div>

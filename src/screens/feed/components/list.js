@@ -23,7 +23,10 @@ export class Item extends Component {
 
 				<div className={styles.body}>
 					<BuildTime
-						start={(item.build && item.build.started) || (item.build && item.build.created)}
+						start={
+							(item.build && item.build.started) ||
+							(item.build && item.build.created)
+						}
 						finish={item.build && item.build.finished}
 					/>
 				</div>

@@ -9,8 +9,6 @@ import { inject } from "config/client/inject";
 import MenuIcon from "shared/components/icons/menu";
 
 import Feed from "screens/feed";
-import RepoRegistry from "screens/repo/screens/registry";
-import RepoSecrets from "screens/repo/screens/secrets";
 import RepoSettings from "screens/repo/screens/settings";
 import RepoBuilds from "screens/repo/screens/builds";
 import UserRepos, { UserRepoTitle } from "screens/user/screens/repos";
@@ -133,16 +131,6 @@ export default class Default extends Component {
 						<Route path="/account/token" exact={true} component={UserTokens} />
 						<Route path="/account/repos" exact={true} component={UserRepos} />
 						<Route
-							path="/:namespace/:name/settings/secrets"
-							exact={true}
-							component={RepoSecrets}
-						/>
-						<Route
-							path="/:namespace/:name/settings/registry"
-							exact={true}
-							component={RepoRegistry}
-						/>
-						<Route
 							path="/:namespace/:name/settings"
 							exact={true}
 							component={RepoSettings}
@@ -157,7 +145,11 @@ export default class Default extends Component {
 							exact={true}
 							component={BuildLogs}
 						/>
-						<Route path="/:namespace/:name" exact={true} component={RepoBuilds} />
+						<Route
+							path="/:namespace/:name"
+							exact={true}
+							component={RepoBuilds}
+						/>
 						<Route path="/" exact={true} component={RedirectRoot} />
 					</Switch>
 				</div>
@@ -186,7 +178,11 @@ export default class Default extends Component {
 							exact={true}
 							component={BuildMenu}
 						/>
-						<Route path="/:namespace/:name" exact={false} component={RepoMenu} />
+						<Route
+							path="/:namespace/:name"
+							exact={false}
+							component={RepoMenu}
+						/>
 					</Switch>
 					<section>
 						<ul>

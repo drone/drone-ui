@@ -51,7 +51,12 @@ export default class Settings extends Component {
 		const { drone, dispatch, match, repo } = this.props;
 
 		if (!repo) {
-			dispatch(fetchRepository, drone, match.params.namespace, match.params.name);
+			dispatch(
+				fetchRepository,
+				drone,
+				match.params.namespace,
+				match.params.name,
+			);
 		}
 	}
 
