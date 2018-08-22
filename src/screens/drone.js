@@ -9,6 +9,7 @@ import Title from "./titles";
 import Layout from "./layout";
 import RedirectRoot from "./redirect";
 import { fetchFeedOnce, subscribeToFeedOnce } from "shared/utils/feed";
+import { checkSyncing } from "shared/utils/users";
 
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
@@ -36,6 +37,7 @@ class App extends Component {
 if (tree.exists(["user", "data"])) {
 	fetchFeedOnce(tree, client);
 	subscribeToFeedOnce(tree, client);
+	checkSyncing(tree, client);
 }
 
 client.onerror = error => {

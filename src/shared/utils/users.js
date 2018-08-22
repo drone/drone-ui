@@ -17,3 +17,24 @@ export const generateToken = (tree, client) => {
 			displayMessage(tree, "Failed to retrieve your personal access token");
 		});
 };
+
+export function checkSyncing(tree, client) {
+	var user = tree.get(["user", "data"]);
+	if (!user.syncing) {
+		return;
+	}
+	var timer = setInterval(() => {
+		client
+			.getSelf()
+			.then(result => {
+				tree.set(["user", "data"], result);
+				if (!result.syncing) {
+					clearInterval(timer);
+				}
+			})
+			.catch(() => {
+				clearInterval(timer);
+				displayMessage(tree, "Failed to fetch your account details");
+			});
+	}, 5000);
+}

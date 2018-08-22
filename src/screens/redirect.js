@@ -7,7 +7,6 @@ const binding = (props, context) => {
 	return {
 		feed: ["feed"],
 		user: ["user", "data"],
-		syncing: ["user", "syncing"],
 	};
 };
 
@@ -21,10 +20,11 @@ export default class RedirectRoot extends Component {
 	}
 
 	render() {
-		const { user, syncing } = this.props;
+		const { user } = this.props;
 		const { latest, loaded } = this.props.feed;
+		const syncing = user && user.syncing;
 
-		return !loaded && syncing ? (
+		return syncing ? (
 			<Message />
 		) : !loaded ? (
 			undefined
