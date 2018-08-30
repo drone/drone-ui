@@ -34,7 +34,7 @@ class App extends Component {
 	}
 }
 
-if (tree.exists(["user", "data"])) {
+if (tree.exists(["user", "data", "login"])) {
 	fetchFeedOnce(tree, client);
 	subscribeToFeedOnce(tree, client);
 	checkSyncing(tree, client);

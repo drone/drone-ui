@@ -12,9 +12,9 @@ const binding = (props, context) => {
 
 @branch(binding)
 export default class RedirectRoot extends Component {
-	componentWillReceiveProps(nextProps) {
-		const { user } = nextProps;
-		if (!user && window) {
+	componentWillMount() {
+		const { user } = this.props;
+		if (!user) {
 			window.location.href = "/login";
 		}
 	}
