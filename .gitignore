@@ -1,0 +1,6 @@
+node_modules
+dist
+*.txt
+*.log
+.env
+.env.*
