@@ -9,23 +9,67 @@ export default new Vuex.Store({
     route: {
       params: {}
     },
+  
     latest: {},
+
     repos: {},
 
+    repoLoaded: false,
+    repoLoading: false,
+    repoLoadingErr: undefined,
+
+    repoEnabling: false,
+    repoEnablingErr: undefined,
+
+    // repoEnabling: false,
+    // repoEnablingErr: undefined,
+
+    // repoDisabling: false,
+    // repoDisablingErr: undefined,
+
+    // repoSaving: false,
+    // repoSavingErr: undefined,
+
     builds: {},
+    buildLoaded: false,
+    buildLoading: false,
+    buildLoadingErr: undefined,
+
     secrets: {},
     crons: {},
-    activity: {
-    },
+    activity: {},
 
     user: undefined,
     userLoaded: false,
   },
   mutations: {
+    // BEFORE_ROUTE_LOAD(state) {
+    //   // reset repository fetch states.
+    //   state.repoLoading = false;
+    //   state.repoLoaded = false;
+    //   state.repoLoadingErr = undefined;
 
-    REPO_FIND_LOADING(state) {},
-    REPO_FIND_FAILURE(state, error) {},
+    //   // reset repository enable states.
+    //   state.repoEnabling = false;
+    //   state.repoEnablingErr = undefined;
+    // },
+
+    REPO_FIND_LOADING(state) {
+      state.repoEnabling = false;
+      state.repoEnablingErr = undefined;
+      state.repoLoading = true;
+      state.repoLoaded = false;
+      state.repoLoadingErr = undefined;
+    },
+    REPO_FIND_FAILURE(state, error) {
+      state.repoLoading = false;
+      state.repoLoaded = true;
+      state.repoLoadingErr = {error: {status: 404}};
+    },
     REPO_FIND_SUCCESS(state, item) {
+      state.repoLoading = false;
+      state.repoLoaded = false;
+      state.repoLoadingErr = undefined;
       Vue.set(state.repos, item.slug, item);
     },
 
@@ -56,6 +100,46 @@ export default new Vuex.Store({
     },
 
     //
+    // repo update
+    //
+
+    REPO_UPDATE_LOADING(state) {},
+    REPO_UPDATE_FAILURE(state) {},
+    REPO_UPDATE_SUCCESS(state, {namespace, name, repo}) {
+      Vue.set(state.repos, repo.slug, repo);
+    },
+
+    REPO_ENABLE_LOADING(state) {
+      state.repoEnabling = true;
+      state.repoEnablingErr = undefined;
+    },
+    REPO_ENABLE_FAILURE(state, {error}) {
+      state.repoEnabling = false;
+      state.repoEnablingErr = error;
+    },
+    REPO_ENABLE_SUCCESS(state, {repo}) {
+      state.repoEnabling = false;
+      state.repoEnablingErr = undefined;
+      state.repos[repo.slug] = repo;
+    },
+
+    REPO_DISABLE_LOADING(state) {},
+    REPO_DISABLE_FAILURE(state, {error}) {},
+    REPO_DISABLE_SUCCESS(state, {repo}) {
+      state.repoEnabling = false;
+      state.repoEnablingErr = undefined;
+      state.repos[repo.slug] = repo;
+    },
+
+    REPO_REPAIR_LOADING(state) {},
+    REPO_REPAIR_SUCCESS(state) {},
+    REPO_REPAIR_FAILURE(state) {},
+
+    REPO_CHOWN_LOADING(state) {},
+    REPO_CHOWN_SUCCESS(state) {},
+    REPO_CHOWN_FAILURE(state) {},
+
+    //
     // build list
     //
 
@@ -77,9 +161,21 @@ export default new Vuex.Store({
     // build
     //
 
-    BUILD_FIND_LOADING(state){},
-    BUILD_FIND_FAILURE(state){},
+    BUILD_FIND_LOADING(state){
+      state.buildLoaded = false;
+      state.buildLoading = true;
+      state.buildLoadingErr = undefined;
+    },
+    BUILD_FIND_FAILURE(state, {error}){
+      state.buildLoaded = true;
+      state.buildLoading = false;
+      state.buildLoadingErr = error;
+    },
     BUILD_FIND_SUCCESS(state, data){
+      state.buildLoaded = true;
+      state.buildLoading = false;
+      state.buildLoadingErr = undefined;
+
       const slug = `${data.params.namespace}/${data.params.name}`;
       let builds = state.builds[slug];
       if (!builds) {
@@ -179,7 +275,10 @@ export default new Vuex.Store({
     //
 
     VIEWER_FIND_LOADING(state){},
-    VIEWER_FIND_FAILURE(state){},
+    VIEWER_FIND_FAILURE(state){
+      state.userLoaded = true;
+      state.user = undefined;
+    },
     VIEWER_FIND_SUCCESS(state, res){
       state.userLoaded = true;
       state.user = res;

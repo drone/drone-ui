@@ -18,7 +18,7 @@
 
     <template v-if="showLogin">
         <div class="login">
-            <button>Login</button>
+            <a href="/login" class="button">Login</a>
         </div>
     </template>
 
@@ -81,6 +81,21 @@ export default {
     width: 26px;
     height: 26px;
     text-align: left;
+}
+
+.login {
+    text-align: right;
+    flex: 1;
+}
+
+.login .button {
+    border: none;
+    background: #0060da;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 12px;
+    padding: 10px 20px;
+    text-transform: uppercase;
 }
 
 .search {

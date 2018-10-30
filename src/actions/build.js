@@ -39,7 +39,7 @@ export const fetchBuild = async ({commit}, params) => {
 	const res = await req.json();
 
 	if (req.status > 299) {
-		commit(BUILD_FIND_FAILURE, {params, error: err});
+		commit(BUILD_FIND_FAILURE, {params, error: res});
 	} else {
 		commit(BUILD_FIND_SUCCESS, {params, build: res});
 	}

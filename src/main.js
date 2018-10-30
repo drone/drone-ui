@@ -42,7 +42,7 @@ router.beforeEach((to, from, next) => {
     store.dispatch('fetchCrons', params);
     break
   case "home":
-    store.dispatch('fetchRepos', params);
+    // store.dispatch('fetchRepos', params);
     store.dispatch('fetchReposLatest', params);
     break;
   case "logs":
@@ -51,6 +51,9 @@ router.beforeEach((to, from, next) => {
   case "secrets":
     store.dispatch('fetchSecrets', params);
     break
+  case "settings":
+    store.dispatch('fetchSecrets', params);
+    store.dispatch('fetchCrons', params);
   }
 
   next();

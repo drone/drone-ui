@@ -18,8 +18,19 @@ Vue.use(Router);
 
 export default new Router({
   mode: "history",
-  base: process.env.BASE_URL,
+  // base: process.env.BASE_URL,
+  base: "/",
   routes: [
+    {
+      path: "/login/form",
+      name: "login",
+      component: Login
+    },
+    {
+      path: "/logout",
+      name: "logout",
+      component: Logout
+    },
     {
       path: "/",
       component: Main,
@@ -71,16 +82,6 @@ export default new Router({
           ]
         }
       ],
-    },
-    {
-      path: "/login/form",
-      name: "login",
-      component: Login
-    },
-    {
-      path: "/logout",
-      name: "logout",
-      component: Logout
     },
   ]
 });

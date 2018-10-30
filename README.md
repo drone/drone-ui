@@ -2,7 +2,7 @@
 
 ## Configuration
 
-Create a `.env.local` file with the drone server address (no trailing slash) and your drone user token:
+Create a `.env.development.local` file with the drone server address (no trailing slash) and your drone user token:
 
 ```
 VUE_APP_DRONE_SERVER=https://drone.company.com

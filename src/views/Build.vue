@@ -1,6 +1,9 @@
 <template>
   <div class="build">
 
+    <div v-if="buildLoadingErr">
+      Cannot retrieve the Build details.
+    </div>
 
     <Build v-if="build"
       :number="build.number"
@@ -70,7 +73,16 @@ export default {
       var number = parseInt(this.$route.params.build);
       return this.$store.state.builds[this.namespace] &&
         this.$store.state.builds[this.namespace][number];
-    }
+    },
+    buildLoaded() {
+      return this.$store.state.buildLoaded;
+    },
+    buildLoading() {
+      return this.$store.state.buildLoading;
+    },
+    buildLoadingErr() {
+      return this.$store.state.buildLoadingErr;
+    },
   }
 };
 </script>

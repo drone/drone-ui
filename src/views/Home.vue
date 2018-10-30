@@ -7,10 +7,18 @@
         </Breadcrumb>
 
         <!-- Repository List (Active) -->
-        <div>
-          <span v-for="repo in builds" :key="repo.id">
-            <router-link :to="repo.slug">
+
+            <router-link
+              v-for="repo in repos"
+              :key="repo.id"
+              :to="repo.slug">
+              <InactiveRepoItem
+                v-if="!repo.build"
+                :namespace="repo.namespace"
+                :name="repo.name" />
+
               <RepoItem
+                v-if="repo.build"
                 :namespace="repo.namespace"
                 :name="repo.name"
                 :number="repo.build.number"
@@ -26,17 +34,8 @@
                 :avatar="repo.build.author_avatar"
               />
             </router-link>
-          </span>
-        </div>
-
-        <!-- Repository List (Inactive) -->
-        <div>
-          <span v-for="repo in repos" :key="repo.id">
-            <InactiveRepoItem v-if="!repo.active" :namespace="repo.namespace" :name="repo.name" />
-          </span>
-        </div>
-
-      </div>
+    <button v-if="!all" v-on:click="showAll">Show All Repositories</button>
+  </div>
 </template>
 
 <script>
@@ -53,13 +52,45 @@ export default {
     InactiveRepoItem,
     RepoItem
   },
+  data() {
+    return {
+      all: false,
+    }
+  },
   computed: {
     repos() {
-      return Object.values(this.$store.state.repos || {}) 
+      // TODO improve the sorting code here. It is currently
+      // split into two separate sorting operations, but should
+      // be possible to combine to a single operation.
+      let list = Object.values(this.$store.state.latest || {});
+
+      // sort by repository name, ascending.
+      list.sort(function(a, b){
+        if (a.slug < b.slug) return -1;
+        if (a.slug > b.slug) return 1;
+        return 0;
+      });
+
+      // sort by active status.
+      list.sort(function(a, b){ return b.active-a.active});
+      return this.all ? list : list.slice(0, 10);
     },
-    builds() {
-      return Object.values(this.$store.state.latest || {}) 
+  },
+  methods: {
+    showAll: function() {
+      this.all = true;
     }
   }
 };
 </script>
+
+<style scoped>
+button {
+  background: none;
+  border: none;
+  color: #8f99a4;
+  cursor: pointer;
+  font-size: 13px;
+  padding: 0px;
+}
+</style>

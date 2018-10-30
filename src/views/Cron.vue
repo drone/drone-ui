@@ -1,22 +1,35 @@
 <template>
   <div class="crons">
+    <div class="inner">
+      <header>
+        Cron Jobs
+      </header>
 
-    <span v-for="cron in crons" :key="cron.id">
+      <div v-if="crons.length == 0" class="alert">
+        Your Cron List is Empty.
+      </div>
+
       <Cron
+        v-for="cron in crons"
+        :key="cron.id"
         :name="cron.name"
         :expr="cron.expr"
         :branch="cron.branch"
         :next="cron.next"
         v-on:delete="handleDelete"
       />
-    </span>
+    </div>
   
-    <form @submit.prevent="handleSubmit">
-      <input name="cron.name" v-model="cron.name" type="text" />
-      <input name="cron.expr" v-model="cron.expr" type="text" />
-      <input name="cron.branch" v-model="cron.branch" type="text" />
-      <button type="submit">Submit</button>
+    <form @submit.prevent="handleSubmit" autocomplete="off">
+      <input placeholder="Cron Job Name" name="cron.name" v-model="cron.name" type="text" />
+      <input placeholder="Cron Job Expression" name="cron.expr" v-model="cron.expr" type="text" />
+      <input placeholder="Cron Job Branch" name="cron.branch" v-model="cron.branch" type="text" />
+      
+      <div class="actions">
+        <button type="submit">Add a Cron Job</button>
+      </div>
     </form>
+
 
 <!--
 @yearly (or @annually) | Run once a year, midnight, Jan. 1st        | 0 0 0 1 1 *
@@ -50,7 +63,8 @@ export default {
       return this.$route.params.namespace + '/' + this.$route.params.name;
     },
     crons() {
-      return this.$store.state.crons[this.slug];
+      const crons = this.$store.state.crons[this.slug];
+      return Object.values(crons || {})
     },
   },
   methods: {
@@ -75,3 +89,89 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.crons {
+  background: #FFF;
+  border: 1px solid #e8eaed;
+  border-radius: 3px;
+  box-shadow: 0px 0px 8px 1px #e8eaed;
+  margin-bottom: 30px;
+}
+
+.inner {
+  padding: 0px 15px;
+}
+
+header {
+  font-size: 15px;
+  padding: 15px;
+  padding-left: 0px;
+  border-bottom: 1px solid #e8eaed;
+  font-weight: bold;
+}
+
+.alert {
+  color: #8d96a2;
+  padding: 45px 0px;
+  text-align: center;
+}
+
+.secret:not(:last-of-type) {
+  border-bottom: 1px solid #e8eaed;
+}
+
+form {
+  background: #fbfbfb;
+  border-top: 1px solid #e8eaed;
+  padding: 15px 15px;
+}
+
+form input[type=text],
+form textarea {
+  border-radius: 3px;
+  border: 1px solid #e8eaed;
+  box-sizing: border-box;
+  display: block;
+  font-size: 13px;
+  margin-bottom: 10px;
+  outline: none;
+  padding: 7px 10px;
+  width: 100%;
+}
+
+form input[type=text]:focus,
+form textarea:focus {
+  border: 1px solid #0060da;
+}
+
+form textarea {
+  height: 60px;
+}
+
+form button {
+  border: none;
+  background: #0060da;
+  border-radius: 3px;
+  color: #FFF;
+  font-size: 12px;
+  padding: 10px 20px;
+  text-transform: uppercase;
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #909aa5;
+}
+
+::-moz-placeholder { /* Firefox 19+ */
+  color: #909aa5;
+}
+
+:-ms-input-placeholder { /* IE 10+ */
+  color: #909aa5;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+  color: #909aa5;
+}
+</style>

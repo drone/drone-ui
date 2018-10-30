@@ -1,7 +1,7 @@
 <template>
     <div>
         <h3>{{ namespace }}/{{ name }}</h3>
-        <button>Add</button>
+        <span>View</span>
     </div>
 </template>
 
@@ -33,7 +33,7 @@ h3 {
     font-size: 15px;
 }
 
-button {
+span {
     background: none;
     border: none;
     color: #0f6cdd;

@@ -8,50 +8,55 @@
     <Breadcrumb>
       <router-link :to="'/'">Repositories</router-link>
       <BreadcrumbDivider />
-      <router-link :to="'/'+namespace">{{ namespace }}</router-link>
+      <router-link :to="'/'+slug">{{ slug }}</router-link>
       <BreadcrumbDivider v-if="$route.params.build" />
-      <router-link v-if="$route.params.build" :to="'/'+namespace"># {{ $route.params.build }}</router-link>
+      <router-link v-if="$route.params.build" :to="'/'+slug"># {{ $route.params.build }}</router-link>
+
+<transition name="fade">
+      <div class="loading" v-show="repoLoading" style="background: #EEE; color: #8d97a2; border-radius: 3px; padding: 3px 10px; display: inline-block; text-transform: uppercase;font-size: 11px;">
+        Loading...
+      </div>
+      </transition>
     </Breadcrumb>
 
     <!--
         this section provides the repository header.
     -->
-    <router-link :to="'/'+namespace">
+    <router-link :to="'/'+slug">
       <h1 v-if="repo">
         {{ repo.slug }}
       </h1>
     </router-link>
 
-    <!--
-        this section provides views for alternate states,
-        such as loading or error states. TODO IMPORTANT
-        these are not yet wired up to the store ...
-    -->
-    <!-- <div class="loading" v-if="loading">
-      Loading...
+    <div v-if="error">
+      Repository Not Found.
     </div>
-
-    <div v-if="error" class="error">
-      {{ error }}
-    </div> -->
 
     <!--
          this section provides the repository navigation bar. It is
          enabled for all sub-pages with the exception of the build
          page.
     -->
-    <nav v-if="$route.name != 'build'">
-      <router-link :to="'/'+namespace">Activity Feed</router-link>
-      <router-link :to="'/'+namespace + '/cron'">Cron</router-link>
-      <router-link :to="'/'+namespace + '/secrets'">Secrets</router-link>
-      <router-link :to="'/'+namespace + '/settings'">Settings</router-link>
+    <nav v-if="showTabs">
+      <router-link :to="'/'+slug">Activity Feed</router-link>
+      <!-- <router-link :to="'/'+slug + '/cron'">Cron</router-link>
+      <router-link :to="'/'+slug + '/secrets'">Secrets</router-link> -->
+      <router-link :to="'/'+slug + '/settings'">Settings</router-link>
     </nav>
+
+    <div v-if="showActivatePrompt">
+      Activate this repository <button v-on:click="handleActivate" :disabled="repoEnabling">Activate</button>
+    </div>
+
+    <div v-if="repoEnablingErr">
+      There was a problem enabling your repository.
+    </div>
 
     <!--
         this is the router outlet for all repository pages, including
         the build pages.
     -->
-    <router-view></router-view>
+    <router-view v-if="showRouterOutlet"></router-view>
   </div>
 </template>
 
@@ -66,14 +71,45 @@ export default {
     BreadcrumbDivider,
   },
   computed: {
-    namespace() {
+    slug() {
       return this.$route.params.namespace + '/' + this.$route.params.name;
     },
     repo() {
-      return this.$store.state.repos[this.namespace];
+      return this.$store.state.repos[this.slug];
     },
+    repoEnabling() {
+      return this.$store.state.repoEnabling;
+    },
+    repoEnablingErr() {
+      return this.$store.state.repoEnablingErr;
+    },
+    repoLoading() {
+      const {repoLoading} = this.$store.state;
+      return repoLoading;
+    },
+    error() {
+      const {repoLoading, repoLoaded, repoLoadingErr} = this.$store.state;
+      return repoLoaded && repoLoadingErr;
+    },
+    showActivatePrompt() {
+      return this.repo && !this.repo.active;
+    },
+    showRouterOutlet() {
+      return this.repo && this.repo.active;
+    },
+    showTabs() {
+      return this.$route.name != 'build' && (this.repo && this.repo.active);
+    }
   },
-  methods: {}
+  methods: {
+    handleActivate: function() {
+      const {namespace, name} = this.$route.params;
+      this.$store.dispatch('enableRepo', {
+        namespace: namespace,
+        name: name,
+      });
+    },
+  }
 };
 </script>
 
@@ -84,10 +120,15 @@ h1 {
   margin: 40px 0px;
 }
 
+nav {
+  border-bottom: 1px solid #EEE;
+  margin-bottom: 20px;
+}
+
 nav a {
   color: #8d96a2;
   display: inline-block;
-  font-size: 14px;
+  font-size: 13px;
   padding-bottom: 10px;
   margin-right: 15px;
   text-transform: uppercase;
@@ -100,5 +141,12 @@ nav a:hover {
 nav .router-link-exact-active {
   border-bottom: 1px solid #2d4057;
   color: #2d4057;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 2s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
 </style>

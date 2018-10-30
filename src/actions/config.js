@@ -10,4 +10,4 @@ export const headers = new Headers(
 export const token = process.env.VUE_APP_DRONE_TOKEN
 
 // default server address.
-export const instance = process.env.VUE_APP_DRONE_SERVER;
+export const instance = process.env.VUE_APP_DRONE_SERVER || '';

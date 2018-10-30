@@ -1,3 +1,5 @@
 module.exports = {
-  lintOnSave: false
+  lintOnSave: false,
+  productionSourceMap: false,
+  outputDir: 'dist/files',
 };

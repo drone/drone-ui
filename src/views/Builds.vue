@@ -1,5 +1,9 @@
 <template>
   <div class="builds">
+    <div v-if="builds && builds.length == 0">
+      Your Build List is Empty.
+    </div>
+
         <div>
           <span v-for="build in builds" :key="build.id">
             <router-link :to="'/'+namespace+'/'+build.number">
