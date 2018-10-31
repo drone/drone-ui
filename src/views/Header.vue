@@ -12,7 +12,9 @@
 
     <template v-if="user">
         <div class="avatar">
-            <img :src="user.avatar" />
+            <router-link to="/account">
+                <img :src="user.avatar" />
+            </router-link>
         </div>
     </template>
 
@@ -104,6 +106,7 @@ export default {
     min-width: 900px;
     grid-column: 2;
     text-align: center;
+    display: none;
 }
 
 .search input {

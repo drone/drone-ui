@@ -50,6 +50,8 @@ import {
 import {
 	fetchViewer,
 	fetchViewerToken,
+	syncAccount,
+	syncPoll,
 } from "./viewer";
 
 export default {
@@ -83,4 +85,6 @@ export default {
 	updateRepo,
 	updateSecret,
 	syncRepos,
+	syncAccount,
+	syncPoll,
 }

@@ -48,7 +48,7 @@ table {
 	border-spacing: 0;
 }
 
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700|Roboto+Mono:400,500');
 
 html, body {
   background: #fbfbfb;

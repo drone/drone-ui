@@ -1,5 +1,9 @@
 <template>
   <div class="logs">
+    <router-link :to="'/'+$route.params.namespace+'/'+$route.params.name+'/'+$route.params.build">
+      Close
+    </router-link>
+
     <h1>Logs</h1>
     <div v-if="stage">
       <div>Name: {{ stage.name }}</div>
@@ -50,3 +54,12 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.logs {
+  width: 100%;
+  height: 100%;
+  background: #182c47;
+  color: #8c96a1;
+}
+</style>

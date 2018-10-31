@@ -53,25 +53,16 @@ export const BUILD_CANCEL_FAILURE = 'BUILD_CANCEL_FAILURE';
  * cancelBuild cancels the build and dispatches an event
  * to purge the object from the store.
  */
-export const cancelBuild = async (dispatch, state) => {
-	dispatch({
-		type: BUILD_CANCEL_LOADING,
-	});
+export const cancelBuild = async ({commit}, {namespace, name, build}) => {
+	commit(BUILD_CANCEL_LOADING);
 
-	const {namespace, name, build} = state.route.params;
 	const req = await fetch(`${instance}/api/repos/${namespace}/${name}/builds/${build}`, {headers, method: 'DELETE', credentials: 'same-origin'});
     const res = await req.json();
 
 	if (req.status < 300) {
-        dispatch({
-            type: BUILD_CANCEL_SUCCESS,
-            data: res,
-		});
+        commit(BUILD_CANCEL_SUCCESS, {namespace, name, build: res});
 	} else {
-		dispatch({
-			type: BUILD_CANCEL_FAILURE,
-			error: res,
-        });
+		commit(BUILD_CANCEL_FAILURE, {namespace, name, error: res});
     }
 }
 
@@ -83,24 +74,17 @@ export const BUILD_RETRY_FAILURE = 'BUILD_RETRY_FAILURE';
  * createBuild swapns the a new build from an existing entry
  * and dispatches an event to add the object to the store.
  */
-export const createBuild = async (dispatch, state, input) => {
-	dispatch({
-		type: BUILD_CANCEL_LOADING,
-	});
+export const createBuild = async ({commit}, {namespace, name, build}) => {
+	commit(BUILD_RETRY_LOADING);
 
-	const {namespace, name, build} = state.route.params;
 	const req = await fetch(`${instance}/api/repos/${namespace}/${name}/builds/${build}`, {headers, method: 'POST', credentials: 'same-origin'});
     const res = await req.json();
 
 	if (req.status < 300) {
-        dispatch({
-            type: BUILD_RETRY_SUCCESS,
-            data: res,
-		});
+		const data = {namespace, name, build: res};
+		commit(BUILD_RETRY_SUCCESS, data);
+		return data
 	} else {
-		dispatch({
-			type: BUILD_RETRY_FAILURE,
-			error: res,
-        });
+		commit(BUILD_RETRY_FAILURE, {namespace, name, error: res});
     }
 }

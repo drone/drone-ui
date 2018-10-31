@@ -21,8 +21,9 @@
     </Build>
 
     <div v-if="build">
-      <button>Cancel</button>
-      <button>Restart</button>
+      <button v-on:click="handleCancel">Cancel</button>
+      <button v-on:click="handleRestart">Restart</button>
+      <a v-if="build.link" :href="build.link" target="_blank">View Commit</a>
     </div>
 
     <div v-if="build && build.stages">
@@ -83,6 +84,20 @@ export default {
     buildLoadingErr() {
       return this.$store.state.buildLoadingErr;
     },
+  },
+  methods: {
+    handleCancel: function() {
+      const {namespace, name, build} = this.$route.params;
+      this.$store.dispatch('cancelBuild', {namespace, name, build})
+    },
+    handleRestart: function() {
+      const {namespace, name, build} = this.$route.params;
+
+      let router = this.$router;
+      this.$store.dispatch('createBuild', {namespace, name, build}).then((data) => {
+        router.push(`/${namespace}/${name}/${data.build.number}`);
+      })
+    }
   }
 };
 </script>

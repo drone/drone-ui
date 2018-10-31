@@ -9,8 +9,15 @@ export default new Vuex.Store({
     route: {
       params: {}
     },
+
+    instance: {
+      host: window.location.host,
+      protocol: window.location.protocol,
+    },
   
     latest: {},
+    latestUpdated: 0,
+    latestLoaded: false,
 
     repos: {},
 
@@ -94,6 +101,8 @@ export default new Vuex.Store({
     REPO_LIST_LATEST_FAILURE(state, error) {},
     REPO_LIST_LATEST_SUCCESS(state, list) {
       state.latest = {}
+      state.latestLoaded = true;
+      state.latestUpdated = Math.round((new Date()).getTime() / 1000);
 			list.map(item => {
 				state.latest[item.slug] = item;
 			});
@@ -293,6 +302,59 @@ export default new Vuex.Store({
     VIEWER_FIND_TOKEN_SUCCESS(state, res){
       state.userLoaded = true;
       state.user = res;
+    },
+
+    //
+    // events
+    //
+
+    BUILD_EVENT(state, {event}) {
+      let builds = state.builds[event.slug] || {};
+			Vue.set(builds, event.build.number, event.build);
+      Vue.set(state.builds, event.slug, builds);
+
+      let latest = state.latest[event.slug];
+      if (latest) {
+        state.latest[event.slug] = event;
+        // TODO somebody please fix this.
+        // this is super fucked up. We need to completely replace
+        // this path in the state tree in order for changes to
+        // properly render on the dashboard.
+        state.latest = JSON.parse(JSON.stringify(state.latest))
+      }
+    },
+
+
+    BUILD_RETRY_LOADING(state){},
+    BUILD_RETRY_FAILURE(state){},
+    BUILD_RETRY_SUCCESS(state, {namespace, name, build}){
+      let slug = `${namespace}/${name}`;
+      let builds = state.builds[slug] || {};
+			Vue.set(builds, build.number, build);
+      Vue.set(state.builds, slug, builds);
+    },
+
+    BUILD_CANCEL_LOADING(state){},
+    BUILD_CANCEL_FAILURE(state){},
+    BUILD_CANCEL_SUCCESS(state, {namespace, name, build}){
+      let slug = `${namespace}/${name}`;
+      let builds = state.builds[slug] || {};
+			Vue.set(builds, build.number, build);
+      Vue.set(state.builds, slug, builds);
+    },
+
+    //
+    // sync
+    //
+
+    VIEWER_SYNC_STARTING(state){
+      state.user.syncing = true;
+    },
+    VIEWER_SYNC_FAILURE(state){
+      state.user.syncing = false;
+    },
+    VIEWER_SYNC_SUCCESS(state){
+      state.user.syncing = true;
     },
   },
   actions,

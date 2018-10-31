@@ -18,6 +18,18 @@ export const fetchViewer = async (context) => {
 		context.commit(VIEWER_FIND_FAILURE, res);
 	} else {
 		context.commit(VIEWER_FIND_SUCCESS, res);
+
+		// TODO(bradrydzewski) find a way to decouple the
+		// syncing from fetching the user.
+		//
+		// if the user is syncing we need to poll and 
+		// refresh the repository list when the syncing
+		// is completed.
+		if (res.syncing) {
+			setTimeout(() => {
+				context.dispatch('syncPoll')
+			}, 10000);
+		}
 	}
 }
 
@@ -40,4 +52,49 @@ export const fetchViewerToken = async (context) => {
 	} else {
 		context.commit(VIEWER_FIND_TOKEN_SUCCESS, res);
 	}
+}
+
+//
+// TODO(bradrydzewski) we should use EventSource to poll
+// the system for updates. This is going to be more efficent
+// than multi-request polling with backoff.
+//
+
+export const VIEWER_SYNC_STARTING = 'VIEWER_SYNC_STARTING';
+export const VIEWER_SYNC_SUCCESS = 'VIEWER_SYNC_SUCCESS';
+export const VIEWER_SYNC_FAILURE = 'VIEWER_SYNC_FAILURE';
+
+export const syncAccount = async (context) => {
+	context.commit(VIEWER_SYNC_STARTING)
+	const req = await fetch(`${instance}/api/user/repos?async=true`, {headers, method: 'POST', credentials: 'same-origin'});
+
+	if (req.status > 299) {
+		const res = await req.json();
+		context.commit(VIEWER_SYNC_FAILURE, {error: res});
+	} else {
+		context.commit(VIEWER_SYNC_SUCCESS);
+	}
+
+	// once synchronization begins we should wait a few
+	// seconds before we check if polling is complete.
+	setTimeout(() => {
+		context.dispatch('syncPoll')
+	}, 10000);
+}
+
+export const syncPoll = async (context) => {
+	const TIMEOUT = 10000; // 10 seconds
+
+	let interval = setInterval(async function() {
+		const req = await fetch(`${instance}/api/user`, {headers, credentials: 'same-origin'});
+		const res = await req.json();
+
+		if (req.status > 299) {
+			clearInterval(interval);
+		} else if (res.syncing === false)  {
+			clearInterval(interval);
+			context.commit(VIEWER_FIND_SUCCESS, res);
+			context.dispatch('fetchReposLatest');
+		}
+	}, TIMEOUT);
 }
