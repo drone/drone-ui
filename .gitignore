@@ -1,6 +1,5 @@
 node_modules
 dist
-dist/files
 dist/files/*
 *.txt
 *.log
