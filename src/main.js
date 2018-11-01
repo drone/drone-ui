@@ -1,5 +1,7 @@
 import Vue from "vue";
 import VueI18n from "vue-i18n";
+import VueMoment from "vue-moment";
+
 import App from "./App.vue";
 import Router from "vue-router";
 import {messages, resolve} from "./locales";
@@ -9,8 +11,9 @@ import {sync} from 'vuex-router-sync';
 import {authorizer, defaultParams} from "./router/gates";
 import {fetcher} from "./router/fetch";
 
+Vue.use(VueMoment);
 Vue.use(Router);
-Vue.use(VueI18n)
+Vue.use(VueI18n);
 Vue.config.productionTip = false;
 
 sync(store, router)

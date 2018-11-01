@@ -13,9 +13,16 @@
     </header>
 
     <transition name="fade">
-      <div v-show="empty" class="alert empty">
+      <Alert v-show="showEmptyAlert">
         Your repository list is empty.
-      </div>
+      </Alert>
+    </transition>
+
+    <transition name="fade">
+      <Alert v-show="showSyncingAlert">
+        Your repository list is being synchronized.
+        <small>This could take between 30 and 60 seconds to complete.</small>
+      </Alert>
     </transition>
 
     <router-link
@@ -37,7 +44,7 @@
           :status="repo.build.status"
           :message="repo.build.message"
           :commit="repo.build.after"
-          :branch="repo.build.branch"
+          :branch="repo.build.target"
           :reference="repo.build.ref"
           :created="repo.build.created"
           :started="repo.build.started"
@@ -46,11 +53,12 @@
         />
     </router-link>
 
-    <button v-if="!all && !empty" v-on:click="showAll">Show All Repositories</button>
+    <button v-if="showMore" v-on:click="showAll">Show All Repositories</button>
   </div>
 </template>
 
 <script>
+import Alert from "@/components/Alert.vue";
 import InactiveRepoItem from "@/components/InactiveRepoItem.vue";
 import RepoItem from "@/components/RepoItem.vue";
 import Breadcrumb from "@/components/Breadcrumb.vue";
@@ -60,6 +68,7 @@ import Running from "@/components/icons/Running.vue";
 export default {
   name: "home",
   components: {
+    Alert,
     BreadcrumbDivider,
     Breadcrumb,
     InactiveRepoItem,
@@ -75,19 +84,24 @@ export default {
     latest() {
       return this.$store.state.latest;
     },
+    loaded() {
+      return this.$store.state.latestLoaded;
+    },
     syncing() {
       return this.$store.state.user &&
         this.$store.state.user.syncing;
     },
-    // latest() {
-    //   return this.$store.state.latest;
-    // },
-    // repos() {
-
-    // },
     empty() {
-      return this.repos && this.repos.length === 0 &&
-        this.$store.state.latestLoaded;
+      return Object.keys(this.latest).length === 0;
+    },
+    showEmptyAlert() {
+      return this.empty && this.loaded && !this.syncing;
+    },
+    showSyncingAlert() {
+      return this.empty && this.loaded && this.syncing;
+    },
+    showMore() {
+      return this.loaded && !this.all && !this.empty;
     }
   },
   methods: {
@@ -115,31 +129,6 @@ export default {
       this.$store.dispatch('syncAccount');
     }
   },
-
-  // /**
-  //  * A navigation guard restricts this view to authenticated
-  //  * user accounts. If the user is not authenticated, they
-  //  * are redirected to the login screen.
-  //  * 
-  //  * If the user is authenticated, the guard dispatches a
-  //  * request to load the repository list.
-  //  * 
-  //  * @param {*} to 
-  //  * @param {*} from 
-  //  * @param {*} next 
-  //  */
-  // beforeRouteEnter (to, from, next) {
-  //   next(vm => {
-  //     if (!vm.$store.state.user) {
-  //       window.location.href='/login';
-  //       return;
-  //     }
-
-  //     if (!vm.$store.latestLoaded) {
-  //       vm.$store.dispatch('fetchReposLatest', to.params);
-  //     }
-  //   })
-  // }
 };
 </script>
 
@@ -153,23 +142,16 @@ button {
   padding: 0px;
 }
 
-.alert.empty {
-  background: #FFF;
-  border: 1px solid #e8eaed;
-  border-radius: 3px;
-  box-shadow: 0px 0px 8px 1px #e8eaed;
-  margin: 30px 0px;
-  padding: 30px 15px;
-  text-align: center;
-}
-
 header {
   display: flex;
   align-items: center;
+  padding-bottom:30px;
 }
+
 header .breadcrumb {
   flex: 1;
 }
+
 header button {
   display: flex;
   margin-right: 15px;
@@ -207,12 +189,13 @@ header button svg {
 	100%{transform:rotate(359deg)}
 }
 
-.alert.fade-enter-active,
-.alert.fade-leave-active {
-  transition: opacity 1s;
+.fade-enter-active {
+  transition: opacity 0.75s;
 }
-.alert.fade-enter,
-.alert.fade-leave-to {
+.fade-leave-active {
+  transition: none;
+}
+.fade-enter {
   opacity: 0;
 }
 </style>

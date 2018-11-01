@@ -100,10 +100,11 @@ export const enableRepo = async ({commit}, {namespace, name}) => {
 	const req = await fetch(`${instance}/api/repos/${namespace}/${name}`, {headers, method: 'POST', credentials: 'same-origin'});
 	const res = await req.json();
 
-	if (req.status < 300) {
+	if (req.ok) {
         commit(REPO_ENABLE_SUCCESS, {namespace, name, repo: res});
 	} else {
-		commit(REPO_ENABLE_FAILURE, {namespace, name, error: res});
+		const error = {...res, status: req.status };
+		commit(REPO_ENABLE_FAILURE, {namespace, name, error});
     }
 }
 

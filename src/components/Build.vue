@@ -10,11 +10,29 @@
                 </div>
                 <div class="metadata">
                     <img :src="avatar" />
-                    <span class="author">{{ author }}</span>
-                    <span class="finished">{{ finished }}</span>
-                    <span class="duration">{{ duration }}</span>
-                    <span class="commit">{{ commit.substr(0, 8) }}</span>
-                    <span class="branch">{{ branch }}</span>
+                    <p class="author">{{ author }}</p>
+
+                    <span class="finished">
+                        <IconCalendar />
+                        {{ new Date(created * 1000) | moment("from", "now") }}
+                    </span>
+                    <span class="duration">
+                        <IconClock />
+                        <TimeElapsed v-if="started" :started="started" :stopped="finished" />
+                    </span>
+                    <span class="commit">
+                        <IconCommit />
+                        {{ commit && commit.substr(0, 8) }}
+                    </span>
+                    <span class="branch">
+                        <IconBranch v-if="event == 'push'" />
+                        <IconMerge v-else-if="event == 'pull_request'" />
+                        <IconTag v-else-if="event == 'tag'" />
+                        <IconPromote v-else-if="event == 'promote'" />
+                        <IconRollback v-else-if="event == 'rollback'" />
+                        <IconBranch v-else />
+                        {{ branch || reference.replace("refs/tags/") }}
+                    </span>
                 </div>
             </div>
         </div>
@@ -23,7 +41,16 @@
 </template>
 
 <script>
+import IconBranch from "./icons/IconBranch.vue";
+import IconClock from "./icons/IconClock.vue";
+import IconCalendar from "./icons/IconCalendar.vue";
+import IconCommit from "./icons/IconCommit.vue";
+import IconMerge from "./icons/IconMerge.vue";
+import IconPromote from "./icons/IconPromote.vue";
+import IconRollback from "./icons/IconRollback.vue";
+
 import Status from "./Status.vue";
+import TimeElapsed from "./TimeElapsed.vue";
 
 export default {
   name: "Build",
@@ -42,12 +69,15 @@ export default {
     avatar: String,
   },
   components: {
+    IconBranch,
+    IconCalendar,
+    IconClock,
+    IconCommit,
+    IconMerge,
+    IconPromote,
+    IconRollback,
     Status,
-  },
-  computed: {
-    duration() {
-        return "";
-    }
+    TimeElapsed,
   }
 };
 </script>
@@ -123,19 +153,46 @@ h3 {
     margin-bottom: 10px;
 }
 
+
 .metadata {
     align-items: center;
     display: inline-flex;
 }
 
-.metadata span {
-    display: inline-block;
-    font-size: 13px;
+.metadata svg {
+    fill: #8d97a2;
+    height: 18px;
     margin-right: 10px;
+    min-height: 18px;
+    min-width: 18px;
+    width: 18px;
+}
+
+.metadata span {
+    align-items: center;
+    display: flex;
+    font-size: 13px;
+    width: 125px;
+    margin-right: 15px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    border-right: 1px solid #EEE;
 }
+.metadata span:last-of-type {
+    border: none;
+}
+
+.metadata span.finished {
+    width: 150px;
+}
+.metadata span.commit {
+    width: 110px;
+}
+.metadata span.duration {
+    width: 90px;
+}
+
 
 .message {
     width: 100px;
@@ -143,7 +200,13 @@ h3 {
 }
 
 p {
+    box-sizing: border-box;
     font-size: 13px;
+    width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    padding-right: 10px;
+    text-overflow: ellipsis;
 }
 
 img {

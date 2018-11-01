@@ -11,7 +11,7 @@
       :status="build.status"
       :message="build.message"
       :commit="build.after"
-      :branch="build.branch"
+      :branch="build.target"
       :reference="build.ref"
       :created="build.created"
       :started="build.started"

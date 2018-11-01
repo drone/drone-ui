@@ -28,9 +28,9 @@
       </h1>
     </router-link>
 
-    <div v-if="error">
+    <Alert v-if="error" style="margin-top:30px;">
       Repository Not Found.
-    </div>
+    </Alert>
 
     <!--
          this section provides the repository navigation bar. It is
@@ -44,12 +44,19 @@
       <router-link :to="'/'+slug + '/settings'">Settings</router-link>
     </nav>
 
-    <div v-if="showActivatePrompt">
-      Activate this repository <button v-on:click="handleActivate" :disabled="repoEnabling">Activate</button>
-    </div>
 
-    <div v-if="repoEnablingErr">
+
+    <Alert v-if="repoEnablingErr && repoEnablingErr.status === 402">
+      You have reached your repository activation limit.
+      <small>Please contact your system administrator.</small>
+    </Alert>
+    <Alert v-else-if="repoEnablingErr">
       There was a problem enabling your repository.
+      <small>{{ repoEnablingErr.message }}.</small>
+    </Alert>
+    <div class="alert activate" v-else-if="showActivatePrompt">
+      <button v-on:click="handleActivate" :disabled="repoEnabling">Activate</button>
+      Activate this repository 
     </div>
 
     <!--
@@ -61,12 +68,14 @@
 </template>
 
 <script>
+import Alert from "@/components/Alert.vue";
 import Breadcrumb from "@/components/Breadcrumb.vue";
 import BreadcrumbDivider from "@/components/BreadcrumbDivider.vue";
 
 export default {
   name: "repo",
   components: {
+    Alert,
     Breadcrumb,
     BreadcrumbDivider,
   },
@@ -150,5 +159,22 @@ nav .router-link-exact-active {
 }
 .fade-enter, .fade-leave-to {
   opacity: 0;
+}
+
+.alert.activate {
+  padding: 15px;
+  background: #FFF;
+  border: 1px solid #EEE;
+}
+.alert.activate button {
+  margin-right: 10px;
+  border: none;
+  background: #0060da;
+  border-radius: 3px;
+  color: #FFF;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 7px 20px;
+  text-transform: uppercase;
 }
 </style>

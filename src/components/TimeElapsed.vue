@@ -26,10 +26,11 @@ export default {
   },
   computed: {
     time: function() {
-      return this.hours + ':' + this.minutes + ':' + this.seconds;
+      return this.hours == '00'
+        ? this.minutes + ':' + this.seconds
+        : this.hours + ':' + this.minutes + ':' + this.seconds;
     },
     milliseconds: function() {
-      console.log()
       return this.currentTime - this.started * 1000;
     },
     hours: function() {

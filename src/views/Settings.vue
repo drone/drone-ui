@@ -1,48 +1,62 @@
 <template>
-  <div class="settings">
+  <div class="settings-view">
     <section v-if="repo" class="settings">
       <div>
         <span>Visibility</span>
-        <select v-model="repo.visibility">
-          <option value="public">Public</option>
-          <option value="private">Private</option>
-          <option value="internal">Internal</option>
-        </select>
+        <span>
+          <select v-model="repo.visibility">
+            <option value="public">Public</option>
+            <option value="private">Private</option>
+            <option value="internal">Internal</option>
+          </select>
+        </span>
       </div>
 
       <div>
         <span>Protected</span>
         <span>
-          <input type="checkbox" v-model="repo.protected" />
+          <BaseCheckbox v-model="repo.protected"></BaseCheckbox>
         </span>
       </div>
 
       <div v-if="sysAdmin">
         <span>Trusted</span>
         <span>
-          <input type="checkbox" v-model="repo.trusted" />
+          <BaseCheckbox v-model="repo.trusted"></BaseCheckbox>
         </span>
       </div>
 
       <div v-if="sysAdmin">
         <span>Timeout</span>
-        <select v-model="repo.timeout">
-          <option
-            v-for="timeout in timeouts"
-            v-bind:key="timeout" :value="timeout">
-              {{ timeout > 90
-                  ? timeout / 60 + " hours"
-                  : timeout + " minutes"
-              }}
-          </option>
-        </select>
+        <span>
+          <select v-model="repo.timeout">
+            <option
+              v-for="timeout in timeouts"
+              v-bind:key="timeout" :value="timeout">
+                {{ timeout > 90
+                    ? timeout / 60 + " hours"
+                    : timeout + " minutes"
+                }}
+            </option>
+          </select>
+        </span>
       </div>
 
       <div>
         <span>Configuration</span>
-        <input type="text" v-model="repo.config_path" />
+        <span>
+          <input
+            type="text"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+            v-model="repo.config_path" />
+        </span>
       </div>
-    <button v-on:click="save">Save</button>
+      <div class="actions">
+        <button v-on:click="save">Save</button>
+      </div>
     </section>
 
 
@@ -69,6 +83,7 @@
 <script>
 import Secrets from "./Secrets.vue";
 import Cron from "./Cron.vue";
+import BaseCheckbox from "@/components/forms/BaseCheckbox.vue";
 
 export default {
   name: "settings",
@@ -78,6 +93,7 @@ export default {
     }
   },
   components: {
+    BaseCheckbox,
     Secrets,
     Cron,
   },
@@ -172,5 +188,77 @@ section.disable p {
   color: #98a1ab;
   font-size: 14px;
   padding: 0px 15px;
+}
+
+
+.settings > div {
+  display: flex;
+  height: 35px;
+  margin-bottom: 10px;
+}
+.settings div > span {
+  align-items: center;
+  display: flex;
+  font-size: 13px;
+}
+.settings > div > span:first-of-type {
+  flex: 0 0 150px;
+}
+.settings > div > span:last-of-type {
+  flex: 1
+}
+
+input[type="text"] {
+      border-radius: 3px;
+    border: 1px solid #e8eaed;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    display: block;
+    font-size: 13px;
+    outline: none;
+    padding: 7px 10px;
+    resize: none;
+    width: 100%;
+}
+
+select {
+    appearance: none;
+  -webkit-appearance: none;
+    border-radius: 3px;
+    border: 1px solid #e8eaed;
+    box-sizing: border-box;
+    cursor: pointer;
+    box-sizing: border-box;
+    display: block;
+    font-size: 13px;
+    outline: none;
+    padding: 7px 10px;
+    resize: none;
+    width: 100%;
+    position:relative;
+
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><polygon fill='#98a1ab' points='0,30 100, 30 50,90'/></svg>") no-repeat;
+  background-size: 10px;
+  background-position: center right 10px;
+  background-repeat: no-repeat;
+  background-color: #FFF;
+}
+
+.settings .actions {
+  border-top: 1px solid #EEE;
+  padding: 0px;
+  padding-top: 10px;
+  margin: 0px;
+}
+
+.settings button {
+  border: none;
+  background: #0060da;
+  border-radius: 3px;
+  color: #FFF;
+  font-size: 12px;
+  padding: 10px 20px;
+  text-transform: uppercase;
 }
 </style>
