@@ -4,7 +4,7 @@
  * 
  * @param {*} store
  */
-export const fetcher = ({dispatch}) => (to, from, next) => {
+export const fetcher = ({dispatch, commit}) => (to, from, next) => {
     const {name, params} = to;
 
     // TODO we should be able attach actions to the route
@@ -13,11 +13,9 @@ export const fetcher = ({dispatch}) => (to, from, next) => {
     switch (name) {
     case "build":
     case "builds":
-    case "cron":
-    case "logs":
     case "repo":
-    case "secrets":
     case "settings":
+    case "step":
       dispatch('fetchRepo', params);   
       break
     }
@@ -26,7 +24,9 @@ export const fetcher = ({dispatch}) => (to, from, next) => {
     case "account":
       dispatch('fetchViewerToken', params);
       break
+    case "step":
     case "build":
+      commit('LOG_CLEAR');
       dispatch('fetchBuild', params);
       break;
     case "builds":
@@ -34,9 +34,6 @@ export const fetcher = ({dispatch}) => (to, from, next) => {
       break
     case "home":
       dispatch('fetchReposLatest', params);
-      break;
-    case "logs":
-      dispatch('fetchBuild', params);
       break;
     case "settings":
       dispatch('fetchSecrets', params);

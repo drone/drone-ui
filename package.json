@@ -8,6 +8,8 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "ansi_up": "^3.0.0",
+    "humanize-duration": "^3.15.3",
     "vue": "^2.5.17",
     "vue-i18n": "^8.2.1",
     "vue-router": "^3.0.1",

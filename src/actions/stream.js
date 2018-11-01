@@ -16,21 +16,27 @@ export const streamEvents = ({commit}, store) => {
 }
 
 export const LOG_WRITE = 'LOG_WRITE';
+export const LOG_CLEAR = 'LOG_CLEAR';
 
-export const streamLogs = ({commit}, params) => {
+export function streamLogs({commit}, params) {
+	if (streamLogs.events) {
+		streamLogs.events.close();
+    }
+
 	const {namespace, name, build, stage, step} = params;
     let path = `${instance}/api/stream/${namespace}/${name}/${build}/${stage}/${step}`;
     path = !token ? path : `${path}?access_token=${token}`;
 
-    let events = new EventSource(path);
-    events.onmessage = function(event) {
+    commit(LOG_CLEAR)
+    
+    streamLogs.events = new EventSource(path);
+    streamLogs.events.onmessage = function(event) {
         const line = JSON.parse(event.data);
         commit(LOG_WRITE, {...params, line});
     };
-    events.onerror = function(err) {
+    streamLogs.events.onerror = function(err) {
         if (err.data === "eof") {
-            events.close();
+            streamLogs.events.close();
         }
     };
-    return events;
 }

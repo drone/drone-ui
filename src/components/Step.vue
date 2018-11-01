@@ -1,13 +1,14 @@
 <template>
-    <section>
-        <Status :status="status" :outlined="false" />
+    <section v-bind:class="{ selected: selected }">
+        <Status :status="status" :outlined="true" />
         <span>{{ name }}</span>
-        <time>0:00</time>
+        <time-elapsed :started="started" :stopped="stopped" v-if="started" />
     </section>
 </template>
 
 <script>
 import Status from "./Status.vue";
+import TimeElapsed from "./TimeElapsed.vue";
 
 export default {
   name: "Step",
@@ -17,10 +18,12 @@ export default {
     status: String,
     created: Number,
     started: Number,
-    finished: Number,
+    stopped: Number,
+    selected: Boolean,
   },
   components: {
-      Status
+      Status,
+      TimeElapsed
   },
   computed: {
     duration() {
@@ -43,5 +46,9 @@ span {
     padding: 0px 15px;
     flex: 1;
     font-size: 14px;
+}
+
+section.selected {
+    background: #f3f4f6;
 }
 </style>

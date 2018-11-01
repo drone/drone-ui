@@ -1,21 +1,24 @@
 <template>
     <section>
-        <div class="gutter">
-            <Status :status="status" />
-        </div>
-        <div class="content">
-            <div class="header">
-                <h3>#{{ number }}. {{ message }}</h3>
+        <div class="main">
+            <div class="gutter">
+                <Status :status="status" />
             </div>
-            <div class="metadata">
-                <img :src="avatar" />
-                <span class="author">{{ author }}</span>
-                <span class="finished">{{ finished }}</span>
-                <span class="duration">{{ duration }}</span>
-                <span class="commit">{{ commit.substr(0, 8) }}</span>
-                <span class="branch">{{ branch }}</span>
+            <div class="content">
+                <div class="header">
+                    <h3>#{{ number }}. {{ message }}</h3>
+                </div>
+                <div class="metadata">
+                    <img :src="avatar" />
+                    <span class="author">{{ author }}</span>
+                    <span class="finished">{{ finished }}</span>
+                    <span class="duration">{{ duration }}</span>
+                    <span class="commit">{{ commit.substr(0, 8) }}</span>
+                    <span class="branch">{{ branch }}</span>
+                </div>
             </div>
         </div>
+        <slot></slot>
     </section>
 </template>
 
@@ -51,15 +54,41 @@ export default {
 
 <style scoped>
 section {
-    align-items: stretch;
     background: #FFF;
     box-shadow: 0px 0px 8px 1px #e8eaed;
     border: 1px solid #e8eaed;
+    margin: 15px 0px;
+}
+
+section > .main {
+    align-items: stretch;
     border-radius: 3px;
     color: #8d97a2;
     display: flex;
-    margin: 15px 0px;
     padding: 15px;
+}
+
+section footer {
+    padding: 15px;
+    text-align: right;
+    border-top: 1px solid #e8eaed;
+}
+
+section footer button,
+section footer a {
+    border: none;
+    background: #0060da;
+    border-radius: 3px;
+    color: #FFF;
+    cursor: pointer;
+    font-size: 12px;
+    margin-left: 10px;
+    padding: 5px 15px;
+    text-transform: uppercase;
+}
+
+section footer button.cancel {
+    background: #de3a5d;   
 }
 
 .gutter {

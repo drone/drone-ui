@@ -26,11 +26,6 @@ export default new Router({
       component: Logout
     },
     {
-      path: "/:namespace/:name/:build/:stage/:step",
-      name: "logs",
-      component: Logs
-    },
-    {
       path: "/",
       component: Main,
       children: [
@@ -60,6 +55,11 @@ export default new Router({
               name: "settings",
               component: Settings,
               meta: { requiresAuth: true }
+            },
+            {
+              path: ":build/:stage/:step",
+              name: "step",
+              component: Build
             },
             {
               path: ":build",

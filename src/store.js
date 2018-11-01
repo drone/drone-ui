@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import actions from "./actions";
+import AnsiUp from "ansi_up";
 
 Vue.use(Vuex);
 
@@ -48,6 +49,19 @@ export default new Vuex.Store({
 
     user: undefined,
     userLoaded: false,
+
+
+    logs: [],
+    logsLoaded: false,
+    logsLoading: false,
+    logsLoadingErr: undefined,
+    logsFor: {
+      namespace: undefined,
+      name: undefined,
+      build: undefined,
+      stage: undefined,
+      step: undefined,
+    },
   },
   mutations: {
     // BEFORE_ROUTE_LOAD(state) {
@@ -356,6 +370,44 @@ export default new Vuex.Store({
     VIEWER_SYNC_SUCCESS(state){
       state.user.syncing = true;
     },
+
+
+
+    LOGS_FIND_LOADING(state){
+      state.logs = [];
+    },
+    LOGS_FIND_FAILURE(state){},
+    LOGS_FIND_SUCCESS(state, data){
+      state.logs = escapeLogs(data.lines);
+    },
+
+    LOG_CLEAR(state) {
+      state.logs = [];
+    },
+    LOG_WRITE(state, data){
+      if (!state.logs) {
+        state.logs = [];
+      }
+      state.logs.push(
+        escapeLine(data.line)
+      );
+    },
   },
   actions,
 });
+
+
+let formatter = new AnsiUp();
+formatter.use_classes = true;
+
+function escapeLogs(logs) {
+  return logs.map((line) => {
+    line._html = formatter.ansi_to_html(line.out || "");
+    return line;
+  });
+}
+
+function escapeLine(line) {
+  line._html = formatter.ansi_to_html(line.out || "");
+  return line;
+}

@@ -98,7 +98,9 @@ export default {
       return this.repo && this.repo.active;
     },
     showTabs() {
-      return this.$route.name != 'build' && (this.repo && this.repo.active);
+      return this.$route.name != 'build' &&
+        this.$route.name != 'step' &&
+        (this.repo && this.repo.active);
     }
   },
   methods: {

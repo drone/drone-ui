@@ -6,7 +6,7 @@ import {messages, resolve} from "./locales";
 import router from "./router/router";
 import store from "./store";
 import {sync} from 'vuex-router-sync';
-import {authorizer} from "./router/authorize";
+import {authorizer, defaultParams} from "./router/gates";
 import {fetcher} from "./router/fetch";
 
 Vue.use(Router);
@@ -22,6 +22,7 @@ const i18n = new VueI18n({
 });
 
 // configure routing.
+router.beforeEach(defaultParams);
 router.beforeEach(authorizer(store, window));
 router.beforeEach(fetcher(store));
 

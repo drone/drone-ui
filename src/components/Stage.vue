@@ -3,7 +3,7 @@
         <header>
             <Status :status="status" />
             <span>{{ name }}</span>
-            <time>0:00</time>
+            <time-elapsed :started="started" :stopped="stopped" v-if="started" />
         </header>
         <slot></slot>
     </section>
@@ -11,6 +11,7 @@
 
 <script>
 import Status from "./Status.vue";
+import TimeElapsed from "./TimeElapsed.vue";
 
 export default {
   name: "Stage",
@@ -23,10 +24,11 @@ export default {
     status: String,
     created: Number,
     started: Number,
-    finished: Number,
+    stopped: Number,
   },
   components: {
-      Status
+      Status,
+      TimeElapsed
   },
   computed: {
     duration() {

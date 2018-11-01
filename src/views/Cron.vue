@@ -108,7 +108,7 @@ header {
   padding: 15px;
   padding-left: 0px;
   border-bottom: 1px solid #e8eaed;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .alert {

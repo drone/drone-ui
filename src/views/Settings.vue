@@ -24,7 +24,7 @@
         </span>
       </div>
 
-      <div>
+      <div v-if="sysAdmin">
         <span>Timeout</span>
         <select v-model="repo.timeout">
           <option
@@ -90,7 +90,8 @@ export default {
       return repo && {...repo};
     },
     sysAdmin() {
-      return this.$store.user && this.$store.user.admin;
+      return this.$store.state.user &&
+        this.$store.state.user.admin;
     },
   },
   methods: {
