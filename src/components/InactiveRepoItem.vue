@@ -31,7 +31,6 @@ div {
     background-color: #ffffff;
     display: flex;
     height: 50px;
-    margin: 10px 0px;
     padding: 15px;
 }
 

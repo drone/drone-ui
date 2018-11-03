@@ -41,7 +41,6 @@ export default {
 }
 
 .breadcrumb a:last-of-type {
-  opacity: 0.5;
   color: #192d46;
 }
 

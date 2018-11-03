@@ -23,10 +23,12 @@
       </Alert>
     </transition>
 
-    <router-link
-      v-for="repo in sortLimit(latest)"
-      :key="repo.id"
-      :to="repo.slug">
+    <div class="list">
+      <router-link
+        v-for="repo in sortLimit(latest)"
+        :key="repo.id"
+        :to="repo.slug"
+        class="link">
 
         <InactiveRepoItem
           v-if="!repo.build"
@@ -49,7 +51,8 @@
           :finished="repo.build.finished"
           :avatar="repo.build.author_avatar"
         />
-    </router-link>
+      </router-link>
+    </div>
 
     <MoreButton v-if="showMore" v-on:click="showAll">Show All Repositories</MoreButton>
   </div>
@@ -207,6 +210,15 @@ header button svg {
 }
 
 .more-button {
+  margin-top: 20px;
+}
+
+.link {
+  display: block;
   margin-top: 10px;
+}
+
+.link:first-child {
+  margin-top: 0px;
 }
 </style>

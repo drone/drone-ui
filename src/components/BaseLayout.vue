@@ -1,10 +1,12 @@
 <template>
-  <div class="container">
+  <div class="wrap">
     <header>
       <slot name="header"></slot>
     </header>
     <main>
-      <slot></slot>
+      <div class="container">
+        <slot></slot>
+      </div>
     </main>
     <Footer />
   </div>
@@ -23,28 +25,26 @@ export default {
 
 <style scoped>
 .container {
+  padding-bottom: 80px;
+}
+.wrap {
   min-height: 100%;
   display: grid;
   grid-template-columns: 1;
   grid-template-rows: 60px auto 60px;
 }
 
-.container > header {
+header {
   box-shadow: 0 2px 6px 0px rgba(25, 45, 70, 0.05);
   box-sizing: border-box;
   height: 60px;
-  min-height: 60px;
-  max-height: 60px;
   background: #FFF;
-  grid-column: 1;
-  grid-row: 1;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.container > footer {
+footer {
   box-shadow: 0 -2px 6px 0px rgba(25, 45, 70, 0.05);
   box-sizing: border-box;
   height: 60px;
@@ -55,19 +55,24 @@ export default {
   grid-row: 3;
 }
 
-.content > main {
+main {
   box-sizing: border-box;
   grid-area: content;
   position: relative;
   grid-column: 1;
   grid-row: 2;
 }
+</style>
 
-.container > main > div:first-of-type {
-  box-sizing: border-box;
-  margin: 0px auto;
+<style>
+.container {
   max-width: 980px;
-  padding: 30px 0px;
-  padding-top: 0px;
+  padding: 0 15px;
+  margin: 0 auto;
+}
+body {
+  /* hack for better font rendering on macos */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 </style>
