@@ -41,7 +41,13 @@
                     <IconPromote v-else-if="event == 'promote'" />
                     <IconRollback v-else-if="event == 'rollback'" />
                     <IconBranch v-else />
-                    {{ branch || reference.replace("refs/tags/") }}
+                    {{ 
+                      event === 'pull_request'
+                      ? trimMergeRef(reference)
+                      : event === 'tag'
+                        ? trimTagRef(reference)
+                        : branch
+                    }}
                 </span>
             </div>
         </div>
@@ -56,6 +62,7 @@ import IconBranch from "./icons/events/EventPush.vue";
 import IconMerge from "./icons/events/EventPullRequest.vue";
 import IconPromote from "./icons/events/EventPromote.vue";
 import IconRollback from "./icons/events/EventRollback.vue";
+import IconTag from "./icons/events/EventTag.vue";
 
 import Status from "./Status.vue";
 import TimeElapsed from "./TimeElapsed.vue";
@@ -87,10 +94,21 @@ export default {
     IconMerge,
     IconPromote,
     IconRollback,
+    IconTag,
     Status,
     TimeElapsed,
+  },
+  methods: {
+    trimMergeRef: function(ref) {
+      const match = ref.match(/\d/g);
+      return match && match.length > 0 ? match[0] : ref;
+    },
+	trimTagRef: function(ref) {
+      return ref.startsWith("refs/tags/") ? ref.substr(10) : ref;
+    },
   }
 };
+
 </script>
 
 <style scoped>
@@ -190,6 +208,10 @@ h3 {
   line-height: normal;
   letter-spacing: normal;
   color: #0564d7;
+  /* max-width: 400px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; */
 }
 
 img {

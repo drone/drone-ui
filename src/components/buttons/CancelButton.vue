@@ -43,7 +43,6 @@ svg {
   width: 16px;
   height: 16px;
   fill: #192d46;
-  margin-right: 5px;
-  padding-left: 10px;
+  padding-left: 5px;
 }
 </style>
