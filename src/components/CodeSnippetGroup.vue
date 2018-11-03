@@ -11,4 +11,7 @@
 .code-snippet-group .code-snippet {
   margin-bottom: 15px;
 }
+.code-snippet-group .code-snippet:last-of-type {
+  margin-bottom: 0px;
+}
 </style>
