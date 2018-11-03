@@ -205,6 +205,7 @@ main {
   position: sticky;
   top: 0px;
   margin-top: 0px;
+  padding: 0px;
 }
 
 /* THIS IS A TOTAL HACK */
