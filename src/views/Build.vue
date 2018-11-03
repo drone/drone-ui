@@ -16,12 +16,12 @@
       :created="build.created"
       :started="build.started"
       :finished="build.finished"
+      :link="build.link"
       :author="build.author_login"
       :avatar="build.author_avatar">
       <footer>
-        <button v-on:click="handleCancel" class="cancel" v-if="!build.finished">Cancel</button>
-        <button v-on:click="handleRestart">Restart</button>
-        <a v-if="build.link" :href="build.link" target="_blank">View Commit</a>
+        <CancelButton v-on:click="handleCancel" v-if="!build.finished">Cancel</CancelButton>
+        <SyncButton v-on:click="handleRestart" v-if="build.finished">Restart</SyncButton>
       </footer>
     </Build>
 
@@ -46,7 +46,7 @@
                   v-bind:status="_stage.status"
                   v-bind:created="_stage.created"
                   v-bind:started="_stage.started"
-                  v-bind:finished="_stage.finished">
+                  v-bind:stopped="_stage.stopped">
                 </Stage>
               </router-link>
 
@@ -93,9 +93,12 @@
 </template>
 
 <script>
-import Build from "@/components/Build.vue";
+import Build from "@/components/RepoItem.vue";
 import Step from "@/components/Step.vue";
 import Stage from "@/components/Stage.vue";
+
+import CancelButton from "@/components/buttons/CancelButton.vue";
+import SyncButton from "@/components/buttons/SyncButton.vue";
 
 export default {
   name: "build",
@@ -103,7 +106,9 @@ export default {
   components: {
     Build,
     Step,
-    Stage
+    Stage,
+    SyncButton,
+    CancelButton,
   },
   computed: {
     namespace() {
@@ -199,29 +204,46 @@ main {
   flex: 0 0 300px;
   position: sticky;
   top: 0px;
+  margin-top: 0px;
+}
+
+/* THIS IS A TOTAL HACK */
+.container.steps > div > span > a > section,
+.container.steps > div > span > section {
+  margin-top: 0px;
 }
 
 .container.output {
   flex: 1;
   box-sizing: border-box;
+  margin-top: 0px;
 }
 
+.repo-item {
+  margin-top: 0px;
+  margin-bottom: 20px;
+}
+
+
 .output {
-  background: #182c47;
   color: #FFF;
   font-size: 12px;
   font-family: 'Roboto Mono', monospace;
   font-weight: 300;
 
-  border: 1px solid #e8eaed;
-  border-radius: 3px;
+  border: solid 1px rgba(25, 45, 70, 0.05);
+  background-color: #192d46;
+  border-radius: 6px;
   box-shadow: 0px 0px 8px 1px #e8eaed;
+  box-sizing: border-box;
   margin: 15px 0px;
   margin-left: 15px;
   padding: 15px;
 
   box-sizing: border-box;
-  max-width: 585px;
+  min-width: 665px;
+  max-width: 665px;
+  width: 665px;
 }
 
 .output > div {

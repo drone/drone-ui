@@ -1,5 +1,5 @@
 <template>
-    <section v-bind:class="{ selected: selected }">
+    <section v-bind:class="{ selected: selected, step: true }">
         <Status :status="status" :outlined="true" />
         <span>{{ name }}</span>
         <time-elapsed :started="started" :stopped="stopped" v-if="started" />
@@ -38,17 +38,50 @@ section {
     align-items: center;
     color: #8d97a2;
     display: flex;
-    padding: 15px;
+    height: 45px;
+    padding: 0px 15px;
+    position: relative;
 }
 
+time,
 span {
-    color: #243650;
-    padding: 0px 15px;
-    flex: 1;
-    font-size: 14px;
+  margin-left: 10px;
+  flex: 1;
+  height: 18px;
+  font-size: 13px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #192d46;
+}
+
+time {
+  opacity: 0.25;
+  text-align: right;
+  margin-right: 0px;
 }
 
 section.selected {
-    background: #f3f4f6;
+  background-color: #f8f8f9;
+}
+
+section:after,
+section:before {
+    content: " ";
+    border-left: 1px solid #192d46;
+    width: 1px;
+    height: 13px;
+    position: absolute;
+    top: 0px;
+    left: 24px;
+    opacity: 0.05;
+}
+
+section:after {
+    height: 12px;
+    bottom: 0px;
+    top: unset;
 }
 </style>

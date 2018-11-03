@@ -1,0 +1,3 @@
+<template>
+<svg height='300px' width='300px'  fill="#000000" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="-255 347 100 100" enable-background="new -255 347 100 100" xml:space="preserve"><path fill-rule="evenodd" clip-rule="evenodd" fill="#000000" d="M-223.7,437v-68.2h50.2V437H-223.7z M-177.1,372.4h-43.1v61.1h43.1  V372.4z M-230.9,426.2h-3.6l0-68.2l50.3,0v3.6h-46.7V426.2z"></path></svg>
+</template>

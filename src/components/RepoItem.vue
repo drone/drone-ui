@@ -1,15 +1,21 @@
 <template>
-    <section>
-        <div class="gutter">
+    <section class="repo-item">
+        <div class="container-left">
             <Status :status="status" />
+            <div class="connector"></div>
         </div>
         <div class="content">
             <div class="header">
-                <h3>{{ namespace }}/{{ name }}</h3>
+                <h3 v-if="namespace">{{ namespace }}/{{ name }}</h3>
+                <h3 v-else>#{{ number }}. {{ message }}</h3>
+                <span>
+                    <slot></slot>
+                </span>
             </div>
             <div class="metadata">
                 <img :src="avatar" />
-                <p>{{ message }}</p>
+                <p v-if="namespace">{{ message }}</p>
+                <p v-else>{{ author }}</p>
                 <span class="finished">
                     <IconCalendar />
                     {{ new Date(created * 1000) | moment("from", "now") }}
@@ -18,7 +24,13 @@
                     <IconClock />
                     <TimeElapsed v-if="started" :started="started" :stopped="finished" />
                 </span>
-                <span class="commit">
+                <span class="commit" v-if="link">
+                    <IconCommit />
+                    <a v-if="link" target="_blank" :href="link">
+                        {{ commit && commit.substr(0, 8) }}
+                    </a>
+                </span>
+                <span class="commit" v-else>
                     <IconCommit />
                     {{ commit && commit.substr(0, 8) }}
                 </span>
@@ -37,13 +49,13 @@
 </template>
 
 <script>
-import IconBranch from "./icons/IconBranch.vue";
 import IconClock from "./icons/IconClock.vue";
 import IconCalendar from "./icons/IconCalendar.vue";
 import IconCommit from "./icons/IconCommit.vue";
-import IconMerge from "./icons/IconMerge.vue";
-import IconPromote from "./icons/IconPromote.vue";
-import IconRollback from "./icons/IconRollback.vue";
+import IconBranch from "./icons/events/EventPush.vue";
+import IconMerge from "./icons/events/EventPullRequest.vue";
+import IconPromote from "./icons/events/EventPromote.vue";
+import IconRollback from "./icons/events/EventRollback.vue";
 
 import Status from "./Status.vue";
 import TimeElapsed from "./TimeElapsed.vue";
@@ -63,6 +75,8 @@ export default {
     created: Number,
     started: Number,
     finished: Number,
+    link: String,
+    author: String,
     avatar: String,
   },
   components: {
@@ -81,108 +95,156 @@ export default {
 
 <style scoped>
 section {
-    align-items: stretch;
-    background: #FFF;
-    box-shadow: 0px 0px 8px 1px #e8eaed;
+    /* align-items: stretch; */
+    /* align-items: flex-start; */
+    /* background: #FFF;
     border: 1px solid #e8eaed;
     border-radius: 3px;
     color: #8d97a2;
+    display: flex; */
+
+
+
+    /* box-shadow: 0px 0px 8px 1px rgba(25, 45, 70, 0.05); */
+
+    align-items: stretch;
+    border-radius: 3px;
+    box-sizing: border-box;
+    box-shadow: 0px 1px 4px 1px rgba(25, 45, 70, 0.02);
+    border: solid 1px rgba(25, 45, 70, 0.08);
+    background-color: #ffffff;
+    color: #192d46;
     display: flex;
-    margin: 15px 0px;
+    height: 80px;
+    margin: 10px 0px;
     padding: 15px;
 }
 
-.gutter {
-    width: 40px;
+.container-left {
+    width: 30px;
 }
 
-.status {
-    background: #ff3e61;
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
+.container-left .status {
+    height: 20px;
+    width: 20px;
+    margin-top: 1px;
 }
 
-.status.success {
-    background: #00d88a;
-}
-
-.status.pending,
-.status.running {
-    background: #ffd300;
+.connector {
+    width: 15px;
+    height: 15px;
+    opacity: 0.15;
+    border-bottom-left-radius: 8px;
+    border-left: solid 1px #192d46;
+    border-bottom: solid 1px #192d46;
+    float: right;
+    margin-top: 5px;
+    margin-right: 5px;
 }
 
 .content {
+    display: flex;
+    flex-direction: column;
     flex: 1;
-}
-
-h3 {
-    color: #0064db;
-    flex: 1;
-    font-size: 15px;
-    line-height: 24px;
-    margin-bottom: 10px;
 }
 
 .metadata {
-    align-items: center;
     display: inline-flex;
+    flex: 1;
+    align-items: flex-end;
 }
 
-.metadata svg {
-    fill: #8d97a2;
-    height: 18px;
-    margin-right: 10px;
-    min-height: 18px;
-    min-width: 18px;
-    width: 18px;
-}
-
-.metadata span {
-    align-items: center;
-    display: flex;
-    font-size: 13px;
-    width: 125px;
-    margin-right: 15px;
+.metadata span,
+.metadata p {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    border-right: 1px solid #EEE;
-}
-.metadata span:last-of-type {
-    border: none;
-}
-
-.metadata span.finished {
-    width: 150px;
-}
-.metadata span.commit {
-    width: 110px;
-}
-.metadata span.duration {
-    width: 90px;
-}
-
-
-.message {
-    width: 100px;
-    max-width: 100px;
-}
-
-p {
     box-sizing: border-box;
-    font-size: 13px;
-    width: 250px;
-    white-space: nowrap;
-    overflow: hidden;
-    padding-right: 10px;
-    text-overflow: ellipsis;
+
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  opacity: 0.5;
+  color: #192d46;
+  display: flex;
+}
+
+.metadata p {
+    max-width: 250px;
+    margin-right: 30px;
+    flex: 1;
+}
+
+
+h3 {
+  flex: 1;
+  height: 22px;
+  line-height: 22px;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #0564d7;
 }
 
 img {
     border-radius: 50%;
-    width: 24px;
-    height: 24px;
+    margin-right: 7px;
+    width: 18px;
+    height: 18px;
+}
+
+.metadata svg {
+    fill: #192d46;
+    height: 16px;
     margin-right: 10px;
+    min-height: 16px;
+    min-width: 16px;
+    opacity: 0.5;
+    width: 16px;
+}
+
+
+.metadata span {
+    margin-left: 15px;
+    border-right: 1px solid rgba(25, 45, 70, 0.25);
+}
+
+.metadata span.finished,
+.metadata span.branch {
+    width: 150px;
+    max-width: 150px;
+    min-width: 150px;
+}
+
+.metadata span:last-of-type {
+    border: none;
+}
+
+.metadata span.commit {
+    width: 110px;
+    max-width: 110px;
+    min-width: 110px;
+}
+.metadata span.duration {
+    width: 90px;
+    max-width: 90px;
+    min-width: 90px;
+}
+
+.metadata span a {
+  color: #192d46;
+}
+
+.header {
+    display: flex;
+}
+.header span {
+    text-align: right;
 }
 </style>

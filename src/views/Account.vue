@@ -4,34 +4,56 @@
       <h1>User Settings</h1>
     </header>
 
-    <section v-if="user && user.token">
-      <header>
-        <h2>Token</h2>
-      </header>
-      <div>
-        <h3>Your Personal Token</h3>
-        <pre>{{ user.token }}</pre>
+    <CardGroup v-if="user && user.token">
+      <Card>
+        <header slot="header">
+          <h2>Token</h2>
+        </header>
 
-        <h3>Example API Usage:</h3>
-        <pre>curl -i {{ instance }}/api/user \
-  -H "Authorization: Bearer {{ user.token }}"</pre>
+        <CodeSnippetGroup>
+          <CodeSnippet>
+            <h3 slot="header">Your Personal Token:</h3>
+            <pre>
+              <code>{{ user.token }}</code>  
+            </pre>
+          </CodeSnippet>
 
-        <h3>Example CLI Usage:</h3>
-        <pre>export DRONE_SERVER={{ instance }}
-export DRONE_TOKEN={{user.token}}
+          <CodeSnippet>
+            <h3 slot="header">Example API Usage:</h3>
+            <pre class="terminal single-command">
+              <code>curl -i {{ instance }}/api/user \</code>
+              <code>-H "Authorization: Bearer {{ user.token }}"</code>
+            </pre>
+          </CodeSnippet>
 
-drone info</pre>
-
-      </div>
-    </section>
-
+          <CodeSnippet>
+            <h3 slot="header">Example CLI Usage:</h3>
+            <pre class="terminal">
+              <code>export DRONE_SERVER={{ instance }}</code>
+              <code>export DRONE_TOKEN={{user.token}}</code> 
+              <code>drone info</code>  
+            </pre>
+          </CodeSnippet>
+        </CodeSnippetGroup>
+      </Card>
+    </CardGroup>
   </div>
 </template>
 
 <script>
+import Card from "@/components/Card.vue";
+import CardGroup from "@/components/CardGroup.vue";
+import CodeSnippet from "@/components/CodeSnippet.vue";
+import CodeSnippetGroup from "@/components/CodeSnippetGroup.vue";
+
 export default {
   name: "account",
-  components: {},
+  components: {
+    Card,
+    CardGroup,
+    CodeSnippet,
+    CodeSnippetGroup,
+  },
   computed: {
     instance() {
       const {host, protocol} = this.$store.state.instance;
@@ -45,66 +67,15 @@ export default {
 </script>
 
 <style scoped>
-.account > header {
-  margin-bottom: 30px;
-}
-
 h1 {
-  font-size: 22px;
+  height: 41px;
+  font-size: 30px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #192d46;
+  margin: 30px 0px;
 }
-
-section {
-  background: #FFF;
-  border: 1px solid #e8eaed;
-  border-radius: 3px;
-  box-shadow: 0px 0px 8px 1px #e8eaed;
-  margin-bottom: 30px;
-}
-
-section > div {
-  padding: 15px;
-}
-
-section header {
-  padding: 15px;
-  border-bottom: 1px solid #e8eaed;
-}
-
-section h2 {
-  font-size: 15px;
-  font-weight: 600;
-}
-
-section footer {
-  padding: 15px;
-}
-
-section h3 {
-  background: #f8f8f9;
-  border-bottom: 1px solid #ecedf0;
-  border-top-right-radius: 3px;
-  border-top-left-radius: 3px;
-  color: #182c47;
-  font-family: 'Roboto Mono', monospace;
-  font-size: 13px;
-  font-weight: 500;
-  padding: 15px;
-}
-
-section pre {
-  background: #f8f8f9;
-  border-bottom-right-radius: 3px;
-  border-bottom-left-radius: 3px;
-  color: #506074;
-  font-family: 'Roboto Mono', monospace;
-  font-size: 13px;
-  line-height: 18px;
-  margin-bottom: 30px;
-  padding: 15px;
-}
-
-section pre:last-of-type {
-  margin-bottom: 0px;
-}
-
 </style>

@@ -24,7 +24,7 @@
     -->
     <router-link :to="'/'+slug">
       <h1 v-if="repo">
-        {{ repo.slug }}
+        {{ repo.name }}
       </h1>
     </router-link>
 
@@ -126,14 +126,23 @@ export default {
 
 <style scoped>
 h1 {
-  color: #182c47;
-  font-size: 25px;
-  margin: 40px 0px;
+  margin-bottom: 30px;
+  padding-left: 15px;
+
+  height: 41px;
+  font-size: 30px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #192d46;
 }
 
 nav {
   border-bottom: 1px solid #EEE;
   margin-bottom: 20px;
+  padding-left: 15px;
 }
 
 nav a {

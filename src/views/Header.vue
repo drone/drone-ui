@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import Logo from "@/components/Logo.vue";
+import Logo from "@/components/logos/Logo.vue";
 
 export default {
   name: "Header",
@@ -61,9 +61,7 @@ export default {
     align-items: center;
     box-sizing: border-box;
     display: flex;
-    /* grid-template-rows: 1;
-    grid-template-columns: auto 900px auto; */
-    padding: 0px 15px;
+    padding: 0px 30px;
 }
 
 .avatar {
@@ -73,15 +71,15 @@ export default {
 
 .avatar img {
     border-radius: 50%;
-    width: 26px;
-    height: 26px;
+    width: 30px;
+    height: 30px;
 }
 
 .logo {
     flex: 1;
     grid-column: 1;
-    width: 26px;
-    height: 26px;
+    width: 30px;
+    height: 30px;
     text-align: left;
 }
 

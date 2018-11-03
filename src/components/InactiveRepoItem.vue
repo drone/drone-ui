@@ -1,13 +1,19 @@
 <template>
-    <div>
+    <div class="repo-item repo-item-inactive">
+        <LogoGithub />
         <h3>{{ namespace }}/{{ name }}</h3>
         <span>View</span>
     </div>
 </template>
 
 <script>
+import LogoGithub from "./logos/LogoGithub.vue";
+
 export default {
   name: "InactiveRepoItem",
+  components: {
+    LogoGithub,
+  },
   props: {
     namespace: String,
     name: String
@@ -18,30 +24,46 @@ export default {
 <style scoped>
 div {
     align-items: center;
-    background: #FFF;
-    box-shadow: 0px 0px 8px 2px #e8eaed;
-    border: 1px solid #e3e5e9;
-    border-radius: 3px;
+    border-radius: 2px;
+    box-sizing: border-box;
+    box-shadow: 0px 1px 4px 1px rgba(25, 45, 70, 0.02);
+    border: solid 1px rgba(25, 45, 70, 0.08);
+    background-color: #ffffff;
     display: flex;
-    margin: 15px 0px;
+    height: 50px;
+    margin: 10px 0px;
     padding: 15px;
 }
 
+svg {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    fill: #192d46;
+    opacity: 0.25;
+}
+
 h3 {
-    color: #8c96a2;
-    flex: 1;
-    font-size: 15px;
+  flex: 1;
+  opacity: 0.5;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #192d46;
 }
 
 span {
-    background: none;
-    border: none;
-    color: #0f6cdd;
-    cursor: pointer;
-    display: block;
-    font-size: 15px;
-    outline: none;
-    text-transform: uppercase;
-    text-align: right;
+  font-size: 12px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 1px;
+  text-align: right;
+  text-transform: uppercase;
+  color: #0564d7;
 }
 </style>

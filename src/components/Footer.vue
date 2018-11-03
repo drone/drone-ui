@@ -26,7 +26,7 @@ nav {
     align-content: center;
     justify-content: flex-start;
     display: flex;
-    padding: 0px 0px;
+    padding: 0px 30px;
 }
 
 nav:last-of-type {
@@ -34,13 +34,23 @@ nav:last-of-type {
 }
 
 nav a {
-    font-size: 13px;
-    margin: 0px 15px;
-    text-decoration: none;
-    color: #8f99a4;
+  opacity: 0.5;
+  font-size: 13px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  margin-left: 30px;
+  color: #192d46;
+}
+
+nav a:first-child {
+  margin-left: 0px;
 }
 
 nav a:hover {
-    color: #0061da;
+    color: #192d46;
+    opacity: 1;
 }
 </style>

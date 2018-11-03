@@ -1,5 +1,5 @@
 <template>
-    <label>
+    <label class="base-checkbox">
         <div>
             <slot></slot>
         </div>

@@ -30,7 +30,7 @@ export default {
 }
 
 .container > header {
-  box-shadow: 0px 0px 8px 2px #e8eaed;
+  box-shadow: 0 2px 6px 0px rgba(25, 45, 70, 0.05);
   box-sizing: border-box;
   height: 60px;
   min-height: 60px;
@@ -45,7 +45,7 @@ export default {
 }
 
 .container > footer {
-  box-shadow: 0 -8px 8px -8px #e8eaed;
+  box-shadow: 0 -2px 6px 0px rgba(25, 45, 70, 0.05);
   box-sizing: border-box;
   height: 60px;
   min-height: 60px;
@@ -64,8 +64,10 @@ export default {
 }
 
 .container > main > div:first-of-type {
+  box-sizing: border-box;
   margin: 0px auto;
-  max-width: 900px;
+  max-width: 980px;
   padding: 30px 0px;
+  padding-top: 0px;
 }
 </style>

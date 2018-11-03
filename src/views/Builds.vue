@@ -27,7 +27,7 @@
 
 <script>
 import Alert from "@/components/Alert.vue";
-import Build from "@/components/Build.vue";
+import Build from "@/components/RepoItem.vue";
 
 export default {
   name: "builds",

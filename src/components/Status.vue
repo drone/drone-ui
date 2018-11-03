@@ -16,12 +16,12 @@
 </template>
 
 <script>
-import Blocked from "./icons/Blocked.vue";
-import Failure from "./icons/Failure.vue";
-import Pending from "./icons/Pending.vue";
-import Running from "./icons/Running.vue";
-import Skipped from "./icons/Skipped.vue";
-import Success from "./icons/Success.vue";
+import Blocked from "./icons/status/StatusBlocked.vue";
+import Failure from "./icons/status/StatusFailure.vue";
+import Pending from "./icons/status/StatusPending.vue";
+import Running from "./icons/status/StatusRunning.vue";
+import Skipped from "./icons/status/StatusSkipped.vue";
+import Success from "./icons/status/StatusSuccess.vue";
 
 export default {
   name: "Status",
@@ -61,8 +61,8 @@ const STATUS_WAITING = "waiting_on_dependencies";
     border-radius: 50%;
     box-sizing: border-box;
     display: flex;
-    height: 24px;
-    width: 24px;
+    height: 20px;
+    width: 20px;
 }
 
 svg {

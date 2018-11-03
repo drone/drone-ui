@@ -4,12 +4,10 @@
     <header>
       <Breadcrumb>
         <router-link :to="'/'">Repositories</router-link>
-        <BreadcrumbDivider />
-        <router-link :to="'/'">Dashboard</router-link>
       </Breadcrumb>
 
-      <button v-if="!syncing" v-on:click="sync"><Running /> Sync Repositories</button>
-      <div v-if="syncing" class="syncing"><Running /> Syncing</div>
+      <SyncButton v-if="!syncing" v-on:click="sync">Synchronize</SyncButton>
+      <div v-if="syncing" class="syncing"><IconSpinner /> Syncing</div>
     </header>
 
     <transition name="fade">
@@ -53,7 +51,7 @@
         />
     </router-link>
 
-    <button v-if="showMore" v-on:click="showAll">Show All Repositories</button>
+    <MoreButton v-if="showMore" v-on:click="showAll">Show All Repositories</MoreButton>
   </div>
 </template>
 
@@ -63,7 +61,10 @@ import InactiveRepoItem from "@/components/InactiveRepoItem.vue";
 import RepoItem from "@/components/RepoItem.vue";
 import Breadcrumb from "@/components/Breadcrumb.vue";
 import BreadcrumbDivider from "@/components/BreadcrumbDivider.vue";
-import Running from "@/components/icons/Running.vue";
+import IconSpinner from "@/components/icons/IconSpinner.vue";
+import MoreButton from "@/components/buttons/MoreButton.vue";
+import SyncButton from "@/components/buttons/SyncButton.vue";
+
 
 export default {
   name: "home",
@@ -72,8 +73,10 @@ export default {
     BreadcrumbDivider,
     Breadcrumb,
     InactiveRepoItem,
+    MoreButton,
     RepoItem,
-    Running
+    IconSpinner,
+    SyncButton
   },
   data() {
     return {
@@ -133,26 +136,25 @@ export default {
 </script>
 
 <style scoped>
-button {
+/* button {
   background: none;
   border: none;
   color: #8f99a4;
   cursor: pointer;
   font-size: 13px;
   padding: 0px;
-}
+} */
 
 header {
   display: flex;
   align-items: center;
-  padding-bottom:30px;
 }
 
 header .breadcrumb {
   flex: 1;
 }
 
-header button {
+/* header button {
   display: flex;
   margin-right: 15px;
   outline: none;
@@ -163,7 +165,7 @@ header button svg {
   width: 16px;
   height: 16px;
   margin-right: 5px;
-}
+} */
 
 .syncing {
   align-items: center;
@@ -197,5 +199,14 @@ header button svg {
 }
 .fade-enter {
   opacity: 0;
+}
+
+
+.repo-item:first-of-type {
+  margin-top: 0px;
+}
+
+.more-button {
+  margin-top: 10px;
 }
 </style>

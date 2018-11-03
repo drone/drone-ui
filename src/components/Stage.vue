@@ -41,30 +41,69 @@ export default {
 <style scoped>
 section {
     background: #FFF;
-    box-shadow: 0px 0px 8px 1px #e8eaed;
-    border: 1px solid #e8eaed;
+    box-shadow: 0px 1px 4px 1px rgba(25, 45, 70, 0.02);
+    border: solid 1px rgba(25, 45, 70, 0.08);
     border-radius: 3px;
+    box-sizing: border-box;
     color: #8d97a2;
     margin: 15px 0px;
     user-select: none;
 }
 
+
+section > a:last-of-type :after {
+   display: none;
+}
+section > a:first-of-type :before {
+   display: none;
+}
+
 header {
     align-items: center;
-    border-bottom: 1px solid #e8eaed;
+    border-bottom: solid 1px rgba(25, 45, 70, 0.05);
+    box-sizing: border-box;
     display: flex;
-    padding: 15px;
+    height: 45px;
+    padding: 0px 15px;
     user-select: none;
 }
 
+header:last-child {
+    border-bottom: none;
+}
+
 span {
-    color: #243650;
-    padding: 0px 15px;
-    flex: 1;
+  flex: 1;
+  height: 18px;
+  font-size: 13px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #192d46;
+  margin-left: 10px;
+}
+
+time{
+  color: #192d46;
+  height: 18px;
+  font-size: 13px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  opacity: 0.25;
+  text-align: right;
+  margin-right: 0px;
+}
+
+a {
+  display: block;
 }
 
 a:hover {
-    background: #f3f4f6;
-    display: block;
+  background-color: #f8f8f9;
 }
 </style>
