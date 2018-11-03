@@ -1,5 +1,5 @@
 <template>
-  <base-layout class="home">
+  <base-layout>
     <template slot="header">
       <Header />
     </template>

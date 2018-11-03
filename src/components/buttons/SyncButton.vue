@@ -30,7 +30,7 @@ button {
   text-transform: uppercase;
   outline: none;
   color: #192d46;
-  opacity: 0.25;
+  opacity: 0.75;
   display: flex;
   align-items: center;
 }
