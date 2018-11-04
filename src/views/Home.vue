@@ -43,6 +43,7 @@
           :event="repo.build.event"
           :status="repo.build.status"
           :message="repo.build.message"
+          :title="repo.build.title"
           :commit="repo.build.after"
           :branch="repo.build.target"
           :reference="repo.build.ref"

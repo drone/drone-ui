@@ -7,14 +7,14 @@
         <div class="content">
             <div class="header">
                 <h3 v-if="namespace">{{ namespace }}/{{ name }}</h3>
-                <h3 v-else>#{{ number }}. {{ message }}</h3>
+                <h3 v-else>#{{ number }}. {{ title || message }}</h3>
                 <span>
                     <slot></slot>
                 </span>
             </div>
             <div class="metadata">
                 <img :src="avatar" />
-                <p v-if="namespace">{{ message }}</p>
+                <p v-if="namespace">{{ title || message }}</p>
                 <p v-else>{{ author }}</p>
                 <span class="finished">
                     <IconCalendar />
@@ -76,6 +76,7 @@ export default {
     event: String,
     status: String,
     message: String,
+    title: String,
     commit: String,
     branch: String,
     reference: String,

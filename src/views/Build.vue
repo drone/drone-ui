@@ -10,6 +10,7 @@
       :event="build.event"
       :status="build.status"
       :message="build.message"
+      :title="build.title"
       :commit="build.after"
       :branch="build.target"
       :reference="build.ref"
