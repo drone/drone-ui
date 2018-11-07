@@ -5,6 +5,7 @@
     </Alert>
 
     <router-link
+      class="build"
       v-for="build in builds"
       :key="build.id"
       :to="'/'+slug + '/' + build.number">
@@ -50,3 +51,12 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.build {
+  display: block;
+}
+.build + .build {
+  margin-top: 10px;
+}
+</style>

@@ -1,7 +1,7 @@
 <template>
 <button @click="$emit('click')" class="more-button">
   <IconArrowDown />
-  <slot></slot>
+  <span><slot></slot></span>
 </button>
 </template>
 
@@ -31,6 +31,19 @@ button {
   color: #0564d7;
   display: flex;
   align-items: center;
+}
+
+button:hover span {
+  border-color: rgba(5, 100, 215, 0.5);
+}
+
+button:hover svg {
+  fill: #0564d7;
+  opacity: 0.75;
+}
+
+span {
+  border-bottom: 1px solid transparent;
 }
 
 svg {

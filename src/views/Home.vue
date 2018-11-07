@@ -3,7 +3,10 @@
 
     <header>
       <Breadcrumb>
-        <router-link :to="'/'">Repositories</router-link>
+        <router-link :to="'/'">
+          Repositories
+          <span class="count">— {{ reposCount(latest) }}</span>
+        </router-link>
       </Breadcrumb>
 
       <SyncButton v-if="!syncing" v-on:click="sync">Synchronize</SyncButton>
@@ -24,35 +27,43 @@
     </transition>
 
     <div class="list">
-      <router-link
-        v-for="repo in sortLimit(latest)"
-        :key="repo.id"
-        :to="repo.slug"
-        class="link">
+      <div class="list-item"
+           v-for="repo in sortLimit(latest)"
+           :key="repo.id">
 
-        <InactiveRepoItem
-          v-if="!repo.build"
-          :namespace="repo.namespace"
-          :name="repo.name" />
+        <div class="link-activate" v-on:click="handleActivate(repo)">
+          <ShortRepoItem v-if="!repo.active"
+                         :namespace="repo.namespace"
+                         :name="repo.name"
+                         :active="false"
+          />
+        </div>
 
-        <RepoItem
-          v-if="repo.build"
-          :namespace="repo.namespace"
-          :name="repo.name"
-          :number="repo.build.number"
-          :event="repo.build.event"
-          :status="repo.build.status"
-          :message="repo.build.message"
-          :title="repo.build.title"
-          :commit="repo.build.after"
-          :branch="repo.build.target"
-          :reference="repo.build.ref"
-          :created="repo.build.created"
-          :started="repo.build.started"
-          :finished="repo.build.finished"
-          :avatar="repo.build.author_avatar"
-        />
-      </router-link>
+        <router-link v-if="repo.active" :to="repo.slug" class="link">
+          <ShortRepoItem v-if="!repo.build"
+                         :namespace="repo.namespace"
+                         :name="repo.name"
+                         :active="true"
+          />
+
+          <RepoItem v-if="repo.build"
+                    :namespace="repo.namespace"
+                    :name="repo.name"
+                    :number="repo.build.number"
+                    :event="repo.build.event"
+                    :status="repo.build.status"
+                    :message="repo.build.message"
+                    :title="repo.build.title"
+                    :commit="repo.build.after"
+                    :branch="repo.build.target"
+                    :reference="repo.build.ref"
+                    :created="repo.build.created"
+                    :started="repo.build.started"
+                    :finished="repo.build.finished"
+                    :avatar="repo.build.author_avatar"
+          />
+        </router-link>
+      </div>
     </div>
 
     <MoreButton v-if="showMore" v-on:click="showAll">Show All Repositories</MoreButton>
@@ -61,7 +72,7 @@
 
 <script>
 import Alert from "@/components/Alert.vue";
-import InactiveRepoItem from "@/components/InactiveRepoItem.vue";
+import ShortRepoItem from "@/components/ShortRepoItem.vue";
 import RepoItem from "@/components/RepoItem.vue";
 import Breadcrumb from "@/components/Breadcrumb.vue";
 import BreadcrumbDivider from "@/components/BreadcrumbDivider.vue";
@@ -76,7 +87,7 @@ export default {
     Alert,
     BreadcrumbDivider,
     Breadcrumb,
-    InactiveRepoItem,
+    ShortRepoItem,
     MoreButton,
     RepoItem,
     IconSpinner,
@@ -134,8 +145,16 @@ export default {
     },
     sync: function() {
       this.$store.dispatch('syncAccount');
+    },
+    reposCount: function(items) {
+      return Object.keys(items).length;
+    },
+    handleActivate: function(repo) {
+      const { namespace, name } = repo;
+      this.$store.dispatch('enableRepo', { namespace, name });
+      this.$router.push(namespace + "/" + name);
     }
-  },
+  }
 };
 </script>
 
@@ -156,6 +175,10 @@ header {
 
 header .breadcrumb {
   flex: 1;
+}
+
+.count {
+  opacity: 0.667; /* 0.75*0.667=0.5 */
 }
 
 /* header button {
@@ -205,7 +228,6 @@ header button svg {
   opacity: 0;
 }
 
-
 .repo-item:first-of-type {
   margin-top: 0px;
 }
@@ -216,10 +238,18 @@ header button svg {
 
 .link {
   display: block;
+  /*margin-top: 10px;*/
+}
+
+.link:hover > .repo-item {
+  box-shadow: 0 4px 10px 0 rgba(25, 45, 70, 0.25);
+}
+
+.list-item + .list-item {
   margin-top: 10px;
 }
 
-.link:first-child {
-  margin-top: 0px;
+.link-activate {
+  cursor: pointer;
 }
 </style>

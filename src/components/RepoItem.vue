@@ -14,25 +14,21 @@
             </div>
             <div class="metadata">
                 <img :src="avatar" />
-                <p v-if="namespace">{{ title || message }}</p>
+                <p v-if="namespace" v-bind:title="title || message">{{ title || message }}</p>
                 <p v-else>{{ author }}</p>
                 <span class="finished">
-                    <IconCalendar />
-                    {{ new Date(created * 1000) | moment("from", "now") }}
+                    <IconCalendar />{{ new Date(created * 1000) | moment("from", "now") }}
                 </span>
                 <span class="duration">
-                    <IconClock />
-                    <TimeElapsed v-if="started" :started="started" :stopped="finished" />
+                    <IconClock /><TimeElapsed v-if="started" :started="started" :stopped="finished" />
                 </span>
                 <span class="commit" v-if="link">
-                    <IconCommit />
-                    <a v-if="link" target="_blank" :href="link">
+                    <IconCommit /><a v-if="link" target="_blank" :href="link">
                         {{ commit && commit.substr(0, 8) }}
                     </a>
                 </span>
                 <span class="commit" v-else>
-                    <IconCommit />
-                    {{ commit && commit.substr(0, 8) }}
+                    <IconCommit />{{ commit && commit.substr(0, 8) }}
                 </span>
                 <span class="branch">
                     <IconBranch v-if="event == 'push'" />
@@ -41,13 +37,13 @@
                     <IconPromote v-else-if="event == 'promote'" />
                     <IconRollback v-else-if="event == 'rollback'" />
                     <IconBranch v-else />
-                    {{ 
+                    <span>{{
                       event === 'pull_request'
                       ? trimMergeRef(reference)
                       : event === 'tag'
                         ? trimTagRef(reference)
                         : branch
-                    }}
+                    }}</span>
                 </span>
             </div>
         </div>
@@ -114,33 +110,19 @@ export default {
 
 <style scoped>
 section {
-    /* align-items: stretch; */
-    /* align-items: flex-start; */
-    /* background: #FFF;
-    border: 1px solid #e8eaed;
-    border-radius: 3px;
-    color: #8d97a2;
-    display: flex; */
-
-
-
-    /* box-shadow: 0px 0px 8px 1px rgba(25, 45, 70, 0.05); */
-
-    align-items: stretch;
     border-radius: 3px;
     box-sizing: border-box;
-    box-shadow: 0px 1px 4px 1px rgba(25, 45, 70, 0.02);
-    border: solid 1px rgba(25, 45, 70, 0.08);
+    box-shadow: 0 2px 4px 0 rgba(25, 45, 70, 0.05);
+    border: solid 1px #EDEEF1;
     background-color: #ffffff;
     color: #192d46;
-    display: flex;
-    height: 80px;
-    margin: 10px 0px;
-    padding: 15px;
+    padding: 13px 15px 15px;
 }
 
 .container-left {
     width: 30px;
+    position: absolute;
+    padding-top: 2px;
 }
 
 .container-left .status {
@@ -162,9 +144,11 @@ section {
 }
 
 .content {
+    padding-left: 30px;
     display: flex;
     flex-direction: column;
-    flex: 1;
+    flex-grow: 1;
+    max-width: 100%;
 }
 
 .metadata {
@@ -173,12 +157,12 @@ section {
     align-items: flex-end;
 }
 
-.metadata span,
+.metadata > span,
 .metadata p {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  box-sizing: border-box;
 
   font-size: 12px;
   font-weight: normal;
@@ -186,22 +170,17 @@ section {
   font-stretch: normal;
   line-height: normal;
   letter-spacing: normal;
-  opacity: 0.5;
-  color: #192d46;
-  display: flex;
+  color: rgba(25, 45, 70, 0.5);
 }
 
 .metadata p {
-    max-width: 250px;
-    margin-right: 30px;
-    flex: 1;
+  flex-grow: 1;
+  display: block;
 }
-
 
 h3 {
   flex: 1;
   height: 22px;
-  line-height: 22px;
   font-size: 16px;
   font-weight: normal;
   font-style: normal;
@@ -209,10 +188,6 @@ h3 {
   line-height: normal;
   letter-spacing: normal;
   color: #0564d7;
-  /* max-width: 400px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis; */
 }
 
 img {
@@ -223,49 +198,47 @@ img {
 }
 
 .metadata svg {
-    fill: #192d46;
-    height: 16px;
-    margin-right: 10px;
-    min-height: 16px;
-    min-width: 16px;
-    opacity: 0.5;
-    width: 16px;
+  fill: #192d46;
+  margin-right: 7px;
+  max-height: 16px;
+  max-width: 16px;
+  opacity: 0.5;
+  vertical-align: baseline;
 }
 
-
-.metadata span {
-    margin-left: 15px;
-    border-right: 1px solid rgba(25, 45, 70, 0.25);
+.metadata > span {
+  height: 24px;
+  margin-left: 15px;
+  border-left: 1px solid rgba(25, 45, 70, 0.05);
+  padding-left: 15px;
+  display: flex;
+  align-items: center;
 }
 
-.metadata span.finished,
-.metadata span.branch {
-    width: 150px;
-    max-width: 150px;
-    min-width: 150px;
+.metadata > span.finished,
+.metadata > span.branch {
+  flex-basis: 150px;
 }
 
-.metadata span:last-of-type {
-    border: none;
+.metadata > span.commit {
+  flex-basis: 110px;
+}
+.metadata > span.duration {
+  flex-basis: 90px;
 }
 
-.metadata span.commit {
-    width: 110px;
-    max-width: 110px;
-    min-width: 110px;
-}
-.metadata span.duration {
-    width: 90px;
-    max-width: 90px;
-    min-width: 90px;
+.metadata > span > span {
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
-.metadata span a {
+.metadata > span a {
   color: #192d46;
 }
 
 .header {
     display: flex;
+    margin-bottom: 6px;
 }
 .header span {
     text-align: right;
