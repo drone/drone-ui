@@ -200,8 +200,8 @@ img {
 .metadata svg {
   fill: #192d46;
   margin-right: 7px;
-  max-height: 16px;
-  max-width: 16px;
+  height: 16px;
+  width: 16px;
   opacity: 0.5;
   vertical-align: baseline;
 }
