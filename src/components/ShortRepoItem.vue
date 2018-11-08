@@ -36,10 +36,6 @@ div {
     padding: 15px;
 }
 
-div:hover {
-  box-shadow: 0 4px 10px 0 rgba(25, 45, 70, 0.25);
-}
-
 svg {
     width: 20px;
     height: 20px;

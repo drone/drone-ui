@@ -6,9 +6,7 @@
         </router-link>
     </div>
 
-    <div class="search">
-        <input type="search" placeholder="Search repositories or jump to …" />
-    </div>
+    <Search placeholder="Search repositories or jump to …"/>
 
     <template v-if="user">
         <div class="avatar">
@@ -35,12 +33,14 @@
 
 <script>
 import Logo from "@/components/logos/Logo.vue";
+import Search from "../components/Search";
 
 export default {
   name: "Header",
   props: {},
   components: {
-      Logo,
+    Search,
+    Logo
   },
   computed: {
     user() {
@@ -96,26 +96,6 @@ export default {
     font-size: 12px;
     padding: 10px 20px;
     text-transform: uppercase;
-}
-
-.search {
-    width: 900px;
-    max-width: 900px;
-    min-width: 900px;
-    grid-column: 2;
-    text-align: center;
-    display: none;
-}
-
-.search input {
-    border: 1px solid #e8eaed;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-size: 14px;
-    line-height: 32px;
-    outline: none;
-    padding: 0px 10px;
-    width: 100%;
 }
 
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */

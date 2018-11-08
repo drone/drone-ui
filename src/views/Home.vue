@@ -73,6 +73,8 @@ import MoreButton from "@/components/buttons/MoreButton.vue";
 import SyncButton from "@/components/buttons/SyncButton.vue";
 import RepoLink from "@/components/RepoLink.vue";
 
+import reposSort from "@/lib/reposSort";
+
 export default {
   name: "home",
   components: {
@@ -117,20 +119,10 @@ export default {
   },
   methods: {
     sortLimit: function(items) {
-      // TODO improve the sorting code here. It is currently
-      // split into two separate sorting operations, but should
-      // be possible to combine to a single operation.
       let list = Object.values(items || {});
 
-      // sort by repository name, ascending.
-      list.sort(function(a, b){
-        if (a.slug < b.slug) return -1;
-        if (a.slug > b.slug) return 1;
-        return 0;
-      });
+      list = reposSort(list);
 
-      // sort by active status.
-      list.sort(function(a, b){ return b.active-a.active});
       return this.all ? list : list.slice(0, 10);
     },
     showAll: function() {
