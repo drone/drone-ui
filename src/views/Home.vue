@@ -31,19 +31,11 @@
            v-for="repo in sortLimit(latest)"
            :key="repo.id">
 
-        <div class="link-activate" v-on:click="handleActivate(repo)">
-          <ShortRepoItem v-if="!repo.active"
-                         :namespace="repo.namespace"
-                         :name="repo.name"
-                         :active="false"
-          />
-        </div>
-
-        <router-link v-if="repo.active" :to="repo.slug" class="link">
+        <RepoLink :repo="repo">
           <ShortRepoItem v-if="!repo.build"
                          :namespace="repo.namespace"
                          :name="repo.name"
-                         :active="true"
+                         :active="repo.active"
           />
 
           <RepoItem v-if="repo.build"
@@ -62,7 +54,7 @@
                     :finished="repo.build.finished"
                     :avatar="repo.build.author_avatar"
           />
-        </router-link>
+        </RepoLink>
       </div>
     </div>
 
@@ -79,7 +71,7 @@ import BreadcrumbDivider from "@/components/BreadcrumbDivider.vue";
 import IconSpinner from "@/components/icons/IconSpinner.vue";
 import MoreButton from "@/components/buttons/MoreButton.vue";
 import SyncButton from "@/components/buttons/SyncButton.vue";
-
+import RepoLink from "@/components/RepoLink.vue";
 
 export default {
   name: "home",
@@ -91,7 +83,8 @@ export default {
     MoreButton,
     RepoItem,
     IconSpinner,
-    SyncButton
+    SyncButton,
+    RepoLink
   },
   data() {
     return {
@@ -148,26 +141,12 @@ export default {
     },
     reposCount: function(items) {
       return Object.keys(items).length;
-    },
-    handleActivate: function(repo) {
-      const { namespace, name } = repo;
-      this.$store.dispatch('enableRepo', { namespace, name });
-      this.$router.push(namespace + "/" + name);
     }
   }
 };
 </script>
 
 <style scoped>
-/* button {
-  background: none;
-  border: none;
-  color: #8f99a4;
-  cursor: pointer;
-  font-size: 13px;
-  padding: 0px;
-} */
-
 header {
   display: flex;
   align-items: center;
@@ -180,19 +159,6 @@ header .breadcrumb {
 .count {
   opacity: 0.667; /* 0.75*0.667=0.5 */
 }
-
-/* header button {
-  display: flex;
-  margin-right: 15px;
-  outline: none;
-}
-
-header button svg {
-  fill: #8f99a4;
-  width: 16px;
-  height: 16px;
-  margin-right: 5px;
-} */
 
 .syncing {
   align-items: center;
@@ -228,28 +194,11 @@ header button svg {
   opacity: 0;
 }
 
-.repo-item:first-of-type {
-  margin-top: 0px;
-}
-
 .more-button {
   margin-top: 20px;
 }
 
-.link {
-  display: block;
-  /*margin-top: 10px;*/
-}
-
-.link:hover > .repo-item {
-  box-shadow: 0 4px 10px 0 rgba(25, 45, 70, 0.25);
-}
-
 .list-item + .list-item {
   margin-top: 10px;
-}
-
-.link-activate {
-  cursor: pointer;
 }
 </style>
