@@ -4,9 +4,11 @@
                v-model="query"
                :placeholder="placeholder"
                @focus="open"
-               @input="loadIfNeeded"
+               @input="onInput"
                v-click-outside="close"
-               v-shortkey.focus="['/']"/>
+               v-shortkey.focus="['/']"
+               v-shortkey="{up: ['arrowup'], down: ['arrowdown'], enter: ['enter']}"
+               @shortkey.native="onKeyPress"/>
     <div class="icon">/</div>
 
     <div class="results" v-if="query && opened">
@@ -14,10 +16,12 @@
       <div v-if="empty" class="text-result">Repositories not found</div>
 
       <RepoLink v-if="loaded"
-                v-for="repo in results"
-                :hoverType="'background'"
+                v-for="(repo, index) in results"
+                :class="{selected: selectionIndex === index }"
+                :hoverType="'none'"
                 :key="repo.id"
-                :repo="repo">
+                :repo="repo"
+                @mouseenter.native="onItemHover(index)">
 
         <ShortRepoItem v-if="!repo.build"
                        :namespace="repo.namespace"
@@ -48,6 +52,8 @@ import Overlay from "@/components/Overlay";
 
 import reposSort from "@/lib/reposSort";
 
+const ITEMS_LIMIT = 6;
+
 export default {
   name: "Search",
   components: {
@@ -67,7 +73,8 @@ export default {
   data() {
     return {
       query: "",
-      opened: false
+      opened: false,
+      selectionIndex: 0
     };
   },
   computed: {
@@ -85,7 +92,7 @@ export default {
         return (repo.namespace + "/" + repo.name).toLowerCase().indexOf(this.query.toLowerCase()) > -1;
       });
 
-      return reposSort(filtered).slice(0, 6);
+      return reposSort(filtered).slice(0, ITEMS_LIMIT);
     },
     loaded() {
       return this.$store.state.latestLoaded;
@@ -96,8 +103,14 @@ export default {
   },
   methods: {
     open() {
-      this.opened = true;
-      this.overlay.open();
+      if (!this.opened) {
+        this.opened = true;
+        this.overlay.open();
+      }
+    },
+    onInput() {
+      this.open();
+      this.loadIfNeeded();
     },
     loadIfNeeded() {
       if (!this.$store.state.latestLoaded) {
@@ -105,8 +118,32 @@ export default {
       }
     },
     close() {
-      this.opened = false;
-      this.overlay.close();
+      if (this.opened) {
+        this.opened = false;
+        this.overlay.close();
+      }
+    },
+    onKeyPress(e) {
+      if (this.opened && !this.empty) {
+        if (e.srcKey === "up") {
+          const nextIndex = this.selectionIndex - 1;
+          this.selectionIndex = nextIndex < 0 ? ITEMS_LIMIT - 1 : nextIndex;
+        }
+
+        if (e.srcKey === "down") {
+          const nextIndex = this.selectionIndex + 1;
+          this.selectionIndex = nextIndex < ITEMS_LIMIT ? nextIndex : 0;
+        }
+
+        if (e.srcKey === "enter") {
+          const repo = this.results[this.selectionIndex];
+          this.$router.push(`/${repo.namespace}/${repo.name}`);
+          this.close();
+        }
+      }
+    },
+    onItemHover(index) {
+      this.selectionIndex = index;
     }
   },
   mounted() {
@@ -171,6 +208,14 @@ input {
 
 .repo-link {
   padding: 5px 0;
+}
+
+.repo-link.selected {
+  background: rgba(25, 45, 70, 0.02);
+}
+
+.repo-link.selected .repo-item {
+  background: none;
 }
 
 .repo-link + .repo-link {
