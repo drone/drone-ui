@@ -11,7 +11,7 @@
                @shortkey.native="onKeyPress"/>
     <div class="icon">/</div>
 
-    <div class="results" v-if="query && opened">
+    <Popup v-if="query && opened" :width="700" :position="'bottom'" :align="'center'">
       <div v-if="!loaded" class="text-result">Loading...</div>
       <div v-if="empty" class="text-result">Repositories not found</div>
 
@@ -36,7 +36,7 @@
                   :avatar="repo.build.author_avatar"
                   :hide="['duration']"/>
       </RepoLink>
-    </div>
+    </Popup>
   </BaseForm>
 </template>
 
@@ -49,6 +49,7 @@ import RepoLink from "@/components/RepoLink";
 import ShortRepoItem from "@/components/ShortRepoItem";
 import RepoItem from "@/components/RepoItem";
 import Overlay from "@/components/Overlay";
+import Popup from "@/components/Popup";
 
 import reposSort from "@/lib/reposSort";
 
@@ -62,7 +63,8 @@ export default {
     BaseInput,
     RepoLink,
     ShortRepoItem,
-    RepoItem
+    RepoItem,
+    Popup
   },
   directives: {
     ClickOutside
@@ -127,12 +129,12 @@ export default {
       if (this.opened && !this.empty) {
         if (e.srcKey === "up") {
           const nextIndex = this.selectionIndex - 1;
-          this.selectionIndex = nextIndex < 0 ? ITEMS_LIMIT - 1 : nextIndex;
+          this.selectionIndex = nextIndex < 0 ? this.results.length - 1 : nextIndex;
         }
 
         if (e.srcKey === "down") {
           const nextIndex = this.selectionIndex + 1;
-          this.selectionIndex = nextIndex < ITEMS_LIMIT ? nextIndex : 0;
+          this.selectionIndex = nextIndex < this.results.length ? nextIndex : 0;
         }
 
         if (e.srcKey === "enter") {
@@ -185,20 +187,6 @@ input {
   color: rgba(25, 45, 70, 0.25);
   pointer-events: none;
   user-select: none;
-}
-
-.results {
-  position: absolute;
-  width: 700px;
-  top: 50px;
-  left: 50%;
-  margin-left: -350px;
-  max-height: 400px;
-  background: #fff;
-  z-index: 1;
-  border-radius: 3px;
-  box-shadow: 0 2px 4px 0 rgba(25, 45, 70, 0.05);
-  border: solid 1px #edeef1;
 }
 
 .repo-item {
