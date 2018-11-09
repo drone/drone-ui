@@ -85,12 +85,12 @@ export default {
 
         if (byName !== undefined) {
           return (
-            repo.namespace.indexOf(byNamespace) > -1 &&
-            repo.name.indexOf(byName) > -1
+            repo.namespace.toLowerCase().indexOf(byNamespace.toLowerCase()) > -1 &&
+            repo.name.toLowerCase().indexOf(byName.toLowerCase()) > -1
           );
         }
 
-        return (repo.namespace + "/" + repo.name).indexOf(this.query) > -1;
+        return (repo.namespace + "/" + repo.name).toLowerCase().indexOf(this.query.toLowerCase()) > -1;
       });
 
       return reposSort(filtered).slice(0, 6);
