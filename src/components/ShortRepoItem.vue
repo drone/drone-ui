@@ -1,8 +1,8 @@
 <template>
-    <div class="repo-item repo-item-inactive">
+    <div class="repo-item repo-item-short" v-bind:class="{ 'repo-item-inactive': !active }">
         <LogoGithub />
         <h3>{{ namespace }}/{{ name }}</h3>
-        <span>View</span>
+        <span v-if="!active">Add</span>
     </div>
 </template>
 
@@ -10,13 +10,15 @@
 import LogoGithub from "./logos/LogoGithub.vue";
 
 export default {
-  name: "InactiveRepoItem",
+  name: "ShortRepoItem",
   components: {
-    LogoGithub,
+    LogoGithub
   },
   props: {
     namespace: String,
-    name: String
+    name: String,
+    active: Boolean,
+    slug: String
   }
 };
 </script>
@@ -24,10 +26,10 @@ export default {
 <style scoped>
 div {
     align-items: center;
-    border-radius: 2px;
+    border-radius: 3px;
     box-sizing: border-box;
-    box-shadow: 0px 1px 4px 1px rgba(25, 45, 70, 0.02);
-    border: solid 1px rgba(25, 45, 70, 0.08);
+    box-shadow: 0 2px 4px 0 rgba(25, 45, 70, 0.05);
+    border: solid 1px #EDEEF1;
     background-color: #ffffff;
     display: flex;
     height: 50px;
@@ -42,9 +44,12 @@ svg {
     opacity: 0.25;
 }
 
+.repo-item-inactive h3 {
+  opacity: 0.5;
+}
+
 h3 {
   flex: 1;
-  opacity: 0.5;
   font-size: 16px;
   font-weight: normal;
   font-style: normal;
@@ -55,13 +60,9 @@ h3 {
 }
 
 span {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
   letter-spacing: 1px;
-  text-align: right;
   text-transform: uppercase;
   color: #0564d7;
 }

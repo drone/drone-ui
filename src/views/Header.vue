@@ -6,41 +6,45 @@
         </router-link>
     </div>
 
-    <div class="search">
-        <input type="search" placeholder="Search repositories or jump to …" />
-    </div>
+    <Search placeholder="Search repositories or jump to …"/>
 
-    <template v-if="user">
-        <div class="avatar">
-            <router-link to="/account">
-                <img :src="user.avatar" />
-            </router-link>
-        </div>
-    </template>
+    <div class="user" v-if="user">
+      <img class='avatar' :src="user.avatar" @click="toggleUserMenu" v-click-outside="closeUserMenu"/>
+      <Popup v-if="userMenuOpened" :position="'bottom'" :align="'right'">
+        <router-link to="/account">User settings</router-link>
+        <router-link to="/logout" class="logout">{{ $t("labels.logout") }}</router-link>
+      </Popup>
+    </div>
 
     <template v-if="showLogin">
         <div class="login">
             <a href="/login" class="button">Login</a>
         </div>
     </template>
-
-        <!-- <nav>
-          <router-link to="/">{{ $t("labels.home") }}</router-link> |
-          <router-link to="/login/form">{{ $t("labels.login") }}</router-link> |
-          <router-link to="/logout">{{ $t("labels.logout") }}</router-link> |
-          <router-link to="/account">{{ $t("labels.account") }}</router-link>
-        </nav> -->
   </div>
 </template>
 
 <script>
+import ClickOutside from "vue-click-outside";
+
 import Logo from "@/components/logos/Logo.vue";
+import Popup from "@/components/Popup.vue";
+import Search from "@/components/Search";
 
 export default {
   name: "Header",
-  props: {},
   components: {
-      Logo,
+    Search,
+    Logo,
+    Popup
+  },
+  directives: {
+    ClickOutside
+  },
+  data() {
+    return {
+      userMenuOpened: false
+    };
   },
   computed: {
     user() {
@@ -52,6 +56,14 @@ export default {
     showLogin() {
         return this.userLoaded && !this.user;
     }
+  },
+  methods: {
+    toggleUserMenu() {
+      this.userMenuOpened = !this.userMenuOpened;
+    },
+    closeUserMenu() {
+      this.userMenuOpened = false;
+    }
   }
 };
 </script>
@@ -62,21 +74,43 @@ export default {
     box-sizing: border-box;
     display: flex;
     padding: 0px 30px;
+  justify-content: space-between;
+}
+
+.user {
+  position: relative;
+}
+
+.user .popup {
+  min-width: 200px;
+}
+
+.user .popup a {
+  display: block;
+  padding: 11px 15px;
+  color: #192d46;
+}
+
+.user .popup a.logout {
+  color: #ff4164;
+}
+
+.user .popup a:hover {
+  background: rgba(25, 45, 70, 0.03);
+}
+
+.user .popup a + a {
+  border-top: 1px solid rgba(25, 45, 70, 0.05);
 }
 
 .avatar {
-    text-align: right;
-    flex: 1;
-}
-
-.avatar img {
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
 }
 
 .logo {
-    flex: 1;
     grid-column: 1;
     width: 30px;
     height: 30px;
@@ -96,26 +130,6 @@ export default {
     font-size: 12px;
     padding: 10px 20px;
     text-transform: uppercase;
-}
-
-.search {
-    width: 900px;
-    max-width: 900px;
-    min-width: 900px;
-    grid-column: 2;
-    text-align: center;
-    display: none;
-}
-
-.search input {
-    border: 1px solid #e8eaed;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-size: 14px;
-    line-height: 32px;
-    outline: none;
-    padding: 0px 10px;
-    width: 100%;
 }
 
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */

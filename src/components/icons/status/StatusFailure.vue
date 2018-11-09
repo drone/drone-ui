@@ -1,6 +1,8 @@
 <template>
-<svg viewBox="0 0 24 24">
-  <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
-  <path d="M0 0h24v24H0z" fill="none" />
-</svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+        <g fill-rule="nonzero" fill="none">
+            <circle cx="10" cy="10" r="10" fill="#FF4164"/>
+            <path stroke="#FFF" stroke-linecap="round" stroke-width="1.4" d="M7 13l6.083-6m-6.041-.042l6 6.084"/>
+        </g>
+    </svg>
 </template>

@@ -5,26 +5,19 @@
       Cannot retrieve the Build details.
     </div>
 
-    <Build v-if="build"
+    <RepoItem v-if="build"
       :number="build.number"
-      :event="build.event"
       :status="build.status"
-      :message="build.message"
-      :title="build.title"
-      :commit="build.after"
-      :branch="build.target"
-      :reference="build.ref"
-      :created="build.created"
-      :started="build.started"
-      :finished="build.finished"
+      :title="build.message"
+      :message="build.author_login"
       :link="build.link"
-      :author="build.author_login"
-      :avatar="build.author_avatar">
+      :avatar="build.author_avatar"
+      :build="build">
       <footer>
         <CancelButton v-on:click="handleCancel" v-if="!build.finished">Cancel</CancelButton>
         <SyncButton v-on:click="handleRestart" v-if="build.finished">Restart</SyncButton>
       </footer>
-    </Build>
+    </RepoItem>
 
     <main>
       <div class="container steps">
@@ -94,7 +87,7 @@
 </template>
 
 <script>
-import Build from "@/components/RepoItem.vue";
+import RepoItem from "@/components/RepoItem.vue";
 import Step from "@/components/Step.vue";
 import Stage from "@/components/Stage.vue";
 
@@ -105,7 +98,7 @@ export default {
   name: "build",
   methods: {},
   components: {
-    Build,
+    RepoItem,
     Step,
     Stage,
     SyncButton,

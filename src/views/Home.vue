@@ -3,7 +3,10 @@
 
     <header>
       <Breadcrumb>
-        <router-link :to="'/'">Repositories</router-link>
+        <router-link :to="'/'">
+          Repositories
+          <span class="count">— {{ reposCount(latest) }}</span>
+        </router-link>
       </Breadcrumb>
 
       <SyncButton v-if="!syncing" v-on:click="sync">Synchronize</SyncButton>
@@ -24,35 +27,25 @@
     </transition>
 
     <div class="list">
-      <router-link
-        v-for="repo in sortLimit(latest)"
-        :key="repo.id"
-        :to="repo.slug"
-        class="link">
+      <div class="list-item"
+           v-for="repo in sortLimit(latest)"
+           :key="repo.id">
 
-        <InactiveRepoItem
-          v-if="!repo.build"
-          :namespace="repo.namespace"
-          :name="repo.name" />
+        <RepoLink :repo="repo">
+          <ShortRepoItem v-if="!repo.build"
+                         :namespace="repo.namespace"
+                         :name="repo.name"
+                         :active="repo.active"
+          />
 
-        <RepoItem
-          v-if="repo.build"
-          :namespace="repo.namespace"
-          :name="repo.name"
-          :number="repo.build.number"
-          :event="repo.build.event"
-          :status="repo.build.status"
-          :message="repo.build.message"
-          :title="repo.build.title"
-          :commit="repo.build.after"
-          :branch="repo.build.target"
-          :reference="repo.build.ref"
-          :created="repo.build.created"
-          :started="repo.build.started"
-          :finished="repo.build.finished"
-          :avatar="repo.build.author_avatar"
-        />
-      </router-link>
+          <RepoItem v-if="repo.build"
+                    :title="`${repo.namespace}/${repo.name}`"
+                    :build="repo.build"
+                    :status="repo.build.status"
+                    :message="repo.build.message"
+                    :avatar="repo.build.author_avatar"/>
+        </RepoLink>
+      </div>
     </div>
 
     <MoreButton v-if="showMore" v-on:click="showAll">Show All Repositories</MoreButton>
@@ -61,14 +54,16 @@
 
 <script>
 import Alert from "@/components/Alert.vue";
-import InactiveRepoItem from "@/components/InactiveRepoItem.vue";
+import ShortRepoItem from "@/components/ShortRepoItem.vue";
 import RepoItem from "@/components/RepoItem.vue";
 import Breadcrumb from "@/components/Breadcrumb.vue";
 import BreadcrumbDivider from "@/components/BreadcrumbDivider.vue";
 import IconSpinner from "@/components/icons/IconSpinner.vue";
 import MoreButton from "@/components/buttons/MoreButton.vue";
 import SyncButton from "@/components/buttons/SyncButton.vue";
+import RepoLink from "@/components/RepoLink.vue";
 
+import reposSort from "@/lib/reposSort";
 
 export default {
   name: "home",
@@ -76,11 +71,12 @@ export default {
     Alert,
     BreadcrumbDivider,
     Breadcrumb,
-    InactiveRepoItem,
+    ShortRepoItem,
     MoreButton,
     RepoItem,
     IconSpinner,
-    SyncButton
+    SyncButton,
+    RepoLink
   },
   data() {
     return {
@@ -113,20 +109,10 @@ export default {
   },
   methods: {
     sortLimit: function(items) {
-      // TODO improve the sorting code here. It is currently
-      // split into two separate sorting operations, but should
-      // be possible to combine to a single operation.
       let list = Object.values(items || {});
 
-      // sort by repository name, ascending.
-      list.sort(function(a, b){
-        if (a.slug < b.slug) return -1;
-        if (a.slug > b.slug) return 1;
-        return 0;
-      });
+      list = reposSort(list);
 
-      // sort by active status.
-      list.sort(function(a, b){ return b.active-a.active});
       return this.all ? list : list.slice(0, 10);
     },
     showAll: function() {
@@ -134,21 +120,15 @@ export default {
     },
     sync: function() {
       this.$store.dispatch('syncAccount');
+    },
+    reposCount: function(items) {
+      return Object.keys(items).length;
     }
-  },
+  }
 };
 </script>
 
 <style scoped>
-/* button {
-  background: none;
-  border: none;
-  color: #8f99a4;
-  cursor: pointer;
-  font-size: 13px;
-  padding: 0px;
-} */
-
 header {
   display: flex;
   align-items: center;
@@ -158,18 +138,9 @@ header .breadcrumb {
   flex: 1;
 }
 
-/* header button {
-  display: flex;
-  margin-right: 15px;
-  outline: none;
+.count {
+  opacity: 0.667; /* 0.75*0.667=0.5 */
 }
-
-header button svg {
-  fill: #8f99a4;
-  width: 16px;
-  height: 16px;
-  margin-right: 5px;
-} */
 
 .syncing {
   align-items: center;
@@ -205,21 +176,11 @@ header button svg {
   opacity: 0;
 }
 
-
-.repo-item:first-of-type {
-  margin-top: 0px;
-}
-
 .more-button {
   margin-top: 20px;
 }
 
-.link {
-  display: block;
+.list-item + .list-item {
   margin-top: 10px;
-}
-
-.link:first-child {
-  margin-top: 0px;
 }
 </style>
