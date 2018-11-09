@@ -6,42 +6,42 @@
         </div>
         <div class="content">
             <div class="header">
-                <h3 v-if="namespace">{{ namespace }}/{{ name }}</h3>
-                <h3 v-else>#{{ number }}. {{ title || message }}</h3>
-                <span>
-                    <slot></slot>
-                </span>
+                <h3>
+                    <span class="number" v-if="number">
+                        #{{ number }}
+                        <span class="dash">– </span>
+                    </span>
+                    <span class="title">{{ title }}</span>
+                </h3>
+                <span><slot></slot></span>
             </div>
             <div class="metadata">
                 <img :src="avatar" />
-                <p v-if="namespace" v-bind:title="title || message">{{ title || message }}</p>
-                <p v-else>{{ author }}</p>
+                <p :title="message">{{ message }}</p>
+
                 <span class="finished">
-                    <IconCalendar />{{ new Date(created * 1000) | moment("from", "now") }}
+                    <IconCalendar />{{ new Date(build.created * 1000) | moment("from", "now") }}
                 </span>
-                <span class="duration">
-                    <IconClock /><TimeElapsed v-if="started" :started="started" :stopped="finished" />
+                <span class="duration" v-if="!hide.includes('duration')">
+                    <IconClock /><TimeElapsed v-if="build.started" :started="build.started" :stopped="build.finished" />
                 </span>
-                <span class="commit" v-if="link">
-                    <IconCommit /><a v-if="link" target="_blank" :href="link">
-                        {{ commit && commit.substr(0, 8) }}
-                    </a>
-                </span>
-                <span class="commit" v-else>
-                    <IconCommit />{{ commit && commit.substr(0, 8) }}
+                <span class="commit">
+                    <IconCommit />
+                    <a v-if="link" target="_blank" :href="link">{{ commitShaShort }}</a>
+                    <span v-else>{{ commitShaShort }}</span>
                 </span>
                 <span class="branch">
-                    <IconBranch v-if="event == 'push'" />
-                    <IconMerge v-else-if="event == 'pull_request'" />
-                    <IconTag v-else-if="event == 'tag'" />
-                    <IconPromote v-else-if="event == 'promote'" />
-                    <IconRollback v-else-if="event == 'rollback'" />
+                    <IconBranch v-if="build.event == 'push'" />
+                    <IconMerge v-else-if="build.event == 'pull_request'" />
+                    <IconTag v-else-if="build.event == 'tag'" />
+                    <IconPromote v-else-if="build.event == 'promote'" />
+                    <IconRollback v-else-if="build.event == 'rollback'" />
                     <IconBranch v-else />
                     <span>{{
-                      event === 'pull_request'
-                      ? trimMergeRef(reference)
-                      : event === 'tag'
-                        ? trimTagRef(reference)
+                      build.event === 'pull_request'
+                      ? trimMergeRef(build.ref)
+                      : build.event === 'tag'
+                        ? trimTagRef(build.ref)
                         : branch
                     }}</span>
                 </span>
@@ -66,22 +66,15 @@ import TimeElapsed from "./TimeElapsed.vue";
 export default {
   name: "RepoItem",
   props: {
-    namespace: String,
-    name: String,
     number: Number,
-    event: String,
     status: String,
     message: String,
     title: String,
-    commit: String,
-    branch: String,
-    reference: String,
-    created: Number,
-    started: Number,
-    finished: Number,
     link: String,
     author: String,
     avatar: String,
+    build: Object,
+    hide: { type: Array, default: () => [] }
   },
   components: {
     IconBranch,
@@ -94,6 +87,14 @@ export default {
     IconTag,
     Status,
     TimeElapsed,
+  },
+  computed: {
+    commitShaShort() {
+      return this.build.after && this.build.after.substr(0, 8);
+    },
+    branch() {
+      return this.build.target;
+    }
   },
   methods: {
     trimMergeRef: function(ref) {
@@ -125,10 +126,16 @@ section {
     padding-top: 2px;
 }
 
-.container-left .status {
-    height: 20px;
-    width: 20px;
-    margin-top: 1px;
+.number {
+  color: #0564d7;
+}
+
+.number .dash {
+  color: rgba(25, 45, 70, 0.25);
+}
+
+.status {
+  margin-bottom: 5px;
 }
 
 .connector {
@@ -139,7 +146,6 @@ section {
     border-left: solid 1px #192d46;
     border-bottom: solid 1px #192d46;
     float: right;
-    margin-top: 5px;
     margin-right: 5px;
 }
 
@@ -154,7 +160,7 @@ section {
 .metadata {
     display: inline-flex;
     flex: 1;
-    align-items: flex-end;
+    align-items: center;
 }
 
 .metadata > span,
@@ -187,7 +193,7 @@ h3 {
   font-stretch: normal;
   line-height: normal;
   letter-spacing: normal;
-  color: #0564d7;
+  color: #192d46;
 }
 
 img {

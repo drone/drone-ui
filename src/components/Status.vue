@@ -41,6 +41,11 @@ export default {
 </script>
 
 <style scoped>
+.status {
+  display: inline-block;
+  height: 20px;
+}
+
 svg {
   height: 20px;
   width: 20px;

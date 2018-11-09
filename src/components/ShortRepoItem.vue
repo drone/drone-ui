@@ -1,5 +1,5 @@
 <template>
-    <div class="repo-item repo-item-short" v-bind:class="{ 'repo-item-active': active }">
+    <div class="repo-item repo-item-short" v-bind:class="{ 'repo-item-inactive': !active }">
         <LogoGithub />
         <h3>{{ namespace }}/{{ name }}</h3>
         <span v-if="!active">Add</span>
@@ -44,14 +44,12 @@ svg {
     opacity: 0.25;
 }
 
-div.repo-item-active h3 {
-    color: #0564d7;
-    opacity: 1;
+.repo-item-inactive h3 {
+  opacity: 0.5;
 }
 
 h3 {
   flex: 1;
-  opacity: 0.5;
   font-size: 16px;
   font-weight: normal;
   font-style: normal;

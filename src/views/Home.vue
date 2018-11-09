@@ -39,21 +39,11 @@
           />
 
           <RepoItem v-if="repo.build"
-                    :namespace="repo.namespace"
-                    :name="repo.name"
-                    :number="repo.build.number"
-                    :event="repo.build.event"
+                    :title="`${repo.namespace}/${repo.name}`"
+                    :build="repo.build"
                     :status="repo.build.status"
                     :message="repo.build.message"
-                    :title="repo.build.title"
-                    :commit="repo.build.after"
-                    :branch="repo.build.target"
-                    :reference="repo.build.ref"
-                    :created="repo.build.created"
-                    :started="repo.build.started"
-                    :finished="repo.build.finished"
-                    :avatar="repo.build.author_avatar"
-          />
+                    :avatar="repo.build.author_avatar"/>
         </RepoLink>
       </div>
     </div>

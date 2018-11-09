@@ -48,6 +48,14 @@ export default {
   background: rgba(25, 45, 70, 0.02);
 }
 
+.repo-link .repo-item h3 {
+  color: #0564d7;
+}
+
+.repo-link .repo-item-inactive h3 {
+  color: #192d46;
+}
+
 .repo-link.hover-type-background:hover .repo-item {
   background: none;
 }
