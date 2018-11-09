@@ -1,13 +1,10 @@
 <template>
-  <div class="repo-link" :class="[hoverClass]">
-    <router-link v-if="repo.active" :to="repo.slug">
-      <slot></slot>
-    </router-link>
-
-    <div class="activate" v-if="!repo.active" v-on:click="handleActivate">
-      <slot></slot>
-    </div>
-  </div>
+  <a class="repo-link"
+     href="#"
+     :class="[hoverClass, { 'repo-active': repo.active }]"
+     @click.prevent="handle">
+    <slot></slot>
+  </a>
 </template>
 
 <script>
@@ -15,7 +12,7 @@ export default {
   name: "RepoLink",
   props: {
     repo: Object,
-    hoverType: { type: String, default: 'box-shadow'}
+    hoverType: { type: String, default: "box-shadow" }
   },
   computed: {
     hoverClass() {
@@ -23,18 +20,22 @@ export default {
     }
   },
   methods: {
-    handleActivate: function() {
-      const { namespace, name } = this.repo;
-      this.$store.dispatch("enableRepo", { namespace, name });
-      this.$router.push(namespace + "/" + name);
+    handle: function() {
+      const { namespace, name, active } = this.repo;
+
+      if (!active) {
+        this.$store.dispatch("enableRepo", { namespace, name });
+      }
+
+      this.$router.push(`/${namespace}/${name}`);
     }
   }
 };
 </script>
 
 <style scoped>
-.activate {
-  cursor: pointer;
+.repo-link {
+  display: block;
 }
 </style>
 
@@ -46,6 +47,7 @@ export default {
 .repo-link.hover-type-background:hover {
   background: rgba(25, 45, 70, 0.02);
 }
+
 .repo-link.hover-type-background:hover .repo-item {
   background: none;
 }

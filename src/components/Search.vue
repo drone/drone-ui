@@ -5,7 +5,8 @@
                :placeholder="placeholder"
                @focus="open"
                @input="loadIfNeeded"
-               v-click-outside="close"/>
+               v-click-outside="close"
+               v-shortkey.focus="['/']"/>
     <div class="icon">/</div>
 
     <div class="results" v-if="query && opened">
@@ -21,8 +22,7 @@
         <ShortRepoItem v-if="!repo.build"
                        :namespace="repo.namespace"
                        :name="repo.name"
-                       :active="repo.active"
-        />
+                       :active="repo.active"/>
 
         <RepoItem v-if="repo.build"
                   :namespace="repo.namespace"
@@ -38,8 +38,7 @@
                   :created="repo.build.created"
                   :started="repo.build.started"
                   :finished="repo.build.finished"
-                  :avatar="repo.build.author_avatar"
-        />
+                  :avatar="repo.build.author_avatar"/>
       </RepoLink>
     </div>
   </BaseForm>
@@ -53,12 +52,14 @@ import BaseInput from "@/components/forms/BaseInput";
 import RepoLink from "@/components/RepoLink";
 import ShortRepoItem from "@/components/ShortRepoItem";
 import RepoItem from "@/components/RepoItem";
+import Overlay from "@/components/Overlay";
 
 import reposSort from "@/lib/reposSort";
 
 export default {
   name: "Search",
   components: {
+    Overlay,
     BaseForm,
     BaseInput,
     RepoLink,
@@ -104,6 +105,7 @@ export default {
   methods: {
     open() {
       this.opened = true;
+      this.overlay.open();
     },
     loadIfNeeded() {
       if (!this.$store.state.latestLoaded) {
@@ -112,7 +114,11 @@ export default {
     },
     close() {
       this.opened = false;
+      this.overlay.close();
     }
+  },
+  mounted() {
+    this.overlay = Overlay.instance();
   }
 };
 </script>
@@ -126,6 +132,11 @@ input {
   width: 400px;
   padding-right: 45px;
   transition: width linear 0.1s;
+}
+
+.opened {
+  position: relative;
+  z-index: 1001;
 }
 
 .opened input {
