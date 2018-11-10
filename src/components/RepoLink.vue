@@ -23,9 +23,13 @@ export default {
     handle: function() {
       const { namespace, name, active } = this.repo;
 
-      if (!active) {
-        this.$store.dispatch("enableRepo", { namespace, name });
-      }
+      // NOTE: this was disabled by @bradrydzewski temporarily so
+      // that it does not confuse our release-candidate tests.
+      // SEE https://github.com/drone/drone-ui/issues/214#issuecomment-437517931 
+      //
+      // if (!active) {
+      //   this.$store.dispatch("enableRepo", { namespace, name });
+      // }
 
       this.$router.push(`/${namespace}/${name}`);
     }

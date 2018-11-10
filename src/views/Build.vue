@@ -76,6 +76,7 @@
       </div>
 
       <div class="container output">
+        <button v-if="showLimit" v-on:click="handleMore">showing the last {{limit}} lines</button>
         <div v-for="(line) in logs" :key="line.pos">
           <div>{{line.pos+1}}</div>
           <div v-html="line._html"></div>
@@ -129,8 +130,16 @@ export default {
           return step.number === number;
         });
     },
+    limit() {
+      return this.$store.state.logsLimit;
+    },
     logs() {
-      return this.$store.state.logs;
+      const logs = this.$store.state.logs || [];
+      const show = Math.max(logs.length - this.limit, 0)
+      return logs.slice(show);
+    },
+    showLimit() {
+      return this.logs && this.limit == this.logs.length;
     },
     buildLoaded() {
       return this.$store.state.buildLoaded;
@@ -143,6 +152,9 @@ export default {
     },
   },
   methods: {
+    handleMore: function() {
+      this.$store.dispatch('expandLogs');
+    },
     handleCancel: function() {
       const {namespace, name, build} = this.$route.params;
       this.$store.dispatch('cancelBuild', {namespace, name, build})
@@ -264,5 +276,27 @@ main {
     min-width: 0px;
     white-space: pre-wrap;
     word-wrap: break-word;
+}
+
+.output > button {
+  background: rgba(255,255,255,0.1);
+  border: none;
+  border-radius: 5px;
+  color: #FFF;
+  cursor: pointer;
+  display: flex;
+  height: 30px;
+  margin-bottom: 20px;
+  font-family: "Open Sans";
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  text-align: center;
+  text-transform: uppercase;
+  opacity: 0.5;
+  width: 100%;
+}
+.output > button:active {
+  background: rgba(255,255,255,0.05);
 }
 </style>

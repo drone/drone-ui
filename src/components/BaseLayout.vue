@@ -71,8 +71,9 @@ main {
   margin: 0 auto;
 }
 body {
-  /* hack for better font rendering on macos */
+  /* hack for better font rendering on macos
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+   */
 }
 </style>

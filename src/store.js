@@ -5,6 +5,8 @@ import AnsiUp from "ansi_up";
 
 Vue.use(Vuex);
 
+const DEFAULT_LOG_LIMIT = 250;
+
 export default new Vuex.Store({
   state: {
     route: {
@@ -55,6 +57,7 @@ export default new Vuex.Store({
     logsLoaded: false,
     logsLoading: false,
     logsLoadingErr: undefined,
+    logsLimit: DEFAULT_LOG_LIMIT,
     logsFor: {
       namespace: undefined,
       name: undefined,
@@ -380,9 +383,12 @@ export default new Vuex.Store({
     LOGS_FIND_SUCCESS(state, data){
       state.logs = escapeLogs(data.lines);
     },
-
+    LOGS_EXPAND(state) {
+      state.logsLimit = state.logsLimit + DEFAULT_LOG_LIMIT;
+    },
     LOG_CLEAR(state) {
       state.logs = [];
+      state.logsLimit = DEFAULT_LOG_LIMIT;
     },
     LOG_WRITE(state, data){
       if (!state.logs) {
@@ -393,7 +399,13 @@ export default new Vuex.Store({
       );
     },
   },
-  actions,
+  actions: {
+    ...actions,
+
+    expandLogs({commit}) {
+      commit('LOGS_EXPAND');
+    }
+  },
 });
 
 

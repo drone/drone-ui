@@ -15,7 +15,8 @@ import {fetcher} from "./router/fetch";
 Vue.use(VueMoment);
 Vue.use(Router);
 Vue.use(VueI18n);
-Vue.use(VueShortkey)
+// TODO pending https://github.com/iFgR/vue-shortkey/pull/54
+Vue.use(VueShortkey, { prevent: ["input", "textarea"] });
 Vue.config.productionTip = false;
 
 sync(store, router)

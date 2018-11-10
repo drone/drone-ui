@@ -1,5 +1,9 @@
 <template>
   <input ref="input"
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"
          :placeholder="placeholder"
          :value="value"
          @input="update"
