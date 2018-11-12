@@ -1,5 +1,5 @@
 <template>
-  <BaseForm :class="{ opened }">
+  <BaseForm :class="{ opened }" @submit.native="(e) => e.preventDefault()">
     <BaseInput type="search"
                ref="searchInput"
                v-model="query"
@@ -131,10 +131,13 @@ export default {
     clear() {
       this.query = "";
     },
+    blur() {
+      this.$refs.searchInput.$el.blur();
+    },
     onKeyPress(e) {
       if (this.opened) {
         if (e.key === "Escape") {
-          this.$refs.searchInput.$el.blur();
+          this.blur();
           this.stopPropagationAndPreventDefault(e);
         }
 
@@ -157,6 +160,8 @@ export default {
         if (e.key === "Enter") {
           const repo = this.results[this.selectionIndex];
           this.$router.push(`/${repo.namespace}/${repo.name}`);
+          this.clear();
+          this.blur();
           this.stopPropagationAndPreventDefault(e);
         }
       } else {
