@@ -1,18 +1,18 @@
 <template>
     <div class="repo-item repo-item-short" v-bind:class="{ 'repo-item-inactive': !active }">
-        <LogoGithub />
+        <LogoGit />
         <h3>{{ namespace }}/{{ name }}</h3>
         <span v-if="!active" @click="activate">Add</span>
     </div>
 </template>
 
 <script>
-import LogoGithub from "./logos/LogoGithub.vue";
+import LogoGit from "./logos/LogoGit.vue";
 
 export default {
   name: "ShortRepoItem",
   components: {
-    LogoGithub
+    LogoGit
   },
   props: {
     namespace: String,
@@ -46,8 +46,6 @@ svg {
     width: 20px;
     height: 20px;
     margin-right: 10px;
-    fill: #192d46;
-    opacity: 0.25;
 }
 
 .repo-item-inactive h3 {

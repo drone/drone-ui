@@ -1,17 +1,17 @@
 <template>
     <div class="breadcrumb">
-      <LogoGithub class="github" />
+      <LogoGit/>
       <slot></slot>
     </div>
 </template>
 
 <script>
-import LogoGithub from "./logos/LogoGithub.vue";
+import LogoGit from "./logos/LogoGit.vue";
 
 export default {
   name: "Breadcrumb",
   components: {
-    LogoGithub,
+    LogoGit
   },
 };
 </script>
@@ -47,19 +47,7 @@ export default {
 .breadcrumb svg {
   width: 20px;
   height: 20px;
-  margin-right: 10px;
-  fill: #192d46;;
-  opacity: 0.25;
-}
-
-.breadcrumb svg.github {
-  width: 20px;
-  height: 20px;
   margin-left: 15px;
   margin-right: 10px;
-  fill: #192d46;;
-  opacity: 0.25;
 }
-
-
 </style>
