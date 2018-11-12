@@ -1,7 +1,6 @@
 import Vue from "vue";
 import VueI18n from "vue-i18n";
 import VueMoment from "vue-moment";
-import VueShortkey from "vue-shortkey";
 
 import App from "./App.vue";
 import Router from "vue-router";
@@ -15,8 +14,6 @@ import {fetcher} from "./router/fetch";
 Vue.use(VueMoment);
 Vue.use(Router);
 Vue.use(VueI18n);
-// TODO pending https://github.com/iFgR/vue-shortkey/pull/54
-Vue.use(VueShortkey, { prevent: ["input", "textarea"] });
 Vue.config.productionTip = false;
 
 sync(store, router)

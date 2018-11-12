@@ -6,8 +6,7 @@
          spellcheck="false"
          :placeholder="placeholder"
          :value="value"
-         @input="update"
-         @focus="$listeners.focus"/>
+         @input="update"/>
 </template>
 
 <script>

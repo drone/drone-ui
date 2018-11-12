@@ -1,14 +1,12 @@
 <template>
-  <BaseForm v-bind:class="{ opened }" @blur="close">
+  <BaseForm :class="{ opened }">
     <BaseInput type="search"
+               ref="searchInput"
                v-model="query"
                :placeholder="placeholder"
-               @focus="open"
-               @input="onInput"
-               v-click-outside="close"
-               v-shortkey.focus="['/']"
-               v-shortkey="{up: ['arrowup'], down: ['arrowdown'], enter: ['enter']}"
-               @shortkey.native="onKeyPress"/>
+               @focus.native="open"
+               @blur.native="closeTimeouted"
+               @input="onInput"/>
     <div class="icon">/</div>
 
     <Popup v-if="query && opened" :width="700" :position="'bottom'" :align="'center'">
@@ -17,10 +15,12 @@
 
       <RepoLink v-if="loaded"
                 v-for="(repo, index) in results"
+                :focusable="false"
                 :class="{selected: selectionIndex === index }"
                 :hoverType="'none'"
                 :key="repo.id"
                 :repo="repo"
+                @click.native="clear"
                 @mouseenter.native="onItemHover(index)">
 
         <ShortRepoItem v-if="!repo.build"
@@ -125,24 +125,50 @@ export default {
         this.overlay.close();
       }
     },
+    closeTimeouted() {
+      setTimeout(() => this.close(), 100);
+    },
+    clear() {
+      this.query = "";
+    },
     onKeyPress(e) {
-      if (this.opened && !this.empty) {
-        if (e.srcKey === "up") {
+      if (this.opened) {
+        if (e.key === "Escape") {
+          this.$refs.searchInput.$el.blur();
+          this.stopPropagationAndPreventDefault(e);
+        }
+
+        if (this.empty) {
+          return;
+        }
+
+        if (e.key === "ArrowUp") {
           const nextIndex = this.selectionIndex - 1;
           this.selectionIndex = nextIndex < 0 ? this.results.length - 1 : nextIndex;
+          this.stopPropagationAndPreventDefault(e);
         }
 
-        if (e.srcKey === "down") {
+        if (e.key === "ArrowDown") {
           const nextIndex = this.selectionIndex + 1;
           this.selectionIndex = nextIndex < this.results.length ? nextIndex : 0;
+          this.stopPropagationAndPreventDefault(e);
         }
 
-        if (e.srcKey === "enter") {
+        if (e.key === "Enter") {
           const repo = this.results[this.selectionIndex];
           this.$router.push(`/${repo.namespace}/${repo.name}`);
-          this.close();
+          this.stopPropagationAndPreventDefault(e);
+        }
+      } else {
+        if (e.key === "/") {
+          this.$refs.searchInput.$el.focus();
+          this.stopPropagationAndPreventDefault(e);
         }
       }
+    },
+    stopPropagationAndPreventDefault(e) {
+      e.stopPropagation();
+      e.preventDefault();
     },
     onItemHover(index) {
       this.selectionIndex = index;
@@ -150,6 +176,10 @@ export default {
   },
   mounted() {
     this.overlay = Overlay.instance();
+    document.addEventListener("keyup", this.onKeyPress, true);
+  },
+  destroyed() {
+    document.removeEventListener("keyup", this.onKeyPress);
   }
 };
 </script>

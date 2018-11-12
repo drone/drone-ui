@@ -28,7 +28,6 @@ button {
   line-height: normal;
   letter-spacing: normal;
   text-transform: uppercase;
-  outline: none;
   color: #192d46;
   opacity: 0.25;
   display: flex;

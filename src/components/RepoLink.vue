@@ -2,6 +2,7 @@
   <a class="repo-link"
      href="#"
      :class="[hoverClass, { 'repo-active': repo.active }]"
+     :tabindex="focusable ? 0 : -1"
      @click.prevent="handle">
     <slot></slot>
   </a>
@@ -12,7 +13,8 @@ export default {
   name: "RepoLink",
   props: {
     repo: Object,
-    hoverType: { type: String, default: "box-shadow" }
+    hoverType: { type: String, default: "box-shadow" },
+    focusable: { type: Boolean, default: true }
   },
   computed: {
     hoverClass() {
