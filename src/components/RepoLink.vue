@@ -1,11 +1,9 @@
 <template>
-  <a class="repo-link"
-     href="#"
-     :class="[hoverClass, { 'repo-active': repo.active }]"
-     :tabindex="focusable ? 0 : -1"
-     @click.prevent="handle">
+  <router-link class="repo-link"
+               :to="`/${repo.namespace}/${repo.name}`"
+               :class="{ [`hover-type-${hoverType}`]: true, 'repo-active': repo.active }">
     <slot></slot>
-  </a>
+  </router-link>
 </template>
 
 <script>
@@ -15,26 +13,6 @@ export default {
     repo: Object,
     hoverType: { type: String, default: "box-shadow" },
     focusable: { type: Boolean, default: true }
-  },
-  computed: {
-    hoverClass() {
-      return "hover-type-" + this.hoverType;
-    }
-  },
-  methods: {
-    handle: function() {
-      const { namespace, name, active } = this.repo;
-
-      // NOTE: this was disabled by @bradrydzewski temporarily so
-      // that it does not confuse our release-candidate tests.
-      // SEE https://github.com/drone/drone-ui/issues/214#issuecomment-437517931 
-      //
-      // if (!active) {
-      //   this.$store.dispatch("enableRepo", { namespace, name });
-      // }
-
-      this.$router.push(`/${namespace}/${name}`);
-    }
   }
 };
 </script>

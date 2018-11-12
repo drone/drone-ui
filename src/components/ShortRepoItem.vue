@@ -2,7 +2,7 @@
     <div class="repo-item repo-item-short" v-bind:class="{ 'repo-item-inactive': !active }">
         <LogoGithub />
         <h3>{{ namespace }}/{{ name }}</h3>
-        <span v-if="!active">Add</span>
+        <span v-if="!active" @click="activate">Add</span>
     </div>
 </template>
 
@@ -19,6 +19,12 @@ export default {
     name: String,
     active: Boolean,
     slug: String
+  },
+  methods: {
+    activate(repo) {
+      const { namespace, name } = repo;
+      this.$store.dispatch("enableRepo", { namespace, name });
+    }
   }
 };
 </script>
@@ -65,5 +71,11 @@ span {
   letter-spacing: 1px;
   text-transform: uppercase;
   color: #0564d7;
+  padding: 10px 15px;
+  border-radius: 3px;
+}
+
+span:hover {
+  background: rgba(5, 100, 215, 0.1);
 }
 </style>
