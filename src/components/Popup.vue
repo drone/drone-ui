@@ -18,15 +18,17 @@ export default {
     style() {
       const result = {};
 
-      if (this.position === "bottom" && this.align === "center") {
+      if (this.position === "bottom") {
         result.width = `${this.width}px`;
-        result.marginLeft = `-${this.width / 2}px`;
+
+        if (this.align === "center") {
+          result.marginLeft = `-${this.width / 2}px`;
+        }
       }
 
       return result;
     }
-  },
-  methods: {}
+  }
 };
 </script>
 

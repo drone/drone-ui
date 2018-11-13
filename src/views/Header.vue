@@ -8,12 +8,16 @@
 
     <Search placeholder="Search repositories or jump to …"/>
 
-    <div class="user" v-if="user">
-      <img class='avatar' :src="user.avatar" @click="toggleUserMenu" v-click-outside="closeUserMenu"/>
-      <Popup v-if="userMenuOpened" :position="'bottom'" :align="'right'">
-        <router-link to="/account">User settings</router-link>
-        <router-link to="/logout" class="logout">{{ $t("labels.logout") }}</router-link>
-      </Popup>
+    <div class="right-block" v-if="user">
+      <BuildsFeed/>
+
+      <div class="user">
+        <img class='avatar' :src="user.avatar" @click="toggleUserMenu" v-click-outside="closeUserMenu"/>
+        <Popup v-if="userMenuOpened" :position="'bottom'" :align="'right'">
+          <router-link to="/account">User settings</router-link>
+          <router-link to="/logout" class="logout">{{ $t("labels.logout") }}</router-link>
+        </Popup>
+      </div>
     </div>
 
     <template v-if="showLogin">
@@ -30,10 +34,12 @@ import ClickOutside from "vue-click-outside";
 import Logo from "@/components/logos/Logo.vue";
 import Popup from "@/components/Popup.vue";
 import Search from "@/components/Search";
+import BuildsFeed from "@/components/BuildsFeed";
 
 export default {
   name: "Header",
   components: {
+    BuildsFeed,
     Search,
     Logo,
     Popup
@@ -77,7 +83,12 @@ export default {
   justify-content: space-between;
 }
 
+.builds-feed + .user {
+  margin-left: 30px;
+}
+
 .user {
+  display: inline-block;
   position: relative;
 }
 

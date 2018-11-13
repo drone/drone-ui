@@ -1,42 +1,22 @@
 <template>
-  <BaseForm :class="{ opened }" @submit.native="(e) => e.preventDefault()">
+  <BaseForm :class="{ opened }"
+            @submit.native="(e) => e.preventDefault()"
+            @focusin.native="open"
+            @focusout.native="closeDelayed">
     <BaseInput type="search"
                ref="searchInput"
                v-model="query"
                :placeholder="placeholder"
-               @focus.native="open"
-               @blur.native="closeTimeouted"
                @input="onInput"/>
     <div class="icon">/</div>
 
-    <Popup v-if="query && opened" :width="700" :position="'bottom'" :align="'center'">
-      <div v-if="!loaded" class="text-result">Loading...</div>
-      <div v-if="empty" class="text-result">Repositories not found</div>
-
-      <RepoLink v-if="loaded"
-                v-for="(repo, index) in results"
-                :focusable="false"
-                :class="{selected: selectionIndex === index }"
-                :hoverType="'none'"
-                :key="repo.id"
-                :repo="repo"
-                @click.native="clear"
-                @mouseenter.native="onItemHover(index)">
-
-        <ShortRepoItem v-if="!repo.build"
-                       :namespace="repo.namespace"
-                       :name="repo.name"
-                       :active="repo.active"/>
-
-        <RepoItem v-if="repo.build"
-                  :title="`${repo.namespace}/${repo.name}`"
-                  :build="repo.build"
-                  :status="repo.build.status"
-                  :message="repo.build.message"
-                  :avatar="repo.build.author_avatar"
-                  :hide="['duration']"/>
-      </RepoLink>
-    </Popup>
+    <ReposPopup v-if="queryTrimmed && opened"
+                emptyText="Repositories not found"
+                :repos="results"
+                :loaded="loaded"
+                :popupProps="{position: 'bottom', align: 'center', width: 700}"
+                :hideRepoItemFields="['duration']"
+                @itemSelect="onItemSelect"/>
   </BaseForm>
 </template>
 
@@ -49,7 +29,7 @@ import RepoLink from "@/components/RepoLink";
 import ShortRepoItem from "@/components/ShortRepoItem";
 import RepoItem from "@/components/RepoItem";
 import Overlay from "@/components/Overlay";
-import Popup from "@/components/Popup";
+import ReposPopup from "@/components/ReposPopup";
 
 import reposSort from "@/lib/reposSort";
 
@@ -64,7 +44,7 @@ export default {
     RepoLink,
     ShortRepoItem,
     RepoItem,
-    Popup
+    ReposPopup
   },
   directives: {
     ClickOutside
@@ -76,13 +56,13 @@ export default {
     return {
       query: "",
       opened: false,
-      selectionIndex: 0
+      nextOpened: false
     };
   },
   computed: {
     results() {
       const filtered = Object.values(this.$store.state.latest).filter(repo => {
-        const [byNamespace, byName] = this.query.split("/");
+        const [byNamespace, byName] = this.queryTrimmed.split("/");
 
         if (byName !== undefined) {
           return (
@@ -91,7 +71,7 @@ export default {
           );
         }
 
-        return (repo.namespace + "/" + repo.name).toLowerCase().indexOf(this.query.toLowerCase()) > -1;
+        return (repo.namespace + "/" + repo.name).toLowerCase().indexOf(this.queryTrimmed.toLowerCase()) > -1;
       });
 
       return reposSort(filtered).slice(0, ITEMS_LIMIT);
@@ -99,19 +79,32 @@ export default {
     loaded() {
       return this.$store.state.latestLoaded;
     },
-    empty() {
-      return this.loaded && this.results.length === 0;
+    queryTrimmed() {
+      return this.query.trim();
     }
   },
   methods: {
+    toggle() {
+      this.opened ? this.close() : this.open();
+    },
     open() {
-      if (!this.opened) {
-        this.opened = true;
-        this.overlay.open();
-      }
+      this.opened = true;
+      this.nextOpened = true;
+      this.overlay.open();
+    },
+    close() {
+      this.opened = false;
+      this.nextOpened = false;
+      this.overlay.close();
+    },
+    closeDelayed() {
+      this.nextOpened = false;
+
+      setTimeout(() => {
+        if (!this.nextOpened) this.close();
+      }, 100);
     },
     onInput() {
-      this.open();
       this.loadIfNeeded();
     },
     loadIfNeeded() {
@@ -119,64 +112,26 @@ export default {
         this.$store.dispatch("fetchReposLatest");
       }
     },
-    close() {
-      if (this.opened) {
-        this.opened = false;
-        this.overlay.close();
-      }
-    },
-    closeTimeouted() {
-      setTimeout(() => this.close(), 100);
+    onItemSelect() {
+      this.close();
+      this.clear();
     },
     clear() {
       this.query = "";
     },
-    blur() {
-      this.$refs.searchInput.$el.blur();
-    },
     onKeyPress(e) {
-      if (this.opened) {
-        if (e.key === "Escape") {
-          this.blur();
-          this.stopPropagationAndPreventDefault(e);
-        }
-
-        if (this.empty) {
-          return;
-        }
-
-        if (e.key === "ArrowUp") {
-          const nextIndex = this.selectionIndex - 1;
-          this.selectionIndex = nextIndex < 0 ? this.results.length - 1 : nextIndex;
-          this.stopPropagationAndPreventDefault(e);
-        }
-
-        if (e.key === "ArrowDown") {
-          const nextIndex = this.selectionIndex + 1;
-          this.selectionIndex = nextIndex < this.results.length ? nextIndex : 0;
-          this.stopPropagationAndPreventDefault(e);
-        }
-
-        if (e.key === "Enter") {
-          const repo = this.results[this.selectionIndex];
-          this.$router.push(`/${repo.namespace}/${repo.name}`);
-          this.clear();
-          this.blur();
-          this.stopPropagationAndPreventDefault(e);
-        }
-      } else {
-        if (e.key === "/") {
-          this.$refs.searchInput.$el.focus();
-          this.stopPropagationAndPreventDefault(e);
-        }
+      if (this.opened && e.key === "Escape") {
+        this.$refs.searchInput.$el.blur();
+        this.stopPropagationAndPreventDefault(e);
+      }
+      if (!this.opened && e.key === "/") {
+        this.$refs.searchInput.$el.focus();
+        this.stopPropagationAndPreventDefault(e);
       }
     },
     stopPropagationAndPreventDefault(e) {
       e.stopPropagation();
       e.preventDefault();
-    },
-    onItemHover(index) {
-      this.selectionIndex = index;
     }
   },
   mounted() {
@@ -222,33 +177,5 @@ input {
   color: rgba(25, 45, 70, 0.25);
   pointer-events: none;
   user-select: none;
-}
-
-.repo-item {
-  border: 0;
-  box-shadow: none;
-}
-
-.repo-link {
-  padding: 5px 0;
-}
-
-.repo-link.selected {
-  background: rgba(25, 45, 70, 0.02);
-}
-
-.repo-link.selected .repo-item {
-  background: none;
-}
-
-.repo-link + .repo-link {
-  border-top: 1px solid rgba(25, 45, 70, 0.05);
-}
-
-.text-result {
-  text-align: center;
-  color: rgba(25, 45, 70, 0.5);
-  font-size: 13px;
-  padding: 16px;
 }
 </style>
