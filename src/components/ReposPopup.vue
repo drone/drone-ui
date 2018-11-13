@@ -103,8 +103,8 @@ export default {
     document.addEventListener("keyup", this.onKeyPress, true);
   },
   destroyed() {
-    document.removeEventListener("keydown", this.preventScroll);
-    document.removeEventListener("keyup", this.onKeyPress);
+    document.removeEventListener("keydown", this.preventScroll, false);
+    document.removeEventListener("keyup", this.onKeyPress, true);
   }
 };
 </script>
