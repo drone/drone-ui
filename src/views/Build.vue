@@ -193,6 +193,8 @@ export default {
       // from pending to started status.
       } else if (newStep.started > 0 && !oldStep.started) {
           this.$store.dispatch('streamLogs', this.$route.params);
+      } else if (newStep.finished > 0 && this.logs.length === 0) {
+          this.$store.dispatch('fetchLogs', this.$route.params);
       }
     }
   },
