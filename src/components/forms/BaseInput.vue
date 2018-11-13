@@ -26,17 +26,17 @@ export default {
 
 <style scoped>
 input {
-  border: 1px solid #e8eaed;
-  border-radius: 4px;
+  color: #192d46;
+  border: 1px solid rgba(25, 45, 70, 0.25);
+  border-radius: 3px;
   box-sizing: border-box;
-  font-size: 14px;
-  outline: none;
+  font-size: 13px;
   padding: 0 15px;
   height: 40px;
   line-height: 40px;
 }
 
 input::placeholder {
-  color: rgba(25, 45, 70, 0.25);
+  color: rgba(25, 45, 70, 0.5);
 }
 </style>

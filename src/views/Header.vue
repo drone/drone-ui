@@ -8,12 +8,9 @@
 
     <Search placeholder="Search repositories or jump to …"/>
 
-    <div class="user" v-if="user">
-      <img class='avatar' :src="user.avatar" @click="toggleUserMenu" v-click-outside="closeUserMenu"/>
-      <Popup v-if="userMenuOpened" :position="'bottom'" :align="'right'">
-        <router-link to="/account">User settings</router-link>
-        <router-link to="/logout" class="logout">{{ $t("labels.logout") }}</router-link>
-      </Popup>
+    <div class="right-block" v-if="user">
+      <BuildsFeed/>
+      <UserMenu :user="user"/>
     </div>
 
     <template v-if="showLogin">
@@ -25,26 +22,20 @@
 </template>
 
 <script>
-import ClickOutside from "vue-click-outside";
+
 
 import Logo from "@/components/logos/Logo.vue";
-import Popup from "@/components/Popup.vue";
 import Search from "@/components/Search";
+import BuildsFeed from "@/components/BuildsFeed";
+import UserMenu from "@/components/UserMenu";
 
 export default {
   name: "Header",
   components: {
+    BuildsFeed,
     Search,
     Logo,
-    Popup
-  },
-  directives: {
-    ClickOutside
-  },
-  data() {
-    return {
-      userMenuOpened: false
-    };
+    UserMenu
   },
   computed: {
     user() {
@@ -54,15 +45,7 @@ export default {
       return this.$store.state.userLoaded;
     },
     showLogin() {
-        return this.userLoaded && !this.user;
-    }
-  },
-  methods: {
-    toggleUserMenu() {
-      this.userMenuOpened = !this.userMenuOpened;
-    },
-    closeUserMenu() {
-      this.userMenuOpened = false;
+      return this.userLoaded && !this.user;
     }
   }
 };
@@ -77,37 +60,8 @@ export default {
   justify-content: space-between;
 }
 
-.user {
-  position: relative;
-}
-
-.user .popup {
-  min-width: 200px;
-}
-
-.user .popup a {
-  display: block;
-  padding: 11px 15px;
-  color: #192d46;
-}
-
-.user .popup a.logout {
-  color: #ff4164;
-}
-
-.user .popup a:hover {
-  background: rgba(25, 45, 70, 0.03);
-}
-
-.user .popup a + a {
-  border-top: 1px solid rgba(25, 45, 70, 0.05);
-}
-
-.avatar {
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
+.builds-feed + .user-menu {
+  margin-left: 30px;
 }
 
 .logo {
@@ -130,43 +84,5 @@ export default {
     font-size: 12px;
     padding: 10px 20px;
     text-transform: uppercase;
-}
-
-::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-  color: #909aa5;
-}
-
-::-moz-placeholder { /* Firefox 19+ */
-  color: #909aa5;
-}
-
-:-ms-input-placeholder { /* IE 10+ */
-  color: #909aa5;
-}
-
-:-moz-placeholder { /* Firefox 18- */
-  color: #909aa5;
-}
-
-.breadcrumb {
-  display: flex;
-  align-items: center;
-}
-
-.breadcrumb a {
-  display: inline-block;
-  margin-right: 15px;
-  text-decoration: none;
-}
-
-.breadcrumb a:last-of-type {
-  color: #2d4057;
-}
-
-.breadcrumb svg {
-  width: 22px;
-  height: 22px;
-  margin-right: 15px;
-  fill: #c4c9cf;
 }
 </style>

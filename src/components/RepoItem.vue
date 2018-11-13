@@ -19,13 +19,13 @@
                 <img :src="avatar" />
                 <p :title="message">{{ message }}</p>
 
-                <span class="finished">
+                <span class="finished" v-if="!hide.includes('finished')">
                     <IconCalendar />{{ new Date(build.created * 1000) | moment("from", "now") }}
                 </span>
                 <span class="duration" v-if="!hide.includes('duration')">
                     <IconClock /><TimeElapsed v-if="build.started" :started="build.started" :stopped="build.finished" />
                 </span>
-                <span class="commit">
+                <span class="commit" v-if="!hide.includes('commit')">
                     <IconCommit />
                     <a v-if="link" target="_blank" :href="link">{{ commitShaShort }}</a>
                     <span v-else>{{ commitShaShort }}</span>
