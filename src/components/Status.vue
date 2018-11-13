@@ -50,4 +50,35 @@ svg {
   height: 20px;
   width: 20px;
 }
+
+.status.running svg {
+  animation: spin 1s linear infinite;
+}
+
+.status.pending svg {
+  animation: wrench 2.5s ease infinite;
+}
+
+@keyframes spin{
+	0%{transform:rotate(0deg)}
+	100%{transform:rotate(359deg)}
+}
+
+@keyframes wrench {
+	0%{transform:rotate(-12deg)}
+	8%{transform:rotate(12deg)}
+	10%{transform:rotate(24deg)}
+	18%{transform:rotate(-24deg)}
+	20%{transform:rotate(-24deg)}
+	28%{transform:rotate(24deg)}
+	30%{transform:rotate(24deg)}
+	38%{transform:rotate(-24deg)}
+	40%{transform:rotate(-24deg)}
+	48%{transform:rotate(24deg)}
+	50%{transform:rotate(24deg)}
+	58%{transform:rotate(-24deg)}
+	60%{transform:rotate(-24deg)}
+	68%{transform:rotate(24deg)}
+	75%,100%{transform:rotate(0deg)}
+}
 </style>
