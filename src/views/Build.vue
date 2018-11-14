@@ -20,7 +20,7 @@
       :build="build">
       <footer>
         <CancelButton v-on:click="handleCancel" v-if="!build.finished">Cancel</CancelButton>
-        <Button @click="handleRestart" v-if="build.finished" class="restart-button">
+        <Button @click.native="handleRestart" v-if="build.finished" class="restart-button">
           <span>Restart</span>
           <IconRestart/>
         </Button>
