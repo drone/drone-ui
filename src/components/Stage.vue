@@ -45,8 +45,8 @@ export default {
 <style scoped>
 section {
     background: #FFF;
-    box-shadow: 0px 1px 4px 1px rgba(25, 45, 70, 0.02);
-    border: solid 1px rgba(25, 45, 70, 0.08);
+    box-shadow: 0 2px 4px 0 rgba(25,45,70,.05);
+    border: 1px solid #edeef1;
     border-radius: 3px;
     box-sizing: border-box;
     color: #8d97a2;
