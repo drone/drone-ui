@@ -71,11 +71,17 @@ export default {
 }
 
 .status-blocked,
+.status-killed,
+.status-error,
+.status-declined,
 .status-failure {
   background-color: #FF4164;
 }
 
 .status-blocked.outlined,
+.status-killed.outlined,
+.status-error.outlined,
+.status-declined.outlined,
 .status-failure.outlined {
   border-color: #FF4164;
   color: #FF4164;
@@ -104,11 +110,11 @@ svg {
   left: -1px;
 }
 
-.status.running svg {
+.status-running svg {
   animation: spin 1s linear infinite;
 }
 
-.status.pending svg {
+.status-pending svg {
   animation: wrench 2.5s ease infinite;
 }
 
