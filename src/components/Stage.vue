@@ -1,9 +1,10 @@
 <template>
-    <section>
+    <section :class="{ hoverable }">
         <header>
-            <Status :status="status" />
+            <Status :status="status"/>
             <span>{{ name }}</span>
             <time-elapsed :started="started" :stopped="stopped" v-if="started" />
+            <IconArrowDropdown direction="down" class="arrow-dropdown"/>
         </header>
         <slot></slot>
     </section>
@@ -12,6 +13,7 @@
 <script>
 import Status from "./Status.vue";
 import TimeElapsed from "./TimeElapsed.vue";
+import IconArrowDropdown from "./icons/IconArrowDropdown.vue";
 
 export default {
   name: "Stage",
@@ -25,10 +27,12 @@ export default {
     created: Number,
     started: Number,
     stopped: Number,
+    hoverable: Boolean
   },
   components: {
-      Status,
-      TimeElapsed
+    Status,
+    TimeElapsed,
+    IconArrowDropdown
   },
   computed: {
     duration() {
@@ -50,12 +54,23 @@ section {
     user-select: none;
 }
 
-
 section > a:last-of-type :after {
    display: none;
 }
 section > a:first-of-type :before {
    display: none;
+}
+
+section.hoverable:hover header {
+  background: rgba(25, 45, 70, 0.02);
+}
+
+section.hoverable:hover time {
+  display: none;
+}
+
+section.hoverable:hover .arrow-dropdown {
+  display: inline-block;
 }
 
 header {
@@ -94,9 +109,14 @@ time{
   font-stretch: normal;
   line-height: normal;
   letter-spacing: normal;
-  opacity: 0.25;
+  opacity: 0.5;
   text-align: right;
   margin-right: 0px;
+}
+
+.arrow-dropdown {
+  display: none;
+  color: rgba(25, 45, 70, 0.5);
 }
 
 a {

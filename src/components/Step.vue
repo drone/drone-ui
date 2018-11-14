@@ -1,6 +1,6 @@
 <template>
     <section v-bind:class="{ selected: selected, step: true }">
-        <Status :status="status" :outlined="true" />
+        <Status :status="status" outlined />
         <span>{{ name }}</span>
         <time-elapsed :started="started" :stopped="stopped" v-if="started" />
     </section>
