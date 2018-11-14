@@ -1,8 +1,7 @@
 <template>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
         <g fill-rule="nonzero" fill="none">
-            <circle cx="10" cy="10" r="10" fill="#192D46" opacity=".25"/>
-            <path stroke="#FFF" stroke-width="1.4"
+            <path stroke="currentColor" stroke-width="1.4"
                   d="M9 5h3.7a.3.3 0 0 1 .3.3v1.688c0 .293-.651 1.112-1.954 2.457a.1.1 0 0 0-.029.068l-.016.942a.1.1 0 0 0 .03.073C12.344 11.804 13 12.61 13 12.947V14.7a.3.3 0 0 1-.3.3H7.3a.3.3 0 0 1-.3-.3v-1.753c0-.337.656-1.143 1.969-2.419a.1.1 0 0 0 .03-.073l-.016-.942a.1.1 0 0 0-.028-.069C7.65 8.1 7 7.282 7 6.989V5.3a.3.3 0 0 1 .3-.3H9z"/>
         </g>
     </svg>

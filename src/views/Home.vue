@@ -48,7 +48,7 @@
       </div>
     </div>
 
-    <MoreButton v-if="showMore" v-on:click="showAll">Show All Repositories</MoreButton>
+    <MoreButton v-if="showMore" @click.native="showAll">Show All Repositories</MoreButton>
   </div>
 </template>
 
@@ -57,7 +57,6 @@ import Alert from "@/components/Alert.vue";
 import ShortRepoItem from "@/components/ShortRepoItem.vue";
 import RepoItem from "@/components/RepoItem.vue";
 import Breadcrumb from "@/components/Breadcrumb.vue";
-import BreadcrumbDivider from "@/components/BreadcrumbDivider.vue";
 import IconSpinner from "@/components/icons/IconSpinner.vue";
 import MoreButton from "@/components/buttons/MoreButton.vue";
 import SyncButton from "@/components/buttons/SyncButton.vue";
@@ -69,7 +68,6 @@ export default {
   name: "home",
   components: {
     Alert,
-    BreadcrumbDivider,
     Breadcrumb,
     ShortRepoItem,
     MoreButton,
@@ -177,7 +175,7 @@ header .breadcrumb {
 }
 
 .more-button {
-  margin-top: 20px;
+  margin: 20px auto 0 22px;
 }
 
 .list-item + .list-item {

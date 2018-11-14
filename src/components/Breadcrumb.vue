@@ -1,8 +1,10 @@
 <template>
-    <div class="breadcrumb">
-      <LogoGit/>
+  <div class="breadcrumb">
+    <LogoGit/>
+    <div class="slot">
       <slot></slot>
     </div>
+  </div>
 </template>
 
 <script>
@@ -12,7 +14,7 @@ export default {
   name: "Breadcrumb",
   components: {
     LogoGit
-  },
+  }
 };
 </script>
 
@@ -40,11 +42,26 @@ export default {
   color: #0564d7;
 }
 
+.breadcrumb a:hover {
+  position: relative;
+  opacity: 1;
+}
+
+.breadcrumb a:hover:after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  height: 1px;
+  background-color: rgba(5, 100, 215, 0.5);
+  right: 0;
+  left: 0;
+}
+
 .breadcrumb a:last-of-type {
   color: #192d46;
 }
 
-.breadcrumb svg {
+.breadcrumb > svg {
   width: 20px;
   height: 20px;
   margin-left: 15px;

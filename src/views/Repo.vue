@@ -7,15 +7,16 @@
     -->
     <Breadcrumb>
       <router-link :to="'/'">Repositories</router-link>
-      <BreadcrumbDivider />
+      <IconArrow direction="right"/>
       <router-link :to="'/'+slug">{{ slug }}</router-link>
-      <BreadcrumbDivider v-if="$route.params.build" />
-      <router-link v-if="$route.params.build" :to="'/'+slug"># {{ $route.params.build }}</router-link>
+      <IconArrow direction="right" v-if="$route.params.build"/>
+      <router-link v-if="$route.params.build" :to="'/'+slug">#{{ $route.params.build }}</router-link>
 
-<transition name="fade">
-      <div class="loading" v-show="repoLoading" style="background: #EEE; color: #8d97a2; border-radius: 3px; padding: 3px 10px; display: inline-block; text-transform: uppercase;font-size: 11px;">
-        Loading...
-      </div>
+      <transition name="fade">
+        <div class="loading" v-show="repoLoading"
+             style="background: #EEE; color: #8d97a2; border-radius: 3px; padding: 3px 10px; display: inline-block; text-transform: uppercase;font-size: 11px;">
+          Loading...
+        </div>
       </transition>
     </Breadcrumb>
 
@@ -70,14 +71,14 @@
 <script>
 import Alert from "@/components/Alert.vue";
 import Breadcrumb from "@/components/Breadcrumb.vue";
-import BreadcrumbDivider from "@/components/BreadcrumbDivider.vue";
+import IconArrow from "@/components/icons/IconArrow.vue";
 
 export default {
   name: "repo",
   components: {
     Alert,
     Breadcrumb,
-    BreadcrumbDivider,
+    IconArrow
   },
   computed: {
     slug() {
@@ -185,5 +186,11 @@ nav .router-link-exact-active {
   font-size: 12px;
   padding: 7px 20px;
   text-transform: uppercase;
+}
+
+.breadcrumb svg {
+  width: 17px;
+  margin-right: 10px;
+  color: rgba(25, 45, 70, 0.25)
 }
 </style>

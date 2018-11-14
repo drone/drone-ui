@@ -17,7 +17,7 @@
                 :avatar="build.author_avatar"/>
     </router-link>
 
-    <MoreButton v-if="hasMore" @click="showMore">Show more</MoreButton>
+    <MoreButton v-if="hasMore" @click.native="showMore">Show more</MoreButton>
   </div>
 </template>
 
@@ -64,7 +64,8 @@ export default {
 </script>
 
 <style>
-.build:hover .repo-item .header h3 {
+.builds .build .repo-item .header h3 .number,
+.builds .build:hover .repo-item .header h3 {
   color: #0564d7;
 }
 </style>

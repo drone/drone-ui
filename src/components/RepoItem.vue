@@ -126,10 +126,6 @@ section {
     padding-top: 2px;
 }
 
-.number {
-  color: #0564d7;
-}
-
 .number .dash {
   color: rgba(25, 45, 70, 0.25);
 }
@@ -239,6 +235,10 @@ img {
 }
 
 .metadata > span a {
+    color: rgba(25, 45, 70, 0.5);
+}
+
+.metadata > span a:hover {
   color: #192d46;
 }
 

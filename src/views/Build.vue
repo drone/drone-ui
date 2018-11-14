@@ -1,6 +1,11 @@
 <template>
   <div class="build">
 
+    <Button class="back-to-feed-button" :to="`/${namespace}`">
+      <IconArrow direction="left"/>
+      <span>Back to activity feed</span>
+    </Button>
+
     <div v-if="buildLoadingErr">
       Cannot retrieve the Build details.
     </div>
@@ -15,7 +20,10 @@
       :build="build">
       <footer>
         <CancelButton v-on:click="handleCancel" v-if="!build.finished">Cancel</CancelButton>
-        <SyncButton v-on:click="handleRestart" v-if="build.finished">Restart</SyncButton>
+        <Button @click="handleRestart" v-if="build.finished" class="restart-button">
+          <span>Restart</span>
+          <IconRestart/>
+        </Button>
       </footer>
     </RepoItem>
 
@@ -36,6 +44,7 @@
                 v-if="_stage !== stage"
                 v-bind:to="'/'+namespace+'/'+build.number+'/'+_stage.number+'/1'">
                 <Stage
+                  hoverable
                   v-bind:name="_stage.name"
                   v-bind:status="_stage.status"
                   v-bind:created="_stage.created"
@@ -75,12 +84,22 @@
         </div>
       </div>
 
-      <div class="container output">
-        <button v-if="showLimit" v-on:click="handleMore">showing the last {{limit}} lines</button>
-        <div v-for="(line) in logs" :key="line.pos">
-          <div>{{line.pos+1}}</div>
-          <div v-html="line._html"></div>
-          <div>{{line.time}}s</div>
+      <ScrollLock v-if="outputFullscreen"/>
+      <div class="output" :class="{'output-fullscreen': outputFullscreen}">
+        <div class="output-header">
+          <span class="output-title-pipeline">{{ stage && stage.name }}</span>
+          <span class="output-title-step"> — {{ step && step.name }}</span>
+          <div class="output-actions">
+            <IconFullscreen :close="outputFullscreen" @click.native="toggleOutputFullscreen"/>
+          </div>
+        </div>
+        <div class="output-content">
+          <button v-if="showLimit" v-on:click="handleMore">showing the last {{limit}} lines</button>
+          <div v-for="(line) in logs" :key="line.pos">
+            <div>{{line.pos+1}}</div>
+            <div v-html="line._html"></div>
+            <div>{{line.time}}s</div>
+          </div>
         </div>
       </div>
     </main>
@@ -94,16 +113,30 @@ import Stage from "@/components/Stage.vue";
 
 import CancelButton from "@/components/buttons/CancelButton.vue";
 import SyncButton from "@/components/buttons/SyncButton.vue";
+import Button from "@/components/buttons/Button.vue";
+import IconArrow from "@/components/icons/IconArrow.vue";
+import IconRestart from "@/components/icons/IconRestart.vue";
+import IconFullscreen from "@/components/icons/IconFullscreen.vue";
+import ScrollLock from "@/components/utils/ScrollLock.vue";
 
 export default {
-  name: "build",
-  methods: {},
+  name: "Build",
   components: {
     RepoItem,
     Step,
     Stage,
     SyncButton,
     CancelButton,
+    Button,
+    IconArrow,
+    IconRestart,
+    ScrollLock,
+    IconFullscreen
+  },
+  data() {
+    return {
+      outputFullscreen: false
+    };
   },
   computed: {
     namespace() {
@@ -166,6 +199,9 @@ export default {
       this.$store.dispatch('createBuild', {namespace, name, build}).then((data) => {
         router.push(`/${namespace}/${name}/${data.build.number}`);
       })
+    },
+    toggleOutputFullscreen() {
+      this.outputFullscreen = !this.outputFullscreen;
     }
   },
   watch: {
@@ -202,6 +238,21 @@ export default {
 </script>
 
 <style scoped>
+.back-to-feed-button {
+  margin: 0 0 32px 15px;
+}
+
+.back-to-feed-button span {
+  margin-left: 8px;
+}
+
+.restart-button svg {
+  width: 17px;
+  height: 17px;
+  margin-left: 10px;
+  vertical-align: bottom;
+}
+
 main {
   display: flex;
   align-items: flex-start;
@@ -240,40 +291,80 @@ main {
   font-family: 'Roboto Mono', monospace;
   font-weight: 300;
 
-  border: solid 1px rgba(25, 45, 70, 0.05);
   background-color: #192d46;
   border-radius: 6px;
   box-shadow: 0px 0px 8px 1px #e8eaed;
   box-sizing: border-box;
-  margin: 15px 0px;
   margin-left: 15px;
-  padding: 15px;
+  padding: 0;
 
-  box-sizing: border-box;
-  min-width: 665px;
-  max-width: 665px;
   width: 665px;
 }
 
-.output > div {
+.output-fullscreen {
+  position: fixed;
+  top: 60px;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  margin: 0;
+  width: auto;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.output-fullscreen .output-content {
+  overflow: auto;
+}
+
+.output-header {
+  padding: 17px 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 13px;
+}
+
+.output-title-pipeline {
+  font-weight: bold;
+}
+
+.output-title-step {
+  opacity: 0.5;
+}
+
+.output-actions {
+  float: right;
+}
+
+.output-actions .icon-fullscreen {
+  cursor: pointer;
+  opacity: 0.75;
+}
+
+.output-content {
+  padding: 15px;
+}
+
+.output-content > div {
   display: flex;
   line-height: 19px;
   max-width: 100%;
 }
-.output > div > div:first-child {
+
+.output-content > div > div:first-child {
     -webkit-user-select: none;
   color: #8c96a1;
     min-width: 20px;
     padding-right: 20px;
     user-select: none;
 }
-.output > div > div:last-child {
+.output-content > div > div:last-child {
     -webkit-user-select: none;
   color: #8c96a1;
     padding-left: 20px;
     user-select: none;
 }
-.output > div > div:nth-child(2) {
+.output-content > div > div:nth-child(2) {
     flex: 1 1 auto;
     min-width: 0px;
     white-space: pre-wrap;
