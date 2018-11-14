@@ -7,9 +7,9 @@
 
     <Popup :position="'bottom'" :align="'right'" :style="style">
       <router-link to="/account" @focus.native="open" @blur.native="closeDelayed">User settings</router-link>
-      <router-link to="/logout" class="logout" @focus.native="open" @blur.native="closeDelayed">
+      <a href="/logout" class="logout">
         {{ $t("labels.logout") }}
-      </router-link>
+      </a>
     </Popup>
   </div>
 </template>
