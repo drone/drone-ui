@@ -21,8 +21,8 @@ export default {
     slug: String
   },
   methods: {
-    activate(repo) {
-      const { namespace, name } = repo;
+    activate() {
+      const { namespace, name } = this;
       this.$store.dispatch("enableRepo", { namespace, name });
     }
   }
