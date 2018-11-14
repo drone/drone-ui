@@ -6,7 +6,7 @@
         </router-link>
     </div>
 
-    <Search placeholder="Search repositories or jump to …"/>
+    <Search v-if="user" placeholder="Search repositories or jump to …"/>
 
     <div class="right-block" v-if="user">
       <BuildsFeed/>
