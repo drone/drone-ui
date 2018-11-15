@@ -20,10 +20,7 @@
       :build="build">
       <footer>
         <CancelButton v-on:click="handleCancel" v-if="!build.finished">Cancel</CancelButton>
-        <Button @click.native="handleRestart" v-if="build.finished" class="restart-button">
-          <span>Restart</span>
-          <IconRestart/>
-        </Button>
+        <ReButton @click.native="handleRestart" v-if="build.finished">Restart</ReButton>
       </footer>
     </RepoItem>
 
@@ -121,10 +118,9 @@ import Step from "@/components/Step.vue";
 import Stage from "@/components/Stage.vue";
 
 import CancelButton from "@/components/buttons/CancelButton.vue";
-import SyncButton from "@/components/buttons/SyncButton.vue";
+import ReButton from "@/components/buttons/ReButton.vue";
 import Button from "@/components/buttons/Button.vue";
 import IconArrow from "@/components/icons/IconArrow.vue";
-import IconRestart from "@/components/icons/IconRestart.vue";
 import IconFullscreen from "@/components/icons/IconFullscreen.vue";
 import ScrollLock from "@/components/utils/ScrollLock.vue";
 
@@ -135,11 +131,10 @@ export default {
     RepoItem,
     Step,
     Stage,
-    SyncButton,
+    ReButton,
     CancelButton,
     Button,
     IconArrow,
-    IconRestart,
     ScrollLock,
     IconFullscreen
   },
@@ -260,13 +255,6 @@ export default {
 
 .back-to-feed-button span {
   margin-left: 8px;
-}
-
-.restart-button svg {
-  width: 17px;
-  height: 17px;
-  margin-left: 10px;
-  vertical-align: bottom;
 }
 
 main {

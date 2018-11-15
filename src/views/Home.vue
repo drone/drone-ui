@@ -3,13 +3,13 @@
 
     <header>
       <Breadcrumb>
-        <router-link :to="'/'">
+        <span>
           Repositories
           <span class="count">— {{ reposCount(latest) }}</span>
-        </router-link>
+        </span>
       </Breadcrumb>
 
-      <SyncButton v-if="!syncing" v-on:click="sync">Synchronize</SyncButton>
+      <ReButton v-if="!syncing" class='sync-button' @click.native="sync">Synchronize</ReButton>
       <div v-if="syncing" class="syncing"><IconSpinner /> Syncing</div>
     </header>
 
@@ -59,7 +59,7 @@ import RepoItem from "@/components/RepoItem.vue";
 import Breadcrumb from "@/components/Breadcrumb.vue";
 import IconSpinner from "@/components/icons/IconSpinner.vue";
 import MoreButton from "@/components/buttons/MoreButton.vue";
-import SyncButton from "@/components/buttons/SyncButton.vue";
+import ReButton from "@/components/buttons/ReButton.vue";
 import RepoLink from "@/components/RepoLink.vue";
 
 import reposSort from "@/lib/reposSort";
@@ -73,7 +73,7 @@ export default {
     MoreButton,
     RepoItem,
     IconSpinner,
-    SyncButton,
+    ReButton,
     RepoLink
   },
   data() {
@@ -138,6 +138,10 @@ header .breadcrumb {
 
 .count {
   opacity: 0.667; /* 0.75*0.667=0.5 */
+}
+
+.sync-button {
+  margin-right: 15px;
 }
 
 .syncing {

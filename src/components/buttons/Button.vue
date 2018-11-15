@@ -49,7 +49,9 @@ export default {
   cursor: pointer;
 }
 
+.button:focus,
 .button:hover {
   color: rgba(25, 45, 70, 0.75);
+  outline: none;
 }
 </style>

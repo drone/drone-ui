@@ -24,6 +24,7 @@ export default {
   display: flex;
   align-items: center;
   height: 80px;
+  font-size: 13px;
 }
 
 .breadcrumb a {
@@ -40,6 +41,10 @@ export default {
   line-height: normal;
   letter-spacing: normal;
   color: #0564d7;
+}
+
+.breadcrumb span {
+  color: rgba(25, 45, 70, 0.75);
 }
 
 .breadcrumb a:hover {

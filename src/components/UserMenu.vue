@@ -7,7 +7,7 @@
 
     <Popup :position="'bottom'" :align="'right'" :style="style">
       <router-link to="/account" @focus.native="open" @blur.native="closeDelayed">User settings</router-link>
-      <a href="/logout" class="logout">
+      <a href="/logout" class="logout" @focus="open" @blur="closeDelayed">
         {{ $t("labels.logout") }}
       </a>
     </Popup>
@@ -57,10 +57,6 @@ export default {
     closeDelayed() {
       this.nextOpened = false;
       setTimeout(() => !this.nextOpened && this.close(), 100);
-    },
-    onMouseDown() {
-      this.toggle();
-      this.clicked = true;
     }
   }
 };
@@ -90,8 +86,10 @@ export default {
   color: #ff4164;
 }
 
+.user-menu .popup a:focus,
 .user-menu .popup a:hover {
   background: rgba(25, 45, 70, 0.03);
+  outline: none;
 }
 
 .user-menu .popup a + a {

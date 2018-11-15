@@ -26,15 +26,19 @@ button.more-button {
   text-transform: none;
 }
 
-button.more-button:hover {
+button.more-button:hover,
+button.more-button:focus {
   color: #0564d7;
+  outline: none;
 }
 
-button.more-button:hover span {
+button.more-button:hover span,
+button.more-button:focus span {
   border-color: rgba(5, 100, 215, 0.5);
 }
 
-button:hover svg {
+button.more-button:hover svg,
+button.more-button:focus svg {
   color: rgba(5, 100, 215, 0.75);
 }
 

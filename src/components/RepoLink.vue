@@ -25,6 +25,11 @@ export default {
 </style>
 
 <style>
+.repo-link.hover-type-box-shadow:focus {
+  outline: none;
+}
+
+.repo-link.hover-type-box-shadow:focus .repo-item,
 .repo-link.hover-type-box-shadow:hover .repo-item {
   box-shadow: 0 4px 10px 0 rgba(25, 45, 70, 0.25);
 }
