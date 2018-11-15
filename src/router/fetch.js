@@ -14,6 +14,7 @@ export const fetcher = ({dispatch, commit}) => (to, from, next) => {
     case "build":
     case "builds":
     case "repo":
+    case "badges":
     case "settings":
     case "step":
       dispatch('fetchRepo', params);   
