@@ -1,7 +1,15 @@
 <template>
   <div class="build">
 
-    <Button class="back-to-feed-button" :to="`/${namespace}`">
+    <div class="build-actions">
+      <Button @click.native="handleCancel" v-if="!build.finished">
+        <span>Cancel</span>
+        <IconCancel/>
+      </Button>
+      <ReButton @click.native="handleRestart" v-if="build.finished">Restart</ReButton>
+    </div>
+
+    <Button class="back-to-feed-button" :to="`/${namespace}`" :bordered="false">
       <IconArrow direction="left"/>
       <span>Back to activity feed</span>
     </Button>
@@ -17,12 +25,7 @@
       :message="build.author_login"
       :link="build.link"
       :avatar="build.author_avatar"
-      :build="build">
-      <footer>
-        <CancelButton v-on:click="handleCancel" v-if="!build.finished">Cancel</CancelButton>
-        <ReButton @click.native="handleRestart" v-if="build.finished">Restart</ReButton>
-      </footer>
-    </RepoItem>
+      :build="build"/>
 
     <main v-if="!isBuildError">
       <div class="container steps">
@@ -117,7 +120,7 @@ import RepoItem from "@/components/RepoItem.vue";
 import Step from "@/components/Step.vue";
 import Stage from "@/components/Stage.vue";
 
-import CancelButton from "@/components/buttons/CancelButton.vue";
+import IconCancel from "@/components/icons/IconCancel.vue";
 import ReButton from "@/components/buttons/ReButton.vue";
 import Button from "@/components/buttons/Button.vue";
 import IconArrow from "@/components/icons/IconArrow.vue";
@@ -132,7 +135,7 @@ export default {
     Step,
     Stage,
     ReButton,
-    CancelButton,
+    IconCancel,
     Button,
     IconArrow,
     ScrollLock,
@@ -255,6 +258,10 @@ export default {
 
 .back-to-feed-button span {
   margin-left: 8px;
+}
+
+.build-actions {
+  float: right;
 }
 
 main {

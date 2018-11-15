@@ -19,15 +19,17 @@ export default {
   props: {
     to: String,
     // todo href
-    type: String
+    // kind: { type: String, default: "default" },
+    bordered: { type: Boolean, default: true }
   },
   render(createElement) {
     const tag = getTag(this);
+    const { bordered } = this;
 
     return createElement(
       tag,
       {
-        class: "button",
+        class: { button: true, bordered },
         props: getElementProps(tag, this)
       },
       this.$slots.default
@@ -36,22 +38,49 @@ export default {
 };
 </script>
 
+<style>
+.button > span + svg,
+.button > svg + span {
+  margin-left: 10px;
+}
+
+.button > svg {
+  width: 18px;
+  height: 18px;
+  margin-bottom: -4px;
+}
+</style>
+
 <style scoped>
 .button {
   background: none;
-  border: none;
   font-size: 13px;
+  border: none;
   color: rgba(25, 45, 70, 0.25);
   display: inline-block;
-  align-items: center;
   text-transform: uppercase;
-  padding: 0;
   cursor: pointer;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+.button.bordered {
+  border-radius: 3px;
+  line-height: 28px;
+  border: 1px solid rgba(25, 45, 70, 0.25);
+  color: #192d46;
 }
 
 .button:focus,
 .button:hover {
   color: rgba(25, 45, 70, 0.75);
   outline: none;
+}
+
+.button.bordered:hover,
+.button.bordered:focus {
+  border-color: transparent;
 }
 </style>

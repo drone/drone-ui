@@ -1,5 +1,5 @@
 <template>
-  <Button class="re-button">
+  <Button>
     <span><slot></slot></span>
     <IconRestart/>
   </Button>
@@ -17,12 +17,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-svg {
-  padding-left: 10px;
-  width: 18px;
-  height: 18px;
-  vertical-align: bottom;
-}
-</style>

@@ -73,3 +73,9 @@ export default {
   margin-right: 10px;
 }
 </style>
+
+<style scoped>
+.slot {
+  display: flex;
+}
+</style>

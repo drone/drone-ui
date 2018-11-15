@@ -9,7 +9,7 @@
         </span>
       </Breadcrumb>
 
-      <ReButton v-if="!syncing" class='sync-button' @click.native="sync">Synchronize</ReButton>
+      <ReButton v-if="!syncing" class='sync-button' @click.native="sync">Sync</ReButton>
       <div v-if="syncing" class="syncing"><IconSpinner /> Syncing</div>
     </header>
 

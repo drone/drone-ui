@@ -1,5 +1,5 @@
 <template>
-<Button class="more-button">
+<Button class="more-button" :bordered="false">
   <IconArrow direction="down"/>
   <span><slot></slot></span>
 </Button>

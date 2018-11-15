@@ -22,8 +22,8 @@ export default {
 
 <style scoped>
 .icon-arrow {
-  width: 17px;
-  height: 8px;
+  width: 18px;
+  height: 18px;
 }
 
 .direction-left {
