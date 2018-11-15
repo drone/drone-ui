@@ -1,5 +1,5 @@
 <template>
-    <section :class="{ hoverable }">
+    <section class="stage">
         <header>
             <Status :status="status"/>
             <span>{{ name }}</span>
@@ -26,8 +26,7 @@ export default {
     status: String,
     created: Number,
     started: Number,
-    stopped: Number,
-    hoverable: Boolean
+    stopped: Number
   },
   components: {
     Status,
@@ -43,34 +42,14 @@ export default {
 </script>
 
 <style scoped>
-section {
+.stage {
     background: #FFF;
     box-shadow: 0 2px 4px 0 rgba(25,45,70,.05);
     border: 1px solid #edeef1;
     border-radius: 3px;
     box-sizing: border-box;
     color: #8d97a2;
-    margin: 15px 0px;
     user-select: none;
-}
-
-section > a:last-of-type :after {
-   display: none;
-}
-section > a:first-of-type :before {
-   display: none;
-}
-
-section.hoverable:hover header {
-  background: rgba(25, 45, 70, 0.02);
-}
-
-section.hoverable:hover time {
-  display: none;
-}
-
-section.hoverable:hover .arrow-dropdown {
-  display: inline-block;
 }
 
 header {

@@ -7,27 +7,25 @@
     -->
     <Breadcrumb>
       <router-link :to="'/'">Repositories</router-link>
+
       <IconArrow direction="right"/>
-      <router-link :to="'/'+slug">{{ slug }}</router-link>
+
+      <router-link v-if="$route.params.build" :to="'/'+slug">{{ slug }}</router-link>
+      <span v-else>{{ slug }}</span>
+
       <IconArrow direction="right" v-if="$route.params.build"/>
-      <router-link v-if="$route.params.build" :to="'/'+slug">#{{ $route.params.build }}</router-link>
+
+      <span v-if="$route.params.build">#{{ $route.params.build }}</span>
 
       <transition name="fade">
-        <div class="loading" v-show="repoLoading"
-             style="background: #EEE; color: #8d97a2; border-radius: 3px; padding: 3px 10px; display: inline-block; text-transform: uppercase;font-size: 11px;">
-          Loading...
-        </div>
+        <div class="loading" v-show="repoLoading">Loading...</div>
       </transition>
     </Breadcrumb>
 
     <!--
         this section provides the repository header.
     -->
-    <router-link :to="'/'+slug">
-      <h1 v-if="repo">
-        {{ repo.name }}
-      </h1>
-    </router-link>
+    <h1 v-if="repo">{{ repo.name }}</h1>
 
     <Alert v-if="error" style="margin-top:30px;">
       Repository Not Found.
@@ -40,12 +38,8 @@
     -->
     <nav v-if="showTabs">
       <router-link :to="'/'+slug">Activity Feed</router-link>
-      <!-- <router-link :to="'/'+slug + '/cron'">Cron</router-link>
-      <router-link :to="'/'+slug + '/secrets'">Secrets</router-link> -->
       <router-link :to="'/'+slug + '/settings'">Settings</router-link>
     </nav>
-
-
 
     <Alert v-if="repoEnablingErr && repoEnablingErr.status === 402">
       You have reached your repository activation limit.
@@ -189,8 +183,18 @@ nav .router-link-exact-active {
 }
 
 .breadcrumb svg {
-  width: 17px;
   margin-right: 10px;
-  color: rgba(25, 45, 70, 0.25)
+  color: rgba(25, 45, 70, 0.25);
+}
+
+.loading {
+  background: #eee;
+  color: #8d97a2;
+  border-radius: 3px;
+  padding: 3px 10px;
+  display: inline-block;
+  text-transform: uppercase;
+  font-size: 11px;
+  margin-left: 10px;
 }
 </style>

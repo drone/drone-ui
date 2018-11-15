@@ -238,8 +238,10 @@ img {
     color: rgba(25, 45, 70, 0.5);
 }
 
+.metadata > span a:focus,
 .metadata > span a:hover {
   color: #192d46;
+  outline: none;
 }
 
 .header {

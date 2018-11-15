@@ -1,6 +1,11 @@
 <template>
   <div class="build">
 
+    <Button class="back-to-feed-button" :to="`/${namespace}`" :bordered="false">
+      <IconArrow direction="left"/>
+      <span>Back to activity feed</span>
+    </Button>
+
     <div class="build-actions">
       <Button @click.native="handleCancel" v-if="!build.finished">
         <span>Cancel</span>
@@ -8,11 +13,6 @@
       </Button>
       <ReButton @click.native="handleRestart" v-if="build.finished">Restart</ReButton>
     </div>
-
-    <Button class="back-to-feed-button" :to="`/${namespace}`" :bordered="false">
-      <IconArrow direction="left"/>
-      <span>Back to activity feed</span>
-    </Button>
 
     <div v-if="buildLoadingErr">
       Cannot retrieve the Build details.
@@ -28,12 +28,12 @@
       :build="build"/>
 
     <main v-if="!isBuildError">
-      <div class="container steps">
+      <div class="stages">
         <div v-if="build && build.stages">
 
-          <span
-            v-for="(_stage) in build.stages"
-            v-bind:key="_stage.id"> <!-- begin: step loop -->
+          <div class="stage-container"
+               v-for="(_stage) in build.stages"
+               :key="_stage.id">
 
               <!--
                 If the stage is not selected it is collapsed
@@ -65,22 +65,29 @@
                 v-bind:created="_stage.created"
                 v-bind:started="_stage.started"
                 v-bind:stopped="_stage.stopped">
-                  <router-link
-                    v-for="(_step) in _stage.steps"
-                    v-bind:key="_step.id"
-                    v-bind:to="'/'+namespace+'/'+build.number+'/'+_stage.number+'/'+_step.number">
+                <div v-for="(_step) in _stage.steps" :key="_step.id" class="step-container">
+                  <Step v-if="_step === step"
+                        selected
+                        :name="_step.name"
+                        :number="_step.number"
+                        :status="_step.status"
+                        :created="_step.created"
+                        :started="_step.started"
+                        :stopped="_step.stopped"/>
+
+                  <router-link v-else :to="'/'+namespace+'/'+build.number+'/'+_stage.number+'/'+_step.number">
                     <Step
                       :name="_step.name"
                       :number="_step.number"
                       :status="_step.status"
                       :created="_step.created"
                       :started="_step.started"
-                      :stopped="_step.stopped"
-                      :selected="_step === step">
+                      :stopped="_step.stopped">
                     </Step>
                   </router-link>
+                  </div>
               </Stage>
-            </span> <!-- end: step loop -->
+            </div> <!-- end: step loop -->
         </div>
       </div>
 
@@ -192,7 +199,7 @@ export default {
       return this.$store.state.buildLoadingErr;
     },
     isBuildError() {
-     return this.build && this.build.error; 
+     return this.build && this.build.error;
     },
     isStageError() {
       return this.stage && this.stage.error;
@@ -223,7 +230,7 @@ export default {
      * Watches for changes to pipeline steps. If the step
      * is complete it dispatches a request to fetch the
      * logs. If the step changes to running status it
-     * dispatches a request to stream the logs. 
+     * dispatches a request to stream the logs.
      */
     step: function (newStep, oldStep) {
       if (!newStep) return;
@@ -270,18 +277,14 @@ main {
   box-sizing: border-box;
 }
 
-.container.steps {
+.stages {
   flex: 0 0 300px;
   position: sticky;
-  top: 0px;
-  margin-top: 0px;
-  padding: 0px;
+  top: 0;
 }
 
-/* THIS IS A TOTAL HACK */
-.container.steps > div > span > a > section,
-.container.steps > div > span > section {
-  margin-top: 0px;
+.stage-container + .stage-container {
+  margin-top: 15px;
 }
 
 .container.output {
@@ -417,5 +420,38 @@ main {
 
 main > .alert {
   margin-left: 15px;
+}
+</style>
+
+<style>
+.stage-container > a:hover,
+.stage-container > a:focus {
+  outline: none;
+}
+
+.stage-container > a:hover header,
+.stage-container > a:focus header {
+  background: rgba(25, 45, 70, 0.02);
+}
+
+.stage-container > a:hover time,
+.stage-container > a:focus time {
+  display: none;
+}
+
+.stage-container > a:hover .arrow-dropdown,
+.stage-container > a:focus .arrow-dropdown {
+  display: inline-block;
+}
+
+.step-container > a:hover,
+.step-container > a:focus {
+  outline: none;
+  background: rgba(25, 45, 70, 0.02);
+}
+
+.stage-container .stage div:first-of-type .step:before,
+.stage-container .stage div:last-of-type .step:after {
+  display: none;
 }
 </style>

@@ -75,7 +75,13 @@ export default {
   display: block;
 }
 
-.build:hover .repo-item {
+.build:hover,
+.build:focus {
+  outline: none;
+}
+
+.build:hover .repo-item,
+.build:focus .repo-item {
   box-shadow: 0 4px 10px 0 rgba(25, 45, 70, 0.25);
 }
 

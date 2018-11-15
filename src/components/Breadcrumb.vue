@@ -25,33 +25,30 @@ export default {
   align-items: center;
   height: 80px;
   font-size: 13px;
+  line-height: 18px;
 }
 
 .breadcrumb a {
   display: inline-block;
   margin-right: 10px;
   text-decoration: none;
-
-  height: 18px;
-  opacity: 0.75;
   font-size: 13px;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  color: #0564d7;
+  color: rgba(5, 100, 215, 0.75);
+  height: 18px;
 }
 
 .breadcrumb span {
   color: rgba(25, 45, 70, 0.75);
 }
 
+.breadcrumb a:focus,
 .breadcrumb a:hover {
   position: relative;
-  opacity: 1;
+  color: #0564d7;
+  outline: none;
 }
 
+.breadcrumb a:focus:after,
 .breadcrumb a:hover:after {
   content: "";
   position: absolute;
@@ -60,10 +57,6 @@ export default {
   background-color: rgba(5, 100, 215, 0.5);
   right: 0;
   left: 0;
-}
-
-.breadcrumb a:last-of-type {
-  color: #192d46;
 }
 
 .breadcrumb > svg {
@@ -76,6 +69,8 @@ export default {
 
 <style scoped>
 .slot {
+  height: 24px;
   display: flex;
+  align-items: center;
 }
 </style>
