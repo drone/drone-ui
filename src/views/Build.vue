@@ -27,7 +27,7 @@
       </footer>
     </RepoItem>
 
-    <main>
+    <main v-if="!isBuildError">
       <div class="container steps">
         <div v-if="build && build.stages">
 
@@ -85,7 +85,7 @@
       </div>
 
       <ScrollLock v-if="outputFullscreen"/>
-      <div class="output" :class="{'output-fullscreen': outputFullscreen}">
+      <div class="output" :class="{'output-fullscreen': outputFullscreen}" v-if="!isStageError">
         <div class="output-header">
           <span class="output-title-pipeline">{{ stage && stage.name }}</span>
           <span class="output-title-step"> — {{ step && step.name }}</span>
@@ -102,11 +102,20 @@
           </div>
         </div>
       </div>
+
+      <Alert v-if="isStageError" class="alert">
+        {{stage.error}}
+      </Alert>
     </main>
+
+    <Alert v-if="isBuildError" class="alert">
+      {{build.error}}
+    </Alert>
   </div>
 </template>
 
 <script>
+import Alert from "@/components/Alert.vue";
 import RepoItem from "@/components/RepoItem.vue";
 import Step from "@/components/Step.vue";
 import Stage from "@/components/Stage.vue";
@@ -122,6 +131,7 @@ import ScrollLock from "@/components/utils/ScrollLock.vue";
 export default {
   name: "Build",
   components: {
+    Alert,
     RepoItem,
     Step,
     Stage,
@@ -183,6 +193,12 @@ export default {
     buildLoadingErr() {
       return this.$store.state.buildLoadingErr;
     },
+    isBuildError() {
+     return this.build && this.build.error; 
+    },
+    isStageError() {
+      return this.stage && this.stage.error;
+    }
   },
   methods: {
     handleMore: function() {
@@ -391,5 +407,20 @@ main {
 }
 .output > button:active {
   background: rgba(255,255,255,0.05);
+}
+
+.alert {
+  display: flex;
+  flex: 1;
+  color: #ff3e61;
+  border-color: #ff3e61;
+  line-height: 18px;
+  font-family: "Roboto Mono";
+  font-size: 13px;
+  text-align: left;
+}
+
+main > .alert {
+  margin-left: 15px;
 }
 </style>
