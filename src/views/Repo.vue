@@ -38,6 +38,7 @@
     -->
     <nav v-if="showTabs">
       <router-link :to="'/'+slug">Activity Feed</router-link>
+      <router-link :to="'/'+slug + '/badges'">Badges</router-link>
       <router-link :to="'/'+slug + '/settings'">Settings</router-link>
     </nav>
 
