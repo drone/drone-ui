@@ -144,12 +144,18 @@ nav a {
   color: #8d96a2;
   display: inline-block;
   font-size: 13px;
-  padding-bottom: 10px;
-  margin-right: 15px;
+  padding: 10px 0;
   text-transform: uppercase;
+  margin-bottom: -1px;
+  letter-spacing: 1px;
 }
 
-nav a:hover {
+nav a + a {
+  margin-left: 30px;
+}
+
+nav a:hover,
+nav a:focus {
   color: #2d4057;
 }
 
