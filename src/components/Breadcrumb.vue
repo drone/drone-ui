@@ -33,7 +33,7 @@ export default {
   margin-right: 10px;
   text-decoration: none;
   font-size: 13px;
-  color: rgba(5, 100, 215, 0.75);
+  color: #0564d7;
   height: 18px;
 }
 
