@@ -5,8 +5,8 @@ import Build from "../views/Build.vue";
 import Builds from "../views/Builds.vue";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
+import LoginErr from "../views/LoginErr.vue";
 import Logout from "../views/Logout.vue";
-import Logs from "../views/Logs.vue";
 import Main from "../views/Main.vue";
 import Repo from "../views/Repo.vue";
 import Settings from "../views/Settings.vue";
@@ -19,6 +19,11 @@ export default new Router({
       path: "/login/form",
       name: "login",
       component: Login
+    },
+    {
+      path: "/login/error",
+      name: "loginerr",
+      component: LoginErr
     },
     {
       path: "/logout",
