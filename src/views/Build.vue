@@ -7,11 +7,11 @@
     </Button>
 
     <div class="build-actions">
-      <Button @click.native="handleCancel" v-if="build.finished">
+      <Button @click.native="handleCancel" v-if="!build.finished">
         <span>Cancel</span>
         <!--todo, add new IconCancel <IconCancel/>-->
       </Button>
-      <!--<ReButton @click.native="handleRestart" v-if="build.finished">Restart</ReButton>-->
+      <ReButton @click.native="handleRestart" v-if="build.finished">Restart</ReButton>
     </div>
 
     <div v-if="buildLoadingErr">
