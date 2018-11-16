@@ -54,17 +54,17 @@ html, body {
   background: #fbfbfb;
   box-sizing: border-box;
   color: #192d48;
-  font-size: 15px;
-  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
   height: 100%;
   margin: 0px;
   padding: 0px;
   width: 100%;
 }
 
-* {
-  font-family: 'Open Sans', sans-serif;
-}
+/** {*/
+  /*font-family: 'Open Sans', sans-serif;*/
+/*}*/
 
 a {
   text-decoration: none;

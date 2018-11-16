@@ -54,9 +54,9 @@ export default {
 <style scoped>
 .button {
   background: none;
-  font-size: 13px;
+  font-size: 14px;
   border: none;
-  color: rgba(25, 45, 70, 0.25);
+  color: rgba(25, 45, 70, 0.6);
   display: inline-block;
   text-transform: uppercase;
   cursor: pointer;
@@ -64,6 +64,12 @@ export default {
   line-height: 30px;
   padding: 0 10px;
   box-sizing: border-box;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+.button > * {
+  transition: color linear 0.2s;
 }
 
 .button.bordered {
@@ -71,16 +77,17 @@ export default {
   line-height: 28px;
   border: 1px solid rgba(25, 45, 70, 0.25);
   color: #192d46;
+  transition: border-color linear 0.2s;
 }
 
 .button:focus,
 .button:hover {
-  color: rgba(25, 45, 70, 0.75);
+  color: #0564d7;
   outline: none;
 }
 
 .button.bordered:hover,
 .button.bordered:focus {
-  border-color: transparent;
+  border-color: #0564d7;
 }
 </style>

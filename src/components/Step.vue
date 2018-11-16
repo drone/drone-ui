@@ -48,7 +48,6 @@ span {
   margin-left: 10px;
   flex: 1;
   height: 18px;
-  font-size: 13px;
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
@@ -58,25 +57,23 @@ span {
 }
 
 time {
-  opacity: 0.25;
+  color: rgba(25, 45, 70, 0.6);
   text-align: right;
-  margin-right: 0px;
 }
 
 section.selected {
-  background-color: #f8f8f9;
+  background-color: rgba(25, 45, 70, 0.03);
 }
 
 section:after,
 section:before {
     content: " ";
-    border-left: 1px solid #192d46;
+    border-left: 1px solid rgba(25, 45, 70, 0.1);
     width: 1px;
     height: 13px;
     position: absolute;
     top: 0px;
     left: 24px;
-    opacity: 0.05;
 }
 
 section:after {

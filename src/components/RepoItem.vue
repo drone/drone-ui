@@ -120,13 +120,13 @@ section {
     border: solid 1px #EDEEF1;
     background-color: #ffffff;
     color: #192d46;
-    padding: 13px 15px 15px;
+    padding: 15px;
+    transition: box-shadow linear 0.2s;
 }
 
 .container-left {
     width: 30px;
     position: absolute;
-    padding-top: 2px;
 }
 
 .number .dash {
@@ -141,7 +141,7 @@ section {
 .connector {
     width: 15px;
     height: 15px;
-    opacity: 0.15;
+    opacity: 0.2;
     border-bottom-left-radius: 8px;
     border-left: solid 1px #192d46;
     border-bottom: solid 1px #192d46;
@@ -181,9 +181,8 @@ section {
   text-overflow: ellipsis;
   white-space: nowrap;
   box-sizing: border-box;
-  font-size: 12px;
   line-height: normal;
-  color: rgba(25, 45, 70, 0.5);
+  color: rgba(25, 45, 70, 0.6);
 }
 
 .metadata .message {
@@ -193,7 +192,7 @@ section {
 h3 {
   flex: 1;
   height: 22px;
-  font-size: 16px;
+  font-size: 18px;
   line-height: normal;
   color: #192d46;
   overflow: hidden;
@@ -202,10 +201,10 @@ h3 {
 }
 
 img {
-    border-radius: 50%;
-    margin-right: 7px;
-    width: 18px;
-    height: 18px;
+  border-radius: 50%;
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
 }
 
 .metadata svg {
@@ -213,7 +212,7 @@ img {
   margin-right: 7px;
   height: 16px;
   width: 16px;
-  opacity: 0.5;
+  opacity: 0.6;
   vertical-align: baseline;
   flex-shrink: 0;
 }
@@ -247,7 +246,7 @@ img {
 }
 
 .metadata > span a {
-    color: rgba(25, 45, 70, 0.5);
+    color: rgba(25, 45, 70, 0.6);
 }
 
 .metadata > span a:focus,

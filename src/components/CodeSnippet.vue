@@ -98,7 +98,7 @@ button {
 }
 
 button:hover svg {
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 button:active svg {

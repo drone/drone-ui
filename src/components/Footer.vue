@@ -23,8 +23,8 @@ footer {
 }
 
 nav a {
-  font-size: 13px;
-  color: rgba(25, 45, 70, 0.5);
+  color: rgba(25, 45, 70, 0.6);
+  transition: color linear 0.2s;
 }
 
 nav a:hover,

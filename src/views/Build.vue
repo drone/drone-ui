@@ -1,17 +1,17 @@
 <template>
   <div class="build">
 
-    <Button class="back-to-feed-button" :to="`/${namespace}`" :bordered="false">
+    <Button class="back-to-feed-button" :to="`/${namespace}`">
       <IconArrow direction="left"/>
-      <span>Back to activity feed</span>
+      <span>activity feed</span>
     </Button>
 
     <div class="build-actions">
-      <Button @click.native="handleCancel" v-if="!build.finished">
+      <Button @click.native="handleCancel" v-if="build.finished">
         <span>Cancel</span>
-        <IconCancel/>
+        <!--todo, add new IconCancel <IconCancel/>-->
       </Button>
-      <ReButton @click.native="handleRestart" v-if="build.finished">Restart</ReButton>
+      <!--<ReButton @click.native="handleRestart" v-if="build.finished">Restart</ReButton>-->
     </div>
 
     <div v-if="buildLoadingErr">
@@ -261,7 +261,7 @@ export default {
 
 <style scoped>
 .back-to-feed-button {
-  margin: 0 0 32px 15px;
+  margin: 0 0 20px 15px;
 }
 
 .back-to-feed-button span {
@@ -270,6 +270,7 @@ export default {
 
 .build-actions {
   float: right;
+  margin-right: 15px;
 }
 
 main {
@@ -334,7 +335,7 @@ main {
 }
 
 .output-header {
-  padding: 17px 15px;
+  padding: 17px 15px 15px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   font-size: 13px;
 }
@@ -344,7 +345,7 @@ main {
 }
 
 .output-title-step {
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 .output-actions {
@@ -401,7 +402,7 @@ main {
   outline: none;
   text-align: center;
   text-transform: uppercase;
-  opacity: 0.5;
+  opacity: 0.6;
   width: 100%;
 }
 .output > button:active {
@@ -448,7 +449,7 @@ main > .alert {
 .step-container > a:hover,
 .step-container > a:focus {
   outline: none;
-  background: rgba(25, 45, 70, 0.02);
+  background-color: rgba(25, 45, 70, 0.02);
 }
 
 .stage-container .stage div:first-of-type .step:before,

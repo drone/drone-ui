@@ -14,8 +14,8 @@
                 emptyText="Repositories not found"
                 :repos="results"
                 :loaded="loaded"
-                :popupProps="{position: 'bottom', align: 'center', width: 700}"
-                :hideRepoItemFields="['duration']"
+                :popupProps="{position: 'bottom', align: 'center', width: 980}"
+                :hideRepoItemFields="['commit']"
                 @itemSelect="onItemSelect"/>
   </BaseForm>
 </template>
@@ -162,7 +162,7 @@ input {
 }
 
 .opened input {
-  width: 700px;
+  width: 980px;
   padding-right: 15px;
 }
 
@@ -176,11 +176,11 @@ input {
   position: absolute;
   top: 10px;
   right: 10px;
-  border: solid 1px rgba(25, 45, 70, 0.1);
+  border: solid 1px rgba(25, 45, 70, 0.25);
   border-radius: 2px;
   text-align: center;
-  line-height: 18px;
-  color: rgba(25, 45, 70, 0.25);
+  line-height: 16px;
+  color: rgba(25, 45, 70, 0.5);
   pointer-events: none;
   user-select: none;
 }

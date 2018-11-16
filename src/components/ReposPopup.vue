@@ -112,7 +112,6 @@ export default {
 <style scoped>
 .repo-link {
   outline: none;
-  padding: 5px 0;
 }
 
 .repo-link.selected {
@@ -134,8 +133,7 @@ export default {
 
 .text {
   text-align: center;
-  color: rgba(25, 45, 70, 0.5);
-  font-size: 13px;
+  color: rgba(25, 45, 70, 0.6);
   padding: 16px;
 }
 </style>

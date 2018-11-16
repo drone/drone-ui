@@ -54,7 +54,7 @@ export default {
 
 header {
     align-items: center;
-    border-bottom: solid 1px rgba(25, 45, 70, 0.05);
+    border-bottom: solid 1px rgba(25, 45, 70, 0.1);
     box-sizing: border-box;
     display: flex;
     height: 45px;
@@ -69,7 +69,6 @@ header:last-child {
 span {
   flex: 1;
   height: 18px;
-  font-size: 13px;
   font-weight: 600;
   font-style: normal;
   font-stretch: normal;
@@ -82,20 +81,19 @@ span {
 time{
   color: #192d46;
   height: 18px;
-  font-size: 13px;
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
   line-height: normal;
   letter-spacing: normal;
-  opacity: 0.5;
+  opacity: 0.6;
   text-align: right;
   margin-right: 0px;
 }
 
 .arrow-dropdown {
   display: none;
-  color: rgba(25, 45, 70, 0.5);
+  color: rgba(25, 45, 70, 0.6);
 }
 
 a {
