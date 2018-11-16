@@ -9,12 +9,14 @@
       v-for="build in limitedBuilds"
       :key="build.id"
       :to="'/'+slug + '/' + build.number">
-      <RepoItem :number="build.number"
+      <RepoItem metaAlign="left"
+                :number="build.number"
                 :message="build.author_login"
                 :title="build.message"
                 :status="build.status"
                 :build="build"
-                :avatar="build.author_avatar"/>
+                :avatar="build.author_avatar"
+                :hide="['commit']"/>
     </router-link>
 
     <MoreButton v-if="hasMore" @click.native="showMore">Show more</MoreButton>

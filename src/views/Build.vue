@@ -1,15 +1,15 @@
 <template>
   <div class="build">
 
-    <Button class="back-to-feed-button" :to="`/${namespace}`" :bordered="false">
+    <Button class="back-to-feed-button" :to="`/${namespace}`">
       <IconArrow direction="left"/>
-      <span>Back to activity feed</span>
+      <span>activity feed</span>
     </Button>
 
-    <div class="build-actions">
+    <div class="build-actions"  v-if="build">
       <Button @click.native="handleCancel" v-if="!build.finished">
         <span>Cancel</span>
-        <IconCancel/>
+        <!--todo, add new IconCancel <IconCancel/>-->
       </Button>
       <ReButton @click.native="handleRestart" v-if="build.finished">Restart</ReButton>
     </div>
@@ -18,7 +18,8 @@
       Cannot retrieve the Build details.
     </div>
 
-    <RepoItem v-if="build"
+    <RepoItem metaAlign="left"
+      v-if="build"
       :number="build.number"
       :status="build.status"
       :title="build.message"
@@ -94,13 +95,19 @@
       <ScrollLock v-if="outputFullscreen"/>
       <div class="output" :class="{'output-fullscreen': outputFullscreen}" v-if="!isStageError">
         <div class="output-header">
-          <span class="output-title-pipeline">{{ stage && stage.name }}</span>
-          <span class="output-title-step"> — {{ step && step.name }}</span>
+          <div class="output-title">
+            <span class="output-title-pipeline">{{ stage && stage.name }}</span>
+            <span class="output-title-step"> — {{ step && step.name }}</span>
+          </div>
           <div class="output-actions">
-            <IconFullscreen :close="outputFullscreen" @click.native="toggleOutputFullscreen"/>
+            <PlayButton title="Follow logs" @click.native="toggleFollow" :pause="follow"></PlayButton>
+            <div class="divider"></div>
+            <Button title="Fullscreen" @click.native="toggleOutputFullscreen" theme="default-light" :bordered="false">
+              <IconFullscreen :close="outputFullscreen" />
+            </Button>
           </div>
         </div>
-        <div class="output-content">
+        <div class="output-content" ref="outputContent">
           <button v-if="showLimit" v-on:click="handleMore">showing the last {{limit}} lines</button>
           <div v-for="(line) in logs" :key="line.pos">
             <div>{{line.pos+1}}</div>
@@ -108,6 +115,7 @@
             <div>{{line.time}}s</div>
           </div>
         </div>
+        <div ref="bottomAnchor"></div>
       </div>
 
       <Alert v-if="isStageError" class="alert">
@@ -130,6 +138,7 @@ import Stage from "@/components/Stage.vue";
 import IconCancel from "@/components/icons/IconCancel.vue";
 import ReButton from "@/components/buttons/ReButton.vue";
 import Button from "@/components/buttons/Button.vue";
+import PlayButton from "@/components/buttons/PlayButton.vue";
 import IconArrow from "@/components/icons/IconArrow.vue";
 import IconFullscreen from "@/components/icons/IconFullscreen.vue";
 import ScrollLock from "@/components/utils/ScrollLock.vue";
@@ -144,13 +153,15 @@ export default {
     ReButton,
     IconCancel,
     Button,
+    PlayButton,
     IconArrow,
     ScrollLock,
     IconFullscreen
   },
   data() {
     return {
-      outputFullscreen: false
+      outputFullscreen: false,
+      follow: false
     };
   },
   computed: {
@@ -223,6 +234,18 @@ export default {
     },
     toggleOutputFullscreen() {
       this.outputFullscreen = !this.outputFullscreen;
+    },
+    toggleFollow() {
+      this.follow = !this.follow;
+      if (this.follow) this.scrollToBottom();
+    },
+    scrollToBottom() {
+      if (this.outputFullscreen) {
+        const { outputContent } = this.$refs;
+        outputContent.scrollTop = outputContent.scrollHeight + 15; // 15 - padding
+      } else {
+        this.$refs.bottomAnchor.scrollIntoView()
+      }
     }
   },
   watch: {
@@ -239,6 +262,8 @@ export default {
       // fetch the completed step logs, or if the step
       // is running, dispatch a request to stream the logs.
       if (!oldStep || oldStep.id != newStep.id) {
+        this.follow = false;
+
         if (newStep.stopped) {
           this.$store.dispatch('fetchLogs', this.$route.params);
         } else if (newStep.started) {
@@ -253,6 +278,11 @@ export default {
       } else if (newStep.finished > 0 && this.logs.length === 0) {
           this.$store.dispatch('fetchLogs', this.$route.params);
       }
+    },
+    logs(newValue, oldValue) {
+      if (this.follow && newValue && oldValue.length < newValue.length) {
+        setTimeout(() => this.scrollToBottom(), 0);
+      }
     }
   },
 };
@@ -260,7 +290,7 @@ export default {
 
 <style scoped>
 .back-to-feed-button {
-  margin: 0 0 32px 15px;
+  margin: 0 0 20px 15px;
 }
 
 .back-to-feed-button span {
@@ -269,6 +299,7 @@ export default {
 
 .build-actions {
   float: right;
+  margin-right: 15px;
 }
 
 main {
@@ -287,31 +318,21 @@ main {
   margin-top: 15px;
 }
 
-.container.output {
-  flex: 1;
-  box-sizing: border-box;
-  margin-top: 0px;
-}
-
 .repo-item {
-  margin-top: 0px;
   margin-bottom: 20px;
 }
-
 
 .output {
   color: #FFF;
   font-size: 12px;
   font-family: 'Roboto Mono', monospace;
   font-weight: 300;
-
   background-color: #192d46;
   border-radius: 6px;
   box-shadow: 0px 0px 8px 1px #e8eaed;
   box-sizing: border-box;
   margin-left: 15px;
   padding: 0;
-
   width: 665px;
 }
 
@@ -333,26 +354,37 @@ main {
 }
 
 .output-header {
-  padding: 17px 15px;
+  position: sticky;
+  top: 0;
+  background: #192d46;
+  padding: 8px 15px 7px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 6px 6px 0 0;
 }
 
 .output-title-pipeline {
   font-weight: bold;
-}
-
-.output-title-step {
-  opacity: 0.5;
+  color: #fff;
 }
 
 .output-actions {
-  float: right;
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
-.output-actions .icon-fullscreen {
-  cursor: pointer;
-  opacity: 0.75;
+.output-actions .divider {
+  display: inline-block;
+  height: 24px;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.05);
+  margin: 0 5px;
 }
 
 .output-content {
@@ -366,45 +398,23 @@ main {
 }
 
 .output-content > div > div:first-child {
-    -webkit-user-select: none;
+  -webkit-user-select: none;
   color: #8c96a1;
-    min-width: 20px;
-    padding-right: 20px;
-    user-select: none;
+  min-width: 20px;
+  padding-right: 20px;
+  user-select: none;
 }
 .output-content > div > div:last-child {
-    -webkit-user-select: none;
+  -webkit-user-select: none;
   color: #8c96a1;
-    padding-left: 20px;
-    user-select: none;
+  padding-left: 20px;
+  user-select: none;
 }
 .output-content > div > div:nth-child(2) {
-    flex: 1 1 auto;
-    min-width: 0px;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-}
-
-.output > button {
-  background: rgba(255,255,255,0.1);
-  border: none;
-  border-radius: 5px;
-  color: #FFF;
-  cursor: pointer;
-  display: flex;
-  height: 30px;
-  margin-bottom: 20px;
-  font-family: "Open Sans";
-  align-items: center;
-  justify-content: center;
-  outline: none;
-  text-align: center;
-  text-transform: uppercase;
-  opacity: 0.5;
-  width: 100%;
-}
-.output > button:active {
-  background: rgba(255,255,255,0.05);
+  flex: 1 1 auto;
+  min-width: 0px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 .alert {
@@ -447,7 +457,7 @@ main > .alert {
 .step-container > a:hover,
 .step-container > a:focus {
   outline: none;
-  background: rgba(25, 45, 70, 0.02);
+  background-color: rgba(25, 45, 70, 0.02);
 }
 
 .stage-container .stage div:first-of-type .step:before,

@@ -24,7 +24,6 @@ export default {
   display: flex;
   align-items: center;
   height: 80px;
-  font-size: 13px;
   line-height: 18px;
 }
 
@@ -32,7 +31,6 @@ export default {
   display: inline-block;
   margin-right: 10px;
   text-decoration: none;
-  font-size: 13px;
   color: #0564d7;
   height: 18px;
 }
@@ -52,7 +50,7 @@ export default {
 .breadcrumb a:hover:after {
   content: "";
   position: absolute;
-  bottom: -3px;
+  bottom: -2px;
   height: 1px;
   background-color: rgba(5, 100, 215, 0.5);
   right: 0;

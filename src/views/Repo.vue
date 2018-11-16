@@ -126,7 +126,7 @@ export default {
 
 <style scoped>
 h1 {
-  margin-bottom: 30px;
+  margin-bottom: 25px;
   padding-left: 15px;
 
   height: 41px;
@@ -140,19 +140,21 @@ h1 {
 }
 
 nav {
-  border-bottom: 1px solid #EEE;
+  border-bottom: 1px solid rgba(25, 45, 70, 0.1);
   margin-bottom: 20px;
   padding-left: 15px;
 }
 
 nav a {
-  color: #8d96a2;
+  box-sizing: border-box;
+  color: rgba(25, 45, 70, 0.6);
   display: inline-block;
-  font-size: 13px;
-  padding: 10px 0;
+  height: 30px;
+  line-height: 29px;
   text-transform: uppercase;
   margin-bottom: -1px;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
+  font-weight: 500;
 }
 
 nav a + a {
@@ -161,12 +163,12 @@ nav a + a {
 
 nav a:hover,
 nav a:focus {
-  color: #2d4057;
+  color: #192d46;
 }
 
 nav .router-link-exact-active {
-  border-bottom: 1px solid #2d4057;
-  color: #2d4057;
+  border-bottom: 1px solid #192d46;
+  color: #192d46;
 }
 
 .fade-enter-active, .fade-leave-active {
@@ -194,8 +196,9 @@ nav .router-link-exact-active {
 }
 
 .breadcrumb svg {
+  padding-top: 1px;
   margin-right: 10px;
-  color: rgba(25, 45, 70, 0.25);
+  color: rgba(25, 45, 70, 0.6);
 }
 
 .loading {

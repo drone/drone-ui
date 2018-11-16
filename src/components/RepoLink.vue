@@ -31,7 +31,7 @@ export default {
 
 .repo-link.hover-type-box-shadow:focus .repo-item,
 .repo-link.hover-type-box-shadow:hover .repo-item {
-  box-shadow: 0 4px 10px 0 rgba(25, 45, 70, 0.25);
+  box-shadow: 0 4px 10px 0 rgba(25, 45, 70, 0.2);
 }
 
 .repo-link .repo-item h3 {

@@ -43,12 +43,13 @@
                     :build="repo.build"
                     :status="repo.build.status"
                     :message="repo.build.message"
-                    :avatar="repo.build.author_avatar"/>
+                    :avatar="repo.build.author_avatar"
+                    :hide="['commit']"/>
         </RepoLink>
       </div>
     </div>
 
-    <MoreButton v-if="showMore" @click.native="showAll">Show All Repositories</MoreButton>
+    <MoreButton v-if="showMore" @click.native="showAll">Show all repositories</MoreButton>
   </div>
 </template>
 
@@ -179,7 +180,7 @@ header .breadcrumb {
 }
 
 .more-button {
-  margin: 20px auto 0 22px;
+  margin: 15px auto 0 12px;
 }
 
 .list-item + .list-item {

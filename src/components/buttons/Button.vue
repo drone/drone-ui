@@ -19,8 +19,12 @@ export default {
   props: {
     to: String,
     // todo href
-    // kind: { type: String, default: "default" },
-    bordered: { type: Boolean, default: true }
+    bordered: { type: Boolean, default: true },
+    theme: {
+      type: String,
+      default: "default",
+      validator: val => ["default", "default-light"].includes(val)
+    }
   },
   render(createElement) {
     const tag = getTag(this);
@@ -29,7 +33,7 @@ export default {
     return createElement(
       tag,
       {
-        class: { button: true, bordered },
+        class: { button: true, bordered, [`theme-${this.theme}`]: true },
         props: getElementProps(tag, this)
       },
       this.$slots.default
@@ -54,9 +58,8 @@ export default {
 <style scoped>
 .button {
   background: none;
-  font-size: 13px;
+  font-size: 14px;
   border: none;
-  color: rgba(25, 45, 70, 0.25);
   display: inline-block;
   text-transform: uppercase;
   cursor: pointer;
@@ -64,6 +67,12 @@ export default {
   line-height: 30px;
   padding: 0 10px;
   box-sizing: border-box;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+.button > * {
+  transition: color linear 0.2s;
 }
 
 .button.bordered {
@@ -71,16 +80,26 @@ export default {
   line-height: 28px;
   border: 1px solid rgba(25, 45, 70, 0.25);
   color: #192d46;
+  transition: border-color linear 0.2s;
+}
+
+.button.theme-default-light {
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .button:focus,
 .button:hover {
-  color: rgba(25, 45, 70, 0.75);
+  color: #0564d7;
   outline: none;
 }
 
 .button.bordered:hover,
 .button.bordered:focus {
-  border-color: transparent;
+  border-color: #0564d7;
+}
+
+.button.theme-default-light:hover,
+.button.theme-default-light:focus {
+  color: #fff;
 }
 </style>

@@ -7,19 +7,7 @@
        @focusout="closeDelayed">
     <div class="round">
       <div class="border"></div>
-
-      <div class="label">
-        <template v-if="status === 'done'">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-            <g fill-rule="nonzero" fill="none">
-              <path stroke="currentColor" stroke-linecap="round" stroke-width="1.4"
-                    d="M5.66 11.113l2.777 2.739a.2.2 0 0 0 .28 0L14.66 7.99"/>
-            </g>
-          </svg>
-        </template>
-
-        <template v-if="status === 'running'">{{ runningBuildsCount }}</template>
-      </div>
+      <div class="label">{{ runningBuildsCount }}</div>
     </div>
 
     <ReposPopup v-if="opened"
@@ -55,7 +43,7 @@ export default {
   },
   computed: {
     latest() {
-      const repos = Object.values(this.$store.state.latest).filter(x => x.build);
+      const repos = Object.values(this.$store.state.latest).filter(x => x.build || true);
       return reposSort(repos).slice(0, 5);
     },
     loaded() {
@@ -143,7 +131,7 @@ export default {
   height: 30px;
   border-radius: 15px;
   box-sizing: border-box;
-  border: 2px solid rgba(25, 45, 70, 0.25);
+  border: 1px solid rgba(25, 45, 70, 0.25);
 }
 
 .label {

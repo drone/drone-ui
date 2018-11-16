@@ -66,7 +66,7 @@ export default {
 
 .logo {
     grid-column: 1;
-    width: 30px;
+    width: 90px;
     height: 30px;
     text-align: left;
 }

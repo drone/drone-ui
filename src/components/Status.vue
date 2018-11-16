@@ -45,7 +45,7 @@ export default {
   display: inline-block;
   height: 20px;
   width: 20px;
-  border-radius: 10px;
+  border-radius: 50%;
   box-sizing: border-box;
   position: relative;
   border: 1px solid transparent;

@@ -30,13 +30,17 @@ input {
   border: 1px solid rgba(25, 45, 70, 0.25);
   border-radius: 3px;
   box-sizing: border-box;
-  font-size: 13px;
+  font-size: 14px;
   padding: 0 15px;
   height: 40px;
   line-height: 40px;
 }
 
+input:focus {
+  border-color: #0564D7;
+}
+
 input::placeholder {
-  color: rgba(25, 45, 70, 0.5);
+  color: rgba(25, 45, 70, 0.6);
 }
 </style>

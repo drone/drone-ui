@@ -2,17 +2,19 @@
     <div class="repo-item repo-item-short" v-bind:class="{ 'repo-item-inactive': !active }">
         <LogoGit />
         <h3>{{ namespace }}/{{ name }}</h3>
-        <span v-if="!active" @click="activate">Add</span>
+        <Button v-if="!active" @click="activate" :bordered="false">Activate</Button>
     </div>
 </template>
 
 <script>
 import LogoGit from "./logos/LogoGit.vue";
+import Button from "./buttons/Button.vue";
 
 export default {
   name: "ShortRepoItem",
   components: {
-    LogoGit
+    LogoGit,
+    Button
   },
   props: {
     namespace: String,
@@ -40,6 +42,7 @@ div {
     display: flex;
     height: 50px;
     padding: 15px;
+    transition: box-shadow linear 0.2s;
 }
 
 svg {
@@ -49,12 +52,12 @@ svg {
 }
 
 .repo-item-inactive h3 {
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 h3 {
   flex: 1;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
@@ -63,17 +66,14 @@ h3 {
   color: #192d46;
 }
 
-span {
-  font-size: 13px;
-  font-weight: 600;
+.button {
   letter-spacing: 1px;
-  text-transform: uppercase;
   color: #0564d7;
-  padding: 10px 15px;
   border-radius: 3px;
+  transition: background-color linear 0.2s;
 }
 
-span:hover {
-  background: rgba(5, 100, 215, 0.1);
+.button:hover {
+  background-color: rgba(5, 100, 215, 0.05);
 }
 </style>

@@ -6,7 +6,7 @@
         </div>
         <div class="content">
             <div class="header">
-                <h3>
+                <h3 :title="title">
                     <span class="number" v-if="number">
                         #{{ number }}
                         <span class="dash">– </span>
@@ -15,9 +15,9 @@
                 </h3>
                 <span><slot></slot></span>
             </div>
-            <div class="metadata">
+            <div class="metadata" :class="[`align-${metaAlign}`]">
                 <img :src="avatar" />
-                <p :title="message">{{ message }}</p>
+                <p class="message" :title="message">{{ message }}</p>
 
                 <span class="finished" v-if="!hide.includes('finished')">
                     <IconCalendar />{{ new Date(build.created * 1000) | moment("from", "now") }}
@@ -37,13 +37,7 @@
                     <IconPromote v-else-if="build.event == 'promote'" />
                     <IconRollback v-else-if="build.event == 'rollback'" />
                     <IconBranch v-else />
-                    <span>{{
-                      build.event === 'pull_request'
-                      ? trimMergeRef(build.ref)
-                      : build.event === 'tag'
-                        ? trimTagRef(build.ref)
-                        : branch
-                    }}</span>
+                    <span :title="branchMetaValue">{{ branchMetaValue }}</span>
                 </span>
             </div>
         </div>
@@ -74,7 +68,12 @@ export default {
     author: String,
     avatar: String,
     build: Object,
-    hide: { type: Array, default: () => [] }
+    hide: { type: Array, default: () => [] },
+    metaAlign: {
+      type: String,
+      default: "right",
+      validator: val => ["right", "left"].includes(val)
+    }
   },
   components: {
     IconBranch,
@@ -94,6 +93,10 @@ export default {
     },
     branch() {
       return this.build.target;
+    },
+    branchMetaValue() {
+      const { event, ref } = this.build;
+      return event === "pull_request" ? this.trimMergeRef(ref) : event === "tag" ? this.trimTagRef(ref) : this.branch;
     }
   },
   methods: {
@@ -117,13 +120,13 @@ section {
     border: solid 1px #EDEEF1;
     background-color: #ffffff;
     color: #192d46;
-    padding: 13px 15px 15px;
+    padding: 15px;
+    transition: box-shadow linear 0.2s;
 }
 
 .container-left {
     width: 30px;
     position: absolute;
-    padding-top: 2px;
 }
 
 .number .dash {
@@ -132,12 +135,13 @@ section {
 
 .status {
   margin-bottom: 5px;
+  display: block;
 }
 
 .connector {
     width: 15px;
     height: 15px;
-    opacity: 0.15;
+    opacity: 0.2;
     border-bottom-left-radius: 8px;
     border-left: solid 1px #192d46;
     border-bottom: solid 1px #192d46;
@@ -159,44 +163,48 @@ section {
     align-items: center;
 }
 
+.metadata.align-right .message {
+  flex-grow: 1;
+}
+
+.metadata.align-right span.branch {
+  flex: 1 0 150px;
+}
+
+.metadata.align-left .message {
+  flex: 0 0 115px;
+}
+
 .metadata > span,
-.metadata p {
+.metadata .message {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   box-sizing: border-box;
-
-  font-size: 12px;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
   line-height: normal;
-  letter-spacing: normal;
-  color: rgba(25, 45, 70, 0.5);
+  color: rgba(25, 45, 70, 0.6);
 }
 
-.metadata p {
-  flex-grow: 1;
-  display: block;
+.metadata .message {
+  padding-right: 15px;
 }
 
 h3 {
   flex: 1;
   height: 22px;
-  font-size: 16px;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
+  font-size: 18px;
   line-height: normal;
-  letter-spacing: normal;
   color: #192d46;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 img {
-    border-radius: 50%;
-    margin-right: 7px;
-    width: 18px;
-    height: 18px;
+  border-radius: 50%;
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
 }
 
 .metadata svg {
@@ -204,29 +212,32 @@ img {
   margin-right: 7px;
   height: 16px;
   width: 16px;
-  opacity: 0.5;
+  opacity: 0.6;
   vertical-align: baseline;
+  flex-shrink: 0;
 }
 
 .metadata > span {
   height: 24px;
-  margin-left: 15px;
   border-left: 1px solid rgba(25, 45, 70, 0.05);
-  padding-left: 15px;
+  padding: 0 15px;
   display: flex;
   align-items: center;
 }
 
-.metadata > span.finished,
-.metadata > span.branch {
-  flex-basis: 150px;
+.metadata > span.finished {
+  flex: 0 0 140px;
 }
 
 .metadata > span.commit {
-  flex-basis: 110px;
+  flex: 0 0 110px;
 }
 .metadata > span.duration {
-  flex-basis: 90px;
+  flex: 0 0 105px;
+}
+
+.metadata > span.branch {
+  padding-right: 0;
 }
 
 .metadata > span > span {
@@ -235,7 +246,7 @@ img {
 }
 
 .metadata > span a {
-    color: rgba(25, 45, 70, 0.5);
+    color: rgba(25, 45, 70, 0.6);
 }
 
 .metadata > span a:focus,

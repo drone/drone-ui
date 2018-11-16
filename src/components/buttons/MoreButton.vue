@@ -20,10 +20,11 @@ export default {
 
 <style scoped>
 button.more-button {
-  font-size: 12px;
   color: #0564d7;
   display: flex;
   text-transform: none;
+  letter-spacing: normal;
+  font-weight: 400;
 }
 
 button.more-button:hover,
@@ -39,15 +40,23 @@ button.more-button:focus span {
 
 button.more-button:hover svg,
 button.more-button:focus svg {
-  color: rgba(5, 100, 215, 0.75);
+  color: #0564d7;
+}
+
+button svg + span {
+  border-bottom: 1px solid transparent;
+  margin-left: 6px;
+  transition: border-color linear 0.2s;
 }
 
 span {
-  border-bottom: 1px solid transparent;
+  height: 24px;
+  line-height: 30px;
 }
 
 svg {
-  color: rgba(25, 45, 70, 0.25);
-  padding-top: 10px;
+  color: rgba(25, 45, 70, 0.6);
+  margin: 5px 0 0;
+  transition: color linear 0.2s;
 }
 </style>
