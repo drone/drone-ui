@@ -7,11 +7,11 @@
     </Button>
 
     <div class="build-actions"  v-if="build">
-      <Button @click.native="handleCancel" v-if="!build.finished">
+      <Button @click.native="handleCancel" v-if="!build.finished" :disabled="!isCollaborator">
         <span>Cancel</span>
         <!--todo, add new IconCancel <IconCancel/>-->
       </Button>
-      <ReButton @click.native="handleRestart" v-if="build.finished">Restart</ReButton>
+      <ReButton @click.native="handleRestart" v-if="build.finished" :disabled="!isCollaborator">Restart</ReButton>
     </div>
 
     <div v-if="buildLoadingErr">
@@ -168,6 +168,9 @@ export default {
     namespace() {
       return this.$route.params.namespace + '/' + this.$route.params.name;
     },
+    repo() {
+      return this.$store.state.repos[this.namespace];
+    },
     build() {
       var number = parseInt(this.$route.params.build);
       return this.$store.state.builds[this.namespace] &&
@@ -214,6 +217,9 @@ export default {
     },
     isStageError() {
       return this.stage && this.stage.error;
+    },
+    isCollaborator() {
+      return this.repo && this.repo.permissions && this.repo.permissions.write || false;
     }
   },
   methods: {
