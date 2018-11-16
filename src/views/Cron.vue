@@ -22,9 +22,14 @@
   
     <form @submit.prevent="handleSubmit" autocomplete="off">
       <input placeholder="Cron Job Name" name="cron.name" v-model="cron.name" type="text" />
-      <input placeholder="Cron Job Expression" name="cron.expr" v-model="cron.expr" type="text" />
       <input placeholder="Cron Job Branch" name="cron.branch" v-model="cron.branch" type="text" />
-      
+      <select v-model="cron.expr" name="cron.expr">
+        <option value="@hourly">@hourly</option>
+        <option value="@daily">@daily</option>
+        <option value="@weekly">@weekly</option>
+        <option value="@monthly ">@monthly</option>
+        <option value="@yearly">@yearly</option>
+      </select>
       <div class="actions">
         <button type="submit">Add a Cron Job</button>
       </div>
@@ -53,7 +58,7 @@ export default {
     return {
       cron: {
         name: "",
-        expr: "",
+        expr: "@weekly",
         branch: "",
       }
     }
@@ -77,12 +82,12 @@ export default {
       const cron = {
         name: this.cron.name,
         expr: this.cron.expr,
-        branch: this.cron.branch || "master",
+        branch: this.cron.branch || (this.repo && this.repo.branch) || "master",
       };
       this.$store.dispatch('createCron', { namespace, name, cron });
       this.cron = {
         name: "",
-        expr: "",
+        expr: "@weekly",
         branch: "",
       }
     }
@@ -138,6 +143,10 @@ form textarea {
   outline: none;
   padding: 7px 10px;
   width: 100%;
+}
+
+form select {
+  margin-bottom: 10px;
 }
 
 form input[type=text]:focus,

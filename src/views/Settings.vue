@@ -226,29 +226,6 @@ input[type="text"] {
     width: 100%;
 }
 
-select {
-    appearance: none;
-  -webkit-appearance: none;
-    border-radius: 3px;
-    border: 1px solid #e8eaed;
-    box-sizing: border-box;
-    cursor: pointer;
-    box-sizing: border-box;
-    display: block;
-    font-size: 13px;
-    outline: none;
-    padding: 7px 10px;
-    resize: none;
-    width: 100%;
-    position:relative;
-
-  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><polygon fill='#98a1ab' points='0,30 100, 30 50,90'/></svg>") no-repeat;
-  background-size: 10px;
-  background-position: center right 10px;
-  background-repeat: no-repeat;
-  background-color: #FFF;
-}
-
 .settings .actions {
   border-top: 1px solid #EEE;
   padding: 0px;
@@ -264,5 +241,30 @@ select {
   font-size: 12px;
   padding: 10px 20px;
   text-transform: uppercase;
+}
+</style>
+
+<style>
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 3px;
+  border: 1px solid #e8eaed;
+  box-sizing: border-box;
+  cursor: pointer;
+  box-sizing: border-box;
+  display: block;
+  font-size: 13px;
+  outline: none;
+  padding: 7px 10px;
+  resize: none;
+  width: 100%;
+  position:relative;
+
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><polygon fill='#98a1ab' points='0,30 100, 30 50,90'/></svg>") no-repeat;
+  background-size: 10px;
+  background-position: center right 10px;
+  background-repeat: no-repeat;
+  background-color: #FFF;
 }
 </style>
