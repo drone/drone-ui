@@ -18,7 +18,8 @@
       Cannot retrieve the Build details.
     </div>
 
-    <RepoItem v-if="build"
+    <RepoItem metaAlign="left"
+      v-if="build"
       :number="build.number"
       :status="build.status"
       :title="build.message"

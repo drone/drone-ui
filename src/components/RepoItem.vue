@@ -15,9 +15,9 @@
                 </h3>
                 <span><slot></slot></span>
             </div>
-            <div class="metadata">
+            <div class="metadata" :class="[`align-${metaAlign}`]">
                 <img :src="avatar" />
-                <p :title="message">{{ message }}</p>
+                <p class="message" :title="message">{{ message }}</p>
 
                 <span class="finished" v-if="!hide.includes('finished')">
                     <IconCalendar />{{ new Date(build.created * 1000) | moment("from", "now") }}
@@ -37,13 +37,7 @@
                     <IconPromote v-else-if="build.event == 'promote'" />
                     <IconRollback v-else-if="build.event == 'rollback'" />
                     <IconBranch v-else />
-                    <span>{{
-                      build.event === 'pull_request'
-                      ? trimMergeRef(build.ref)
-                      : build.event === 'tag'
-                        ? trimTagRef(build.ref)
-                        : branch
-                    }}</span>
+                    <span :title="branchMetaValue">{{ branchMetaValue }}</span>
                 </span>
             </div>
         </div>
@@ -74,7 +68,12 @@ export default {
     author: String,
     avatar: String,
     build: Object,
-    hide: { type: Array, default: () => [] }
+    hide: { type: Array, default: () => [] },
+    metaAlign: {
+      type: String,
+      default: "right",
+      validator: val => ["right", "left"].includes(val)
+    }
   },
   components: {
     IconBranch,
@@ -94,6 +93,10 @@ export default {
     },
     branch() {
       return this.build.target;
+    },
+    branchMetaValue() {
+      const { event, ref } = this.build;
+      return event === "pull_request" ? this.trimMergeRef(ref) : event === "tag" ? this.trimTagRef(ref) : this.branch;
     }
   },
   methods: {
@@ -159,25 +162,27 @@ section {
     align-items: center;
 }
 
+.metadata.align-right .message {
+  flex-grow: 1;
+}
+
+.metadata.align-right span.branch {
+  flex: 0 0 150px;
+}
+
+.metadata.align-left .message {
+  flex: 0 0 115px;
+}
+
 .metadata > span,
-.metadata p {
+.metadata .message {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   box-sizing: border-box;
-
   font-size: 12px;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
   line-height: normal;
-  letter-spacing: normal;
   color: rgba(25, 45, 70, 0.5);
-}
-
-.metadata p {
-  flex-grow: 1;
-  display: block;
 }
 
 h3 {
@@ -206,6 +211,7 @@ img {
   width: 16px;
   opacity: 0.5;
   vertical-align: baseline;
+  flex-shrink: 0;
 }
 
 .metadata > span {
@@ -217,16 +223,15 @@ img {
   align-items: center;
 }
 
-.metadata > span.finished,
-.metadata > span.branch {
-  flex-basis: 150px;
+.metadata > span.finished {
+  flex: 0 0 150px;
 }
 
 .metadata > span.commit {
-  flex-basis: 110px;
+  flex: 0 0 110px;
 }
 .metadata > span.duration {
-  flex-basis: 90px;
+  flex: 0 0 90px;
 }
 
 .metadata > span > span {

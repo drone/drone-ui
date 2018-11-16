@@ -43,7 +43,8 @@
                     :build="repo.build"
                     :status="repo.build.status"
                     :message="repo.build.message"
-                    :avatar="repo.build.author_avatar"/>
+                    :avatar="repo.build.author_avatar"
+                    :hide="['commit']"/>
         </RepoLink>
       </div>
     </div>
