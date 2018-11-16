@@ -6,7 +6,7 @@
         </div>
         <div class="content">
             <div class="header">
-                <h3>
+                <h3 :title="title">
                     <span class="number" v-if="number">
                         #{{ number }}
                         <span class="dash">– </span>
@@ -135,6 +135,7 @@ section {
 
 .status {
   margin-bottom: 5px;
+  display: block;
 }
 
 .connector {
@@ -185,16 +186,19 @@ section {
   color: rgba(25, 45, 70, 0.5);
 }
 
+.metadata .message {
+  padding-right: 15px;
+}
+
 h3 {
   flex: 1;
   height: 22px;
   font-size: 16px;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
   line-height: normal;
-  letter-spacing: normal;
   color: #192d46;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 img {
