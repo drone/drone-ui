@@ -1,6 +1,6 @@
 <template>
   <div class="settings-view">
-    <section v-if="repo" class="settings">
+    <section v-if="repo && isAdmin" class="settings">
       <div>
         <span>Visibility</span>
         <span>
@@ -19,14 +19,14 @@
         </span>
       </div>
 
-      <div v-if="sysAdmin">
+      <div v-if="isRoot">
         <span>Trusted</span>
         <span>
           <BaseCheckbox v-model="repo.trusted"></BaseCheckbox>
         </span>
       </div>
 
-      <div v-if="sysAdmin">
+      <div v-if="isRoot">
         <span>Timeout</span>
         <span>
           <select v-model="repo.timeout">
@@ -73,7 +73,7 @@
     <Secrets />
     <Cron />
 
-    <section v-if="repo.active" class="disable">
+    <section v-if="repo.active && isAdmin" class="disable">
       <button v-on:click="disable">Disable Repository</button>
       <p>You can disable your repository to stop processing builds.</p>
     </section>
@@ -105,10 +105,14 @@ export default {
       let repo = this.$store.state.repos[this.slug]
       return repo && {...repo};
     },
-    sysAdmin() {
+    isRoot() {
       return this.$store.state.user &&
         this.$store.state.user.admin;
     },
+    isAdmin() {
+      const isAdmin = this.repo && this.repo.permissions && this.repo.permissions.admin;
+      return this.isRoot || isAdmin;
+    }
   },
   methods: {
     save: function (event) {
