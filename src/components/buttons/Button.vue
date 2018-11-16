@@ -19,8 +19,12 @@ export default {
   props: {
     to: String,
     // todo href
-    // kind: { type: String, default: "default" },
-    bordered: { type: Boolean, default: true }
+    bordered: { type: Boolean, default: true },
+    theme: {
+      type: String,
+      default: "default",
+      validator: val => ["default", "default-light"].includes(val)
+    }
   },
   render(createElement) {
     const tag = getTag(this);
@@ -29,7 +33,7 @@ export default {
     return createElement(
       tag,
       {
-        class: { button: true, bordered },
+        class: { button: true, bordered, [`theme-${this.theme}`]: true },
         props: getElementProps(tag, this)
       },
       this.$slots.default
@@ -56,7 +60,6 @@ export default {
   background: none;
   font-size: 14px;
   border: none;
-  color: rgba(25, 45, 70, 0.6);
   display: inline-block;
   text-transform: uppercase;
   cursor: pointer;
@@ -80,6 +83,10 @@ export default {
   transition: border-color linear 0.2s;
 }
 
+.button.theme-default-light {
+  color: rgba(255, 255, 255, 0.6);
+}
+
 .button:focus,
 .button:hover {
   color: #0564d7;
@@ -89,5 +96,10 @@ export default {
 .button.bordered:hover,
 .button.bordered:focus {
   border-color: #0564d7;
+}
+
+.button.theme-default-light:hover,
+.button.theme-default-light:focus {
+  color: #fff;
 }
 </style>

@@ -14,12 +14,12 @@ import {
 } from "./cron";
 
 import {
-	streamEvents,
-	streamLogs,
+	streamEvents
 } from "./stream";
 
 import {
 	fetchLogs,
+  streamLogs
 } from "./logs";
 
 import {
