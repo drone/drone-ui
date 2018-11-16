@@ -167,7 +167,7 @@ section {
 }
 
 .metadata.align-right span.branch {
-  flex: 0 0 150px;
+  flex: 1 0 150px;
 }
 
 .metadata.align-left .message {
@@ -216,22 +216,25 @@ img {
 
 .metadata > span {
   height: 24px;
-  margin-left: 15px;
   border-left: 1px solid rgba(25, 45, 70, 0.05);
-  padding-left: 15px;
+  padding: 0 15px;
   display: flex;
   align-items: center;
 }
 
 .metadata > span.finished {
-  flex: 0 0 150px;
+  flex: 0 0 140px;
 }
 
 .metadata > span.commit {
   flex: 0 0 110px;
 }
 .metadata > span.duration {
-  flex: 0 0 90px;
+  flex: 0 0 105px;
+}
+
+.metadata > span.branch {
+  padding-right: 0;
 }
 
 .metadata > span > span {
