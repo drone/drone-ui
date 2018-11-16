@@ -20,6 +20,7 @@ export default {
     to: String,
     // todo href
     bordered: { type: Boolean, default: true },
+    disabled: { type: Boolean, default: false },
     theme: {
       type: String,
       default: "default",
@@ -28,11 +29,11 @@ export default {
   },
   render(createElement) {
     const tag = getTag(this);
-    const { bordered } = this;
-
+    const { bordered, disabled } = this;
     return createElement(
       tag,
       {
+        domProps: { disabled: disabled },
         class: { button: true, bordered, [`theme-${this.theme}`]: true },
         props: getElementProps(tag, this)
       },
@@ -101,5 +102,13 @@ export default {
 .button.theme-default-light:hover,
 .button.theme-default-light:focus {
   color: #fff;
+}
+
+.button[disabled],
+.button:hover[disabled] {
+  cursor: not-allowed;
+  opacity: 0.25;
+  border-color: rgba(25, 45, 70, 0.5);
+  color: #192d46;
 }
 </style>
