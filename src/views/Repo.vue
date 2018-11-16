@@ -39,7 +39,7 @@
     <nav v-if="showTabs">
       <router-link :to="'/'+slug">Activity Feed</router-link>
       <router-link :to="'/'+slug + '/badges'">Badges</router-link>
-      <router-link :to="'/'+slug + '/settings'" v-if="isAdmin">Settings</router-link>
+      <router-link :to="'/'+slug + '/settings'" v-if="showSettings">Settings</router-link>
     </nav>
 
     <Alert v-if="repoEnablingErr && repoEnablingErr.status === 402">
@@ -107,9 +107,8 @@ export default {
         this.$route.name != 'step' &&
         (this.repo && this.repo.active);
     },
-    isAdmin() {
-      console.log(this.repo)
-      return this.repo && this.repo.permissions && this.repo.permissions.admin;
+    showSettings() {
+      return this.repo && this.repo.permissions && this.repo.permissions.write;
     }
   },
   methods: {
