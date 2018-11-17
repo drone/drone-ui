@@ -108,7 +108,7 @@
           </div>
         </div>
         <div class="output-content" ref="outputContent">
-          <button v-if="showLimit" v-on:click="handleMore">showing the last {{limit}} lines</button>
+          <button class="more-output-button" v-if="showLimit" v-on:click="handleMore">showing the last {{limit}} lines</button>
           <div v-for="(line) in logs" :key="line.pos">
             <div>{{line.pos+1}}</div>
             <div v-html="line._html"></div>
@@ -421,6 +421,24 @@ main {
   min-width: 0px;
   white-space: pre-wrap;
   word-wrap: break-word;
+}
+
+.more-output-button {
+  background: rgba(255,255,255,0.05);
+  border-radius: 3px;
+  border: none;
+  color: #8c96a1;
+  text-transform: uppercase;
+  font-size: 14px;
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 10px 0px;
+  cursor: pointer;
+  transition: all 0.4s ease-in-out;
+}
+.more-output-button:hover {
+  background: rgba(255,255,255,0.1);
+  color: #FFF;
 }
 
 .alert {
