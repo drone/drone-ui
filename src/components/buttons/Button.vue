@@ -19,22 +19,29 @@ export default {
   props: {
     to: String,
     // todo href
-    bordered: { type: Boolean, default: true },
+    borderless: { type: Boolean, default: false },
+    outline: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
     theme: {
       type: String,
       default: "default",
-      validator: val => ["default", "default-light"].includes(val)
+      validator: val => ["default", "light", "primary", "danger"].includes(val)
+    }
+  },
+  computed: {
+    bordered() {
+      return !this.borderless && this.outline;
     }
   },
   render(createElement) {
     const tag = getTag(this);
-    const { bordered, disabled } = this;
+    const { bordered, outline, disabled } = this;
+
     return createElement(
       tag,
       {
-        domProps: { disabled: disabled },
-        class: { button: true, bordered, [`theme-${this.theme}`]: true },
+        domProps: { disabled },
+        class: { button: true, bordered, outline, [`theme-${this.theme}`]: true },
         props: getElementProps(tag, this)
       },
       this.$slots.default
@@ -70,6 +77,9 @@ export default {
   box-sizing: border-box;
   letter-spacing: 0.5px;
   font-weight: 500;
+  border-radius: 3px;
+  color: #fff;
+  transition: background-color linear 0.2s;
 }
 
 .button > * {
@@ -77,20 +87,45 @@ export default {
 }
 
 .button.bordered {
-  border-radius: 3px;
   line-height: 28px;
   border: 1px solid rgba(25, 45, 70, 0.25);
   color: #192d46;
   transition: border-color linear 0.2s;
 }
 
-.button.theme-default-light {
+.button.theme-default {
+  background-color: #192d46;
+}
+
+.button.theme-light {
+  background-color: #fff;
+}
+
+.button.theme-primary {
+  background-color: #0564d7;
+}
+
+.button.theme-danger {
+  background-color: #ff4164;
+}
+
+.button.outline {
+  background-color: transparent;
+}
+
+.button.theme-light.outline {
   color: rgba(255, 255, 255, 0.6);
 }
 
-.button:focus,
-.button:hover {
+.button.theme-primary.outline {
   color: #0564d7;
+}
+
+.button.theme-danger.outline {
+  color: #ff4164;
+}
+
+.button:focus {
   outline: none;
 }
 
@@ -99,9 +134,34 @@ export default {
   border-color: #0564d7;
 }
 
-.button.theme-default-light:hover,
-.button.theme-default-light:focus {
+.button.theme-default:focus,
+.button.theme-default:hover {
+  color: #0564d7;
+}
+
+.button.theme-light:focus,
+.button.theme-light:hover {
   color: #fff;
+}
+
+.button.theme-primary:focus,
+.button.theme-primary:hover {
+  background-color: #085cc1;
+}
+
+.button.theme-primary.outline:focus,
+.button.theme-primary.outline:hover {
+  background-color: rgba(5, 100, 215, 0.05);
+}
+
+.button.theme-danger:focus,
+.button.theme-danger:hover {
+  background-color: #dd3e60;
+}
+
+.button.theme-danger.outline:focus,
+.button.theme-danger.outline:hover {
+  background-color: rgba(255, 65, 100, 0.05);
 }
 
 .button[disabled],

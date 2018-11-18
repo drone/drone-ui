@@ -1,171 +1,108 @@
 <template>
-  <section class="secrets">
-    <div class="inner">
-      <header>
-        Secrets
-      </header>
+  <Card contentPadding="0 15px">
+    <h2 slot="header">Secrets</h2>
 
-      <div v-if="secrets.length == 0" class="alert">
-        Your Secret List is Empty.
-      </div>
-
-      <Secret
-        v-for="secret in secrets"
-        :key="secret.id"
-        :name="secret.name"
-        :pullRequest="secret.pull_request"
-        v-on:delete="handleDelete"
-        class="secret">
-      </Secret>
+    <div v-if="secrets.length === 0" class="alert">
+      Your Secret List is Empty.
     </div>
-  
-    <form @submit.prevent="handleSubmit" autocomplete="off">
 
-      <input name="secret.name" v-model="secret.name" placeholder="Secret Name" type="text" />
-      <textarea name="secret.data" v-model="secret.data" placeholder="Secret Value"></textarea>
+    <Secret v-for="secret in secrets"
+            :key="secret.id"
+            :name="secret.name"
+            :pullRequest="secret.pull_request"
+            @delete="handleDelete"
+            class="secret"/>
+
+    <form @submit.prevent="handleSubmit" autocomplete="off" slot="footer">
+      <BaseInput name="secret.name" v-model="secret.name" placeholder="Secret Name" type="text"/>
+      <BaseTextArea name="secret.data" v-model="secret.data" placeholder="Secret Value"/>
       <BaseCheckbox v-model="secret.pullRequest" style="margin-bottom: 12px;">Allow Pull Requests</BaseCheckbox>
- 
+
       <div class="actions">
-        <button type="submit">Add a Secret</button>
+        <Button type="submit" theme="primary">Add a Secret</Button>
       </div>
     </form>
-  </section>
+  </Card>
 </template>
 
 <script>
+import Card from "@/components/Card.vue";
 import BaseCheckbox from "@/components/forms/BaseCheckbox.vue";
+import BaseInput from "@/components/forms/BaseInput.vue";
+import BaseTextArea from "@/components/forms/BaseTextArea.vue";
 import Secret from "@/components/cards/Secret.vue";
+import Button from "@/components/buttons/Button.vue";
 
 export default {
   name: "secrets",
   components: {
     BaseCheckbox,
+    BaseInput,
+    BaseTextArea,
+    Button,
     Secret,
+    Card
   },
   data() {
     return {
       secret: {
         name: "",
         data: "",
-        pullRequest: false,
+        pullRequest: false
       }
-    }
+    };
   },
   computed: {
     slug() {
-      return this.$route.params.namespace + '/' + this.$route.params.name;
+      return this.$route.params.namespace + "/" + this.$route.params.name;
     },
     secrets() {
       const secrets = this.$store.state.secrets[this.slug];
       return Object.values(secrets || {});
-    },
+    }
   },
   methods: {
-    handleDelete: function (secret) {
-      const {namespace, name} = this.$route.params;
-      this.$store.dispatch('deleteSecret', { namespace, name, secret });
+    handleDelete: function(secret) {
+      const { namespace, name } = this.$route.params;
+      this.$store.dispatch("deleteSecret", { namespace, name, secret });
     },
-    handleSubmit: function (event) {
-      const {namespace, name} = this.$route.params;
+    handleSubmit: function(event) {
+      const { namespace, name } = this.$route.params;
       const secret = {
         name: this.secret.name,
         data: this.secret.data,
-        pull_request: this.secret.pullRequest,
+        pull_request: this.secret.pullRequest
       };
-      this.$store.dispatch('createSecret', { namespace, name, secret });
+      this.$store.dispatch("createSecret", { namespace, name, secret });
       this.secret = {
         name: "",
         data: "",
-        pullRequest: false,
-      }
+        pullRequest: false
+      };
     }
   }
 };
 </script>
 
 <style scoped>
-.secrets {
-  background: #FFF;
-  border: 1px solid #e8eaed;
-  border-radius: 3px;
-  box-shadow: 0px 0px 8px 1px #e8eaed;
-  margin-bottom: 30px;
-}
-
-.inner {
-  padding: 0px 15px;
-}
-
-header {
-  font-size: 15px;
-  padding: 15px;
-  padding-left: 0px;
-  border-bottom: 1px solid #e8eaed;
-  font-weight: 600;
-}
-
 .alert {
-  color: #8d96a2;
-  padding: 45px 0px;
+  color: rgba(25, 45, 70, 0.6);
+  padding: 45px 0;
   text-align: center;
 }
 
-.secret:not(:last-of-type) {
-  border-bottom: 1px solid #e8eaed;
-}
-
-form {
-  background: #fbfbfb;
-  border-top: 1px solid #e8eaed;
-  padding: 15px 15px;
-}
-
-form input[type=text],
+form input[type="text"],
 form textarea {
-  border-radius: 3px;
-  border: 1px solid #e8eaed;
-  box-sizing: border-box;
   display: block;
-  font-size: 13px;
-  margin-bottom: 10px;
-  outline: none;
-  padding: 7px 10px;
-  resize: none;
+  margin-bottom: 15px;
   width: 100%;
 }
 
-form input[type=text]:focus,
-form textarea:focus {
-  border: 1px solid #0060da;
+.secret + .secret {
+  border-top: 1px solid rgba(25, 45, 70, 0.1);
 }
 
 form textarea {
   height: 60px;
-}
-
-form button {
-  border: none;
-  background: #0060da;
-  border-radius: 3px;
-  color: #FFF;
-  font-size: 12px;
-  padding: 10px 20px;
-  text-transform: uppercase;
-}
-
-::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-  color: #909aa5;
-}
-
-::-moz-placeholder { /* Firefox 19+ */
-  color: #97a0aa;
-}
-
-:-ms-input-placeholder { /* IE 10+ */
-  color: #97a0aa;
-}
-
-:-moz-placeholder { /* Firefox 18- */
-  color: #97a0aa;
 }
 </style>

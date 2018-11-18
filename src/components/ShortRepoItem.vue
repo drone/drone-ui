@@ -2,7 +2,7 @@
     <div class="repo-item repo-item-short" v-bind:class="{ 'repo-item-inactive': !active }">
         <LogoGit />
         <h3>{{ namespace }}/{{ name }}</h3>
-        <Button v-if="!active" @click="activate" :bordered="false">Activate</Button>
+        <Button v-if="!active" @click="activate" theme="primary" outline borderless>Activate</Button>
     </div>
 </template>
 
@@ -68,12 +68,5 @@ h3 {
 
 .button {
   letter-spacing: 1px;
-  color: #0564d7;
-  border-radius: 3px;
-  transition: background-color linear 0.2s;
-}
-
-.button:hover {
-  background-color: rgba(5, 100, 215, 0.05);
 }
 </style>

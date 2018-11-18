@@ -153,7 +153,6 @@ input {
   width: 400px;
   padding-right: 45px;
   transition: width linear 0.1s;
-  outline: none;
 }
 
 .opened {

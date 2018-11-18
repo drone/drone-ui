@@ -1,5 +1,5 @@
 <template>
-  <Button theme="default-light" :bordered="false">
+  <Button theme="light" outline borderless>
     <IconPlay v-if="!pause"/>
     <IconPause v-if="pause"/>
   </Button>

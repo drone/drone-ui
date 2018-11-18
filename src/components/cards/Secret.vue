@@ -1,17 +1,24 @@
 <template>
-    <div class="secret">
-        <h1>{{ name }}</h1>
-        <span v-if="pullRequest">Pull Requests Enabled</span>
-        <button v-on:click="$emit('delete', {name, pullRequest})">Delete</button>
-    </div>
+  <div class="secret">
+    <span>{{ name }}</span>
+    <Tag v-if="pullRequest">Pull Requests Enabled</Tag>
+    <Button theme="danger" outline borderless @click.native="$emit('delete', {name, pullRequest})">Delete</Button>
+  </div>
 </template>
 
 <script>
+import Button from "@/components/buttons/Button";
+import Tag from "@/components/Tag";
+
 export default {
   name: "Secret",
+  components: {
+    Button,
+    Tag
+  },
   props: {
     name: String,
-    pullRequest: Boolean,
+    pullRequest: Boolean
   }
 };
 </script>
@@ -20,30 +27,15 @@ export default {
 .secret {
   align-items: center;
   display: flex;
-  font-size: 14px;
-  padding: 15px 0px;
-}
-
-h1 {
-  flex: 1;
+  padding: 20px 0;
 }
 
 span {
-  background: #EEE;
-  color: #888;
-  font-size: 11px;
-  text-transform: uppercase;
-  padding: 5px 7px;
-  border-radius: 3px;
+  flex-grow: 1;
 }
 
-button {
-  background: none;
-  border: none;
-  color: red;
-  cursor: pointer;
-  font-size: 12px;
-  margin-left: 10px;
-  text-transform: uppercase;
+.tag {
+  flex-grow: 0;
+  margin-right: 5px;
 }
 </style>

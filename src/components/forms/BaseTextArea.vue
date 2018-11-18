@@ -1,27 +1,20 @@
 <template>
-  <input ref="input"
-         :placeholder="placeholder"
-         :value="value"
-         @input="update"/>
+  <textarea ref="input"
+            :value="value"
+            @input="$emit('input', $event.target.value)"/>
 </template>
 
 <script>
 export default {
   name: "BaseInput",
   props: {
-    placeholder: String,
     value: String
-  },
-  methods: {
-    update() {
-      this.$emit("input", this.$refs.input.value);
-    }
   }
 };
 </script>
 
 <style scoped>
-input {
+textarea {
   color: #192d46;
   border: 1px solid rgba(25, 45, 70, 0.25);
   border-radius: 3px;
@@ -32,12 +25,12 @@ input {
   line-height: 40px;
 }
 
-input:focus {
+textarea:focus {
   border-color: #0564D7;
   outline: none;
 }
 
-input::placeholder {
+textarea::placeholder {
   color: rgba(25, 45, 70, 0.6);
 }
 </style>

@@ -1,21 +1,27 @@
 <template>
-    <div class="cron">
-        <h1>{{ name }}</h1>
-        <span>{{ expr }}</span>
-        <span>{{ branch }}</span>
-        <!-- <div>{{ new Date(next * 1000).toString() }}</div> -->
-        <button v-on:click="$emit('delete', {name, expr, branch})">Delete</button>
-    </div>
+  <div class="cron">
+    <span>{{ name }}</span>
+    <Tag>{{ expr }}</Tag>
+    <Tag>{{ branch }}</Tag>
+    <Button @click="$emit('delete', {name, expr, branch})" theme="danger" outline borderless>Delete</Button>
+  </div>
 </template>
 
 <script>
+import Button from "@/components/buttons/Button";
+import Tag from "@/components/Tag";
+
 export default {
   name: "Cron",
+  components: {
+    Button,
+    Tag
+  },
   props: {
     name: String,
     expr: String,
     branch: String,
-    next: Number,
+    next: Number
   }
 };
 </script>
@@ -24,30 +30,15 @@ export default {
 .cron {
   align-items: center;
   display: flex;
-  font-size: 14px;
-  padding: 15px 0px;
-}
-
-h1 {
-  flex: 1;
+  padding: 20px 0;
 }
 
 span {
-  background: #EEE;
-  border-radius: 3px;
-  color: #888;
-  font-size: 12px;
-  margin-left: 10px;
-  padding: 5px 7px;
+  flex-grow: 1;
 }
 
-button {
-  background: none;
-  border: none;
-  color: red;
-  cursor: pointer;
-  font-size: 12px;
-  margin-left: 10px;
-  text-transform: uppercase;
+.tag {
+  flex-grow: 0;
+  margin-right: 5px;
 }
 </style>

@@ -1,13 +1,13 @@
 <template>
   <div class="build">
 
-    <Button class="back-to-feed-button" :to="`/${namespace}`">
+    <Button outline class="back-to-feed-button" :to="`/${namespace}`">
       <IconArrow direction="left"/>
       <span>activity feed</span>
     </Button>
 
     <div class="build-actions"  v-if="build">
-      <Button @click.native="handleCancel" v-if="!build.finished" :disabled="!isCollaborator">
+      <Button outline @click.native="handleCancel" v-if="!build.finished" :disabled="!isCollaborator">
         <span>Cancel</span>
         <!--todo, add new IconCancel <IconCancel/>-->
       </Button>
@@ -102,7 +102,7 @@
           <div class="output-actions">
             <PlayButton title="Follow logs" @click.native="toggleFollow" :pause="follow"></PlayButton>
             <div class="divider"></div>
-            <Button title="Fullscreen" @click.native="toggleOutputFullscreen" theme="default-light" :bordered="false">
+            <Button title="Fullscreen" @click.native="toggleOutputFullscreen" theme="light" outline borderless>
               <IconFullscreen :close="outputFullscreen" />
             </Button>
           </div>

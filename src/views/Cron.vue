@@ -1,28 +1,25 @@
 <template>
-  <div class="crons">
-    <div class="inner">
-      <header>
-        Cron Jobs
-      </header>
+  <Card contentPadding="0 15px">
+    <h2 slot="header">Cron Jobs</h2>
 
-      <div v-if="crons.length == 0" class="alert">
-        Your Cron List is Empty.
-      </div>
-
-      <Cron
-        v-for="cron in crons"
-        :key="cron.id"
-        :name="cron.name"
-        :expr="cron.expr"
-        :branch="cron.branch"
-        :next="cron.next"
-        v-on:delete="handleDelete"
-      />
+    <div v-if="crons.length === 0" class="alert">
+      Your Cron List is Empty.
     </div>
-  
-    <form @submit.prevent="handleSubmit" autocomplete="off">
-      <input placeholder="Cron Job Name" name="cron.name" v-model="cron.name" type="text" />
-      <input placeholder="Cron Job Branch" name="cron.branch" v-model="cron.branch" type="text" />
+
+    <Cron
+      v-for="cron in crons"
+      :key="cron.id"
+      :name="cron.name"
+      :expr="cron.expr"
+      :branch="cron.branch"
+      :next="cron.next"
+      v-on:delete="handleDelete"
+    />
+
+    <form @submit.prevent="handleSubmit" autocomplete="off" slot="footer">
+      <BaseInput placeholder="Cron Job Name" name="cron.name" v-model="cron.name" type="text"/>
+      <BaseInput placeholder="Cron Job Branch" name="cron.branch" v-model="cron.branch" type="text"/>
+
       <select v-model="cron.expr" name="cron.expr">
         <option value="@hourly">@hourly</option>
         <option value="@daily">@daily</option>
@@ -30,8 +27,9 @@
         <option value="@monthly ">@monthly</option>
         <option value="@yearly">@yearly</option>
       </select>
+
       <div class="actions">
-        <button type="submit">Add a Cron Job</button>
+        <Button type="submit" theme="primary">Add a Cron Job</Button>
       </div>
     </form>
 
@@ -41,18 +39,24 @@
 @monthly               | Run once a month, midnight, first of month | 0 0 0 1 * *
 @weekly                | Run once a week, midnight between Sat/Sun  | 0 0 0 * * 0
 @daily (or @midnight)  | Run once a day, midnight                   | 0 0 0 * * *
-@hourly 
+@hourly
 -->
-  </div>
+  </Card>
 </template>
 
 <script>
 import Cron from "@/components/cards/Cron.vue";
+import Card from "@/components/Card.vue";
+import BaseInput from "@/components/forms/BaseInput.vue";
+import Button from "@/components/buttons/Button.vue";
 
 export default {
   name: "cron",
   components: {
     Cron,
+    Card,
+    BaseInput,
+    Button
   },
   data() {
     return {
@@ -96,91 +100,24 @@ export default {
 </script>
 
 <style scoped>
-.crons {
-  background: #FFF;
-  border: 1px solid #e8eaed;
-  border-radius: 3px;
-  box-shadow: 0px 0px 8px 1px #e8eaed;
-  margin-bottom: 30px;
-}
-
-.inner {
-  padding: 0px 15px;
-}
-
-header {
-  font-size: 15px;
-  padding: 15px;
-  padding-left: 0px;
-  border-bottom: 1px solid #e8eaed;
-  font-weight: 600;
-}
-
 .alert {
-  color: #8d96a2;
-  padding: 45px 0px;
+  color: rgba(25, 45, 70, 0.6);
+  padding: 45px 0;
   text-align: center;
 }
 
-.secret:not(:last-of-type) {
-  border-bottom: 1px solid #e8eaed;
-}
-
-form {
-  background: #fbfbfb;
-  border-top: 1px solid #e8eaed;
-  padding: 15px 15px;
-}
-
-form input[type=text],
+form input[type="text"],
 form textarea {
-  border-radius: 3px;
-  border: 1px solid #e8eaed;
-  box-sizing: border-box;
   display: block;
-  font-size: 13px;
-  margin-bottom: 10px;
-  outline: none;
-  padding: 7px 10px;
+  margin-bottom: 15px;
   width: 100%;
+}
+
+.cron + .cron {
+  border-top: 1px solid rgba(25, 45, 70, 0.1);
 }
 
 form select {
   margin-bottom: 10px;
-}
-
-form input[type=text]:focus,
-form textarea:focus {
-  border: 1px solid #0060da;
-}
-
-form textarea {
-  height: 60px;
-}
-
-form button {
-  border: none;
-  background: #0060da;
-  border-radius: 3px;
-  color: #FFF;
-  font-size: 12px;
-  padding: 10px 20px;
-  text-transform: uppercase;
-}
-
-::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-  color: #909aa5;
-}
-
-::-moz-placeholder { /* Firefox 19+ */
-  color: #909aa5;
-}
-
-:-ms-input-placeholder { /* IE 10+ */
-  color: #909aa5;
-}
-
-:-moz-placeholder { /* Firefox 18- */
-  color: #909aa5;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-<Button class="more-button" :bordered="false">
+<Button class="more-button" theme="primary" outline borderless>
   <IconArrow direction="down"/>
   <span><slot></slot></span>
 </Button>
@@ -20,17 +20,15 @@ export default {
 
 <style scoped>
 button.more-button {
-  color: #0564d7;
   display: flex;
   text-transform: none;
   letter-spacing: normal;
   font-weight: 400;
 }
 
-button.more-button:hover,
-button.more-button:focus {
-  color: #0564d7;
-  outline: none;
+button.button.theme-primary.outline.more-button:hover,
+button.button.theme-primary.outline.more-button:focus {
+  background: none;
 }
 
 button.more-button:hover span,

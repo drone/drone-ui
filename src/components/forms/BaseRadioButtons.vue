@@ -1,31 +1,32 @@
 <template>
-  <div class="base-checkbox">
-    <input type="checkbox"
-           :id="name"
-           :checked="value"
-           @change="$emit('input', $event.target.checked)"
-    />
-    <label :for="name">
-      <slot></slot>
-    </label>
+  <div class="base-radio-buttons">
+    <div class="options" v-for="(oName, oValue) in options" :key="oValue">
+      <input type="radio"
+             :name="name"
+             :value="oValue"
+             :checked="oValue === value"
+             :id="`${name}-${oValue}`"
+             @change="$emit('input', $event.target.checked)"/>
+      <label :for="`${name}-${oValue}`">{{ oName }}</label>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "BaseCheckbox",
+  name: "BaseRadioButtons",
   props: {
-    name: { type: String, default: () => Math.random().toString() },
-    value: { type: Boolean, required: true }
+    name: { type: String, required: true },
+    value: { type: String, required: true },
+    options: { type: Object, required: true }
   }
 };
 </script>
 
-<!-- TODO: Think about extracting common code from BaseCheckbox and BaseRadioButtons -->
-
 <style scoped>
-.base-checkbox {
+.options {
   display: inline-block;
+  margin-right: 70px;
 }
 
 input {
@@ -49,7 +50,7 @@ label:before {
   width: 18px;
   height: 18px;
   border: 1px solid rgba(25, 45, 70, 0.25);
-  border-radius: 3px;
+  border-radius: 50%;
   top: 0;
   left: 0;
   background-color: #fff;

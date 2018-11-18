@@ -1,5 +1,5 @@
 <template>
-  <Button>
+  <Button outline>
     <span><slot></slot></span>
     <IconRestart/>
   </Button>

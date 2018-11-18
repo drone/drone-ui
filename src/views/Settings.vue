@@ -1,64 +1,53 @@
 <template>
   <div class="settings-view">
-    <section v-if="repo && isAdmin" class="settings">
-      <div>
-        <span>Visibility</span>
-        <span>
-          <select v-model="repo.visibility">
-            <option value="public">Public</option>
-            <option value="private">Private</option>
-            <option value="internal">Internal</option>
-          </select>
-        </span>
+    <Card contentPadding="0 15px 15px" v-if="isAdmin">
+      <h2 slot="header">Main</h2>
+
+      <div class="control-group">
+        <label class="control-label">Project settings</label>
+        <div class="controls">
+          <BaseCheckbox v-model="repo.protected">Protected</BaseCheckbox>
+          <BaseCheckbox v-model="repo.trusted" v-if="isRoot">Trusted</BaseCheckbox>
+        </div>
       </div>
 
-      <div>
-        <span>Protected</span>
-        <span>
-          <BaseCheckbox v-model="repo.protected"></BaseCheckbox>
-        </span>
+      <div class="control-group">
+        <label class="control-label">Project visibility</label>
+        <div class="controls">
+          <BaseRadioButtons v-model="repo.visibility"
+                            name="visibility"
+                            :options="{ public: 'Public', private: 'Private', internal: 'Internal'}"/>
+        </div>
       </div>
 
-      <div v-if="isRoot">
-        <span>Trusted</span>
-        <span>
-          <BaseCheckbox v-model="repo.trusted"></BaseCheckbox>
-        </span>
-      </div>
-
-      <div v-if="isRoot">
-        <span>Timeout</span>
-        <span>
+      <div v-if="isRoot" class="control-group">
+        <label class="control-label">Timeout</label>
+        <div class="controls">
           <select v-model="repo.timeout">
-            <option
-              v-for="timeout in timeouts"
-              v-bind:key="timeout" :value="timeout">
-                {{ timeout > 90
-                    ? timeout / 60 + " hours"
-                    : timeout + " minutes"
-                }}
+            <option v-for="timeout in timeouts"
+                    :key="timeout"
+                    :value="timeout">
+              {{ timeout > 90 ? timeout / 60 + " hours" : timeout + " minutes" }}
             </option>
           </select>
-        </span>
+        </div>
       </div>
 
-      <div>
-        <span>Configuration</span>
-        <span>
-          <input
-            type="text"
-            autocomplete="off"
-            autocorrect="off"
-            autocapitalize="off"
-            spellcheck="false"
-            v-model="repo.config_path" />
-        </span>
+      <div class="control-group">
+        <label class="control-label">Configuration</label>
+        <div class="controls">
+          <BaseInput v-model="repo.config_path"
+                     autocomplete="off"
+                     autocorrect="off"
+                     autocapitalize="off"
+                     spellcheck="false"/>
+        </div>
       </div>
+
       <div class="actions">
-        <button v-on:click="save">Save</button>
+        <Button theme="primary" @click.native="save">Save</Button>
       </div>
-    </section>
-
+    </Card>
 
     <!--
         The repair and chown buttons will require their own
@@ -74,7 +63,7 @@
     <Cron />
 
     <section v-if="repo.active && isAdmin" class="disable">
-      <button v-on:click="disable">Disable Repository</button>
+      <Button @click.native="disable" theme="danger">Disable Repository</Button>
       <p>You can disable your repository to stop processing builds.</p>
     </section>
   </div>
@@ -84,6 +73,10 @@
 import Secrets from "./Secrets.vue";
 import Cron from "./Cron.vue";
 import BaseCheckbox from "@/components/forms/BaseCheckbox.vue";
+import BaseRadioButtons from "@/components/forms/BaseRadioButtons.vue";
+import BaseInput from "@/components/forms/BaseInput.vue";
+import Card from "@/components/Card.vue";
+import Button from "@/components/buttons/Button.vue";
 
 export default {
   name: "settings",
@@ -94,8 +87,12 @@ export default {
   },
   components: {
     BaseCheckbox,
+    BaseRadioButtons,
+    BaseInput,
     Secrets,
     Cron,
+    Card,
+    Button
   },
   computed: {
     slug() {
@@ -151,120 +148,63 @@ const timeouts = [
 </script>
 
 <style scoped>
-section.settings {
-  background: #FFF;
-  border: 1px solid #e8eaed;
-  border-radius: 3px;
-  box-shadow: 0px 0px 8px 1px #e8eaed;
-  margin-bottom: 30px;
-  padding: 15px;
+.card {
+  margin-bottom: 20px;
 }
 
-section.disable {
+.control-group {
+  display: flex;
+  padding: 20px 0;
   align-items: center;
-  background: #FFF;
-  border: 1px solid #e8eaed;
-  border-radius: 3px;
-  box-shadow: 0px 0px 8px 1px #e8eaed;
-  display: flex;
-  margin-bottom: 30px;
-  padding: 15px;
 }
 
-section.disable button {
-  border: none;
-  background: #FFF;
-  border: 1px solid #de3a5d;
-  border-radius: 3px;
-  color: #de3a5d;
-  cursor: pointer;
-  font-size: 12px;
-  padding: 10px 20px;
-  text-transform: uppercase;
+.control-group + .control-group {
+  border-top: 1px solid rgba(25, 45, 70, 0.1);
 }
 
-section.disable button:hover {
-  color: #FFF;
-  background: #de3a5d;
+.control-group .control-label {
+  flex-basis: 150px;
+  margin-right: 15px;
+  color: rgba(25, 45, 70, 0.6);
 }
 
-section.disable p {
-  color: #98a1ab;
-  font-size: 14px;
-  padding: 0px 15px;
+.actions {
+  border-top: 1px solid rgba(25, 45, 70, 0.1);
+  padding-top: 15px;
 }
 
-
-.settings > div {
-  display: flex;
-  height: 35px;
-  margin-bottom: 10px;
-}
-.settings div > span {
-  align-items: center;
-  display: flex;
-  font-size: 13px;
-}
-.settings > div > span:first-of-type {
-  flex: 0 0 150px;
-}
-.settings > div > span:last-of-type {
-  flex: 1
+/* Settings specific */
+.control-group .controls .base-checkbox + .base-checkbox {
+  margin-left: 48px;
 }
 
-input[type="text"] {
-      border-radius: 3px;
-    border: 1px solid #e8eaed;
-    box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    display: block;
-    font-size: 13px;
-    outline: none;
-    padding: 7px 10px;
-    resize: none;
-    width: 100%;
-}
-
-.settings .actions {
-  border-top: 1px solid #EEE;
-  padding: 0px;
-  padding-top: 10px;
-  margin: 0px;
-}
-
-.settings button {
-  border: none;
-  background: #0060da;
-  border-radius: 3px;
-  color: #FFF;
-  font-size: 12px;
-  padding: 10px 20px;
-  text-transform: uppercase;
-}
-</style>
-
-<style>
 select {
   appearance: none;
-  -webkit-appearance: none;
   border-radius: 3px;
   border: 1px solid #e8eaed;
   box-sizing: border-box;
   cursor: pointer;
-  box-sizing: border-box;
   display: block;
   font-size: 13px;
   outline: none;
   padding: 7px 10px;
   resize: none;
   width: 100%;
-  position:relative;
+  position: relative;
 
   background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><polygon fill='#98a1ab' points='0,30 100, 30 50,90'/></svg>") no-repeat;
   background-size: 10px;
   background-position: center right 10px;
   background-repeat: no-repeat;
   background-color: #FFF;
+}
+
+.disable {
+  padding: 15px;
+}
+
+.disable p {
+  margin-top: 15px;
+  color: rgba(25, 45, 70, 0.6);
 }
 </style>
