@@ -19,17 +19,11 @@
     <form @submit.prevent="handleSubmit" autocomplete="off" slot="footer">
       <BaseInput placeholder="Cron Job Name" name="cron.name" v-model="cron.name" type="text"/>
       <BaseInput placeholder="Cron Job Branch" name="cron.branch" v-model="cron.branch" type="text"/>
+      <BaseSelect v-model="cron.expr" name="cron.expr" :options="cronExprOptions"/>
 
-      <select v-model="cron.expr" name="cron.expr">
-        <option value="@hourly">@hourly</option>
-        <option value="@daily">@daily</option>
-        <option value="@weekly">@weekly</option>
-        <option value="@monthly ">@monthly</option>
-        <option value="@yearly">@yearly</option>
-      </select>
-
-      <div class="actions">
+      <div class="control-actions">
         <Button type="submit" theme="primary">Add a Cron Job</Button>
+        <div class="error-message" v-if="error">{{ error.message }}</div>
       </div>
     </form>
 
@@ -48,6 +42,7 @@
 import Cron from "@/components/cards/Cron.vue";
 import Card from "@/components/Card.vue";
 import BaseInput from "@/components/forms/BaseInput.vue";
+import BaseSelect from "@/components/forms/BaseSelect.vue";
 import Button from "@/components/buttons/Button.vue";
 
 export default {
@@ -56,16 +51,18 @@ export default {
     Cron,
     Card,
     BaseInput,
+    BaseSelect,
     Button
   },
   data() {
     return {
+      error: null,
       cron: {
         name: "",
         expr: "@weekly",
-        branch: "",
+        branch: ""
       }
-    }
+    };
   },
   computed: {
     slug() {
@@ -75,6 +72,9 @@ export default {
       const crons = this.$store.state.crons[this.slug];
       return Object.values(crons || {})
     },
+    cronExprOptions() {
+      return ["@hourly", "@daily", "@weekly", "@monthly", "@yearly"].map(x => [x, x]);
+    }
   },
   methods: {
     handleDelete: function (cron) {
@@ -82,18 +82,23 @@ export default {
       this.$store.dispatch('deleteCron', { namespace, name, cron });
     },
     handleSubmit: function (event) {
+      const { onFailure } = this;
       const {namespace, name} = this.$route.params;
       const cron = {
         name: this.cron.name,
         expr: this.cron.expr,
         branch: this.cron.branch || (this.repo && this.repo.branch) || "master",
       };
-      this.$store.dispatch('createCron', { namespace, name, cron });
+      this.$store.dispatch('createCron', { namespace, name, cron, onFailure });
+      this.createRequestSent = true;
       this.cron = {
         name: "",
         expr: "@weekly",
         branch: "",
       }
+    },
+    onFailure(error) {
+      this.error = error;
     }
   }
 };
@@ -119,5 +124,15 @@ form textarea {
 
 form select {
   margin-bottom: 10px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+}
+
+.error-message {
+  color: #ff4164;
+  margin-left: 15px;
 }
 </style>

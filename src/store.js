@@ -132,7 +132,7 @@ export default new Vuex.Store({
     REPO_UPDATE_LOADING(state) {},
     REPO_UPDATE_FAILURE(state) {},
     REPO_UPDATE_SUCCESS(state, {namespace, name, repo}) {
-      Vue.set(state.repos, repo.slug, repo);
+      Vue.set(state.repos, repo.slug, { ...state.repos[repo.slug], ...repo });
     },
 
     REPO_ENABLE_LOADING(state) {
@@ -228,7 +228,9 @@ export default new Vuex.Store({
     },
 
     SECRET_CREATE_LOADING(state){},
-    SECRET_CREATE_FAILURE(state){},
+    SECRET_CREATE_FAILURE(state, e) {
+      Vue.set(state, "secretCreationError", e.error);
+    },
     SECRET_CREATE_SUCCESS(state, data){
       const slug = `${data.namespace}/${data.name}`;
       let secrets = state.secrets[slug];
@@ -269,8 +271,8 @@ export default new Vuex.Store({
     },
   
     CRON_CREATE_LOADING(state){},
-    CRON_CREATE_FAILURE(state, e){
-      console.log(e)
+    CRON_CREATE_FAILURE(state, e) {
+      Vue.set(state, "cronCreationError", e.error);
     },
     CRON_CREATE_SUCCESS(state, data){
       const slug = `${data.namespace}/${data.name}`;

@@ -71,7 +71,7 @@ export const SECRET_CREATE_FAILURE = 'SECRET_CREATE_FAILURE';
  * createSecret creates the secret and dispatches an event
  * to purge the object from the store.
  */
-export const createSecret = async ({commit}, {namespace, name, secret}) => {
+export const createSecret = async ({ commit }, { namespace, name, secret, onFailure }) => {
 	commit(SECRET_CREATE_LOADING);
 
 	const body = JSON.stringify(secret);
@@ -80,6 +80,7 @@ export const createSecret = async ({commit}, {namespace, name, secret}) => {
 
 	if (req.status > 299) {
 		commit(SECRET_CREATE_FAILURE, {namespace, name, error: res});
+    onFailure && onFailure(res);
 	} else {
 		commit(SECRET_CREATE_SUCCESS, {namespace, name, secret: res});
 	}

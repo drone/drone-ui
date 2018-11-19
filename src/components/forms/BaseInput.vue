@@ -1,21 +1,12 @@
 <template>
-  <input ref="input"
-         :placeholder="placeholder"
-         :value="value"
-         @input="update"/>
+  <input :value="value" @input="$emit('input', $event.target.value)"/>
 </template>
 
 <script>
 export default {
   name: "BaseInput",
   props: {
-    placeholder: String,
     value: String
-  },
-  methods: {
-    update() {
-      this.$emit("input", this.$refs.input.value);
-    }
   }
 };
 </script>
@@ -30,10 +21,15 @@ input {
   padding: 0 15px;
   height: 40px;
   line-height: 40px;
+  background: #fff;
+}
+
+input[type="search"] {
+  -webkit-appearance: none;
 }
 
 input:focus {
-  border-color: #0564D7;
+  border-color: #0564d7;
   outline: none;
 }
 

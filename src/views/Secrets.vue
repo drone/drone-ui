@@ -18,8 +18,9 @@
       <BaseTextArea name="secret.data" v-model="secret.data" placeholder="Secret Value"/>
       <BaseCheckbox v-model="secret.pullRequest" style="margin-bottom: 12px;">Allow Pull Requests</BaseCheckbox>
 
-      <div class="actions">
+      <div class="control-actions">
         <Button type="submit" theme="primary">Add a Secret</Button>
+        <div class="error-message" v-if="error">{{ error.message }}</div>
       </div>
     </form>
   </Card>
@@ -45,6 +46,7 @@ export default {
   },
   data() {
     return {
+      error: null,
       secret: {
         name: "",
         data: "",
@@ -66,19 +68,23 @@ export default {
       const { namespace, name } = this.$route.params;
       this.$store.dispatch("deleteSecret", { namespace, name, secret });
     },
-    handleSubmit: function(event) {
+    handleSubmit() {
+      const { onFailure } = this;
       const { namespace, name } = this.$route.params;
       const secret = {
         name: this.secret.name,
         data: this.secret.data,
         pull_request: this.secret.pullRequest
       };
-      this.$store.dispatch("createSecret", { namespace, name, secret });
+      this.$store.dispatch("createSecret", { namespace, name, secret, onFailure });
       this.secret = {
         name: "",
         data: "",
         pullRequest: false
       };
+    },
+    onFailure(error) {
+      this.error = error;
     }
   }
 };

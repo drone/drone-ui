@@ -1,12 +1,10 @@
 <template>
-  <textarea ref="input"
-            :value="value"
-            @input="$emit('input', $event.target.value)"/>
+  <textarea :value="value" @input="$emit('input', $event.target.value)"/>
 </template>
 
 <script>
 export default {
-  name: "BaseInput",
+  name: "BaseTextArea",
   props: {
     value: String
   }

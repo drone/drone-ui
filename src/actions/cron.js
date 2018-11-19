@@ -72,7 +72,7 @@ export const CRON_CREATE_FAILURE = 'CRON_CREATE_FAILURE';
  * createCron creates the cron job and dispatches an event
  * to purge the object from the store.
  */
-export const createCron = async ({commit}, {namespace, name, cron}) => {
+export const createCron = async ({ commit }, { namespace, name, cron, onFailure }) => {
 	commit(CRON_CREATE_LOADING);
 
 	const body = JSON.stringify(cron);
@@ -81,6 +81,7 @@ export const createCron = async ({commit}, {namespace, name, cron}) => {
 
 	if (req.status > 299) {
 		commit(CRON_CREATE_FAILURE, {namespace, name, error: res});
+    onFailure && onFailure(res);
 	} else {
 		commit(CRON_CREATE_SUCCESS, {namespace, name, cron: res});
 	}

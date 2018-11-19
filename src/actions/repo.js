@@ -181,16 +181,22 @@ export const REPO_UPDATE_FAILURE = 'REPO_UPDATE_FAILURE';
  * updateRepo updates the repository and dispatches an event
  * to purge the object from the store.
  */
-export const updateRepo = async ({commit}, {namespace, name, repo}) => {
-	commit(REPO_UPDATE_LOADING);
+export const updateRepo = async ({ commit }, { namespace, name, repo, onFailure }) => {
+  commit(REPO_UPDATE_LOADING);
 
-    const body = JSON.stringify(repo);
-	const req = await fetch(`${instance}/api/repos/${namespace}/${name}`, {headers, method: 'PATCH', body, credentials: 'same-origin'});
-    const res = await req.json();
+  const body = JSON.stringify(repo);
+  const req = await fetch(`${instance}/api/repos/${namespace}/${name}`, {
+    headers,
+    method: "PATCH",
+    body,
+    credentials: "same-origin"
+  });
+  const res = await req.json();
 
-	if (req.status < 300) {
-        commit(REPO_UPDATE_SUCCESS, {namespace, name, repo: res});
-	} else {
-		commit(REPO_UPDATE_FAILURE, {namespace, name, error: res});
-    }
-}
+  if (req.status < 300) {
+    commit(REPO_UPDATE_SUCCESS, { namespace, name, repo: res });
+  } else {
+    commit(REPO_UPDATE_FAILURE, { namespace, name, error: res });
+    onFailure && onFailure(res);
+  }
+};
