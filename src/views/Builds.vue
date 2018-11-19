@@ -11,11 +11,11 @@
       :to="'/'+slug + '/' + build.number">
       <RepoItem metaAlign="left"
                 :number="build.number"
-                :message="build.author_login"
                 :title="build.message"
                 :status="build.status"
                 :build="build"
                 :avatar="build.author_avatar"
+                :repoLink="repo.link"
                 :hide="['commit']"/>
     </router-link>
 
@@ -25,7 +25,7 @@
 
 <script>
 import Alert from "@/components/Alert.vue";
-import RepoItem from "@/components/RepoItem.vue";
+import RepoItem from "@/components/RepoItem2.vue";
 import MoreButton from "@/components/buttons/MoreButton.vue";
 
 export default {
@@ -55,6 +55,9 @@ export default {
     },
     hasMore() {
       return this.limitedBuilds.length < this.builds.length;
+    },
+    repo() {
+      return this.$store.state.repos[this.slug];
     }
   },
   methods: {
@@ -66,8 +69,8 @@ export default {
 </script>
 
 <style>
-.builds .build .repo-item .header h3 .number,
-.builds .build:hover .repo-item .header h3 {
+.builds .build .repo-item .header .number,
+.builds .build:hover .repo-item .header {
   color: #0564d7;
 }
 </style>

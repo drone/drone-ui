@@ -6,11 +6,11 @@
         if this should be moved to the base layout.
     -->
     <Breadcrumb>
-      <router-link :to="'/'">Repositories</router-link>
+      <router-link :to="'/'" class="link">Repositories</router-link>
 
       <IconArrow direction="right"/>
 
-      <router-link v-if="$route.params.build" :to="'/'+slug">{{ slug }}</router-link>
+      <router-link v-if="$route.params.build" :to="'/'+slug" class="link">{{ slug }}</router-link>
       <span v-else>{{ slug }}</span>
 
       <IconArrow direction="right" v-if="$route.params.build"/>
