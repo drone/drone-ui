@@ -1,45 +1,48 @@
 <template>
-    <div v-bind:class="{ [variant]: true }">
-        <slot></slot>
-    </div>
+  <Card :class="{ [`theme-${theme}`]: true }">
+    <slot></slot>
+    <div class="secondary"><slot name="secondary"></slot></div>
+  </Card>
 </template>
 
 <script>
-
-const SUCCESS = "success";
-const INFO = "info";
-const WARNING = "warning";
-const ERROR = "error";
+import Card from "@/components/Card.vue";
 
 export default {
   name: "Alert",
+  components: {
+    Card
+  },
   props: {
-    variant: String
+    theme: String
   }
 };
 </script>
 
 <style scoped>
-div {
-    background: #FFF;
-    border: 1px solid #EEE;
-    border-radius: 3px;
-    font-size: 15px;
-    padding: 30px;
-    text-align: center;
+.card {
+  font-size: 15px;
+  padding: 30px;
+  text-align: center;
 }
-small {
-    color: #8f99a4;
-    display: block;
-    font-size: 14px;
-    margin-top: 8px;
+
+.secondary {
+  color: rgba(25, 45, 70, 0.6);
+  font-size: 14px;
+  margin-top: 8px;
 }
-div.success {
-    color: #00d88a;
+
+.theme-success {
+  color: #00d88a;
 }
-div.info {}
-div.warning {}
-div.error {
-    color: #ff3e61;
+
+.theme-info {
+}
+
+.theme-warning {
+}
+
+.theme-error {
+  color: #ff3e61;
 }
 </style>

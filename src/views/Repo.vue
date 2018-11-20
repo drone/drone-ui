@@ -37,23 +37,23 @@
          page.
     -->
     <nav v-if="showTabs">
-      <router-link :to="'/'+slug">Activity Feed</router-link>
-      <router-link :to="'/'+slug + '/badges'">Badges</router-link>
+      <router-link :to="'/'+slug" :disabled="!repo.active">Activity Feed</router-link>
+      <router-link :to="'/'+slug + '/badges'" :disabled="!repo.active">Badges</router-link>
       <router-link :to="'/'+slug + '/settings'" v-if="showSettings">Settings</router-link>
     </nav>
 
     <Alert v-if="repoEnablingErr && repoEnablingErr.status === 402">
       You have reached your repository activation limit.
-      <small>Please contact your system administrator.</small>
+      <span slot="secondary">Please contact your system administrator.</span>
     </Alert>
     <Alert v-else-if="repoEnablingErr">
       There was a problem enabling your repository.
-      <small>{{ repoEnablingErr.message }}.</small>
+      <span slot="secondary">{{ repoEnablingErr.message }}.</span>
     </Alert>
-    <div class="alert activate" v-else-if="showActivatePrompt">
-      <button v-on:click="handleActivate" :disabled="repoEnabling">Activate</button>
-      Activate this repository 
-    </div>
+    <Card v-else-if="showActivatePrompt">
+      <Button theme="primary" @click.native="handleActivate" :disabled="repoEnabling">Activate</Button>
+      Activate this repository
+    </Card>
 
     <!--
         this is the router outlet for all repository pages, including
@@ -67,13 +67,19 @@
 import Alert from "@/components/Alert.vue";
 import Breadcrumb from "@/components/Breadcrumb.vue";
 import IconArrow from "@/components/icons/IconArrow.vue";
+import Link from "@/components/Link.vue";
+import Button from "@/components/buttons/Button.vue";
+import Card from "@/components/Card.vue";
 
 export default {
   name: "repo",
   components: {
     Alert,
     Breadcrumb,
-    IconArrow
+    IconArrow,
+    Link, /* styles required */
+    Button,
+    Card
   },
   computed: {
     slug() {
@@ -103,9 +109,7 @@ export default {
       return this.repo && this.repo.active;
     },
     showTabs() {
-      return this.$route.name != 'build' &&
-        this.$route.name != 'step' &&
-        (this.repo && this.repo.active);
+      return this.$route.name !== "build" && this.$route.name !== "step" && this.repo;
     },
     showSettings() {
       return this.repo && this.repo.permissions && this.repo.permissions.write;
@@ -165,6 +169,13 @@ nav a:focus {
   color: #192d46;
 }
 
+nav a[disabled],
+nav a[disabled]:hover,
+nav a[disabled]:focus {
+  pointer-events: none;
+  color: rgba(25, 45, 70, 0.25);
+}
+
 nav .router-link-exact-active {
   border-bottom: 1px solid #192d46;
   color: #192d46;
@@ -177,21 +188,8 @@ nav .router-link-exact-active {
   opacity: 0;
 }
 
-.alert.activate {
-  padding: 15px;
-  background: #FFF;
-  border: 1px solid #EEE;
-}
 .alert.activate button {
   margin-right: 10px;
-  border: none;
-  background: #0060da;
-  border-radius: 3px;
-  color: #FFF;
-  cursor: pointer;
-  font-size: 12px;
-  padding: 7px 20px;
-  text-transform: uppercase;
 }
 
 .breadcrumb svg {

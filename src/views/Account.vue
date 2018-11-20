@@ -56,8 +56,7 @@ export default {
   },
   computed: {
     instance() {
-      const {host, protocol} = this.$store.state.instance;
-      return `${protocol}//${host}`
+      return this.$store.state.instance.url;
     },
     user() {
       return this.$store.state.user;

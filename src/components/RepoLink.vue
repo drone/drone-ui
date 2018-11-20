@@ -1,6 +1,6 @@
 <template>
   <router-link class="repo-link"
-               :to="`/${repo.namespace}/${repo.name}`"
+               :to="to"
                :class="{ [`hover-type-${hoverType}`]: true, 'repo-active': repo.active }"
                :tabindex="focusable ? 0 : -1">
     <slot></slot>
@@ -14,6 +14,13 @@ export default {
     repo: Object,
     hoverType: { type: String, default: "box-shadow" },
     focusable: { type: Boolean, default: true }
+  },
+  computed: {
+    to() {
+      const { repo } = this;
+      const tab = repo.active ? "" : "settings";
+      return `/${repo.namespace}/${repo.name}/${tab}`;
+    }
   }
 };
 </script>

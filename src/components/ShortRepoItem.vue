@@ -2,7 +2,7 @@
     <div class="repo-item repo-item-short" v-bind:class="{ 'repo-item-inactive': !active }">
         <LogoGit />
         <h3>{{ namespace }}/{{ name }}</h3>
-        <Button v-if="!active" @click="activate" theme="primary" outline borderless>Activate</Button>
+        <Button v-if="!active" @click.native="activate" theme="primary" outline borderless>Activate</Button>
     </div>
 </template>
 

@@ -27,6 +27,10 @@ export default {
   line-height: 18px;
 }
 
+.breadcrumb a {
+  margin-right: 10px;
+}
+
 .breadcrumb span {
   color: rgba(25, 45, 70, 0.75);
 }

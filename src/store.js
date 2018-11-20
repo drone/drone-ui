@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import actions from "./actions";
 import AnsiUp from "ansi_up";
+import * as config from "./actions/config";
 
 Vue.use(Vuex);
 
@@ -14,10 +15,9 @@ export default new Vuex.Store({
     },
 
     instance: {
-      host: window.location.host,
-      protocol: window.location.protocol,
+      url: config.instance || `${window.location.protocol}//${window.location.host}`
     },
-  
+
     latest: {},
     latestUpdated: 0,
     latestLoaded: false,

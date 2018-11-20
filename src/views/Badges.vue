@@ -2,10 +2,10 @@
   <div class="badges">
     <CardGroup>
       <Card>
-        <header slot="header">
+        <div slot="header" class="header">
           <h2>Badges</h2>
           <img :src="image" />
-        </header>
+        </div>
 
         <CodeSnippetGroup>
           <CodeSnippet>
@@ -50,8 +50,7 @@ export default {
   },
   computed: {
     instance() {
-      const {host, protocol} = this.$store.state.instance;
-      return `${protocol}//${host}`
+      return this.$store.state.instance.url;
     },
     name() {
       return this.$route.params.namespace + '/' + this.$route.params.name;
@@ -73,7 +72,12 @@ export default {
 </script>
 
 <style scoped>
-header > h2 {
-  flex: 1;
+.header {
+  display: flex;
+  align-items: center;
+}
+
+.header h2 {
+  flex-grow: 1;
 }
 </style>

@@ -136,7 +136,13 @@ export default {
 
 .button.theme-default:focus,
 .button.theme-default:hover {
+  background-color: rgba(25, 45, 70, 0.8);
+}
+
+.button.theme-default.outline:focus,
+.button.theme-default.outline:hover {
   color: #0564d7;
+  background-color: transparent;
 }
 
 .button.theme-light:focus,

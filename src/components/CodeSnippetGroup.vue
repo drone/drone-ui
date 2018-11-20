@@ -5,13 +5,7 @@
 </template>
 
 <style scoped>
-.code-snippet-group {
-  padding: 15px;
-}
-.code-snippet-group .code-snippet {
-  margin-bottom: 15px;
-}
-.code-snippet-group .code-snippet:last-of-type {
-  margin-bottom: 0px;
+.code-snippet-group .code-snippet + .code-snippet {
+  margin-top: 15px;
 }
 </style>
