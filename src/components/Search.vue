@@ -10,7 +10,7 @@
                @input="onInput"/>
     <div class="icon">/</div>
 
-    <ReposPopup v-if="queryTrimmed && opened"
+    <ReposPopup v-if="popupOpened"
                 emptyText="Repositories not found"
                 :repos="results"
                 :loaded="loaded"
@@ -81,6 +81,9 @@ export default {
     },
     queryTrimmed() {
       return this.query.trim();
+    },
+    popupOpened() {
+      return this.queryTrimmed && this.opened;
     }
   },
   methods: {
@@ -90,12 +93,12 @@ export default {
     open() {
       this.opened = true;
       this.nextOpened = true;
-      this.overlay.open();
+      this.actualizeOverlay();
     },
     close() {
       this.opened = false;
       this.nextOpened = false;
-      this.overlay.close();
+      this.actualizeOverlay();
     },
     closeDelayed() {
       this.nextOpened = false;
@@ -132,6 +135,14 @@ export default {
     stopPropagationAndPreventDefault(e) {
       e.stopPropagation();
       e.preventDefault();
+    },
+    actualizeOverlay() {
+      this.popupOpened ? this.overlay.open() : this.overlay.close();
+    }
+  },
+  watch: {
+    popupOpened() {
+      this.actualizeOverlay();
     }
   },
   mounted() {
