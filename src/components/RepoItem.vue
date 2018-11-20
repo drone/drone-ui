@@ -17,8 +17,8 @@
           <span>{{build.author_login}}</span>
           <span> {{action}} </span>
           <span class="label">{{actionTargetLabel}}</span>
-          <span v-if="toLabel"> to <span class="label">{{ toLabel }}</span></span>
-          <span class="commit-message" v-if="build.message"> — {{ build.message }}</span>
+          <span v-if="toLabel" class="to"> to <span class="label" :title="toLabel">{{ toLabel }}</span></span>
+          <span class="commit-message" v-if="build.message" :title="build.message"> — {{ build.message }}</span>
         </div>
 
         <div class="time">
@@ -173,7 +173,16 @@ section {
   line-height: 20px;
   background-color: rgba(5, 100, 215, 0.07);
   color: #0564d7;
-  padding: 0 3px;
+  padding: 0 4px;
+  border-radius: 2px;
+}
+
+.description .to .label {
+  display: inline-block;
+  max-width: 35%;
+  vertical-align: bottom;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .description .commit-message {

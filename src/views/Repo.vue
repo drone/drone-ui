@@ -160,14 +160,14 @@ nav {
 }
 
 nav a {
-  box-sizing: border-box;
   color: rgba(25, 45, 70, 0.6);
-  height: 30px;
-  line-height: 29px;
+  height: 18px;
+  line-height: 18px;
+  padding-bottom: 11px;
   text-transform: uppercase;
   margin-bottom: -1px;
   letter-spacing: 0.5px;
-  font-weight: 500;
+  font-weight: 600;
   display: flex;
   align-items: center;
   margin-right: 30px;
@@ -186,7 +186,7 @@ nav a[disabled]:focus {
 }
 
 nav a svg {
-  margin: 1px 5px 0 0;
+  margin: 0 5px 0 0;
 }
 
 nav .router-link-exact-active {
