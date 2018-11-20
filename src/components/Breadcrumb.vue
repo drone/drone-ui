@@ -1,45 +1,37 @@
-<template>
-  <div class="breadcrumb">
-    <LogoGit/>
-    <div class="slot">
-      <slot></slot>
-    </div>
-  </div>
-</template>
-
 <script>
-import LogoGit from "./logos/LogoGit.vue";
-
 export default {
   name: "Breadcrumb",
-  components: {
-    LogoGit
+  render(createElement) {
+    const items = [];
+    const slotItems = this.$slots.default;
+
+    for (let i = 0; i < slotItems.length; ++i) {
+      if (i !== 0 && slotItems[i].tag) {
+        const divider = createElement("span", { class: "divider" }, "/");
+        items.push(divider);
+      }
+
+      items.push(slotItems[i]);
+    }
+
+    return createElement("div", { class: "breadcrumbs" }, items);
   }
 };
 </script>
 
 <style>
-.breadcrumb {
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  height: 80px;
-  line-height: 18px;
+.breadcrumbs {
+  font-size: 18px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-right: 30px;
+  padding: 5px 0;
 }
 
-.breadcrumb a {
-  margin-right: 10px;
-}
-
-.breadcrumb span {
-  color: rgba(25, 45, 70, 0.75);
-}
-
-.breadcrumb > svg {
-  width: 20px;
-  height: 20px;
-  margin-left: 15px;
-  margin-right: 10px;
+.breadcrumbs .divider {
+  padding: 0 10px;
+  color: rgba(25, 45, 70, 0.25);
 }
 </style>
 

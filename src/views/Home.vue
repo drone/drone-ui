@@ -1,17 +1,15 @@
 <template>
   <div>
-
-    <header>
+    <PageHeader>
       <Breadcrumb>
-        <span>
-          Repositories
-          <span class="count">— {{ reposCount(latest) }}</span>
-        </span>
+        <span>Repositories</span>
       </Breadcrumb>
 
-      <ReButton v-if="!syncing" class='sync-button' @click.native="sync">Sync</ReButton>
-      <div v-if="syncing" class="syncing"><IconSpinner /> Syncing</div>
-    </header>
+      <div>
+        <ReButton v-if="!syncing" class='sync-button' @click.native="sync">Sync</ReButton>
+        <div v-if="syncing" class="syncing"><IconSpinner /> Syncing</div>
+      </div>
+    </PageHeader>
 
     <transition name="fade">
       <Alert v-show="showEmptyAlert">
@@ -64,10 +62,12 @@ import ReButton from "@/components/buttons/ReButton.vue";
 import RepoLink from "@/components/RepoLink.vue";
 
 import reposSort from "@/lib/reposSort";
+import PageHeader from "../components/PageHeader";
 
 export default {
   name: "home",
   components: {
+    PageHeader,
     Alert,
     Breadcrumb,
     ShortRepoItem,
@@ -119,32 +119,12 @@ export default {
     },
     sync: function() {
       this.$store.dispatch('syncAccount');
-    },
-    reposCount: function(items) {
-      return Object.keys(items).length;
     }
   }
 };
 </script>
 
 <style scoped>
-header {
-  display: flex;
-  align-items: center;
-}
-
-header .breadcrumb {
-  flex: 1;
-}
-
-.count {
-  opacity: 0.667; /* 0.75*0.667=0.5 */
-}
-
-.sync-button {
-  margin-right: 15px;
-}
-
 .syncing {
   align-items: center;
   background: #ffd300;

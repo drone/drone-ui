@@ -4,7 +4,6 @@
 
 <style>
 .link {
-  margin-right: 10px;
   text-decoration: none;
   color: #0564d7;
   height: 18px;

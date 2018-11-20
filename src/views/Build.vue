@@ -1,19 +1,5 @@
 <template>
   <div class="build">
-
-    <Button outline class="back-to-feed-button" :to="`/${namespace}`">
-      <IconArrow direction="left"/>
-      <span>activity feed</span>
-    </Button>
-
-    <div class="build-actions"  v-if="build">
-      <Button outline @click.native="handleCancel" v-if="!build.finished" :disabled="!isCollaborator">
-        <span>Cancel</span>
-        <!--todo, add new IconCancel <IconCancel/>-->
-      </Button>
-      <ReButton @click.native="handleRestart" v-if="build.finished" :disabled="!isCollaborator">Restart</ReButton>
-    </div>
-
     <div v-if="buildLoadingErr">
       Cannot retrieve the Build details.
     </div>
@@ -295,19 +281,6 @@ export default {
 </script>
 
 <style scoped>
-.back-to-feed-button {
-  margin: 0 0 20px 15px;
-}
-
-.back-to-feed-button span {
-  margin-left: 8px;
-}
-
-.build-actions {
-  float: right;
-  margin-right: 15px;
-}
-
 main {
   display: flex;
   align-items: flex-start;

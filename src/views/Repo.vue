@@ -5,27 +5,24 @@
         the repository page and sub-pages. TODO evaluate
         if this should be moved to the base layout.
     -->
-    <Breadcrumb>
-      <router-link :to="'/'" class="link">Repositories</router-link>
+    <PageHeader>
+      <Breadcrumb>
+        <router-link :to="'/'" class="link">Repositories</router-link>
 
-      <IconArrow direction="right"/>
+        <router-link v-if="$route.params.build" :to="'/'+slug" class="link repo-name-breadcrumb" :title="slug">{{ slug }}</router-link>
+        <span :title="slug" v-else>{{ slug }}</span>
 
-      <router-link v-if="$route.params.build" :to="'/'+slug" class="link">{{ slug }}</router-link>
-      <span v-else>{{ slug }}</span>
+        <span v-if="$route.params.build">#{{ $route.params.build }}</span>
+      </Breadcrumb>
 
-      <IconArrow direction="right" v-if="$route.params.build"/>
-
-      <span v-if="$route.params.build">#{{ $route.params.build }}</span>
-
-      <transition name="fade">
-        <div class="loading" v-show="repoLoading">Loading...</div>
-      </transition>
-    </Breadcrumb>
-
-    <!--
-        this section provides the repository header.
-    -->
-    <h1 v-if="repo">{{ repo.name }}</h1>
+      <div v-if="build">
+        <Button outline @click.native="handleCancel" v-if="!build.finished" :disabled="!isCollaborator">
+          <span>Cancel</span>
+          <!--todo, add new IconCancel <IconCancel/>-->
+        </Button>
+        <ReButton @click.native="handleRestart" v-if="build.finished" :disabled="!isCollaborator">Restart</ReButton>
+      </div>
+    </PageHeader>
 
     <Alert v-if="error" style="margin-top:30px;">
       Repository Not Found.
@@ -36,7 +33,14 @@
          enabled for all sub-pages with the exception of the build
          page.
     -->
-    <nav v-if="showTabs">
+    <nav v-if="$route.name === 'build'">
+      <router-link :to="'/'+slug">
+        <IconArrow direction="left"/>
+        <span>Activity Feed</span>
+      </router-link>
+    </nav>
+
+    <nav v-else-if="showTabs">
       <router-link :to="'/'+slug" :disabled="!repo.active">Activity Feed</router-link>
       <router-link :to="'/'+slug + '/badges'" :disabled="!repo.active">Badges</router-link>
       <router-link :to="'/'+slug + '/settings'" v-if="showSettings">Settings</router-link>
@@ -67,19 +71,23 @@
 import Alert from "@/components/Alert.vue";
 import Breadcrumb from "@/components/Breadcrumb.vue";
 import IconArrow from "@/components/icons/IconArrow.vue";
-import Link from "@/components/Link.vue";
 import Button from "@/components/buttons/Button.vue";
 import Card from "@/components/Card.vue";
+import PageHeader from "@/components/PageHeader";
+import Link from "@/components/Link";
+import ReButton from "@/components/buttons/ReButton.vue";
 
 export default {
   name: "repo",
   components: {
+    PageHeader,
     Alert,
     Breadcrumb,
     IconArrow,
-    Link, /* styles required */
     Button,
-    Card
+    Card,
+    Link,
+    ReButton
   },
   computed: {
     slug() {
@@ -112,7 +120,14 @@ export default {
       return this.$route.name !== "build" && this.$route.name !== "step" && this.repo;
     },
     showSettings() {
+      return this.isCollaborator;
+    },
+    isCollaborator() {
       return this.repo && this.repo.permissions && this.repo.permissions.write;
+    },
+    build() {
+      const { builds } = this.$store.state;
+      return this.repo && builds[this.slug] && builds[this.slug][this.$route.params.build];
     }
   },
   methods: {
@@ -128,40 +143,34 @@ export default {
 </script>
 
 <style scoped>
-h1 {
-  margin-bottom: 25px;
-  padding-left: 15px;
-
-  height: 41px;
-  font-size: 30px;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  color: #192d46;
+.repo-name-breadcrumb {
+  max-width: 500px;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  vertical-align: bottom;
 }
 
 nav {
   border-bottom: 1px solid rgba(25, 45, 70, 0.1);
   margin-bottom: 20px;
   padding-left: 15px;
+  display: flex;
 }
 
 nav a {
   box-sizing: border-box;
   color: rgba(25, 45, 70, 0.6);
-  display: inline-block;
   height: 30px;
   line-height: 29px;
   text-transform: uppercase;
   margin-bottom: -1px;
   letter-spacing: 0.5px;
   font-weight: 500;
-}
-
-nav a + a {
-  margin-left: 30px;
+  display: flex;
+  align-items: center;
+  margin-right: 30px;
 }
 
 nav a:hover,
@@ -174,6 +183,10 @@ nav a[disabled]:hover,
 nav a[disabled]:focus {
   pointer-events: none;
   color: rgba(25, 45, 70, 0.25);
+}
+
+nav a svg {
+  margin: 1px 5px 0 0;
 }
 
 nav .router-link-exact-active {
@@ -190,12 +203,6 @@ nav .router-link-exact-active {
 
 .alert.activate button {
   margin-right: 10px;
-}
-
-.breadcrumb svg {
-  padding-top: 1px;
-  margin-right: 10px;
-  color: rgba(25, 45, 70, 0.6);
 }
 
 .loading {
