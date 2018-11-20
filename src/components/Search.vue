@@ -15,7 +15,6 @@
                 :repos="results"
                 :loaded="loaded"
                 :popupProps="{position: 'bottom', align: 'center', width: 980}"
-                :hideRepoItemFields="['commit']"
                 @itemSelect="onItemSelect"/>
   </BaseForm>
 </template>

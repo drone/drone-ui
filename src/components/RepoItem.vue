@@ -1,59 +1,37 @@
 <template>
-    <section class="repo-item">
-        <div class="container-left">
-            <Status :status="status" />
-            <div class="connector"></div>
-        </div>
-        <div class="content">
-            <div class="header">
-                <h3 :title="title">
-                    <span class="number" v-if="number">
-                        #{{ number }}
-                        <span class="dash">– </span>
-                    </span>
-                    <span class="title">{{ title }}</span>
-                </h3>
-                <span><slot></slot></span>
-            </div>
-            <div class="metadata" :class="[`align-${metaAlign}`]">
-                <img :src="avatar" />
-                <p class="message" :title="message">{{ message }}</p>
+  <section class="repo-item">
+    <div class="container-left">
+      <Status :status="status"/>
+      <div class="connector"></div>
+    </div>
 
-                <span class="finished" v-if="!hide.includes('finished')">
-                    <IconCalendar />{{ new Date(build.created * 1000) | moment("from", "now") }}
-                </span>
-                <span class="duration" v-if="!hide.includes('duration')">
-                    <IconClock /><TimeElapsed v-if="build.started" :started="build.started" :stopped="build.finished" />
-                </span>
-                <span class="commit" v-if="!hide.includes('commit')">
-                    <IconCommit />
-                    <a v-if="link" target="_blank" :href="link">{{ commitShaShort }}</a>
-                    <span v-else>{{ commitShaShort }}</span>
-                </span>
-                <span class="branch">
-                    <IconBranch v-if="build.event == 'push'" />
-                    <IconMerge v-else-if="build.event == 'pull_request'" />
-                    <IconTag v-else-if="build.event == 'tag'" />
-                    <IconPromote v-else-if="build.event == 'promote'" />
-                    <IconRollback v-else-if="build.event == 'rollback'" />
-                    <IconBranch v-else />
-                    <span :title="branchMetaValue">{{ branchMetaValue }}</span>
-                </span>
-            </div>
+    <div class="content">
+      <div class="header" :title="title">
+        <span class="number" v-if="number">#{{ number }}<span class="dash"> – </span></span>
+        <span class="title">{{ title }}</span>
+      </div>
+
+      <div class="build">
+        <img :src="avatar"/>
+        <div class="description">
+          <span>{{build.author_login}}</span>
+          <span> {{action}} </span>
+          <span class="label">{{actionTargetLabel}}</span>
+          <span v-if="toLabel"> to <span class="label">{{ toLabel }}</span></span>
+          <span class="commit-message" v-if="build.message"> — {{ build.message }}</span>
         </div>
-    </section>
+
+        <div class="time">
+          <TimeElapsed v-if="build.started" :started="build.started" :stopped="build.finished"/>
+          <span v-if="build.started" class="dot"></span>
+          <span>{{ new Date(build.created * 1000) | moment("from", "now") }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>
-import IconClock from "./icons/IconClock.vue";
-import IconCalendar from "./icons/IconCalendar.vue";
-import IconCommit from "./icons/IconCommit.vue";
-import IconBranch from "./icons/events/EventPush.vue";
-import IconMerge from "./icons/events/EventPullRequest.vue";
-import IconPromote from "./icons/events/EventPromote.vue";
-import IconRollback from "./icons/events/EventRollback.vue";
-import IconTag from "./icons/events/EventTag.vue";
-
 import Status from "./Status.vue";
 import TimeElapsed from "./TimeElapsed.vue";
 
@@ -62,41 +40,40 @@ export default {
   props: {
     number: Number,
     status: String,
-    message: String,
     title: String,
-    link: String,
-    author: String,
     avatar: String,
-    build: Object,
-    hide: { type: Array, default: () => [] },
-    metaAlign: {
-      type: String,
-      default: "right",
-      validator: val => ["right", "left"].includes(val)
-    }
+    build: Object
   },
   components: {
-    IconBranch,
-    IconCalendar,
-    IconClock,
-    IconCommit,
-    IconMerge,
-    IconPromote,
-    IconRollback,
-    IconTag,
     Status,
-    TimeElapsed,
+    TimeElapsed
   },
   computed: {
+    action() {
+      const { event } = this.build;
+      if (event === "pull_request") return "opened pull request";
+      if (event === "tag") return "created tag";
+      if (event === "promote") return "promoted";
+      return "pushed";
+    },
+    actionTargetLabel() {
+      const { event, ref } = this.build;
+      if (event === "pull_request") return "#" + this.trimMergeRef(ref);
+      if (event === "tag") return this.trimTagRef(ref);
+      if (event === "promote") return this.branch;
+      return this.commitShaShort;
+    },
+    toLabel() {
+      const { event } = this.build;
+      if (event === "push" || event === "pull_request") {
+        return this.branch;
+      }
+    },
     commitShaShort() {
       return this.build.after && this.build.after.substr(0, 8);
     },
     branch() {
       return this.build.target;
-    },
-    branchMetaValue() {
-      const { event, ref } = this.build;
-      return event === "pull_request" ? this.trimMergeRef(ref) : event === "tag" ? this.trimTagRef(ref) : this.branch;
     }
   },
   methods: {
@@ -104,29 +81,39 @@ export default {
       const match = ref.match(/\d/g);
       return match && match.length > 0 ? match[0] : ref;
     },
-	trimTagRef: function(ref) {
+    trimTagRef: function(ref) {
       return ref.startsWith("refs/tags/") ? ref.substr(10) : ref;
-    },
+    }
   }
 };
-
 </script>
 
 <style scoped>
 section {
-    border-radius: 3px;
-    box-sizing: border-box;
-    box-shadow: 0 2px 4px 0 rgba(25, 45, 70, 0.05);
-    border: solid 1px #EDEEF1;
-    background-color: #ffffff;
-    color: #192d46;
-    padding: 15px;
-    transition: box-shadow linear 0.2s;
+  border-radius: 3px;
+  box-sizing: border-box;
+  box-shadow: 0 2px 4px 0 rgba(25, 45, 70, 0.05);
+  border: solid 1px #edeef1;
+  background-color: #ffffff;
+  color: #192d46;
+  padding: 15px;
+  transition: box-shadow linear 0.2s;
+}
+
+.header {
+  height: 22px;
+  font-size: 18px;
+  line-height: normal;
+  color: #192d46;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-bottom: 6px;
 }
 
 .container-left {
-    width: 30px;
-    position: absolute;
+  width: 30px;
+  position: absolute;
 }
 
 .number .dash {
@@ -139,127 +126,72 @@ section {
 }
 
 .connector {
-    width: 15px;
-    height: 15px;
-    opacity: 0.2;
-    border-bottom-left-radius: 8px;
-    border-left: solid 1px #192d46;
-    border-bottom: solid 1px #192d46;
-    float: right;
-    margin-right: 5px;
+  width: 15px;
+  height: 15px;
+  opacity: 0.2;
+  border-bottom-left-radius: 8px;
+  border-left: solid 1px #192d46;
+  border-bottom: solid 1px #192d46;
+  float: right;
+  margin-right: 5px;
 }
 
 .content {
-    padding-left: 30px;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    max-width: 100%;
-}
-
-.metadata {
-    display: inline-flex;
-    flex: 1;
-    align-items: center;
-}
-
-.metadata.align-right .message {
+  padding-left: 30px;
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
+  max-width: 100%;
 }
 
-.metadata.align-right span.branch {
-  flex: 1 0 150px;
-}
-
-.metadata.align-left .message {
-  flex: 0 0 115px;
-}
-
-.metadata > span,
-.metadata .message {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  box-sizing: border-box;
-  line-height: normal;
+.build {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   color: rgba(25, 45, 70, 0.6);
 }
 
-.metadata .message {
-  padding-right: 15px;
-}
-
-h3 {
-  flex: 1;
-  height: 22px;
-  font-size: 18px;
-  line-height: normal;
-  color: #192d46;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-img {
+.build > img {
+  flex-shrink: 0;
   border-radius: 50%;
   margin-right: 10px;
   width: 20px;
   height: 20px;
 }
 
-.metadata svg {
-  fill: #192d46;
-  margin-right: 7px;
-  height: 16px;
-  width: 16px;
-  opacity: 0.6;
-  vertical-align: baseline;
-  flex-shrink: 0;
+.description {
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: normal;
+  color: rgba(25, 45, 70, 0.6);
+  margin-right: 15px;
 }
 
-.metadata > span {
-  height: 24px;
-  border-left: 1px solid rgba(25, 45, 70, 0.05);
-  padding: 0 15px;
+.description .label {
+  line-height: 20px;
+  background-color: rgba(5, 100, 215, 0.07);
+  color: #0564d7;
+  padding: 0 3px;
+}
+
+.description .commit-message {
+  font-style: italic;
+}
+
+.time {
+  flex-shrink: 0;
   display: flex;
   align-items: center;
 }
 
-.metadata > span.finished {
-  flex: 0 0 140px;
-}
-
-.metadata > span.commit {
-  flex: 0 0 110px;
-}
-.metadata > span.duration {
-  flex: 0 0 105px;
-}
-
-.metadata > span.branch {
-  padding-right: 0;
-}
-
-.metadata > span > span {
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-
-.metadata > span a {
-    color: rgba(25, 45, 70, 0.6);
-}
-
-.metadata > span a:focus,
-.metadata > span a:hover {
-  color: #192d46;
-  outline: none;
-}
-
-.header {
-    display: flex;
-    margin-bottom: 6px;
-}
-.header span {
-    text-align: right;
+.time .dot {
+  display: inline-block;
+  width: 3px;
+  height: 3px;
+  background: rgba(25, 45, 70, 0.25);
+  border-radius: 50%;
+  margin: 0 6px;
 }
 </style>

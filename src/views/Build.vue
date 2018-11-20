@@ -9,10 +9,8 @@
       :number="build.number"
       :status="build.status"
       :title="build.message"
-      :message="build.author_login"
-      :link="build.link"
       :avatar="build.author_avatar"
-      :build="build"/>
+      :build="Object.assign({}, build, { message: null })"/>
 
     <main v-if="!isBuildError">
       <div class="stages">

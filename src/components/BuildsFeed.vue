@@ -14,7 +14,6 @@
                 :repos="latest"
                 :loaded="loaded"
                 :popupProps="{position: 'bottom', align: 'right', width: 570}"
-                :hideRepoItemFields="['commit', 'finished']"
                 @itemSelect="close"/>
   </div>
 </template>
@@ -43,7 +42,7 @@ export default {
   },
   computed: {
     latest() {
-      const repos = Object.values(this.$store.state.latest).filter(x => x.build || true);
+      const repos = Object.values(this.$store.state.latest).filter(x => x.build);
       return reposSort(repos).slice(0, 5);
     },
     loaded() {

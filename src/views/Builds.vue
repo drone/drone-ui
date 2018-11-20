@@ -13,10 +13,8 @@
                 :number="build.number"
                 :title="build.message"
                 :status="build.status"
-                :build="build"
-                :avatar="build.author_avatar"
-                :repoLink="repo.link"
-                :hide="['commit']"/>
+                :build="shrinkBuild(build)"
+                :avatar="build.author_avatar"/>
     </router-link>
 
     <MoreButton v-if="hasMore" @click.native="showMore">Show more</MoreButton>
@@ -25,7 +23,7 @@
 
 <script>
 import Alert from "@/components/Alert.vue";
-import RepoItem from "@/components/RepoItem2.vue";
+import RepoItem from "@/components/RepoItem.vue";
 import MoreButton from "@/components/buttons/MoreButton.vue";
 
 export default {
@@ -63,6 +61,9 @@ export default {
   methods: {
     showMore() {
       this.limit += 10;
+    },
+    shrinkBuild(build) {
+      return { ...build, message: null };
     }
   }
 };

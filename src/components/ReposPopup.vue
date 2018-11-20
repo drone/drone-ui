@@ -22,9 +22,7 @@
                 :title="`${repo.namespace}/${repo.name}`"
                 :build="repo.build"
                 :status="repo.build.status"
-                :message="repo.build.message"
-                :avatar="repo.build.author_avatar"
-                :hide="hideRepoItemFields"/>
+                :avatar="repo.build.author_avatar"/>
     </RepoLink>
   </Popup>
 </template>
@@ -47,8 +45,7 @@ export default {
     popupProps: Object,
     loaded: { type: Boolean, default: false },
     repos: Array,
-    emptyText: { type: String, default: "List is empty" },
-    hideRepoItemFields: Array
+    emptyText: { type: String, default: "List is empty" }
   },
   data() {
     return {

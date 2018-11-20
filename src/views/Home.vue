@@ -40,9 +40,7 @@
                     :title="`${repo.namespace}/${repo.name}`"
                     :build="repo.build"
                     :status="repo.build.status"
-                    :message="repo.build.message"
-                    :avatar="repo.build.author_avatar"
-                    :hide="['commit']"/>
+                    :avatar="repo.build.author_avatar"/>
         </RepoLink>
       </div>
     </div>
