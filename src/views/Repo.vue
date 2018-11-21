@@ -247,10 +247,6 @@ nav a svg {
   margin: 0 5px 0 0;
 }
 
-nav a.manually-active svg {
-  opacity: 0.6;
-}
-
 nav .router-link-exact-active {
   border-color: #192d46;
   color: #192d46;
