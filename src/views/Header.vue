@@ -2,7 +2,7 @@
   <div class="header">
     <div class="logo">
         <router-link to="/">
-            <Logo class="logo" />
+            <Logo/>
         </router-link>
     </div>
 
@@ -67,7 +67,7 @@ export default {
 .logo {
   width: 30px;
   height: 30px;
-  padding-right: 60px;
+  margin-right: 60px;
   flex-shrink: 0;
 }
 

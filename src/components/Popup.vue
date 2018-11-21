@@ -1,6 +1,6 @@
 <template>
   <div class="popup"
-       :class="{ [`position-${position}`]: true, [`align-${align}`]: true }"
+       :class="{ [`position-${position}`]: true, [`align-${align}`]: true, 'width-same': width === 'same' }"
        :style="style">
     <slot></slot>
   </div>
@@ -10,8 +10,8 @@
 export default {
   name: "Popup",
   props: {
-    position: String,
-    align: String,
+    position: { type: String, required: true, validator: x => ["bottom"].includes(x) },
+    align: { type: String, required: true, validator: x => ["center", "right", "both"].includes(x) },
     width: Number
   },
   computed: {
@@ -19,7 +19,9 @@ export default {
       const result = {};
 
       if (this.position === "bottom") {
-        result.width = `${this.width}px`;
+        if (this.align === "right") {
+          result.width = `${this.width}px`;
+        }
 
         if (this.align === "center") {
           result.marginLeft = `-${this.width / 2}px`;
@@ -53,6 +55,11 @@ export default {
 
 .popup.position-bottom.align-right {
   right: 0;
+}
+
+.popup.position-bottom.align-both {
+  right: 0;
+  left: 0;
 }
 </style>
 
