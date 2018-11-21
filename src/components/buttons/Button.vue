@@ -22,6 +22,7 @@ export default {
     borderless: { type: Boolean, default: false },
     outline: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
+    size: { type: String, default: "m", validator: val => ["m", "l"].includes(val) },
     theme: {
       type: String,
       default: "default",
@@ -35,13 +36,13 @@ export default {
   },
   render(createElement) {
     const tag = getTag(this);
-    const { bordered, outline, disabled } = this;
+    const { bordered, outline, disabled, theme, size } = this;
 
     return createElement(
       tag,
       {
         domProps: { disabled },
-        class: { button: true, bordered, outline, [`theme-${this.theme}`]: true },
+        class: { button: true, bordered, outline, [`theme-${theme}`]: true, [`size-${size}`]: true },
         props: getElementProps(tag, this)
       },
       this.$slots.default
@@ -84,8 +85,6 @@ export default {
   display: inline-block;
   text-transform: uppercase;
   cursor: pointer;
-  height: 30px;
-  line-height: 30px;
   padding: 0 10px;
   box-sizing: border-box;
   letter-spacing: 0.5px;
@@ -95,15 +94,28 @@ export default {
   transition: background-color linear 0.2s;
 }
 
-.button > span {
-  transition: color linear 0.2s;
+.button.size-m {
+  height: 30px;
+  line-height: 30px;
+}
+
+.button.size-l {
+  height: 40px;
+  line-height: 40px;
 }
 
 .button.bordered {
-  line-height: 28px;
   border: 1px solid rgba(25, 45, 70, 0.25);
   color: #192d46;
   transition: border-color linear 0.2s;
+}
+
+.button.bordered.size-m {
+  line-height: 28px;
+}
+
+.button.bordered.size-l {
+  line-height: 38px;
 }
 
 .button.theme-default {
@@ -184,5 +196,9 @@ export default {
   opacity: 0.25;
   border-color: rgba(25, 45, 70, 0.5);
   color: #192d46;
+}
+
+.button > span {
+  transition: color linear 0.2s;
 }
 </style>
