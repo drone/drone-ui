@@ -11,7 +11,7 @@ import IconPlay from "../icons/IconPlay.vue";
 import IconPause from "../icons/IconPause.vue";
 
 export default {
-  name: "ReButton",
+  name: "PlayButton",
   components: {
     Button,
     IconPlay,

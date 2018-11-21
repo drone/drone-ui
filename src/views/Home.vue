@@ -6,7 +6,10 @@
       </Breadcrumb>
 
       <div>
-        <ReButton v-if="!syncing" class='sync-button' @click.native="sync">Sync</ReButton>
+        <Button v-if="!syncing" class='sync-button' @click.native="sync" outline>
+          <span>Sync</span>
+          <IconSync/>
+        </Button>
         <div v-if="syncing" class="syncing"><IconSpinner /> Syncing</div>
       </div>
     </PageHeader>
@@ -55,8 +58,9 @@ import ShortRepoItem from "@/components/ShortRepoItem.vue";
 import RepoItem from "@/components/RepoItem.vue";
 import Breadcrumb from "@/components/Breadcrumb.vue";
 import IconSpinner from "@/components/icons/IconSpinner.vue";
+import IconSync from "@/components/icons/IconSync.vue";
 import MoreButton from "@/components/buttons/MoreButton.vue";
-import ReButton from "@/components/buttons/ReButton.vue";
+import Button from "@/components/buttons/Button.vue";
 import RepoLink from "@/components/RepoLink.vue";
 
 import reposSort from "@/lib/reposSort";
@@ -70,9 +74,10 @@ export default {
     Breadcrumb,
     ShortRepoItem,
     MoreButton,
+    Button,
     RepoItem,
     IconSpinner,
-    ReButton,
+    IconSync,
     RepoLink
   },
   data() {

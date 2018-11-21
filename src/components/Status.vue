@@ -10,7 +10,7 @@
     <Pending v-if="status === 'waiting_on_dependencies'"/>
     <Running v-if="status === 'running'"/>
     <Running v-if="status === 'started'"/>
-    <Skipped v-if="status === 'skipped'"/>
+    <Failure v-if="status === 'skipped'"/> <!-- a cross like in failure -->
     <Success v-if="status === 'success'"/>
   </div>
 </template>
@@ -20,7 +20,6 @@ import Blocked from "./icons/status/StatusBlocked.vue";
 import Failure from "./icons/status/StatusFailure.vue";
 import Pending from "./icons/status/StatusPending.vue";
 import Running from "./icons/status/StatusRunning.vue";
-import Skipped from "./icons/status/StatusSkipped.vue";
 import Success from "./icons/status/StatusSuccess.vue";
 
 export default {
@@ -34,7 +33,6 @@ export default {
     Failure,
     Pending,
     Running,
-    Skipped,
     Success
   }
 };

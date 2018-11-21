@@ -1,19 +1,19 @@
 <template>
     <div class="repo-item repo-item-short" v-bind:class="{ 'repo-item-inactive': !active }">
-        <LogoGit />
+        <IconRepository />
         <h3>{{ namespace }}/{{ name }}</h3>
         <Button v-if="!active" @click.native="activate" theme="primary" outline borderless>Activate</Button>
     </div>
 </template>
 
 <script>
-import LogoGit from "./logos/LogoGit.vue";
+import IconRepository from "./icons/IconRepository.vue";
 import Button from "./buttons/Button.vue";
 
 export default {
   name: "ShortRepoItem",
   components: {
-    LogoGit,
+    IconRepository,
     Button
   },
   props: {
@@ -46,9 +46,10 @@ div {
 }
 
 svg {
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  color: #c6cbd1;
 }
 
 .repo-item-inactive h3 {

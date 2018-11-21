@@ -120,10 +120,8 @@ import Step from "@/components/Step.vue";
 import Stage from "@/components/Stage.vue";
 
 import IconCancel from "@/components/icons/IconCancel.vue";
-import ReButton from "@/components/buttons/ReButton.vue";
 import Button from "@/components/buttons/Button.vue";
 import PlayButton from "@/components/buttons/PlayButton.vue";
-import IconArrow from "@/components/icons/IconArrow.vue";
 import IconFullscreen from "@/components/icons/IconFullscreen.vue";
 import ScrollLock from "@/components/utils/ScrollLock.vue";
 
@@ -134,11 +132,9 @@ export default {
     RepoItem,
     Step,
     Stage,
-    ReButton,
     IconCancel,
     Button,
     PlayButton,
-    IconArrow,
     ScrollLock,
     IconFullscreen
   },
@@ -209,18 +205,6 @@ export default {
   methods: {
     handleMore: function() {
       this.$store.dispatch('expandLogs');
-    },
-    handleCancel: function() {
-      const {namespace, name, build} = this.$route.params;
-      this.$store.dispatch('cancelBuild', {namespace, name, build})
-    },
-    handleRestart: function() {
-      const {namespace, name, build} = this.$route.params;
-
-      let router = this.$router;
-      this.$store.dispatch('createBuild', {namespace, name, build}).then((data) => {
-        router.push(`/${namespace}/${name}/${data.build.number}`);
-      })
     },
     toggleOutputFullscreen() {
       this.outputFullscreen = !this.outputFullscreen;
@@ -355,6 +339,16 @@ main {
   display: flex;
   align-items: center;
 }
+
+/*.output-actions .button > svg {*/
+  /*color: #fff;*/
+  /*opacity: 0.6;*/
+/*}*/
+
+/*.output-actions .button:focus > svg*/
+/*.output-actions .button:hover > svg {*/
+  /*opacity: 1;*/
+/*}*/
 
 .output-actions .divider {
   display: inline-block;

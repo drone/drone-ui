@@ -57,9 +57,22 @@ export default {
 }
 
 .button > svg {
+  width: 20px;
+  height: 20px;
+  opacity: 0.6;
+  margin-bottom: -5px;
+  transition: opacity linear 0.2s;
+}
+
+.button:focus > svg,
+.button:hover > svg {
+  opacity: 1;
+}
+
+.button.theme-light.outline > svg {
   width: 18px;
   height: 18px;
-  margin-bottom: -4px;
+  margin-top: -4px;
 }
 </style>
 
@@ -82,7 +95,7 @@ export default {
   transition: background-color linear 0.2s;
 }
 
-.button > * {
+.button > span {
   transition: color linear 0.2s;
 }
 
@@ -114,7 +127,7 @@ export default {
 }
 
 .button.theme-light.outline {
-  color: rgba(255, 255, 255, 0.6);
+  color: #fff;
 }
 
 .button.theme-primary.outline {
@@ -143,11 +156,6 @@ export default {
 .button.theme-default.outline:hover {
   color: #0564d7;
   background-color: transparent;
-}
-
-.button.theme-light:focus,
-.button.theme-light:hover {
-  color: #fff;
 }
 
 .button.theme-primary:focus,

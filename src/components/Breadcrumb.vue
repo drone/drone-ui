@@ -1,13 +1,18 @@
 <script>
+import IconArrow from "@/components/icons/IconArrow";
+
 export default {
   name: "Breadcrumb",
+  components: {
+    IconArrow
+  },
   render(createElement) {
     const items = [];
     const slotItems = this.$slots.default;
 
     for (let i = 0; i < slotItems.length; ++i) {
       if (i !== 0 && slotItems[i].tag) {
-        const divider = createElement("span", { class: "divider" }, "/");
+        const divider = createElement(IconArrow, { class: "divider", props: { direction: "right" } });
         items.push(divider);
       }
 
@@ -19,7 +24,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .breadcrumbs {
   font-size: 18px;
   overflow: hidden;
@@ -31,14 +36,7 @@ export default {
 
 .breadcrumbs .divider {
   padding: 0 10px;
-  color: rgba(25, 45, 70, 0.25);
-}
-</style>
-
-<style scoped>
-.slot {
-  height: 24px;
-  display: flex;
-  align-items: center;
+  color: rgba(25, 45, 70, 0.6);
+  vertical-align: bottom;
 }
 </style>

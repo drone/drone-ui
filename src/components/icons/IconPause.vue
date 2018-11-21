@@ -1,9 +1,9 @@
 <template>
-  <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg">
+  <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
     <g fill="none" fill-rule="evenodd">
-      <g transform="translate(1 1)" fill-rule="nonzero" stroke="currentColor">
-        <rect x="11" width="5" height="16" rx="1"/>
-        <rect width="5" height="16" rx="1"/>
+      <g fill="currentColor" fill-rule="nonzero">
+        <path
+          d="M13 1.65a.35.35 0 0 0-.35.35v14c0 .193.157.35.35.35h3a.35.35 0 0 0 .35-.35V2a.35.35 0 0 0-.35-.35h-3zm0-1.3h3c.911 0 1.65.739 1.65 1.65v14A1.65 1.65 0 0 1 16 17.65h-3A1.65 1.65 0 0 1 11.35 16V2c0-.911.739-1.65 1.65-1.65zM2 1.65a.35.35 0 0 0-.35.35v14c0 .193.157.35.35.35h3a.35.35 0 0 0 .35-.35V2A.35.35 0 0 0 5 1.65H2zm0-1.3h3c.911 0 1.65.739 1.65 1.65v14A1.65 1.65 0 0 1 5 17.65H2A1.65 1.65 0 0 1 .35 16V2C.35 1.089 1.089.35 2 .35z"/>
       </g>
     </g>
   </svg>

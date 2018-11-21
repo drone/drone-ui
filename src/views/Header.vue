@@ -65,10 +65,9 @@ export default {
 }
 
 .logo {
-    grid-column: 1;
-    width: 90px;
-    height: 30px;
-    text-align: left;
+  width: 30px;
+  height: 30px;
+  padding-right: 60px;
 }
 
 .login {

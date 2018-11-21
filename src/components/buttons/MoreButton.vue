@@ -26,6 +26,10 @@ button.more-button {
   font-weight: 400;
 }
 
+button.more-button svg {
+  opacity: 1;
+}
+
 button.button.theme-primary.outline.more-button:hover,
 button.button.theme-primary.outline.more-button:focus {
   background: none;

@@ -16,11 +16,18 @@
       </Breadcrumb>
 
       <div v-if="build">
-        <Button outline @click.native="handleCancel" v-if="!build.finished" :disabled="!isCollaborator">
+        <Button outline
+                @click.native="handleCancel"
+                v-if="!build.finished"
+                :disabled="!isCollaborator"
+                class="button-cancel">
           <span>Cancel</span>
-          <!--todo, add new IconCancel <IconCancel/>-->
+          <IconCancel/>
         </Button>
-        <ReButton @click.native="handleRestart" v-if="build.finished" :disabled="!isCollaborator">Restart</ReButton>
+        <Button outline @click.native="handleRestart" v-if="build.finished" :disabled="!isCollaborator">
+          <span>Restart</span>
+          <IconRestart/>
+        </Button>
       </div>
     </PageHeader>
 
@@ -71,11 +78,12 @@
 import Alert from "@/components/Alert.vue";
 import Breadcrumb from "@/components/Breadcrumb.vue";
 import IconArrow from "@/components/icons/IconArrow.vue";
+import IconCancel from "@/components/icons/IconCancel.vue";
 import Button from "@/components/buttons/Button.vue";
 import Card from "@/components/Card.vue";
 import PageHeader from "@/components/PageHeader";
 import Link from "@/components/Link";
-import ReButton from "@/components/buttons/ReButton.vue";
+import IconRestart from "@/components/icons/IconRestart.vue";
 
 export default {
   name: "repo",
@@ -84,10 +92,11 @@ export default {
     Alert,
     Breadcrumb,
     IconArrow,
+    IconCancel,
+    IconRestart,
     Button,
     Card,
-    Link,
-    ReButton
+    Link
   },
   computed: {
     slug() {
@@ -138,6 +147,18 @@ export default {
         name: name,
       });
     },
+    handleCancel: function() {
+      const { namespace, name, build } = this.$route.params;
+      this.$store.dispatch("cancelBuild", { namespace, name, build });
+    },
+    handleRestart: function() {
+      const { namespace, name, build } = this.$route.params;
+
+      let router = this.$router;
+      this.$store.dispatch("createBuild", { namespace, name, build }).then(data => {
+        router.push(`/${namespace}/${name}/${data.build.number}`);
+      });
+    }
   }
 };
 </script>
@@ -150,6 +171,12 @@ export default {
   white-space: nowrap;
   text-overflow: ellipsis;
   vertical-align: bottom;
+}
+
+.button-cancel svg {
+  width: 15px;
+  height: 15px;
+  margin-bottom: -2px;
 }
 
 nav {
@@ -171,6 +198,7 @@ nav a {
   display: flex;
   align-items: center;
   margin-right: 30px;
+  transition: color linear 0.2s;
 }
 
 nav a:hover,
