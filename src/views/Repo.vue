@@ -14,6 +14,10 @@
 
         <span v-if="$route.params.build">#{{ $route.params.build }}</span>
       </Breadcrumb>
+    </PageHeader>
+
+    <PageHeader class="secondary-page-header">
+      <h1 v-if="repo">{{ repo.name }}</h1>
 
       <div v-if="build">
         <Button outline
@@ -30,6 +34,7 @@
         </Button>
       </div>
     </PageHeader>
+
 
     <Alert v-if="error" style="margin-top:30px;">
       Repository Not Found.
@@ -171,6 +176,22 @@ export default {
   white-space: nowrap;
   text-overflow: ellipsis;
   vertical-align: bottom;
+  padding: 2px 0;
+}
+
+.repo-name-breadcrumb.link:focus:after,
+.repo-name-breadcrumb.link:hover:after {
+  bottom: 0;
+}
+
+.secondary-page-header {
+  height: auto;
+  margin-bottom: 30px;
+}
+
+h1 {
+  line-height: 38px;
+  font-size: 28px;
 }
 
 .button-cancel svg {
@@ -199,6 +220,7 @@ nav a {
   align-items: center;
   margin-right: 30px;
   transition: color linear 0.2s;
+  border-bottom: 1px solid transparent;
 }
 
 nav a:hover,
@@ -218,7 +240,7 @@ nav a svg {
 }
 
 nav .router-link-exact-active {
-  border-bottom: 1px solid #192d46;
+  border-color: #192d46;
   color: #192d46;
 }
 

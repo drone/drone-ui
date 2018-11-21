@@ -26,7 +26,8 @@ export default {
 
 <style scoped>
 .breadcrumbs {
-  font-size: 18px;
+  display: flex;
+  align-items: center;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -37,6 +38,5 @@ export default {
 .breadcrumbs .divider {
   padding: 0 10px;
   color: rgba(25, 45, 70, 0.6);
-  vertical-align: bottom;
 }
 </style>

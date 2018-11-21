@@ -6,7 +6,6 @@
 .link {
   text-decoration: none;
   color: #0564d7;
-  height: 18px;
 }
 
 .link:focus,
