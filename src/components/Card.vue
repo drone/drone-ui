@@ -33,7 +33,7 @@ section {
 header {
   height: 50px;
   line-height: 50px;
-  border-bottom: 1px solid rgba(25, 45, 70, 0.1);
+  border-bottom: 1px solid rgba(25, 45, 70, 0.05);
   padding: 0 15px;
   font-size: 16px;
   font-weight: 600;
@@ -45,7 +45,7 @@ header {
 
 footer {
   background-color: rgba(25, 45, 70, 0.03);
-  border-top: 1px solid rgba(25, 45, 70, 0.1);
+  border-top: 1px solid rgba(25, 45, 70, 0.05);
   padding: 15px;
 }
 </style>

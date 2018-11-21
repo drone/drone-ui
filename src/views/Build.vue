@@ -292,7 +292,7 @@ main {
   border-radius: 6px;
   box-shadow: 0px 0px 8px 1px #e8eaed;
   box-sizing: border-box;
-  margin-left: 15px;
+  margin-left: 20px;
   padding: 0;
   width: 665px;
 }

@@ -46,7 +46,7 @@
          page.
     -->
     <nav v-if="$route.name === 'build'">
-      <router-link :to="'/'+slug">
+      <router-link :to="'/'+slug" class="manually-active">
         <IconArrow direction="left"/>
         <span>Activity Feed</span>
       </router-link>
@@ -201,7 +201,7 @@ h1 {
 }
 
 nav {
-  border-bottom: 1px solid rgba(25, 45, 70, 0.1);
+  border-bottom: 1px solid rgba(25, 45, 70, 0.05);
   margin-bottom: 20px;
   padding-left: 15px;
   display: flex;
@@ -215,17 +215,25 @@ nav a {
   text-transform: uppercase;
   margin-bottom: -1px;
   letter-spacing: 0.5px;
-  font-weight: 600;
+  font-weight: 500;
   display: flex;
   align-items: center;
   margin-right: 30px;
-  transition: color linear 0.2s;
   border-bottom: 1px solid transparent;
+}
+
+nav a.manually-active {
+  color: #192d46;
 }
 
 nav a:hover,
 nav a:focus {
   color: #192d46;
+}
+
+nav a.manually-active:focus,
+nav a.manually-active:hover {
+  color: #0564d7;
 }
 
 nav a[disabled],
@@ -237,6 +245,10 @@ nav a[disabled]:focus {
 
 nav a svg {
   margin: 0 5px 0 0;
+}
+
+nav a.manually-active svg {
+  opacity: 0.6;
 }
 
 nav .router-link-exact-active {

@@ -19,7 +19,7 @@
       <BaseCheckbox v-model="secret.pullRequest" style="margin-bottom: 12px;">Allow Pull Requests</BaseCheckbox>
 
       <div class="control-actions">
-        <Button type="submit" theme="primary">Add a Secret</Button>
+        <Button type="submit" theme="primary" size="l">Add a Secret</Button>
         <div class="error-message" v-if="error">{{ error.message }}</div>
       </div>
     </form>
@@ -105,7 +105,7 @@ form textarea {
 }
 
 .secret + .secret {
-  border-top: 1px solid rgba(25, 45, 70, 0.1);
+  border-top: 1px solid rgba(25, 45, 70, 0.05);
 }
 
 form textarea {

@@ -24,7 +24,6 @@ footer {
 
 nav a {
   color: rgba(25, 45, 70, 0.6);
-  transition: color linear 0.2s;
 }
 
 nav a:hover,

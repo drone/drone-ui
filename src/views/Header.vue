@@ -68,6 +68,11 @@ export default {
   width: 30px;
   height: 30px;
   padding-right: 60px;
+  flex-shrink: 0;
+}
+
+.right-block {
+  flex-shrink: 0;
 }
 
 .login {

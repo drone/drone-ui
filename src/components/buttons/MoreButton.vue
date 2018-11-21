@@ -48,7 +48,6 @@ button.more-button:focus svg {
 button svg + span {
   border-bottom: 1px solid transparent;
   margin-left: 6px;
-  transition: border-color linear 0.2s;
 }
 
 span {
@@ -59,6 +58,5 @@ span {
 svg {
   color: rgba(25, 45, 70, 0.6);
   margin: 5px 0 0;
-  transition: color linear 0.2s;
 }
 </style>

@@ -39,7 +39,7 @@
       </div>
 
       <div class="control-actions">
-        <Button theme="primary" @click.native="save">Save</Button>
+        <Button theme="primary" size="l" @click.native="save">Save</Button>
         <div class="error-message" v-if="error">{{ error.message }}</div>
       </div>
     </Card>

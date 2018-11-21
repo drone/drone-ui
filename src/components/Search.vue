@@ -14,7 +14,7 @@
                 emptyText="Repositories not found"
                 :repos="results"
                 :loaded="loaded"
-                :popupProps="{position: 'bottom', align: 'center', width: 980}"
+                :popupProps="{position: 'bottom', align: 'center', width: popupWidth}"
                 @itemSelect="onItemSelect"/>
   </BaseForm>
 </template>
@@ -55,7 +55,8 @@ export default {
     return {
       query: "",
       opened: false,
-      nextOpened: false
+      nextOpened: false,
+      popupWidth: 0
     };
   },
   computed: {
@@ -141,6 +142,7 @@ export default {
   },
   watch: {
     popupOpened() {
+      this.popupWidth = this.$refs.searchInput.$el.offsetWidth;
       this.actualizeOverlay();
     }
   },
@@ -157,21 +159,25 @@ export default {
 <style scoped>
 form {
   position: relative;
+  text-align: center;
+  padding: 0 30px;
+  width: 100%;
+  max-width: 400px;
+  transition: max-width linear 0.1s;
 }
 
 input {
-  width: 400px;
+  width: 100%;
   padding-right: 45px;
-  transition: width linear 0.1s;
 }
 
 .opened {
   position: relative;
   z-index: 1001;
+  max-width: 980px;
 }
 
 .opened input {
-  width: 980px;
   padding-right: 15px;
 }
 
@@ -184,7 +190,7 @@ input {
   height: 18px;
   position: absolute;
   top: 10px;
-  right: 10px;
+  right: 40px;
   border: solid 1px rgba(25, 45, 70, 0.25);
   border-radius: 2px;
   text-align: center;
@@ -192,5 +198,9 @@ input {
   color: rgba(25, 45, 70, 0.5);
   pointer-events: none;
   user-select: none;
+}
+
+.popup {
+  text-align: left;
 }
 </style>

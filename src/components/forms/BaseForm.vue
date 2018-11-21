@@ -18,7 +18,7 @@ export default {
 }
 
 .control-group + .control-group {
-  border-top: 1px solid rgba(25, 45, 70, 0.1);
+  border-top: 1px solid rgba(25, 45, 70, 0.05);
 }
 
 .control-group .control-label {
@@ -33,7 +33,7 @@ export default {
 }
 
 .control-group + .control-actions {
-  border-top: 1px solid rgba(25, 45, 70, 0.1);
+  border-top: 1px solid rgba(25, 45, 70, 0.05);
   padding-top: 15px;
 }
 

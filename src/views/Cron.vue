@@ -22,7 +22,7 @@
       <BaseSelect v-model="cron.expr" name="cron.expr" :options="cronExprOptions"/>
 
       <div class="control-actions">
-        <Button type="submit" theme="primary">Add a Cron Job</Button>
+        <Button type="submit" theme="primary" size="l">Add a Cron Job</Button>
         <div class="error-message" v-if="error">{{ error.message }}</div>
       </div>
     </form>
@@ -119,11 +119,11 @@ form textarea {
 }
 
 .cron + .cron {
-  border-top: 1px solid rgba(25, 45, 70, 0.1);
+  border-top: 1px solid rgba(25, 45, 70, 0.05);
 }
 
 form select {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .actions {

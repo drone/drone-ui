@@ -62,7 +62,6 @@ export default {
   height: 20px;
   opacity: 0.6;
   margin-bottom: -5px;
-  transition: opacity linear 0.2s;
 }
 
 .button:focus > svg,
@@ -85,29 +84,28 @@ export default {
   display: inline-block;
   text-transform: uppercase;
   cursor: pointer;
-  padding: 0 10px;
   box-sizing: border-box;
   letter-spacing: 0.5px;
   font-weight: 500;
   border-radius: 3px;
   color: #fff;
-  transition: background-color linear 0.2s;
 }
 
 .button.size-m {
   height: 30px;
   line-height: 30px;
+  padding: 0 10px;
 }
 
 .button.size-l {
   height: 40px;
   line-height: 40px;
+  padding: 0 20px;
 }
 
 .button.bordered {
   border: 1px solid rgba(25, 45, 70, 0.25);
   color: #192d46;
-  transition: border-color linear 0.2s;
 }
 
 .button.bordered.size-m {
@@ -196,9 +194,5 @@ export default {
   opacity: 0.25;
   border-color: rgba(25, 45, 70, 0.5);
   color: #192d46;
-}
-
-.button > span {
-  transition: color linear 0.2s;
 }
 </style>

@@ -68,7 +68,7 @@ section.selected {
 section:after,
 section:before {
     content: " ";
-    border-left: 1px solid rgba(25, 45, 70, 0.1);
+    border-left: 1px solid rgba(25, 45, 70, 0.05);
     width: 1px;
     height: 13px;
     position: absolute;

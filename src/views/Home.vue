@@ -66,6 +66,8 @@ import RepoLink from "@/components/RepoLink.vue";
 import reposSort from "@/lib/reposSort";
 import PageHeader from "../components/PageHeader";
 
+const LIMIT = 10;
+
 export default {
   name: "home",
   components: {
@@ -97,7 +99,10 @@ export default {
         this.$store.state.user.syncing;
     },
     empty() {
-      return Object.keys(this.latest).length === 0;
+      return this.count === 0;
+    },
+    count() {
+      return Object.keys(this.latest).length;
     },
     showEmptyAlert() {
       return this.empty && this.loaded && !this.syncing;
@@ -106,7 +111,7 @@ export default {
       return this.empty && this.loaded && this.syncing;
     },
     showMore() {
-      return this.loaded && !this.all && !this.empty;
+      return this.loaded && !this.all && this.count > LIMIT;
     }
   },
   methods: {
@@ -115,7 +120,7 @@ export default {
 
       list = reposSort(list);
 
-      return this.all ? list : list.slice(0, 10);
+      return this.all ? list : list.slice(0, LIMIT);
     },
     showAll: function() {
       this.all = true;

@@ -93,7 +93,7 @@ export default {
 }
 
 .user-menu .popup a + a {
-  border-top: 1px solid rgba(25, 45, 70, 0.1);
+  border-top: 1px solid rgba(25, 45, 70, 0.05);
 }
 
 .avatar {

@@ -36,7 +36,7 @@ export default {
 }
 
 .breadcrumbs .divider {
-  padding: 0 10px;
+  padding: 0 8px;
   color: rgba(25, 45, 70, 0.6);
 }
 </style>
