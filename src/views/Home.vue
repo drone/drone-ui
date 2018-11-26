@@ -6,11 +6,10 @@
       </Breadcrumb>
 
       <div>
-        <Button v-if="!syncing" class='sync-button' @click.native="sync" outline>
-          <span>Sync</span>
+        <Button @click.native="sync" outline :disabled="syncing" :class="{ syncing }">
+          <span>{{ syncing ? "Syncing" : "Sync"}}</span>
           <IconSync/>
         </Button>
-        <div v-if="syncing" class="syncing"><IconSpinner /> Syncing</div>
       </div>
     </PageHeader>
 
@@ -21,7 +20,7 @@
     </transition>
 
     <transition name="fade">
-      <Alert v-show="showSyncingAlert">
+      <Alert v-show="showSyncingAlert" class="alert">
         Your repository list is being synchronized.
         <small>This could take between 30 and 60 seconds to complete.</small>
       </Alert>
@@ -108,7 +107,7 @@ export default {
       return this.empty && this.loaded && !this.syncing;
     },
     showSyncingAlert() {
-      return this.empty && this.loaded && this.syncing;
+      return this.syncing;
     },
     showMore() {
       return this.loaded && !this.all && this.count > LIMIT;
@@ -133,28 +132,17 @@ export default {
 </script>
 
 <style scoped>
-.syncing {
-  align-items: center;
-  background: #ffd300;
-  border-radius: 3px;
-  color: #FFF;
-  display: flex;
-  font-size: 12px;
-  padding: 3px 10px;
-  text-transform: uppercase;
-}
-
 .syncing svg {
-  fill: #FFF;
-  width: 14px;
-  height: 14px;
-  margin-right: 5px;
   animation: spin 1s linear infinite;
 }
 
 @keyframes spin{
 	0%{transform:rotate(0deg)}
 	100%{transform:rotate(359deg)}
+}
+
+.alert {
+  margin-bottom: 15px;
 }
 
 .fade-enter-active {
