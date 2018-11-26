@@ -3,7 +3,7 @@
     <span>{{ name }}</span>
     <Tag>{{ expr }}</Tag>
     <Tag>{{ branch }}</Tag>
-    <Button @click="$emit('delete', {name, expr, branch})" theme="danger" outline borderless>Delete</Button>
+    <Button @click.native="$emit('delete', {name, expr, branch})" theme="danger" outline borderless>Delete</Button>
   </div>
 </template>
 

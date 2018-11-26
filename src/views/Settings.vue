@@ -116,7 +116,11 @@ export default {
   methods: {
     save() {
       const { repo, repo: { namespace, name }, onFailure } = this;
-      this.$store.dispatch("updateRepo", { namespace, name, repo, onFailure });
+      const updatedRepo = {
+       ...repo,
+       timeout: parseInt(repo.timeout),
+      };
+      this.$store.dispatch("updateRepo", { namespace, name, repo: updatedRepo, onFailure });
     },
     onFailure(error) {
       this.error = error;
