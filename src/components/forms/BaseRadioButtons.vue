@@ -6,7 +6,7 @@
              :value="oValue"
              :checked="oValue === value"
              :id="`${name}-${oValue}`"
-             @change="$emit('input', $event.target.checked)"/>
+             @change="$emit('input', $event.target.value)"/>
       <label :for="`${name}-${oValue}`">{{ oName }}</label>
     </div>
   </div>
