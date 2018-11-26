@@ -110,6 +110,9 @@ export default {
     repo() {
       return this.$store.state.repos[this.slug];
     },
+    user() {
+      return this.$store.state.user;
+    },
     repoEnabling() {
       return this.$store.state.repoEnabling;
     },
@@ -137,7 +140,8 @@ export default {
       return this.isCollaborator;
     },
     isCollaborator() {
-      return this.repo && this.repo.permissions && this.repo.permissions.write;
+      return (this.repo && this.repo.permissions && this.repo.permissions.write) ||
+        (this.user && this.user.admin);
     },
     build() {
       const { builds } = this.$store.state;
