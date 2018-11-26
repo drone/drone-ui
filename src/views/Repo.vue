@@ -20,14 +20,11 @@
       <h1 v-if="repo">{{ repo.name }}</h1>
 
       <div v-if="build">
-        <Button outline
-                @click.native="handleCancel"
-                v-if="!build.finished"
-                :disabled="!isCollaborator"
-                class="button-cancel">
+        <ButtonConfirm outline @click="handleCancel" v-if="!build.finished" :disabled="!isCollaborator"
+                       class="button-cancel">
           <span>Cancel</span>
           <IconCancel/>
-        </Button>
+        </ButtonConfirm>
         <Button outline @click.native="handleRestart" v-if="build.finished" :disabled="!isCollaborator">
           <span>Restart</span>
           <IconRestart/>
@@ -85,6 +82,7 @@ import Breadcrumb from "@/components/Breadcrumb.vue";
 import IconArrow from "@/components/icons/IconArrow.vue";
 import IconCancel from "@/components/icons/IconCancel.vue";
 import Button from "@/components/buttons/Button.vue";
+import ButtonConfirm from "@/components/buttons/ButtonConfirm.vue";
 import Card from "@/components/Card.vue";
 import PageHeader from "@/components/PageHeader";
 import Link from "@/components/Link";
@@ -100,6 +98,7 @@ export default {
     IconCancel,
     IconRestart,
     Button,
+    ButtonConfirm,
     Card,
     Link
   },

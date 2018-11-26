@@ -58,7 +58,7 @@
     <Cron />
 
     <section v-if="repo.active && isAdmin" class="disable">
-      <Button @click.native="disable" theme="danger">Disable Repository</Button>
+      <ButtonConfirm @click="disable" theme="danger">Disable Repository</ButtonConfirm>
       <p>You can disable your repository to stop processing builds.</p>
     </section>
   </div>
@@ -73,6 +73,7 @@ import BaseInput from "@/components/forms/BaseInput.vue";
 import BaseSelect from "@/components/forms/BaseSelect.vue";
 import Card from "@/components/Card.vue";
 import Button from "@/components/buttons/Button.vue";
+import ButtonConfirm from "@/components/buttons/ButtonConfirm.vue";
 
 export default {
   name: "settings",
@@ -90,6 +91,7 @@ export default {
     Secrets,
     Cron,
     Card,
+    ButtonConfirm,
     Button
   },
   computed: {
@@ -101,7 +103,6 @@ export default {
       return repo && {...repo};
     },
     isRoot() {
-      return true;
       return this.$store.state.user &&
         this.$store.state.user.admin;
     },

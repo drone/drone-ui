@@ -8,6 +8,13 @@ Vue.use(Vuex);
 
 const DEFAULT_LOG_LIMIT = 250;
 
+function mergeRepoChanges(prev, next) {
+  return {
+    permissions: prev.permissions,
+    ...next
+  };
+}
+
 export default new Vuex.Store({
   state: {
     route: {
@@ -131,8 +138,8 @@ export default new Vuex.Store({
 
     REPO_UPDATE_LOADING(state) {},
     REPO_UPDATE_FAILURE(state) {},
-    REPO_UPDATE_SUCCESS(state, {namespace, name, repo}) {
-      Vue.set(state.repos, repo.slug, { ...state.repos[repo.slug], ...repo });
+    REPO_UPDATE_SUCCESS(state, { repo }) {
+      state.repos[repo.slug] = mergeRepoChanges(state.repos[repo.slug], repo);
     },
 
     REPO_ENABLE_LOADING(state) {
@@ -143,18 +150,18 @@ export default new Vuex.Store({
       state.repoEnabling = false;
       state.repoEnablingErr = error;
     },
-    REPO_ENABLE_SUCCESS(state, {repo}) {
+    REPO_ENABLE_SUCCESS(state, { repo }) {
       state.repoEnabling = false;
       state.repoEnablingErr = undefined;
-      state.repos[repo.slug] = repo;
+      state.repos[repo.slug] = mergeRepoChanges(state.repos[repo.slug], repo);
     },
 
     REPO_DISABLE_LOADING(state) {},
     REPO_DISABLE_FAILURE(state, {error}) {},
-    REPO_DISABLE_SUCCESS(state, {repo}) {
+    REPO_DISABLE_SUCCESS(state, { repo }) {
       state.repoEnabling = false;
       state.repoEnablingErr = undefined;
-      state.repos[repo.slug] = repo;
+      state.repos[repo.slug] = mergeRepoChanges(state.repos[repo.slug], repo);
     },
 
     REPO_REPAIR_LOADING(state) {},
