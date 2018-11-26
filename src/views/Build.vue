@@ -79,9 +79,9 @@
       <ScrollLock v-if="outputFullscreen"/>
       <div class="output" :class="{'output-fullscreen': outputFullscreen}" v-if="!isStageError">
         <div class="output-header">
-          <div class="output-title">
+          <div class="output-title" :title="stage && step && `${stage.name} - ${step.name}`">
             <span class="output-title-pipeline">{{ stage && stage.name }}</span>
-            <span class="output-title-step"> — {{ step && step.name }}</span>
+            <span> — {{ step && step.name }}</span>
           </div>
           <div class="output-actions">
             <PlayButton title="Follow logs" @click.native="toggleFollow" :pause="follow"></PlayButton>
@@ -92,7 +92,11 @@
           </div>
         </div>
         <div class="output-content" ref="outputContent">
-          <button class="more-output-button" v-if="showLimit" v-on:click="handleMore">showing the last {{limit}} lines</button>
+          <div class="output-content-actions">
+            <!--todo replace with Button if the design is not changed-->
+            <button class="output-button" v-if="showLimit" @click="handleMore">showing the last {{limit}} lines</button>
+            <button class="output-button" @click="downloadLogs">Download</button>
+          </div>
           <div v-for="(line) in logs" :key="line.pos">
             <div>{{line.pos+1}}</div>
             <div v-html="line._html"></div>
@@ -220,6 +224,9 @@ export default {
       } else {
         this.$refs.bottomAnchor.scrollIntoView()
       }
+    },
+    downloadLogs() {
+      this.$store.dispatch("downloadLogs", this.$route.params);
     }
   },
   watch: {
@@ -294,7 +301,7 @@ main {
   box-sizing: border-box;
   margin-left: 20px;
   padding: 0;
-  width: 665px;
+  width: 660px;
 }
 
 .output-fullscreen {
@@ -329,6 +336,12 @@ main {
   border-radius: 6px 6px 0 0;
 }
 
+.output-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .output-title-pipeline {
   font-weight: bold;
   color: #fff;
@@ -338,17 +351,8 @@ main {
   position: relative;
   display: flex;
   align-items: center;
+  margin-left: 15px;
 }
-
-/*.output-actions .button > svg {*/
-  /*color: #fff;*/
-  /*opacity: 0.6;*/
-/*}*/
-
-/*.output-actions .button:focus > svg*/
-/*.output-actions .button:hover > svg {*/
-  /*opacity: 1;*/
-/*}*/
 
 .output-actions .divider {
   display: inline-block;
@@ -388,20 +392,29 @@ main {
   word-wrap: break-word;
 }
 
-.more-output-button {
+.output-content-actions {
+  display: flex;
+}
+
+.output-button {
+  flex: 1 0 0;
   background: rgba(255,255,255,0.05);
   border-radius: 3px;
   border: none;
   color: #8c96a1;
   text-transform: uppercase;
   font-size: 14px;
-  width: 100%;
   margin-bottom: 15px;
   padding: 10px 0px;
   cursor: pointer;
   transition: all 0.4s ease-in-out;
 }
-.more-output-button:hover {
+
+.output-button + .output-button {
+  margin-left: 15px;
+}
+
+.output-button:hover {
   background: rgba(255,255,255,0.1);
   color: #FFF;
 }

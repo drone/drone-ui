@@ -1,4 +1,6 @@
+import throttle from 'lodash.throttle';
 import { instance, headers, token } from "./config";
+import downloadFile from "@/lib/downloadFile";
 
 export const LOGS_FIND_LOADING = 'LOGS_FIND_LOADING';
 export const LOGS_FIND_SUCCESS = 'LOGS_FIND_SUCCESS';
@@ -40,14 +42,26 @@ export function streamLogs({ commit }, params) {
 
   commit(LOG_CLEAR);
 
+  let lines = [];
+  const throttledCommit = throttle(() => {
+    commit(LOG_WRITE, { lines });
+    lines = [];
+  }, 2000);
+
   streamLogs.events = new EventSource(path);
   streamLogs.events.onmessage = function(event) {
-    const line = JSON.parse(event.data);
-    commit(LOG_WRITE, { ...params, line });
+    lines.push(JSON.parse(event.data));
+    throttledCommit();
   };
   streamLogs.events.onerror = function(err) {
     if (err.data === "eof") {
       streamLogs.events.close();
     }
   };
+}
+
+export function downloadLogs(store, params) {
+  const { namespace, name, build, stage, step } = params;
+  const url = `${instance}/api/repos/${namespace}/${name}/builds/${build}/logs/${stage}/${step}`;
+  downloadFile(url, `logs_${namespace}_${name}_${stage}_${step}.json`);
 }

@@ -45,7 +45,7 @@
          enabled for all sub-pages with the exception of the build
          page.
     -->
-    <nav v-if="$route.name === 'build'">
+    <nav v-if="$route.params.build">
       <router-link :to="'/'+slug" class="manually-active">
         <IconArrow direction="left"/>
         <span>Activity Feed</span>

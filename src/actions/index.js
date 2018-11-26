@@ -19,6 +19,7 @@ import {
 
 import {
 	fetchLogs,
+  downloadLogs,
   streamLogs
 } from "./logs";
 
@@ -64,6 +65,7 @@ export default {
 	deleteMember,
 	deleteSecret,
 	disableRepo,
+  downloadLogs,
 	enableRepo,
 	fetchBuild,
 	fetchBuilds,

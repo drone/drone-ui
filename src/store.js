@@ -383,7 +383,8 @@ export default new Vuex.Store({
     },
     LOGS_FIND_FAILURE(state){},
     LOGS_FIND_SUCCESS(state, data){
-      state.logs = escapeLogs(data.lines);
+      escapeLogs(data.lines);
+      state.logs = data.lines;
     },
     LOGS_EXPAND(state) {
       state.logsLimit = state.logsLimit + DEFAULT_LOG_LIMIT;
@@ -392,14 +393,11 @@ export default new Vuex.Store({
       state.logs = [];
       state.logsLimit = DEFAULT_LOG_LIMIT;
     },
-    LOG_WRITE(state, data){
-      if (!state.logs) {
-        state.logs = [];
-      }
-      state.logs.push(
-        escapeLine(data.line)
-      );
-    },
+    LOG_WRITE(state, { lines }) {
+      if (!state.logs) state.logs = [];
+      escapeLogs(lines);
+      state.logs = state.logs.concat(lines);
+    }
   },
   actions: {
     ...actions,
@@ -415,13 +413,7 @@ let formatter = new AnsiUp();
 formatter.use_classes = true;
 
 function escapeLogs(logs) {
-  return logs.map((line) => {
-    line._html = formatter.ansi_to_html(line.out || "");
-    return line;
-  });
-}
-
-function escapeLine(line) {
-  line._html = formatter.ansi_to_html(line.out || "");
-  return line;
+  for (let i = 0; i < logs.length; ++i) {
+    logs[i]._html = formatter.ansi_to_html(logs[i].out || "");
+  }
 }
