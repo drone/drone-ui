@@ -1,6 +1,5 @@
 import throttle from 'lodash.throttle';
 import { instance, headers, token } from "./config";
-import downloadFile from "@/lib/downloadFile";
 
 export const LOGS_FIND_LOADING = 'LOGS_FIND_LOADING';
 export const LOGS_FIND_SUCCESS = 'LOGS_FIND_SUCCESS';
@@ -58,10 +57,4 @@ export function streamLogs({ commit }, params) {
       streamLogs.events.close();
     }
   };
-}
-
-export function downloadLogs(store, params) {
-  const { namespace, name, build, stage, step } = params;
-  const url = `${instance}/api/repos/${namespace}/${name}/builds/${build}/logs/${stage}/${step}`;
-  downloadFile(url, `logs_${namespace}_${name}_${stage}_${step}.json`);
 }

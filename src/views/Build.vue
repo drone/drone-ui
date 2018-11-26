@@ -85,6 +85,10 @@
           </div>
           <div class="output-actions">
             <PlayButton title="Follow logs" @click.native="toggleFollow" :pause="follow"></PlayButton>
+            <div v-if="readyToDownload" class="divider"></div>
+            <Button v-if="readyToDownload" title="Download" @click.native="download" theme="light" outline borderless>
+              <IconDownload :close="outputFullscreen" />
+            </Button>
             <div class="divider"></div>
             <Button title="Fullscreen" @click.native="toggleOutputFullscreen" theme="light" outline borderless>
               <IconFullscreen :close="outputFullscreen" />
@@ -95,7 +99,6 @@
           <div class="output-content-actions">
             <!--todo replace with Button if the design is not changed-->
             <button class="output-button" v-if="showLimit" @click="handleMore">showing the last {{limit}} lines</button>
-            <button class="output-button" @click="downloadLogs">Download</button>
           </div>
           <div v-for="(line) in logs" :key="line.pos">
             <div>{{line.pos+1}}</div>
@@ -127,6 +130,7 @@ import IconCancel from "@/components/icons/IconCancel.vue";
 import Button from "@/components/buttons/Button.vue";
 import PlayButton from "@/components/buttons/PlayButton.vue";
 import IconFullscreen from "@/components/icons/IconFullscreen.vue";
+import IconDownload from "@/components/icons/IconDownload.vue";
 import ScrollLock from "@/components/utils/ScrollLock.vue";
 
 export default {
@@ -140,6 +144,7 @@ export default {
     Button,
     PlayButton,
     ScrollLock,
+    IconDownload,
     IconFullscreen
   },
   data() {
@@ -204,6 +209,9 @@ export default {
     },
     isCollaborator() {
       return this.repo && this.repo.permissions && this.repo.permissions.write || false;
+    },
+    readyToDownload() {
+      return this.step && this.step.stopped && this.$store.state.logs && this.$store.state.logs.length;
     }
   },
   methods: {
@@ -225,8 +233,21 @@ export default {
         this.$refs.bottomAnchor.scrollIntoView()
       }
     },
-    downloadLogs() {
-      this.$store.dispatch("downloadLogs", this.$route.params);
+    download() {
+      const {namespace, name, stage, step} = this.$route.params;
+      const link = document.createElement("a");
+      const logsClone = this.$store.state.logs.slice(0);
+
+      for (let i = 0; i < logsClone.length; ++i) {
+        delete logsClone[i]._html;
+      }
+
+      const blob = new Blob([JSON.stringify(logsClone)], { type: "application/json" });
+
+      link.download = `logs_${namespace}_${name}_${stage}_${step}.json`;
+      link.href = URL.createObjectURL(blob);
+      link.target = "_blank";
+      link.click();
     }
   },
   watch: {
@@ -340,6 +361,7 @@ main {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding: 5px 0;
 }
 
 .output-title-pipeline {

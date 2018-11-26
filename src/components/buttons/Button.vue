@@ -7,18 +7,25 @@ function getTag(context) {
   return "button";
 }
 
-function getElementProps(tag, context) {
-  const { to, href } = context;
+function getProps(tag, context) {
+  const { to } = context;
 
   if (tag === "router-link") return { to };
   return {};
+}
+
+function getDomProps(tag, context) {
+  const { href, disabled } = context;
+
+  if (tag === "a") return { href, disabled };
+  return { disabled };
 }
 
 export default {
   name: "Button",
   props: {
     to: String,
-    // todo href
+    href: String,
     borderless: { type: Boolean, default: false },
     outline: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
@@ -36,14 +43,14 @@ export default {
   },
   render(createElement) {
     const tag = getTag(this);
-    const { bordered, outline, disabled, theme, size } = this;
+    const { bordered, outline, theme, size } = this;
 
     return createElement(
       tag,
       {
-        domProps: { disabled },
+        domProps: getDomProps(tag, this),
         class: { button: true, bordered, outline, [`theme-${theme}`]: true, [`size-${size}`]: true },
-        props: getElementProps(tag, this)
+        props: getProps(tag, this)
       },
       this.$slots.default
     );

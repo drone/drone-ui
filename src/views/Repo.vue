@@ -63,8 +63,8 @@
       There was a problem enabling your repository.
       <span slot="secondary">{{ repoEnablingErr.message }}.</span>
     </Alert>
-
-    <section v-if="showActivatePrompt" class="activate">
+    <Alert v-else-if="repoEnabling">Activating...</Alert>
+    <section v-else-if="showActivatePrompt" class="activate">
       <Button theme="primary" @click.native="handleActivate" :disabled="repoEnabling" size="l">Activate</Button>
       <p>Activate this repository.</p>
     </section>
