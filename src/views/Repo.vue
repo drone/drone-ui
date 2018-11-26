@@ -63,11 +63,11 @@
       There was a problem enabling your repository.
       <span slot="secondary">{{ repoEnablingErr.message }}.</span>
     </Alert>
-    <Card v-else-if="showActivatePrompt">
-      <Button theme="primary" @click.native="handleActivate" :disabled="repoEnabling">Activate</Button>
-      Activate this repository
-    </Card>
 
+    <section v-if="showActivatePrompt" class="activate">
+      <Button theme="primary" @click.native="handleActivate" :disabled="repoEnabling" size="l">Activate</Button>
+      <p>Activate this repository.</p>
+    </section>
     <!--
         this is the router outlet for all repository pages, including
         the build pages.
@@ -275,5 +275,14 @@ nav .router-link-exact-active {
   text-transform: uppercase;
   font-size: 11px;
   margin-left: 10px;
+}
+
+.activate {
+  padding: 0 15px;
+}
+
+.activate p {
+  margin-top: 15px;
+  color: rgba(25, 45, 70, 0.6);
 }
 </style>

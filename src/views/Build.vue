@@ -462,8 +462,11 @@ main > .alert {
   background-color: rgba(25, 45, 70, 0.02);
 }
 
-.stage-container .stage div:first-of-type .step:before,
+.stage-container .stage div:first-of-type .step:after {
+  top: 50%;
+}
+
 .stage-container .stage div:last-of-type .step:after {
-  display: none;
+  bottom: 50%;
 }
 </style>

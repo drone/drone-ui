@@ -38,47 +38,44 @@ section {
     align-items: center;
     color: #8d97a2;
     display: flex;
-    height: 45px;
-    padding: 0px 15px;
+    padding: 15px;
     position: relative;
 }
 
 time,
 span {
   margin-left: 10px;
-  flex: 1;
-  height: 18px;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
   line-height: normal;
   letter-spacing: normal;
   color: #192d46;
 }
 
+.status {
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+span {
+  flex-grow: 1;
+}
+
 time {
   color: rgba(25, 45, 70, 0.6);
   text-align: right;
+  flex-shrink: 0;
 }
 
 section.selected {
   background-color: rgba(25, 45, 70, 0.03);
 }
 
-section:after,
-section:before {
+section:after {
     content: " ";
     border-left: 1px solid rgba(25, 45, 70, 0.05);
     width: 1px;
-    height: 13px;
     position: absolute;
-    top: 0px;
+    top: 0;
+  bottom: 0;
     left: 24px;
-}
-
-section:after {
-    height: 12px;
-    bottom: 0px;
-    top: unset;
 }
 </style>

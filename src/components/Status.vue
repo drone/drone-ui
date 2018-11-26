@@ -97,7 +97,7 @@ export default {
 }
 
 .outlined {
-  background: transparent;
+  background: #fff;
 }
 
 svg {
