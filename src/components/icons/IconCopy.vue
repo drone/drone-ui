@@ -1,3 +1,12 @@
 <template>
-<svg height='300px' width='300px'  fill="#000000" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="-255 347 100 100" enable-background="new -255 347 100 100" xml:space="preserve"><path fill-rule="evenodd" clip-rule="evenodd" fill="#000000" d="M-223.7,437v-68.2h50.2V437H-223.7z M-177.1,372.4h-43.1v61.1h43.1  V372.4z M-230.9,426.2h-3.6l0-68.2l50.3,0v3.6h-46.7V426.2z"></path></svg>
+  <svg viewBox="0 0 18 21" xmlns="http://www.w3.org/2000/svg">
+    <g fill="none" fill-rule="evenodd">
+      <g fill="currentColor" fill-rule="nonzero">
+        <path
+          d="M2.15 14.35H6a.65.65 0 1 1 0 1.3H1.5A.65.65 0 0 1 .85 15V1.5A.65.65 0 0 1 1.5.85H12a.65.65 0 0 1 .65.65V6a.65.65 0 1 1-1.3 0V2.15h-9.2v12.2z"/>
+        <path
+          d="M6 20.15a.65.65 0 0 1-.65-.65V6A.65.65 0 0 1 6 5.35h10.5a.65.65 0 0 1 .65.65v13.5a.65.65 0 0 1-.65.65H6zm.65-1.3h9.2V6.65h-9.2v12.2z"/>
+      </g>
+    </g>
+  </svg>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <div class="settings-view">
+  <CardGroup class="settings-view">
     <Card contentPadding="0 15px 15px" v-if="isAdmin">
       <h2 slot="header">Main</h2>
 
@@ -56,12 +56,13 @@
 
     <Secrets />
     <Cron />
+    <Badges />
 
-    <section v-if="repo.active && isAdmin" class="disable">
+    <Card v-if="repo.active && isAdmin" class="disable" contentPadding="30px">
       <ButtonConfirm @click="disable" theme="danger" size="l">Disable Repository</ButtonConfirm>
       <p>You can disable your repository to stop processing builds.</p>
-    </section>
-  </div>
+    </Card>
+  </CardGroup>
 </template>
 
 <script>
@@ -72,8 +73,10 @@ import BaseRadioButtons from "@/components/forms/BaseRadioButtons.vue";
 import BaseInput from "@/components/forms/BaseInput.vue";
 import BaseSelect from "@/components/forms/BaseSelect.vue";
 import Card from "@/components/Card.vue";
+import CardGroup from "@/components/CardGroup.vue";
 import Button from "@/components/buttons/Button.vue";
 import ButtonConfirm from "@/components/buttons/ButtonConfirm.vue";
+import Badges from "@/components/Badges.vue";
 
 export default {
   name: "settings",
@@ -91,6 +94,8 @@ export default {
     Secrets,
     Cron,
     Card,
+    CardGroup,
+    Badges,
     ButtonConfirm,
     Button
   },
@@ -154,17 +159,9 @@ const timeouts = [
 </script>
 
 <style scoped>
-.card {
-  margin-bottom: 20px;
-}
-
 /* Settings specific */
 .control-group .controls .base-checkbox + .base-checkbox {
   margin-left: 48px;
-}
-
-.disable {
-  padding: 15px;
 }
 
 .disable p {

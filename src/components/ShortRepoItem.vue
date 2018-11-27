@@ -41,7 +41,7 @@ div {
     background-color: #ffffff;
     display: flex;
     height: 50px;
-    padding: 15px;
+    padding: 15px 10px 15px 15px;
     transition: box-shadow linear 0.2s;
 }
 

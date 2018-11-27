@@ -1,6 +1,5 @@
 <template>
-  <Card :class="{ [`theme-${theme}`]: true }" v-bind="cardProps" contentPadding="45px">
-    <!--todo remove cardProps-->
+  <Card :class="{ [`theme-${theme}`]: true }" contentPadding="45px">
     <slot></slot>
     <div class="secondary" v-if="$slots.secondary"><slot name="secondary"></slot></div>
   </Card>
@@ -15,8 +14,7 @@ export default {
     Card
   },
   props: {
-    theme: String,
-    cardProps: Object
+    theme: String
   }
 };
 </script>

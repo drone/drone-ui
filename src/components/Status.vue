@@ -1,8 +1,8 @@
 <template>
-  <div v-bind:class="{ status: true, [`status-${status}`]: true, outlined }">
+  <div v-bind:class="{ status: true, [`status-${status}`]: true, outlined }" :title="status">
     <Blocked v-if="status === 'blocked'"/>
     <Failure v-if="status === 'failure'"/>
-    <Failure v-if="status === 'killed'"/>
+    <Cancelled v-if="status === 'killed'"/>
     <Failure v-if="status === 'error'"/>
     <Failure v-if="status === 'declined'"/>
     <Pending v-if="status === 'pending'"/>
@@ -21,6 +21,7 @@ import Failure from "./icons/status/StatusFailure.vue";
 import Pending from "./icons/status/StatusPending.vue";
 import Running from "./icons/status/StatusRunning.vue";
 import Success from "./icons/status/StatusSuccess.vue";
+import Cancelled from "./icons/status/StatusCancelled.vue";
 
 export default {
   name: "Status",
@@ -33,7 +34,8 @@ export default {
     Failure,
     Pending,
     Running,
-    Success
+    Success,
+    Cancelled
   }
 };
 </script>

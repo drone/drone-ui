@@ -108,6 +108,11 @@ form textarea {
   display: block;
   margin-bottom: 15px;
   width: 100%;
+  border-color: rgba(25, 45, 70, 0.15);
+}
+
+select {
+  border-color: rgba(25, 45, 70, 0.15);
 }
 
 .cron + .cron {

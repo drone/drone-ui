@@ -1,13 +1,26 @@
 <template>
 <div class="code-snippet">
-  <header>
+  <header v-if="$slots.header">
     <slot name="header"></slot>
-    <button v-on:click="handleCopy">
-      <IconCopy />
+
+    <button @click="handleCopy">
+      <transition name="fade">
+        <span v-show="copied">Copied</span>
+      </transition>
+      <IconCopy/>
     </button>
   </header>
   <div ref="snippet">
-    <slot></slot>
+    <pre :class="{ 'with-copy': !$slots.header, [`lang-${lang}`]: true }">
+      <button @click="handleCopy" v-if="!$slots.header">
+        <transition name="fade">
+          <span v-show="copied">Copied</span>
+        </transition>
+        <IconCopy/>
+      </button>
+
+      <slot></slot>
+    </pre>
   </div>
 </div>
 </template>
@@ -20,11 +33,29 @@ export default {
   components: {
     IconCopy,
   },
+  props: {
+    lang: String
+  },
+  data() {
+    return {
+      copied: false,
+      copiedTimeoutId: false
+    };
+  },
   methods: {
     handleCopy: function() {
       if (!navigator || !navigator.clipboard) return;
       const text = this.$refs.snippet.innerText;
-      navigator.clipboard.writeText(text)
+      navigator.clipboard.writeText(text);
+
+      this.copied = true;
+      if (this.copiedTimeoutId) {
+        clearTimeout(this.copiedTimeoutId);
+      }
+      this.copiedTimeoutId = setTimeout(() => {
+        this.copiedTimeoutId = null;
+        this.copied = false;
+      }, 1000);
     }
   }
 };
@@ -73,14 +104,25 @@ pre {
   white-space: normal;
 }
 
-pre.terminal code:before {
+pre.lang-terminal code:before {
   content: "$";
   display: inline-block;
   min-width: 20px;
 }
 
-pre.terminal.single-command code:not(:first-of-type):before {
+pre.lang-terminal code.out:before {
   content: ">";
+}
+
+pre.with-copy {
+  padding-right: 100px;
+  position: relative;
+}
+
+pre.with-copy button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
 }
 
 code {
@@ -94,16 +136,24 @@ button {
   border: none;
   cursor: pointer;
   outline: none;
-  padding: 0px;
+  padding: 0;
+  display: flex;
 }
 
-button:hover svg {
+button:hover svg,
+button:focus svg {
   opacity: 0.6;
 }
 
 button:active svg {
   opacity: 1;
   margin-bottom: -2px;
+}
+
+button span {
+  font-size: 15px;
+  margin-right: 10px;
+  color: rgba(25, 45, 70, 0.6);
 }
 
 svg {

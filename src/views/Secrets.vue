@@ -1,5 +1,5 @@
 <template>
-  <Card contentPadding="0 15px">
+  <Card contentPadding="0 15px" class="secrets">
     <h2 slot="header">Secrets</h2>
 
     <div v-if="secrets.length === 0" class="alert">
@@ -102,6 +102,7 @@ form textarea {
   display: block;
   margin-bottom: 15px;
   width: 100%;
+  border-color: rgba(25, 45, 70, 0.15);
 }
 
 .secret + .secret {
@@ -110,5 +111,11 @@ form textarea {
 
 form textarea {
   height: 60px;
+}
+</style>
+
+<style>
+.secrets .base-checkbox label:before {
+  border-color: rgba(25, 45, 70, 0.15);
 }
 </style>

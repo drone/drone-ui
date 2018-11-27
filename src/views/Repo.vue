@@ -51,7 +51,6 @@
 
     <nav v-else-if="showTabs">
       <router-link :to="'/'+slug" :disabled="!repo.active">Activity Feed</router-link>
-      <router-link :to="'/'+slug + '/badges'" :disabled="!repo.active">Badges</router-link>
       <router-link :to="'/'+slug + '/settings'" v-if="showSettings">Settings</router-link>
     </nav>
 
@@ -64,10 +63,10 @@
       <span slot="secondary">{{ repoEnablingErr.message }}.</span>
     </Alert>
     <Alert v-else-if="repoEnabling">Activating...</Alert>
-    <section v-else-if="showActivatePrompt" class="activate">
+    <Card v-else-if="showActivatePrompt" class="activate" contentPadding="30px">
       <Button theme="primary" @click.native="handleActivate" :disabled="repoEnabling" size="l">Activate</Button>
       <p>Activate this repository.</p>
-    </section>
+    </Card>
     <!--
         this is the router outlet for all repository pages, including
         the build pages.
@@ -278,7 +277,6 @@ nav .router-link-exact-active {
 }
 
 .activate {
-  padding: 30px 15px 0;
   text-align: center;
 }
 

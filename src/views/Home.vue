@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="page-home">
     <PageHeader>
       <Breadcrumb>
         <span>Repositories</span>
@@ -20,7 +20,7 @@
     </transition>
 
     <transition name="fade">
-      <Alert v-show="showSyncingAlert" class="alert" :cardProps="{ contentPadding: '6.5px' }">
+      <Alert v-show="showSyncingAlert" class="alert">
         Your repository list is being synchronized.
         <small slot="secondary">This could take between 30 and 60 seconds to complete.</small>
       </Alert>
@@ -151,6 +151,10 @@ export default {
   margin-bottom: 15px;
 }
 
+.alert small {
+  font-style: italic;
+}
+
 .fade-enter-active {
   transition: opacity 0.75s;
 }
@@ -167,5 +171,12 @@ export default {
 
 .list-item + .list-item {
   margin-top: 10px;
+}
+</style>
+
+<style>
+.page-home .alert .content {
+  height: 40px;
+  padding: 20px !important;
 }
 </style>
