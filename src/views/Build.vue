@@ -86,7 +86,8 @@
           <div class="output-actions">
             <PlayButton title="Follow logs" @click.native="toggleFollow" :pause="follow"></PlayButton>
             <div v-if="readyToDownload" class="divider"></div>
-            <Button v-if="readyToDownload" title="Download" @click.native="download" theme="light" outline borderless>
+            <Button v-if="readyToDownload" title="Download" @click.native="download" theme="light" outline borderless
+                    class="download">
               <IconDownload :close="outputFullscreen" />
             </Button>
             <div class="divider"></div>
@@ -443,6 +444,12 @@ main {
 .output-button:hover {
   background: rgba(255,255,255,0.1);
   color: #FFF;
+}
+
+.button.theme-light.outline.download > svg {
+  width: 21px;
+  height: 22px;
+  margin-bottom: -6px;
 }
 
 .alert {

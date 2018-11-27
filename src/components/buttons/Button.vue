@@ -79,7 +79,7 @@ export default {
 .button.theme-light.outline > svg {
   width: 18px;
   height: 18px;
-  margin-top: -4px;
+  margin-bottom: -4px;
 }
 </style>
 
