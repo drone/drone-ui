@@ -184,12 +184,16 @@ export default {
     limit() {
       return this.$store.state.logsLimit;
     },
+    fullLogs() {
+      return this.$store.state.logs || [];
+    },
     logs() {
       const logs = this.$store.state.logs || [];
       const show = Math.max(logs.length - this.limit, 0)
       return logs.slice(show);
     },
     showLimit() {
+      // fixme: there is a bug when fullLogs.length equals this.limit
       return this.logs && this.limit == this.logs.length;
     },
     buildLoaded() {
@@ -281,7 +285,7 @@ export default {
           this.$store.dispatch('fetchLogs', this.$route.params);
       }
     },
-    logs(newValue, oldValue) {
+    fullLogs(newValue, oldValue) {
       if (this.follow && newValue && oldValue.length < newValue.length) {
         setTimeout(() => this.scrollToBottom(), 0);
       }

@@ -45,7 +45,7 @@ export function streamLogs({ commit }, params) {
   const throttledCommit = throttle(() => {
     commit(LOG_WRITE, { lines });
     lines = [];
-  }, 2000);
+  }, 500);
 
   streamLogs.events = new EventSource(path);
   streamLogs.events.onmessage = function(event) {
