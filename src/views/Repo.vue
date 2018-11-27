@@ -278,7 +278,8 @@ nav .router-link-exact-active {
 }
 
 .activate {
-  padding: 0 15px;
+  padding: 30px 15px 0;
+  text-align: center;
 }
 
 .activate p {

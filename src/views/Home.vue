@@ -6,7 +6,7 @@
       </Breadcrumb>
 
       <div>
-        <Button @click.native="sync" outline :disabled="syncing" :class="{ syncing }">
+        <Button @click.native="sync" outline :class="{ syncing }">
           <span>{{ syncing ? "Syncing" : "Sync"}}</span>
           <IconSync/>
         </Button>
@@ -20,9 +20,9 @@
     </transition>
 
     <transition name="fade">
-      <Alert v-show="showSyncingAlert" class="alert">
+      <Alert v-show="showSyncingAlert" class="alert" :cardProps="{ contentPadding: '6.5px' }">
         Your repository list is being synchronized.
-        <small>This could take between 30 and 60 seconds to complete.</small>
+        <small slot="secondary">This could take between 30 and 60 seconds to complete.</small>
       </Alert>
     </transition>
 
@@ -125,13 +125,19 @@ export default {
       this.all = true;
     },
     sync: function() {
-      this.$store.dispatch('syncAccount');
+      if (!this.syncing) {
+        this.$store.dispatch('syncAccount');
+      }
     }
   }
 };
 </script>
 
 <style scoped>
+.syncing {
+  opacity: 0.6;
+}
+
 .syncing svg {
   animation: spin 1s linear infinite;
 }

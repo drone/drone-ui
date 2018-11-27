@@ -58,7 +58,7 @@
     <Cron />
 
     <section v-if="repo.active && isAdmin" class="disable">
-      <ButtonConfirm @click="disable" theme="danger">Disable Repository</ButtonConfirm>
+      <ButtonConfirm @click="disable" theme="danger" size="l">Disable Repository</ButtonConfirm>
       <p>You can disable your repository to stop processing builds.</p>
     </section>
   </div>

@@ -32,7 +32,7 @@ export default {
   align-items: center;
 }
 
-.control-group + .control-actions {
+.control-actions {
   border-top: 1px solid rgba(25, 45, 70, 0.05);
   padding-top: 15px;
 }
