@@ -2,7 +2,7 @@
     <div class="repo-item repo-item-short" v-bind:class="{ 'repo-item-inactive': !active }">
         <IconRepository />
         <h3>{{ namespace }}/{{ name }}</h3>
-        <Button v-if="!active" @click.native="activate" theme="primary" outline borderless>Activate</Button>
+        <Button v-if="!active" theme="primary" outline borderless>Activate</Button>
     </div>
 </template>
 
@@ -21,12 +21,6 @@ export default {
     name: String,
     active: Boolean,
     slug: String
-  },
-  methods: {
-    activate() {
-      const { namespace, name } = this;
-      this.$store.dispatch("enableRepo", { namespace, name });
-    }
   }
 };
 </script>

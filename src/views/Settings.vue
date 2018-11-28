@@ -164,6 +164,10 @@ const timeouts = [
   margin-left: 48px;
 }
 
+.disable {
+  text-align: center;
+}
+
 .disable p {
   margin-top: 15px;
   color: rgba(25, 45, 70, 0.6);

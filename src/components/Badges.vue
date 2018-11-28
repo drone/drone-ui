@@ -64,7 +64,7 @@ export default {
 const langs = [
   ["markdown", "Markdown"],
   ["markup", "Markup"],
-  ["ccmenu", "ccmenu"]
+  ["ccmenu", "CCMenu"]
 ];
 </script>
 

@@ -121,7 +121,8 @@ pre.with-copy {
 
 pre.with-copy button {
   position: absolute;
-  top: 15px;
+  top: 50%;
+  margin-top: -11px;
   right: 15px;
 }
 
