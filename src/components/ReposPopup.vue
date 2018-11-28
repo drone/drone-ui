@@ -8,7 +8,7 @@
               :focusable="false"
               :class="{selected: selectionIndex === index }"
               :hoverType="'none'"
-              :key="repo.id"
+              :key="`${repo.id}-${repo.build && repo.build.id}`"
               :repo="repo"
               @mouseenter.native="onItemHover(index)"
               @click.native="triggerItemSelect">

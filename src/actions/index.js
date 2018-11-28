@@ -3,6 +3,7 @@ import {
 	fetchBuild,
 	fetchBuilds,
 	createBuild,
+  fetchBuildsFeed
 } from "./build";
 
 import {
@@ -67,6 +68,7 @@ export default {
 	enableRepo,
 	fetchBuild,
 	fetchBuilds,
+  fetchBuildsFeed,
 	fetchCron,
 	fetchCrons,
 	fetchLogs,

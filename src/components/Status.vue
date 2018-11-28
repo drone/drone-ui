@@ -110,11 +110,11 @@ svg {
   left: -1px;
 }
 
-.status-running svg {
+.status-running > svg {
   animation: spin 1s linear infinite;
 }
 
-.status-pending svg {
+.status-pending > svg {
   animation: wrench 2.5s ease infinite;
 }
 

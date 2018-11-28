@@ -1,4 +1,5 @@
 import {instance, headers} from "./config";
+import { byBuildCreatedAtDesc } from '@/lib/reposSort'
 
 export const BUILD_LIST_LOADING = 'BUILD_LIST_LOADING';
 export const BUILD_LIST_SUCCESS = 'BUILD_LIST_SUCCESS';
@@ -88,3 +89,17 @@ export const createBuild = async ({commit}, {namespace, name, build}) => {
 		commit(BUILD_RETRY_FAILURE, {namespace, name, error: res});
     }
 }
+
+export const fetchBuildsFeed = async ({ commit }) => {
+	commit("BUILDS_FEED_LOADING");
+
+  const req = await fetch(`${instance}/api/user/builds/recent`, { headers, credentials: "same-origin" });
+  const res = await req.json();
+
+  if (req.status < 300) {
+  	const builds = res.filter(x => !x.build.finished).sort(byBuildCreatedAtDesc);
+    commit("BUILDS_FEED_SUCCESS", { builds });
+  } else {
+    commit("BUILDS_FEED_FAILURE", { error: res });
+  }
+};
