@@ -84,28 +84,43 @@
             <span> — {{ step && step.name }}</span>
           </div>
           <div class="output-actions">
-            <PlayButton title="Follow logs" @click.native="toggleFollow" :pause="follow"></PlayButton>
-            <div v-if="readyToDownload" class="divider"></div>
+            <PlayButton v-if="step && !step.stopped" title="Follow logs" @click.native="toggleFollow" :pause="follow"/>
+            <div v-if="step && !step.stopped" class="divider"></div>
             <Button v-if="readyToDownload" title="Download" @click.native="download" theme="light" outline borderless
                     class="download">
               <IconDownload :close="outputFullscreen" />
             </Button>
-            <div class="divider"></div>
+            <div v-if="readyToDownload" class="divider"></div>
             <Button title="Fullscreen" @click.native="toggleOutputFullscreen" theme="light" outline borderless>
               <IconFullscreen :close="outputFullscreen" />
             </Button>
           </div>
         </div>
         <div class="output-content" ref="outputContent">
-          <div class="output-content-actions">
+          <div v-if="logsLoading" class="output-loading">Loading...</div>
+
+          <div class="output-content-actions output-content-actions-top" v-if="!logFromTop && moreCount">
             <!--todo replace with Button if the design is not changed-->
-            <button class="output-button" v-if="showLimit" @click="handleMore">showing the last {{limit}} lines</button>
+            <button class="output-button" @click="handleMore">
+              Show {{Math.min(moreCount, logStep)}} lines more
+            </button>
+            <button class="output-button" @click="toggleLogFrom">To top</button>
           </div>
-          <div v-for="(line) in logs" :key="line.pos">
+
+          <div v-for="line in shownLogs" :key="line.pos" class="output-line">
             <div>{{line.pos+1}}</div>
             <div v-html="line._html"></div>
             <div>{{line.time}}s</div>
           </div>
+
+          <div class="output-content-actions output-content-actions-bottom" v-if="logFromTop && moreCount">
+            <!--todo replace with Button if the design is not changed-->
+            <button class="output-button" @click="handleMore">
+              Show {{Math.min(moreCount, logStep)}} lines more
+            </button>
+            <button class="output-button" @click="toggleLogFrom">To bottom</button>
+          </div>
+
         </div>
         <div ref="bottomAnchor"></div>
       </div>
@@ -151,7 +166,10 @@ export default {
   data() {
     return {
       outputFullscreen: false,
-      follow: false
+      follow: false,
+      logStep: 250,
+      logLimit: 250,
+      logFromTop: false
     };
   },
   computed: {
@@ -182,26 +200,21 @@ export default {
           return step.number === number;
         });
     },
-    limit() {
-      return this.$store.state.logsLimit;
-    },
-    fullLogs() {
-      return this.$store.state.logs || [];
+    shownLogs() {
+      if (this.logFromTop) {
+        return this.logs.slice(0, this.logLimit);
+      } else {
+        return this.logs.slice(this.logs.length - this.logLimit);
+      }
     },
     logs() {
-      const logs = this.$store.state.logs || [];
-      const show = Math.max(logs.length - this.limit, 0)
-      return logs.slice(show);
+      return this.$store.state.logs;
     },
-    showLimit() {
-      // fixme: there is a bug when fullLogs.length equals this.limit
-      return this.logs && this.limit == this.logs.length;
+    logsLoading() {
+      return this.$store.state.logsLoading;
     },
-    buildLoaded() {
-      return this.$store.state.buildLoaded;
-    },
-    buildLoading() {
-      return this.$store.state.buildLoading;
+    moreCount() {
+      return Math.max(this.logs.length - this.logLimit, 0);
     },
     buildLoadingErr() {
       return this.$store.state.buildLoadingErr;
@@ -221,7 +234,7 @@ export default {
   },
   methods: {
     handleMore: function() {
-      this.$store.dispatch('expandLogs');
+      this.logLimit += this.logStep;
     },
     toggleOutputFullscreen() {
       this.outputFullscreen = !this.outputFullscreen;
@@ -230,12 +243,15 @@ export default {
       this.follow = !this.follow;
       if (this.follow) this.scrollToBottom();
     },
+    toggleLogFrom() {
+      this.logFromTop = !this.logFromTop;
+    },
     scrollToBottom() {
       if (this.outputFullscreen) {
         const { outputContent } = this.$refs;
         outputContent.scrollTop = outputContent.scrollHeight + 15; // 15 - padding
       } else {
-        this.$refs.bottomAnchor.scrollIntoView()
+        this.$refs.bottomAnchor.scrollIntoView();
       }
     },
     download() {
@@ -270,6 +286,7 @@ export default {
       // is running, dispatch a request to stream the logs.
       if (!oldStep || oldStep.id != newStep.id) {
         this.follow = false;
+        this.logLimit = 250;
 
         if (newStep.stopped) {
           this.$store.dispatch('fetchLogs', this.$route.params);
@@ -286,7 +303,7 @@ export default {
           this.$store.dispatch('fetchLogs', this.$route.params);
       }
     },
-    fullLogs(newValue, oldValue) {
+    logs(newValue, oldValue) {
       if (this.follow && newValue && oldValue.length < newValue.length) {
         setTimeout(() => this.scrollToBottom(), 0);
       }
@@ -393,26 +410,30 @@ main {
   padding: 15px;
 }
 
-.output-content > div {
+.output-loading {
+  text-align: center;
+}
+
+.output-line {
   display: flex;
   line-height: 19px;
   max-width: 100%;
 }
 
-.output-content > div > div:first-child {
+.output-line > div:first-child {
   -webkit-user-select: none;
   color: #8c96a1;
   min-width: 20px;
   padding-right: 20px;
   user-select: none;
 }
-.output-content > div > div:last-child {
+.output-line > div:last-child {
   -webkit-user-select: none;
   color: #8c96a1;
   padding-left: 20px;
   user-select: none;
 }
-.output-content > div > div:nth-child(2) {
+.output-line > div:nth-child(2) {
   flex: 1 1 auto;
   min-width: 0px;
   white-space: pre-wrap;
@@ -423,6 +444,14 @@ main {
   display: flex;
 }
 
+.output-content-actions-top {
+  margin-bottom: 15px;
+}
+
+.output-content-actions-bottom {
+  margin-top: 15px;
+}
+
 .output-button {
   flex: 1 0 0;
   background: rgba(255,255,255,0.05);
@@ -431,7 +460,6 @@ main {
   color: #8c96a1;
   text-transform: uppercase;
   font-size: 14px;
-  margin-bottom: 15px;
   padding: 10px 0px;
   cursor: pointer;
   transition: all 0.4s ease-in-out;
