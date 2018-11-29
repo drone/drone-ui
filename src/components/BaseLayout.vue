@@ -9,16 +9,20 @@
       </div>
     </main>
     <Footer />
+
+    <Notifications/>
   </div>
 </template>
 
 <script>
 import Footer from "./Footer.vue";
+import Notifications from "@/components/Notifications.vue";
 
 export default {
   name: "BaseLayout",
   components: {
     Footer,
+    Notifications
   }
 };
 </script>

@@ -13,16 +13,20 @@
       :expr="cron.expr"
       :branch="cron.branch"
       :next="cron.next"
-      @delete="handleDelete"
+      :deleting="deleting[cron.id]"
+      @delete="handleDelete(cron)"
     />
 
     <form @submit.prevent="handleSubmit" autocomplete="off" slot="footer">
       <BaseInput placeholder="Cron Job Name" name="cron.name" v-model="cron.name" type="text"/>
-      <BaseInput placeholder="Cron Job Branch" name="cron.branch" v-model="cron.branch" type="text"/>
+      <BaseInput :placeholder="`Cron Job Branch (default: ${defaultBranch})`"
+                 name="cron.branch"
+                 v-model="cron.branch"
+                 type="text"/>
       <BaseSelect v-model="cron.expr" name="cron.expr" :options="cronExprOptions"/>
 
       <div class="control-actions">
-        <Button type="submit" theme="primary" size="l">Add a Cron Job</Button>
+        <Button type="submit" theme="primary" size="l" :loading="creating">Add a Cron Job</Button>
         <div class="error-message" v-if="error">{{ error.message }}</div>
       </div>
     </form>
@@ -49,6 +53,8 @@ export default {
   data() {
     return {
       error: null,
+      creating: false,
+      deleting: {},
       cron: {
         name: "",
         expr: "@weekly",
@@ -66,31 +72,49 @@ export default {
     },
     cronExprOptions() {
       return ["@hourly", "@daily", "@weekly", "@monthly", "@yearly"].map(x => [x, x]);
+    },
+    defaultBranch() {
+      return (this.repo && this.repo.branch) || "master";
     }
   },
   methods: {
     handleDelete: function (cron) {
       const {namespace, name} = this.$route.params;
-      this.$store.dispatch('deleteCron', { namespace, name, cron });
+
+      this.$set(this.deleting, cron.id, true);
+      this.$store
+        .dispatch("deleteCron", { namespace, name, cron })
+        .then(() => {
+          this.$store.dispatch("showNotification", { message: "Successfully deleted" });
+          this.$delete(this.deleting, cron.id);
+          this.error = null;
+        })
+        .catch(error => {
+          this.error = error;
+          this.$delete(this.deleting, cron.id);
+        });
     },
-    handleSubmit: function (event) {
-      const { onFailure } = this;
-      const {namespace, name} = this.$route.params;
+    handleSubmit: function() {
+      const { namespace, name } = this.$route.params;
       const cron = {
         name: this.cron.name,
         expr: this.cron.expr,
-        branch: this.cron.branch || (this.repo && this.repo.branch) || "master",
+        branch: this.cron.branch || this.defaultBranch
       };
-      this.$store.dispatch('createCron', { namespace, name, cron, onFailure });
-      this.createRequestSent = true;
-      this.cron = {
-        name: "",
-        expr: "@weekly",
-        branch: "",
-      }
-    },
-    onFailure(error) {
-      this.error = error;
+
+      this.creating = true;
+      this.$store
+        .dispatch("createCron", { namespace, name, cron })
+        .then(() => {
+          this.$store.dispatch("showNotification", { message: "Successfully saved" });
+          this.creating = false;
+          this.cron = { name: "", expr: "@weekly", branch: "" };
+          this.error = null;
+        })
+        .catch(error => {
+          this.error = error;
+          this.creating = false;
+        });
     }
   }
 };

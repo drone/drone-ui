@@ -39,7 +39,7 @@
       </div>
 
       <div class="control-actions">
-        <Button theme="primary" size="l" @click.native="save">Save</Button>
+        <Button theme="primary" size="l" @click.native="save" :loading="saving">Save</Button>
         <div class="error-message" v-if="error">{{ error.message }}</div>
       </div>
     </Card>
@@ -83,7 +83,8 @@ export default {
   data() {
     return {
       timeouts,
-      error: null
+      error: null,
+      saving: false
     };
   },
   components: {
@@ -121,15 +122,21 @@ export default {
   },
   methods: {
     save() {
-      const { repo, repo: { namespace, name }, onFailure } = this;
-      const updatedRepo = {
-       ...repo,
-       timeout: parseInt(repo.timeout),
-      };
-      this.$store.dispatch("updateRepo", { namespace, name, repo: updatedRepo, onFailure });
-    },
-    onFailure(error) {
-      this.error = error;
+      const { repo: { namespace, name }, repo } = this;
+      const updatedRepo = { ...repo, timeout: parseInt(repo.timeout) };
+      this.saving = true;
+
+      this.$store
+        .dispatch("updateRepo", { namespace, name, repo: updatedRepo })
+        .then(() => {
+          this.$store.dispatch("showNotification", { message: "Successfully saved" });
+          this.error = null;
+          this.saving = false;
+        })
+        .catch(error => {
+          this.error = error;
+          this.saving = false;
+        });
     },
     disable: function (event) {
       const {namespace, name} = this.$route.params;

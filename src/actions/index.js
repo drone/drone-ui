@@ -55,6 +55,11 @@ import {
 	syncPoll,
 } from "./viewer";
 
+import {
+  showNotification,
+  hideNotification
+} from "./notifications"
+
 export default {
 	cancelBuild,
 	chownRepo,
@@ -86,6 +91,8 @@ export default {
 	updateCron,
 	updateRepo,
 	updateSecret,
+  showNotification,
+  hideNotification,
 	syncRepos,
 	syncAccount,
 	syncPoll,

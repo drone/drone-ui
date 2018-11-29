@@ -103,6 +103,8 @@ export default new Vuex.Store({
       stage: undefined,
       step: undefined,
     },
+
+    notifications: {}
   },
   mutations: {
     // BEFORE_ROUTE_LOAD(state) {
@@ -443,6 +445,13 @@ export default new Vuex.Store({
       if (!state.logs) state.logs = [];
       escapeLogs(lines);
       state.logs = state.logs.concat(lines);
+    },
+
+    NOTIFICATION_ADD(state, notification) {
+      Vue.set(state.notifications, notification.id, notification);
+    },
+    NOTIFICATION_REMOVE(state, notificationId) {
+      Vue.delete(state.notifications, notificationId);
     }
   },
   actions: {

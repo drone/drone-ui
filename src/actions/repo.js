@@ -181,7 +181,7 @@ export const REPO_UPDATE_FAILURE = 'REPO_UPDATE_FAILURE';
  * updateRepo updates the repository and dispatches an event
  * to purge the object from the store.
  */
-export const updateRepo = async ({ commit }, { namespace, name, repo, onFailure }) => {
+export const updateRepo = async ({ commit }, { namespace, name, repo }) => {
   commit(REPO_UPDATE_LOADING);
 
   const body = JSON.stringify(repo);
@@ -197,6 +197,6 @@ export const updateRepo = async ({ commit }, { namespace, name, repo, onFailure 
     commit(REPO_UPDATE_SUCCESS, { namespace, name, repo: res });
   } else {
     commit(REPO_UPDATE_FAILURE, { namespace, name, error: res });
-    onFailure && onFailure(res);
+    throw new Error(res.message);
   }
 };

@@ -26,6 +26,7 @@ export default {
   props: {
     to: String,
     href: String,
+    loading: { type: Boolean, default: false },
     borderless: { type: Boolean, default: false },
     outline: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
@@ -43,13 +44,13 @@ export default {
   },
   render(createElement) {
     const tag = getTag(this);
-    const { bordered, outline, theme, size } = this;
+    const { bordered, outline, theme, size, loading } = this;
 
     return createElement(
       tag,
       {
         domProps: getDomProps(tag, this),
-        class: { button: true, bordered, outline, [`theme-${theme}`]: true, [`size-${size}`]: true },
+        class: { button: true, bordered, outline, loading, [`theme-${theme}`]: true, [`size-${size}`]: true },
         props: getProps(tag, this)
       },
       this.$slots.default
@@ -193,6 +194,32 @@ export default {
 .button.theme-danger.outline:focus,
 .button.theme-danger.outline:hover {
   background-color: rgba(255, 65, 100, 0.05);
+}
+
+.button.loading {
+  color: transparent !important;
+  text-align: center;
+  position: relative;
+  pointer-events: none;
+}
+
+.button.loading:before {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  margin: -9px 0 0 -9px;
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  border-bottom-color: transparent !important;
+  animation: spin 1s linear infinite;
+}
+
+.button.theme-danger.outline.loading:before {
+  border-color: #dd3e60;
 }
 
 .button[disabled],

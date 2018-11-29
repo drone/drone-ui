@@ -2,7 +2,9 @@
   <div class="secret">
     <span>{{ name }}</span>
     <Tag v-if="pullRequest">Pull Requests Enabled</Tag>
-    <Button theme="danger" outline borderless @click.native="$emit('delete', {name, pullRequest})">Delete</Button>
+    <Button theme="danger" outline borderless @click.native="$emit('delete')" :loading="deleting">
+      Delete
+    </Button>
   </div>
 </template>
 
@@ -18,7 +20,8 @@ export default {
   },
   props: {
     name: String,
-    pullRequest: Boolean
+    pullRequest: Boolean,
+    deleting: Boolean
   }
 };
 </script>

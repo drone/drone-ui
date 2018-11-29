@@ -50,18 +50,23 @@ export const SECRET_DELETE_FAILURE = 'SECRET_DELETE_FAILURE';
  * deleteSecret deletes the secret and dispatches an event
  * to purge the object from the store.
  */
-export const deleteSecret = async ({commit}, {namespace, name, secret}) => {
-	commit(SECRET_DELETE_LOADING)
+export const deleteSecret = async ({ commit }, { namespace, name, secret }) => {
+  commit(SECRET_DELETE_LOADING);
 
-	const req = await fetch(`${instance}/api/repos/${namespace}/${name}/secrets/${secret.name}`, {headers, method: 'DELETE', credentials: 'same-origin'});
+  const req = await fetch(`${instance}/api/repos/${namespace}/${name}/secrets/${secret.name}`, {
+    headers,
+    method: "DELETE",
+    credentials: "same-origin"
+  });
 
-	if (req.status < 300) {
-        commit(SECRET_DELETE_SUCCESS, {namespace, name, secret});
-	} else {
-        const res = await req.json();
-        commit(SECRET_DELETE_FAILURE, {namespace, name, error: res});
-    }
-}
+  if (req.status < 300) {
+    commit(SECRET_DELETE_SUCCESS, { namespace, name, secret });
+  } else {
+    const res = await req.json();
+    commit(SECRET_DELETE_FAILURE, { namespace, name, error: res });
+    throw new Error(res.message);
+  }
+};
 
 export const SECRET_CREATE_LOADING = 'SECRET_CREATE_LOADING';
 export const SECRET_CREATE_SUCCESS = 'SECRET_CREATE_SUCCESS';
@@ -71,7 +76,7 @@ export const SECRET_CREATE_FAILURE = 'SECRET_CREATE_FAILURE';
  * createSecret creates the secret and dispatches an event
  * to purge the object from the store.
  */
-export const createSecret = async ({ commit }, { namespace, name, secret, onFailure }) => {
+export const createSecret = async ({ commit }, { namespace, name, secret }) => {
 	commit(SECRET_CREATE_LOADING);
 
 	const body = JSON.stringify(secret);
@@ -80,7 +85,7 @@ export const createSecret = async ({ commit }, { namespace, name, secret, onFail
 
 	if (req.status > 299) {
 		commit(SECRET_CREATE_FAILURE, {namespace, name, error: res});
-    onFailure && onFailure(res);
+    throw new Error(res.message);
 	} else {
 		commit(SECRET_CREATE_SUCCESS, {namespace, name, secret: res});
 	}
