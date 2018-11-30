@@ -13,67 +13,64 @@
       :build="Object.assign({}, build, { message: null })"/>
 
     <main v-if="!isBuildError">
-      <div class="stages">
-        <div v-if="build && build.stages">
+      <div v-if="build && build.stages" class="stages" ref="stages">
+        <div class="stage-container"
+             v-for="(_stage) in build.stages"
+             :key="_stage.id">
 
-          <div class="stage-container"
-               v-for="(_stage) in build.stages"
-               :key="_stage.id">
+          <!--
+            If the stage is not selected it is collapsed
+            and rendered as a link. Clicking the link will
+            change the route and expand the section.
+          -->
+          <router-link
+            v-if="_stage !== stage"
+            v-bind:to="'/'+namespace+'/'+build.number+'/'+_stage.number+'/1'">
+            <Stage
+              hoverable
+              v-bind:name="_stage.name"
+              v-bind:status="_stage.status"
+              v-bind:created="_stage.created"
+              v-bind:started="_stage.started"
+              v-bind:stopped="_stage.stopped">
+            </Stage>
+          </router-link>
 
-              <!--
-                If the stage is not selected it is collapsed
-                and rendered as a link. Clicking the link will
-                change the route and expand the section.
-              -->
-              <router-link
-                v-if="_stage !== stage"
-                v-bind:to="'/'+namespace+'/'+build.number+'/'+_stage.number+'/1'">
-                <Stage
-                  hoverable
-                  v-bind:name="_stage.name"
-                  v-bind:status="_stage.status"
-                  v-bind:created="_stage.created"
-                  v-bind:started="_stage.started"
-                  v-bind:stopped="_stage.stopped">
-                </Stage>
+          <!--
+            If the stage is selected it is expanded, and
+            all steps are displayed.
+          -->
+          <Stage
+            v-if="_stage === stage"
+            v-bind:key="_stage.id"
+            v-bind:name="_stage.name"
+            v-bind:status="_stage.status"
+            v-bind:created="_stage.created"
+            v-bind:started="_stage.started"
+            v-bind:stopped="_stage.stopped">
+            <div v-for="(_step) in _stage.steps" :key="_step.id" class="step-container">
+              <Step v-if="_step === step"
+                    selected
+                    :name="_step.name"
+                    :number="_step.number"
+                    :status="_step.status"
+                    :created="_step.created"
+                    :started="_step.started"
+                    :stopped="_step.stopped"/>
+
+              <router-link v-else :to="'/'+namespace+'/'+build.number+'/'+_stage.number+'/'+_step.number">
+                <Step
+                  :name="_step.name"
+                  :number="_step.number"
+                  :status="_step.status"
+                  :created="_step.created"
+                  :started="_step.started"
+                  :stopped="_step.stopped">
+                </Step>
               </router-link>
-
-              <!--
-                If the stage is selected it is expanded, and
-                all steps are displayed.
-              -->
-              <Stage
-                v-if="_stage === stage"
-                v-bind:key="_stage.id"
-                v-bind:name="_stage.name"
-                v-bind:status="_stage.status"
-                v-bind:created="_stage.created"
-                v-bind:started="_stage.started"
-                v-bind:stopped="_stage.stopped">
-                <div v-for="(_step) in _stage.steps" :key="_step.id" class="step-container">
-                  <Step v-if="_step === step"
-                        selected
-                        :name="_step.name"
-                        :number="_step.number"
-                        :status="_step.status"
-                        :created="_step.created"
-                        :started="_step.started"
-                        :stopped="_step.stopped"/>
-
-                  <router-link v-else :to="'/'+namespace+'/'+build.number+'/'+_stage.number+'/'+_step.number">
-                    <Step
-                      :name="_step.name"
-                      :number="_step.number"
-                      :status="_step.status"
-                      :created="_step.created"
-                      :started="_step.started"
-                      :stopped="_step.stopped">
-                    </Step>
-                  </router-link>
-                  </div>
-              </Stage>
-            </div> <!-- end: step loop -->
-        </div>
+            </div>
+          </Stage>
+        </div> <!-- end: step loop -->
       </div>
 
       <ScrollLock v-if="outputFullscreen"/>
@@ -149,6 +146,8 @@ import IconFullscreen from "@/components/icons/IconFullscreen.vue";
 import IconDownload from "@/components/icons/IconDownload.vue";
 import ScrollLock from "@/components/utils/ScrollLock.vue";
 
+let previousScrollY = window.scrollY;
+
 export default {
   name: "Build",
   components: {
@@ -171,6 +170,12 @@ export default {
       logLimit: 250,
       logFromTop: false
     };
+  },
+  mounted() {
+    window.addEventListener("scroll", this.onScroll);
+  },
+  destroyed() {
+    window.removeEventListener("scroll", this.onScroll);
   },
   computed: {
     namespace() {
@@ -269,6 +274,20 @@ export default {
       link.href = URL.createObjectURL(blob);
       link.target = "_blank";
       link.click();
+    },
+    onScroll() {
+      const delta = window.scrollY - previousScrollY;
+      previousScrollY = window.scrollY;
+
+      const stages = this.$refs.stages;
+      const stagesRect = stages.getBoundingClientRect();
+
+      if (stagesRect.y <= 0 && window.innerHeight < stagesRect.height) {
+        const top = parseInt(stages.style.top || 0);
+        const newTop = Math.max(Math.min(0, top - delta), window.innerHeight - stagesRect.height);
+
+        stages.style.top = `${newTop}px`;
+      }
     }
   },
   watch: {
@@ -313,10 +332,13 @@ export default {
 </script>
 
 <style scoped>
+.repo-item {
+  margin-bottom: 20px;
+}
+
 main {
   display: flex;
   align-items: flex-start;
-  box-sizing: border-box;
 }
 
 .stages {
@@ -327,10 +349,6 @@ main {
 
 .stage-container + .stage-container {
   margin-top: 15px;
-}
-
-.repo-item {
-  margin-bottom: 20px;
 }
 
 .output {
