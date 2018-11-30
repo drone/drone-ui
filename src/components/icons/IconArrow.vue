@@ -37,4 +37,8 @@ export default {
 .direction-right {
   transform: rotate(-90deg);
 }
+
+.direction-up {
+  transform: rotate(180deg);
+}
 </style>

@@ -74,7 +74,9 @@
       </div>
 
       <ScrollLock v-if="outputFullscreen"/>
-      <div class="output" :class="{'output-fullscreen': outputFullscreen}" v-if="!isStageError">
+      <div class="output" :class="{'output-fullscreen': outputFullscreen}" v-if="!isStageError" ref="output">
+        <div ref="topAnchor"></div>
+
         <div class="output-header">
           <div class="output-title" :title="stage && step && `${stage.name} - ${step.name}`">
             <span class="output-title-pipeline">{{ stage && stage.name }}</span>
@@ -94,14 +96,12 @@
           </div>
         </div>
         <div class="output-content" ref="outputContent">
-          <div v-if="logsLoading" class="output-loading">Loading...</div>
+          <div v-if="logsLoading" class="output-loading">Loading</div>
 
-          <div class="output-content-actions output-content-actions-top" v-if="!logFromTop && moreCount">
-            <!--todo replace with Button if the design is not changed-->
-            <button class="output-button" @click="handleMore">
+          <div class="output-content-actions" v-if="moreCount">
+            <Button size="l" outline borderless class="output-button" @click.native="handleMore">
               Show {{Math.min(moreCount, logStep)}} lines more
-            </button>
-            <button class="output-button" @click="toggleLogFrom">To top</button>
+            </Button>
           </div>
 
           <div v-for="line in shownLogs" :key="line.pos" class="output-line">
@@ -109,17 +109,13 @@
             <div v-html="line._html"></div>
             <div>{{line.time}}s</div>
           </div>
-
-          <div class="output-content-actions output-content-actions-bottom" v-if="logFromTop && moreCount">
-            <!--todo replace with Button if the design is not changed-->
-            <button class="output-button" @click="handleMore">
-              Show {{Math.min(moreCount, logStep)}} lines more
-            </button>
-            <button class="output-button" @click="toggleLogFrom">To bottom</button>
-          </div>
-
         </div>
+
         <div ref="bottomAnchor"></div>
+
+        <div class="to-top" @click="scrollToTop" v-show="!logsLoading && showToTop">
+          <IconArrow direction="up"/>
+        </div>
       </div>
 
       <Alert v-if="isStageError" class="alert">
@@ -145,12 +141,14 @@ import PlayButton from "@/components/buttons/PlayButton.vue";
 import IconFullscreen from "@/components/icons/IconFullscreen.vue";
 import IconDownload from "@/components/icons/IconDownload.vue";
 import ScrollLock from "@/components/utils/ScrollLock.vue";
+import IconArrow from "../components/icons/IconArrow";
 
 let previousScrollY = window.scrollY;
 
 export default {
   name: "Build",
   components: {
+    IconArrow,
     Alert,
     RepoItem,
     Step,
@@ -168,7 +166,7 @@ export default {
       follow: false,
       logStep: 250,
       logLimit: 250,
-      logFromTop: false
+      showToTop: false
     };
   },
   mounted() {
@@ -206,11 +204,7 @@ export default {
         });
     },
     shownLogs() {
-      if (this.logFromTop) {
-        return this.logs.slice(0, this.logLimit);
-      } else {
-        return this.logs.slice(this.logs.length - this.logLimit);
-      }
+      return this.logs.slice(this.logs.length - this.logLimit);
     },
     logs() {
       return this.$store.state.logs;
@@ -248,9 +242,6 @@ export default {
       this.follow = !this.follow;
       if (this.follow) this.scrollToBottom();
     },
-    toggleLogFrom() {
-      this.logFromTop = !this.logFromTop;
-    },
     scrollToBottom() {
       if (this.outputFullscreen) {
         const { outputContent } = this.$refs;
@@ -259,18 +250,24 @@ export default {
         this.$refs.bottomAnchor.scrollIntoView();
       }
     },
+    scrollToTop() {
+      if (this.outputFullscreen) {
+        this.$refs.outputContent.scrollTop = 0;
+      } else {
+        this.$refs.topAnchor.scrollIntoView();
+      }
+    },
     download() {
-      const {namespace, name, stage, step} = this.$route.params;
-      const link = document.createElement("a");
-      const logsClone = this.$store.state.logs.slice(0);
-
-      for (let i = 0; i < logsClone.length; ++i) {
-        delete logsClone[i]._html;
+      let output = "";
+      for (let i = 0; i < this.logs.length; ++i) {
+        output += this.logs[i].out;
       }
 
-      const blob = new Blob([JSON.stringify(logsClone)], { type: "application/json" });
+      const { namespace, name, stage, step } = this.$route.params;
+      const link = document.createElement("a");
+      const blob = new Blob([output], { type: "application/text" });
 
-      link.download = `logs_${namespace}_${name}_${stage}_${step}.json`;
+      link.download = `logs_${namespace}_${name}_${stage}_${step}.log`;
       link.href = URL.createObjectURL(blob);
       link.target = "_blank";
       link.click();
@@ -288,6 +285,8 @@ export default {
 
         stages.style.top = `${newTop}px`;
       }
+
+      this.showToTop = this.$refs.output.getBoundingClientRect().y < 0;
     }
   },
   watch: {
@@ -327,7 +326,7 @@ export default {
         setTimeout(() => this.scrollToBottom(), 0);
       }
     }
-  },
+  }
 };
 </script>
 
@@ -382,6 +381,14 @@ main {
   overflow: auto;
 }
 
+.output-fullscreen .to-top {
+  position: absolute;
+  top: unset;
+  bottom: 0;
+  right: 0;
+  display: block !important;
+}
+
 .output-header {
   position: sticky;
   top: 0;
@@ -432,6 +439,21 @@ main {
   text-align: center;
 }
 
+.output-loading:after {
+  position: absolute;
+  overflow: hidden;
+  display: inline-block;
+  animation: ellipsis steps(4, end) 1s infinite;
+  content: "...";
+  width: 0;
+}
+
+@keyframes ellipsis {
+  to {
+    width: 28px;
+  }
+}
+
 .output-line {
   display: flex;
   line-height: 19px;
@@ -459,43 +481,47 @@ main {
 }
 
 .output-content-actions {
-  display: flex;
-}
-
-.output-content-actions-top {
   margin-bottom: 15px;
 }
 
-.output-content-actions-bottom {
-  margin-top: 15px;
+.output-button.button.outline.theme-default {
+  width: 100%;
+  background-color: rgba(216, 216, 216, 0.07);
+  font-family: "Roboto Mono", monospace;
+  text-transform: none;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: normal;
 }
 
-.output-button {
-  flex: 1 0 0;
-  background: rgba(255,255,255,0.05);
-  border-radius: 3px;
-  border: none;
-  color: #8c96a1;
-  text-transform: uppercase;
-  font-size: 14px;
-  padding: 10px 0px;
-  cursor: pointer;
-  transition: all 0.4s ease-in-out;
-}
-
-.output-button + .output-button {
-  margin-left: 15px;
-}
-
-.output-button:hover {
-  background: rgba(255,255,255,0.1);
-  color: #FFF;
+.output-button.button.outline.theme-default:hover,
+.output-button.button.outline.theme-default:focus {
+  color: #fff;
 }
 
 .button.theme-light.outline.download > svg {
   width: 21px;
   height: 22px;
   margin-bottom: -6px;
+}
+
+.to-top {
+  float: right;
+  position: sticky;
+  bottom: 0;
+  cursor: pointer;
+  width: 21px;
+  height: 30px;
+  background: #192d46;
+  color: rgba(255, 255, 255, 0.75)
+}
+
+.to-top > svg {
+  margin-top: 5px;
+}
+
+.to-top:hover {
+  color: #fff;
 }
 
 .alert {
