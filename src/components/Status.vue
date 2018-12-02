@@ -1,8 +1,8 @@
 <template>
-  <div v-bind:class="{ status: true, [`status-${status}`]: true, outlined }">
+  <div v-bind:class="{ status: true, [`status-${status}`]: true }" :title="status">
     <Blocked v-if="status === 'blocked'"/>
     <Failure v-if="status === 'failure'"/>
-    <Failure v-if="status === 'killed'"/>
+    <Cancelled v-if="status === 'killed'"/>
     <Failure v-if="status === 'error'"/>
     <Failure v-if="status === 'declined'"/>
     <Pending v-if="status === 'pending'"/>
@@ -21,11 +21,11 @@ import Failure from "./icons/status/StatusFailure.vue";
 import Pending from "./icons/status/StatusPending.vue";
 import Running from "./icons/status/StatusRunning.vue";
 import Success from "./icons/status/StatusSuccess.vue";
+import Cancelled from "./icons/status/StatusCancelled.vue";
 
 export default {
   name: "Status",
   props: {
-    outlined: Boolean,
     status: String
   },
   components: {
@@ -33,7 +33,8 @@ export default {
     Failure,
     Pending,
     Running,
-    Success
+    Success,
+    Cancelled
   }
 };
 </script>
@@ -54,18 +55,8 @@ export default {
   background-color: #19D78C;
 }
 
-.status-success.outlined {
-  border-color: #19D78C;
-  color: #19D78C;
-}
-
 .status-running {
   background-color: #FFD20A;
-}
-
-.status-running.outlined {
-  border-color: #FFD20A;
-  color: #FFD20A;
 }
 
 .status-blocked,
@@ -76,28 +67,9 @@ export default {
   background-color: #FF4164;
 }
 
-.status-blocked.outlined,
-.status-killed.outlined,
-.status-error.outlined,
-.status-declined.outlined,
-.status-failure.outlined {
-  border-color: #FF4164;
-  color: #FF4164;
-}
-
 .status-skipped,
 .status-pending {
   background-color: #c6cbd1; /* = rgba(25, 45, 70, 0.25); */
-}
-
-.status-skipped.outlined,
-.status-pending.outlined {
-  border-color: #c6cbd1;
-  color: #c6cbd1;
-}
-
-.outlined {
-  background: transparent;
 }
 
 svg {
@@ -108,17 +80,12 @@ svg {
   left: -1px;
 }
 
-.status-running svg {
-  animation: spin 1s linear infinite;
+.status-running > svg {
+  animation: spin 3s linear infinite;
 }
 
-.status-pending svg {
+.status-pending > svg {
   animation: wrench 2.5s ease infinite;
-}
-
-@keyframes spin{
-	0%{transform:rotate(0deg)}
-	100%{transform:rotate(359deg)}
 }
 
 @keyframes wrench {

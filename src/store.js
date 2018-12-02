@@ -6,7 +6,38 @@ import * as config from "./actions/config";
 
 Vue.use(Vuex);
 
-const DEFAULT_LOG_LIMIT = 250;
+function mergeRepoChanges(prev, next) {
+  return {
+    permissions: prev.permissions,
+    ...next
+  };
+}
+
+function updateBuildsFeedByBuildEvent(state, event) {
+  const builds = state.buildsFeed.data;
+  let index = -1;
+
+  for (let i = 0; i < builds.length; ++i) {
+    if (builds[i].id === event.id && builds[i].build.id === event.build.id) {
+      index = i;
+      break;
+    }
+  }
+
+  const found = index !== -1;
+
+  if (found) {
+    if (event.build.finished) {
+      Vue.delete(state.buildsFeed.data, index);
+    } else {
+      Vue.set(state.buildsFeed.data, index, event);
+    }
+  } else {
+    if (!event.build.finished) {
+      state.buildsFeed.data.push(event);
+    }
+  }
+}
 
 export default new Vuex.Store({
   state: {
@@ -45,6 +76,12 @@ export default new Vuex.Store({
     buildLoading: false,
     buildLoadingErr: undefined,
 
+    buildsFeed: {
+      data: [],
+      status: "empty", // 'loading', 'loaded', 'error'
+      error: undefined
+    },
+
     secrets: {},
     crons: {},
     activity: {},
@@ -52,12 +89,10 @@ export default new Vuex.Store({
     user: undefined,
     userLoaded: false,
 
-
     logs: [],
     logsLoaded: false,
     logsLoading: false,
     logsLoadingErr: undefined,
-    logsLimit: DEFAULT_LOG_LIMIT,
     logsFor: {
       namespace: undefined,
       name: undefined,
@@ -65,6 +100,8 @@ export default new Vuex.Store({
       stage: undefined,
       step: undefined,
     },
+
+    notifications: {}
   },
   mutations: {
     // BEFORE_ROUTE_LOAD(state) {
@@ -117,12 +154,12 @@ export default new Vuex.Store({
     REPO_LIST_LATEST_LOADING(state) {},
     REPO_LIST_LATEST_FAILURE(state, error) {},
     REPO_LIST_LATEST_SUCCESS(state, list) {
-      state.latest = {}
+      const latest = {};
+			list.forEach(item => latest[item.slug] = item);
+
+      state.latest = latest;
       state.latestLoaded = true;
       state.latestUpdated = Math.round((new Date()).getTime() / 1000);
-			list.map(item => {
-				state.latest[item.slug] = item;
-			});
     },
 
     //
@@ -131,8 +168,8 @@ export default new Vuex.Store({
 
     REPO_UPDATE_LOADING(state) {},
     REPO_UPDATE_FAILURE(state) {},
-    REPO_UPDATE_SUCCESS(state, {namespace, name, repo}) {
-      Vue.set(state.repos, repo.slug, { ...state.repos[repo.slug], ...repo });
+    REPO_UPDATE_SUCCESS(state, { repo }) {
+      state.repos[repo.slug] = mergeRepoChanges(state.repos[repo.slug], repo);
     },
 
     REPO_ENABLE_LOADING(state) {
@@ -143,18 +180,18 @@ export default new Vuex.Store({
       state.repoEnabling = false;
       state.repoEnablingErr = error;
     },
-    REPO_ENABLE_SUCCESS(state, {repo}) {
+    REPO_ENABLE_SUCCESS(state, { repo }) {
       state.repoEnabling = false;
       state.repoEnablingErr = undefined;
-      state.repos[repo.slug] = repo;
+      state.repos[repo.slug] = mergeRepoChanges(state.repos[repo.slug], repo);
     },
 
     REPO_DISABLE_LOADING(state) {},
     REPO_DISABLE_FAILURE(state, {error}) {},
-    REPO_DISABLE_SUCCESS(state, {repo}) {
+    REPO_DISABLE_SUCCESS(state, { repo }) {
       state.repoEnabling = false;
       state.repoEnablingErr = undefined;
-      state.repos[repo.slug] = repo;
+      state.repos[repo.slug] = mergeRepoChanges(state.repos[repo.slug], repo);
     },
 
     REPO_REPAIR_LOADING(state) {},
@@ -328,21 +365,17 @@ export default new Vuex.Store({
     //
 
     BUILD_EVENT(state, {event}) {
-      let builds = state.builds[event.slug] || {};
+      const builds = state.builds[event.slug] || {};
 			Vue.set(builds, event.build.number, event.build);
       Vue.set(state.builds, event.slug, builds);
 
-      let latest = state.latest[event.slug];
-      if (latest) {
-        state.latest[event.slug] = event;
-        // TODO somebody please fix this.
-        // this is super fucked up. We need to completely replace
-        // this path in the state tree in order for changes to
-        // properly render on the dashboard.
-        state.latest = JSON.parse(JSON.stringify(state.latest))
+      const latest = state.latest[event.slug];
+      if (latest && (!latest.build || latest.build.number <= event.build.number)) {
+        Vue.set(state.latest, event.slug, event);
       }
-    },
 
+      updateBuildsFeedByBuildEvent(state, event);
+    },
 
     BUILD_RETRY_LOADING(state){},
     BUILD_RETRY_FAILURE(state){},
@@ -362,6 +395,18 @@ export default new Vuex.Store({
       Vue.set(state.builds, slug, builds);
     },
 
+    BUILDS_FEED_LOADING(state) {
+      state.buildsFeed.status = "loading";
+    },
+    BUILDS_FEED_FAILURE(state, { error }) {
+      state.buildsFeed.status = "error";
+      state.buildsFeed.error = error;
+    },
+    BUILDS_FEED_SUCCESS(state, { builds }) {
+      state.buildsFeed.status = "loaded";
+      state.buildsFeed.data = builds;
+    },
+
     //
     // sync
     //
@@ -376,52 +421,45 @@ export default new Vuex.Store({
       state.user.syncing = true;
     },
 
-
-
     LOGS_FIND_LOADING(state){
       state.logs = [];
+      state.logsLoading = true;
     },
-    LOGS_FIND_FAILURE(state){},
+    LOGS_FIND_FAILURE(state, data){
+      state.logsLoading = false;
+      state.logsLoadingErr = data;
+    },
     LOGS_FIND_SUCCESS(state, data){
-      state.logs = escapeLogs(data.lines);
-    },
-    LOGS_EXPAND(state) {
-      state.logsLimit = state.logsLimit + DEFAULT_LOG_LIMIT;
+      escapeLogs(data.lines);
+
+      state.logsLoadingErr = null;
+      state.logsLoading = false;
+      state.logs = data.lines;
     },
     LOG_CLEAR(state) {
       state.logs = [];
-      state.logsLimit = DEFAULT_LOG_LIMIT;
     },
-    LOG_WRITE(state, data){
-      if (!state.logs) {
-        state.logs = [];
-      }
-      state.logs.push(
-        escapeLine(data.line)
-      );
+    LOG_WRITE(state, { lines }) {
+      if (!state.logs) state.logs = [];
+      escapeLogs(lines);
+      state.logs = state.logs.concat(lines);
     },
-  },
-  actions: {
-    ...actions,
 
-    expandLogs({commit}) {
-      commit('LOGS_EXPAND');
+    NOTIFICATION_ADD(state, notification) {
+      Vue.set(state.notifications, notification.id, notification);
+    },
+    NOTIFICATION_REMOVE(state, notificationId) {
+      Vue.delete(state.notifications, notificationId);
     }
   },
+  actions
 });
-
 
 let formatter = new AnsiUp();
 formatter.use_classes = true;
 
 function escapeLogs(logs) {
-  return logs.map((line) => {
-    line._html = formatter.ansi_to_html(line.out || "");
-    return line;
-  });
-}
-
-function escapeLine(line) {
-  line._html = formatter.ansi_to_html(line.out || "");
-  return line;
+  for (let i = 0; i < logs.length; ++i) {
+    logs[i]._html = formatter.ansi_to_html(logs[i].out || "");
+  }
 }

@@ -6,6 +6,6 @@
 
 <style scoped>
 .card-group .card {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 </style>

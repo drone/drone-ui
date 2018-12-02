@@ -62,12 +62,25 @@ html, body {
   width: 100%;
 }
 
-/** {*/
-  /*font-family: 'Open Sans', sans-serif;*/
-/*}*/
-
 a {
   text-decoration: none;
   color: #0061da;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.75s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(359deg);
+  }
 }
 </style>

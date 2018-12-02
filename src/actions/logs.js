@@ -1,3 +1,4 @@
+import throttle from 'lodash.throttle';
 import { instance, headers, token } from "./config";
 
 export const LOGS_FIND_LOADING = 'LOGS_FIND_LOADING';
@@ -40,10 +41,16 @@ export function streamLogs({ commit }, params) {
 
   commit(LOG_CLEAR);
 
+  let lines = [];
+  const throttledCommit = throttle(() => {
+    commit(LOG_WRITE, { lines });
+    lines = [];
+  }, 500);
+
   streamLogs.events = new EventSource(path);
   streamLogs.events.onmessage = function(event) {
-    const line = JSON.parse(event.data);
-    commit(LOG_WRITE, { ...params, line });
+    lines.push(JSON.parse(event.data));
+    throttledCommit();
   };
   streamLogs.events.onerror = function(err) {
     if (err.data === "eof") {

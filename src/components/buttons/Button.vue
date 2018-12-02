@@ -7,18 +7,26 @@ function getTag(context) {
   return "button";
 }
 
-function getElementProps(tag, context) {
-  const { to, href } = context;
+function getProps(tag, context) {
+  const { to } = context;
 
   if (tag === "router-link") return { to };
   return {};
+}
+
+function getDomProps(tag, context) {
+  const { href, disabled } = context;
+
+  if (tag === "a") return { href, disabled };
+  return { disabled };
 }
 
 export default {
   name: "Button",
   props: {
     to: String,
-    // todo href
+    href: String,
+    loading: { type: Boolean, default: false },
     borderless: { type: Boolean, default: false },
     outline: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
@@ -36,14 +44,14 @@ export default {
   },
   render(createElement) {
     const tag = getTag(this);
-    const { bordered, outline, disabled, theme, size } = this;
+    const { bordered, outline, theme, size, loading } = this;
 
     return createElement(
       tag,
       {
-        domProps: { disabled },
-        class: { button: true, bordered, outline, [`theme-${theme}`]: true, [`size-${size}`]: true },
-        props: getElementProps(tag, this)
+        domProps: getDomProps(tag, this),
+        class: { button: true, bordered, outline, loading, [`theme-${theme}`]: true, [`size-${size}`]: true },
+        props: getProps(tag, this)
       },
       this.$slots.default
     );
@@ -72,7 +80,7 @@ export default {
 .button.theme-light.outline > svg {
   width: 18px;
   height: 18px;
-  margin-top: -4px;
+  margin-bottom: -4px;
 }
 </style>
 
@@ -186,6 +194,32 @@ export default {
 .button.theme-danger.outline:focus,
 .button.theme-danger.outline:hover {
   background-color: rgba(255, 65, 100, 0.05);
+}
+
+.button.loading {
+  color: transparent !important;
+  text-align: center;
+  position: relative;
+  pointer-events: none;
+}
+
+.button.loading:before {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  margin: -9px 0 0 -9px;
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  border-bottom-color: transparent !important;
+  animation: spin 1s linear infinite;
+}
+
+.button.theme-danger.outline.loading:before {
+  border-color: #dd3e60;
 }
 
 .button[disabled],

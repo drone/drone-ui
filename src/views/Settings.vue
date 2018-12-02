@@ -1,5 +1,5 @@
 <template>
-  <div class="settings-view">
+  <CardGroup class="settings-view">
     <Card contentPadding="0 15px 15px" v-if="isAdmin">
       <h2 slot="header">Main</h2>
 
@@ -39,7 +39,7 @@
       </div>
 
       <div class="control-actions">
-        <Button theme="primary" size="l" @click.native="save">Save</Button>
+        <Button theme="primary" size="l" @click.native="save" :loading="saving">Save</Button>
         <div class="error-message" v-if="error">{{ error.message }}</div>
       </div>
     </Card>
@@ -56,12 +56,13 @@
 
     <Secrets />
     <Cron />
+    <Badges />
 
-    <section v-if="repo.active && isAdmin" class="disable">
-      <Button @click.native="disable" theme="danger">Disable Repository</Button>
+    <Card v-if="repo.active && isAdmin" class="disable" contentPadding="30px">
+      <ButtonConfirm @click="disable" theme="danger" size="l">Disable Repository</ButtonConfirm>
       <p>You can disable your repository to stop processing builds.</p>
-    </section>
-  </div>
+    </Card>
+  </CardGroup>
 </template>
 
 <script>
@@ -72,14 +73,18 @@ import BaseRadioButtons from "@/components/forms/BaseRadioButtons.vue";
 import BaseInput from "@/components/forms/BaseInput.vue";
 import BaseSelect from "@/components/forms/BaseSelect.vue";
 import Card from "@/components/Card.vue";
+import CardGroup from "@/components/CardGroup.vue";
 import Button from "@/components/buttons/Button.vue";
+import ButtonConfirm from "@/components/buttons/ButtonConfirm.vue";
+import Badges from "@/components/Badges.vue";
 
 export default {
   name: "settings",
   data() {
     return {
       timeouts,
-      error: null
+      error: null,
+      saving: false
     };
   },
   components: {
@@ -90,6 +95,9 @@ export default {
     Secrets,
     Cron,
     Card,
+    CardGroup,
+    Badges,
+    ButtonConfirm,
     Button
   },
   computed: {
@@ -101,7 +109,6 @@ export default {
       return repo && {...repo};
     },
     isRoot() {
-      return true;
       return this.$store.state.user &&
         this.$store.state.user.admin;
     },
@@ -115,15 +122,21 @@ export default {
   },
   methods: {
     save() {
-      const { repo, repo: { namespace, name }, onFailure } = this;
-      const updatedRepo = {
-       ...repo,
-       timeout: parseInt(repo.timeout),
-      };
-      this.$store.dispatch("updateRepo", { namespace, name, repo: updatedRepo, onFailure });
-    },
-    onFailure(error) {
-      this.error = error;
+      const { repo: { namespace, name }, repo } = this;
+      const updatedRepo = { ...repo, timeout: parseInt(repo.timeout) };
+      this.saving = true;
+
+      this.$store
+        .dispatch("updateRepo", { namespace, name, repo: updatedRepo })
+        .then(() => {
+          this.$store.dispatch("showNotification", { message: "Successfully saved" });
+          this.error = null;
+          this.saving = false;
+        })
+        .catch(error => {
+          this.error = error;
+          this.saving = false;
+        });
     },
     disable: function (event) {
       const {namespace, name} = this.$route.params;
@@ -153,17 +166,13 @@ const timeouts = [
 </script>
 
 <style scoped>
-.card {
-  margin-bottom: 20px;
-}
-
 /* Settings specific */
 .control-group .controls .base-checkbox + .base-checkbox {
   margin-left: 48px;
 }
 
 .disable {
-  padding: 15px;
+  text-align: center;
 }
 
 .disable p {

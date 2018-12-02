@@ -1,7 +1,7 @@
 <template>
-  <Card :class="{ [`theme-${theme}`]: true }">
+  <Card :class="{ [`theme-${theme}`]: true }" contentPadding="45px">
     <slot></slot>
-    <div class="secondary"><slot name="secondary"></slot></div>
+    <div class="secondary" v-if="$slots.secondary"><slot name="secondary"></slot></div>
   </Card>
 </template>
 
@@ -21,14 +21,11 @@ export default {
 
 <style scoped>
 .card {
-  font-size: 15px;
-  padding: 30px;
   text-align: center;
 }
 
 .secondary {
   color: rgba(25, 45, 70, 0.6);
-  font-size: 14px;
   margin-top: 8px;
 }
 

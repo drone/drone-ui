@@ -1,7 +1,6 @@
 import Router from "vue-router";
 
 import Account from "../views/Account.vue";
-import Badges from "../views/Badges.vue";
 import Build from "../views/Build.vue";
 import Builds from "../views/Builds.vue";
 import Home from "../views/Home.vue";
@@ -55,11 +54,6 @@ export default new Router({
               path: "",
               name: "builds",
               component: Builds
-            },
-            {
-              path: "badges",
-              name: "badges",
-              component: Badges
             },
             {
               path: "settings",

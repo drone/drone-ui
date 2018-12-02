@@ -13,93 +13,109 @@
       :build="Object.assign({}, build, { message: null })"/>
 
     <main v-if="!isBuildError">
-      <div class="stages">
-        <div v-if="build && build.stages">
+      <div v-if="build && build.stages" class="stages" ref="stages">
+        <div class="stage-container"
+             v-for="(_stage) in build.stages"
+             :key="_stage.id">
 
-          <div class="stage-container"
-               v-for="(_stage) in build.stages"
-               :key="_stage.id">
+          <!--
+            If the stage is not selected it is collapsed
+            and rendered as a link. Clicking the link will
+            change the route and expand the section.
+          -->
+          <router-link
+            v-if="_stage !== stage"
+            v-bind:to="'/'+namespace+'/'+build.number+'/'+_stage.number+'/1'">
+            <Stage
+              hoverable
+              v-bind:name="_stage.name"
+              v-bind:status="_stage.status"
+              v-bind:created="_stage.created"
+              v-bind:started="_stage.started"
+              v-bind:stopped="_stage.stopped">
+            </Stage>
+          </router-link>
 
-              <!--
-                If the stage is not selected it is collapsed
-                and rendered as a link. Clicking the link will
-                change the route and expand the section.
-              -->
-              <router-link
-                v-if="_stage !== stage"
-                v-bind:to="'/'+namespace+'/'+build.number+'/'+_stage.number+'/1'">
-                <Stage
-                  hoverable
-                  v-bind:name="_stage.name"
-                  v-bind:status="_stage.status"
-                  v-bind:created="_stage.created"
-                  v-bind:started="_stage.started"
-                  v-bind:stopped="_stage.stopped">
-                </Stage>
+          <!--
+            If the stage is selected it is expanded, and
+            all steps are displayed.
+          -->
+          <Stage
+            v-if="_stage === stage"
+            v-bind:key="_stage.id"
+            v-bind:name="_stage.name"
+            v-bind:status="_stage.status"
+            v-bind:created="_stage.created"
+            v-bind:started="_stage.started"
+            v-bind:stopped="_stage.stopped">
+            <div v-for="(_step) in _stage.steps" :key="_step.id" class="step-container">
+              <Step v-if="_step === step"
+                    selected
+                    :name="_step.name"
+                    :number="_step.number"
+                    :status="_step.status"
+                    :created="_step.created"
+                    :started="_step.started"
+                    :stopped="_step.stopped"/>
+
+              <router-link v-else :to="'/'+namespace+'/'+build.number+'/'+_stage.number+'/'+_step.number">
+                <Step
+                  :name="_step.name"
+                  :number="_step.number"
+                  :status="_step.status"
+                  :created="_step.created"
+                  :started="_step.started"
+                  :stopped="_step.stopped">
+                </Step>
               </router-link>
-
-              <!--
-                If the stage is selected it is expanded, and
-                all steps are displayed.
-              -->
-              <Stage
-                v-if="_stage === stage"
-                v-bind:key="_stage.id"
-                v-bind:name="_stage.name"
-                v-bind:status="_stage.status"
-                v-bind:created="_stage.created"
-                v-bind:started="_stage.started"
-                v-bind:stopped="_stage.stopped">
-                <div v-for="(_step) in _stage.steps" :key="_step.id" class="step-container">
-                  <Step v-if="_step === step"
-                        selected
-                        :name="_step.name"
-                        :number="_step.number"
-                        :status="_step.status"
-                        :created="_step.created"
-                        :started="_step.started"
-                        :stopped="_step.stopped"/>
-
-                  <router-link v-else :to="'/'+namespace+'/'+build.number+'/'+_stage.number+'/'+_step.number">
-                    <Step
-                      :name="_step.name"
-                      :number="_step.number"
-                      :status="_step.status"
-                      :created="_step.created"
-                      :started="_step.started"
-                      :stopped="_step.stopped">
-                    </Step>
-                  </router-link>
-                  </div>
-              </Stage>
-            </div> <!-- end: step loop -->
-        </div>
+            </div>
+          </Stage>
+        </div> <!-- end: step loop -->
       </div>
 
       <ScrollLock v-if="outputFullscreen"/>
-      <div class="output" :class="{'output-fullscreen': outputFullscreen}" v-if="!isStageError">
+      <div class="output" :class="{'output-fullscreen': outputFullscreen}" v-if="!isStageError" ref="output">
+        <div ref="topAnchor"></div>
+
         <div class="output-header">
-          <div class="output-title">
+          <div class="output-title" :title="stage && step && `${stage.name} - ${step.name}`">
             <span class="output-title-pipeline">{{ stage && stage.name }}</span>
-            <span class="output-title-step"> — {{ step && step.name }}</span>
+            <span> — {{ step && step.name }}</span>
           </div>
           <div class="output-actions">
-            <PlayButton title="Follow logs" @click.native="toggleFollow" :pause="follow"></PlayButton>
-            <div class="divider"></div>
+            <PlayButton v-if="step && !step.stopped" title="Follow logs" @click.native="toggleFollow" :pause="follow"/>
+            <div v-if="step && !step.stopped" class="divider"></div>
+            <Button v-if="readyToDownload" title="Download" @click.native="download" theme="light" outline borderless
+                    class="download">
+              <IconDownload :close="outputFullscreen" />
+            </Button>
+            <div v-if="readyToDownload" class="divider"></div>
             <Button title="Fullscreen" @click.native="toggleOutputFullscreen" theme="light" outline borderless>
               <IconFullscreen :close="outputFullscreen" />
             </Button>
           </div>
         </div>
         <div class="output-content" ref="outputContent">
-          <button class="more-output-button" v-if="showLimit" v-on:click="handleMore">showing the last {{limit}} lines</button>
-          <div v-for="(line) in logs" :key="line.pos">
+          <div v-if="logsLoading" class="output-loading">Loading</div>
+
+          <div class="output-content-actions" v-if="moreCount">
+            <Button size="l" outline borderless class="output-button" @click.native="handleMore">
+              Show {{Math.min(moreCount, logStep)}} lines more
+            </Button>
+          </div>
+
+          <div v-for="line in shownLogs" :key="line.pos" class="output-line">
             <div>{{line.pos+1}}</div>
             <div v-html="line._html"></div>
             <div>{{line.time}}s</div>
           </div>
         </div>
+
         <div ref="bottomAnchor"></div>
+
+        <div class="to-top" @click="scrollToTop" v-show="!logsLoading && showToTop">
+          <IconArrow direction="up"/>
+        </div>
       </div>
 
       <Alert v-if="isStageError" class="alert">
@@ -123,11 +139,16 @@ import IconCancel from "@/components/icons/IconCancel.vue";
 import Button from "@/components/buttons/Button.vue";
 import PlayButton from "@/components/buttons/PlayButton.vue";
 import IconFullscreen from "@/components/icons/IconFullscreen.vue";
+import IconDownload from "@/components/icons/IconDownload.vue";
 import ScrollLock from "@/components/utils/ScrollLock.vue";
+import IconArrow from "../components/icons/IconArrow";
+
+let previousScrollY = window.scrollY;
 
 export default {
   name: "Build",
   components: {
+    IconArrow,
     Alert,
     RepoItem,
     Step,
@@ -136,13 +157,23 @@ export default {
     Button,
     PlayButton,
     ScrollLock,
+    IconDownload,
     IconFullscreen
   },
   data() {
     return {
       outputFullscreen: false,
-      follow: false
+      follow: false,
+      logStep: 250,
+      logLimit: 250,
+      showToTop: false
     };
+  },
+  mounted() {
+    window.addEventListener("scroll", this.onScroll);
+  },
+  destroyed() {
+    window.removeEventListener("scroll", this.onScroll);
   },
   computed: {
     namespace() {
@@ -172,22 +203,17 @@ export default {
           return step.number === number;
         });
     },
-    limit() {
-      return this.$store.state.logsLimit;
+    shownLogs() {
+      return this.logs.slice(this.logs.length - this.logLimit);
     },
     logs() {
-      const logs = this.$store.state.logs || [];
-      const show = Math.max(logs.length - this.limit, 0)
-      return logs.slice(show);
+      return this.$store.state.logs;
     },
-    showLimit() {
-      return this.logs && this.limit == this.logs.length;
+    logsLoading() {
+      return this.$store.state.logsLoading;
     },
-    buildLoaded() {
-      return this.$store.state.buildLoaded;
-    },
-    buildLoading() {
-      return this.$store.state.buildLoading;
+    moreCount() {
+      return Math.max(this.logs.length - this.logLimit, 0);
     },
     buildLoadingErr() {
       return this.$store.state.buildLoadingErr;
@@ -200,11 +226,14 @@ export default {
     },
     isCollaborator() {
       return this.repo && this.repo.permissions && this.repo.permissions.write || false;
+    },
+    readyToDownload() {
+      return this.step && this.step.stopped && this.$store.state.logs && this.$store.state.logs.length;
     }
   },
   methods: {
     handleMore: function() {
-      this.$store.dispatch('expandLogs');
+      this.logLimit += this.logStep;
     },
     toggleOutputFullscreen() {
       this.outputFullscreen = !this.outputFullscreen;
@@ -218,8 +247,46 @@ export default {
         const { outputContent } = this.$refs;
         outputContent.scrollTop = outputContent.scrollHeight + 15; // 15 - padding
       } else {
-        this.$refs.bottomAnchor.scrollIntoView()
+        this.$refs.bottomAnchor.scrollIntoView();
       }
+    },
+    scrollToTop() {
+      if (this.outputFullscreen) {
+        this.$refs.outputContent.scrollTop = 0;
+      } else {
+        this.$refs.topAnchor.scrollIntoView();
+      }
+    },
+    download() {
+      let output = "";
+      for (let i = 0; i < this.logs.length; ++i) {
+        output += this.logs[i].out;
+      }
+
+      const { namespace, name, stage, step } = this.$route.params;
+      const link = document.createElement("a");
+      const blob = new Blob([output], { type: "application/text" });
+
+      link.download = `logs_${namespace}_${name}_${stage}_${step}.log`;
+      link.href = URL.createObjectURL(blob);
+      link.target = "_blank";
+      link.click();
+    },
+    onScroll() {
+      const delta = window.scrollY - previousScrollY;
+      previousScrollY = window.scrollY;
+
+      const stages = this.$refs.stages;
+      const stagesRect = stages.getBoundingClientRect();
+
+      if (stagesRect.y <= 0 && window.innerHeight < stagesRect.height) {
+        const top = parseInt(stages.style.top || 0);
+        const newTop = Math.max(Math.min(0, top - delta), window.innerHeight - stagesRect.height);
+
+        stages.style.top = `${newTop}px`;
+      }
+
+      this.showToTop = this.$refs.output.getBoundingClientRect().y < 0;
     }
   },
   watch: {
@@ -237,6 +304,7 @@ export default {
       // is running, dispatch a request to stream the logs.
       if (!oldStep || oldStep.id != newStep.id) {
         this.follow = false;
+        this.logLimit = 250;
 
         if (newStep.stopped) {
           this.$store.dispatch('fetchLogs', this.$route.params);
@@ -258,15 +326,18 @@ export default {
         setTimeout(() => this.scrollToBottom(), 0);
       }
     }
-  },
+  }
 };
 </script>
 
 <style scoped>
+.repo-item {
+  margin-bottom: 20px;
+}
+
 main {
   display: flex;
   align-items: flex-start;
-  box-sizing: border-box;
 }
 
 .stages {
@@ -277,10 +348,6 @@ main {
 
 .stage-container + .stage-container {
   margin-top: 15px;
-}
-
-.repo-item {
-  margin-bottom: 20px;
 }
 
 .output {
@@ -294,7 +361,7 @@ main {
   box-sizing: border-box;
   margin-left: 20px;
   padding: 0;
-  width: 665px;
+  width: 660px;
 }
 
 .output-fullscreen {
@@ -314,6 +381,14 @@ main {
   overflow: auto;
 }
 
+.output-fullscreen .to-top {
+  position: absolute;
+  top: unset;
+  bottom: 0;
+  right: 0;
+  display: block !important;
+}
+
 .output-header {
   position: sticky;
   top: 0;
@@ -329,6 +404,13 @@ main {
   border-radius: 6px 6px 0 0;
 }
 
+.output-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 5px 0;
+}
+
 .output-title-pipeline {
   font-weight: bold;
   color: #fff;
@@ -338,17 +420,8 @@ main {
   position: relative;
   display: flex;
   align-items: center;
+  margin-left: 15px;
 }
-
-/*.output-actions .button > svg {*/
-  /*color: #fff;*/
-  /*opacity: 0.6;*/
-/*}*/
-
-/*.output-actions .button:focus > svg*/
-/*.output-actions .button:hover > svg {*/
-  /*opacity: 1;*/
-/*}*/
 
 .output-actions .divider {
   display: inline-block;
@@ -362,48 +435,93 @@ main {
   padding: 15px;
 }
 
-.output-content > div {
+.output-loading {
+  text-align: center;
+}
+
+.output-loading:after {
+  position: absolute;
+  overflow: hidden;
+  display: inline-block;
+  animation: ellipsis steps(4, end) 1s infinite;
+  content: "...";
+  width: 0;
+}
+
+@keyframes ellipsis {
+  to {
+    width: 28px;
+  }
+}
+
+.output-line {
   display: flex;
   line-height: 19px;
   max-width: 100%;
 }
 
-.output-content > div > div:first-child {
+.output-line > div:first-child {
   -webkit-user-select: none;
   color: #8c96a1;
   min-width: 20px;
   padding-right: 20px;
   user-select: none;
 }
-.output-content > div > div:last-child {
+.output-line > div:last-child {
   -webkit-user-select: none;
   color: #8c96a1;
   padding-left: 20px;
   user-select: none;
 }
-.output-content > div > div:nth-child(2) {
+.output-line > div:nth-child(2) {
   flex: 1 1 auto;
   min-width: 0px;
   white-space: pre-wrap;
   word-wrap: break-word;
 }
 
-.more-output-button {
-  background: rgba(255,255,255,0.05);
-  border-radius: 3px;
-  border: none;
-  color: #8c96a1;
-  text-transform: uppercase;
-  font-size: 14px;
-  width: 100%;
+.output-content-actions {
   margin-bottom: 15px;
-  padding: 10px 0px;
-  cursor: pointer;
-  transition: all 0.4s ease-in-out;
 }
-.more-output-button:hover {
-  background: rgba(255,255,255,0.1);
-  color: #FFF;
+
+.output-button.button.outline.theme-default {
+  width: 100%;
+  background-color: rgba(216, 216, 216, 0.07);
+  font-family: "Roboto Mono", monospace;
+  text-transform: none;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: normal;
+}
+
+.output-button.button.outline.theme-default:hover,
+.output-button.button.outline.theme-default:focus {
+  color: #fff;
+}
+
+.button.theme-light.outline.download > svg {
+  width: 21px;
+  height: 22px;
+  margin-bottom: -6px;
+}
+
+.to-top {
+  float: right;
+  position: sticky;
+  bottom: 0;
+  cursor: pointer;
+  width: 21px;
+  height: 30px;
+  background: #192d46;
+  color: rgba(255, 255, 255, 0.75)
+}
+
+.to-top > svg {
+  margin-top: 5px;
+}
+
+.to-top:hover {
+  color: #fff;
 }
 
 .alert {
@@ -449,8 +567,11 @@ main > .alert {
   background-color: rgba(25, 45, 70, 0.02);
 }
 
-.stage-container .stage div:first-of-type .step:before,
+.stage-container .stage div:first-of-type .step:after {
+  top: 50%;
+}
+
 .stage-container .stage div:last-of-type .step:after {
-  display: none;
+  bottom: 50%;
 }
 </style>

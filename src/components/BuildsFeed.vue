@@ -7,11 +7,11 @@
        @focusout="closeDelayed">
     <div class="round">
       <div class="border"></div>
-      <div class="label">{{ runningBuildsCount }}</div>
+      <div class="label">{{ count }}</div>
     </div>
 
     <ReposPopup v-if="opened"
-                :repos="latest"
+                :repos="items"
                 :loaded="loaded"
                 :popupProps="{position: 'bottom', align: 'right', width: 570}"
                 @itemSelect="close"/>
@@ -22,8 +22,6 @@
 import ClickOutside from "vue-click-outside";
 
 import ReposPopup from "@/components/ReposPopup";
-
-import reposSort from "@/lib/reposSort";
 
 export default {
   name: "BuildsFeed",
@@ -41,18 +39,17 @@ export default {
     };
   },
   computed: {
-    latest() {
-      const repos = Object.values(this.$store.state.latest).filter(x => x.build);
-      return reposSort(repos).slice(0, 5);
+    items() {
+      return this.$store.state.buildsFeed.data;
     },
     loaded() {
-      return this.$store.state.latestLoaded;
+      return this.$store.state.buildsFeed.status === "loaded";
     },
     status() {
-      return this.runningBuildsCount > 0 ? "running" : "done";
+      return this.count > 0 ? "running" : "done";
     },
-    runningBuildsCount() {
-      return this.latest.filter(x => x.build && x.build.status === "running").length;
+    count() {
+      return this.items.length;
     }
   },
   methods: {
@@ -81,6 +78,11 @@ export default {
           this.opened = false;
         }
       }, 100);
+    }
+  },
+  mounted() {
+    if (this.$store.state.buildsFeed.status === "empty") {
+      this.$store.dispatch("fetchBuildsFeed");
     }
   }
 };

@@ -13,26 +13,20 @@
         <CodeSnippetGroup>
           <CodeSnippet>
             <h3 slot="header">Your Personal Token:</h3>
-            <pre>
-              <code>{{ user.token }}</code>  
-            </pre>
+            <code>{{ user.token }}</code>
           </CodeSnippet>
 
-          <CodeSnippet>
+          <CodeSnippet lang="terminal">
             <h3 slot="header">Example API Usage:</h3>
-            <pre class="terminal single-command">
-              <code>curl -i {{ instance }}/api/user \</code>
-              <code>-H "Authorization: Bearer {{ user.token }}"</code>
-            </pre>
+            <code>curl -i {{ instance }}/api/user \</code>
+            <code class="out">-H "Authorization: Bearer {{ user.token }}"</code>
           </CodeSnippet>
 
-          <CodeSnippet>
+          <CodeSnippet lang="terminal">
             <h3 slot="header">Example CLI Usage:</h3>
-            <pre class="terminal">
-              <code>export DRONE_SERVER={{ instance }}</code>
-              <code>export DRONE_TOKEN={{user.token}}</code> 
-              <code>drone info</code>  
-            </pre>
+            <code>export DRONE_SERVER={{ instance }}</code>
+            <code>export DRONE_TOKEN={{user.token}}</code>
+            <code>drone info</code>
           </CodeSnippet>
         </CodeSnippetGroup>
       </Card>

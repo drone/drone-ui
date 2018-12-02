@@ -1,5 +1,5 @@
 <template>
-  <Card contentPadding="0 15px">
+  <Card contentPadding="0 15px" class="secrets">
     <h2 slot="header">Secrets</h2>
 
     <div v-if="secrets.length === 0" class="alert">
@@ -10,7 +10,8 @@
             :key="secret.id"
             :name="secret.name"
             :pullRequest="secret.pull_request"
-            @delete="handleDelete"
+            :deleting="deleting[secret.id]"
+            @delete="handleDelete(secret)"
             class="secret"/>
 
     <form @submit.prevent="handleSubmit" autocomplete="off" slot="footer">
@@ -19,7 +20,7 @@
       <BaseCheckbox v-model="secret.pullRequest" style="margin-bottom: 12px;">Allow Pull Requests</BaseCheckbox>
 
       <div class="control-actions">
-        <Button type="submit" theme="primary" size="l">Add a Secret</Button>
+        <Button type="submit" theme="primary" size="l" :loading="creating">Add a Secret</Button>
         <div class="error-message" v-if="error">{{ error.message }}</div>
       </div>
     </form>
@@ -47,6 +48,8 @@ export default {
   data() {
     return {
       error: null,
+      creating: false,
+      deleting: {},
       secret: {
         name: "",
         data: "",
@@ -60,31 +63,47 @@ export default {
     },
     secrets() {
       const secrets = this.$store.state.secrets[this.slug];
-      return Object.values(secrets || {});
+      return secrets ? Object.values(secrets) : [];
     }
   },
   methods: {
     handleDelete: function(secret) {
       const { namespace, name } = this.$route.params;
-      this.$store.dispatch("deleteSecret", { namespace, name, secret });
+
+      this.$set(this.deleting, secret.id, true);
+      this.$store
+        .dispatch("deleteSecret", { namespace, name, secret })
+        .then(() => {
+          this.$store.dispatch("showNotification", { message: "Successfully deleted" });
+          this.$delete(this.deleting, secret.id);
+          this.error = null;
+        })
+        .catch(error => {
+          this.error = error;
+          this.$delete(this.deleting, secret.id);
+        });
     },
     handleSubmit() {
-      const { onFailure } = this;
       const { namespace, name } = this.$route.params;
       const secret = {
         name: this.secret.name,
         data: this.secret.data,
         pull_request: this.secret.pullRequest
       };
-      this.$store.dispatch("createSecret", { namespace, name, secret, onFailure });
-      this.secret = {
-        name: "",
-        data: "",
-        pullRequest: false
-      };
-    },
-    onFailure(error) {
-      this.error = error;
+
+      this.creating = true;
+      this.$store
+        .dispatch("createSecret", { namespace, name, secret })
+        .then(() => {
+          this.$store.dispatch("showNotification", { message: "Successfully saved" });
+          this.creating = false;
+          this.secret = { name: "", data: "", pullRequest: false };
+          this.error = null;
+        })
+        .catch(error => {
+          this.error = error;
+          this.creating = false;
+        });
     }
   }
 };
@@ -102,6 +121,7 @@ form textarea {
   display: block;
   margin-bottom: 15px;
   width: 100%;
+  border-color: rgba(25, 45, 70, 0.15);
 }
 
 .secret + .secret {
@@ -110,5 +130,11 @@ form textarea {
 
 form textarea {
   height: 60px;
+}
+</style>
+
+<style>
+.secrets .base-checkbox label:before {
+  border-color: rgba(25, 45, 70, 0.15);
 }
 </style>

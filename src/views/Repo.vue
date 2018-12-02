@@ -20,14 +20,11 @@
       <h1 v-if="repo">{{ repo.name }}</h1>
 
       <div v-if="build">
-        <Button outline
-                @click.native="handleCancel"
-                v-if="!build.finished"
-                :disabled="!isCollaborator"
-                class="button-cancel">
+        <ButtonConfirm outline @click="handleCancel" v-if="!build.finished" :disabled="!isCollaborator"
+                       class="button-cancel">
           <span>Cancel</span>
           <IconCancel/>
-        </Button>
+        </ButtonConfirm>
         <Button outline @click.native="handleRestart" v-if="build.finished" :disabled="!isCollaborator">
           <span>Restart</span>
           <IconRestart/>
@@ -45,7 +42,7 @@
          enabled for all sub-pages with the exception of the build
          page.
     -->
-    <nav v-if="$route.name === 'build'">
+    <nav v-if="$route.params.build">
       <router-link :to="'/'+slug" class="manually-active">
         <IconArrow direction="left"/>
         <span>Activity Feed</span>
@@ -54,7 +51,6 @@
 
     <nav v-else-if="showTabs">
       <router-link :to="'/'+slug" :disabled="!repo.active">Activity Feed</router-link>
-      <router-link :to="'/'+slug + '/badges'" :disabled="!repo.active">Badges</router-link>
       <router-link :to="'/'+slug + '/settings'" v-if="showSettings">Settings</router-link>
     </nav>
 
@@ -66,11 +62,11 @@
       There was a problem enabling your repository.
       <span slot="secondary">{{ repoEnablingErr.message }}.</span>
     </Alert>
-    <Card v-else-if="showActivatePrompt">
-      <Button theme="primary" @click.native="handleActivate" :disabled="repoEnabling">Activate</Button>
-      Activate this repository
+    <Alert v-else-if="repoEnabling">Activating...</Alert>
+    <Card v-else-if="showActivatePrompt" class="activate" contentPadding="30px">
+      <Button theme="primary" @click.native="handleActivate" :disabled="repoEnabling" size="l">Activate</Button>
+      <p>Activate this repository.</p>
     </Card>
-
     <!--
         this is the router outlet for all repository pages, including
         the build pages.
@@ -85,6 +81,7 @@ import Breadcrumb from "@/components/Breadcrumb.vue";
 import IconArrow from "@/components/icons/IconArrow.vue";
 import IconCancel from "@/components/icons/IconCancel.vue";
 import Button from "@/components/buttons/Button.vue";
+import ButtonConfirm from "@/components/buttons/ButtonConfirm.vue";
 import Card from "@/components/Card.vue";
 import PageHeader from "@/components/PageHeader";
 import Link from "@/components/Link";
@@ -100,6 +97,7 @@ export default {
     IconCancel,
     IconRestart,
     Button,
+    ButtonConfirm,
     Card,
     Link
   },
@@ -276,5 +274,14 @@ nav .router-link-exact-active {
   text-transform: uppercase;
   font-size: 11px;
   margin-left: 10px;
+}
+
+.activate {
+  text-align: center;
+}
+
+.activate p {
+  margin-top: 15px;
+  color: rgba(25, 45, 70, 0.6);
 }
 </style>

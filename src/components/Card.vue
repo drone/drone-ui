@@ -39,10 +39,6 @@ header {
   font-weight: 600;
 }
 
-.content {
-  padding: 15px;
-}
-
 footer {
   background-color: rgba(25, 45, 70, 0.03);
   border-top: 1px solid rgba(25, 45, 70, 0.05);

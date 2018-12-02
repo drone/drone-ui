@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "ansi_up": "^3.0.0",
+    "lodash.throttle": "^4.1.1",
     "vue": "^2.5.17",
     "vue-click-outside": "^1.0.7",
     "vue-i18n": "^8.2.1",
@@ -48,6 +49,9 @@
     "last 2 versions",
     "not ie <= 8"
   ],
+  "engines": {
+    "npm": "<=5"
+  },
   "prettier": {
     "printWidth": 120
   }

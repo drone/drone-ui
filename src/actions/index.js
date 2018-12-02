@@ -3,6 +3,7 @@ import {
 	fetchBuild,
 	fetchBuilds,
 	createBuild,
+  fetchBuildsFeed
 } from "./build";
 
 import {
@@ -61,6 +62,11 @@ import {
 	syncPoll,
 } from "./viewer";
 
+import {
+  showNotification,
+  hideNotification
+} from "./notifications"
+
 export default {
 	cancelBuild,
 	chownRepo,
@@ -75,6 +81,7 @@ export default {
 	enableRepo,
 	fetchBuild,
 	fetchBuilds,
+  fetchBuildsFeed,
 	fetchCron,
 	fetchCrons,
 	fetchLogs,
@@ -95,6 +102,8 @@ export default {
 	updateNode,
 	updateRepo,
 	updateSecret,
+  showNotification,
+  hideNotification,
 	syncRepos,
 	syncAccount,
 	syncPoll,

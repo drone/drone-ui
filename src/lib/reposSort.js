@@ -16,6 +16,10 @@ function byBuildPresence(a, b) {
   return 0;
 }
 
+export function byBuildCreatedAtDesc(a, b) {
+  return (a.build ? a.build.created : 0) - (b.build ? b.build.created : 0);
+}
+
 function combineConditions() {
   const conditions = arguments;
 

@@ -1,16 +1,15 @@
 <template>
-  <div>
+  <div class="page-home">
     <PageHeader>
       <Breadcrumb>
         <span>Repositories</span>
       </Breadcrumb>
 
       <div>
-        <Button v-if="!syncing" class='sync-button' @click.native="sync" outline>
-          <span>Sync</span>
+        <Button @click.native="sync" outline :class="{ syncing }">
+          <span>{{ syncing ? "Syncing" : "Sync"}}</span>
           <IconSync/>
         </Button>
-        <div v-if="syncing" class="syncing"><IconSpinner /> Syncing</div>
       </div>
     </PageHeader>
 
@@ -21,9 +20,9 @@
     </transition>
 
     <transition name="fade">
-      <Alert v-show="showSyncingAlert">
+      <Alert v-show="showSyncingAlert" class="alert">
         Your repository list is being synchronized.
-        <small>This could take between 30 and 60 seconds to complete.</small>
+        <small slot="secondary">This could take between 30 and 60 seconds to complete.</small>
       </Alert>
     </transition>
 
@@ -108,7 +107,7 @@ export default {
       return this.empty && this.loaded && !this.syncing;
     },
     showSyncingAlert() {
-      return this.empty && this.loaded && this.syncing;
+      return this.syncing;
     },
     showMore() {
       return this.loaded && !this.all && this.count > LIMIT;
@@ -126,7 +125,9 @@ export default {
       this.all = true;
     },
     sync: function() {
-      this.$store.dispatch('syncAccount');
+      if (!this.syncing) {
+        this.$store.dispatch('syncAccount');
+      }
     }
   }
 };
@@ -134,27 +135,24 @@ export default {
 
 <style scoped>
 .syncing {
-  align-items: center;
-  background: #ffd300;
-  border-radius: 3px;
-  color: #FFF;
-  display: flex;
-  font-size: 12px;
-  padding: 3px 10px;
-  text-transform: uppercase;
+  opacity: 0.6;
 }
 
 .syncing svg {
-  fill: #FFF;
-  width: 14px;
-  height: 14px;
-  margin-right: 5px;
   animation: spin 1s linear infinite;
 }
 
 @keyframes spin{
 	0%{transform:rotate(0deg)}
 	100%{transform:rotate(359deg)}
+}
+
+.alert {
+  margin-bottom: 15px;
+}
+
+.alert small {
+  font-style: italic;
 }
 
 .fade-enter-active {
@@ -173,5 +171,12 @@ export default {
 
 .list-item + .list-item {
   margin-top: 10px;
+}
+</style>
+
+<style>
+.page-home .alert .content {
+  height: 40px;
+  padding: 20px !important;
 }
 </style>

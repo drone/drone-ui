@@ -61,6 +61,7 @@ export const deleteCron = async ({commit}, {namespace, name, cron}) => {
 	} else {
         const res = await req.json();
         commit(CRON_DELETE_FAILURE, {namespace, name, error: res});
+        throw new Error(res.message)
     }
 }
 
@@ -72,7 +73,7 @@ export const CRON_CREATE_FAILURE = 'CRON_CREATE_FAILURE';
  * createCron creates the cron job and dispatches an event
  * to purge the object from the store.
  */
-export const createCron = async ({ commit }, { namespace, name, cron, onFailure }) => {
+export const createCron = async ({ commit }, { namespace, name, cron }) => {
 	commit(CRON_CREATE_LOADING);
 
 	const body = JSON.stringify(cron);
@@ -81,7 +82,7 @@ export const createCron = async ({ commit }, { namespace, name, cron, onFailure 
 
 	if (req.status > 299) {
 		commit(CRON_CREATE_FAILURE, {namespace, name, error: res});
-    onFailure && onFailure(res);
+    throw new Error(res.message);
 	} else {
 		commit(CRON_CREATE_SUCCESS, {namespace, name, cron: res});
 	}
