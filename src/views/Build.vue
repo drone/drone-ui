@@ -74,7 +74,10 @@
       </div>
 
       <ScrollLock v-if="outputFullscreen"/>
-      <div class="output" :class="{'output-fullscreen': outputFullscreen}" v-if="!isStageError" ref="output">
+      <div class="output"
+           :class="{'output-fullscreen': outputFullscreen, 'show-to-top': !logsLoading && showToTop}"
+           v-if="!isStageError"
+           ref="output">
         <div ref="topAnchor"></div>
 
         <div class="output-header">
@@ -113,9 +116,7 @@
 
         <div ref="bottomAnchor"></div>
 
-        <div class="to-top" @click="scrollToTop" v-show="!logsLoading && showToTop">
-          <IconArrow direction="up"/>
-        </div>
+        <div class="to-top" @click="scrollToTop"><IconArrow direction="up"/></div>
       </div>
 
       <Alert v-if="isStageError" class="alert">
@@ -204,7 +205,8 @@ export default {
         });
     },
     shownLogs() {
-      return this.logs.slice(this.logs.length - this.logLimit);
+      const from = Math.max(this.logs.length - this.logLimit, 0);
+      return this.logs.slice(from);
     },
     logs() {
       return this.$store.state.logs;
@@ -364,6 +366,14 @@ main {
   width: 660px;
 }
 
+.output.show-to-top .to-top {
+  display: block;
+}
+
+.output.show-to-top .output-content {
+  margin-bottom: -30px;
+}
+
 .output-fullscreen {
   position: fixed;
   top: 60px;
@@ -386,7 +396,7 @@ main {
   top: unset;
   bottom: 0;
   right: 0;
-  display: block !important;
+  display: block;
 }
 
 .output-header {
@@ -513,7 +523,8 @@ main {
   width: 21px;
   height: 30px;
   background: #192d46;
-  color: rgba(255, 255, 255, 0.75)
+  color: rgba(255, 255, 255, 0.75);
+  display: none;
 }
 
 .to-top > svg {

@@ -86,9 +86,6 @@ export default {
     }
   },
   methods: {
-    toggle() {
-      this.opened ? this.close() : this.open();
-    },
     open() {
       this.opened = true;
       this.nextOpened = true;
@@ -115,7 +112,7 @@ export default {
       }
     },
     onItemSelect() {
-      this.close();
+      this.$refs.searchInput.$el.blur();
       this.clear();
     },
     clear() {
