@@ -28,6 +28,13 @@ import {
 } from "./member";
 
 import {
+	deleteNode,
+	fetchNode,
+	fetchNodes,
+	updateNode,
+} from "./node";
+
+import {
 	chownRepo,
 	disableRepo,
 	enableRepo,
@@ -62,6 +69,7 @@ export default {
 	createSecret,
 	deleteCron,
 	deleteMember,
+	deleteNode,
 	deleteSecret,
 	disableRepo,
 	enableRepo,
@@ -71,6 +79,8 @@ export default {
 	fetchCrons,
 	fetchLogs,
 	fetchMembers,
+	fetchNode,
+	fetchNodes,
 	fetchRepo,
 	fetchRepos,
 	fetchReposLatest,
@@ -82,6 +92,7 @@ export default {
 	streamEvents,
 	streamLogs,
 	updateCron,
+	updateNode,
 	updateRepo,
 	updateSecret,
 	syncRepos,
