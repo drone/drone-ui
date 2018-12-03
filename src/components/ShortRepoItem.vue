@@ -2,7 +2,7 @@
     <div class="repo-item repo-item-short" v-bind:class="{ 'repo-item-inactive': !active }">
         <IconRepository />
         <h3>{{ namespace }}/{{ name }}</h3>
-        <Button v-if="!active" theme="primary" outline borderless>Activate</Button>
+        <Button v-if="!active" theme="primary" outline borderless type="button" tabindex="-1">Activate</Button>
     </div>
 </template>
 

@@ -63,15 +63,11 @@ export default {
         const nextIndex = this.selectionIndex - 1;
         this.selectionIndex = nextIndex < 0 ? this.repos.length - 1 : nextIndex;
         this.stopPropagationAndPreventDefault(e);
-      }
-
-      if (e.key === "ArrowDown") {
+      } else if (e.key === "ArrowDown") {
         const nextIndex = this.selectionIndex + 1;
         this.selectionIndex = nextIndex < this.repos.length ? nextIndex : 0;
         this.stopPropagationAndPreventDefault(e);
-      }
-
-      if (e.key === "Enter") {
+      } else if (e.key === "Enter") {
         const repo = this.repos[this.selectionIndex];
         this.$router.push(`/${repo.namespace}/${repo.name}`);
         this.triggerItemSelect(e);
@@ -96,12 +92,12 @@ export default {
     }
   },
   mounted() {
-    document.addEventListener("keydown", this.preventScroll, false);
-    document.addEventListener("keyup", this.onKeyPress, true);
+    document.addEventListener("keydown", this.preventScroll);
+    document.addEventListener("keyup", this.onKeyPress);
   },
   destroyed() {
-    document.removeEventListener("keydown", this.preventScroll, false);
-    document.removeEventListener("keyup", this.onKeyPress, true);
+    document.removeEventListener("keydown", this.preventScroll);
+    document.removeEventListener("keyup", this.onKeyPress);
   }
 };
 </script>

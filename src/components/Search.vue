@@ -143,7 +143,7 @@ export default {
   },
   mounted() {
     this.overlay = Overlay.instance();
-    document.addEventListener("keyup", this.onKeyPress, true);
+    document.addEventListener("keyup", this.onKeyPress);
   },
   destroyed() {
     document.removeEventListener("keyup", this.onKeyPress);
