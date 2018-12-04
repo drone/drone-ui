@@ -32,7 +32,6 @@ router.beforeEach(fetcher(store));
 // dispatch requests to subscribe to the global event
 // feed and to load the currently authenticated user
 // account.
-store.dispatch('streamEvents');
 store.dispatch('fetchViewer').then(() => {
   // once the attempt to ascertain the currently
   // authenticated user completes, load the application.
@@ -42,5 +41,12 @@ store.dispatch('fetchViewer').then(() => {
     store,
     render: h => h(App)
   }).$mount("#app");
-});
 
+  store
+    .dispatch("fetchReposLatest")
+    .then(() => store.dispatch("streamEvents"))
+    .catch(error => {
+      const message = `Can't enable realtime updates. Error: ${JSON.stringify(error)}`;
+      store.dispatch("showNotification", { message });
+    });
+});

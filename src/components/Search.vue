@@ -76,7 +76,7 @@ export default {
       return reposSort(filtered).slice(0, ITEMS_LIMIT);
     },
     loaded() {
-      return this.$store.state.latestLoaded;
+      return this.$store.state.latestStatus === "loaded";
     },
     queryTrimmed() {
       return this.query.trim();
@@ -107,7 +107,7 @@ export default {
       this.loadIfNeeded();
     },
     loadIfNeeded() {
-      if (!this.$store.state.latestLoaded) {
+      if (this.$store.state.latestStatus === "empty") {
         this.$store.dispatch("fetchReposLatest");
       }
     },

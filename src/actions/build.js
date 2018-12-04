@@ -1,4 +1,4 @@
-import {instance, headers} from "./config";
+import { instance, headers, token } from "./config";
 import { byBuildCreatedAtDesc } from '@/lib/reposSort'
 
 export const BUILD_LIST_LOADING = 'BUILD_LIST_LOADING';
@@ -104,4 +104,17 @@ export const fetchBuildsFeed = async ({ commit }) => {
   } else {
     commit("BUILDS_FEED_FAILURE", { error: res });
   }
+};
+
+export const streamEvents = ({ commit, state }) => {
+  const path = `${instance}/api/stream${token ? `?access_token=${token}` : ""}`;
+  const events = new EventSource(path);
+
+  events.onmessage = function(event) {
+    const repo = JSON.parse(event.data);
+
+    if (state.latest[repo.slug]) {
+      commit("BUILD_EVENT", { repo });
+    }
+  };
 };

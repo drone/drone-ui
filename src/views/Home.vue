@@ -91,7 +91,7 @@ export default {
       return this.$store.state.latest;
     },
     loaded() {
-      return this.$store.state.latestLoaded;
+      return this.$store.state.latestStatus === 'loaded';
     },
     syncing() {
       return this.$store.state.user &&

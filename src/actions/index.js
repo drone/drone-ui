@@ -3,7 +3,8 @@ import {
 	fetchBuild,
 	fetchBuilds,
 	createBuild,
-  fetchBuildsFeed
+  fetchBuildsFeed,
+  streamEvents
 } from "./build";
 
 import {
@@ -13,10 +14,6 @@ import {
 	fetchCron,
 	fetchCrons,
 } from "./cron";
-
-import {
-	streamEvents
-} from "./stream";
 
 import {
 	fetchLogs,

@@ -59,7 +59,7 @@ export default new Vuex.Store({
 
     latest: {},
     latestUpdated: 0,
-    latestLoaded: false,
+    latestStatus: "empty", // "empty", 'loading', 'loaded', 'error'
 
     repos: {},
 
@@ -170,14 +170,18 @@ export default new Vuex.Store({
     // repo list + latest build
     //
 
-    REPO_LIST_LATEST_LOADING(state) {},
-    REPO_LIST_LATEST_FAILURE(state, error) {},
+    REPO_LIST_LATEST_LOADING(state) {
+      state.latestStatus = "loading";
+    },
+    REPO_LIST_LATEST_FAILURE(state) {
+      state.latestStatus = "error";
+    },
     REPO_LIST_LATEST_SUCCESS(state, list) {
       const latest = {};
-			list.forEach(item => latest[item.slug] = item);
+      list.forEach(item => latest[item.slug] = item);
 
       state.latest = latest;
-      state.latestLoaded = true;
+      state.latestStatus = "loaded";
       state.latestUpdated = Math.round((new Date()).getTime() / 1000);
     },
 
@@ -406,15 +410,15 @@ export default new Vuex.Store({
     // events
     //
 
-    BUILD_EVENT(state, { event }) {
-      insertBuildToCollection(state, event.slug, event.build);
+    BUILD_EVENT(state, { repo }) {
+      insertBuildToCollection(state, repo.slug, repo.build);
 
-      const latest = state.latest[event.slug];
-      if (latest && (!latest.build || latest.build.number <= event.build.number)) {
-        Vue.set(state.latest, event.slug, event);
+      const latest = state.latest[repo.slug];
+      if (latest && (!latest.build || latest.build.number <= repo.build.number)) {
+        Vue.set(state.latest, repo.slug, repo);
       }
 
-      updateBuildsFeedByBuildEvent(state, event);
+      updateBuildsFeedByBuildEvent(state, repo);
     },
 
     BUILD_RETRY_LOADING() {},

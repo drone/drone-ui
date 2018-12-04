@@ -60,6 +60,7 @@ export const fetchReposLatest = async (store) => {
 
 	if (req.status > 299) {
 		store.commit(REPO_LIST_LATEST_FAILURE, res);
+    throw new Error(res);
 	} else {
 		store.commit(REPO_LIST_LATEST_SUCCESS, res);
 	}
