@@ -25,7 +25,7 @@
           -->
           <router-link
             v-if="_stage !== stage"
-            v-bind:to="'/'+namespace+'/'+build.number+'/'+_stage.number+'/1'">
+            v-bind:to="'/'+slug+'/'+build.number+'/'+_stage.number+'/1'">
             <Stage
               hoverable
               v-bind:name="_stage.name"
@@ -58,7 +58,7 @@
                     :started="_step.started"
                     :stopped="_step.stopped"/>
 
-              <router-link v-else :to="'/'+namespace+'/'+build.number+'/'+_stage.number+'/'+_step.number">
+              <router-link v-else :to="'/'+slug+'/'+build.number+'/'+_stage.number+'/'+_step.number">
                 <Step
                   :name="_step.name"
                   :number="_step.number"
@@ -99,7 +99,7 @@
           </div>
         </div>
         <div class="output-content" ref="outputContent">
-          <div v-if="logsLoading" class="output-loading">Loading</div>
+          <Loading v-if="logsLoading"/>
 
           <div class="output-content-actions" v-if="moreCount">
             <Button size="l" outline borderless class="output-button" @click.native="handleMore">
@@ -142,6 +142,7 @@ import PlayButton from "@/components/buttons/PlayButton.vue";
 import IconFullscreen from "@/components/icons/IconFullscreen.vue";
 import IconDownload from "@/components/icons/IconDownload.vue";
 import ScrollLock from "@/components/utils/ScrollLock.vue";
+import Loading from "@/components/Loading.vue";
 import IconArrow from "../components/icons/IconArrow";
 
 let previousScrollY = window.scrollY;
@@ -158,6 +159,7 @@ export default {
     Button,
     PlayButton,
     ScrollLock,
+    Loading,
     IconDownload,
     IconFullscreen
   },
@@ -177,16 +179,16 @@ export default {
     window.removeEventListener("scroll", this.onScroll);
   },
   computed: {
-    namespace() {
+    slug() {
       return this.$route.params.namespace + '/' + this.$route.params.name;
     },
     repo() {
-      return this.$store.state.repos[this.namespace];
+      return this.$store.state.repos[this.slug];
     },
     build() {
-      var number = parseInt(this.$route.params.build);
-      return this.$store.state.builds[this.namespace] &&
-        this.$store.state.builds[this.namespace][number];
+      const number = parseInt(this.$route.params.build);
+      const collection = this.$store.state.builds[this.slug];
+      return collection && collection.data[number];
     },
     stage() {
       const number = parseInt(this.$route.params.stage || '1');
@@ -445,17 +447,8 @@ main {
   padding: 15px;
 }
 
-.output-loading {
-  text-align: center;
-}
-
-.output-loading:after {
-  position: absolute;
-  overflow: hidden;
-  display: inline-block;
-  animation: ellipsis steps(4, end) 1s infinite;
-  content: "...";
-  width: 0;
+.loading:after {
+  animation-name: ellipsis;
 }
 
 @keyframes ellipsis {

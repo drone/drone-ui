@@ -39,6 +39,14 @@ function updateBuildsFeedByBuildEvent(state, event) {
   }
 }
 
+function insertBuildToCollection(state, slug, build) {
+  const collection = state.builds[slug];
+
+  if (collection) {
+    Vue.set(collection.data, build.number, build);
+  }
+}
+
 export default new Vuex.Store({
   state: {
     route: {
@@ -71,7 +79,18 @@ export default new Vuex.Store({
     // repoSaving: false,
     // repoSavingErr: undefined,
 
-    builds: {},
+    builds: {
+      /*
+      EXAMPLE:
+      "namespace/name": {
+        data: {},
+        status: "empty", or 'loading', 'loaded', 'error'
+        error: undefined,
+        page: undefined,
+      }
+      */
+    },
+
     buildLoaded: false,
     buildLoading: false,
     buildLoadingErr: undefined,
@@ -206,18 +225,36 @@ export default new Vuex.Store({
     // build list
     //
 
-    BUILD_LIST_LOADING(state){},
-    BUILD_LIST_FAILURE(state){},
-    BUILD_LIST_SUCCESS(state, {params, builds}){
-      const ns = `${params.namespace}/${params.name}`;
-      let tmp = state.builds[ns];
-      if (!tmp) {
-        tmp = {};
+    BUILD_LIST_LOADING(state, { params }) {
+      const slug = `${params.namespace}/${params.name}`;
+      const repoBuilds = state.builds[slug];
+
+      if (!repoBuilds || params.page === 1) {
+        Vue.set(state.builds, slug, {
+          data: {},
+          status: "loading", // 'loading', 'loaded', 'error'
+          error: undefined,
+          page: undefined
+        });
+      } else {
+        repoBuilds.error = null;
+        repoBuilds.status = "loading";
       }
-			builds.map(item => {
-        Vue.set(tmp, item.number, item);
-      });
-      Vue.set(state.builds, ns, tmp);
+    },
+    BUILD_LIST_FAILURE(state, { params, error }) {
+      const slug = `${params.namespace}/${params.name}`;
+
+      state.builds[slug].status = "error";
+      state.builds[slug].error = error;
+    },
+    BUILD_LIST_SUCCESS(state, { params, builds }) {
+      const slug = `${params.namespace}/${params.name}`;
+      const repoBuilds = state.builds[slug];
+
+      repoBuilds.status = "loaded";
+      repoBuilds.error = null;
+      repoBuilds.page = params.page;
+      builds.forEach(item => Vue.set(repoBuilds.data, item.number, item));
     },
 
     //
@@ -234,18 +271,23 @@ export default new Vuex.Store({
       state.buildLoading = false;
       state.buildLoadingErr = error;
     },
-    BUILD_FIND_SUCCESS(state, data){
+    BUILD_FIND_SUCCESS(state, { params, build }){
       state.buildLoaded = true;
       state.buildLoading = false;
       state.buildLoadingErr = undefined;
 
-      const slug = `${data.params.namespace}/${data.params.name}`;
-      let builds = state.builds[slug];
+      const slug = `${params.namespace}/${params.name}`;
+      const builds = state.builds[slug];
+
       if (!builds) {
-        Vue.set(state.builds, slug, {[data.build.number]: data.build});
+        Vue.set(state.builds, slug, {
+          data: { [build.number]: build },
+          status: "loading", // 'loading', 'loaded', 'error'
+          error: undefined,
+          page: undefined
+        });
       } else {
-        builds[data.build.number] = data.build;
-        Vue.set(state.builds, slug, builds);
+        Vue.set(builds.data, build.number, build);
       }
     },
 
@@ -364,10 +406,8 @@ export default new Vuex.Store({
     // events
     //
 
-    BUILD_EVENT(state, {event}) {
-      const builds = state.builds[event.slug] || {};
-			Vue.set(builds, event.build.number, event.build);
-      Vue.set(state.builds, event.slug, builds);
+    BUILD_EVENT(state, { event }) {
+      insertBuildToCollection(state, event.slug, event.build);
 
       const latest = state.latest[event.slug];
       if (latest && (!latest.build || latest.build.number <= event.build.number)) {
@@ -377,22 +417,16 @@ export default new Vuex.Store({
       updateBuildsFeedByBuildEvent(state, event);
     },
 
-    BUILD_RETRY_LOADING(state){},
-    BUILD_RETRY_FAILURE(state){},
-    BUILD_RETRY_SUCCESS(state, {namespace, name, build}){
-      let slug = `${namespace}/${name}`;
-      let builds = state.builds[slug] || {};
-			Vue.set(builds, build.number, build);
-      Vue.set(state.builds, slug, builds);
+    BUILD_RETRY_LOADING() {},
+    BUILD_RETRY_FAILURE() {},
+    BUILD_RETRY_SUCCESS(state, { namespace, name, build }) {
+      insertBuildToCollection(state, `${namespace}/${name}`, build);
     },
 
-    BUILD_CANCEL_LOADING(state){},
-    BUILD_CANCEL_FAILURE(state){},
-    BUILD_CANCEL_SUCCESS(state, {namespace, name, build}){
-      let slug = `${namespace}/${name}`;
-      let builds = state.builds[slug] || {};
-			Vue.set(builds, build.number, build);
-      Vue.set(state.builds, slug, builds);
+    BUILD_CANCEL_LOADING() {},
+    BUILD_CANCEL_FAILURE() {},
+    BUILD_CANCEL_SUCCESS(state, { namespace, name, build }) {
+      insertBuildToCollection(state, `${namespace}/${name}`, build);
     },
 
     BUILDS_FEED_LOADING(state) {

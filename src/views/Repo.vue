@@ -142,8 +142,8 @@ export default {
         (this.user && this.user.admin);
     },
     build() {
-      const { builds } = this.$store.state;
-      return this.repo && builds[this.slug] && builds[this.slug][this.$route.params.build];
+      const collection = this.$store.state.builds[this.slug];
+      return this.repo && collection && collection.data[this.$route.params.build];
     }
   },
   methods: {

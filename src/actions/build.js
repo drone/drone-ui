@@ -9,20 +9,22 @@ export const BUILD_LIST_FAILURE = 'BUILD_LIST_FAILURE';
  * fetchBuilds fetches the build list and dispatches an
  * event to update the store.
  */
-export const fetchBuilds = async ({commit}, params) => {
-    commit(BUILD_LIST_LOADING);
+export const fetchBuilds = async ({ commit }, params) => {
+  commit(BUILD_LIST_LOADING, { params });
 
-	const {namespace, name} = params;
-	const req = await fetch(`${instance}/api/repos/${namespace}/${name}/builds`, {headers, credentials: 'same-origin'});
-	const res = await req.json();
+  const { namespace, name, page = 1 } = params;
+  const req = await fetch(`${instance}/api/repos/${namespace}/${name}/builds?page=${page}`, {
+    headers,
+    credentials: "same-origin"
+  });
+  const res = await req.json();
 
-	if (req.status > 299) {
-        commit(BUILD_LIST_FAILURE, {params, error: res});
-	} else {
-        commit(BUILD_LIST_SUCCESS, {params, builds: res});
-	}
-}
-
+  if (req.status > 299) {
+    commit(BUILD_LIST_FAILURE, { params, error: res });
+  } else {
+    commit(BUILD_LIST_SUCCESS, { params, builds: res });
+  }
+};
 
 export const BUILD_FIND_LOADING = 'BUILD_FIND_LOADING';
 export const BUILD_FIND_SUCCESS = 'BUILD_FIND_SUCCESS';

@@ -1,12 +1,12 @@
 <template>
   <div class="builds">
-    <Alert v-if="builds && builds.length == 0">
+    <Alert v-if="loaded && builds.length === 0">
       Your Build List is Empty.
     </Alert>
 
     <router-link
       class="build"
-      v-for="build in limitedBuilds"
+      v-for="build in builds"
       :key="build.id"
       :to="'/'+slug + '/' + build.number">
       <RepoItem metaAlign="left"
@@ -17,6 +17,7 @@
                 :avatar="build.author_avatar"/>
     </router-link>
 
+    <Loading v-show="loading"/>
     <MoreButton v-if="hasMore" @click.native="showMore">Show more</MoreButton>
   </div>
 </template>
@@ -24,6 +25,7 @@
 <script>
 import Alert from "@/components/Alert.vue";
 import RepoItem from "@/components/RepoItem.vue";
+import Loading from "@/components/Loading.vue";
 import MoreButton from "@/components/buttons/MoreButton.vue";
 
 export default {
@@ -31,28 +33,30 @@ export default {
   components: {
     Alert,
     RepoItem,
+    Loading,
     MoreButton
-  },
-  data() {
-    return {
-      limit: 10
-    };
   },
   computed: {
     slug() {
       return this.$route.params.namespace + "/" + this.$route.params.name;
     },
+    collection() {
+      return this.$store.state.builds[this.slug];
+    },
     builds() {
-      let { builds } = this.$store.state;
-      let values = Object.values(builds[this.slug] || {});
+      const values = this.collection ? Object.values(this.collection.data) : [];
       values.sort((a, b) => b.number - a.number);
       return values;
     },
-    limitedBuilds() {
-      return this.builds.slice(0, this.limit);
+    loading() {
+      return this.collection && this.collection.status === "loading";
+    },
+    loaded() {
+      return this.collection && this.collection.status === "loaded";
     },
     hasMore() {
-      return this.limitedBuilds.length < this.builds.length;
+      const lastBuilds = this.builds[this.builds.length - 1];
+      return !this.loading && lastBuilds && lastBuilds.number !== 1;
     },
     repo() {
       return this.$store.state.repos[this.slug];
@@ -60,7 +64,7 @@ export default {
   },
   methods: {
     showMore() {
-      this.limit += 10;
+      this.$store.dispatch('fetchBuilds', { ...this.$route.params, page: this.collection.page + 1})
     },
     shrinkBuild(build) {
       return { ...build, message: null };
@@ -93,6 +97,11 @@ export default {
 
 .build + .build {
   margin-top: 10px;
+}
+
+.loading {
+  margin: 20px 0;
+  color: rgba(25, 45, 70, 0.6);
 }
 
 .more-button {

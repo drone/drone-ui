@@ -31,8 +31,8 @@ export const fetcher = ({dispatch, commit}) => (to, from, next) => {
       dispatch('fetchBuild', params);
       break;
     case "builds":
-      dispatch('fetchBuilds', params);
-      break
+      dispatch("fetchBuilds", { ...params, page: 1 });
+      break;
     case "home":
       dispatch('fetchReposLatest', params);
       break;
