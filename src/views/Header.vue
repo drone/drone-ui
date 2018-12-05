@@ -6,10 +6,10 @@
         </router-link>
     </div>
 
-    <Search v-if="user" placeholder="Search repositories or jump to …"/>
+    <Search v-if="user && mediaType === 'desktop'" placeholder="Search repositories or jump to …"/>
 
     <div class="right-block" v-if="user">
-      <BuildsFeed/>
+      <BuildsFeed v-if="mediaType === 'desktop'"/>
       <UserMenu :user="user"/>
     </div>
 
@@ -22,8 +22,6 @@
 </template>
 
 <script>
-
-
 import Logo from "@/components/logos/Logo.vue";
 import Search from "@/components/Search";
 import BuildsFeed from "@/components/BuildsFeed";
@@ -38,6 +36,9 @@ export default {
     UserMenu
   },
   computed: {
+    mediaType() {
+      return this.$store.state.mediaType;
+    },
     user() {
       return this.$store.state.user;
     },

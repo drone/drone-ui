@@ -5,7 +5,7 @@
         <a target="_blank" href="http://plugins.drone.io">Plugins</a>
         <a target="_blank" href="https://discourse.drone.io">Support</a>
     </nav>
-    <nav>
+    <nav class="nav-right">
         <a target="_blank" href="https://github.com/drone">GitHub</a>
         <a target="_blank" href="https://twitter.com/droneio">Twitter</a>
         <a target="_blank" href="https://discourse.drone.io">Discourse</a>
@@ -14,25 +14,51 @@
   </footer>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../assets/styles/mixins";
+
 footer {
   display: flex;
   justify-content: space-between;
   padding: 0 30px;
   align-items: center;
+
+  box-shadow: 0 -2px 6px 0px rgba(25, 45, 70, 0.05);
+  box-sizing: border-box;
+  min-height: 60px;
+  background: #fff;
+
+  @include mobile {
+    padding: 20px 30px;
+    align-items: flex-start;
+  }
+}
+
+nav.nav-right {
+  @include mobile {
+    text-align: right;
+  }
 }
 
 nav a {
   color: rgba(25, 45, 70, 0.6);
+
+  @include mobile {
+    display: block;
+  }
+
+  & + a {
+    margin-left: 30px;
+
+    @include mobile {
+      margin: 10px 0 0;
+    }
+  }
 }
 
 nav a:hover,
 nav a:focus {
   color: #192d46;
   outline: none;
-}
-
-nav a + a {
-  margin-left: 30px;
 }
 </style>

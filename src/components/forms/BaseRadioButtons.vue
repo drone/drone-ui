@@ -1,6 +1,6 @@
 <template>
   <div class="base-radio-buttons">
-    <div class="options" v-for="(oName, oValue) in options" :key="oValue">
+    <div class="option" v-for="(oName, oValue) in options" :key="oValue">
       <input type="radio"
              :name="name"
              :value="oValue"
@@ -23,10 +23,21 @@ export default {
 };
 </script>
 
-<style scoped>
-.options {
+<style scoped lang="scss">
+@import "../../assets/styles/mixins";
+
+.option {
   display: inline-block;
   margin-right: 70px;
+
+  @include mobile {
+    margin: 0;
+    display: block;
+
+    & + .option {
+      margin-top: 10px;
+    }
+  }
 }
 
 input {

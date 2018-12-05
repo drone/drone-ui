@@ -3,11 +3,13 @@
     <header>
       <slot name="header"></slot>
     </header>
+
     <main>
       <div class="container">
         <slot></slot>
       </div>
     </main>
+
     <Footer />
 
     <Notifications/>
@@ -33,9 +35,8 @@ export default {
 }
 .wrap {
   min-height: 100%;
-  display: grid;
-  grid-template-columns: 1;
-  grid-template-rows: 60px auto 60px;
+  display: flex;
+  flex-direction: column;
 }
 
 header {
@@ -46,25 +47,17 @@ header {
   display: flex;
   flex-direction: column;
   justify-content: center;
-}
-
-footer {
-  box-shadow: 0 -2px 6px 0px rgba(25, 45, 70, 0.05);
-  box-sizing: border-box;
-  height: 60px;
-  min-height: 60px;
-  max-height: 60px;
-  background: #FFF;
-  grid-column: 1;
-  grid-row: 3;
+  flex-shrink: 0;
 }
 
 main {
   box-sizing: border-box;
-  grid-area: content;
   position: relative;
-  grid-column: 1;
-  grid-row: 2;
+  flex-grow: 1;
+}
+
+footer {
+  flex-shrink: 0;
 }
 </style>
 

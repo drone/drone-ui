@@ -10,11 +10,30 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+@import "../../assets/styles/mixins";
+
 .control-group {
   display: flex;
   padding: 20px 0;
   align-items: center;
+
+  @include mobile {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .controls {
+    @include mobile {
+      width: 100%;
+    }
+
+    .base-input {
+      @include mobile {
+        width: 100%;
+      }
+    }
+  }
 }
 
 .control-group + .control-group {
@@ -22,9 +41,14 @@ export default {
 }
 
 .control-group .control-label {
-  flex-basis: 150px;
+  flex: 0 0 150px;
   margin-right: 15px;
   color: rgba(25, 45, 70, 0.6);
+
+  @include mobile {
+    flex-basis: auto;
+    margin-bottom: 15px;
+  }
 }
 
 .control-actions {

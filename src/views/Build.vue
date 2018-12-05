@@ -335,7 +335,9 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../assets/styles/mixins";
+
 .repo-item {
   margin-bottom: 20px;
 }
@@ -343,12 +345,23 @@ export default {
 main {
   display: flex;
   align-items: flex-start;
+
+  @include mobile {
+    flex-direction: column;
+  }
 }
 
 .stages {
   flex: 0 0 300px;
   position: sticky;
   top: 0;
+
+  @include mobile {
+    flex: 1 0 auto;
+    width: 100%;
+    margin-bottom: 20px;
+    position: static;
+  }
 }
 
 .stage-container + .stage-container {
@@ -367,6 +380,11 @@ main {
   margin-left: 20px;
   padding: 0;
   width: 660px;
+
+  @include mobile {
+    margin: 0;
+    width: 100%;
+  }
 }
 
 .output.show-to-top .to-top {
@@ -388,6 +406,7 @@ main {
   border-radius: 0;
   display: flex;
   flex-direction: column;
+  z-index: 10;
 }
 
 .output-fullscreen .output-content {
@@ -470,18 +489,18 @@ main {
   min-width: 20px;
   padding-right: 20px;
   user-select: none;
+  flex-shrink: 0;
 }
 .output-line > div:last-child {
   -webkit-user-select: none;
   color: #8c96a1;
   padding-left: 20px;
   user-select: none;
+  flex-shrink: 0;
 }
 .output-line > div:nth-child(2) {
-  flex: 1 1 auto;
-  min-width: 0px;
-  white-space: pre-wrap;
-  word-wrap: break-word;
+  flex-grow: 1;
+  word-break: break-all;
 }
 
 .output-content-actions {
@@ -519,6 +538,7 @@ main {
   background: #192d46;
   color: rgba(255, 255, 255, 0.75);
   display: none;
+  border-bottom-right-radius: 6px;
 }
 
 .to-top > svg {

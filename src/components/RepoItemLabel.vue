@@ -91,4 +91,9 @@ export default {
   padding: 0 4px;
   border-radius: 2px;
 }
+
+a.repo-item-label:hover,
+a.repo-item-label:focus {
+  background-color: rgba(5, 100, 215, 0.2);
+}
 </style>

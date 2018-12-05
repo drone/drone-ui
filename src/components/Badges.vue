@@ -68,7 +68,9 @@ const langs = [
 ];
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../assets/styles/mixins";
+
 .header {
   display: flex;
   align-items: center;
@@ -81,14 +83,28 @@ const langs = [
 .options {
   display: flex;
   margin-bottom: 20px;
+
+  @include mobile {
+    flex-direction: column;
+  }
 }
 
 .options select {
   flex-basis: 220px;
   margin-right: 20px;
+
+  @include mobile {
+    width: 100%;
+    flex-basis: auto;
+    margin-bottom: 15px;
+  }
 }
 
 .options input {
   flex-grow: 1;
+
+  @include mobile {
+    width: 100%;
+  }
 }
 </style>

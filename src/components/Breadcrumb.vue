@@ -26,17 +26,12 @@ export default {
 
 <style scoped>
 .breadcrumbs {
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  margin-right: 30px;
   padding: 5px 0;
 }
 
 .breadcrumbs .divider {
   padding: 0 8px;
   color: rgba(25, 45, 70, 0.6);
+  vertical-align: bottom;
 }
 </style>

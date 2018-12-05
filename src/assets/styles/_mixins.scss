@@ -1,0 +1,7 @@
+@import "./_variables";
+
+@mixin mobile {
+  @media (max-width: $bp-mobile - 1px) {
+    @content
+  }
+}

@@ -34,8 +34,7 @@ div {
     border: solid 1px #EDEEF1;
     background-color: #ffffff;
     display: flex;
-    height: 50px;
-    padding: 15px 10px 15px 15px;
+    padding: 10px 10px 10px 15px;
     transition: box-shadow linear 0.2s;
 }
 
@@ -44,6 +43,7 @@ svg {
   height: 20px;
   margin-right: 10px;
   color: #c6cbd1;
+  flex-shrink: 0;
 }
 
 .repo-item-inactive h3 {
@@ -51,14 +51,10 @@ svg {
 }
 
 h3 {
-  flex: 1;
   font-size: 18px;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  color: #192d46;
+  flex-grow: 1;
+  margin: 5px 0;
+  word-break: break-all;
 }
 
 .button {

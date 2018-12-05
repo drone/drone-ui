@@ -63,7 +63,9 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../assets/styles/mixins";
+
 section {
   border-radius: 3px;
   box-sizing: border-box;
@@ -124,6 +126,10 @@ section {
   align-items: center;
   justify-content: space-between;
   color: rgba(25, 45, 70, 0.6);
+
+  @include mobile {
+    display: block;
+  }
 }
 
 .build > img {
@@ -132,6 +138,10 @@ section {
   margin-right: 10px;
   width: 20px;
   height: 20px;
+
+  @include mobile {
+    float: left;
+  }
 }
 
 .description {
@@ -142,6 +152,10 @@ section {
   line-height: normal;
   color: rgba(25, 45, 70, 0.6);
   margin-right: 15px;
+
+  @include mobile {
+    white-space: normal;
+  }
 }
 
 .description .commit-message {
@@ -152,6 +166,10 @@ section {
   flex-shrink: 0;
   display: flex;
   align-items: center;
+
+  @include mobile {
+    margin: 10px 0 0 30px;
+  }
 }
 
 .time .dot {
@@ -164,12 +182,19 @@ section {
 }
 </style>
 
-<style>
+<style lang="scss">
+@import "../assets/styles/mixins";
+
 .description .to .repo-item-label {
   display: inline-block;
   max-width: 35%;
   vertical-align: bottom;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  @include mobile {
+    max-width: none;
+    display: inline;
+  }
 }
 </style>

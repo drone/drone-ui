@@ -130,6 +130,7 @@ code {
   display: block;
   line-height: 18px;
   white-space: normal;
+  word-break: break-all;
 }
 
 button {

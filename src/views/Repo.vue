@@ -7,12 +7,12 @@
     -->
     <PageHeader>
       <Breadcrumb>
-        <router-link :to="'/'" class="link">Repositories</router-link>
+        <router-link :to="'/'" class="link breadcrumb">Repositories</router-link>
 
-        <router-link v-if="$route.params.build" :to="'/'+slug" class="link repo-name-breadcrumb" :title="slug">{{ slug }}</router-link>
+        <router-link v-if="$route.params.build" :to="'/'+slug" class="link breadcrumb repo-name-breadcrumb" :title="slug">{{ slug }}</router-link>
         <span :title="slug" v-else>{{ slug }}</span>
 
-        <span v-if="$route.params.build">#{{ $route.params.build }}</span>
+        <span v-if="$route.params.build" class="breadcrumb">#{{ $route.params.build }}</span>
       </Breadcrumb>
     </PageHeader>
 
@@ -171,14 +171,18 @@ export default {
 </script>
 
 <style scoped>
+.breadcrumb {
+  padding: 2px 0;
+  line-height: 16px;
+  display: inline-block;
+}
+
 .repo-name-breadcrumb {
   max-width: 500px;
-  display: inline-block;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   vertical-align: bottom;
-  padding: 2px 0;
 }
 
 .repo-name-breadcrumb.link:focus:after,
