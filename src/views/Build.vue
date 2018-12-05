@@ -10,6 +10,7 @@
       :status="build.status"
       :title="build.message"
       :avatar="build.author_avatar"
+      :linkRepo="repo"
       :build="Object.assign({}, build, { message: null })"/>
 
     <main v-if="!isBuildError">

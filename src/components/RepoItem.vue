@@ -12,12 +12,12 @@
       </div>
 
       <div class="build">
-        <img :src="avatar"/>
+        <img :src="avatar" alt="avatar"/>
         <div class="description">
           <span>{{build.author_login}}</span>
           <span> {{action}} </span>
-          <span class="label">{{actionTargetLabel}}</span>
-          <span v-if="toLabel" class="to"> to <span class="label" :title="toLabel">{{ toLabel }}</span></span>
+          <RepoItemLabel type="actionTarget" :build="build" :repo="linkRepo" :link="!!linkRepo"/>
+          <RepoItemLabel class="to" type="to" :build="build" :repo="linkRepo" :link="!!linkRepo" prefix=" to "/>
           <span class="commit-message" v-if="build.message" :title="build.message"> — {{ build.message }}</span>
         </div>
 
@@ -34,6 +34,7 @@
 <script>
 import Status from "./Status.vue";
 import TimeElapsed from "./TimeElapsed.vue";
+import RepoItemLabel from "./RepoItemLabel.vue";
 
 export default {
   name: "RepoItem",
@@ -42,10 +43,12 @@ export default {
     status: String,
     title: String,
     avatar: String,
-    build: Object
+    build: Object,
+    linkRepo: Object
   },
   components: {
     Status,
+    RepoItemLabel,
     TimeElapsed
   },
   computed: {
@@ -55,34 +58,6 @@ export default {
       if (event === "tag") return "created tag";
       if (event === "promote") return "promoted";
       return "pushed";
-    },
-    actionTargetLabel() {
-      const { event, ref } = this.build;
-      if (event === "pull_request") return "#" + this.trimMergeRef(ref);
-      if (event === "tag") return this.trimTagRef(ref);
-      if (event === "promote") return this.branch;
-      return this.commitShaShort;
-    },
-    toLabel() {
-      const { event } = this.build;
-      if (event === "push" || event === "pull_request") {
-        return this.branch;
-      }
-    },
-    commitShaShort() {
-      return this.build.after && this.build.after.substr(0, 8);
-    },
-    branch() {
-      return this.build.target;
-    }
-  },
-  methods: {
-    trimMergeRef: function(ref) {
-      const match = ref.match(/\d/g);
-      return match && match.length > 0 ? match[0] : ref;
-    },
-    trimTagRef: function(ref) {
-      return ref.startsWith("refs/tags/") ? ref.substr(10) : ref;
     }
   }
 };
@@ -169,22 +144,6 @@ section {
   margin-right: 15px;
 }
 
-.description .label {
-  line-height: 20px;
-  background-color: rgba(5, 100, 215, 0.07);
-  color: #0564d7;
-  padding: 0 4px;
-  border-radius: 2px;
-}
-
-.description .to .label {
-  display: inline-block;
-  max-width: 35%;
-  vertical-align: bottom;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 .description .commit-message {
   font-style: italic;
 }
@@ -202,5 +161,15 @@ section {
   background: rgba(25, 45, 70, 0.25);
   border-radius: 50%;
   margin: 0 6px;
+}
+</style>
+
+<style>
+.description .to .repo-item-label {
+  display: inline-block;
+  max-width: 35%;
+  vertical-align: bottom;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
