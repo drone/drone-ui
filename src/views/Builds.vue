@@ -17,7 +17,7 @@
                 :avatar="build.author_avatar"/>
     </router-link>
 
-    <Loading v-show="loading"/>
+    <Loading v-show="loading" text="Loading builds"/>
     <MoreButton v-if="hasMore" @click.native="showMore">Show more</MoreButton>
   </div>
 </template>
@@ -58,9 +58,6 @@ export default {
       const lastBuilds = this.builds[this.builds.length - 1];
       return !this.loading && lastBuilds && lastBuilds.number !== 1;
     },
-    repo() {
-      return this.$store.state.repos[this.slug];
-    }
   },
   methods: {
     showMore() {

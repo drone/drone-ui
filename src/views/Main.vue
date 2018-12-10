@@ -17,7 +17,7 @@ import BaseLayout from "@/components/BaseLayout.vue";
 import Header from "./Header.vue";
 
 export default {
-  name: "main",
+  name: "Main",
   components: {
     Header,
     BaseLayout

@@ -4,8 +4,10 @@
       Cannot retrieve the Build details.
     </div>
 
+    <Loading v-if="loading"/>
+
     <RepoItem metaAlign="left"
-      v-if="build"
+      v-if="build && !loading"
       :number="build.number"
       :status="build.status"
       :title="build.message"
@@ -13,8 +15,8 @@
       :linkRepo="repo"
       :build="Object.assign({}, build, { message: null })"/>
 
-    <main v-if="!isBuildError">
-      <div v-if="build && build.stages" class="stages" ref="stages">
+    <main v-if="!isBuildError && build && build.stages">
+      <div class="stages" ref="stages">
         <div class="stage-container"
              v-for="(_stage) in build.stages"
              :key="_stage.id">
@@ -119,14 +121,14 @@
 
         <div class="to-top" @click="scrollToTop"><IconArrow direction="up"/></div>
       </div>
-
-      <Alert v-if="isStageError" class="alert">
-        {{stage.error}}
-      </Alert>
     </main>
 
     <Alert v-if="isBuildError" class="alert">
       {{build.error}}
+    </Alert>
+
+    <Alert v-if="isStageError" class="alert">
+      {{stage.error}}
     </Alert>
   </div>
 </template>
@@ -219,6 +221,9 @@ export default {
     },
     moreCount() {
       return Math.max(this.logs.length - this.logLimit, 0);
+    },
+    loading() {
+      return this.$store.state.buildLoading;
     },
     buildLoadingErr() {
       return this.$store.state.buildLoadingErr;

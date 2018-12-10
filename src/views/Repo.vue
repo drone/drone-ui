@@ -16,6 +16,12 @@
       </Breadcrumb>
     </PageHeader>
 
+    <Alert v-if="error" style="margin-top:30px;">
+      Repository Not Found.
+    </Alert>
+
+    <Loading v-if="loading" text="Loading repository"/>
+
     <PageHeader class="secondary-page-header">
       <h1 v-if="repo">{{ repo.name }}</h1>
 
@@ -32,11 +38,6 @@
         </Button>
       </div>
     </PageHeader>
-
-
-    <Alert v-if="error" style="margin-top:30px;">
-      Repository Not Found.
-    </Alert>
 
     <!--
          this section provides the repository navigation bar. It is
@@ -87,6 +88,7 @@ import Card from "@/components/Card.vue";
 import PageHeader from "@/components/PageHeader";
 import Link from "@/components/Link";
 import IconRestart from "@/components/icons/IconRestart.vue";
+import Loading from "@/components/Loading.vue";
 
 export default {
   name: "repo",
@@ -100,6 +102,7 @@ export default {
     Button,
     ButtonConfirm,
     Card,
+    Loading,
     Link
   },
   computed: {
@@ -118,9 +121,8 @@ export default {
     repoEnablingErr() {
       return this.$store.state.repoEnablingErr;
     },
-    repoLoading() {
-      const {repoLoading} = this.$store.state;
-      return repoLoading;
+    loading() {
+      return !this.repo && this.$store.state.repoLoading;
     },
     error() {
       const {repoLoading, repoLoaded, repoLoadingErr} = this.$store.state;
@@ -272,17 +274,6 @@ nav .router-link-exact-active {
 
 .alert.activate button {
   margin-right: 10px;
-}
-
-.loading {
-  background: #eee;
-  color: #8d97a2;
-  border-radius: 3px;
-  padding: 3px 10px;
-  display: inline-block;
-  text-transform: uppercase;
-  font-size: 11px;
-  margin-left: 10px;
 }
 
 .activate {
