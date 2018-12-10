@@ -35,7 +35,7 @@ router.beforeEach(fetcher(store));
 store.dispatch('fetchViewer').then(() => {
   // once the attempt to ascertain the currently
   // authenticated user completes, load the application.
-  new Vue({
+  window.vue = new Vue({
     i18n,
     router,
     store,

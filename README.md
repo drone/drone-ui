@@ -26,7 +26,11 @@ npm run build
 
 ### Run your tests
 ```
-npm run test
+ngrok
+
+npm run test -- --base-url=http://ea196810.ngrok.io
+# OR
+npm run test-ui -- --base-url=http://ea196810.ngrok.io
 ```
 
 ### Lints and fixes files

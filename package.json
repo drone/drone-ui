@@ -5,7 +5,9 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "test": "hermione",
+    "test-ui": "hermione-gui"
   },
   "dependencies": {
     "ansi_up": "^3.0.0",
@@ -23,6 +25,9 @@
     "@vue/cli-plugin-eslint": "^3.0.5",
     "@vue/cli-service": "^3.0.5",
     "@vue/eslint-config-prettier": "^3.0.5",
+    "chai": "^4.2.0",
+    "hermione": "^1.0.0",
+    "html-reporter": "^3.0.2",
     "node-sass": "^4.10.0",
     "sass-loader": "^7.1.0",
     "vue-template-compiler": "^2.5.17"

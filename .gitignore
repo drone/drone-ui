@@ -4,3 +4,5 @@ dist/files/*
 *.log
 .env
 .env.*
+hermione/report
+hermione/screens
