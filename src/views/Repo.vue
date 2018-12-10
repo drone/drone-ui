@@ -19,7 +19,8 @@
     <PageHeader class="secondary-page-header">
       <h1 v-if="repo">{{ repo.name }}</h1>
 
-      <div v-if="build">
+      <div v-if="build" class="header-actions">
+        <Button outline :href="build.link" target="_blank"><span>View source</span></Button>
         <ButtonConfirm outline @click="handleCancel" v-if="!build.finished" :disabled="!isCollaborator"
                        class="button-cancel">
           <span>Cancel</span>
@@ -198,6 +199,10 @@ export default {
 h1 {
   line-height: 38px;
   font-size: 28px;
+}
+
+.header-actions .button + .button {
+  margin-left: 10px;
 }
 
 .button-cancel svg {
