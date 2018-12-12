@@ -35,12 +35,19 @@ router.beforeEach(fetcher(store));
 store.dispatch('fetchViewer').then(() => {
   // once the attempt to ascertain the currently
   // authenticated user completes, load the application.
-  window.vue = new Vue({
+  const vue = new Vue({
     i18n,
     router,
     store,
     render: h => h(App)
   }).$mount("#app");
+
+  if (process.env.NODE_ENV === "development") {
+    require("../hermione/mocks/browser-lib");
+
+    window.vue = vue;
+    window.Mocks.insertSaveMockButton(document.getElementsByClassName('wrap')[0]);
+  }
 
   store
     .dispatch("fetchReposLatest")

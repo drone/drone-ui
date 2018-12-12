@@ -6,3 +6,4 @@ dist/files/*
 .env.*
 hermione/report
 hermione/screens
+hermione/mocks/data

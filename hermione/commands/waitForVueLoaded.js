@@ -1,6 +1,8 @@
 module.exports = {
   name: "waitForVueLoaded",
-  func: browser => {
+  func: function () {
+    const browser = this;
+
     return browser.waitUntil(function() {
       return browser.execute(function() {
         function checkAllMounted() {

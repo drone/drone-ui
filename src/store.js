@@ -47,7 +47,7 @@ function insertBuildToCollection(state, slug, build) {
   }
 }
 
-export default new Vuex.Store({
+const storeConfig = {
   state: {
     mediaType: window.innerWidth >= 980 ? "desktop" : "mobile",
 
@@ -85,7 +85,7 @@ export default new Vuex.Store({
       /*
       EXAMPLE:
       "namespace/name": {
-        data: {},
+        server-lib.js: {},
         status: "empty", or 'loading', 'loaded', 'error'
         error: undefined,
         page: undefined,
@@ -493,7 +493,16 @@ export default new Vuex.Store({
     }
   },
   actions
-});
+};
+
+if (process.env.NODE_ENV === "development") {
+  require("../hermione/mocks/browser-lib");
+  window.Mocks.applyMock(storeConfig);
+}
+
+console.log(storeConfig.state.user)
+
+export default new Vuex.Store(storeConfig);
 
 let formatter = new AnsiUp();
 formatter.use_classes = true;

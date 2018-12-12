@@ -1,8 +1,10 @@
+const { webpackDevServerBefore } = require("./hermione/mocks/server-lib")
+
 module.exports = {
   lintOnSave: false,
   productionSourceMap: false,
   outputDir: 'dist/files',
   devServer: {
-    disableHostCheck: true
+    before: webpackDevServerBefore
   }
 };

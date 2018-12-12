@@ -1,6 +1,6 @@
 /**
  * Returns a router gate that dispatches http requests
- * to fetch data based on the requested route.
+ * to fetch server-lib.js based on the requested route.
  * 
  * @param {*} store
  */
