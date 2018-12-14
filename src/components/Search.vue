@@ -31,6 +31,7 @@ import Overlay from "@/components/Overlay";
 import ReposPopup from "@/components/ReposPopup";
 
 import reposSort from "@/lib/reposSort";
+import reposSearch from "@/lib/reposSearch";
 
 const ITEMS_LIMIT = 6;
 
@@ -60,20 +61,8 @@ export default {
   },
   computed: {
     results() {
-      const filtered = Object.values(this.$store.state.latest).filter(repo => {
-        const [byNamespace, byName] = this.queryTrimmed.split("/");
-
-        if (byName !== undefined) {
-          return (
-            repo.namespace.toLowerCase().indexOf(byNamespace.toLowerCase()) > -1 &&
-            repo.name.toLowerCase().indexOf(byName.toLowerCase()) > -1
-          );
-        }
-
-        return (repo.namespace + "/" + repo.name).toLowerCase().indexOf(this.queryTrimmed.toLowerCase()) > -1;
-      });
-
-      return reposSort(filtered).slice(0, ITEMS_LIMIT);
+      const repos = Object.values(this.$store.state.latest);
+      return reposSort(reposSearch(repos, this.queryTrimmed)).slice(0, ITEMS_LIMIT);
     },
     loaded() {
       return this.$store.state.latestStatus === "loaded";

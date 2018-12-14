@@ -25,6 +25,7 @@
     <PageHeader class="secondary-page-header">
       <h1 v-if="repo">{{ repo.name }}</h1>
 
+      <!--TODO: Refactor header-actions with vue portal-->
       <div v-if="build" class="header-actions">
         <Button outline :href="build.link" target="_blank"><span>View source</span></Button>
         <ButtonConfirm outline @click="handleCancel" v-if="!build.finished" :disabled="!isCollaborator"
@@ -173,7 +174,9 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../assets/styles/mixins";
+
 .breadcrumb {
   padding: 2px 0;
   line-height: 16px;
@@ -196,11 +199,20 @@ export default {
 .secondary-page-header {
   height: auto;
   margin-bottom: 30px;
+
+  @include mobile {
+    flex-direction: column;
+  }
 }
 
 h1 {
   line-height: 38px;
   font-size: 28px;
+  margin-bottom: 10px;
+
+  @include mobile {
+    flex-direction: column;
+  }
 }
 
 .header-actions .button + .button {

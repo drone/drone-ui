@@ -10,6 +10,8 @@ import Logout from "../views/Logout.vue";
 import Main from "../views/Main.vue";
 import Repo from "../views/Repo.vue";
 import Settings from "../views/Settings.vue";
+import Search from "../views/Search.vue";
+import BuildsFeed from "../views/BuildsFeed.vue";
 
 export default new Router({
   mode: "history",
@@ -44,6 +46,18 @@ export default new Router({
           path: "/account",
           name: "account",
           component: Account,
+          meta: { requiresAuth: true }
+        },
+        {
+          path: "/search",
+          name: "search",
+          component: Search,
+          meta: { requiresAuth: true }
+        },
+        {
+          path: "/builds-feed",
+          name: "builds-feed",
+          component: BuildsFeed,
           meta: { requiresAuth: true }
         },
         {

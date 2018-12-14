@@ -14,7 +14,7 @@
 
 <script>
 import BaseLayout from "@/components/BaseLayout.vue";
-import Header from "./Header.vue";
+import Header from "@/components/Header.vue";
 
 export default {
   name: "Main",

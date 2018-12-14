@@ -4,3 +4,4 @@ dist/files/*
 *.log
 .env
 .env.*
+hermione

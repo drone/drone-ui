@@ -1,17 +1,9 @@
 <template>
-  <div class="builds-feed"
-       tabindex="0"
-       :class="{ [`status-${status}`]: true, opened }"
-       @mousedown="toggle"
-       @focusin="open"
-       @focusout="closeDelayed">
-    <div class="round">
-      <div class="border"></div>
-      <div class="label">{{ count }}</div>
-    </div>
+  <div class="builds-feed" tabindex="0" @mousedown="toggle" @focusin="open" @focusout="closeDelayed">
+    <BuildsFeedIndicator :collection="collection" :filled="opened"/>
 
     <ReposPopup v-if="opened"
-                :repos="items"
+                :repos="collection.data"
                 :loaded="loaded"
                 :popupProps="{position: 'bottom', align: 'right', width: 570}"
                 @itemSelect="close"/>
@@ -22,16 +14,17 @@
 import ClickOutside from "vue-click-outside";
 
 import ReposPopup from "@/components/ReposPopup";
+import BuildsFeedIndicator from "@/components/BuildsFeedIndicator";
 
 export default {
   name: "BuildsFeed",
   components: {
-    ReposPopup
+    ReposPopup,
+    BuildsFeedIndicator
   },
   directives: {
     ClickOutside
   },
-  props: {},
   data() {
     return {
       opened: false,
@@ -39,30 +32,18 @@ export default {
     };
   },
   computed: {
-    items() {
-      return this.$store.state.buildsFeed.data;
+    collection() {
+      return this.$store.state.buildsFeed;
     },
     loaded() {
-      return this.$store.state.buildsFeed.status === "loaded";
-    },
-    status() {
-      return this.count > 0 ? "running" : "done";
-    },
-    count() {
-      return this.items.length;
+      return this.collection.status === "loaded";
     }
   },
   methods: {
-    loadIfNeeded() {
-      if (!this.loaded) {
-        this.$store.dispatch("fetchReposLatest");
-      }
-    },
     toggle() {
       this.opened ? this.close() : this.open();
     },
     open() {
-      this.loadIfNeeded();
       this.opened = true;
       this.nextOpened = true;
     },
@@ -93,65 +74,5 @@ export default {
   position: relative;
   display: inline-block;
   outline: none;
-}
-
-.builds-feed.status-done .label {
-  color: rgba(25, 45, 70, 0.25);
-}
-
-.builds-feed.status-running .border {
-  border-color: #ffd20a;
-  border-bottom-color: transparent;
-  animation: spin 1s linear infinite;
-}
-
-.builds-feed.status-running .label {
-  color: #ffd20a;
-}
-
-.builds-feed.status-running.opened .border {
-  background-color: #ffd20a;
-}
-
-.builds-feed.opened .border {
-  background-color: rgba(25, 45, 70, 0.25);
-  border: none;
-  animation: none;
-}
-
-.builds-feed.opened .label {
-  color: #fff;
-}
-
-.round {
-  cursor: pointer;
-}
-
-.border {
-  width: 30px;
-  height: 30px;
-  border-radius: 15px;
-  box-sizing: border-box;
-  border: 1px solid rgba(25, 45, 70, 0.25);
-}
-
-.label {
-  top: 0;
-  width: 30px;
-  height: 30px;
-  position: absolute;
-  line-height: 30px;
-  text-align: center;
-  font-size: 16px;
-  font-weight: 600;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(359deg);
-  }
 }
 </style>

@@ -14,38 +14,13 @@
     </PageHeader>
 
     <transition name="fade">
-      <Alert v-show="showEmptyAlert">
-        Your repository list is empty.
-      </Alert>
-    </transition>
-
-    <transition name="fade">
       <Alert v-show="showSyncingAlert" class="alert">
         Your repository list is being synchronized.
         <small slot="secondary">This could take between 30 and 60 seconds to complete.</small>
       </Alert>
     </transition>
 
-    <div class="list">
-      <div class="list-item"
-           v-for="repo in sortLimit(latest)"
-           :key="repo.id">
-
-        <RepoLink :repo="repo">
-          <ShortRepoItem v-if="!repo.build"
-                         :namespace="repo.namespace"
-                         :name="repo.name"
-                         :active="repo.active"
-          />
-
-          <RepoItem v-if="repo.build"
-                    :title="`${repo.namespace}/${repo.name}`"
-                    :build="repo.build"
-                    :status="repo.build.status"
-                    :avatar="repo.build.author_avatar"/>
-        </RepoLink>
-      </div>
-    </div>
+    <RepoList :items="sortLimit(latest)" emptyMessage="Your repository list is empty." :loading="loading"/>
 
     <MoreButton v-if="showMore" @click.native="showAll">Show all repositories</MoreButton>
   </div>
@@ -53,17 +28,14 @@
 
 <script>
 import Alert from "@/components/Alert.vue";
-import ShortRepoItem from "@/components/ShortRepoItem.vue";
-import RepoItem from "@/components/RepoItem.vue";
 import Breadcrumb from "@/components/Breadcrumb.vue";
-import IconSpinner from "@/components/icons/IconSpinner.vue";
 import IconSync from "@/components/icons/IconSync.vue";
 import MoreButton from "@/components/buttons/MoreButton.vue";
 import Button from "@/components/buttons/Button.vue";
-import RepoLink from "@/components/RepoLink.vue";
+import RepoList from "@/components/RepoList.vue";
+import PageHeader from "@/components/PageHeader";
 
 import reposSort from "@/lib/reposSort";
-import PageHeader from "../components/PageHeader";
 
 const LIMIT = 10;
 
@@ -73,13 +45,10 @@ export default {
     PageHeader,
     Alert,
     Breadcrumb,
-    ShortRepoItem,
     MoreButton,
     Button,
-    RepoItem,
-    IconSpinner,
     IconSync,
-    RepoLink
+    RepoList
   },
   data() {
     return {
@@ -93,6 +62,9 @@ export default {
     loaded() {
       return this.$store.state.latestStatus === 'loaded';
     },
+    loading() {
+      return this.$store.state.latestStatus === "loading";
+    },
     syncing() {
       return this.$store.state.user &&
         this.$store.state.user.syncing;
@@ -102,9 +74,6 @@ export default {
     },
     count() {
       return Object.keys(this.latest).length;
-    },
-    showEmptyAlert() {
-      return this.empty && this.loaded && !this.syncing;
     },
     showSyncingAlert() {
       return this.syncing;
@@ -142,11 +111,6 @@ export default {
   animation: spin 1s linear infinite;
 }
 
-@keyframes spin{
-	0%{transform:rotate(0deg)}
-	100%{transform:rotate(359deg)}
-}
-
 .alert {
   margin-bottom: 15px;
 }
@@ -167,10 +131,6 @@ export default {
 
 .more-button {
   margin: 15px auto 0 12px;
-}
-
-.list-item + .list-item {
-  margin-top: 10px;
 }
 </style>
 
