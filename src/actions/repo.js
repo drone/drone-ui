@@ -1,70 +1,28 @@
 import {instance, headers} from "./config";
-
-export const REPO_LIST_LOADING = 'REPO_LIST_LOADING';
-export const REPO_LIST_SUCCESS = 'REPO_LIST_SUCCESS';
-export const REPO_LIST_FAILURE = 'REPO_LIST_FAILURE';
-
-/**
- * fetchRepos fetches the repository list and dispatches an
- * event to update the store.
- */
-export const fetchRepos = async (store) => {
-	store.commit(REPO_LIST_LOADING);
-
-	const req = await fetch(`${instance}/api/user/repos`, {headers, credentials: 'same-origin'});
-	const res = await req.json();
-
-	if (req.status > 299) {
-		store.commit(REPO_LIST_FAILURE, res);
-	} else {
-		store.commit(REPO_LIST_SUCCESS, res);
-	}
-}
-
-export const REPO_FIND_LOADING = 'REPO_FIND_LOADING';
-export const REPO_FIND_SUCCESS = 'REPO_FIND_SUCCESS';
-export const REPO_FIND_FAILURE = 'REPO_FIND_FAILURE';
+import { dispatchTypicalFetch } from "./_base";
 
 /**
  * fetchRepo fetches the repository and dispatches an event
  * to update the store.
  */
-export const fetchRepo = async ({commit, state}, params) => {
-	commit(REPO_FIND_LOADING);
+export const fetchRepo = async (store, params) => {
+  const { namespace, name } = params;
 
-	const {namespace, name} = params;
-	const req = await fetch(`${instance}/api/repos/${namespace}/${name}`, {headers, credentials: 'same-origin'});
-	const res = await req.json();
-
-	if (req.status > 299) {
-		commit(REPO_FIND_FAILURE, res);
-	} else {
-		commit(REPO_FIND_SUCCESS, res);
-	}
-}
-
-export const REPO_LIST_LATEST_LOADING = 'REPO_LIST_LATEST_LOADING';
-export const REPO_LIST_LATEST_SUCCESS = 'REPO_LIST_LATEST_SUCCESS';
-export const REPO_LIST_LATEST_FAILURE = 'REPO_LIST_LATEST_FAILURE';
+  return dispatchTypicalFetch(store, params, "REPO_FIND", () => {
+    return fetch(`${instance}/api/repos/${namespace}/${name}`, { headers, credentials: "same-origin" });
+  });
+};
 
 /**
  * fetchRepoLatest fetches the repository list with the
  * latest build results and dispatches an event to update
  * the store.
  */
-export const fetchReposLatest = async (store) => {
-	store.commit(REPO_LIST_LATEST_LOADING);
-
-	const req = await fetch(`${instance}/api/user/repos?latest=true`, {headers, credentials: 'same-origin'});
-	const res = await req.json();
-
-	if (req.status > 299) {
-		store.commit(REPO_LIST_LATEST_FAILURE, res);
-    throw new Error(res);
-	} else {
-		store.commit(REPO_LIST_LATEST_SUCCESS, res);
-	}
-}
+export const fetchReposLatest = store => {
+  return dispatchTypicalFetch(store, null, "REPO_LIST_LATEST", () => {
+    return fetch(`${instance}/api/user/repos?latest=true`, { headers, credentials: "same-origin" });
+  });
+};
 
 export const REPO_SYNC_LOADING = 'REPO_SYNC_LOADING';
 export const REPO_SYNC_SUCCESS = 'REPO_SYNC_SUCCESS';

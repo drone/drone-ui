@@ -14,13 +14,17 @@
     </PageHeader>
 
     <transition name="fade">
-      <Alert v-show="showSyncingAlert" class="alert">
+      <Alert v-show="syncing" class="alert-syncing">
         Your repository list is being synchronized.
         <small slot="secondary">This could take between 30 and 60 seconds to complete.</small>
       </Alert>
     </transition>
 
-    <RepoList :items="sortLimit(latest)" emptyMessage="Your repository list is empty." :loading="loading"/>
+    <AlertError :error="loadingError || syncingError"/>
+    <RepoList v-if="!loadingError"
+              :items="sortLimit(latest)"
+              emptyMessage="Your repository list is empty."
+              :loading="loading"/>
 
     <MoreButton v-if="showMore" @click.native="showAll">Show all repositories</MoreButton>
   </div>
@@ -28,6 +32,7 @@
 
 <script>
 import Alert from "@/components/Alert.vue";
+import AlertError from "@/components/AlertError.vue";
 import Breadcrumb from "@/components/Breadcrumb.vue";
 import IconSync from "@/components/icons/IconSync.vue";
 import MoreButton from "@/components/buttons/MoreButton.vue";
@@ -40,15 +45,16 @@ import reposSort from "@/lib/reposSort";
 const LIMIT = 10;
 
 export default {
-  name: "home",
+  name: "Home",
   components: {
     PageHeader,
     Alert,
+    AlertError,
     Breadcrumb,
     MoreButton,
     Button,
     IconSync,
-    RepoList
+    RepoList,
   },
   data() {
     return {
@@ -59,27 +65,26 @@ export default {
     latest() {
       return this.$store.state.latest;
     },
-    loaded() {
-      return this.$store.state.latestStatus === 'loaded';
+    loadingStatus() {
+      return this.$store.state.latestStatus
     },
     loading() {
-      return this.$store.state.latestStatus === "loading";
+      return this.loadingStatus === "loading";
+    },
+    loadingError() {
+      return this.loadingStatus === "error" ? this.$store.state.latestLoadingError : null;
     },
     syncing() {
-      return this.$store.state.user &&
-        this.$store.state.user.syncing;
+      return this.$store.state.user && this.$store.state.user.syncing;
     },
-    empty() {
-      return this.count === 0;
+    syncingError() {
+      return this.$store.state.user ? this.$store.state.user.syncingError : null;
     },
     count() {
       return Object.keys(this.latest).length;
     },
-    showSyncingAlert() {
-      return this.syncing;
-    },
     showMore() {
-      return this.loaded && !this.all && this.count > LIMIT;
+      return this.loadingStatus === "loaded" && !this.all && this.count > LIMIT;
     }
   },
   methods: {
@@ -135,7 +140,7 @@ export default {
 </style>
 
 <style>
-.page-home .alert .content {
+.page-home .alert-syncing .content {
   height: 40px;
   padding: 20px !important;
 }

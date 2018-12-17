@@ -1,5 +1,5 @@
 <template>
-  <Card :class="{ [`theme-${theme}`]: true }" contentPadding="45px">
+  <Card class="alert" :class="{ [`theme-${theme}`]: true }" contentPadding="45px">
     <slot></slot>
     <div class="secondary" v-if="$slots.secondary"><slot name="secondary"></slot></div>
   </Card>

@@ -1,24 +1,27 @@
 <template>
   <div class="builds">
-    <Alert v-if="loaded && builds.length === 0">
-      Your Build List is Empty.
-    </Alert>
+    <Loading v-if="loading" text="Loading builds"/>
+    <AlertError v-else-if="loadingError" :error="loadingError"/>
+    <div v-else>
+      <Alert v-if="loaded && builds.length === 0">
+        Your Build List is Empty.
+      </Alert>
 
-    <router-link
-      class="build"
-      v-for="build in builds"
-      :key="build.id"
-      :to="'/'+slug + '/' + build.number">
-      <RepoItem metaAlign="left"
-                :number="build.number"
-                :title="build.message"
-                :status="build.status"
-                :build="shrinkBuild(build)"
-                :avatar="build.author_avatar"/>
-    </router-link>
+      <router-link
+        class="build"
+        v-for="build in builds"
+        :key="build.id"
+        :to="'/'+slug + '/' + build.number">
+        <RepoItem metaAlign="left"
+                  :number="build.number"
+                  :title="build.message"
+                  :status="build.status"
+                  :build="shrinkBuild(build)"
+                  :avatar="build.author_avatar"/>
+      </router-link>
 
-    <Loading v-show="loading" text="Loading builds"/>
-    <MoreButton v-if="hasMore" @click.native="showMore">Show more</MoreButton>
+      <MoreButton v-if="hasMore" @click.native="showMore">Show more</MoreButton>
+    </div>
   </div>
 </template>
 
@@ -27,6 +30,7 @@ import Alert from "@/components/Alert.vue";
 import RepoItem from "@/components/RepoItem.vue";
 import Loading from "@/components/Loading.vue";
 import MoreButton from "@/components/buttons/MoreButton.vue";
+import AlertError from "@/components/AlertError.vue";
 
 export default {
   name: "builds",
@@ -34,6 +38,7 @@ export default {
     Alert,
     RepoItem,
     Loading,
+    AlertError,
     MoreButton
   },
   computed: {
@@ -50,6 +55,9 @@ export default {
     },
     loading() {
       return this.collection && this.collection.status === "loading";
+    },
+    loadingError() {
+      return this.collection.status === "error" ? this.collection.error : null;
     },
     loaded() {
       return this.collection && this.collection.status === "loaded";

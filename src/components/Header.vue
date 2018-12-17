@@ -53,10 +53,10 @@ export default {
       return this.$store.state.mediaType;
     },
     user() {
-      return this.$store.state.user;
+      return this.$store.state.user.data;
     },
     userLoaded() {
-      return this.$store.state.userLoaded;
+      return this.$store.state.user.status === "loaded";
     },
     showLogin() {
       return this.userLoaded && !this.user;

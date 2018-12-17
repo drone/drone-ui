@@ -1,25 +1,17 @@
 import {instance, headers} from "./config";
-
-export const SECRET_LIST_LOADING = 'SECRET_LIST_LOADING';
-export const SECRET_LIST_SUCCESS = 'SECRET_LIST_SUCCESS';
-export const SECRET_LIST_FAILURE = 'SECRET_LIST_FAILURE';
+import { dispatchTypicalFetch } from "./_base";
 
 /**
  * fetchSecrets fetches the secret list and dispatches an
  * event to update the store.
  */
-export const fetchSecrets = async ({commit}, {namespace, name}) => {
-	commit(SECRET_LIST_LOADING)
+export const fetchSecrets = (store, params) => {
+  const { namespace, name } = params;
 
-	const req = await fetch(`${instance}/api/repos/${namespace}/${name}/secrets`, {headers, credentials: 'same-origin'});
-	const res = await req.json();
-
-	if (req.status > 299) {
-		commit(SECRET_LIST_FAILURE, {namespace, name, error: res});
-	} else {
-		commit(SECRET_LIST_SUCCESS, {namespace, name, secrets: res});
-	}
-}
+  return dispatchTypicalFetch(store, params, "SECRET_LIST", () => {
+    return fetch(`${instance}/api/repos/${namespace}/${name}/secrets`, { headers, credentials: "same-origin" });
+  });
+};
 
 export const SECRET_FIND_LOADING = 'SECRET_FIND_LOADING';
 export const SECRET_FIND_SUCCESS = 'SECRET_FIND_SUCCESS';

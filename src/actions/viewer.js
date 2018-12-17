@@ -1,4 +1,5 @@
 import {instance, headers} from "./config";
+import { dispatchTypicalFetch } from "./_base";
 
 export const VIEWER_FIND_LOADING = 'VIEWER_FIND_LOADING';
 export const VIEWER_FIND_SUCCESS = 'VIEWER_FIND_SUCCESS';
@@ -15,14 +16,14 @@ export const fetchViewer = async (context) => {
 	const res = await req.json();
 
 	if (req.status > 299) {
-		context.commit(VIEWER_FIND_FAILURE, res);
+		context.commit(VIEWER_FIND_FAILURE, { error: res });
 	} else {
-		context.commit(VIEWER_FIND_SUCCESS, res);
+		context.commit(VIEWER_FIND_SUCCESS, { res });
 
 		// TODO(bradrydzewski) find a way to decouple the
 		// syncing from fetching the user.
 		//
-		// if the user is syncing we need to poll and 
+		// if the user is syncing we need to poll and
 		// refresh the repository list when the syncing
 		// is completed.
 		if (res.syncing) {
@@ -33,26 +34,15 @@ export const fetchViewer = async (context) => {
 	}
 }
 
-export const VIEWER_FINE_TOKEN_LOADING = 'VIEWER_FINE_TOKEN_LOADING';
-export const VIEWER_FIND_TOKEN_SUCCESS = 'VIEWER_FIND_TOKEN_SUCCESS';
-export const VIEWER_FIND_TOKEN_FAILURE = 'VIEWER_FIND_TOKEN_FAILURE';
-
 /**
  * fetchViewer fetches the currently authenticated user
  * and dispatches an event to update the store.
  */
-export const fetchViewerToken = async (context) => {
-	context.commit(VIEWER_FINE_TOKEN_LOADING);
-
-	const req = await fetch(`${instance}/api/user/token`, {headers, method: 'POST', credentials: 'same-origin'});
-	const res = await req.json();
-
-	if (req.status > 299) {
-		context.commit(VIEWER_FIND_TOKEN_FAILURE, res);
-	} else {
-		context.commit(VIEWER_FIND_TOKEN_SUCCESS, res);
-	}
-}
+export const fetchViewerToken = store => {
+  return dispatchTypicalFetch(store, null, "VIEWER_FIND_TOKEN", () => {
+    return fetch(`${instance}/api/user/token`, { headers, method: "POST", credentials: "same-origin" });
+  });
+};
 
 //
 // TODO(bradrydzewski) we should use EventSource to poll
@@ -65,36 +55,42 @@ export const VIEWER_SYNC_SUCCESS = 'VIEWER_SYNC_SUCCESS';
 export const VIEWER_SYNC_FAILURE = 'VIEWER_SYNC_FAILURE';
 
 export const syncAccount = async (context) => {
-	context.commit(VIEWER_SYNC_STARTING)
-	const req = await fetch(`${instance}/api/user/repos?async=true`, {headers, method: 'POST', credentials: 'same-origin'});
+  context.commit(VIEWER_SYNC_STARTING);
+  let req = null;
 
-	if (req.status > 299) {
-		const res = await req.json();
-		context.commit(VIEWER_SYNC_FAILURE, {error: res});
-	} else {
-		context.commit(VIEWER_SYNC_SUCCESS);
-	}
+  try {
+    req = await fetch(`${instance}/api/user/repos?async=true`, { headers, method: "POST", credentials: "same-origin" });
+  } catch (e) {
+    context.commit(VIEWER_SYNC_FAILURE, e);
+    return;
+  }
 
-	// once synchronization begins we should wait a few
-	// seconds before we check if polling is complete.
-	setTimeout(() => {
-		context.dispatch('syncPoll')
-	}, 10000);
-}
+  if (req.status > 299) {
+    const res = await req.json();
+    context.commit(VIEWER_SYNC_FAILURE, res);
+  }
 
-export const syncPoll = async (context) => {
-	const TIMEOUT = 10000; // 10 seconds
+  // once synchronization begins we should wait a few
+  // seconds before we check if polling is complete.
+  setTimeout(() => {
+    context.dispatch("syncPoll");
+  }, 10000);
+};
 
-	let interval = setInterval(async function() {
-		const req = await fetch(`${instance}/api/user`, {headers, credentials: 'same-origin'});
-		const res = await req.json();
+export const syncPoll = async context => {
+  const TIMEOUT = 10000; // 10 seconds
 
-		if (req.status > 299) {
-			clearInterval(interval);
-		} else if (res.syncing === false)  {
-			clearInterval(interval);
-			context.commit(VIEWER_FIND_SUCCESS, res);
-			context.dispatch('fetchReposLatest');
-		}
-	}, TIMEOUT);
-}
+  let interval = setInterval(async function() {
+    const req = await fetch(`${instance}/api/user`, { headers, credentials: "same-origin" });
+    const res = await req.json();
+
+    if (req.status > 299) {
+      clearInterval(interval);
+      context.commit(VIEWER_SYNC_FAILURE, res);
+    } else if (res.syncing === false) {
+      clearInterval(interval);
+      context.commit(VIEWER_SYNC_SUCCESS, res);
+      context.dispatch("fetchReposLatest");
+    }
+  }, TIMEOUT);
+};

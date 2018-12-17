@@ -109,8 +109,7 @@ export default {
       return repo && {...repo};
     },
     isRoot() {
-      return this.$store.state.user &&
-        this.$store.state.user.admin;
+      return this.$store.state.user.data.admin;
     },
     isAdmin() {
       const isAdmin = this.repo && this.repo.permissions && this.repo.permissions.admin;

@@ -4,7 +4,9 @@
       <h1>User Settings</h1>
     </header>
 
-    <CardGroup v-if="user && user.token">
+    <Loading v-if="loading"/>
+    <AlertError v-else-if="error" :error="error"/>
+    <CardGroup v-else-if="user && user.token">
       <Card>
         <header slot="header">
           <h2>Token</h2>
@@ -31,6 +33,7 @@
         </CodeSnippetGroup>
       </Card>
     </CardGroup>
+
   </div>
 </template>
 
@@ -39,22 +42,44 @@ import Card from "@/components/Card.vue";
 import CardGroup from "@/components/CardGroup.vue";
 import CodeSnippet from "@/components/CodeSnippet.vue";
 import CodeSnippetGroup from "@/components/CodeSnippetGroup.vue";
+import Loading from "@/components/Loading.vue";
+import AlertError from "@/components/AlertError.vue";
 
 export default {
-  name: "account",
+  name: "Account",
   components: {
     Card,
     CardGroup,
     CodeSnippet,
     CodeSnippetGroup,
+    Loading,
+    AlertError
+  },
+  data() {
+    return {
+      loading: false,
+      error: null
+    };
   },
   computed: {
     instance() {
       return this.$store.state.instance.url;
     },
     user() {
-      return this.$store.state.user;
+      return this.$store.state.user.data;
     }
+  },
+  mounted() {
+    this.loading = true;
+    this.$store
+      .dispatch("fetchViewerToken")
+      .then(() => {
+        this.loading = false;
+      })
+      .catch(e => {
+        this.loading = false;
+        this.error = e;
+      });
   }
 };
 </script>

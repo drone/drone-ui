@@ -1,10 +1,5 @@
 <template>
   <div class="repo">
-    <!--
-        this section provides the breadcrumb section for
-        the repository page and sub-pages. TODO evaluate
-        if this should be moved to the base layout.
-    -->
     <PageHeader>
       <Breadcrumb>
         <router-link :to="'/'" class="link breadcrumb">Repositories</router-link>
@@ -16,9 +11,9 @@
       </Breadcrumb>
     </PageHeader>
 
-    <Alert v-if="error" style="margin-top:30px;">
+    <AlertError v-if="!repo" :error="error || null">
       Repository Not Found.
-    </Alert>
+    </AlertError>
 
     <Loading v-if="loading" text="Loading repository"/>
 
@@ -80,6 +75,7 @@
 
 <script>
 import Alert from "@/components/Alert.vue";
+import AlertError from "@/components/AlertError.vue";
 import Breadcrumb from "@/components/Breadcrumb.vue";
 import IconArrow from "@/components/icons/IconArrow.vue";
 import IconCancel from "@/components/icons/IconCancel.vue";
@@ -96,6 +92,7 @@ export default {
   components: {
     PageHeader,
     Alert,
+    AlertError,
     Breadcrumb,
     IconArrow,
     IconCancel,
@@ -114,7 +111,7 @@ export default {
       return this.$store.state.repos[this.slug];
     },
     user() {
-      return this.$store.state.user;
+      return this.$store.state.user.data;
     },
     repoEnabling() {
       return this.$store.state.repoEnabling;

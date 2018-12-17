@@ -1,13 +1,9 @@
 <template>
   <div class="build">
-    <div v-if="buildLoadingErr">
-      Cannot retrieve the Build details.
-    </div>
-
-    <Loading v-if="loading"/>
+    <Loading v-if="buildLoading"/>
 
     <RepoItem metaAlign="left"
-      v-if="build && !loading"
+      v-if="build && !buildLoading"
       :number="build.number"
       :status="build.status"
       :title="build.message"
@@ -15,7 +11,11 @@
       :linkRepo="repo"
       :build="Object.assign({}, build, { message: null })"/>
 
-    <main v-if="!isBuildError && build && build.stages">
+    <Loading v-if="!buildLoading && stagesLoading" text="Loading stages and steps"/>
+
+    <AlertError :error="buildLoadingErr"/>
+
+    <main v-if="build && !buildLoadingErr && !isBuildError && stagesLoaded">
       <div class="stages" ref="stages">
         <div class="stage-container"
              v-for="(_stage) in build.stages"
@@ -147,12 +147,14 @@ import IconDownload from "@/components/icons/IconDownload.vue";
 import ScrollLock from "@/components/utils/ScrollLock.vue";
 import Loading from "@/components/Loading.vue";
 import IconArrow from "../components/icons/IconArrow";
+import AlertError from "../components/AlertError";
 
 let previousScrollY = window.scrollY;
 
 export default {
   name: "Build",
   components: {
+    AlertError,
     IconArrow,
     Alert,
     RepoItem,
@@ -222,11 +224,18 @@ export default {
     moreCount() {
       return Math.max(this.logs.length - this.logLimit, 0);
     },
-    loading() {
-      return this.$store.state.buildLoading;
+    buildLoading() {
+      const { buildLoaded, buildLoading } = this.$store.state;
+      return !buildLoaded && buildLoading;
     },
     buildLoadingErr() {
       return this.$store.state.buildLoadingErr;
+    },
+    stagesLoading() {
+      return this.$store.state.buildLoading && !this.stagesLoaded;
+    },
+    stagesLoaded() {
+      return this.build && this.build.stages;
     },
     isBuildError() {
      return this.build && this.build.error;
@@ -287,6 +296,9 @@ export default {
       previousScrollY = window.scrollY;
 
       const stages = this.$refs.stages;
+
+      if (!stages) return;
+
       const stagesRect = stages.getBoundingClientRect();
 
       if (stagesRect.y <= 0 && window.innerHeight < stagesRect.height) {
@@ -552,17 +564,6 @@ main {
 
 .to-top:hover {
   color: #fff;
-}
-
-.alert {
-  display: flex;
-  flex: 1;
-  color: #ff3e61;
-  border-color: #ff3e61;
-  line-height: 18px;
-  font-family: "Roboto Mono";
-  font-size: 13px;
-  text-align: left;
 }
 
 main > .alert {

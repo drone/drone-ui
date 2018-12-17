@@ -62,6 +62,7 @@ export default new Vuex.Store({
     latest: {},
     latestUpdated: 0,
     latestStatus: "empty", // "empty", 'loading', 'loaded', 'error'
+    latestLoadingError: null,
 
     repos: {},
 
@@ -107,8 +108,13 @@ export default new Vuex.Store({
     crons: {},
     activity: {},
 
-    user: undefined,
-    userLoaded: false,
+    user: {
+      data: {},
+      status: "empty", // or 'loading', 'loaded', 'error'
+      error: null,
+      syncing: false,
+      syncingError: null
+    },
 
     logs: [],
     logsLoaded: false,
@@ -125,17 +131,6 @@ export default new Vuex.Store({
     notifications: {}
   },
   mutations: {
-    // BEFORE_ROUTE_LOAD(state) {
-    //   // reset repository fetch states.
-    //   state.repoLoading = false;
-    //   state.repoLoaded = false;
-    //   state.repoLoadingErr = undefined;
-
-    //   // reset repository enable states.
-    //   state.repoEnabling = false;
-    //   state.repoEnablingErr = undefined;
-    // },
-
     REPO_FIND_LOADING(state) {
       state.repoEnabling = false;
       state.repoEnablingErr = undefined;
@@ -143,29 +138,16 @@ export default new Vuex.Store({
       state.repoLoaded = false;
       state.repoLoadingErr = undefined;
     },
-    REPO_FIND_FAILURE(state, error) {
+    REPO_FIND_FAILURE(state, { error }) {
       state.repoLoading = false;
       state.repoLoaded = true;
-      state.repoLoadingErr = {error: {status: 404}};
+      state.repoLoadingErr = error;
     },
-    REPO_FIND_SUCCESS(state, item) {
+    REPO_FIND_SUCCESS(state, { res: item }) {
       state.repoLoading = false;
       state.repoLoaded = false;
       state.repoLoadingErr = undefined;
       Vue.set(state.repos, item.slug, item);
-    },
-
-    //
-    // repo list
-    //
-
-    REPO_LIST_LOADING(state) {},
-    REPO_LIST_FAILURE(state, error) {},
-    REPO_LIST_SUCCESS(state, list) {
-      state.repos = {}
-			list.map(item => {
-				state.repos[item.slug] = item;
-			});
     },
 
     //
@@ -175,12 +157,13 @@ export default new Vuex.Store({
     REPO_LIST_LATEST_LOADING(state) {
       state.latestStatus = "loading";
     },
-    REPO_LIST_LATEST_FAILURE(state) {
+    REPO_LIST_LATEST_FAILURE(state, { error }) {
       state.latestStatus = "error";
+      state.latestLoadingError = error;
     },
-    REPO_LIST_LATEST_SUCCESS(state, list) {
+    REPO_LIST_LATEST_SUCCESS(state, { res }) {
       const latest = {};
-      list.forEach(item => latest[item.slug] = item);
+      res.forEach(item => latest[item.slug] = item);
 
       state.latest = latest;
       state.latestStatus = "loaded";
@@ -253,14 +236,14 @@ export default new Vuex.Store({
       state.builds[slug].status = "error";
       state.builds[slug].error = error;
     },
-    BUILD_LIST_SUCCESS(state, { params, builds }) {
+    BUILD_LIST_SUCCESS(state, { params, res }) {
       const slug = `${params.namespace}/${params.name}`;
       const repoBuilds = state.builds[slug];
 
       repoBuilds.status = "loaded";
       repoBuilds.error = null;
       repoBuilds.page = params.page;
-      builds.forEach(item => Vue.set(repoBuilds.data, item.number, item));
+      res.forEach(item => Vue.set(repoBuilds.data, item.number, item));
     },
 
     //
@@ -268,16 +251,14 @@ export default new Vuex.Store({
     //
 
     BUILD_FIND_LOADING(state){
-      state.buildLoaded = false;
       state.buildLoading = true;
       state.buildLoadingErr = undefined;
     },
     BUILD_FIND_FAILURE(state, {error}){
-      state.buildLoaded = true;
       state.buildLoading = false;
       state.buildLoadingErr = error;
     },
-    BUILD_FIND_SUCCESS(state, { params, build }){
+    BUILD_FIND_SUCCESS(state, { params, res: build }) {
       state.buildLoaded = true;
       state.buildLoading = false;
       state.buildLoadingErr = undefined;
@@ -303,10 +284,10 @@ export default new Vuex.Store({
 
     SECRET_LIST_LOADING(state){},
     SECRET_LIST_FAILURE(state){},
-    SECRET_LIST_SUCCESS(state, data){
-      const slug = `${data.namespace}/${data.name}`;
+    SECRET_LIST_SUCCESS(state, { params, res }){
+      const slug = `${params.namespace}/${params.name}`;
       let set = {};
-			data.secrets.map(item => {
+      res.map(item => {
 				set[item.name] = item;
 			});
       Vue.set(state.secrets, slug, set);
@@ -387,25 +368,26 @@ export default new Vuex.Store({
     // user
     //
 
-    VIEWER_FIND_LOADING(state){},
-    VIEWER_FIND_FAILURE(state){
-      state.userLoaded = true;
-      state.user = undefined;
+    VIEWER_FIND_LOADING(state) {
+      state.user.status = "loading";
     },
-    VIEWER_FIND_SUCCESS(state, res){
-      state.userLoaded = true;
-      state.user = res;
+    VIEWER_FIND_FAILURE(state, { error }){
+      state.user.status = "error";
+      state.user.error = error;
+    },
+    VIEWER_FIND_SUCCESS(state, { res }){
+      state.user.status = "loaded";
+      state.user.data = res;
     },
 
     //
     // user token
     //
 
-    VIEWER_FINE_TOKEN_LOADING(state){},
-    VIEWER_FIND_TOKEN_FAILURE(state){},
-    VIEWER_FIND_TOKEN_SUCCESS(state, res){
-      state.userLoaded = true;
-      state.user = res;
+    VIEWER_FIND_TOKEN_LOADING() {},
+    VIEWER_FIND_TOKEN_FAILURE() {},
+    VIEWER_FIND_TOKEN_SUCCESS(state, { res }) {
+      state.user.data = res;
     },
 
     //
@@ -451,14 +433,17 @@ export default new Vuex.Store({
     // sync
     //
 
-    VIEWER_SYNC_STARTING(state){
+    VIEWER_SYNC_STARTING(state) {
       state.user.syncing = true;
+      state.user.syncingError = null;
     },
-    VIEWER_SYNC_FAILURE(state){
+    VIEWER_SYNC_FAILURE(state, error) {
       state.user.syncing = false;
+      state.user.syncingError = error;
     },
-    VIEWER_SYNC_SUCCESS(state){
-      state.user.syncing = true;
+    VIEWER_SYNC_SUCCESS(state) {
+      state.user.syncing = false;
+      state.user.syncingError = null;
     },
 
     LOGS_FIND_LOADING(state){

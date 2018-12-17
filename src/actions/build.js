@@ -1,52 +1,33 @@
 import { instance, headers, token } from "./config";
 import { byBuildCreatedAtDesc } from '@/lib/reposSort'
-
-export const BUILD_LIST_LOADING = 'BUILD_LIST_LOADING';
-export const BUILD_LIST_SUCCESS = 'BUILD_LIST_SUCCESS';
-export const BUILD_LIST_FAILURE = 'BUILD_LIST_FAILURE';
+import { dispatchTypicalFetch } from "./_base";
 
 /**
  * fetchBuilds fetches the build list and dispatches an
  * event to update the store.
  */
-export const fetchBuilds = async ({ commit }, params) => {
-  commit(BUILD_LIST_LOADING, { params });
-
+export const fetchBuilds = (store, params) => {
   const { namespace, name, page = 1 } = params;
-  const req = await fetch(`${instance}/api/repos/${namespace}/${name}/builds?page=${page}`, {
-    headers,
-    credentials: "same-origin"
+
+  return dispatchTypicalFetch(store, params, "BUILD_LIST", () => {
+    return fetch(`${instance}/api/repos/${namespace}/${name}/builds?page=${page}`, {
+      headers,
+      credentials: "same-origin"
+    });
   });
-  const res = await req.json();
-
-  if (req.status > 299) {
-    commit(BUILD_LIST_FAILURE, { params, error: res });
-  } else {
-    commit(BUILD_LIST_SUCCESS, { params, builds: res });
-  }
 };
-
-export const BUILD_FIND_LOADING = 'BUILD_FIND_LOADING';
-export const BUILD_FIND_SUCCESS = 'BUILD_FIND_SUCCESS';
-export const BUILD_FIND_FAILURE = 'BUILD_FIND_FAILURE';
 
 /**
  * fetchBuild fetches the build and dispatches an event
  * to update the store.
  */
-export const fetchBuild = async ({commit}, params) => {
-	commit(BUILD_FIND_LOADING);
+export const fetchBuild = async (store, params) => {
+  const { namespace, name, build } = params;
 
-	const {namespace, name, build} = params;
-	const req = await fetch(`${instance}/api/repos/${namespace}/${name}/builds/${build}`, {headers, credentials: 'same-origin'});
-	const res = await req.json();
-
-	if (req.status > 299) {
-		commit(BUILD_FIND_FAILURE, {params, error: res});
-	} else {
-		commit(BUILD_FIND_SUCCESS, {params, build: res});
-	}
-}
+  return dispatchTypicalFetch(store, params, "BUILD_FIND", () => {
+    return fetch(`${instance}/api/repos/${namespace}/${name}/builds/${build}`, { headers, credentials: "same-origin" });
+  });
+};
 
 export const BUILD_CANCEL_LOADING = 'BUILD_CANCEL_LOADING';
 export const BUILD_CANCEL_SUCCESS = 'BUILD_CANCEL_SUCCESS';

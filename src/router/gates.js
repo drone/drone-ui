@@ -25,16 +25,13 @@ export const defaultParams = (to, from, next) => {
  * @param {*} window
  */
 export const authorizer = (store, window) => (to, from, next) => {
-    // require authentication to access certain
-    // routes. If the user is not authenticated,
-    // redirect to login.
-    if (!store.state.user) {
-      if (to.meta && to.meta.requiresAuth) {
-        window.location.href='/login';
-        return;
-      }
-    }
-  
+  // require authentication to access certain
+  // routes. If the user is not authenticated,
+  // redirect to login.
+  if (to.meta && to.meta.requiresAuth && !store.state.user.data) {
+    window.location.href = "/login";
+  } else {
     // proceed to the next guard.
     next();
-}
+  }
+};
