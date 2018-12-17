@@ -10,7 +10,7 @@ class Term extends Component {
 		const { lines, exitcode } = this.props;
 		return (
 			<div className={style.term}>
-				{lines.map(renderTermLine)}
+				{stitchLines(lines).map(renderTermLine)}
 				{exitcode !== undefined ? renderExitCode(exitcode) : undefined}
 			</div>
 		);
@@ -44,6 +44,30 @@ class TermLine extends Component {
 		return this.props.line.out !== nextProps.line.out;
 	}
 }
+
+const isEOL = line => {
+	return line.out.charAt(line.out.length - 1) === "\n";
+};
+
+const stitchLines = lines => {
+	return lines.reduce(
+		(stitchedLines, line) => {
+			let lastLine = stitchedLines[stitchedLines.length - 1];
+
+			if (isEOL(lastLine)) {
+				let newLine = Object.assign({}, line);
+				newLine.pos = stitchedLines.length + 1;
+
+				return stitchedLines.concat(newLine);
+			} else {
+				lastLine.out = lastLine.out.concat(line.out);
+
+				return stitchedLines;
+			}
+		},
+		[Object.assign({}, lines[0])],
+	);
+};
 
 const renderTermLine = line => {
 	return <TermLine line={line} />;
