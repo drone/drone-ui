@@ -58,10 +58,10 @@
     <Cron />
     <Badges />
 
-    <Card v-if="repo.active && isAdmin" class="disable" contentPadding="30px">
+    <div v-if="repo.active && isAdmin" class="disable">
       <ButtonConfirm @click="disable" theme="danger" size="l">Disable Repository</ButtonConfirm>
-      <p>You can disable your repository to stop processing builds.</p>
-    </Card>
+      <span>to stop processing builds.</span>
+    </div>
   </CardGroup>
 </template>
 
@@ -171,11 +171,11 @@ const timeouts = [
 }
 
 .disable {
-  text-align: center;
+  padding: 0 15px;
 }
 
-.disable p {
-  margin-top: 15px;
+.disable span {
+  margin: 15px 0 0 15px;
   color: rgba(25, 45, 70, 0.6);
 }
 </style>

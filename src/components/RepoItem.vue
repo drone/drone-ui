@@ -7,7 +7,7 @@
 
     <div class="content">
       <div class="header" :title="title">
-        <span class="number" v-if="number">#{{ number }}<span class="dash"> – </span></span>
+        <span class="number" v-if="number">#{{ number }}<span>. </span></span>
         <span class="title">{{ title }}</span>
       </div>
 
@@ -91,10 +91,6 @@ section {
 .container-left {
   width: 30px;
   position: absolute;
-}
-
-.number .dash {
-  color: rgba(25, 45, 70, 0.25);
 }
 
 .status {
