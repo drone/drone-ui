@@ -1,8 +1,8 @@
 <template>
   <div class="builds">
-    <Loading v-if="loading" text="Loading builds"/>
-    <AlertError v-else-if="loadingError" :error="loadingError"/>
-    <div v-else>
+    <AlertError v-if="loadingError" :error="loadingError"/>
+
+    <template v-else>
       <Alert v-if="loaded && builds.length === 0">
         Your Build List is Empty.
       </Alert>
@@ -20,7 +20,9 @@
       </router-link>
 
       <MoreButton v-if="hasMore" @click.native="showMore">Show more</MoreButton>
-    </div>
+    </template>
+
+    <Loading v-if="loading" text="Loading builds"/>
   </div>
 </template>
 
@@ -64,7 +66,7 @@ export default {
     hasMore() {
       const lastBuilds = this.builds[this.builds.length - 1];
       return !this.loading && lastBuilds && lastBuilds.number !== 1;
-    },
+    }
   },
   methods: {
     showMore() {

@@ -3,7 +3,7 @@
     <Hint>{{ statusHumanized }}</Hint>
 
     <Failure v-if="['failure', 'error'].includes(status)"/>
-    <Failure v-else-if="['killed', 'skipped', 'declined'].includes(status)"/>  <!-- gray -->
+    <Cancelled v-else-if="['killed', 'skipped', 'declined'].includes(status)"/>
     <Pending v-else-if="['waiting_on_dependencies', 'pending', 'blocked'].includes(status)"/>
     <Success v-else-if="status === 'success'"/>
     <Running v-else-if="status === 'running'"/>
@@ -16,7 +16,7 @@ import Failure from "./icons/status/StatusFailure.vue";
 import Pending from "./icons/status/StatusPending.vue";
 import Running from "./icons/status/StatusRunning.vue";
 import Success from "./icons/status/StatusSuccess.vue";
-import Cancelled from "./icons/status/StatusCancelled.vue";
+import Cancelled from "./icons/status/StatusCancelled";
 import Hint from "@/components/Hint";
 
 import * as validators from "@/lib/validators";
@@ -78,14 +78,14 @@ export default {
   background-color: #FFD20A;
 }
 
+.status-skipped,
+.status-killed,
+.status-declined,
 .status-error,
 .status-failure {
   background-color: #FF4164;
 }
 
-.status-skipped,
-.status-killed,
-.status-declined,
 .status-waiting_on_dependencies,
 .status-pending,
 .status-blocked {
@@ -105,7 +105,7 @@ svg {
 }
 
 .status-running > svg {
-  animation: spin 3s linear infinite;
+  animation: spin 1.5s linear infinite;
 }
 
 .status-pending > svg {
