@@ -19,20 +19,7 @@
 
     <PageHeader class="secondary-page-header">
       <h1 v-if="repo">{{ repo.name }}</h1>
-
-      <!--TODO: Refactor header-actions with vue portal-->
-      <div v-if="build" class="header-actions">
-        <Button outline :href="build.link" target="_blank"><span>View source</span></Button>
-        <ButtonConfirm outline @click="handleCancel" v-if="!build.finished" :disabled="!isCollaborator"
-                       class="button-cancel">
-          <span>Cancel</span>
-          <IconCancel/>
-        </ButtonConfirm>
-        <Button outline @click.native="handleRestart" v-if="build.finished" :disabled="!isCollaborator">
-          <span>Restart</span>
-          <IconRestart/>
-        </Button>
-      </div>
+      <portal-target name="secondary-page-header-actions"/>
     </PageHeader>
 
     <!--
@@ -209,16 +196,6 @@ h1 {
     flex-direction: column;
     margin-bottom: 0;
   }
-
-  + .header-actions {
-    @include tablet {
-      margin-top: 15px;
-    }
-  }
-}
-
-.header-actions .button + .button {
-  margin-left: 10px;
 }
 
 .button-cancel svg {

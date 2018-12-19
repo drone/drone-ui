@@ -3,22 +3,18 @@
   <header v-if="$slots.header">
     <slot name="header"></slot>
 
-    <button @click="handleCopy">
-      <transition name="fade">
-        <span v-show="copied">Copied</span>
-      </transition>
+    <div class="copy" @click="handleCopy" style="position: relative">
+      <transition name="fade"><Hint align="right" v-show="copied">Copied</Hint></transition>
       <IconCopy/>
-    </button>
+    </div>
   </header>
-  <div ref="snippet">
-    <pre :class="{ 'with-copy': !$slots.header, [`lang-${lang}`]: true }">
-      <button @click="handleCopy" v-if="!$slots.header">
-        <transition name="fade">
-          <span v-show="copied">Copied</span>
-        </transition>
-        <IconCopy/>
-      </button>
+  <div ref="snippet" :class="{'with-copy': !$slots.header}">
+    <div class="copy" @click="handleCopy" v-if="!$slots.header">
+      <transition name="fade"><Hint align="right" v-show="copied">Copied</Hint></transition>
+      <IconCopy/>
+    </div>
 
+    <pre :class="{ [`lang-${lang}`]: true }">
       <slot></slot>
     </pre>
   </div>
@@ -27,11 +23,13 @@
 
 <script>
 import IconCopy from "./icons/IconCopy.vue";
+import Hint from "@/components/Hint.vue";
 
 export default {
   name: "CodeSnippet",
   components: {
     IconCopy,
+    Hint
   },
   props: {
     lang: String
@@ -114,13 +112,17 @@ pre.lang-terminal code.out:before {
   content: ">";
 }
 
-pre.with-copy {
-  padding-right: 100px;
+.with-copy {
   position: relative;
 }
 
-pre.with-copy button {
+.with-copy pre {
+  padding-right: 50px;
+}
+
+.with-copy .copy {
   position: absolute;
+  z-index: 1;
   top: 50%;
   margin-top: -11px;
   right: 15px;
@@ -133,7 +135,7 @@ code {
   word-break: break-all;
 }
 
-button {
+.copy {
   background: none;
   border: none;
   cursor: pointer;
@@ -142,20 +144,14 @@ button {
   display: flex;
 }
 
-button:hover svg,
-button:focus svg {
+.copy:hover svg,
+.copy:focus svg {
   opacity: 0.6;
 }
 
-button:active svg {
+.copy:active svg {
   opacity: 1;
   margin-bottom: -2px;
-}
-
-button span {
-  font-size: 15px;
-  margin-right: 10px;
-  color: rgba(25, 45, 70, 0.6);
 }
 
 svg {

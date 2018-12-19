@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueI18n from "vue-i18n";
 import VueMoment from "vue-moment";
+import PortalVue from "portal-vue";
 
 import App from "./App.vue";
 import Router from "vue-router";
@@ -14,6 +15,7 @@ import {fetcher} from "./router/fetch";
 Vue.use(VueMoment);
 Vue.use(Router);
 Vue.use(VueI18n);
+Vue.use(PortalVue);
 Vue.config.productionTip = false;
 
 sync(store, router)

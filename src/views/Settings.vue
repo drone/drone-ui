@@ -173,6 +173,10 @@ const timeouts = [
 
 .disable {
   padding: 0 15px;
+
+  @include mobile {
+    text-align: center;
+  }
 }
 
 .disable span {

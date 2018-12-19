@@ -1,13 +1,13 @@
 <template>
-    <section class="stage">
-        <header>
-            <Status :status="status"/>
-            <span>{{ name }}</span>
-            <time-elapsed :started="started" :stopped="stopped" v-if="started" />
-            <IconArrowDropdown direction="down" class="arrow-dropdown"/>
-        </header>
-        <slot></slot>
-    </section>
+  <section class="stage">
+    <header>
+      <Status :status="status"/>
+      <span>{{ name }}</span>
+      <time-elapsed :started="started" :stopped="stopped" v-if="started"/>
+      <IconArrowDropdown direction="down" class="arrow-dropdown"/>
+    </header>
+    <slot></slot>
+  </section>
 </template>
 
 <script>
@@ -35,7 +35,7 @@ export default {
   },
   computed: {
     duration() {
-        return "";
+      return "";
     }
   }
 };
@@ -43,52 +43,40 @@ export default {
 
 <style scoped>
 .stage {
-    background: #FFF;
-    box-shadow: 0 2px 4px 0 rgba(25,45,70,.05);
-    border: 1px solid #edeef1;
-    border-radius: 3px;
-    box-sizing: border-box;
-    color: #8d97a2;
-    user-select: none;
+  background: #FFF;
+  box-shadow: 0 2px 4px 0 rgba(25, 45, 70, .05);
+  border: 1px solid #edeef1;
+  border-radius: 3px;
+  box-sizing: border-box;
+  color: #8d97a2;
+  user-select: none;
 }
 
 header {
-    align-items: center;
-    border-bottom: solid 1px rgba(25, 45, 70, 0.05);
-    box-sizing: border-box;
-    display: flex;
-    height: 45px;
-    padding: 0px 15px;
-    user-select: none;
+  align-items: center;
+  border-bottom: solid 1px rgba(25, 45, 70, 0.05);
+  box-sizing: border-box;
+  display: flex;
+  height: 45px;
+  padding: 0 15px;
+  user-select: none;
+  max-width: 100%;
+  color: #192d46;
 }
 
-header:last-child {
-    border-bottom: none;
+.status {
+  flex-shrink: 0;
 }
 
 span {
-  flex: 1;
-  height: 18px;
+  flex-grow: 1;
   font-weight: 600;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  color: #192d46;
   margin-left: 10px;
-}
-
-time{
-  color: #192d46;
-  height: 18px;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  opacity: 0.6;
-  text-align: right;
-  margin-right: 0px;
+  text-transform: uppercase;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .arrow-dropdown {

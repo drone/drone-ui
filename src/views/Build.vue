@@ -2,7 +2,31 @@
   <div class="build">
     <Loading v-if="buildLoading"/>
 
-    <RepoItem metaAlign="left"
+    <portal v-if="build && !buildLoading" to="secondary-page-header-actions">
+      <div class="header-actions">
+        <Button outline class="button-source" :href="build.link" target="_blank">
+          <span>View source</span>
+          <IconSource/>
+        </Button>
+
+        <Button outline v-if="build.finished"
+                @click.native="handleRestart"
+                :disabled="!isCollaborator">
+          <span>Restart</span>
+          <IconRestart/>
+        </Button>
+
+        <ButtonConfirm v-else outline
+                       @click="handleCancel"
+                       :disabled="!isCollaborator"
+                       class="button-cancel">
+          <span>Cancel</span>
+          <IconCancel/>
+        </ButtonConfirm>
+      </div>
+    </portal>
+
+    <RepoItem
       v-if="build && !buildLoading"
       :number="build.number"
       :status="build.status"
@@ -141,12 +165,15 @@ import Stage from "@/components/Stage.vue";
 
 import IconCancel from "@/components/icons/IconCancel.vue";
 import Button from "@/components/buttons/Button.vue";
+import ButtonConfirm from "@/components/buttons/ButtonConfirm.vue";
 import PlayButton from "@/components/buttons/PlayButton.vue";
 import IconFullscreen from "@/components/icons/IconFullscreen.vue";
 import IconDownload from "@/components/icons/IconDownload.vue";
+import IconRestart from "@/components/icons/IconRestart.vue";
 import ScrollLock from "@/components/utils/ScrollLock.vue";
 import Loading from "@/components/Loading.vue";
 import IconArrow from "../components/icons/IconArrow";
+import IconSource from "../components/icons/IconSource";
 import AlertError from "../components/AlertError";
 
 let previousScrollY = window.scrollY;
@@ -162,10 +189,13 @@ export default {
     Stage,
     IconCancel,
     Button,
+    ButtonConfirm,
     PlayButton,
     ScrollLock,
     Loading,
     IconDownload,
+    IconRestart,
+    IconSource,
     IconFullscreen
   },
   data() {
@@ -355,6 +385,24 @@ export default {
 <style scoped lang="scss">
 @import "../assets/styles/mixins";
 
+.header-actions {
+  margin: -5px;
+
+  @include mobile {
+    margin-top: 10px;
+  }
+
+  .button {
+    margin: 5px;
+  }
+}
+
+.button-source > svg {
+  width: 24px;
+  height: 24px;
+  margin-bottom: -7px;
+}
+
 .repo-item {
   margin-bottom: 20px;
 }
@@ -370,6 +418,7 @@ main {
 
 .stages {
   flex: 0 0 300px;
+  width: 300px;
   position: sticky;
   top: 0;
 
@@ -442,7 +491,7 @@ main {
   position: sticky;
   top: 0;
   background: #192d46;
-  padding: 8px 15px 7px;
+  padding: 8px 5px 7px 15px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   font-size: 13px;
   color: rgba(255, 255, 255, 0.6);

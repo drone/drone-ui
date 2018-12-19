@@ -62,7 +62,7 @@ export default {
 <style>
 .button > span + svg,
 .button > svg + span {
-  margin-left: 10px;
+  margin-left: 7px;
 }
 
 .button > svg {
@@ -84,7 +84,9 @@ export default {
 }
 </style>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../../assets/styles/mixins";
+
 .button {
   background: none;
   font-size: 14px;
@@ -97,6 +99,10 @@ export default {
   font-weight: 500;
   border-radius: 3px;
   color: #fff;
+
+  @include mobile {
+    font-size: 13px;
+  }
 }
 
 .button.size-m {

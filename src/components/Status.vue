@@ -1,6 +1,6 @@
 <template>
   <div v-bind:class="{ status: true, [`status-${status}`]: true }">
-    <Hint>{{ statusHumanized }}</Hint>
+    <Hint showOn="hover">{{ statusHumanized }}</Hint>
 
     <Failure v-if="['failure', 'error'].includes(status)"/>
     <Cancelled v-else-if="['killed', 'skipped', 'declined'].includes(status)"/>

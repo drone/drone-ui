@@ -23,8 +23,6 @@ export default {
     const items = [];
     const slotItems = this.$slots.default.filter(item => item.tag);
 
-    console.log(slotItems)
-
     for (let i = 0; i < slotItems.length; ++i) {
       this.insertClassToSlotItem(slotItems[i]);
 

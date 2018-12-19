@@ -214,12 +214,18 @@ export default {
   }
 }
 
-.description .commit-message {
-  font-style: italic;
-}
+.description {
+  .divider {
+    height: 5px;
+  }
 
-.description .divider {
-  height: 5px;
+  .commit-message {
+    font-style: italic;
+
+    .divider {
+      height: 2px;
+    }
+  }
 }
 
 .time {
