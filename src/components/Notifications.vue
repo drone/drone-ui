@@ -44,12 +44,7 @@ export default {
   background: rgba(25, 45, 70, 0.9);
   border-radius: 2px;
   padding: 11px 60px 11px 15px;
-  box-shadow: 0 2px 10px 0 rgba(25, 45, 70, 0.5);
   color: #fff;
-}
-
-.notification:hover {
-  background: rgba(25, 45, 70, 0.75);
 }
 
 .notification + .notification {
@@ -69,10 +64,13 @@ export default {
   margin-bottom: -2px;
 }
 
-.list-enter-active, .list-leave-active {
-  transition: all 1s;
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s;
 }
-.list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
+
+.list-enter,
+.list-leave-to /* .list-leave-active below version 2.1.8 */ {
   opacity: 0;
   transform: translateY(30px);
 }

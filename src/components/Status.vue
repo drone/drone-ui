@@ -1,40 +1,59 @@
 <template>
-  <div v-bind:class="{ status: true, [`status-${status}`]: true }" :title="status">
-    <Blocked v-if="status === 'blocked'"/>
-    <Failure v-if="status === 'failure'"/>
-    <Cancelled v-if="status === 'killed'"/>
-    <Failure v-if="status === 'error'"/>
-    <Failure v-if="status === 'declined'"/>
-    <Pending v-if="status === 'pending'"/>
-    <Pending v-if="status === 'planned'"/>
-    <Pending v-if="status === 'waiting_on_dependencies'"/>
-    <Running v-if="status === 'running'"/>
-    <Running v-if="status === 'started'"/>
-    <Failure v-if="status === 'skipped'"/> <!-- a cross like in failure -->
-    <Success v-if="status === 'success'"/>
+  <div v-bind:class="{ status: true, [`status-${status}`]: true }">
+    <Hint>{{ statusHumanized }}</Hint>
+
+    <Failure v-if="['failure', 'error'].includes(status)"/>
+    <Failure v-else-if="['killed', 'skipped', 'declined'].includes(status)"/>  <!-- gray -->
+    <Pending v-else-if="['waiting_on_dependencies', 'pending', 'blocked'].includes(status)"/>
+    <Success v-else-if="status === 'success'"/>
+    <Running v-else-if="status === 'running'"/>
+    <div class="no" v-else/>
   </div>
 </template>
 
 <script>
-import Blocked from "./icons/status/StatusBlocked.vue";
 import Failure from "./icons/status/StatusFailure.vue";
 import Pending from "./icons/status/StatusPending.vue";
 import Running from "./icons/status/StatusRunning.vue";
 import Success from "./icons/status/StatusSuccess.vue";
 import Cancelled from "./icons/status/StatusCancelled.vue";
+import Hint from "@/components/Hint";
+
+import * as validators from "@/lib/validators";
+
+const STATUSES = [
+  "failure", "error",
+  "killed", "skipped", "declined",
+  "waiting_on_dependencies", "pending", "blocked",
+  "success",
+  "running"
+];
 
 export default {
   name: "Status",
   props: {
-    status: String
+    status: { type: String, required: true, validator: validators.oneOf(STATUSES) }
   },
   components: {
-    Blocked,
     Failure,
     Pending,
     Running,
     Success,
-    Cancelled
+    Cancelled,
+    Hint
+  },
+  computed: {
+    statusHumanized() {
+      if (this.status === "waiting_on_dependencies") {
+        return "Waiting on dependencies";
+      }
+
+      if (this.status === "killed") {
+        return "Killed (cancelled)";
+      }
+
+      return this.status[0].toLocaleUpperCase() + this.status.substr(1);
+    }
   }
 };
 </script>
@@ -59,17 +78,22 @@ export default {
   background-color: #FFD20A;
 }
 
-.status-blocked,
-.status-killed,
 .status-error,
-.status-declined,
 .status-failure {
   background-color: #FF4164;
 }
 
 .status-skipped,
-.status-pending {
+.status-killed,
+.status-declined,
+.status-waiting_on_dependencies,
+.status-pending,
+.status-blocked {
   background-color: #c6cbd1; /* = rgba(25, 45, 70, 0.25); */
+}
+
+.hint {
+  white-space: nowrap;
 }
 
 svg {
