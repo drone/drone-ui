@@ -136,7 +136,7 @@ select {
   border-color: rgba(25, 45, 70, 0.15);
 }
 
-.cron + .cron {
+.editable-list-item + .editable-list-item {
   border-top: 1px solid rgba(25, 45, 70, 0.05);
 }
 

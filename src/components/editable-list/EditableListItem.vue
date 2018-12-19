@@ -1,7 +1,7 @@
 <!-- A list item of editable list -->
 
 <template>
-  <div class="secret">
+  <div class="editable-list-item">
     <span class="name">{{ name }}</span>
 
     <div class="tags">
@@ -35,7 +35,7 @@ export default {
 <style scoped lang="scss">
 @import "../../assets/styles/mixins";
 
-.secret {
+.editable-list-item {
   align-items: center;
   display: flex;
   padding: 20px 0;
