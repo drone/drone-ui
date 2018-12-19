@@ -30,7 +30,7 @@ export default {
   display: inline-block;
   margin-right: 70px;
 
-  @include mobile {
+  @include tablet {
     margin: 0;
     display: block;
 

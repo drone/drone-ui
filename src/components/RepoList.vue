@@ -6,16 +6,11 @@
 
     <div v-if="!loading" class="list-item" v-for="repo in items" :key="repo.id">
       <RepoLink :repo="repo">
-        <ShortRepoItem v-if="!repo.build"
-                       :namespace="repo.namespace"
-                       :name="repo.name"
-                       :active="repo.active"/>
-
-        <RepoItem v-if="repo.build"
+        <RepoItem :active="repo.active"
                   :title="`${repo.namespace}/${repo.name}`"
                   :build="repo.build"
-                  :status="repo.build.status"
-                  :avatar="repo.build.author_avatar"/>
+                  :status="repo.build && repo.build.status"
+                  :avatar="repo.build && repo.build.author_avatar"/>
       </RepoLink>
     </div>
   </div>
@@ -25,7 +20,6 @@
 import Alert from "@/components/Alert.vue";
 import RepoLink from "@/components/RepoLink.vue";
 import RepoItem from "@/components/RepoItem.vue";
-import ShortRepoItem from "@/components/ShortRepoItem.vue";
 import Loading from "@/components/Loading.vue";
 
 export default {
@@ -39,7 +33,6 @@ export default {
     Alert,
     RepoLink,
     RepoItem,
-    ShortRepoItem,
     Loading
   }
 };

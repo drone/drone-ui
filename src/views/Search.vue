@@ -11,9 +11,6 @@
 <script>
 import BaseForm from "@/components/forms/BaseForm.vue";
 import BaseInput from "@/components/forms/BaseInput.vue";
-import Alert from "@/components/Alert.vue";
-import ShortRepoItem from "@/components/ShortRepoItem.vue";
-import RepoItem from "@/components/RepoItem.vue";
 import RepoList from "@/components/RepoList.vue";
 
 import reposSort from "@/lib/reposSort";
@@ -24,9 +21,6 @@ export default {
   components: {
     BaseForm,
     BaseInput,
-    Alert,
-    ShortRepoItem,
-    RepoItem,
     RepoList
   },
   data() {

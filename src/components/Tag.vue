@@ -4,6 +4,7 @@
 
 <style scoped>
 span {
+  display: inline-block;
   background: rgba(25, 45, 70, 0.03);
   color: rgba(25, 45, 70, 0.6);
   font-size: 11px;

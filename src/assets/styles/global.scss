@@ -1,3 +1,5 @@
+@import "./_mixins";
+
 html, body {
   background: #fbfbfb;
   box-sizing: border-box;
@@ -29,5 +31,18 @@ a {
   }
   100% {
     transform: rotate(359deg);
+  }
+}
+
+.media-only-mobile {
+  display: none;
+  @include mobile {
+    display: block;
+  }
+}
+
+.media-hide-mobile {
+  @include mobile {
+    display: none;
   }
 }

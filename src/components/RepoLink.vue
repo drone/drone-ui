@@ -41,11 +41,11 @@ export default {
   box-shadow: 0 4px 10px 0 rgba(25, 45, 70, 0.2);
 }
 
-.repo-link .repo-item h3 {
+.repo-link .repo-item.build-no.active-yes .header .title {
   color: #0564d7;
 }
 
-.repo-link .repo-item-inactive h3 {
+.repo-link .repo-item.build-no.active-no .header .title {
   color: #192d46;
 }
 </style>

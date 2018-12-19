@@ -29,10 +29,17 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../assets/styles/mixins";
+
 .container {
   padding-bottom: 80px;
+
+  @include mobile {
+    padding-bottom: 40px;
+  }
 }
+
 .wrap {
   min-height: 100%;
   display: flex;
@@ -61,11 +68,18 @@ footer {
 }
 </style>
 
-<style>
+<style lang="scss">
+/* todo: decide could we move it to scoped style */
+@import "../assets/styles/mixins";
+
 .container {
   max-width: 980px;
   padding: 0 15px;
   margin: 0 auto;
+
+  @include mobile {
+    padding: 0 10px;
+  }
 }
 body {
   /* hack for better font rendering on macos

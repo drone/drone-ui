@@ -6,15 +6,12 @@
       Your Cron List is Empty.
     </div>
 
-    <Cron
-      v-for="cron in crons"
-      :key="cron.id"
-      :name="cron.name"
-      :expr="cron.expr"
-      :branch="cron.branch"
-      :next="cron.next"
-      :deleting="deleting[cron.id]"
-      @delete="handleDelete(cron)"
+    <EditableListItem v-for="cron in crons"
+                      :key="cron.id"
+                      :name="cron.name"
+                      :tags="[cron.expr, cron.branch]"
+                      :deleting="deleting[cron.id]"
+                      @delete="handleDelete(cron)"
     />
 
     <form @submit.prevent="handleSubmit" autocomplete="off" slot="footer">
@@ -35,7 +32,7 @@
 </template>
 
 <script>
-import Cron from "@/components/cards/Cron.vue";
+import EditableListItem from "@/components/editable-list/EditableListItem.vue";
 import Card from "@/components/Card.vue";
 import BaseInput from "@/components/forms/BaseInput.vue";
 import BaseSelect from "@/components/forms/BaseSelect.vue";
@@ -44,7 +41,7 @@ import Button from "@/components/buttons/Button.vue";
 export default {
   name: "cron",
   components: {
-    Cron,
+    EditableListItem,
     Card,
     BaseInput,
     BaseSelect,

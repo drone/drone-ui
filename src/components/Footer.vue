@@ -28,30 +28,26 @@ footer {
   min-height: 60px;
   background: #fff;
 
-  @include mobile {
+  @include tablet {
     padding: 20px 30px;
-    align-items: flex-start;
+    flex-direction: column;
   }
 }
 
 nav.nav-right {
-  @include mobile {
-    text-align: right;
+  @include tablet {
+    margin-top: 15px;
   }
 }
 
 nav a {
   color: rgba(25, 45, 70, 0.6);
 
-  @include mobile {
-    display: block;
-  }
-
   & + a {
     margin-left: 30px;
 
-    @include mobile {
-      margin: 10px 0 0;
+    @include tablet {
+      margin-left: 15px;
     }
   }
 }

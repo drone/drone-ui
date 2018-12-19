@@ -363,7 +363,7 @@ main {
   display: flex;
   align-items: flex-start;
 
-  @include mobile {
+  @include tablet {
     flex-direction: column;
   }
 }
@@ -373,7 +373,7 @@ main {
   position: sticky;
   top: 0;
 
-  @include mobile {
+  @include tablet {
     flex: 1 0 auto;
     width: 100%;
     margin-bottom: 20px;
@@ -398,7 +398,7 @@ main {
   padding: 0;
   width: 660px;
 
-  @include mobile {
+  @include tablet {
     margin: 0;
     width: 100%;
   }

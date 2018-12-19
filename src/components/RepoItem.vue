@@ -1,24 +1,43 @@
 <template>
-  <section class="repo-item">
+  <section class="repo-item"
+           :class="{ [`build-${build ? 'yes' : 'no'}`]: true, [`active-${active ? 'yes' : 'no'}`]: true }">
     <div class="container-left">
-      <Status :status="status"/>
-      <div class="connector"></div>
+      <template v-if="status" >
+        <Status :status="status"/>
+        <div class="connector"></div>
+      </template>
+
+      <IconRepository v-else class="icon-repository"/>
     </div>
 
     <div class="content">
       <div class="header" :title="title">
-        <span class="number" v-if="number">#{{ number }}<span>. </span></span>
-        <span class="title">{{ title }}</span>
+        <span class="title">
+          <span class="number" v-if="number">#{{ number }}. </span>
+          <span>{{ title }}</span>
+        </span>
+
+        <Button outline borderless
+                v-if="!active && $store.state.mediaType !== 'mobile'"
+                theme="primary"
+                type="button"
+                tabindex="-1">
+          Activate
+        </Button>
       </div>
 
-      <div class="build">
+      <div v-if="build" class="build">
         <img :src="avatar" alt="avatar"/>
         <div class="description">
           <span>{{build.author_login}}</span>
           <span> {{action}} </span>
+          <div class="divider media-only-mobile"/>
           <RepoItemLabel type="actionTarget" :build="build" :repo="linkRepo" :link="!!linkRepo"/>
           <RepoItemLabel class="to" type="to" :build="build" :repo="linkRepo" :link="!!linkRepo" prefix=" to "/>
-          <span class="commit-message" v-if="build.message" :title="build.message"> — {{ build.message }}</span>
+          <span class="commit-message" v-if="build.message" :title="build.message">
+            <span class="divider media-only-mobile"/>
+            <span class="media-hide-mobile"> — </span>{{ build.message }}
+          </span>
         </div>
 
         <div class="time">
@@ -35,10 +54,13 @@
 import Status from "./Status.vue";
 import TimeElapsed from "./TimeElapsed.vue";
 import RepoItemLabel from "./RepoItemLabel.vue";
+import IconRepository from "@/components/icons/IconRepository.vue";
+import Button from "@/components/buttons/Button.vue";
 
 export default {
   name: "RepoItem",
   props: {
+    active: { type: Boolean, default: true },
     number: Number,
     status: String,
     title: String,
@@ -49,7 +71,9 @@ export default {
   components: {
     Status,
     RepoItemLabel,
-    TimeElapsed
+    TimeElapsed,
+    IconRepository,
+    Button
   },
   computed: {
     action() {
@@ -66,7 +90,7 @@ export default {
 <style scoped lang="scss">
 @import "../assets/styles/mixins";
 
-section {
+.repo-item {
   border-radius: 3px;
   box-sizing: border-box;
   box-shadow: 0 2px 4px 0 rgba(25, 45, 70, 0.05);
@@ -75,6 +99,14 @@ section {
   color: #192d46;
   padding: 15px;
   transition: box-shadow linear 0.2s;
+
+  @include mobile {
+    padding: 10px;
+  }
+
+  &.repo-item.build-no.active-no .header .title {
+    opacity: 0.6;
+  }
 }
 
 .header {
@@ -82,10 +114,25 @@ section {
   font-size: 18px;
   line-height: normal;
   color: #192d46;
+  display: flex;
+  align-items: center;
+
+  @include mobile {
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .button {
+    letter-spacing: 1px;
+    flex-shrink: 0;
+  }
+}
+
+.title {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  margin-bottom: 6px;
+  flex-grow: 1;
 }
 
 .container-left {
@@ -109,6 +156,14 @@ section {
   margin-right: 5px;
 }
 
+.icon-repository {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  color: #c6cbd1;
+  flex-shrink: 0;
+}
+
 .content {
   padding-left: 30px;
   display: flex;
@@ -122,6 +177,10 @@ section {
   align-items: center;
   justify-content: space-between;
   color: rgba(25, 45, 70, 0.6);
+
+  .header + & {
+    margin-top: 6px;
+  }
 
   @include mobile {
     display: block;
@@ -151,11 +210,16 @@ section {
 
   @include mobile {
     white-space: normal;
+    margin-right: 0;
   }
 }
 
 .description .commit-message {
   font-style: italic;
+}
+
+.description .divider {
+  height: 5px;
 }
 
 .time {
@@ -164,7 +228,7 @@ section {
   align-items: center;
 
   @include mobile {
-    margin: 10px 0 0 30px;
+    margin: 5px 0 0 30px;
   }
 }
 

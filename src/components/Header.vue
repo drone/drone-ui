@@ -70,13 +70,19 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../assets/styles/mixins";
+
 .header {
   align-items: center;
   box-sizing: border-box;
   display: flex;
   padding: 0 30px;
   justify-content: space-between;
+
+  @include mobile {
+    padding: 0 20px;
+  }
 }
 
 .builds-feed + .user-menu {

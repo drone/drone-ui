@@ -107,7 +107,9 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../assets/styles/mixins";
+
 .syncing {
   opacity: 0.6;
 }
@@ -135,7 +137,11 @@ export default {
 }
 
 .more-button {
-  margin: 15px auto 0 12px;
+  margin: 15px 0 0 12px;
+
+  @include mobile {
+    margin-left: 7px;
+  }
 }
 </style>
 

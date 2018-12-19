@@ -2,12 +2,12 @@
   <div class="repo">
     <PageHeader>
       <Breadcrumb>
-        <router-link :to="'/'" class="link breadcrumb">Repositories</router-link>
+        <router-link :to="'/'" class="link">Repositories</router-link>
 
-        <router-link v-if="$route.params.build" :to="'/'+slug" class="link breadcrumb repo-name-breadcrumb" :title="slug">{{ slug }}</router-link>
+        <router-link v-if="$route.params.build" :to="'/'+slug" class="link repo-name-breadcrumb" :title="slug">{{ slug }}</router-link>
         <span :title="slug" v-else>{{ slug }}</span>
 
-        <span v-if="$route.params.build" class="breadcrumb">#{{ $route.params.build }}</span>
+        <span v-if="$route.params.build">#{{ $route.params.build }}</span>
       </Breadcrumb>
     </PageHeader>
 
@@ -178,27 +178,25 @@ export default {
   padding: 2px 0;
   line-height: 16px;
   display: inline-block;
+
+  &.link:focus:after,
+  &.link:hover:after {
+    bottom: 0;
+  }
 }
 
 .repo-name-breadcrumb {
   max-width: 500px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  vertical-align: bottom;
 }
 
-.repo-name-breadcrumb.link:focus:after,
-.repo-name-breadcrumb.link:hover:after {
-  bottom: 0;
-}
-
-.secondary-page-header {
+.page-header.secondary-page-header {
   height: auto;
   margin-bottom: 30px;
 
-  @include mobile {
+  @include tablet {
     flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
   }
 }
 
@@ -207,8 +205,15 @@ h1 {
   font-size: 28px;
   margin-bottom: 10px;
 
-  @include mobile {
+  @include tablet {
     flex-direction: column;
+    margin-bottom: 0;
+  }
+
+  + .header-actions {
+    @include tablet {
+      margin-top: 15px;
+    }
   }
 }
 
@@ -227,6 +232,12 @@ nav {
   margin-bottom: 20px;
   padding-left: 15px;
   display: flex;
+
+  @include mobile {
+    padding-left: 10px;
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
 }
 
 nav a {
@@ -242,6 +253,12 @@ nav a {
   align-items: center;
   margin-right: 30px;
   border-bottom: 1px solid transparent;
+
+  @include mobile {
+    letter-spacing: normal;
+    margin-right: 20px;
+    padding-bottom: 5px;
+  }
 }
 
 nav a.manually-active {

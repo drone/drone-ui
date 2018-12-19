@@ -12,8 +12,7 @@
         v-for="build in builds"
         :key="build.id"
         :to="'/'+slug + '/' + build.number">
-        <RepoItem metaAlign="left"
-                  :number="build.number"
+        <RepoItem :number="build.number"
                   :title="build.message"
                   :status="build.status"
                   :build="shrinkBuild(build)"
@@ -85,7 +84,9 @@ export default {
 }
 </style>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../assets/styles/mixins";
+
 .build {
   display: block;
 }
@@ -110,6 +111,10 @@ export default {
 }
 
 .more-button {
-  margin-top: 20px;
+  margin: 15px 0 0 12px;
+
+  @include mobile {
+    margin-left: 7px;
+  }
 }
 </style>

@@ -24,9 +24,6 @@ import ClickOutside from "vue-click-outside";
 
 import BaseForm from "@/components/forms/BaseForm";
 import BaseInput from "@/components/forms/BaseInput";
-import RepoLink from "@/components/RepoLink";
-import ShortRepoItem from "@/components/ShortRepoItem";
-import RepoItem from "@/components/RepoItem";
 import Overlay from "@/components/Overlay";
 import ReposPopup from "@/components/ReposPopup";
 
@@ -38,12 +35,8 @@ const ITEMS_LIMIT = 6;
 export default {
   name: "Search",
   components: {
-    Overlay,
     BaseForm,
     BaseInput,
-    RepoLink,
-    ShortRepoItem,
-    RepoItem,
     ReposPopup
   },
   directives: {

@@ -55,7 +55,7 @@
     -->
 
     <Secrets />
-    <Cron />
+    <CronJobs />
     <Badges />
 
     <div v-if="repo.active && isAdmin" class="disable">
@@ -66,8 +66,8 @@
 </template>
 
 <script>
-import Secrets from "./Secrets.vue";
-import Cron from "./Cron.vue";
+import Secrets from "../components/editable-list/Secrets.vue";
+import CronJobs from "../components/editable-list/CronJobs.vue";
 import BaseCheckbox from "@/components/forms/BaseCheckbox.vue";
 import BaseRadioButtons from "@/components/forms/BaseRadioButtons.vue";
 import BaseInput from "@/components/forms/BaseInput.vue";
@@ -93,7 +93,7 @@ export default {
     BaseInput,
     BaseSelect,
     Secrets,
-    Cron,
+    CronJobs,
     Card,
     CardGroup,
     Badges,
@@ -164,8 +164,9 @@ const timeouts = [
 ]
 </script>
 
-<style scoped>
-/* Settings specific */
+<style scoped lang="scss">
+@import "../assets/styles/mixins";
+
 .control-group .controls .base-checkbox + .base-checkbox {
   margin-left: 48px;
 }
@@ -177,5 +178,10 @@ const timeouts = [
 .disable span {
   margin: 15px 0 0 15px;
   color: rgba(25, 45, 70, 0.6);
+
+  @include mobile {
+    display: block;
+    margin: 10px 0 0 0;
+  }
 }
 </style>

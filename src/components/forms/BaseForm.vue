@@ -18,18 +18,18 @@ export default {
   padding: 20px 0;
   align-items: center;
 
-  @include mobile {
+  @include tablet {
     flex-direction: column;
     align-items: flex-start;
   }
 
   .controls {
-    @include mobile {
+    @include tablet {
       width: 100%;
     }
 
     .base-input {
-      @include mobile {
+      @include tablet {
         width: 100%;
       }
     }
@@ -45,7 +45,7 @@ export default {
   margin-right: 15px;
   color: rgba(25, 45, 70, 0.6);
 
-  @include mobile {
+  @include tablet {
     flex-basis: auto;
     margin-bottom: 15px;
   }

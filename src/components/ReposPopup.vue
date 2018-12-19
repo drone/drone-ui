@@ -13,16 +13,11 @@
               @mouseenter.native="onItemHover(index)"
               @click.native="triggerItemSelect">
 
-      <ShortRepoItem v-if="!repo.build"
-                     :namespace="repo.namespace"
-                     :name="repo.name"
-                     :active="repo.active"/>
-
-      <RepoItem v-if="repo.build"
+      <RepoItem :active="repo.active"
                 :title="`${repo.namespace}/${repo.name}`"
                 :build="repo.build"
-                :status="repo.build.status"
-                :avatar="repo.build.author_avatar"/>
+                :status="repo.build && repo.build.status"
+                :avatar="repo.build && repo.build.author_avatar"/>
     </RepoLink>
   </Popup>
 </template>
@@ -30,7 +25,6 @@
 <script>
 import Popup from "@/components/Popup.vue";
 import RepoLink from "@/components/RepoLink";
-import ShortRepoItem from "@/components/ShortRepoItem";
 import RepoItem from "@/components/RepoItem";
 
 export default {
@@ -38,7 +32,6 @@ export default {
   components: {
     Popup,
     RepoLink,
-    ShortRepoItem,
     RepoItem
   },
   props: {

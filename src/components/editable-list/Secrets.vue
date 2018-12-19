@@ -6,13 +6,13 @@
       Your Secret List is Empty.
     </div>
 
-    <Secret v-for="secret in secrets"
-            :key="secret.id"
-            :name="secret.name"
-            :pullRequest="secret.pull_request"
-            :deleting="deleting[secret.id]"
-            @delete="handleDelete(secret)"
-            class="secret"/>
+    <EditableListItem v-for="secret in secrets"
+                      class="secret"
+                      :key="secret.id"
+                      :name="secret.name"
+                      :tags="secret.pull_request ? ['Pull Requests Enabled'] : undefined"
+                      :deleting="deleting[secret.id]"
+                      @delete="handleDelete(secret)"/>
 
     <form @submit.prevent="handleSubmit" autocomplete="off" slot="footer">
       <BaseInput name="secret.name" v-model="secret.name" placeholder="Secret Name" type="text"/>
@@ -32,17 +32,17 @@ import Card from "@/components/Card.vue";
 import BaseCheckbox from "@/components/forms/BaseCheckbox.vue";
 import BaseInput from "@/components/forms/BaseInput.vue";
 import BaseTextArea from "@/components/forms/BaseTextArea.vue";
-import Secret from "@/components/cards/Secret.vue";
 import Button from "@/components/buttons/Button.vue";
+import EditableListItem from "@/components/editable-list/EditableListItem";
 
 export default {
   name: "secrets",
   components: {
+    EditableListItem,
     BaseCheckbox,
     BaseInput,
     BaseTextArea,
     Button,
-    Secret,
     Card
   },
   data() {

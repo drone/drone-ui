@@ -84,7 +84,7 @@ const langs = [
   display: flex;
   margin-bottom: 20px;
 
-  @include mobile {
+  @include tablet {
     flex-direction: column;
   }
 }
@@ -93,7 +93,7 @@ const langs = [
   flex-basis: 220px;
   margin-right: 20px;
 
-  @include mobile {
+  @include tablet {
     width: 100%;
     flex-basis: auto;
     margin-bottom: 15px;
@@ -103,7 +103,7 @@ const langs = [
 .options input {
   flex-grow: 1;
 
-  @include mobile {
+  @include tablet {
     width: 100%;
   }
 }

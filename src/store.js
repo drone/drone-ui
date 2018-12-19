@@ -49,7 +49,7 @@ function insertBuildToCollection(state, slug, build) {
 
 export default new Vuex.Store({
   state: {
-    mediaType: window.innerWidth >= 980 ? "desktop" : "mobile",
+    mediaType: window.innerWidth >= 980 ? "desktop" : window.innerWidth > 480 ? "tablet" : "mobile",
 
     route: {
       params: {}

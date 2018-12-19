@@ -1,22 +1,42 @@
 <script>
 import IconArrow from "@/components/icons/IconArrow";
 
+const BREADCRUMB_CLASS = "breadcrumb";
+
 export default {
   name: "Breadcrumb",
   components: {
     IconArrow
   },
+  methods: {
+    insertClassToSlotItem(slotItem) {
+      slotItem.data = slotItem.data || {};
+
+      if (slotItem.data.staticClass) {
+        slotItem.data.staticClass += " " + BREADCRUMB_CLASS;
+      } else {
+        slotItem.data.staticClass = BREADCRUMB_CLASS;
+      }
+    }
+  },
   render(createElement) {
     const items = [];
-    const slotItems = this.$slots.default;
+    const slotItems = this.$slots.default.filter(item => item.tag);
+
+    console.log(slotItems)
 
     for (let i = 0; i < slotItems.length; ++i) {
-      if (i !== 0 && slotItems[i].tag) {
-        const divider = createElement(IconArrow, { class: "divider", props: { direction: "right" } });
-        items.push(divider);
-      }
+      this.insertClassToSlotItem(slotItems[i]);
 
-      items.push(slotItems[i]);
+      const breadcrumbContainer = createElement("div", { class: "breadcrumb-container" }, [
+        slotItems[i],
+
+        i + 1 < slotItems.length
+          ? createElement(IconArrow, { class: "divider", props: { direction: "right" } })
+          : undefined
+      ]);
+
+      items.push(breadcrumbContainer);
     }
 
     return createElement("div", { class: "breadcrumbs" }, items);
@@ -27,9 +47,24 @@ export default {
 <style scoped>
 .breadcrumbs {
   padding: 5px 0;
+  max-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.breadcrumbs .divider {
+.breadcrumb-container {
+  white-space: nowrap;
+  vertical-align: top;
+  max-width: 100%;
+  display: flex;
+}
+
+.breadcrumb {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.divider {
   padding: 0 8px;
   color: rgba(25, 45, 70, 0.6);
   vertical-align: bottom;
