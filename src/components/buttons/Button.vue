@@ -119,7 +119,6 @@ export default {
 
 .button.bordered {
   border: 1px solid rgba(25, 45, 70, 0.25);
-  color: #192d46;
 }
 
 .button.bordered.size-m {
@@ -148,6 +147,10 @@ export default {
 
 .button.outline {
   background-color: transparent;
+}
+
+.button.theme-default.outline {
+  color: #192d46;
 }
 
 .button.theme-light.outline {

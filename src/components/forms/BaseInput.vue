@@ -18,9 +18,9 @@ input {
   border-radius: 3px;
   box-sizing: border-box;
   font-size: 14px;
-  padding: 0 15px;
+  padding: 10px 15px;
   height: 40px;
-  line-height: 40px;
+  line-height: 20px;
   background: #fff;
 }
 

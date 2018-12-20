@@ -6,7 +6,8 @@
 
     <div v-if="!loading" class="list-item" v-for="repo in items" :key="repo.id">
       <RepoLink :repo="repo">
-        <RepoItem :active="repo.active"
+        <RepoItem v-bind='repoItemProps'
+                  :active="repo.active"
                   :title="`${repo.namespace}/${repo.name}`"
                   :build="repo.build"
                   :status="repo.build && repo.build.status"
@@ -27,7 +28,8 @@ export default {
   props: {
     items: Array,
     loading: Boolean,
-    emptyMessage: String
+    emptyMessage: String,
+    repoItemProps: { type: Object, default: () => ({}) }
   },
   components: {
     Alert,

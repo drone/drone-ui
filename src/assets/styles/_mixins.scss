@@ -1,13 +1,25 @@
 @import "./_variables";
 
-@mixin tablet {
+@mixin tablet($withClass: false) {
   @media (max-width: $bp-tablet - 1px) {
     @content
   }
+
+  @if($withClass) {
+    &.media-tablet {
+      @content
+    }
+  }
 }
 
-@mixin mobile {
+@mixin mobile($withClass: false) {
   @media (max-width: $bp-mobile) {
     @content
+  }
+
+  @if($withClass) {
+    &.media-mobile {
+      @content
+    }
   }
 }

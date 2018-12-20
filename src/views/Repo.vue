@@ -141,18 +141,6 @@ export default {
         namespace: namespace,
         name: name,
       });
-    },
-    handleCancel: function() {
-      const { namespace, name, build } = this.$route.params;
-      this.$store.dispatch("cancelBuild", { namespace, name, build });
-    },
-    handleRestart: function() {
-      const { namespace, name, build } = this.$route.params;
-
-      let router = this.$router;
-      this.$store.dispatch("createBuild", { namespace, name, build }).then(data => {
-        router.push(`/${namespace}/${name}/${data.build.number}`);
-      });
     }
   }
 };

@@ -1,22 +1,26 @@
 <template>
   <div class="page-builds-feed">
-    <RepoList :items="$store.state.buildsFeed.data" emptyMessage="No recent builds."/>
+    <PageHeader>
+      <span>Builds feed</span>
+      <slot name="header"></slot>
+    </PageHeader>
+
+    <RepoList
+      :items="$store.state.buildsFeed.data"
+      emptyMessage="No recent builds."
+      :repoItemProps="{ class: 'media-mobile '}"/>
   </div>
 </template>
 
 <script>
 import RepoList from "@/components/RepoList.vue";
+import PageHeader from "@/components/PageHeader.vue";
 
 export default {
   name: "BuildsFeed",
   components: {
-    RepoList
+    RepoList,
+    PageHeader
   }
 };
 </script>
-
-<style scoped>
-.page-builds-feed {
-  margin-top: 15px;
-}
-</style>

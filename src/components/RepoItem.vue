@@ -31,12 +31,12 @@
         <div class="description">
           <span>{{build.author_login}}</span>
           <span> {{action}} </span>
-          <div class="divider media-only-mobile"/>
+          <div class="divider"/>
           <RepoItemLabel type="actionTarget" :build="build" :repo="linkRepo" :link="!!linkRepo"/>
           <RepoItemLabel class="to" type="to" :build="build" :repo="linkRepo" :link="!!linkRepo" prefix=" to "/>
           <span class="commit-message" v-if="build.message" :title="build.message">
-            <span class="divider media-only-mobile"/>
-            <span class="media-hide-mobile"> — </span>{{ build.message }}
+            <span class="divider"/>
+            <span class="build-message-dash"> — </span>{{ build.message }}
           </span>
         </div>
 
@@ -100,8 +100,38 @@ export default {
   padding: 15px;
   transition: box-shadow linear 0.2s;
 
-  @include mobile {
+  @include mobile(true) {
     padding: 10px;
+
+    .header {
+      font-size: 16px;
+      line-height: 20px;
+    }
+
+    .build {
+      display: block;
+
+      & > img {
+        float: left;
+      }
+    }
+
+    .description {
+      white-space: normal;
+      margin-right: 0;
+
+      .divider {
+        display: block;
+      }
+    }
+
+    .build-message-dash {
+      display: none;
+    }
+
+    .time {
+      margin: 5px 0 0 30px;
+    }
   }
 
   &.repo-item.build-no.active-no .header .title {
@@ -116,11 +146,6 @@ export default {
   color: #192d46;
   display: flex;
   align-items: center;
-
-  @include mobile {
-    font-size: 16px;
-    line-height: 20px;
-  }
 
   .button {
     letter-spacing: 1px;
@@ -181,10 +206,6 @@ export default {
   .header + & {
     margin-top: 6px;
   }
-
-  @include mobile {
-    display: block;
-  }
 }
 
 .build > img {
@@ -193,10 +214,6 @@ export default {
   margin-right: 10px;
   width: 20px;
   height: 20px;
-
-  @include mobile {
-    float: left;
-  }
 }
 
 .description {
@@ -207,16 +224,12 @@ export default {
   line-height: normal;
   color: rgba(25, 45, 70, 0.6);
   margin-right: 15px;
-
-  @include mobile {
-    white-space: normal;
-    margin-right: 0;
-  }
 }
 
 .description {
   .divider {
     height: 5px;
+    display: none;
   }
 
   .commit-message {
@@ -232,10 +245,6 @@ export default {
   flex-shrink: 0;
   display: flex;
   align-items: center;
-
-  @include mobile {
-    margin: 5px 0 0 30px;
-  }
 }
 
 .time .dot {
@@ -257,10 +266,14 @@ export default {
   vertical-align: bottom;
   overflow: hidden;
   text-overflow: ellipsis;
+}
 
-  @include mobile {
-    max-width: none;
-    display: inline;
+.repo-item {
+  @include mobile(true) {
+    .description .to .repo-item-label {
+      max-width: none;
+      display: inline;
+    }
   }
 }
 </style>

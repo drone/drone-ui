@@ -8,16 +8,14 @@
 
     <Search v-if="user && mediaType === 'desktop'" placeholder="Search repositories or jump to …"/>
 
-    <div class="right-block" v-if="user">
-      <BuildsFeed v-if="mediaType === 'desktop'"/>
-
-      <router-link to='/search' v-if="mediaType === 'mobile'" class="mobile-link">
+    <div class="status-bar" v-if="user">
+      <router-link v-if="mediaType !== 'desktop'"
+                   to='/search'
+                   class="search-button">
         <IconMagnifier/>
       </router-link>
 
-      <router-link to='/builds-feed' v-if="mediaType === 'mobile'" class="mobile-link">
-        <BuildsFeedIndicator :collection="$store.state.buildsFeed"/>
-      </router-link>
+      <portal-target name="status-bar" slim/>
 
       <UserMenu :user="user"/>
     </div>
@@ -33,7 +31,6 @@
 <script>
 import Logo from "@/components/logos/Logo.vue";
 import Search from "@/components/Search";
-import BuildsFeed from "@/components/BuildsFeed";
 import UserMenu from "@/components/UserMenu";
 import IconMagnifier from "@/components/icons/IconMagnifier";
 import BuildsFeedIndicator from "@/components/BuildsFeedIndicator";
@@ -42,7 +39,6 @@ export default {
   name: "Header",
   components: {
     BuildsFeedIndicator,
-    BuildsFeed,
     Search,
     Logo,
     UserMenu,
@@ -91,7 +87,6 @@ export default {
 
 .builds-feed-indicator {
   display: inline-block;
-  margin-right: 10px;
 }
 
 .logo {
@@ -101,15 +96,40 @@ export default {
   flex-shrink: 0;
 }
 
-.right-block {
+.status-bar {
   flex-shrink: 0;
+
+  > * + * {
+    margin-left: 30px;
+
+    @include mobile {
+      margin-left: 10px;
+    }
+  }
 }
 
-.mobile-link {
+.search-button {
+  box-sizing: border-box;
+  position: relative;
   display: inline-block;
   width: 30px;
   height: 30px;
-  margin-right: 20px;
+  border: 1px solid rgba(25, 45, 70, 0.25);
+  border-radius: 50%;
+  color: rgba(25, 45, 70, 0.25);
+
+  &.router-link-active {
+    background-color: #19d78c;
+    border-color: #19d78c;
+    color: #fff
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+    padding: 6px 8px 8px 6px;
+    position: absolute;
+  }
 }
 
 .login {

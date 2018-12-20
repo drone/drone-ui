@@ -30,6 +30,7 @@ export default {
 .builds-feed-indicator {
   cursor: pointer;
   position: relative;
+  display: inline-block;
 }
 
 .builds-feed-indicator.status-done .label {

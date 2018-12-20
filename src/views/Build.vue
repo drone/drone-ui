@@ -281,6 +281,17 @@ export default {
     }
   },
   methods: {
+    handleCancel: function() {
+      const { namespace, name, build } = this.$route.params;
+      this.$store.dispatch("cancelBuild", { namespace, name, build });
+    },
+    handleRestart: function() {
+      const { namespace, name, build } = this.$route.params;
+
+      this.$store.dispatch("createBuild", { namespace, name, build }).then(data => {
+        this.$router.push(`/${namespace}/${name}/${data.build.number}`);
+      });
+    },
     handleMore: function() {
       this.logLimit += this.logStep;
     },

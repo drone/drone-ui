@@ -38,7 +38,7 @@ export default {
   },
   computed: {
     style() {
-      return { zIndex: this.opened ? 1 : -1 };
+      return { top: this.opened ? undefined : "-999px" };
     }
   },
   methods: {

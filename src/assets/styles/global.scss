@@ -33,16 +33,3 @@ a {
     transform: rotate(359deg);
   }
 }
-
-.media-only-mobile {
-  display: none;
-  @include mobile {
-    display: block;
-  }
-}
-
-.media-hide-mobile {
-  @include mobile {
-    display: none;
-  }
-}

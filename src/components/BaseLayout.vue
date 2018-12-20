@@ -13,18 +13,21 @@
     <Footer />
 
     <Notifications/>
+    <BuildsFeedPanel/>
   </div>
 </template>
 
 <script>
 import Footer from "./Footer.vue";
 import Notifications from "@/components/Notifications.vue";
+import BuildsFeedPanel from "@/components/BuildsFeedPanel";
 
 export default {
   name: "BaseLayout",
   components: {
     Footer,
-    Notifications
+    Notifications,
+    BuildsFeedPanel
   }
 };
 </script>
@@ -55,6 +58,7 @@ header {
   flex-direction: column;
   justify-content: center;
   flex-shrink: 0;
+  z-index: 1; // upper than Panel
 }
 
 main {
@@ -65,6 +69,10 @@ main {
 
 footer {
   flex-shrink: 0;
+}
+
+.panel {
+  padding: 0 20px;
 }
 </style>
 

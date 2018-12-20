@@ -37,6 +37,9 @@ export default {
       return this.query.trim();
     }
   },
+  mounted() {
+    this.$refs.input.$el.focus();
+  },
   methods: {
     onInput() {
       this.loadIfNeeded();
