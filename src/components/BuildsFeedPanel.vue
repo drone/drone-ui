@@ -12,7 +12,7 @@
   </Panel>
 
   <portal v-else to="status-bar">
-    <router-link to='/builds-feed'>
+    <router-link to='/builds-feed' class="builds-feed-link">
       <BuildsFeedIndicator :collection="$store.state.buildsFeed" :filled="$route.name === 'builds-feed'"/>
     </router-link>
   </portal>
@@ -46,3 +46,12 @@ export default {
   }
 };
 </script>
+
+<style>
+.builds-feed-link {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  box-sizing: border-box;
+}
+</style>

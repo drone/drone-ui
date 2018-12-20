@@ -3,13 +3,13 @@
   <header v-if="$slots.header">
     <slot name="header"></slot>
 
-    <div class="copy" @click="handleCopy" style="position: relative">
+    <div v-if="copyAvailable" class="copy" @click="handleCopy" style="position: relative">
       <transition name="fade"><Hint align="right" v-show="copied">Copied</Hint></transition>
       <IconCopy/>
     </div>
   </header>
   <div ref="snippet" :class="{'with-copy': !$slots.header}">
-    <div class="copy" @click="handleCopy" v-if="!$slots.header">
+    <div v-if="!$slots.header && copyAvailable" class="copy" @click="handleCopy">
       <transition name="fade"><Hint align="right" v-show="copied">Copied</Hint></transition>
       <IconCopy/>
     </div>
@@ -40,9 +40,15 @@ export default {
       copiedTimeoutId: false
     };
   },
+  computed: {
+    copyAvailable() {
+      return !!(navigator && navigator.clipboard);
+    }
+  },
   methods: {
     handleCopy: function() {
-      if (!navigator || !navigator.clipboard) return;
+      if (!this.copyAvailable) return;
+
       const text = this.$refs.snippet.innerText;
       navigator.clipboard.writeText(text);
 
@@ -57,7 +63,6 @@ export default {
     }
   }
 };
-
 </script>
 
 <style scoped>
@@ -68,7 +73,7 @@ div {
 
 header {
   align-items: center;
-  display: flex;  
+  display: flex;
   height: 50px;
   padding: 0px 15px;
   border-bottom: 1px solid #eff0f2;
