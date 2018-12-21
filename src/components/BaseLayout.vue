@@ -8,12 +8,12 @@
       <div class="container">
         <slot></slot>
       </div>
+      <BuildsFeedPanel v-if="$store.state.mediaType === 'desktop'" />
     </main>
 
     <Footer />
 
     <Notifications/>
-    <BuildsFeedPanel/>
   </div>
 </template>
 
@@ -37,6 +37,8 @@ export default {
 
 .container {
   padding-bottom: 80px;
+  flex-grow: 1;
+  overflow: hidden;
 
   @include mobile {
     padding-bottom: 40px;
@@ -58,21 +60,18 @@ header {
   flex-direction: column;
   justify-content: center;
   flex-shrink: 0;
-  z-index: 1; // upper than Panel
+  z-index: 20; // upper than Panel and SearchOverlay
 }
 
 main {
   box-sizing: border-box;
   position: relative;
   flex-grow: 1;
+  display: flex;
 }
 
 footer {
   flex-shrink: 0;
-}
-
-.panel {
-  padding: 0 20px;
 }
 </style>
 

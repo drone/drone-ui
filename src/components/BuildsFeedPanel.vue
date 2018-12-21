@@ -1,5 +1,5 @@
 <template>
-  <Panel v-if="$store.state.mediaType === 'desktop'" side="right" :opened="opened">
+  <Panel :opened="opened" side="right" class="builds-feed-panel">
     <portal to="status-bar">
       <BuildsFeedIndicator :collection="$store.state.buildsFeed" @click.native="toggle" :filled="opened"/>
     </portal>
@@ -10,12 +10,6 @@
       </Button>
     </BuildsFeed>
   </Panel>
-
-  <portal v-else to="status-bar">
-    <router-link to='/builds-feed' class="builds-feed-link">
-      <BuildsFeedIndicator :collection="$store.state.buildsFeed" :filled="$route.name === 'builds-feed'"/>
-    </router-link>
-  </portal>
 </template>
 
 <script>
@@ -47,11 +41,41 @@ export default {
 };
 </script>
 
-<style>
-.builds-feed-link {
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-  box-sizing: border-box;
+<style lang="scss">
+.builds-feed-panel {
+  .page-header {
+    padding-right: 5px;
+  }
+
+  .alert {
+    margin: 0 15px;
+    box-shadow: none;
+    color: rgba(25, 45, 70, 0.6);
+  }
+
+  .repo-item {
+    border: none;
+    border-top: 1px solid rgba(25, 45, 70, 0.05);
+    border-bottom: 1px solid rgba(25, 45, 70, 0.05);
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  .repo-link.hover-type-box-shadow:focus .repo-item,
+  .repo-link.hover-type-box-shadow:hover .repo-item {
+    box-shadow: none;
+
+    .header {
+      color: #0564d7;
+    }
+  }
+
+  .list-item + .list-item {
+    margin-top: 0;
+
+    .repo-item {
+      border-top: 0;
+    }
+  }
 }
 </style>

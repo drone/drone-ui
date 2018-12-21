@@ -5,10 +5,7 @@
       <slot name="header"></slot>
     </PageHeader>
 
-    <RepoList
-      :items="$store.state.buildsFeed.data"
-      emptyMessage="No recent builds."
-      :repoItemProps="{ class: 'media-mobile '}"/>
+    <RepoList :items="$store.state.buildsFeed.data" emptyMessage="No recent builds." :repoToProps="repoToProps"/>
   </div>
 </template>
 
@@ -21,6 +18,17 @@ export default {
   components: {
     RepoList,
     PageHeader
+  },
+  methods: {
+    repoToProps(repo) {
+      return {
+        ...RepoList.defaultRepoToProps(repo),
+        build: { ...repo.build, message: null },
+        number: repo.build.number,
+        title: repo.build.message,
+        class: "media-mobile"
+      };
+    }
   }
 };
 </script>

@@ -398,6 +398,7 @@ export default {
 
 .header-actions {
   margin: -5px;
+  align-self: flex-start;
 
   @include mobile {
     margin-top: 10px;
@@ -406,6 +407,12 @@ export default {
   .button {
     margin: 5px;
   }
+}
+
+.button-cancel svg {
+  width: 15px;
+  height: 15px;
+  margin-bottom: -2px;
 }
 
 .button-source > svg {
@@ -456,7 +463,7 @@ main {
   box-sizing: border-box;
   margin-left: 20px;
   padding: 0;
-  width: 660px;
+  flex-grow: 1;
 
   @include tablet {
     margin: 0;

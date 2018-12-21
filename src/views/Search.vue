@@ -56,7 +56,6 @@ export default {
 <style scoped>
 .form {
   margin: 15px 0;
-  display: flex;
 }
 
 .form input {

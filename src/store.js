@@ -55,6 +55,8 @@ export default new Vuex.Store({
       params: {}
     },
 
+    from: null,
+
     instance: {
       url: config.instance || `${window.location.protocol}//${window.location.host}`
     },
@@ -475,6 +477,10 @@ export default new Vuex.Store({
     },
     NOTIFICATION_REMOVE(state, notificationId) {
       Vue.delete(state.notifications, notificationId);
+    },
+
+    SAVE_FROM_ROUTE(state, from) {
+      state.from = from;
     }
   },
   actions

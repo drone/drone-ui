@@ -1,3 +1,5 @@
+const ROUTES_WITH_TOGGLE_BEHAVIOUR = ["search", "builds-feed"];
+
 /**
  * Returns a router gate that dispatches http requests
  * to fetch data based on the requested route.
@@ -10,33 +12,38 @@ export const fetcher = ({dispatch, commit}) => (to, from, next) => {
     // TODO we should be able attach actions to the route
     // metadata so that we can dynamically dispatch.
 
-    switch (name) {
+  switch (name) {
     case "build":
     case "builds":
     case "repo":
     case "badges":
     case "settings":
     case "step":
-      dispatch('fetchRepo', params);   
-      break
-    }
-  
-    switch (name) {
+      dispatch("fetchRepo", params);
+      break;
+  }
+
+  switch (name) {
     case "step":
     case "build":
-      commit('LOG_CLEAR');
-      dispatch('fetchBuild', params);
+      commit("LOG_CLEAR");
+      dispatch("fetchBuild", params);
       break;
     case "builds":
       dispatch("fetchBuilds", { ...params, page: 1 });
       break;
     case "home":
-      dispatch('fetchReposLatest', params);
+      dispatch("fetchReposLatest", params);
       break;
     case "settings":
-      dispatch('fetchSecrets', params);
-      dispatch('fetchCrons', params);
-    }
-  
-    next();
-}
+      dispatch("fetchSecrets", params);
+      dispatch("fetchCrons", params);
+      break;
+  }
+
+  if (ROUTES_WITH_TOGGLE_BEHAVIOUR.includes(name) && !ROUTES_WITH_TOGGLE_BEHAVIOUR.includes(from.name)) {
+    commit("SAVE_FROM_ROUTE", from);
+  }
+
+  next();
+};

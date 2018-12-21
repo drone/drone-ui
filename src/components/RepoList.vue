@@ -6,12 +6,7 @@
 
     <div v-if="!loading" class="list-item" v-for="repo in items" :key="repo.id">
       <RepoLink :repo="repo">
-        <RepoItem v-bind='repoItemProps'
-                  :active="repo.active"
-                  :title="`${repo.namespace}/${repo.name}`"
-                  :build="repo.build"
-                  :status="repo.build && repo.build.status"
-                  :avatar="repo.build && repo.build.author_avatar"/>
+        <RepoItem v-bind='repoToProps(repo)'/>
       </RepoLink>
     </div>
   </div>
@@ -23,13 +18,24 @@ import RepoLink from "@/components/RepoLink.vue";
 import RepoItem from "@/components/RepoItem.vue";
 import Loading from "@/components/Loading.vue";
 
+function defaultRepoToProps(repo) {
+  return {
+    active: repo.active,
+    title: `${repo.namespace}/${repo.name}`,
+    build: repo.build,
+    status: repo.build && repo.build.status,
+    avatar: repo.build && repo.build.author_avatar
+  };
+}
+
 export default {
   name: "RepoList",
+  defaultRepoToProps,
   props: {
     items: Array,
     loading: Boolean,
     emptyMessage: String,
-    repoItemProps: { type: Object, default: () => ({}) }
+    repoToProps: { type: Function, default: defaultRepoToProps }
   },
   components: {
     Alert,

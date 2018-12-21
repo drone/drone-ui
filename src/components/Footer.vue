@@ -22,6 +22,7 @@ footer {
   justify-content: space-between;
   padding: 0 30px;
   align-items: center;
+  z-index: 1;
 
   box-shadow: 0 -2px 6px 0px rgba(25, 45, 70, 0.05);
   box-sizing: border-box;

@@ -19,7 +19,7 @@
 
     <PageHeader class="secondary-page-header">
       <h1 v-if="repo">{{ repo.name }}</h1>
-      <portal-target name="secondary-page-header-actions"/>
+      <portal-target name="secondary-page-header-actions" slim/>
     </PageHeader>
 
     <!--
@@ -184,12 +184,6 @@ h1 {
     flex-direction: column;
     margin-bottom: 0;
   }
-}
-
-.button-cancel svg {
-  width: 15px;
-  height: 15px;
-  margin-bottom: -2px;
 }
 
 nav {

@@ -10,9 +10,14 @@
 
     <div class="status-bar" v-if="user">
       <router-link v-if="mediaType !== 'desktop'"
-                   to='/search'
-                   class="search-button">
+                   class="search-button"
+                   :to="urlOrGoBack('search')"
+                   :class="{ filled: $route.name === 'search' }">
         <IconMagnifier/>
+      </router-link>
+
+      <router-link v-if="mediaType !== 'desktop'" :to="urlOrGoBack('builds-feed')" class="builds-feed-link">
+        <BuildsFeedIndicator :collection="$store.state.buildsFeed" :filled="$route.name === 'builds-feed'"/>
       </router-link>
 
       <portal-target name="status-bar" slim/>
@@ -58,6 +63,15 @@ export default {
       return this.userLoaded && !this.user;
     }
   },
+  methods: {
+    urlOrGoBack(routeName) {
+      const from = this.$store.state.from;
+      return this.$route.name === routeName && from ? from.path : this.getUrlByRouteName(routeName);
+    },
+    getUrlByRouteName(routeName) {
+      return `/${routeName}`;
+    }
+  },
   mounted() {
     if (this.$store.state.buildsFeed.status === "empty") {
       this.$store.dispatch("fetchBuildsFeed");
@@ -101,11 +115,14 @@ export default {
 
   > * + * {
     margin-left: 30px;
-
-    @include mobile {
-      margin-left: 10px;
-    }
   }
+}
+
+.builds-feed-link {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  box-sizing: border-box;
 }
 
 .search-button {
@@ -118,7 +135,7 @@ export default {
   border-radius: 50%;
   color: rgba(25, 45, 70, 0.25);
 
-  &.router-link-active {
+  &.filled {
     background-color: #19d78c;
     border-color: #19d78c;
     color: #fff
