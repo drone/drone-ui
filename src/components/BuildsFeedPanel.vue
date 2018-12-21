@@ -53,12 +53,13 @@ export default {
     color: rgba(25, 45, 70, 0.6);
   }
 
-  .repo-item {
+  .repo-item.media-mobile {
     border: none;
     border-top: 1px solid rgba(25, 45, 70, 0.05);
     border-bottom: 1px solid rgba(25, 45, 70, 0.05);
     box-shadow: none;
     border-radius: 0;
+    padding-left: 15px;
   }
 
   .repo-link.hover-type-box-shadow:focus .repo-item,
