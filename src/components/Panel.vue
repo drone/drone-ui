@@ -46,22 +46,23 @@ export default {
 
 <style scoped lang="scss">
 .panel {
-  width: 0;
+  width: 360px;
   box-shadow: 0 2px 4px 0 rgba(25, 45, 70, 0.05);
   overflow: hidden;
   flex-shrink: 0;
+  display: none;
 
   &.opened-yes {
-    width: 360px;
+    display: block;
 
     .panel-content {
-      transform: translate3d(-360px, 0, 0);
+      display: block;
     }
   }
 
   &.side-right {
     .panel-content {
-      right: -360px;
+      right: 0;
     }
   }
 }
@@ -73,7 +74,6 @@ export default {
   top: 60px;
   bottom: 0;
   background-color: #fff;
-  transition: transform 0.25s linear;
   overflow: auto;
 }
 </style>

@@ -72,8 +72,7 @@ span {
   flex-grow: 1;
   font-weight: 600;
   margin-left: 10px;
-  text-transform: uppercase;
-  font-size: 13px;
+  font-size: 14px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
