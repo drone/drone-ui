@@ -83,17 +83,19 @@ export default {
 };
 </script>
 
-<style>
+<style scoped lang="scss">
+@import "../assets/styles/variables";
+
 .repo-item-label {
   line-height: 20px;
-  background-color: rgba(5, 100, 215, 0.07);
-  color: #0564d7;
+  background-color: rgba($color-primary, 0.07);
+  color: $color-primary;
   padding: 0 4px;
   border-radius: 2px;
 }
 
 a.repo-item-label:hover,
 a.repo-item-label:focus {
-  background-color: rgba(5, 100, 215, 0.2);
+  background-color: rgba($color-primary, $button-outline-hover-bg-opacity);
 }
 </style>

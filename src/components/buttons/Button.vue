@@ -192,7 +192,7 @@ export default {
 
 .button.theme-primary.outline:focus,
 .button.theme-primary.outline:hover {
-  background-color: rgba(5, 100, 215, 0.05);
+  background-color: rgba(5, 100, 215, $button-outline-hover-bg-opacity);
 }
 
 .button.theme-danger:focus,
@@ -202,7 +202,7 @@ export default {
 
 .button.theme-danger.outline:focus,
 .button.theme-danger.outline:hover {
-  background-color: rgba(255, 65, 100, 0.05);
+  background-color: rgba(255, 65, 100, $button-outline-hover-bg-opacity);
 }
 
 .button.loading {

@@ -1,51 +1,28 @@
 <template>
-  <div class="overlay"></div>
+  <transition name="fade">
+    <div class="overlay" v-show="opened"/>
+  </transition>
 </template>
 
 <script>
-import Vue from "vue";
-
 export default {
   name: "Overlay",
-  props: {},
-  data() {
-    return {
-      opened: false
-    };
-  },
-  methods: {
-    open() {
-      if (!this.opened) {
-        document.body.appendChild(this.$el);
-        this.opened = true;
-      }
-    },
-    close() {
-      if (this.opened) {
-        document.body.removeChild(this.$el);
-        this.opened = false;
-      }
-    }
-  },
-  instance() {
-    if (!this._instance) {
-      const component = Vue.extend(this);
-      this._instance = new component().$mount();
-    }
-
-    return this._instance;
+  props: {
+    opened: { type: Boolean, default: false }
   }
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .overlay {
-  background: rgba(255, 255, 255, 0.75);
+  background: rgba(#324155, 0.9);
   position: fixed;
   top: 0;
   right: 0;
   left: 0;
   bottom: 0;
   z-index: 10;
+  display: block;
+  transition-duration: 0.25s;
 }
 </style>

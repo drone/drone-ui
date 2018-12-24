@@ -48,7 +48,7 @@ export default {
   }
 
   .alert {
-    margin: 0 15px;
+    margin: 0 20px;
     box-shadow: none;
     color: rgba(25, 45, 70, 0.6);
   }

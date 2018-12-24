@@ -19,7 +19,7 @@ import ClickOutside from "vue-click-outside";
 import Popup from "@/components/Popup.vue";
 
 export default {
-  name: "Overlay",
+  name: "UserMenu",
   components: {
     Popup
   },

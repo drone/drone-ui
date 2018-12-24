@@ -16,6 +16,8 @@
                 :loaded="loaded"
                 :popupProps="{position: 'bottom', align: 'both'}"
                 @itemSelect="onItemSelect"/>
+
+    <Overlay ref="overlay" :opened="opened"/>
   </BaseForm>
 </template>
 
@@ -35,6 +37,7 @@ const ITEMS_LIMIT = 6;
 export default {
   name: "Search",
   components: {
+    Overlay,
     BaseForm,
     BaseInput,
     ReposPopup
@@ -71,12 +74,10 @@ export default {
     open() {
       this.opened = true;
       this.nextOpened = true;
-      this.actualizeOverlay();
     },
     close() {
       this.opened = false;
       this.nextOpened = false;
-      this.actualizeOverlay();
     },
     closeDelayed() {
       this.nextOpened = false;
@@ -113,18 +114,9 @@ export default {
     stopPropagationAndPreventDefault(e) {
       e.stopPropagation();
       e.preventDefault();
-    },
-    actualizeOverlay() {
-      this.popupOpened ? this.overlay.open() : this.overlay.close();
-    }
-  },
-  watch: {
-    popupOpened() {
-      this.actualizeOverlay();
     }
   },
   mounted() {
-    this.overlay = Overlay.instance();
     document.addEventListener("keyup", this.onKeyPress);
   },
   destroyed() {
@@ -143,22 +135,29 @@ form {
   transition: max-width linear 0.1s;
 }
 
-input {
+.base-input {
   width: 100%;
   padding-right: 45px;
+  position: relative;
+  z-index: 20;
 }
 
-.opened {
+.base-input:hover,
+.base-input:focus {
+  border-color: rgba(25, 45, 70, 0.25);
+}
+
+form.opened {
   position: relative;
   z-index: 1001;
   max-width: 980px;
 }
 
-.opened input {
+form.opened input {
   padding-right: 15px;
 }
 
-.opened .icon {
+form.opened .icon {
   display: none;
 }
 
@@ -179,5 +178,6 @@ input {
 
 .popup {
   text-align: left;
+  z-index: 20;
 }
 </style>

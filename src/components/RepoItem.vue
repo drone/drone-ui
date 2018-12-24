@@ -156,11 +156,12 @@ export default {
   line-height: normal;
   color: #192d46;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 
   .button {
     letter-spacing: 1px;
     flex-shrink: 0;
+    align-self: center;
   }
 }
 
