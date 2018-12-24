@@ -48,7 +48,6 @@ export default {
 .panel {
   width: 0;
   box-shadow: 0 2px 4px 0 rgba(25, 45, 70, 0.05);
-  transition: width 0.25s linear;
   overflow: hidden;
   flex-shrink: 0;
 
@@ -61,7 +60,7 @@ export default {
   }
 
   &.side-right {
-    .panel-content{
+    .panel-content {
       right: -360px;
     }
   }

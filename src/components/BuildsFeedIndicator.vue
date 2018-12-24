@@ -74,7 +74,7 @@ export default {
 
 .hint {
   white-space: nowrap;
-  right: -60px;
+  right: -50px;
 }
 
 .border {
@@ -99,7 +99,7 @@ export default {
 
 <style>
 .builds-feed-indicator .hint .triangle {
-  right: 70px;
+  right: 60px;
   left: auto;
 }
 </style>
