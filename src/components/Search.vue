@@ -142,11 +142,6 @@ form {
   z-index: 20;
 }
 
-.base-input:hover,
-.base-input:focus {
-  border-color: rgba(25, 45, 70, 0.25);
-}
-
 form.opened {
   position: relative;
   z-index: 1001;
@@ -155,6 +150,7 @@ form.opened {
 
 form.opened input {
   padding-right: 15px;
+  border-color: transparent;
 }
 
 form.opened .icon {
@@ -174,6 +170,7 @@ form.opened .icon {
   color: rgba(25, 45, 70, 0.5);
   pointer-events: none;
   user-select: none;
+  z-index: 25;
 }
 
 .popup {

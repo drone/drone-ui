@@ -87,7 +87,7 @@ export default {
   align-items: center;
   box-sizing: border-box;
   display: flex;
-  padding: 0 20px;
+  padding: 0 $padding-side;
   justify-content: space-between;
 }
 

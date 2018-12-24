@@ -54,7 +54,7 @@ export default {
 
 header {
   align-items: center;
-  border-bottom: solid 1px rgba(25, 45, 70, 0.05);
+  border-bottom: solid 1px rgba(25, 45, 70, 0.08);
   box-sizing: border-box;
   display: flex;
   height: 45px;

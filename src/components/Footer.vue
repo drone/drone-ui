@@ -20,7 +20,7 @@
 footer {
   display: flex;
   justify-content: space-between;
-  padding: 0 30px;
+  padding: 0 $padding-side;
   align-items: center;
   z-index: 1;
 
@@ -30,7 +30,8 @@ footer {
   background: #fff;
 
   @include tablet {
-    padding: 20px 30px;
+    padding-top: 20px;
+    padding-bottom: 20px;
     flex-direction: column;
   }
 }
