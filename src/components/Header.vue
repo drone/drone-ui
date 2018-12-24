@@ -87,12 +87,8 @@ export default {
   align-items: center;
   box-sizing: border-box;
   display: flex;
-  padding: 0 30px;
+  padding: 0 20px;
   justify-content: space-between;
-
-  @include mobile {
-    padding: 0 20px;
-  }
 }
 
 .builds-feed + .user-menu {
@@ -106,7 +102,7 @@ export default {
 .logo {
   width: 30px;
   height: 30px;
-  margin-right: 60px;
+  margin-right: 50px;
   flex-shrink: 0;
 }
 
@@ -114,7 +110,7 @@ export default {
   flex-shrink: 0;
 
   > * + * {
-    margin-left: 30px;
+    margin-left: 20px;
   }
 }
 
@@ -131,9 +127,9 @@ export default {
   display: inline-block;
   width: 30px;
   height: 30px;
-  border: 1px solid rgba(25, 45, 70, 0.25);
+  border: 1px solid rgba(25, 45, 70, 0.6);
   border-radius: 50%;
-  color: rgba(25, 45, 70, 0.25);
+  color: rgba(25, 45, 70, 0.6);
 
   &.filled {
     background-color: #19d78c;

@@ -41,9 +41,9 @@
         </div>
 
         <div class="time">
-          <TimeElapsed v-if="build.started" :started="build.started" :stopped="build.finished"/>
-          <span v-if="build.started" class="dot"></span>
-          <span>{{ new Date(build.created * 1000) | moment("from", "now") }}</span>
+          <TimeElapsed v-if="build.started" :started="build.started" :stopped="build.started"/>
+          <span v-if="build.started && build.created" class="dot"></span>
+          <span v-if="build.created">{{ new Date(build.created * 1000) | moment("from", "now") }}</span>
         </div>
       </div>
     </div>
@@ -103,13 +103,24 @@ export default {
   @include mobile(true) {
     padding: 10px;
 
+    .connector {
+      width: 0;
+      margin-top: -5px;
+    }
+
     .header {
       font-size: 16px;
       line-height: 20px;
+      padding-left: 30px;
+    }
+
+    .content {
+      padding-left: 0;
     }
 
     .build {
       display: block;
+      z-index: 1;
 
       & > img {
         float: left;
@@ -177,8 +188,7 @@ export default {
   border-bottom-left-radius: 8px;
   border-left: solid 1px #192d46;
   border-bottom: solid 1px #192d46;
-  float: right;
-  margin-right: 5px;
+  margin-left: 9px;
 }
 
 .icon-repository {

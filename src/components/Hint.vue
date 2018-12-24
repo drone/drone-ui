@@ -1,5 +1,5 @@
 <template>
-  <div class="hint pos-top" :class="{ [`align-${align}`]: true }" v-show="show">
+  <div class="hint" :class="{ [`align-${align}`]: true, [`position-${position}`]: true }" v-show="show">
     <div class="triangle"></div>
     <slot></slot>
   </div>
@@ -11,6 +11,7 @@ import * as validators from "@/lib/validators";
 export default {
   name: "Hint",
   props: {
+    position: { type: String, validator: validators.oneOf(["top", "bottom"]), default: "top" },
     align: { type: String, validator: validators.oneOf(["right", "left"]), default: "left" },
     showOn: { type: String, validator: validators.oneOf(["hover"]) }
   },
@@ -45,7 +46,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .hint {
   position: absolute;
   max-width: 300px;
@@ -56,31 +57,50 @@ export default {
   font-size: 13px;
 }
 
-.pos-top {
+.position-top {
   margin-bottom: 10px;
   margin-left: -7.5px;
   bottom: 100%;
+
+  .triangle {
+    bottom: -5px;
+    border-bottom-width: 0;
+    border-top-color: rgba(25, 45, 70, 0.9);
+  }
+}
+
+.position-bottom {
+  margin-top: 10px;
+  margin-left: -7.5px;
+  top: 100%;
+
+  .triangle {
+    top: -5px;
+    border-top-width: 0;
+    border-bottom-color: rgba(25, 45, 70, 0.9);
+  }
+}
+
+.align-left {
+  .triangle {
+    left: 10px;
+  }
 }
 
 .align-right {
   right: 0;
+
+  .triangle {
+    right: 10px;
+  }
 }
 
 .triangle {
   position: absolute;
-  bottom: -5px;
   width: 0;
   height: 0;
   border-style: solid;
-  border-width: 5px 5px 0 5px;
-  border-color: rgba(25, 45, 70, 0.9) transparent transparent transparent;
-}
-
-.align-left .triangle {
-  left: 10px;
-}
-
-.align-right .triangle {
-  right: 10px;
+  border-width: 5px;
+  border-color: transparent;
 }
 </style>

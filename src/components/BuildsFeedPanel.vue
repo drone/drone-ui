@@ -44,7 +44,7 @@ export default {
 <style lang="scss">
 .builds-feed-panel {
   .page-header {
-    padding-right: 5px;
+    padding: 0 10px 0 20px;
   }
 
   .alert {
@@ -59,7 +59,8 @@ export default {
     border-bottom: 1px solid rgba(25, 45, 70, 0.05);
     box-shadow: none;
     border-radius: 0;
-    padding-left: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
   }
 
   .repo-link.hover-type-box-shadow:focus .repo-item,

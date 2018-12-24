@@ -1,7 +1,7 @@
 <template>
   <div class="page-builds-feed">
     <PageHeader>
-      <span>Builds feed</span>
+      <span class="title">Recent builds</span>
       <slot name="header"></slot>
     </PageHeader>
 
@@ -23,12 +23,16 @@ export default {
     repoToProps(repo) {
       return {
         ...RepoList.defaultRepoToProps(repo),
-        build: { ...repo.build, message: null },
-        number: repo.build.number,
-        title: repo.build.message,
+        build: { ...repo.build, started: null, created: null },
         class: "media-mobile"
       };
     }
   }
 };
 </script>
+
+<style scoped>
+.title {
+  font-size: 18px;
+}
+</style>
