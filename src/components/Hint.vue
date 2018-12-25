@@ -53,7 +53,7 @@ export default {
   background: rgba(25, 45, 70, 0.9);
   border-radius: 2px;
   padding: 6px 8px;
-  color: rgba(255, 255, 255, 0.9);
+  color: #fff;
   font-size: 13px;
 }
 

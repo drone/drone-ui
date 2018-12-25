@@ -15,6 +15,7 @@ const FOOTER_HEIGHT = 60;
 export default {
   name: "Panel",
   props: {
+    name: { type: String, required: true },
     side: { type: String, required: true, validator: validators.oneOf(["right", "left"]) },
     opened: { type: Boolean, default: false }
   },
@@ -30,6 +31,11 @@ export default {
   destroyed() {
     window.removeEventListener("scroll", this.onWindowScroll);
   },
+  computed: {
+    bodyClassName() {
+      return `panel-opened-${this.name}`;
+    }
+  },
   methods: {
     onWindowScroll() {
       const availableHeight = document.getElementsByTagName("html")[0].scrollHeight;
@@ -39,6 +45,18 @@ export default {
 
       if (nextTop !== this.top) this.top = nextTop;
       if (nextBottom !== this.bottom) this.bottom = nextBottom;
+    },
+    actualizeBodyClass(opened) {
+      if (opened) {
+        document.body.classList.add(this.bodyClassName);
+      } else {
+        document.body.classList.remove(this.bodyClassName);
+      }
+    }
+  },
+  watch: {
+    opened(newValue) {
+      this.actualizeBodyClass(newValue);
     }
   }
 };

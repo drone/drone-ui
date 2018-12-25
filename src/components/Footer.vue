@@ -46,7 +46,7 @@ nav a {
   color: rgba(25, 45, 70, 0.6);
 
   & + a {
-    margin-left: 30px;
+    margin-left: $padding-side;
 
     @include tablet {
       margin-left: 15px;

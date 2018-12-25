@@ -491,18 +491,22 @@ main {
   display: flex;
   flex-direction: column;
   z-index: 10;
-}
 
-.output-fullscreen .output-content {
-  overflow: auto;
-}
+  body.panel-opened-builds-feed & {
+    right: 360px;
+  }
 
-.output-fullscreen .to-top {
-  position: absolute;
-  top: unset;
-  bottom: 0;
-  right: 0;
-  display: block;
+  .output-content {
+    overflow: auto;
+  }
+
+  .to-top {
+    position: absolute;
+    top: unset;
+    bottom: 0;
+    right: 0;
+    display: block;
+  }
 }
 
 .output-header {

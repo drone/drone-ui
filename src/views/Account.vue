@@ -8,9 +8,7 @@
     <AlertError v-else-if="error" :error="error"/>
     <CardGroup v-else-if="user && user.token">
       <Card>
-        <header slot="header">
-          <h2>Token</h2>
-        </header>
+        <h2 slot="header">Token</h2>
 
         <CodeSnippetGroup>
           <CodeSnippet>
@@ -95,5 +93,9 @@ h1 {
   letter-spacing: normal;
   color: #192d46;
   margin: 30px 0px;
+}
+
+h2 {
+  margin: 0 15px;
 }
 </style>
