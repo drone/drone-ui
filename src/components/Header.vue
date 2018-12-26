@@ -1,12 +1,15 @@
 <template>
-  <div class="header">
+  <header :class="{ header: true, 'search-opened': searchOpened }">
     <div class="logo">
       <router-link to="/">
         <Logo/>
       </router-link>
     </div>
 
-    <Search v-if="user && mediaType === 'desktop'" placeholder="Search repositories or jump to …"/>
+    <Search v-if="user && mediaType === 'desktop'"
+            placeholder="Search repositories or jump to …"
+            @open="onSearchOpen"
+            @close="onSearchClose"/>
 
     <div class="status-bar" v-if="user">
       <router-link v-if="mediaType !== 'desktop'"
@@ -30,7 +33,7 @@
         <a href="/login" class="button">Login</a>
       </div>
     </template>
-  </div>
+  </header>
 </template>
 
 <script>
@@ -48,6 +51,11 @@ export default {
     Logo,
     UserMenu,
     IconMagnifier
+  },
+  data() {
+    return {
+      searchOpened: false
+    };
   },
   computed: {
     mediaType() {
@@ -70,6 +78,12 @@ export default {
     },
     getUrlByRouteName(routeName) {
       return `/${routeName}`;
+    },
+    onSearchOpen() {
+      this.searchOpened = true;
+    },
+    onSearchClose() {
+      this.searchOpened = false;
     }
   },
   mounted() {
@@ -84,11 +98,18 @@ export default {
 @import "../assets/styles/mixins";
 
 .header {
+  height: 60px;
+  box-shadow: 0 2px 4px 0 rgba(25, 45, 70, 0.05);
+  background-color: $color-header;
   align-items: center;
   box-sizing: border-box;
   display: flex;
   padding: 0 $padding-side;
   justify-content: space-between;
+
+  &.search-opened {
+    background-color: #0f3764;
+  }
 }
 
 .builds-feed + .user-menu {
@@ -104,6 +125,10 @@ export default {
   height: 30px;
   margin-right: 50px;
   flex-shrink: 0;
+
+  svg {
+    color: #fff;
+  }
 }
 
 .status-bar {
@@ -127,14 +152,13 @@ export default {
   display: inline-block;
   width: 30px;
   height: 30px;
-  border: 1px solid rgba(25, 45, 70, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 50%;
-  color: rgba(25, 45, 70, 0.6);
+  color: #fff;
 
   &.filled {
-    background-color: #19d78c;
-    border-color: #19d78c;
-    color: #fff
+    color: $color-header;
+    background-color: #fff;
   }
 
   svg {
@@ -158,5 +182,24 @@ export default {
   font-size: 12px;
   padding: 10px 20px;
   text-transform: uppercase;
+}
+</style>
+
+<style lang="scss">
+.header > .search {
+  > .base-input {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: transparent;
+    color: #fff;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+  }
+
+  > .icon {
+    border: solid 1px rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.6);
+  }
 }
 </style>

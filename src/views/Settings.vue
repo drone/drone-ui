@@ -59,7 +59,12 @@
     <Badges />
 
     <div v-if="repo.active && isAdmin" class="disable">
-      <ButtonConfirm @click="disable" theme="danger" size="l">Disable Repository</ButtonConfirm>
+      <ButtonConfirm @click="disable"
+                     theme="danger"
+                     size="l"
+                     :message="`Are you sure to disable repository ${repo.slug}`">
+        Disable Repository
+      </ButtonConfirm>
       <span>to stop processing builds.</span>
     </div>
   </CardGroup>

@@ -73,12 +73,12 @@ export default {
 }
 
 .user-menu .popup {
-  min-width: 200px;
+  white-space: nowrap;
 }
 
 .user-menu .popup a {
   display: block;
-  padding: 11px 15px;
+  padding: 11px 30px 11px 15px;
   color: #192d46;
 }
 

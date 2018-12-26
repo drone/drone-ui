@@ -1,8 +1,6 @@
 <template>
   <base-layout>
-    <template slot="header">
-      <Header />
-    </template>
+    <Header slot="header"/>
 
     <template>
       <transition name="fadein" mode="out-in">

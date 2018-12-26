@@ -4,7 +4,7 @@
       Recent builds ({{count}} active)
     </Hint>
     <div class="border"></div>
-    <div class="label">{{ loaded ? count : '-' }}</div>
+    <div class="label">{{ loaded ? count : "-" }}</div>
   </div>
 </template>
 
@@ -37,39 +37,47 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../assets/styles/variables";
+
 .builds-feed-indicator {
   cursor: pointer;
   position: relative;
   display: inline-block;
 }
 
-.builds-feed-indicator.status-done .label {
-  color: rgba(25, 45, 70, 0.6);
+.builds-feed-indicator.status-done {
+  .label {
+    color: #fff;
+  }
+
+  .border {
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  &.filled .border {
+    background-color: #fff;
+  }
 }
 
-.builds-feed-indicator.status-running .border {
-  border-color: #ffd20a;
-  border-bottom-color: transparent;
-  animation: spin 1s linear infinite;
-}
+.builds-feed-indicator.status-running {
+  .border {
+    border: 2px solid #ffd20a;
+    border-bottom-color: transparent;
+    animation: spin 1s linear infinite;
+  }
 
-.builds-feed-indicator.status-running .label {
-  color: #ffd20a;
-}
+  .label {
+    color: #ffd20a;
+  }
 
-.builds-feed-indicator.status-running.filled .border {
-  background-color: #ffd20a;
-}
-
-.builds-feed-indicator.filled .border {
-  background-color: rgba(25, 45, 70, 0.6);
-  border: none;
-  animation: none;
+  &.filled .border {
+    background-color: #ffd20a;
+  }
 }
 
 .builds-feed-indicator.filled .label {
-  color: #fff;
+  color: $color-header;
 }
 
 .hint {
@@ -82,7 +90,6 @@ export default {
   height: 30px;
   border-radius: 15px;
   box-sizing: border-box;
-  border: 1px solid rgba(25, 45, 70, 0.6);
 }
 
 .label {
@@ -98,7 +105,7 @@ export default {
 </style>
 
 <style>
-.builds-feed-indicator .hint .triangle {
+.builds-feed-indicator > .hint > .triangle {
   right: 60px;
   left: auto;
 }

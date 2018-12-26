@@ -67,7 +67,6 @@ import Breadcrumb from "@/components/Breadcrumb.vue";
 import IconArrow from "@/components/icons/IconArrow.vue";
 import IconCancel from "@/components/icons/IconCancel.vue";
 import Button from "@/components/buttons/Button.vue";
-import ButtonConfirm from "@/components/buttons/ButtonConfirm.vue";
 import Card from "@/components/Card.vue";
 import PageHeader from "@/components/PageHeader";
 import Link from "@/components/Link";
@@ -85,7 +84,6 @@ export default {
     IconCancel,
     IconRestart,
     Button,
-    ButtonConfirm,
     Card,
     Loading,
     Link
@@ -192,6 +190,10 @@ nav {
   padding-left: 15px;
   display: flex;
 
+  svg {
+    opacity: 0.6;
+  }
+
   @include mobile {
     padding-left: 10px;
     font-size: 13px;
@@ -227,6 +229,10 @@ nav a.manually-active {
 nav a:hover,
 nav a:focus {
   color: #192d46;
+
+  svg {
+    opacity: 1;
+  }
 }
 
 nav a.manually-active:focus,

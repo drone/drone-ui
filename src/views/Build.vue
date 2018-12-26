@@ -10,6 +10,7 @@
         </Button>
 
         <Button outline v-if="build.finished"
+                class="button-restart"
                 @click.native="handleRestart"
                 :disabled="!isCollaborator">
           <span>Restart</span>
@@ -19,6 +20,7 @@
         <ButtonConfirm v-else outline
                        @click="handleCancel"
                        :disabled="!isCollaborator"
+                       :message="`Are you sure to cancel build ${build.number}?`"
                        class="button-cancel">
           <span>Cancel</span>
           <IconCancel/>
@@ -39,7 +41,7 @@
 
     <AlertError :error="buildLoadingErr"/>
 
-    <main v-if="build && !buildLoadingErr && !isBuildError && stagesLoaded">
+    <div class="build-content" v-if="build && !buildLoadingErr && !isBuildError && stagesLoaded">
       <div class="stages" ref="stages">
         <div class="stage-container"
              v-for="(_stage) in build.stages"
@@ -125,7 +127,7 @@
             </Button>
           </div>
         </div>
-        <div class="output-content" ref="outputContent">
+        <div class="output-content" ref="outputContent" @scroll="onOutputContentScroll">
           <Loading v-if="logsLoading"/>
 
           <div class="output-content-actions" v-if="moreCount">
@@ -145,7 +147,7 @@
 
         <div class="to-top" @click="scrollToTop"><IconArrow direction="up"/></div>
       </div>
-    </main>
+    </div>
 
     <Alert v-if="isBuildError" class="alert">
       {{build.error}}
@@ -333,6 +335,10 @@ export default {
       link.click();
     },
     onScroll() {
+      this.alignStages();
+      this.showToTop = this.$refs.output.getBoundingClientRect().y < 0;
+    },
+    alignStages() {
       const delta = window.scrollY - previousScrollY;
       previousScrollY = window.scrollY;
 
@@ -348,8 +354,9 @@ export default {
 
         stages.style.top = `${newTop}px`;
       }
-
-      this.showToTop = this.$refs.output.getBoundingClientRect().y < 0;
+    },
+    onOutputContentScroll() {
+      this.showToTop = this.$refs.outputContent.scrollTop > 0;
     }
   },
   watch: {
@@ -409,28 +416,41 @@ export default {
   }
 }
 
+.button-restart,
+.button-cancel {
+  width: 116px;
+  text-align: left;
+
+  svg {
+    margin-top: 4px;
+    float: right;
+  }
+}
+
 .button-cancel svg {
   width: 15px;
   height: 15px;
-  margin-bottom: -2px;
+  margin-top: 6.5px;
 }
 
 .button-source > svg {
   width: 24px;
-  height: 24px;
-  margin-bottom: -7px;
 }
 
 .repo-item {
   margin-bottom: 20px;
 }
 
-main {
+.build-content {
   display: flex;
   align-items: flex-start;
 
   @include tablet {
     flex-direction: column;
+  }
+
+  > .alert {
+    margin-left: 15px;
   }
 }
 
@@ -449,7 +469,7 @@ main {
 }
 
 .stage-container + .stage-container {
-  margin-top: 15px;
+  margin-top: 20px;
 }
 
 .output {
@@ -464,6 +484,7 @@ main {
   margin-left: 20px;
   padding: 0;
   flex-grow: 1;
+  min-width: 0; // important for white-space: nowrap and text-overflow of .output-header
 
   @include tablet {
     margin: 0;
@@ -481,7 +502,7 @@ main {
 
 .output-fullscreen {
   position: fixed;
-  top: 60px;
+  top: 0;
   right: 0;
   left: 0;
   bottom: 0;
@@ -490,10 +511,11 @@ main {
   border-radius: 0;
   display: flex;
   flex-direction: column;
-  z-index: 10;
+  z-index: 50;
+  box-shadow: none;
 
-  body.panel-opened-builds-feed & {
-    right: 360px;
+  .output-header {
+    position: static;
   }
 
   .output-content {
@@ -505,7 +527,6 @@ main {
     top: unset;
     bottom: 0;
     right: 0;
-    display: block;
   }
 }
 
@@ -635,10 +656,6 @@ main {
 
 .to-top:hover {
   color: #fff;
-}
-
-main > .alert {
-  margin-left: 15px;
 }
 </style>
 

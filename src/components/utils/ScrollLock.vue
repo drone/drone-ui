@@ -1,5 +1,5 @@
 <template>
-  <span style="display: none"></span>
+  <span></span>
 </template>
 
 <script>
@@ -20,10 +20,16 @@ export default {
 };
 </script>
 
+<style scoped>
+span {
+  display: none;
+}
+</style>
+
 <style>
 html.scroll-locked,
 html.scroll-locked body {
-  height: 100%;
+  height: 50%;
   overflow: hidden;
 }
 </style>

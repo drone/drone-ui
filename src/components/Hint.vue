@@ -55,6 +55,7 @@ export default {
   padding: 6px 8px;
   color: #fff;
   font-size: 13px;
+  z-index: 1000;
 }
 
 .position-top {

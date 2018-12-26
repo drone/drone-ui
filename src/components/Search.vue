@@ -1,5 +1,5 @@
 <template>
-  <BaseForm :class="{ opened }"
+  <BaseForm :class="{ opened, search: true }"
             @submit.native="(e) => e.preventDefault()"
             @focusin.native="open"
             @focusout.native="closeDelayed">
@@ -74,10 +74,12 @@ export default {
     open() {
       this.opened = true;
       this.nextOpened = true;
+      this.$emit("open");
     },
     close() {
       this.opened = false;
       this.nextOpened = false;
+      this.$emit("close");
     },
     closeDelayed() {
       this.nextOpened = false;

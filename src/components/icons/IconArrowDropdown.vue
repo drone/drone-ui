@@ -1,8 +1,10 @@
 <template>
-  <svg viewBox="0 0 15 8" xmlns="http://www.w3.org/2000/svg">
-    <path
-      d="M13.182.535a.726.726 0 0 1 .968 0 .596.596 0 0 1 0 .891L7.983 7.11a.95.95 0 0 1-1.266 0L.55 1.426a.596.596 0 0 1 0-.891.726.726 0 0 1 .968 0L7.35 5.908 13.182.535z"
-      fill="currentColor" fill-rule="nonzero"/>
+  <svg viewBox="0 0 14 8" xmlns="http://www.w3.org/2000/svg">
+    <g fill="none" fill-rule="evenodd">
+      <path
+        d="M7 6.352L12.832.211a.66.66 0 0 1 .968 0 .748.748 0 0 1 0 1.019L7.633 7.724a.863.863 0 0 1-1.266 0L.2 1.23A.748.748 0 0 1 .2.211a.66.66 0 0 1 .968 0L7 6.352z"
+        fill="currentColor" fill-rule="nonzero"/>
+    </g>
   </svg>
 </template>
 
@@ -17,7 +19,7 @@ export default {
 
 <style scoped>
 svg {
-  width: 15px;
+  width: 14px;
   height: 8px;
 }
 </style>

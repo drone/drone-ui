@@ -1,10 +1,8 @@
 <template>
   <div class="wrap">
-    <header>
-      <slot name="header"></slot>
-    </header>
+    <slot name="header"></slot>
 
-    <main>
+    <main id="base-layout-main">
       <div class="container">
         <slot></slot>
       </div>
@@ -38,7 +36,7 @@ export default {
 .container {
   padding-bottom: 80px;
   flex-grow: 1;
-  overflow: hidden;
+  min-width: 0; // important for children with white-space: nowrap
 
   @include mobile {
     padding-bottom: 40px;
@@ -49,18 +47,6 @@ export default {
   min-height: 100%;
   display: flex;
   flex-direction: column;
-}
-
-header {
-  box-shadow: 0 2px 6px 0px rgba(25, 45, 70, 0.05);
-  box-sizing: border-box;
-  height: 60px;
-  background: #FFF;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  flex-shrink: 0;
-  z-index: 20; // upper than Panel and SearchOverlay
 }
 
 main {
@@ -80,6 +66,7 @@ footer {
 @import "../assets/styles/mixins";
 
 .container {
+  box-sizing: border-box;
   max-width: 980px;
   padding: 0 15px;
   margin: 0 auto;
