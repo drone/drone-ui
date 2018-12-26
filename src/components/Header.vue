@@ -1,5 +1,5 @@
 <template>
-  <header :class="{ header: true, 'search-opened': searchOpened }">
+  <header :class="{ header: true }">
     <div class="logo">
       <router-link to="/">
         <Logo/>
@@ -7,9 +7,7 @@
     </div>
 
     <Search v-if="user && mediaType === 'desktop'"
-            placeholder="Search repositories or jump to …"
-            @open="onSearchOpen"
-            @close="onSearchClose"/>
+            placeholder="Search repositories or jump to …"/>
 
     <div class="status-bar" v-if="user">
       <router-link v-if="mediaType !== 'desktop'"
@@ -52,11 +50,6 @@ export default {
     UserMenu,
     IconMagnifier
   },
-  data() {
-    return {
-      searchOpened: false
-    };
-  },
   computed: {
     mediaType() {
       return this.$store.state.mediaType;
@@ -78,12 +71,6 @@ export default {
     },
     getUrlByRouteName(routeName) {
       return `/${routeName}`;
-    },
-    onSearchOpen() {
-      this.searchOpened = true;
-    },
-    onSearchClose() {
-      this.searchOpened = false;
     }
   },
   mounted() {
@@ -106,10 +93,6 @@ export default {
   display: flex;
   padding: 0 $padding-side;
   justify-content: space-between;
-
-  &.search-opened {
-    background-color: #0f3764;
-  }
 }
 
 .builds-feed + .user-menu {
@@ -188,18 +171,23 @@ export default {
 <style lang="scss">
 .header > .search {
   > .base-input {
-    background-color: rgba(255, 255, 255, 0.1);
     border-color: transparent;
-    color: #fff;
-
-    &::placeholder {
-      color: rgba(255, 255, 255, 0.6);
-    }
   }
 
-  > .icon {
-    border: solid 1px rgba(255, 255, 255, 0.15);
-    color: rgba(255, 255, 255, 0.6);
+  &.opened-no {
+    > .base-input {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #fff;
+
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.6);
+      }
+    }
+
+    > .icon {
+      border: solid 1px rgba(255, 255, 255, 0.15);
+      color: rgba(255, 255, 255, 0.6);
+    }
   }
 }
 </style>

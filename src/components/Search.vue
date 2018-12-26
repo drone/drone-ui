@@ -1,5 +1,5 @@
 <template>
-  <BaseForm :class="{ opened, search: true }"
+  <BaseForm :class="{ [`opened-${opened ? 'yes' : 'no'}`]: true , search: true }"
             @submit.native="(e) => e.preventDefault()"
             @focusin.native="open"
             @focusout.native="closeDelayed">
@@ -127,7 +127,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 form {
   position: relative;
   text-align: center;
@@ -144,19 +144,19 @@ form {
   z-index: 20;
 }
 
-form.opened {
+form.opened-yes {
   position: relative;
   z-index: 1001;
-  max-width: 980px;
-}
+  max-width: 950px;
 
-form.opened input {
-  padding-right: 15px;
-  border-color: transparent;
-}
+  input {
+    padding-right: 15px;
+    border-color: transparent;
+  }
 
-form.opened .icon {
-  display: none;
+  .icon {
+    display: none;
+  }
 }
 
 .icon {

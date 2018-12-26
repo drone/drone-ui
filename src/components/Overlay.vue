@@ -15,7 +15,7 @@ export default {
 
 <style scoped lang="scss">
 .overlay {
-  background: rgba(#324155, 0.9);
+  background: rgba(#0f3764, 0.9);
   position: fixed;
   top: 0;
   right: 0;
