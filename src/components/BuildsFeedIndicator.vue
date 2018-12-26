@@ -90,6 +90,7 @@ export default {
   height: 30px;
   border-radius: 15px;
   box-sizing: border-box;
+  background-color: $color-header;
 }
 
 .label {

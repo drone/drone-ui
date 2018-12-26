@@ -1,5 +1,5 @@
 <template>
-  <header :class="{ header: true }">
+  <header :class="{ header: true, loading }">
     <div class="logo">
       <router-link to="/">
         <Logo/>
@@ -62,6 +62,17 @@ export default {
     },
     showLogin() {
       return this.userLoaded && !this.user;
+    },
+    loading() {
+      const { state, state: { route } } = this.$store;
+      const slug = route.params && `${route.params.namespace}/${route.params.name}`;
+
+      return (
+        state.latestStatus === "loading" || // latest
+        (route.name === "builds" && state.builds[slug] && state.builds[slug].lStatus === "loading") || // builds
+        (state.buildLoading) ||
+        (state.repoLoading)
+      );
     }
   },
   methods: {
@@ -93,6 +104,42 @@ export default {
   display: flex;
   padding: 0 $padding-side;
   justify-content: space-between;
+  position: relative;
+
+  &.loading:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-image: linear-gradient(
+        -45deg,
+        rgba(255, 255, 255, .05) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, .05) 50%,
+        rgba(255, 255, 255, .05) 75%,
+        transparent 75%,
+        transparent
+    );
+    z-index: 1;
+    background-size: 50px 50px;
+    animation: loading-movement 2s linear infinite;
+  }
+
+  > * {
+    z-index: 2;
+  }
+}
+
+@keyframes loading-movement {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 50px 50px;
+  }
 }
 
 .builds-feed + .user-menu {
@@ -176,7 +223,7 @@ export default {
 
   &.opened-no {
     > .base-input {
-      background-color: rgba(255, 255, 255, 0.1);
+      background-color: rgb(48, 93, 147);
       color: #fff;
 
       &::placeholder {

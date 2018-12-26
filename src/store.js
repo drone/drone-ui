@@ -47,6 +47,24 @@ function insertBuildToCollection(state, slug, build) {
   }
 }
 
+function applyLoading(collection) {
+  collection.lStatus = "loading";
+}
+
+function applyFailure(collection, error) {
+  collection.lStatus = "error";
+  collection.error = error;
+}
+
+function applySuccess(collection, data) {
+  collection.lStatus = "loaded";
+  collection.dStatus = "present";
+
+  if (data !== undefined) {
+    collection.data = data;
+  }
+}
+
 export default new Vuex.Store({
   state: {
     mediaType: window.innerWidth >= 980 ? "desktop" : window.innerWidth > 480 ? "tablet" : "mobile",
@@ -61,6 +79,7 @@ export default new Vuex.Store({
       url: config.instance || `${window.location.protocol}//${window.location.host}`
     },
 
+    // todo use collection style (like object in builds[slug])
     latest: {},
     latestUpdated: 0,
     latestStatus: "empty", // "empty", 'loading', 'loaded', 'error'
@@ -75,23 +94,16 @@ export default new Vuex.Store({
     repoEnabling: false,
     repoEnablingErr: undefined,
 
-    // repoEnabling: false,
-    // repoEnablingErr: undefined,
-
-    // repoDisabling: false,
-    // repoDisablingErr: undefined,
-
-    // repoSaving: false,
-    // repoSavingErr: undefined,
-
     builds: {
       /*
       EXAMPLE:
       "namespace/name": {
         data: {},
-        status: "empty", or 'loading', 'loaded', 'error'
+        dStatus: "empty", // "present" - dataStatus
+        lStatus: "none", // 'loading', 'loaded', 'error' - loadingStatus
         error: undefined,
-        page: undefined,
+        page: undefined, // last loaded page
+        lPage: undefined, // loading page
       }
       */
     },
@@ -100,6 +112,7 @@ export default new Vuex.Store({
     buildLoading: false,
     buildLoadingErr: undefined,
 
+    // todo use separated statuses (l and d)
     buildsFeed: {
       data: [],
       status: "empty", // 'loading', 'loaded', 'error'
@@ -110,6 +123,7 @@ export default new Vuex.Store({
     crons: {},
     activity: {},
 
+    // todo use separated statuses (l and d)
     user: {
       data: {},
       status: "empty", // or 'loading', 'loaded', 'error'
@@ -118,6 +132,7 @@ export default new Vuex.Store({
       syncingError: null
     },
 
+    // todo use collection style (like object in builds[slug])
     logs: [],
     logsLoaded: false,
     logsLoading: false,
@@ -220,30 +235,33 @@ export default new Vuex.Store({
       const slug = `${params.namespace}/${params.name}`;
       const repoBuilds = state.builds[slug];
 
-      if (!repoBuilds || params.page === 1) {
+      if (!repoBuilds) {
         Vue.set(state.builds, slug, {
           data: {},
-          status: "loading", // 'loading', 'loaded', 'error'
-          error: undefined,
-          page: undefined
+          dStatus: "empty",
+          lStatus: "loading", // 'loading', 'loaded', 'error'
+          error: null,
+          page: undefined,
+          lPage: params.page
         });
       } else {
-        repoBuilds.error = null;
-        repoBuilds.status = "loading";
+        repoBuilds.lPage = params.page;
+        applyLoading(repoBuilds);
       }
     },
     BUILD_LIST_FAILURE(state, { params, error }) {
       const slug = `${params.namespace}/${params.name}`;
-
-      state.builds[slug].status = "error";
-      state.builds[slug].error = error;
+      applyFailure(state.builds[slug], error);
     },
     BUILD_LIST_SUCCESS(state, { params, res }) {
       const slug = `${params.namespace}/${params.name}`;
       const repoBuilds = state.builds[slug];
 
-      repoBuilds.status = "loaded";
-      repoBuilds.error = null;
+      if (params.page === 1) {
+        repoBuilds.data = {};
+      }
+
+      applySuccess(repoBuilds);
       repoBuilds.page = params.page;
       res.forEach(item => Vue.set(repoBuilds.data, item.number, item));
     },
@@ -271,9 +289,11 @@ export default new Vuex.Store({
       if (!builds) {
         Vue.set(state.builds, slug, {
           data: { [build.number]: build },
-          status: "loading", // 'loading', 'loaded', 'error'
+          lStatus: "loaded",
+          dStatus: "present",
           error: undefined,
-          page: undefined
+          page: undefined,
+          lPage: undefined
         });
       } else {
         Vue.set(builds.data, build.number, build);

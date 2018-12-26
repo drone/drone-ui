@@ -3,9 +3,7 @@
     <AlertError v-if="loadingError" :error="loadingError"/>
 
     <template v-else>
-      <Alert v-if="loaded && builds.length === 0">
-        Your Build List is Empty.
-      </Alert>
+      <Alert v-if="showEmptyListAlert">Your Build List is Empty.</Alert>
 
       <router-link
         class="build"
@@ -19,10 +17,10 @@
                   :avatar="build.author_avatar"/>
       </router-link>
 
-      <MoreButton v-if="hasMore" @click.native="showMore">Show more</MoreButton>
+      <MoreButton v-if="showHasMore" @click.native="showMore">Show more</MoreButton>
     </template>
 
-    <Loading v-if="loading" text="Loading builds"/>
+    <Loading v-if="showLoading" text="Loading builds"/>
   </div>
 </template>
 
@@ -54,18 +52,20 @@ export default {
       values.sort((a, b) => b.number - a.number);
       return values;
     },
-    loading() {
-      return this.collection && this.collection.status === "loading";
+    showLoading() {
+      return this.collection &&
+        this.collection.lStatus === "loading" &&
+        (this.collection.dStatus === "empty" || this.collection.lPage > 1);
     },
     loadingError() {
-      return this.collection.status === "error" ? this.collection.error : null;
+      return this.collection.lStatus === "error" ? this.collection.error : null;
     },
-    loaded() {
-      return this.collection && this.collection.status === "loaded";
+    showEmptyListAlert() {
+      return this.collection && this.collection.dStatus === "present" && this.builds.length === 0;
     },
-    hasMore() {
+    showHasMore() {
       const lastBuilds = this.builds[this.builds.length - 1];
-      return !this.loading && lastBuilds && lastBuilds.number !== 1;
+      return this.collection && this.collection.lStatus === "loaded" && lastBuilds && lastBuilds.number !== 1;
     }
   },
   methods: {

@@ -24,7 +24,7 @@
     <RepoList v-if="!loadingError"
               :items="sortLimit(latest)"
               emptyMessage="Your repository list is empty."
-              :loading="loading"/>
+              :loading="showLoading"/>
 
     <MoreButton v-if="showMore" @click.native="showAll">Show all repositories</MoreButton>
   </div>
@@ -68,8 +68,8 @@ export default {
     loadingStatus() {
       return this.$store.state.latestStatus
     },
-    loading() {
-      return this.loadingStatus === "loading";
+    showLoading() {
+      return this.loadingStatus === "loading" && this.$store.state.latestUpdated === 0;
     },
     loadingError() {
       return this.loadingStatus === "error" ? this.$store.state.latestLoadingError : null;
