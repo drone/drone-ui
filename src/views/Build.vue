@@ -544,6 +544,10 @@ export default {
     background-color: rgba(255, 255, 255, 0.15);
   }
 
+  .ol-html {
+    padding-right: 0;
+  }
+
   .ol-time {
     display: table-cell;
   }
@@ -628,6 +632,7 @@ export default {
 
 .ol-html {
   word-break: break-all;
+  padding-right: 15px;
 }
 
 .ol-time {
