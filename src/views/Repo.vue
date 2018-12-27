@@ -164,23 +164,20 @@ export default {
 
 .page-header.secondary-page-header {
   height: auto;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 
   @include tablet {
     flex-direction: column;
     align-items: flex-start;
-    margin-bottom: 20px;
   }
 }
 
 h1 {
   line-height: 38px;
   font-size: 28px;
-  margin-bottom: 10px;
 
   @include tablet {
     flex-direction: column;
-    margin-bottom: 0;
   }
 }
 

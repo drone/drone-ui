@@ -129,7 +129,8 @@ export default new Vuex.Store({
       status: "empty", // or 'loading', 'loaded', 'error'
       error: null,
       syncing: false,
-      syncingError: null
+      syncingError: null,
+      tokenLoading: false
     },
 
     // todo use collection style (like object in builds[slug])
@@ -406,9 +407,14 @@ export default new Vuex.Store({
     // user token
     //
 
-    VIEWER_FIND_TOKEN_LOADING() {},
-    VIEWER_FIND_TOKEN_FAILURE() {},
+    VIEWER_FIND_TOKEN_LOADING(state) {
+      state.user.tokenLoading = true;
+    },
+    VIEWER_FIND_TOKEN_FAILURE(state) {
+      state.user.tokenLoading = false;
+    },
     VIEWER_FIND_TOKEN_SUCCESS(state, { res }) {
+      state.user.tokenLoading = false;
       state.user.data = res;
     },
 

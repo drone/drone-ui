@@ -3,18 +3,20 @@
     <Hint v-if="mediaType === 'desktop'" position="bottom" showOn="hover">
       Recent builds ({{count}} active)
     </Hint>
-    <div class="border"></div>
+    <IconGear class="gear"/>
     <div class="label">{{ loaded ? count : "-" }}</div>
   </div>
 </template>
 
 <script>
 import Hint from "@/components/Hint";
+import IconGear from "@/components/icons/IconGear";
 
 export default {
   name: "BuildsFeedIndicator",
   components: {
-    Hint
+    Hint,
+    IconGear
   },
   props: {
     collection: Object,
@@ -51,33 +53,19 @@ export default {
     color: #fff;
   }
 
-  .border {
-    border: 1px solid rgba(255, 255, 255, 0.3);
-  }
-
-  &.filled .border {
-    background-color: #fff;
+  &.filled .label {
+    color: $header-color;
   }
 }
 
 .builds-feed-indicator.status-running {
-  .border {
-    border: 2px solid #ffd20a;
-    border-bottom-color: transparent;
-    animation: spin 1s linear infinite;
-  }
-
   .label {
     color: #ffd20a;
   }
 
-  &.filled .border {
-    background-color: #ffd20a;
+  &.filled .label {
+    color: $header-color;
   }
-}
-
-.builds-feed-indicator.filled .label {
-  color: $color-header;
 }
 
 .hint {
@@ -85,12 +73,9 @@ export default {
   right: -50px;
 }
 
-.border {
+.gear {
   width: 30px;
   height: 30px;
-  border-radius: 15px;
-  box-sizing: border-box;
-  background-color: $color-header;
 }
 
 .label {
@@ -100,14 +85,65 @@ export default {
   position: absolute;
   line-height: 30px;
   text-align: center;
-  font-size: 16px;
+  font-size: 14px;
+  font-style: italic;
   font-weight: 600;
 }
 </style>
 
-<style>
+<style lang="scss">
+@import "../assets/styles/variables";
+
 .builds-feed-indicator > .hint > .triangle {
   right: 60px;
   left: auto;
+}
+
+.builds-feed-indicator .gear > g {
+  fill: $header-color;
+}
+
+.builds-feed-indicator.status-done {
+  .gear {
+    .line {
+      fill: #fff;
+      fill-opacity: 0.3;
+    }
+
+    .bg {
+      fill: $header-color;
+    }
+  }
+
+  &.filled .gear {
+    .line,
+    .bg {
+      fill: #fff;
+      fill-opacity: 1;
+    }
+  }
+}
+
+.builds-feed-indicator.status-running {
+  .gear {
+    animation: spin 5s linear infinite;
+
+    .line {
+      fill: #ffd20a;
+      fill-opacity: 1;
+    }
+
+    .bg {
+      fill: $header-color;
+    }
+  }
+
+  &.filled .gear {
+    .line,
+    .bg {
+      fill: #ffd20a;
+      fill-opacity: 1;
+    }
+  }
 }
 </style>

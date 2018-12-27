@@ -49,11 +49,24 @@ export default {
   flex-direction: column;
 }
 
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+
+  @include mobile {
+    position: absolute;
+  }
+}
+
 main {
   box-sizing: border-box;
   position: relative;
   flex-grow: 1;
   display: flex;
+  padding-top: $header-height;
 }
 
 footer {

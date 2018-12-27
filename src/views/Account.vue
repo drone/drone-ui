@@ -4,7 +4,7 @@
       <h1>User Settings</h1>
     </header>
 
-    <Loading v-if="loading"/>
+    <Loading v-if="showLoading"/>
     <AlertError v-else-if="error" :error="error"/>
     <CardGroup v-else-if="user && user.token">
       <Card>
@@ -55,7 +55,6 @@ export default {
   },
   data() {
     return {
-      loading: false,
       error: null
     };
   },
@@ -65,19 +64,16 @@ export default {
     },
     user() {
       return this.$store.state.user.data;
+    },
+    showLoading() {
+      const { user } = this.$store.state;
+      return user.tokenLoading && !this.user.token;
     }
   },
   mounted() {
-    this.loading = true;
-    this.$store
-      .dispatch("fetchViewerToken")
-      .then(() => {
-        this.loading = false;
-      })
-      .catch(e => {
-        this.loading = false;
-        this.error = e;
-      });
+    this.$store.dispatch("fetchViewerToken").catch(e => {
+      this.error = e;
+    });
   }
 };
 </script>
@@ -93,9 +89,5 @@ h1 {
   letter-spacing: normal;
   color: #192d46;
   margin: 30px 0px;
-}
-
-h2 {
-  margin: 0 15px;
 }
 </style>

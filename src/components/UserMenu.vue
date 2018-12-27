@@ -3,7 +3,7 @@
        :class="{ clicked }"
        @click="toggle"
        v-click-outside="close">
-    <img class='avatar' :src="user.avatar"/>
+    <img class='avatar' :src="user.avatar" alt="avatar"/>
 
     <Popup :position="'bottom'" :align="'right'" :style="style">
       <router-link to="/account" @focus.native="open" @blur.native="closeDelayed">User settings</router-link>
@@ -101,5 +101,6 @@ export default {
   width: 30px;
   height: 30px;
   cursor: pointer;
+  display: block;
 }
 </style>

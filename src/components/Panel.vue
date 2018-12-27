@@ -1,6 +1,6 @@
 <template>
   <div class="panel" :class="{ [`side-${side}`]: true, [`opened-${opened ? 'yes' : 'no'}`]: true }">
-    <div class="panel-content" :style="{ top: `${top}px`, bottom: `${bottom}px` }">
+    <div class="panel-content" :style="{ bottom: `${bottom}px` }">
       <slot></slot>
     </div>
   </div>
@@ -9,8 +9,7 @@
 <script>
 import * as validators from "@/lib/validators";
 
-const HEADER_HEIGHT = 60;
-const FOOTER_HEIGHT = 60;
+const FOOTER_HEIGHT = 56;
 
 export default {
   name: "Panel",
@@ -21,7 +20,6 @@ export default {
   },
   data() {
     return {
-      top: 60,
       bottom: 0
     };
   },
@@ -35,10 +33,8 @@ export default {
     onWindowScroll() {
       const availableHeight = document.getElementsByTagName("html")[0].scrollHeight;
       const scrollYRemain = availableHeight - window.innerHeight - window.scrollY;
-      const nextTop = Math.max(HEADER_HEIGHT - window.scrollY, 0);
       const nextBottom = Math.max(FOOTER_HEIGHT - scrollYRemain, 0);
 
-      if (nextTop !== this.top) this.top = nextTop;
       if (nextBottom !== this.bottom) this.bottom = nextBottom;
     }
   }
@@ -46,6 +42,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "../assets/styles/variables";
+
 .panel {
   width: 360px;
   box-shadow: 0 2px 4px 0 rgba(25, 45, 70, 0.05);
@@ -72,7 +70,7 @@ export default {
   box-sizing: border-box;
   width: 360px;
   position: fixed;
-  top: 60px;
+  top: $header-height;
   bottom: 0;
   background-color: #fff;
   overflow: auto;

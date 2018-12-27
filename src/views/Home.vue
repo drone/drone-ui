@@ -24,7 +24,8 @@
     <RepoList v-if="!loadingError"
               :items="sortLimit(latest)"
               emptyMessage="Your repository list is empty."
-              :loading="showLoading"/>
+              :loading="showLoading"
+              :repoToProps="repoToProps"/>
 
     <MoreButton v-if="showMore" @click.native="showAll">Show all repositories</MoreButton>
   </div>
@@ -102,6 +103,12 @@ export default {
       if (!this.syncing) {
         this.$store.dispatch('syncAccount');
       }
+    },
+    repoToProps(repo) {
+      return {
+        ...RepoList.defaultRepoToProps(repo),
+        linkRepo: repo
+      };
     }
   }
 };

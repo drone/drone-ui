@@ -103,9 +103,11 @@
       </div>
 
       <ScrollLock v-if="outputFullscreen"/>
-      <div class="output"
+
+      <Alert v-if="isStageError" class="alert stage-alert">{{ stage.error }} </Alert>
+
+      <div v-else class="output"
            :class="{'output-fullscreen': outputFullscreen, 'show-to-top': !logsLoading && showToTop}"
-           v-if="!isStageError"
            ref="output">
         <div ref="topAnchor"></div>
 
@@ -136,12 +138,17 @@
             </Button>
           </div>
 
-          <div v-for="line in shownLogs" :key="line.pos" class="output-line">
-            <div>{{line.pos+1}}</div>
-            <div v-html="line._html"></div>
-            <div>{{line.time}}s</div>
-          </div>
+          <table class="output-lines">
+            <tbody>
+            <tr v-for="line in shownLogs" :key="line.pos">
+              <td class="ol-pos">{{line.pos+1}}</td>
+              <td class="ol-html" v-html="line._html"></td>
+              <td class="ol-time">{{line.time}}s</td>
+            </tr>
+            </tbody>
+          </table>
         </div>
+
 
         <div ref="bottomAnchor"></div>
 
@@ -149,12 +156,8 @@
       </div>
     </div>
 
-    <Alert v-if="isBuildError" class="alert">
+    <Alert v-if="isBuildError" class="alert be">
       {{build.error}}
-    </Alert>
-
-    <Alert v-if="isStageError" class="alert">
-      {{stage.error}}
     </Alert>
   </div>
 </template>
@@ -179,6 +182,9 @@ import IconSource from "../components/icons/IconSource";
 import AlertError from "../components/AlertError";
 
 let previousScrollY = window.scrollY;
+const STAGES_TOP = 56;
+const STAGES_PADDING = 10;
+const STAGES_TOP_BREAKPOINT = STAGES_TOP + STAGES_PADDING;
 
 export default {
   name: "Build",
@@ -335,22 +341,23 @@ export default {
       link.click();
     },
     onScroll() {
-      this.alignStages();
-      this.showToTop = this.$refs.output.getBoundingClientRect().y < 0;
-    },
-    alignStages() {
       const delta = window.scrollY - previousScrollY;
+      const { stages, output } = this.$refs;
+
       previousScrollY = window.scrollY;
 
-      const stages = this.$refs.stages;
-
-      if (!stages) return;
-
+      if (stages) this.alignStages(stages, delta);
+      if (output) this.showToTop = this.$refs.output.getBoundingClientRect().y < 0;
+    },
+    alignStages(stages, delta) {
       const stagesRect = stages.getBoundingClientRect();
 
-      if (stagesRect.y <= 0 && window.innerHeight < stagesRect.height) {
+      if (stagesRect.y <= STAGES_TOP_BREAKPOINT && window.innerHeight < stagesRect.height) {
+        const bottomBreakpoint = window.innerHeight - stagesRect.height - STAGES_PADDING;
         const top = parseInt(stages.style.top || 0);
-        const newTop = Math.max(Math.min(0, top - delta), window.innerHeight - stagesRect.height);
+
+        // newTop = top - delta rounded by [STAGES_TOP_BREAKPOINT, bottomBreakpoint]
+        const newTop = Math.max(Math.min(STAGES_TOP_BREAKPOINT, top - delta), bottomBreakpoint);
 
         stages.style.top = `${newTop}px`;
       }
@@ -455,10 +462,10 @@ export default {
 }
 
 .stages {
-  flex: 0 0 300px;
-  width: 300px;
+  flex: 0 0 270px;
+  width: 270px;
   position: sticky;
-  top: 0;
+  top: $header-height;
 
   @include tablet {
     flex: 1 0 auto;
@@ -470,6 +477,10 @@ export default {
 
 .stage-container + .stage-container {
   margin-top: 20px;
+}
+
+.stage-alert {
+  flex-grow: 1;
 }
 
 .output {
@@ -528,11 +539,19 @@ export default {
     bottom: 0;
     right: 0;
   }
+
+  .output-lines tr:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .ol-time {
+    display: table-cell;
+  }
 }
 
 .output-header {
   position: sticky;
-  top: 0;
+  top: $header-height;
   background: #192d46;
   padding: 8px 5px 7px 15px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
@@ -543,6 +562,10 @@ export default {
   align-items: center;
   flex-shrink: 0;
   border-radius: 6px 6px 0 0;
+
+  @include mobile {
+    top: 0;
+  }
 }
 
 .output-title {
@@ -573,7 +596,7 @@ export default {
 }
 
 .output-content {
-  padding: 15px;
+  padding: 15px 0;
 }
 
 .loading:after {
@@ -586,33 +609,35 @@ export default {
   }
 }
 
-.output-line {
-  display: flex;
+.output-lines {
+  width: 100%;
   line-height: 19px;
-  max-width: 100%;
 }
 
-.output-line > div:first-child {
-  -webkit-user-select: none;
+.ol-pos,
+.ol-time {
   color: #8c96a1;
-  min-width: 20px;
-  padding-right: 20px;
   user-select: none;
-  flex-shrink: 0;
+  white-space: nowrap;
+  width: 1px;
 }
-.output-line > div:last-child {
-  -webkit-user-select: none;
-  color: #8c96a1;
-  padding-left: 20px;
-  user-select: none;
-  flex-shrink: 0;
+
+.ol-pos {
+  padding: 0 10px 0 15px;
 }
-.output-line > div:nth-child(2) {
-  flex-grow: 1;
+
+.ol-html {
   word-break: break-all;
 }
 
+.ol-time {
+  display: none;
+  padding: 0 15px 0 10px;
+  text-align: right;
+}
+
 .output-content-actions {
+  padding: 0 15px;
   margin-bottom: 15px;
 }
 

@@ -1,7 +1,7 @@
 <template>
   <span v-if="config">
     <span v-if="prefix">{{ prefix }}</span>
-    <component :is="tag" v-bind="props" class="repo-item-label">{{ config.text }}</component>
+    <component :is="tag" v-bind="props" class="repo-item-label" @click="onClick">{{ config.text }}</component>
   </span>
 </template>
 
@@ -50,7 +50,7 @@ export default {
       if (this.provider === "github") return `${GITHUB_BASE}/${this.repo.slug}/tree/${this.build.target}`;
     },
     hrefCommit() {
-      if (this.provider === "github") return `${GITHUB_BASE}/${this.repo.slug}/commit/${this.build.target}`;
+      if (this.provider === "github") return `${GITHUB_BASE}/${this.repo.slug}/commit/${this.build.after}`;
     },
     provider() {
       if (!this.link) return;
@@ -78,6 +78,11 @@ export default {
     },
     trimTagRef(ref) {
       return ref.startsWith("refs/tags/") ? ref.substr(10) : ref;
+    },
+    onClick(e) {
+      if (this.tag === "a") {
+        e.stopPropagation();
+      }
     }
   }
 };

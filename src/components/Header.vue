@@ -71,7 +71,8 @@ export default {
         state.latestStatus === "loading" || // latest
         (route.name === "builds" && state.builds[slug] && state.builds[slug].lStatus === "loading") || // builds
         (state.buildLoading) ||
-        (state.repoLoading)
+        (state.repoLoading) ||
+        (state.user.tokenLoading)
       );
     }
   },
@@ -96,15 +97,14 @@ export default {
 @import "../assets/styles/mixins";
 
 .header {
-  height: 60px;
+  height: $header-height;
   box-shadow: 0 2px 4px 0 rgba(25, 45, 70, 0.05);
-  background-color: $color-header;
+  background-color: rgba($header-color, 0.97);
   align-items: center;
   box-sizing: border-box;
   display: flex;
   padding: 0 $padding-side;
   justify-content: space-between;
-  position: relative;
 
   &.loading:before {
     content: "";
@@ -164,6 +164,10 @@ export default {
 .status-bar {
   flex-shrink: 0;
 
+  > * {
+    vertical-align: middle;
+  }
+
   > * + * {
     margin-left: 20px;
   }
@@ -185,9 +189,10 @@ export default {
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 50%;
   color: #fff;
+  background-color: $header-color;
 
   &.filled {
-    color: $color-header;
+    color: $header-color;
     background-color: #fff;
   }
 
@@ -196,6 +201,8 @@ export default {
     height: 16px;
     padding: 6px 8px 8px 6px;
     position: absolute;
+    top: 0;
+    left: 0;
   }
 }
 

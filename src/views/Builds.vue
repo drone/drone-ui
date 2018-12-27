@@ -14,7 +14,8 @@
                   :title="build.message"
                   :status="build.status"
                   :build="shrinkBuild(build)"
-                  :avatar="build.author_avatar"/>
+                  :avatar="build.author_avatar"
+                  :linkRepo="repo"/>
       </router-link>
 
       <MoreButton v-if="showHasMore" @click.native="showMore">Show more</MoreButton>
@@ -43,6 +44,9 @@ export default {
   computed: {
     slug() {
       return this.$route.params.namespace + "/" + this.$route.params.name;
+    },
+    repo() {
+      return this.$store.state.repos[this.slug];
     },
     collection() {
       return this.$store.state.builds[this.slug];
