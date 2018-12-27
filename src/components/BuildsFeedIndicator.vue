@@ -4,6 +4,7 @@
       Recent builds ({{count}} active)
     </Hint>
     <IconGear class="gear"/>
+    <div class="circle"/>
     <div class="label">{{ loaded ? count : "-" }}</div>
   </div>
 </template>
@@ -48,26 +49,6 @@ export default {
   display: inline-block;
 }
 
-.builds-feed-indicator.status-done {
-  .label {
-    color: #fff;
-  }
-
-  &.filled .label {
-    color: $header-color;
-  }
-}
-
-.builds-feed-indicator.status-running {
-  .label {
-    color: #ffd20a;
-  }
-
-  &.filled .label {
-    color: $header-color;
-  }
-}
-
 .hint {
   white-space: nowrap;
   right: -50px;
@@ -78,6 +59,13 @@ export default {
   height: 30px;
 }
 
+.circle {
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+}
+
 .label {
   top: 0;
   width: 30px;
@@ -86,7 +74,6 @@ export default {
   line-height: 30px;
   text-align: center;
   font-size: 14px;
-  font-style: italic;
   font-weight: 600;
 }
 </style>
@@ -105,21 +92,20 @@ export default {
 
 .builds-feed-indicator.status-done {
   .gear {
-    .line {
-      fill: #fff;
-      fill-opacity: 0.3;
-    }
-
-    .bg {
-      fill: $header-color;
-    }
+    display: none;
   }
 
-  &.filled .gear {
-    .line,
-    .bg {
-      fill: #fff;
-      fill-opacity: 1;
+  .label {
+    color: #fff;
+  }
+
+  &.filled {
+    .circle {
+      background: white;
+    }
+
+    .label {
+      color: $header-color;
     }
   }
 }
@@ -129,7 +115,7 @@ export default {
     animation: spin 5s linear infinite;
 
     .line {
-      fill: #ffd20a;
+      fill: #ffc800;
       fill-opacity: 1;
     }
 
@@ -138,11 +124,25 @@ export default {
     }
   }
 
-  &.filled .gear {
-    .line,
-    .bg {
-      fill: #ffd20a;
-      fill-opacity: 1;
+  .circle {
+    display: none;
+  }
+
+  .label {
+    color: #ffc800;
+  }
+
+  &.filled {
+    .gear {
+      .line,
+      .bg {
+        fill: #ffc800;
+        fill-opacity: 1;
+      }
+    }
+
+    .label {
+      color: $header-color;
     }
   }
 }

@@ -75,7 +75,8 @@ export default {
 }
 
 .status-running {
-  background-color: #FFD20A;
+  color: #ffc800;
+  background-color: transparent;
 }
 
 .status-skipped,
@@ -105,7 +106,7 @@ svg {
 }
 
 .status-running > svg {
-  animation: spin 1.5s linear infinite;
+  animation: spin 3s linear infinite;
 }
 
 .status-pending > svg {

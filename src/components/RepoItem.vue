@@ -105,7 +105,7 @@ export default {
 
     .connector {
       width: 0;
-      margin-top: -5px;
+      margin-top: -8px;
     }
 
     .header {
@@ -180,11 +180,12 @@ export default {
 .status {
   margin-bottom: 5px;
   display: block;
+  z-index: 2;
 }
 
 .connector {
   width: 15px;
-  height: 15px;
+  height: 18px;
   opacity: 0.2;
   border-bottom-left-radius: 8px;
   border-left: solid 1px #192d46;

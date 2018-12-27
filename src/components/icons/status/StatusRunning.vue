@@ -1,9 +1,9 @@
 <template>
-  <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd"
-       clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414">
-    <g fill="currentColor">
-      <circle cx="6" cy="10" r="2"/>
-      <circle cx="14" cy="10" r="2"/>
+  <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+    <g fill="none" fill-rule="evenodd">
+      <path
+        d="M5.974 2.431c.481-.257.99-.469 1.521-.63L8.095 0h3.81l.6 1.8c.53.162 1.04.374 1.521.631l1.698-.849 2.694 2.694-.85 1.698c.258.481.47.99.632 1.521l1.8.6v3.81l-1.8.6a8.518 8.518 0 0 1-.631 1.521l.849 1.698-2.694 2.694-1.698-.85c-.481.258-.99.47-1.521.632l-.6 1.8h-3.81l-.6-1.8a8.518 8.518 0 0 1-1.521-.631l-1.698.849-2.694-2.694.85-1.698a8.518 8.518 0 0 1-.632-1.521l-1.8-.6v-3.81l1.8-.6c.162-.53.374-1.04.631-1.521l-.849-1.698 2.694-2.694 1.698.85zM10 14a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"
+        fill="currentColor"/>
     </g>
   </svg>
 </template>
