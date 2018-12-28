@@ -33,6 +33,7 @@ import reposSort from "@/lib/reposSort";
 import reposSearch from "@/lib/reposSearch";
 
 const ITEMS_LIMIT = 6;
+const HOTKEY_FREE_INPUT_TYPES = [null, "text", "password", "search", "email", "url"];
 
 export default {
   name: "Search",
@@ -109,6 +110,11 @@ export default {
         this.stopPropagationAndPreventDefault(e);
       }
       if (!this.opened && e.key === "/") {
+        if (
+          e.target.tagName === "TEXTAREA" ||
+          (e.target.tagName === "INPUT" && HOTKEY_FREE_INPUT_TYPES.includes(e.target.getAttribute("type")))
+        ) return;
+
         this.$refs.searchInput.$el.focus();
         this.stopPropagationAndPreventDefault(e);
       }
