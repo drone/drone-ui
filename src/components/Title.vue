@@ -1,7 +1,7 @@
 <template><span></span></template>
 
 <script>
-const PROJECT_NAME = "Drone | CI";
+const PROJECT_NAME = "Drone CI";
 const HUMANIZED_ROUTE_NAMES = {
   settings: "Settings",
   "builds-feed": "Builds feed",
