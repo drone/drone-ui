@@ -95,6 +95,10 @@ export default {
     display: none;
   }
 
+  .circle {
+    background-color: $header-color;
+  }
+
   .label {
     color: #fff;
   }

@@ -87,14 +87,14 @@ export const fetchBuildsFeed = async ({ commit }) => {
   }
 };
 
-export const streamEvents = ({ commit, state }) => {
+export const streamEvents = ({ commit, state, getters }) => {
   const path = `${instance}/api/stream${token ? `?access_token=${token}` : ""}`;
   const events = new EventSource(path);
 
   events.onmessage = function(event) {
     const repo = JSON.parse(event.data);
 
-    if (state.latest[repo.slug]) {
+    if (state.latest[repo.slug] || !getters.userPresent) {
       commit("BUILD_EVENT", { repo });
     }
   };

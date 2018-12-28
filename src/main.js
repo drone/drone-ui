@@ -44,11 +44,12 @@ store.dispatch('fetchViewer').then(() => {
     render: h => h(App)
   }).$mount("#app");
 
-  store
-    .dispatch("fetchReposLatest")
-    .then(() => store.dispatch("streamEvents"))
-    .catch(error => {
-      const message = `Can't enable realtime updates. Error: ${JSON.stringify(error)}`;
-      store.dispatch("showNotification", { message });
-    });
+  store.dispatch("streamEvents").catch(error => {
+    const message = `Can't enable realtime updates. Error: ${JSON.stringify(error)}`;
+    store.dispatch("showNotification", { message });
+  });
+
+  if (store.getters.userPresent) {
+    store.dispatch("fetchReposLatest");
+  }
 });

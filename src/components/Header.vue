@@ -6,10 +6,10 @@
       </router-link>
     </div>
 
-    <Search v-if="user && mediaType === 'desktop'"
+    <Search v-if="userPresent && mediaType === 'desktop'"
             placeholder="Search repositories or jump to …"/>
 
-    <div class="status-bar" v-if="user">
+    <div class="status-bar" v-if="userPresent">
       <router-link v-if="mediaType !== 'desktop'"
                    class="search-button"
                    :to="urlOrGoBack('search')"
@@ -17,7 +17,7 @@
         <IconMagnifier/>
       </router-link>
 
-      <router-link v-if="mediaType !== 'desktop'" :to="urlOrGoBack('builds-feed')" class="builds-feed-link">
+      <router-link v-if="showBuildsFeedIndicatorLink" :to="urlOrGoBack('builds-feed')" class="builds-feed-link">
         <BuildsFeedIndicator :collection="$store.state.buildsFeed" :filled="$route.name === 'builds-feed'"/>
       </router-link>
 
@@ -26,11 +26,9 @@
       <UserMenu :user="user"/>
     </div>
 
-    <template v-if="showLogin">
-      <div class="login">
-        <a href="/login" class="button">Login</a>
-      </div>
-    </template>
+    <div v-if="!userPresent" class="login">
+      <a href="/login" class="button">Login</a>
+    </div>
   </header>
 </template>
 
@@ -57,11 +55,8 @@ export default {
     user() {
       return this.$store.state.user.data;
     },
-    userLoaded() {
-      return this.$store.state.user.status === "loaded";
-    },
-    showLogin() {
-      return this.userLoaded && !this.user;
+    userPresent() {
+      return this.$store.getters.userPresent;
     },
     loading() {
       const { state, state: { route } } = this.$store;
@@ -74,6 +69,9 @@ export default {
         (state.repoLoading) ||
         (state.user.tokenLoading)
       );
+    },
+    showBuildsFeedIndicatorLink() {
+      return this.mediaType !== "desktop" && this.userPresent;
     }
   },
   methods: {
@@ -86,7 +84,7 @@ export default {
     }
   },
   mounted() {
-    if (this.$store.state.buildsFeed.status === "empty") {
+    if (this.$store.state.buildsFeed.status === "empty" && this.showBuildsFeedIndicatorLink) {
       this.$store.dispatch("fetchBuildsFeed");
     }
   }

@@ -2,7 +2,8 @@
   <div class="repo">
     <PageHeader>
       <Breadcrumb>
-        <router-link :to="'/'" class="link">Repositories</router-link>
+        <router-link v-if="userPresent" :to="'/'" class="link">Repositories</router-link>
+        <span v-else>Repositories</span>
 
         <router-link v-if="$route.params.build" :to="'/'+slug" class="link repo-name-breadcrumb" :title="slug">{{ slug }}</router-link>
         <span :title="slug" v-else>{{ slug }}</span>
@@ -130,6 +131,9 @@ export default {
     build() {
       const collection = this.$store.state.builds[this.slug];
       return this.repo && collection && collection.data[this.$route.params.build];
+    },
+    userPresent() {
+      return this.$store.state.user.dStatus === "present";
     }
   },
   methods: {

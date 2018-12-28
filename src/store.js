@@ -123,10 +123,10 @@ export default new Vuex.Store({
     crons: {},
     activity: {},
 
-    // todo use separated statuses (l and d)
     user: {
-      data: {},
-      status: "empty", // or 'loading', 'loaded', 'error'
+      data: null,
+      lStatus: "none", // or 'loading', 'loaded', 'error'
+      dStatus: "empty", // 'present'
       error: null,
       syncing: false,
       syncingError: null,
@@ -147,6 +147,11 @@ export default new Vuex.Store({
     },
 
     notifications: {}
+  },
+  getters: {
+    userPresent(state) {
+      return state.user.dStatus === "present";
+    }
   },
   mutations: {
     REPO_FIND_LOADING(state) {
@@ -392,15 +397,13 @@ export default new Vuex.Store({
     //
 
     VIEWER_FIND_LOADING(state) {
-      state.user.status = "loading";
+      applyLoading(state.user)
     },
     VIEWER_FIND_FAILURE(state, { error }){
-      state.user.status = "error";
-      state.user.error = error;
+      applyFailure(state.user, error)
     },
     VIEWER_FIND_SUCCESS(state, { res }){
-      state.user.status = "loaded";
-      state.user.data = res;
+      applySuccess(state.user, res)
     },
 
     //

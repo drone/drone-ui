@@ -6,7 +6,7 @@
       <div class="container">
         <slot></slot>
       </div>
-      <BuildsFeedPanel v-if="$store.state.mediaType === 'desktop'" />
+      <BuildsFeedPanel v-if="$store.state.mediaType === 'desktop' && $store.getters.userPresent" />
     </main>
 
     <Footer />
