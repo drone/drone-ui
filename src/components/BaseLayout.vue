@@ -1,5 +1,7 @@
 <template>
   <div class="wrap">
+    <Title/>
+
     <slot name="header"></slot>
 
     <main id="base-layout-main">
@@ -19,10 +21,12 @@
 import Footer from "./Footer.vue";
 import Notifications from "@/components/Notifications.vue";
 import BuildsFeedPanel from "@/components/BuildsFeedPanel";
+import Title from "@/components/Title";
 
 export default {
   name: "BaseLayout",
   components: {
+    Title,
     Footer,
     Notifications,
     BuildsFeedPanel
