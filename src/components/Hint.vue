@@ -12,7 +12,7 @@ export default {
   name: "Hint",
   props: {
     position: { type: String, validator: validators.oneOf(["top", "bottom"]), default: "top" },
-    align: { type: String, validator: validators.oneOf(["right", "left"]), default: "left" },
+    align: { type: String, validator: validators.oneOf(["right", "left", "center"]), default: "left" },
     showOn: { type: String, validator: validators.oneOf(["hover"]) }
   },
   data() {
@@ -93,6 +93,15 @@ export default {
 
   .triangle {
     right: 10px;
+  }
+}
+
+.align-center {
+  left: 50%;
+
+  .triangle {
+    left: 50%;
+    margin-left: -5px;
   }
 }
 

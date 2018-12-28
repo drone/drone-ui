@@ -16,13 +16,12 @@ export default {
     };
   },
   mounted: function() {
-    this.updateCurrentTime();
-    if (!this.stopped) {
-      this.interval = setInterval(this.updateCurrentTime, 1000);
-    }
+    this.processStoppedValue(this.stopped);
   },
   destroyed: function() {
-    clearInterval(this.interval);
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
   },
   computed: {
     time: function() {
@@ -47,11 +46,24 @@ export default {
   },
   methods: {
     updateCurrentTime: function() {
-      if (this.stopped) {
-        this.currentTime = this.stopped * 1000;
+      this.currentTime = Date.now();
+    },
+    processStoppedValue(value) {
+      if (this.interval) {
+        clearInterval(this.interval);
+      }
+
+      if (value) {
+        this.currentTime = value * 1000;
       } else {
         this.currentTime = Date.now();
+        this.interval = setInterval(this.updateCurrentTime, 1000);
       }
+    }
+  },
+  watch: {
+    stopped(newValue) {
+      this.processStoppedValue(newValue);
     }
   }
 };

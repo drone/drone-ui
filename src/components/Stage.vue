@@ -102,24 +102,14 @@ time {
 </style>
 
 <style lang="scss">
-$margin-between-steps: 4px;
-
 .stage > .content {
   > .step-container {
-    .step:after {
-      top: -$margin-between-steps;
-    }
-
     &:first-of-type .step:after {
       top: 50%;
     }
 
     &:last-of-type .step:after {
       bottom: 50%;
-    }
-
-    & + .step-container {
-      margin-top: $margin-between-steps;
     }
 
     > a {

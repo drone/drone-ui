@@ -1,6 +1,6 @@
 <template>
   <section :class="{ selected, step: true }">
-    <Status :status="'running'"/>
+    <Status :status="status"/>
     <span class="name" :title="name">{{ number }}. {{ name }}</span>
     <IconArrowDropdown v-if="selected" direction="right"/>
     <time-elapsed v-else-if="started" :started="started" :stopped="stopped"/>
@@ -42,7 +42,7 @@ section {
   display: flex;
   padding: 0 15px;
   position: relative;
-  height: 30px;
+  height: 32px;
 }
 
 .status {

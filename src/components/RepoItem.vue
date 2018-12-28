@@ -31,23 +31,21 @@
         <div class="description">
           <span>{{build.author_login}}</span>
           <span> {{action}} </span>
-          <div class="divider"/>
           <RepoItemLabel type="actionTarget" :build="build" :repo="linkRepo" :link="!!linkRepo"/>
           <RepoItemLabel class="to" type="to" :build="build" :repo="linkRepo" :link="!!linkRepo" prefix=" to "/>
-          <span class="commit-message" v-if="build.message" :title="build.message">
-            <span class="divider"/>
-            <span class="build-message-dash"> — </span>{{ build.message }}
-          </span>
+          <span class="commit-message" v-if="build.message" :title="build.message"> — {{ build.message }}</span>
         </div>
 
         <div class="time">
           <div class="time-elapsed">
-            <Hint showOn="hover" align="right">Build duration</Hint>
+            <Hint showOn="hover" align="center" position="bottom" style="margin-left:-50px;">Build duration</Hint>
             <TimeElapsed v-if="build.started" :started="build.started" :stopped="build.finished"/>
           </div>
           <span v-if="build.started && build.created" class="dot"></span>
           <span v-if="build.created" class="time-started">
-            <Hint showOn="hover" align="right">Build started: {{ build.created | moment("YYYY-MM-DD hh:mm:ss") }}</Hint>
+            <Hint showOn="hover" align="right" position="bottom">
+              Build started: {{ build.created | moment("YYYY-MM-DD hh:mm:ss") }}
+            </Hint>
             {{ new Date(build.created * 1000) | moment("from", "now") }}
           </span>
         </div>
@@ -114,6 +112,7 @@ export default {
     .connector {
       width: 0;
       margin-top: -8px;
+      height: 18px;
     }
 
     .header {
@@ -129,23 +128,24 @@ export default {
     .build {
       display: block;
       z-index: 1;
+    }
 
-      & > img {
-        float: left;
-      }
+    img {
+      float: left;
     }
 
     .description {
       white-space: normal;
       margin-right: 0;
+      line-height: 24px;
 
       .divider {
         display: block;
       }
     }
 
-    .build-message-dash {
-      display: none;
+    .to {
+      display: inline;
     }
 
     .time {
@@ -193,7 +193,7 @@ export default {
 
 .connector {
   width: 15px;
-  height: 18px;
+  height: 15px;
   opacity: 0.2;
   border-bottom-left-radius: 8px;
   border-left: solid 1px #192d46;
@@ -244,9 +244,7 @@ export default {
   line-height: normal;
   color: rgba(25, 45, 70, 0.6);
   margin-right: 15px;
-}
 
-.description {
   .divider {
     height: 5px;
     display: none;
@@ -302,6 +300,7 @@ export default {
     .description .to .repo-item-label {
       max-width: none;
       display: inline;
+      vertical-align: baseline;
     }
   }
 }

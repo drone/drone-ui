@@ -92,7 +92,6 @@ export default {
 @import "../assets/styles/variables";
 
 .repo-item-label {
-  line-height: 20px;
   background-color: rgba($color-primary, 0.07);
   color: $color-primary;
   padding: 0 4px;
