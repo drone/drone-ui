@@ -1,14 +1,16 @@
 <template>
-    <section v-bind:class="{ selected: selected, step: true }">
-        <Status :status="status"/>
-        <span>{{ name }}</span>
-        <time-elapsed :started="started" :stopped="stopped" v-if="started" />
-    </section>
+  <section :class="{ selected, step: true }">
+    <Status :status="'running'"/>
+    <span class="name" :title="name">{{ number }}. {{ name }}</span>
+    <IconArrowDropdown v-if="selected" direction="right"/>
+    <time-elapsed v-else-if="started" :started="started" :stopped="stopped"/>
+  </section>
 </template>
 
 <script>
 import Status from "./Status.vue";
 import TimeElapsed from "./TimeElapsed.vue";
+import IconArrowDropdown from "./icons/IconArrowDropdown.vue";
 
 export default {
   name: "Step",
@@ -19,15 +21,16 @@ export default {
     created: Number,
     started: Number,
     stopped: Number,
-    selected: Boolean,
+    selected: Boolean
   },
   components: {
-      Status,
-      TimeElapsed
+    Status,
+    TimeElapsed,
+    IconArrowDropdown
   },
   computed: {
     duration() {
-        return "";
+      return "";
     }
   }
 };
@@ -35,19 +38,11 @@ export default {
 
 <style scoped>
 section {
-    align-items: center;
-    color: #8d97a2;
-    display: flex;
-    padding: 15px;
-    position: relative;
-}
-
-time,
-span {
-  margin-left: 10px;
-  line-height: normal;
-  letter-spacing: normal;
-  color: #192d46;
+  align-items: center;
+  display: flex;
+  padding: 0 15px;
+  position: relative;
+  height: 30px;
 }
 
 .status {
@@ -55,27 +50,44 @@ span {
   z-index: 1;
 }
 
-span {
+.name {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
   flex-grow: 1;
+  margin-left: 10px;
+  padding: 2px 0;
 }
 
 time {
   color: rgba(25, 45, 70, 0.6);
   text-align: right;
   flex-shrink: 0;
+  margin-left: 10px;
+}
+
+.icon-arrow-dropdown {
+  flex-shrink: 0;
+  color: rgba(25, 45, 70, 0.6);
 }
 
 section.selected {
-  background-color: rgba(25, 45, 70, 0.03);
+  background-color: rgba(25, 45, 70, 0.05);
 }
 
 section:after {
-    content: " ";
-    border-left: 1px solid rgba(25, 45, 70, 0.05);
-    width: 1px;
-    position: absolute;
-    top: 0;
+  content: " ";
+  border-left: 1px solid rgba(25, 45, 70, 0.05);
+  width: 1px;
+  position: absolute;
+  top: 0;
   bottom: 0;
-    left: 24px;
+  left: 24px;
+}
+</style>
+
+<style>
+.step > .status.status-running svg circle {
+  fill: #fff;
 }
 </style>

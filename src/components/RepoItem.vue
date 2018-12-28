@@ -41,9 +41,15 @@
         </div>
 
         <div class="time">
-          <TimeElapsed v-if="build.started" :started="build.started" :stopped="build.started"/>
+          <div class="time-elapsed">
+            <Hint showOn="hover" align="right">Build duration</Hint>
+            <TimeElapsed v-if="build.started" :started="build.started" :stopped="build.finished"/>
+          </div>
           <span v-if="build.started && build.created" class="dot"></span>
-          <span v-if="build.created">{{ new Date(build.created * 1000) | moment("from", "now") }}</span>
+          <span v-if="build.created" class="time-started">
+            <Hint showOn="hover" align="right">Build started: {{ build.created | moment("YYYY-MM-DD hh:mm:ss") }}</Hint>
+            {{ new Date(build.created * 1000) | moment("from", "now") }}
+          </span>
         </div>
       </div>
     </div>
@@ -56,6 +62,7 @@ import TimeElapsed from "./TimeElapsed.vue";
 import RepoItemLabel from "./RepoItemLabel.vue";
 import IconRepository from "@/components/icons/IconRepository.vue";
 import Button from "@/components/buttons/Button.vue";
+import Hint from "@/components/Hint.vue";
 
 export default {
   name: "RepoItem",
@@ -73,6 +80,7 @@ export default {
     RepoItemLabel,
     TimeElapsed,
     IconRepository,
+    Hint,
     Button
   },
   computed: {
@@ -257,6 +265,15 @@ export default {
   flex-shrink: 0;
   display: flex;
   align-items: center;
+}
+
+.time-started,
+.time-elapsed {
+  position: relative;
+
+  .hint {
+    white-space: nowrap;
+  }
 }
 
 .time .dot {

@@ -20,7 +20,7 @@
         <ButtonConfirm v-else outline
                        @click="handleCancel"
                        :disabled="!isCollaborator"
-                       :message="`Are you sure to cancel build ${build.number}?`"
+                       :message="`Are you sure to cancel build #${build.number}?`"
                        class="button-cancel">
           <span>Cancel</span>
           <IconCancel/>
@@ -113,9 +113,13 @@
 
         <div class="output-header">
           <div class="output-title" :title="stage && step && `${stage.name} - ${step.name}`">
-            <span class="output-title-pipeline">{{ stage && stage.name }}</span>
-            <span> — {{ step && step.name }}</span>
+            <span class="output-title-stage">{{ stage && stage.name }}</span>
+            <span class="output-title-step"> — {{ step && step.name }}</span>
           </div>
+          <time-elapsed v-if="step && step.started"
+                        :started="step.started"
+                        :stopped="step.stopped"
+                        class="output-time-elapsed"/>
           <div class="output-actions">
             <PlayButton v-if="step && !step.stopped" title="Follow logs" @click.native="toggleFollow" :pause="follow"/>
             <div v-if="step && !step.stopped" class="divider"></div>
@@ -180,6 +184,7 @@ import Loading from "@/components/Loading.vue";
 import IconArrow from "../components/icons/IconArrow";
 import IconSource from "../components/icons/IconSource";
 import AlertError from "../components/AlertError";
+import TimeElapsed from "../components/TimeElapsed";
 
 let previousScrollY = window.scrollY;
 const STAGES_TOP = 56;
@@ -189,6 +194,7 @@ const STAGES_TOP_BREAKPOINT = STAGES_TOP + STAGES_PADDING;
 export default {
   name: "Build",
   components: {
+    TimeElapsed,
     AlertError,
     IconArrow,
     Alert,
@@ -562,7 +568,6 @@ export default {
   font-size: 13px;
   color: rgba(255, 255, 255, 0.6);
   display: flex;
-  justify-content: space-between;
   align-items: center;
   flex-shrink: 0;
   border-radius: 6px 6px 0 0;
@@ -579,9 +584,14 @@ export default {
   padding: 5px 0;
 }
 
-.output-title-pipeline {
+.output-title-stage {
   font-weight: bold;
   color: #fff;
+}
+
+.output-time-elapsed {
+  flex: 1 0 auto;
+  margin-left: 5px;
 }
 
 .output-actions {
@@ -714,13 +724,5 @@ export default {
 .step-container > a:focus {
   outline: none;
   background-color: rgba(25, 45, 70, 0.02);
-}
-
-.stage-container .stage div:first-of-type .step:after {
-  top: 50%;
-}
-
-.stage-container .stage div:last-of-type .step:after {
-  bottom: 50%;
 }
 </style>

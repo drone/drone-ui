@@ -25,14 +25,14 @@ export default {
     if (this.showOn === "hover") {
       this.addedListeners = true;
       this.show = false;
-      this.$parent.$el.addEventListener("mouseenter", this.onMouseEnter);
-      this.$parent.$el.addEventListener("mouseleave", this.onMouseLeave);
+      this.$el.parentNode.addEventListener("mouseenter", this.onMouseEnter);
+      this.$el.parentNode.addEventListener("mouseleave", this.onMouseLeave);
     }
   },
   destroyed() {
     if (this.addedListeners) {
-      this.$parent.$el.removeEventListener("mouseenter", this.onMouseEnter);
-      this.$parent.$el.removeEventListener("mouseleave", this.onMouseLeave);
+      this.$el.parentNode.removeEventListener("mouseenter", this.onMouseEnter);
+      this.$el.parentNode.removeEventListener("mouseleave", this.onMouseLeave);
     }
   },
   methods: {

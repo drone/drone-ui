@@ -28,6 +28,11 @@ export default {
     Button,
     IconCancel
   },
+  mounted() {
+    if (this.$store.state.buildsFeed.status === "empty") {
+      this.$store.dispatch("fetchBuildsFeed");
+    }
+  },
   data() {
     return {
       opened: false
@@ -42,13 +47,15 @@ export default {
 </script>
 
 <style lang="scss">
+@import "../assets/styles/variables";
+
 .builds-feed-panel {
   .page-header {
-    padding: 0 10px 0 20px;
+    padding: 0 ($header-padding-side - 10px) 0 $header-padding-side;
   }
 
   .alert {
-    margin: 0 20px;
+    margin: 0 $header-padding-side;
     box-shadow: none;
     color: rgba(25, 45, 70, 0.6);
   }
@@ -59,8 +66,8 @@ export default {
     border-bottom: 1px solid rgba(25, 45, 70, 0.05);
     box-shadow: none;
     border-radius: 0;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: $header-padding-side;
+    padding-right: $header-padding-side;
   }
 
   .repo-link.hover-type-box-shadow:focus .repo-item,

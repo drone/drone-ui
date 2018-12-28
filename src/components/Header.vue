@@ -101,7 +101,7 @@ export default {
   align-items: center;
   box-sizing: border-box;
   display: flex;
-  padding: 0 $padding-side;
+  padding: 0 $header-padding-side;
   justify-content: space-between;
 
   &.loading:before {
@@ -151,7 +151,7 @@ export default {
 .logo {
   width: 30px;
   height: 30px;
-  margin-right: 50px;
+  margin-right: 45px;
   flex-shrink: 0;
 
   svg {
@@ -167,7 +167,7 @@ export default {
   }
 
   > * + * {
-    margin-left: 20px;
+    margin-left: $header-padding-side;
   }
 }
 

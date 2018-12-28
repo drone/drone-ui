@@ -18,7 +18,7 @@ export default {
     },
     buildName() {
       const { build, step, stage } = this.$store.state.route.params;
-      return build ? `Build#${build}${stage ? `.${stage}` : ""}${step ? `.${step}` : ""}` : null;
+      return build ? `Build #${build}${stage ? `.${stage}` : ""}${step ? `.${step}` : ""}` : null;
     },
     pageName() {
       return HUMANIZED_ROUTE_NAMES[this.$store.state.route.name];

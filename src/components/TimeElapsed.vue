@@ -1,5 +1,5 @@
 <template>
-  <time v-html="time"></time>
+  <time>{{ time }}</time>
 </template>
 
 <script>
@@ -7,13 +7,13 @@ export default {
   name: "TimeElapsed",
   props: {
     started: Number,
-    stopped: Number,
+    stopped: Number
   },
   data: function() {
     return {
       currentTime: Date.now(),
       interval: null
-    }
+    };
   },
   mounted: function() {
     this.updateCurrentTime();
@@ -22,31 +22,27 @@ export default {
     }
   },
   destroyed: function() {
-    clearInterval(this.interval)
+    clearInterval(this.interval);
   },
   computed: {
     time: function() {
-      return this.hours == '00'
-        ? this.minutes + ':' + this.seconds
-        : this.hours + ':' + this.minutes + ':' + this.seconds;
+      return [
+        this.hours ? `${this.hours}h` : "",
+        this.minutes ? `${this.minutes}m` : "",
+        `${this.seconds}s`
+      ].filter(x => x).join(" ");
     },
-    milliseconds: function() {
-      return this.currentTime - this.started * 1000;
+    lapsedSeconds: function() {
+      return Math.ceil((this.currentTime - this.started * 1000) / 1000);
     },
     hours: function() {
-      var lapsed = this.milliseconds;
-      var hrs = Math.floor((lapsed / 1000 / 60 / 60));
-      return hrs >= 10 ? hrs : '0' + hrs;
+      return Math.floor(this.lapsedSeconds / 60 / 60);
     },
     minutes: function() {
-      var lapsed = this.milliseconds;
-      var min = Math.floor((lapsed / 1000 / 60) % 60);
-      return min >= 10 ? min : '0' + min;
+      return Math.floor((this.lapsedSeconds / 60) % 60);
     },
     seconds: function() {
-      var lapsed = this.milliseconds;
-      var sec = Math.ceil((lapsed / 1000) % 60);
-      return sec >= 10 ? sec : '0' + sec;
+      return this.lapsedSeconds % 60;
     }
   },
   methods: {

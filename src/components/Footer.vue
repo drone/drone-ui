@@ -20,7 +20,7 @@
 footer {
   display: flex;
   justify-content: space-between;
-  padding: 0 $padding-side;
+  padding: 0 $header-padding-side;
   align-items: center;
   z-index: 1;
 
@@ -46,11 +46,7 @@ nav a {
   color: rgba(25, 45, 70, 0.6);
 
   & + a {
-    margin-left: $padding-side;
-
-    @include tablet {
-      margin-left: 15px;
-    }
+    margin-left: $header-padding-side;
   }
 }
 

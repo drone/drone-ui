@@ -2,11 +2,13 @@
   <section class="stage">
     <header>
       <Status :status="status"/>
-      <span>{{ name }}</span>
+      <span :title="name">{{ name }}</span>
       <time-elapsed :started="started" :stopped="stopped" v-if="started"/>
       <IconArrowDropdown direction="down" class="arrow-dropdown"/>
     </header>
-    <slot></slot>
+    <div class="content">
+      <slot></slot>
+    </div>
   </section>
 </template>
 
@@ -41,26 +43,23 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .stage {
   background: #FFF;
   box-shadow: 0 2px 4px 0 rgba(25, 45, 70, .05);
   border: 1px solid #edeef1;
   border-radius: 3px;
   box-sizing: border-box;
-  color: #8d97a2;
   user-select: none;
 }
 
 header {
   align-items: center;
   border-bottom: solid 1px rgba(25, 45, 70, 0.08);
-  box-sizing: border-box;
   display: flex;
-  height: 45px;
+  height: 50px;
   padding: 0 15px;
   user-select: none;
-  max-width: 100%;
   color: #192d46;
 }
 
@@ -72,10 +71,18 @@ span {
   flex-grow: 1;
   font-weight: 600;
   margin-left: 10px;
-  font-size: 14px;
+  font-size: 13px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-transform: uppercase;
+}
+
+time {
+  font-size: 13px;
+  font-weight: 600;
+  flex-shrink: 0;
+  color: rgba(25, 45, 70, 0.6);
 }
 
 .arrow-dropdown {
@@ -83,11 +90,47 @@ span {
   color: rgba(25, 45, 70, 0.6);
 }
 
-a {
-  display: block;
-}
+.content {
+  > *:first-child {
+    margin-top: 10px;
+  }
 
-a:hover {
-  background-color: #f8f8f9;
+  > *:last-child {
+    margin-bottom: 10px;
+  }
+}
+</style>
+
+<style lang="scss">
+$margin-between-steps: 4px;
+
+.stage > .content {
+  > .step-container {
+    .step:after {
+      top: -$margin-between-steps;
+    }
+
+    &:first-of-type .step:after {
+      top: 50%;
+    }
+
+    &:last-of-type .step:after {
+      bottom: 50%;
+    }
+
+    & + .step-container {
+      margin-top: $margin-between-steps;
+    }
+
+    > a {
+      display: block;
+      color: #192d46;
+
+      &:hover,
+      &:focus {
+        background: rgba(25, 45, 70, 0.03);
+      }
+    }
+  }
 }
 </style>
