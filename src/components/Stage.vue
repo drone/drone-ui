@@ -3,7 +3,9 @@
     <header>
       <Status :status="status"/>
       <span :title="name">{{ name }}</span>
-      <time-elapsed :started="started" :stopped="stopped" v-if="started"/>
+      <time-elapsed :started="started" :stopped="stopped" v-if="started">
+        <Hint position="top" align="right" showOn="hover" :offset="-7.5">Full stage duration</Hint>
+      </time-elapsed>
       <IconArrowDropdown direction="down" class="arrow-dropdown"/>
     </header>
     <div class="content">
@@ -16,6 +18,7 @@
 import Status from "./Status.vue";
 import TimeElapsed from "./TimeElapsed.vue";
 import IconArrowDropdown from "./icons/IconArrowDropdown.vue";
+import Hint from "./Hint";
 
 export default {
   name: "Stage",
@@ -31,6 +34,7 @@ export default {
     stopped: Number
   },
   components: {
+    Hint,
     Status,
     TimeElapsed,
     IconArrowDropdown
@@ -75,14 +79,18 @@ span {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  text-transform: uppercase;
 }
 
-time {
+.time-elapsed {
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 400;
   flex-shrink: 0;
-  color: rgba(25, 45, 70, 0.6);
+  color: #192d46;
+  position: relative;
+
+  .hint {
+    white-space: nowrap;
+  }
 }
 
 .arrow-dropdown {
@@ -102,6 +110,8 @@ time {
 </style>
 
 <style lang="scss">
+@import "../assets/styles/variables";
+
 .stage > .content {
   > .step-container {
     &:first-of-type .step:after {
@@ -118,7 +128,11 @@ time {
 
       &:hover,
       &:focus {
-        background: rgba(25, 45, 70, 0.03);
+        background: $step-selected-bg-color;
+
+        .status.status-running svg circle {
+          fill: $step-selected-bg-color;
+        }
       }
     }
   }

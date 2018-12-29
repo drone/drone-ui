@@ -482,7 +482,7 @@ export default {
 }
 
 .stage-container + .stage-container {
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .stage-alert {
@@ -591,7 +591,7 @@ export default {
 
 .output-time-elapsed {
   flex: 1 0 auto;
-  margin-left: 5px;
+  margin-left: 10px;
 }
 
 .output-actions {

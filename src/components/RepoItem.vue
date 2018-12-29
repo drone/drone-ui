@@ -38,7 +38,7 @@
 
         <div class="time">
           <div class="time-elapsed">
-            <Hint showOn="hover" align="center" position="bottom" style="margin-left:-50px;">Build duration</Hint>
+            <Hint showOn="hover" align="center" position="bottom">Build duration</Hint>
             <TimeElapsed v-if="build.started" :started="build.started" :stopped="build.finished"/>
           </div>
           <span v-if="build.started && build.created" class="dot"></span>

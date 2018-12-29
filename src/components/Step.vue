@@ -2,15 +2,13 @@
   <section :class="{ selected, step: true }">
     <Status :status="status"/>
     <span class="name" :title="name">{{ number }}. {{ name }}</span>
-    <IconArrowDropdown v-if="selected" direction="right"/>
-    <time-elapsed v-else-if="started" :started="started" :stopped="stopped"/>
+    <time-elapsed v-if="started" :started="started" :stopped="stopped"/>
   </section>
 </template>
 
 <script>
 import Status from "./Status.vue";
 import TimeElapsed from "./TimeElapsed.vue";
-import IconArrowDropdown from "./icons/IconArrowDropdown.vue";
 
 export default {
   name: "Step",
@@ -25,8 +23,7 @@ export default {
   },
   components: {
     Status,
-    TimeElapsed,
-    IconArrowDropdown
+    TimeElapsed
   },
   computed: {
     duration() {
@@ -36,13 +33,19 @@ export default {
 };
 </script>
 
-<style scoped>
-section {
+<style scoped lang="scss">
+@import "../assets/styles/variables";
+
+.step {
   align-items: center;
   display: flex;
   padding: 0 15px;
   position: relative;
-  height: 32px;
+  height: 36px;
+
+  &.selected {
+    background-color: $step-selected-bg-color;
+  }
 }
 
 .status {
@@ -71,10 +74,6 @@ time {
   color: rgba(25, 45, 70, 0.6);
 }
 
-section.selected {
-  background-color: rgba(25, 45, 70, 0.05);
-}
-
 section:after {
   content: " ";
   border-left: 1px solid rgba(25, 45, 70, 0.05);
@@ -86,8 +85,14 @@ section:after {
 }
 </style>
 
-<style>
+<style lang="scss">
+@import "../assets/styles/variables";
+
 .step > .status.status-running svg circle {
   fill: #fff;
+}
+
+.step.selected > .status.status-running svg circle {
+  fill: $step-selected-bg-color;
 }
 </style>

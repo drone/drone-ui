@@ -1,12 +1,16 @@
 <template>
-  <time>{{ time }}</time>
+  <div v-if="$slots.default" class="time-elapsed">
+    <time>{{ time }}<slot/></time>
+  </div>
+
+  <time v-else>{{ time }}</time>
 </template>
 
 <script>
 export default {
   name: "TimeElapsed",
   props: {
-    started: Number,
+    started: { type: Number, required: true },
     stopped: Number
   },
   data: function() {

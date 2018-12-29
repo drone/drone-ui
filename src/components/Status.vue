@@ -1,6 +1,6 @@
 <template>
   <div v-bind:class="{ status: true, [`status-${status}`]: true }">
-    <Hint showOn="hover">{{ statusHumanized }}</Hint>
+    <Hint showOn="hover" :offset="-7.5">{{ statusHumanized }}</Hint>
 
     <Failure v-if="['failure', 'error'].includes(status)"/>
     <Cancelled v-else-if="['killed', 'skipped', 'declined'].includes(status)"/>
@@ -106,7 +106,7 @@ svg {
 }
 
 .status-running > svg {
-  animation: spin 3s linear infinite;
+  animation: spin 4.5s linear infinite;
 }
 
 .status-pending > svg {

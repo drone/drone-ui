@@ -1,6 +1,6 @@
 <template>
   <div class="builds-feed-indicator" :class="{ [`status-${status}`]: true, filled }">
-    <Hint v-if="mediaType === 'desktop'" position="bottom" showOn="hover">
+    <Hint v-if="mediaType === 'desktop'" position="bottom" showOn="hover" align="right" :offset="-50">
       Recent builds ({{count}} active)
     </Hint>
     <IconGear class="gear"/>
@@ -51,7 +51,6 @@ export default {
 
 .hint {
   white-space: nowrap;
-  right: -50px;
 }
 
 .gear {
@@ -80,11 +79,6 @@ export default {
 
 <style lang="scss">
 @import "../assets/styles/variables";
-
-.builds-feed-indicator > .hint > .triangle {
-  right: 60px;
-  left: auto;
-}
 
 .builds-feed-indicator .gear > g {
   fill: $header-color;

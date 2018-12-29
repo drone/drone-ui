@@ -1,6 +1,6 @@
 <template>
-  <div class="hint" :class="{ [`align-${align}`]: true, [`position-${position}`]: true }" v-show="show">
-    <div class="triangle"></div>
+  <div class="hint" :class="{ [`align-${align}`]: true, [`position-${position}`]: true }" v-show="show" :style="style">
+    <div class="triangle" :style="triangleStyle"></div>
     <slot></slot>
   </div>
 </template>
@@ -8,31 +8,51 @@
 <script>
 import * as validators from "@/lib/validators";
 
+const TRIANGLE_WIDTH = 10;
+
 export default {
   name: "Hint",
   props: {
     position: { type: String, validator: validators.oneOf(["top", "bottom"]), default: "top" },
     align: { type: String, validator: validators.oneOf(["right", "left", "center"]), default: "left" },
-    showOn: { type: String, validator: validators.oneOf(["hover"]) }
+    showOn: { type: String, validator: validators.oneOf(["hover"]) },
+    offset: { type: Number, default: 0 }
   },
   data() {
     return {
       show: true,
-      addedListeners: false
+      addedListeners: false,
+      el: null,
+      parent: null
     };
   },
   mounted() {
+    this.el = this.$el;
+    this.parent = this.$el.parentNode;
+
     if (this.showOn === "hover") {
       this.addedListeners = true;
       this.show = false;
-      this.$el.parentNode.addEventListener("mouseenter", this.onMouseEnter);
-      this.$el.parentNode.addEventListener("mouseleave", this.onMouseLeave);
+      this.parent.addEventListener("mouseenter", this.onMouseEnter);
+      this.parent.addEventListener("mouseleave", this.onMouseLeave);
     }
   },
   destroyed() {
     if (this.addedListeners) {
-      this.$el.parentNode.removeEventListener("mouseenter", this.onMouseEnter);
-      this.$el.parentNode.removeEventListener("mouseleave", this.onMouseLeave);
+      this.parent.removeEventListener("mouseenter", this.onMouseEnter);
+      this.parent.removeEventListener("mouseleave", this.onMouseLeave);
+    }
+  },
+  computed: {
+    style() {
+      if (["right", "left"].includes(this.align)) {
+        return { [`${this.align}`]: `${this.offset}px` };
+      }
+    },
+    triangleStyle() {
+      if (this.el && ["right", "left"].includes(this.align)) {
+        return { [`${this.align}`]: `${this.el.parentNode.offsetWidth / 2 - TRIANGLE_WIDTH / 2 - this.offset}px` };
+      }
     }
   },
   methods: {
@@ -60,7 +80,6 @@ export default {
 
 .position-top {
   margin-bottom: 10px;
-  margin-left: -7.5px;
   bottom: 100%;
 
   .triangle {
@@ -72,7 +91,6 @@ export default {
 
 .position-bottom {
   margin-top: 10px;
-  margin-left: -7.5px;
   top: 100%;
 
   .triangle {
@@ -82,22 +100,9 @@ export default {
   }
 }
 
-.align-left {
-  .triangle {
-    left: 10px;
-  }
-}
-
-.align-right {
-  right: 0;
-
-  .triangle {
-    right: 10px;
-  }
-}
-
 .align-center {
   left: 50%;
+  transform: translateX(-50%);
 
   .triangle {
     left: 50%;
