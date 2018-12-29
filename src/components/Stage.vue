@@ -4,7 +4,7 @@
       <Status :status="status"/>
       <span :title="name">{{ name }}</span>
       <time-elapsed :started="started" :stopped="stopped" v-if="started">
-        <Hint position="top" align="right" showOn="hover" :offset="-7.5">Full stage duration</Hint>
+        <Hint position="top" align="right" showOn="hover">Full stage duration</Hint>
       </time-elapsed>
       <IconArrowDropdown direction="down" class="arrow-dropdown"/>
     </header>
@@ -75,7 +75,7 @@ span {
   flex-grow: 1;
   font-weight: 600;
   margin-left: 10px;
-  font-size: 13px;
+  font-size: 14px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -100,11 +100,11 @@ span {
 
 .content {
   > *:first-child {
-    margin-top: 10px;
+    margin-top: 5px;
   }
 
   > *:last-child {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
   }
 }
 </style>

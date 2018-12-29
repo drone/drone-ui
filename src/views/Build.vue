@@ -81,7 +81,6 @@
               <Step v-if="_step === step"
                     selected
                     :name="_step.name"
-                    :number="_step.number"
                     :status="_step.status"
                     :created="_step.created"
                     :started="_step.started"
@@ -90,7 +89,6 @@
               <router-link v-else :to="'/'+slug+'/'+build.number+'/'+_stage.number+'/'+_step.number">
                 <Step
                   :name="_step.name"
-                  :number="_step.number"
                   :status="_step.status"
                   :created="_step.created"
                   :started="_step.started"

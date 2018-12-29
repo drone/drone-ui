@@ -21,7 +21,7 @@
 import Footer from "./Footer.vue";
 import Notifications from "@/components/Notifications.vue";
 import BuildsFeedPanel from "@/components/BuildsFeedPanel";
-import Title from "@/components/Title";
+import Title from "@/components/utils/Title";
 
 export default {
   name: "BaseLayout",

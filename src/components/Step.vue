@@ -1,7 +1,7 @@
 <template>
   <section :class="{ selected, step: true }">
     <Status :status="status"/>
-    <span class="name" :title="name">{{ number }}. {{ name }}</span>
+    <span class="name" :title="name">{{ name }}</span>
     <time-elapsed v-if="started" :started="started" :stopped="stopped"/>
   </section>
 </template>
@@ -14,7 +14,6 @@ export default {
   name: "Step",
   props: {
     name: String,
-    number: Number,
     status: String,
     created: Number,
     started: Number,

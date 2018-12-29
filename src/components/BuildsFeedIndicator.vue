@@ -1,6 +1,6 @@
 <template>
   <div class="builds-feed-indicator" :class="{ [`status-${status}`]: true, filled }">
-    <Hint v-if="mediaType === 'desktop'" position="bottom" showOn="hover" align="right" :offset="-50">
+    <Hint v-if="mediaType === 'desktop'" position="bottom" showOn="hover" align="right" :offset="-45">
       Recent builds ({{count}} active)
     </Hint>
     <IconGear class="gear"/>
@@ -12,6 +12,7 @@
 <script>
 import Hint from "@/components/Hint";
 import IconGear from "@/components/icons/IconGear";
+import favicon from "@/lib/favicon";
 
 export default {
   name: "BuildsFeedIndicator",
@@ -35,6 +36,11 @@ export default {
     },
     mediaType() {
       return this.$store.state.mediaType;
+    }
+  },
+  watch: {
+    status(nextValue) {
+      favicon.setState(nextValue === "done" ? "default" : "running");
     }
   }
 };
