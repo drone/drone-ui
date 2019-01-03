@@ -14,8 +14,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "../assets/styles/variables";
+
 .overlay {
-  background: rgba(#0f3764, 0.9);
+  background: rgba($header-color, 0.9);
   position: fixed;
   top: 0;
   right: 0;

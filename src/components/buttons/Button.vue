@@ -76,12 +76,6 @@ export default {
 .button:hover > svg {
   opacity: 1;
 }
-
-.button.theme-light.outline > svg {
-  width: 18px;
-  height: 18px;
-  margin-bottom: -4px;
-}
 </style>
 
 <style scoped lang="scss">

@@ -40,7 +40,7 @@ export default {
   display: flex;
   padding: 0 15px;
   position: relative;
-  height: 36px;
+  height: 40px;
 
   &.selected {
     background-color: $step-selected-bg-color;
@@ -66,6 +66,7 @@ time {
   text-align: right;
   flex-shrink: 0;
   margin-left: 10px;
+  font-size: 13px;
 }
 
 .icon-arrow-dropdown {
@@ -75,7 +76,7 @@ time {
 
 section:after {
   content: " ";
-  border-left: 1px solid rgba(25, 45, 70, 0.05);
+  border-left: 1px solid rgba(25, 45, 70, 0.1);
   width: 1px;
   position: absolute;
   top: 0;

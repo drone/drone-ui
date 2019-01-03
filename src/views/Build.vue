@@ -102,59 +102,73 @@
 
       <ScrollLock v-if="outputFullscreen"/>
 
-      <Alert v-if="isStageError" class="alert stage-alert">{{ stage.error }} </Alert>
+      <div class="stage-content">
 
-      <div v-else class="output"
-           :class="{'output-fullscreen': outputFullscreen, 'show-to-top': !logsLoading && showToTop}"
-           ref="output">
-        <div ref="topAnchor"></div>
+        <Alert v-if="isStageError" class="stage-error" theme="danger">{{ stage.name }}: {{ stage.error }}</Alert>
 
-        <div class="output-header">
-          <div class="output-title" :title="stage && step && `${stage.name} - ${step.name}`">
-            <span class="output-title-stage">{{ stage && stage.name }}</span>
-            <span class="output-title-step"> — {{ step && step.name }}</span>
+        <div class="output"
+             :class="{'output-fullscreen': outputFullscreen, 'show-to-top': !logsLoading && showToTop}"
+             ref="output">
+          <div ref="topAnchor"></div>
+
+          <div class="output-header" ref="outputHeader">
+            <div class="output-header-visibility-fix" ref="visibilityFix"/>
+            <div class="output-header-content">
+              <div class="output-title" :title="stage && step && `${stage.name} - ${step.name}`">
+                <span class="output-title-stage">{{ stage && stage.name }}</span>
+                <span class="output-title-step"> — {{ step && step.name }}</span>
+              </div>
+              <time-elapsed v-if="step && step.started"
+                            :started="step.started"
+                            :stopped="step.stopped"
+                            class="output-time-elapsed"/>
+              <div class="output-actions">
+                <PlayButton v-if="step && !step.stopped"
+                            title="Follow logs"
+                            @click.native="toggleFollow"
+                            :pause="follow"/>
+                <div v-if="step && !step.stopped" class="divider"></div>
+                <Button outline borderless v-if="readyToDownload"
+                        title="Download"
+                        @click.native="download"
+                        theme="light"
+                        class="download">
+                  <IconDownload :close="outputFullscreen"/>
+                </Button>
+                <div v-if="readyToDownload" class="divider"></div>
+                <Button title="Fullscreen" @click.native="toggleOutputFullscreen" theme="light" outline borderless>
+                  <IconFullscreen :close="outputFullscreen"/>
+                </Button>
+              </div>
+            </div>
           </div>
-          <time-elapsed v-if="step && step.started"
-                        :started="step.started"
-                        :stopped="step.stopped"
-                        class="output-time-elapsed"/>
-          <div class="output-actions">
-            <PlayButton v-if="step && !step.stopped" title="Follow logs" @click.native="toggleFollow" :pause="follow"/>
-            <div v-if="step && !step.stopped" class="divider"></div>
-            <Button v-if="readyToDownload" title="Download" @click.native="download" theme="light" outline borderless
-                    class="download">
-              <IconDownload :close="outputFullscreen" />
-            </Button>
-            <div v-if="readyToDownload" class="divider"></div>
-            <Button title="Fullscreen" @click.native="toggleOutputFullscreen" theme="light" outline borderless>
-              <IconFullscreen :close="outputFullscreen" />
-            </Button>
+          <div class="output-content" ref="outputContent" @scroll="onOutputContentScroll">
+            <Loading v-if="logsLoading"/>
+
+            <div class="output-content-actions" v-if="moreCount">
+              <Button size="l" outline borderless class="output-button" @click.native="handleMore">
+                Show {{Math.min(moreCount, logStep)}} lines more
+              </Button>
+            </div>
+
+            <table class="output-lines">
+              <tbody>
+              <tr v-for="line in shownLogs" :key="line.pos">
+                <td class="ol-pos">{{line.pos+1}}</td>
+                <td class="ol-html" v-html="line._html"></td>
+                <td class="ol-time">{{line.time}}s</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+
+
+          <div ref="bottomAnchor"></div>
+
+          <div class="to-top" @click="scrollToTop">
+            <IconArrow direction="up"/>
           </div>
         </div>
-        <div class="output-content" ref="outputContent" @scroll="onOutputContentScroll">
-          <Loading v-if="logsLoading"/>
-
-          <div class="output-content-actions" v-if="moreCount">
-            <Button size="l" outline borderless class="output-button" @click.native="handleMore">
-              Show {{Math.min(moreCount, logStep)}} lines more
-            </Button>
-          </div>
-
-          <table class="output-lines">
-            <tbody>
-            <tr v-for="line in shownLogs" :key="line.pos">
-              <td class="ol-pos">{{line.pos+1}}</td>
-              <td class="ol-html" v-html="line._html"></td>
-              <td class="ol-time">{{line.time}}s</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-
-
-        <div ref="bottomAnchor"></div>
-
-        <div class="to-top" @click="scrollToTop"><IconArrow direction="up"/></div>
       </div>
     </div>
 
@@ -185,8 +199,9 @@ import AlertError from "../components/AlertError";
 import TimeElapsed from "../components/TimeElapsed";
 
 let previousScrollY = window.scrollY;
-const STAGES_TOP = 56;
-const STAGES_PADDING = 10;
+const HEADER_HEIGHT = 56;
+const STAGES_TOP = HEADER_HEIGHT;
+const STAGES_PADDING = 20;
 const STAGES_TOP_BREAKPOINT = STAGES_TOP + STAGES_PADDING;
 
 export default {
@@ -227,7 +242,7 @@ export default {
   },
   computed: {
     slug() {
-      return this.$route.params.namespace + '/' + this.$route.params.name;
+      return this.$route.params.namespace + "/" + this.$route.params.name;
     },
     repo() {
       return this.$store.state.repos[this.slug];
@@ -246,7 +261,7 @@ export default {
         });
     },
     step() {
-      const number = parseInt(this.$route.params.step || '1');
+      const number = parseInt(this.$route.params.step || "1");
       return this.stage &&
         this.stage.steps &&
         this.stage.steps.find((step) => {
@@ -280,7 +295,7 @@ export default {
       return this.build && this.build.stages;
     },
     isBuildError() {
-     return this.build && this.build.error;
+      return this.build && this.build.error;
     },
     isStageError() {
       return this.stage && this.stage.error;
@@ -309,6 +324,11 @@ export default {
     },
     toggleOutputFullscreen() {
       this.outputFullscreen = !this.outputFullscreen;
+
+      setTimeout(() => {
+        if (this.outputFullscreen) this.$refs.outputContent.scrollTop = 0;
+        this.actualizeShowToTop();
+      }, 0);
     },
     toggleFollow() {
       this.follow = !this.follow;
@@ -345,13 +365,16 @@ export default {
       link.click();
     },
     onScroll() {
+      if (this.outputFullscreen) return;
+
       const delta = window.scrollY - previousScrollY;
-      const { stages, output } = this.$refs;
+      const { stages, output, outputHeader, visibilityFix } = this.$refs;
 
       previousScrollY = window.scrollY;
 
       if (stages) this.alignStages(stages, delta);
-      if (output) this.showToTop = this.$refs.output.getBoundingClientRect().y < 0;
+      if (output) this.actualizeShowToTop();
+      if (output && outputHeader && visibilityFix) this.fixContentVisibilityInStickyOffset();
     },
     alignStages(stages, delta) {
       const stagesRect = stages.getBoundingClientRect();
@@ -366,8 +389,19 @@ export default {
         stages.style.top = `${newTop}px`;
       }
     },
+    fixContentVisibilityInStickyOffset() {
+      const { output, outputHeader, visibilityFix } = this.$refs;
+      const delta = outputHeader.offsetTop - output.offsetTop;
+
+      visibilityFix.style.top = "-" + Math.min(delta + 10, 80) + "px";
+    },
     onOutputContentScroll() {
-      this.showToTop = this.$refs.outputContent.scrollTop > 0;
+      this.actualizeShowToTop();
+    },
+    actualizeShowToTop() {
+      this.showToTop = this.outputFullscreen
+        ? this.$refs.outputContent.scrollTop > 0
+        : this.$refs.output.getBoundingClientRect().y < STAGES_TOP_BREAKPOINT;
     }
   },
   watch: {
@@ -377,7 +411,7 @@ export default {
      * logs. If the step changes to running status it
      * dispatches a request to stream the logs.
      */
-    step: function (newStep, oldStep) {
+    step: function(newStep, oldStep) {
       if (!newStep) return;
 
       // If a new step is loaded, dispatch a request to
@@ -388,18 +422,18 @@ export default {
         this.logLimit = 250;
 
         if (newStep.stopped) {
-          this.$store.dispatch('fetchLogs', this.$route.params);
+          this.$store.dispatch("fetchLogs", this.$route.params);
         } else if (newStep.started) {
-          this.$store.dispatch('streamLogs', this.$route.params);
+          this.$store.dispatch("streamLogs", this.$route.params);
         }
 
-      // If the step remains the same, but a propery changes,
-      // dispatch a request to stream logs if the step changes
-      // from pending to started status.
+        // If the step remains the same, but a propery changes,
+        // dispatch a request to stream logs if the step changes
+        // from pending to started status.
       } else if (newStep.started > 0 && !oldStep.started) {
-          this.$store.dispatch('streamLogs', this.$route.params);
+        this.$store.dispatch("streamLogs", this.$route.params);
       } else if (newStep.finished > 0 && this.logs.length === 0) {
-          this.$store.dispatch('fetchLogs', this.$route.params);
+        this.$store.dispatch("fetchLogs", this.$route.params);
       }
     },
     logs(newValue, oldValue) {
@@ -465,11 +499,13 @@ export default {
   }
 }
 
+$stages-top: 20px;
+
 .stages {
   flex: 0 0 270px;
   width: 270px;
   position: sticky;
-  top: $header-height;
+  top: $header-height + $stages-top;
 
   @include tablet {
     flex: 1 0 auto;
@@ -483,9 +519,17 @@ export default {
   margin-top: 10px;
 }
 
-.stage-alert {
+.stage-content {
+  margin-left: 20px;
   flex-grow: 1;
+  min-width: 0; // important for white-space: nowrap and text-overflow of .output-header
+
+  .stage-error + .output {
+    margin-top: 20px;
+  }
 }
+
+$output-border-radius: 6px;
 
 .output {
   color: #FFF;
@@ -493,13 +537,10 @@ export default {
   font-family: 'Roboto Mono', monospace;
   font-weight: 300;
   background-color: #192d46;
-  border-radius: 6px;
+  border-radius: $output-border-radius;
   box-shadow: 0px 0px 8px 1px #e8eaed;
   box-sizing: border-box;
-  margin-left: 20px;
   padding: 0;
-  flex-grow: 1;
-  min-width: 0; // important for white-space: nowrap and text-overflow of .output-header
 
   @include tablet {
     margin: 0;
@@ -521,7 +562,7 @@ export default {
   right: 0;
   left: 0;
   bottom: 0;
-  margin: 0;
+  margin: 0 !important;
   width: auto;
   border-radius: 0;
   display: flex;
@@ -531,6 +572,10 @@ export default {
 
   .output-header {
     position: static;
+  }
+
+  .output-header-visibility-fix {
+    display: none;
   }
 
   .output-content {
@@ -557,9 +602,32 @@ export default {
   }
 }
 
+$output-header-before-z-index: 1;
+$output-header-height: 46px;
+$output-header-sticky-offset: $stages-top;
+
 .output-header {
   position: sticky;
-  top: $header-height;
+  top: $header-height + $output-header-sticky-offset;
+  height: $output-header-height;
+
+  .output-header-visibility-fix {
+    position: absolute;
+    top: -$output-header-sticky-offset;
+    bottom: $output-header-height - $output-border-radius;
+    left: -10px; // hide box-shadow of content
+    right: -10px;
+    background: $body-color;
+    z-index: $output-header-before-z-index;
+  }
+
+  @include mobile {
+    top: 0;
+  }
+}
+
+.output-header-content {
+  position: relative;
   background: #192d46;
   padding: 8px 5px 7px 15px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
@@ -569,10 +637,7 @@ export default {
   align-items: center;
   flex-shrink: 0;
   border-radius: 6px 6px 0 0;
-
-  @include mobile {
-    top: 0;
-  }
+  z-index: $output-header-before-z-index + 1;
 }
 
 .output-title {

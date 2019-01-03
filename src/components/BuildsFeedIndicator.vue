@@ -119,7 +119,7 @@ export default {
     animation: spin 5s linear infinite;
 
     .line {
-      fill: #ffc800;
+      fill: $color-warning;
       fill-opacity: 1;
     }
 
@@ -133,20 +133,20 @@ export default {
   }
 
   .label {
-    color: #ffc800;
+    color: $color-warning;
   }
 
   &.filled {
     .gear {
       .line,
       .bg {
-        fill: #ffc800;
+        fill: $color-warning;
         fill-opacity: 1;
       }
     }
 
     .label {
-      color: $header-color;
+      color: #fff;
     }
   }
 }

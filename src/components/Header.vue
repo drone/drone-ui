@@ -221,6 +221,8 @@ export default {
 </style>
 
 <style lang="scss">
+@import "../assets/styles/variables";
+
 .header > .search {
   > .base-input {
     border-color: transparent;
@@ -228,7 +230,7 @@ export default {
 
   &.opened-no {
     > .base-input {
-      background-color: rgb(48, 93, 147);
+      background-color: mix(#fff, $header-color, 10%);
       color: #fff;
 
       &::placeholder {

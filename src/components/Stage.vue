@@ -59,9 +59,9 @@ export default {
 
 header {
   align-items: center;
-  border-bottom: solid 1px rgba(25, 45, 70, 0.08);
+  border-bottom: solid 1px rgba(25, 45, 70, 0.1);
   display: flex;
-  height: 50px;
+  height: 40px;
   padding: 0 15px;
   user-select: none;
   color: #192d46;
@@ -100,11 +100,11 @@ span {
 
 .content {
   > *:first-child {
-    margin-top: 5px;
+    margin-top: 10px;
   }
 
   > *:last-child {
-    margin-bottom: 5px;
+    margin-bottom: 10px;
   }
 }
 </style>

@@ -44,7 +44,7 @@
           <span v-if="build.started && build.created" class="dot"></span>
           <span v-if="build.created" class="time-started">
             <Hint showOn="hover" align="right" position="bottom">
-              Build started: {{ build.created | moment("YYYY-MM-DD hh:mm:ss") }}
+              Build started: {{ build.created | moment(MOMENT_FULL_FORMAT) }}
             </Hint>
             {{ new Date(build.created * 1000) | moment("from", "now") }}
           </span>
@@ -61,6 +61,7 @@ import RepoItemLabel from "./RepoItemLabel.vue";
 import IconRepository from "@/components/icons/IconRepository.vue";
 import Button from "@/components/buttons/Button.vue";
 import Hint from "@/components/Hint.vue";
+import { MOMENT_FULL_FORMAT } from "@/lib/momentFormats";
 
 export default {
   name: "RepoItem",
@@ -80,6 +81,11 @@ export default {
     IconRepository,
     Hint,
     Button
+  },
+  data() {
+    return {
+      MOMENT_FULL_FORMAT
+    };
   },
   computed: {
     action() {

@@ -58,7 +58,9 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../assets/styles/variables";
+
 .status {
   display: inline-block;
   height: 20px;
@@ -75,7 +77,7 @@ export default {
 }
 
 .status-running {
-  color: #ffc800;
+  color: $color-warning;
   background-color: transparent;
 }
 
@@ -106,7 +108,7 @@ svg {
 }
 
 .status-running > svg {
-  animation: spin 4.5s linear infinite;
+  animation: spin 3.3333s linear infinite;
 }
 
 .status-pending > svg {

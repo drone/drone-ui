@@ -1,5 +1,5 @@
 <template>
-  <Card class="alert" :class="{ [`theme-${theme}`]: true }" contentPadding="45px">
+  <Card class="alert" :class="{ [`theme-${theme}`]: true }" :contentPadding="`${contentPadding}px`">
     <slot></slot>
     <div class="secondary" v-if="$slots.secondary"><slot name="secondary"></slot></div>
   </Card>
@@ -15,11 +15,18 @@ export default {
   },
   props: {
     theme: String
+  },
+  computed: {
+    contentPadding() {
+      return this.theme === "danger" ? 11.5 : 45;
+    }
   }
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../assets/styles/variables";
+
 .card {
   text-align: center;
 }
@@ -39,7 +46,10 @@ export default {
 .theme-warning {
 }
 
-.theme-error {
-  color: #ff3e61;
+.theme-danger {
+  background-color: $color-danger;
+  color: #fff;
+  font-weight: 600;
+  line-height: normal;
 }
 </style>
