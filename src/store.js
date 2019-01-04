@@ -1,8 +1,9 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import actions from "./actions";
+import * as actions from "./actions";
 import AnsiUp from "ansi_up";
 import * as config from "./actions/config";
+import { isBuildFinished } from "@/lib/buildHelper";
 
 Vue.use(Vuex);
 
@@ -25,26 +26,37 @@ function updateBuildsFeedByBuildEvent(state, event) {
   }
 
   const found = index !== -1;
+  const isFinished = isBuildFinished(event.build);
 
   if (found) {
-    if (event.build.finished) {
+    if (isFinished) {
       Vue.delete(state.buildsFeed.data, index);
     } else {
       Vue.set(state.buildsFeed.data, index, event);
     }
   } else {
-    if (!event.build.finished) {
+    if (!isFinished) {
       state.buildsFeed.data.push(event);
     }
   }
 }
 
-function insertBuildToCollection(state, slug, build) {
-  const collection = state.builds[slug];
+function createEmptyCollection(data = null) {
+  return {
+    data,
+    dStatus: "empty", // "present" - dataStatus
+    lStatus: "none", // 'loading', 'loaded', 'error' - loadingStatus
+    error: null
+  };
+}
 
-  if (collection) {
-    Vue.set(collection.data, build.number, build);
-  }
+function createPresentCollection(data) {
+  return {
+    data,
+    dStatus: "present",
+    lStatus: "loaded",
+    error: null
+  };
 }
 
 function applyLoading(collection) {
@@ -63,6 +75,25 @@ function applySuccess(collection, data) {
   if (data !== undefined) {
     collection.data = data;
   }
+}
+
+function insertEmptyBuildsCollection(data, slug) {
+  Vue.set(data, slug, {
+    data: {},
+    dStatus: "empty",
+    lStatus: "none", // 'loading', 'loaded', 'error'
+    error: null,
+    page: null,
+    lPage: null
+  });
+}
+
+function insertEmptyBuildCollection(data, number) {
+  Vue.set(data, number, createEmptyCollection());
+}
+
+function insertBuildCollection(data, number, build) {
+  Vue.set(data, build.number, createPresentCollection(build));
 }
 
 export default new Vuex.Store({
@@ -98,7 +129,14 @@ export default new Vuex.Store({
       /*
       EXAMPLE:
       "namespace/name": {
-        data: {},
+        data: {
+          "number": {
+             data: null,
+             dStatus: "empty", // "present" - dataStatus
+             lStatus: "none", // 'loading', 'loaded', 'error' - loadingStatus
+             error: undefined,
+          }
+        },
         dStatus: "empty", // "present" - dataStatus
         lStatus: "none", // 'loading', 'loaded', 'error' - loadingStatus
         error: undefined,
@@ -108,9 +146,9 @@ export default new Vuex.Store({
       */
     },
 
-    buildLoaded: false,
-    buildLoading: false,
-    buildLoadingErr: undefined,
+    // buildLoaded: false,
+    // buildLoading: false,
+    // buildLoadingErr: undefined,
 
     // todo use separated statuses (l and d)
     buildsFeed: {
@@ -239,21 +277,11 @@ export default new Vuex.Store({
 
     BUILD_LIST_LOADING(state, { params }) {
       const slug = `${params.namespace}/${params.name}`;
-      const repoBuilds = state.builds[slug];
 
-      if (!repoBuilds) {
-        Vue.set(state.builds, slug, {
-          data: {},
-          dStatus: "empty",
-          lStatus: "loading", // 'loading', 'loaded', 'error'
-          error: null,
-          page: undefined,
-          lPage: params.page
-        });
-      } else {
-        repoBuilds.lPage = params.page;
-        applyLoading(repoBuilds);
-      }
+      if (!state.builds[slug]) insertEmptyBuildsCollection(state.builds, slug);
+
+      applyLoading(state.builds[slug]);
+      state.builds[slug].lPage = params.page;
     },
     BUILD_LIST_FAILURE(state, { params, error }) {
       const slug = `${params.namespace}/${params.name}`;
@@ -269,42 +297,46 @@ export default new Vuex.Store({
 
       applySuccess(repoBuilds);
       repoBuilds.page = params.page;
-      res.forEach(item => Vue.set(repoBuilds.data, item.number, item));
+      res.forEach(item =>
+        Vue.set(repoBuilds.data, item.number, {
+          data: item,
+          lStatus: "loaded",
+          dStatus: "present",
+          error: undefined
+        })
+      );
     },
 
     //
     // build
     //
 
-    BUILD_FIND_LOADING(state){
-      state.buildLoading = true;
-      state.buildLoadingErr = undefined;
+    BUILD_FIND_LOADING(state, { params }){
+      const slug = `${params.namespace}/${params.name}`;
+
+      if (!state.builds[slug]) insertEmptyBuildsCollection(state.builds, slug, params.page);
+
+      const slugBuildsData = state.builds[slug].data;
+      if (!slugBuildsData[params.build]) insertEmptyBuildCollection(slugBuildsData, params.build);
+
+      applyLoading(slugBuildsData[params.build]);
     },
-    BUILD_FIND_FAILURE(state, {error}){
-      state.buildLoading = false;
-      state.buildLoadingErr = error;
+    BUILD_FIND_FAILURE(state, { params, error }) {
+      const slug = `${params.namespace}/${params.name}`;
+      applyFailure(state.builds[slug].data[params.build], error);
     },
     BUILD_FIND_SUCCESS(state, { params, res: build }) {
-      state.buildLoaded = true;
-      state.buildLoading = false;
-      state.buildLoadingErr = undefined;
-
       const slug = `${params.namespace}/${params.name}`;
-      const builds = state.builds[slug];
-
-      if (!builds) {
-        Vue.set(state.builds, slug, {
-          data: { [build.number]: build },
-          lStatus: "loaded",
-          dStatus: "present",
-          error: undefined,
-          page: undefined,
-          lPage: undefined
-        });
-      } else {
-        Vue.set(builds.data, build.number, build);
-      }
+      applySuccess(state.builds[slug].data[params.build], build);
     },
+
+    BUILD_APPROVE_LOADING() {},
+    BUILD_APPROVE_FAILURE() {},
+    BUILD_APPROVE_SUCCESS() {},
+
+    BUILD_DECLINE_LOADING() {},
+    BUILD_DECLINE_FAILURE() {},
+    BUILD_DECLINE_SUCCESS() {},
 
     //
     // secrets
@@ -426,7 +458,9 @@ export default new Vuex.Store({
     //
 
     BUILD_EVENT(state, { repo }) {
-      insertBuildToCollection(state, repo.slug, repo.build);
+      if (state.builds[repo.slug]) {
+        insertBuildCollection(state.builds[repo.slug].data, repo.slug, repo.build);
+      }
 
       const latest = state.latest[repo.slug];
       if (latest && (!latest.build || latest.build.number <= repo.build.number)) {
@@ -439,13 +473,21 @@ export default new Vuex.Store({
     BUILD_RETRY_LOADING() {},
     BUILD_RETRY_FAILURE() {},
     BUILD_RETRY_SUCCESS(state, { namespace, name, build }) {
-      insertBuildToCollection(state, `${namespace}/${name}`, build);
+      const slug = `${namespace}/${name}`;
+
+      if (state.builds[slug]) {
+        insertBuildCollection(state.builds[slug].data, slug, build);
+      }
     },
 
     BUILD_CANCEL_LOADING() {},
     BUILD_CANCEL_FAILURE() {},
     BUILD_CANCEL_SUCCESS(state, { namespace, name, build }) {
-      insertBuildToCollection(state, `${namespace}/${name}`, build);
+      const slug = `${namespace}/${name}`;
+
+      if (state.builds[slug]) {
+        insertBuildCollection(state.builds[slug].data, slug, build);
+      }
     },
 
     BUILDS_FEED_LOADING(state) {

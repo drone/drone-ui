@@ -1,5 +1,5 @@
 <template>
-  <Alert v-if="error">{{ humanErrorMessage(error) }}</Alert>
+  <Alert v-if="error" theme="danger">{{ humanErrorMessage(error) }}</Alert>
 </template>
 
 <script>

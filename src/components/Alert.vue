@@ -18,7 +18,7 @@ export default {
   },
   computed: {
     contentPadding() {
-      return this.theme === "danger" ? 11.5 : 45;
+      return this.theme ? 11.5 : 45;
     }
   }
 };
@@ -36,20 +36,28 @@ export default {
   margin-top: 8px;
 }
 
+.theme-info,
+.theme-warning,
+.theme-danger,
 .theme-success {
-  color: #00d88a;
+  color: #fff;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.theme-success {
+  background-color: $color-success;
 }
 
 .theme-info {
+  background-color: $color-info;
 }
 
 .theme-warning {
+  background-color: $color-warning;
 }
 
 .theme-danger {
   background-color: $color-danger;
-  color: #fff;
-  font-weight: 600;
-  line-height: normal;
 }
 </style>

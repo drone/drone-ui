@@ -50,7 +50,8 @@ export default {
       }
     },
     triangleStyle() {
-      if (this.el && ["right", "left"].includes(this.align)) {
+      // this.show required for this.el.parentNode.offsetWidth "binding"
+      if (this.show && this.el && ["right", "left"].includes(this.align)) {
         return { [`${this.align}`]: `${this.el.parentNode.offsetWidth / 2 - TRIANGLE_WIDTH / 2 - this.offset}px` };
       }
     }

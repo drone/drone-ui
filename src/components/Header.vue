@@ -60,12 +60,16 @@ export default {
     },
     loading() {
       const { state, state: { route } } = this.$store;
-      const slug = route.params && `${route.params.namespace}/${route.params.name}`;
+      const slug = `${route.params.namespace}/${route.params.name}`;
+      const buildNumber = route.params.build;
 
       return (
         state.latestStatus === "loading" || // latest
         (route.name === "builds" && state.builds[slug] && state.builds[slug].lStatus === "loading") || // builds
-        (state.buildLoading) ||
+        (
+          route.name === "build" && state.builds[slug] && state.builds[slug].data[buildNumber] &&
+          state.builds[slug].data[buildNumber].lStatus === "loading"
+        ) ||
         (state.repoLoading) ||
         (state.user.tokenLoading)
       );

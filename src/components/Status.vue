@@ -1,5 +1,5 @@
 <template>
-  <div v-bind:class="{ status: true, [`status-${status}`]: true }">
+  <div :class="{ status: true, [`status-${status}`]: true, [`theme-${theme}`]: true }">
     <Hint showOn="hover" :offset="-7.5">{{ statusHumanized }}</Hint>
 
     <Failure v-if="['failure', 'error'].includes(status)"/>
@@ -21,13 +21,36 @@ import Hint from "@/components/Hint";
 
 import * as validators from "@/lib/validators";
 
+const DANGER_THEME_STATUSES = ["failure", "error"];
+const INFO_THEME_STATUSES = ["killed", "skipped", "declined", "waiting_on_dependencies", "pending", "blocked"];
+const WARNING_THEME_STATUSES = ["running"];
+const SUCCESS_THEME_STATUSES = ["success"];
+
 const STATUSES = [
-  "failure", "error",
-  "killed", "skipped", "declined",
-  "waiting_on_dependencies", "pending", "blocked",
-  "success",
-  "running"
+  ...DANGER_THEME_STATUSES,
+  ...INFO_THEME_STATUSES,
+  ...WARNING_THEME_STATUSES,
+  ...SUCCESS_THEME_STATUSES
 ];
+
+function humanizeStatus(status) {
+  if (status === "waiting_on_dependencies") {
+    return "Waiting on dependencies";
+  }
+
+  if (status === "killed") {
+    return "Killed (cancelled)";
+  }
+
+  return status[0].toLocaleUpperCase() + status.substr(1);
+}
+
+function getThemeByStatus(status) {
+  if (DANGER_THEME_STATUSES.includes(status)) return "danger";
+  if (WARNING_THEME_STATUSES.includes(status)) return "warning";
+  if (SUCCESS_THEME_STATUSES.includes(status)) return "success";
+  return "info";
+}
 
 export default {
   name: "Status",
@@ -44,17 +67,14 @@ export default {
   },
   computed: {
     statusHumanized() {
-      if (this.status === "waiting_on_dependencies") {
-        return "Waiting on dependencies";
-      }
-
-      if (this.status === "killed") {
-        return "Killed (cancelled)";
-      }
-
-      return this.status[0].toLocaleUpperCase() + this.status.substr(1);
+      return humanizeStatus(this.status);
+    },
+    theme() {
+      return getThemeByStatus(this.status);
     }
-  }
+  },
+  humanizeStatus,
+  getThemeByStatus
 };
 </script>
 
@@ -72,27 +92,16 @@ export default {
   color: #fff;
 }
 
-.status-success {
-  background-color: #19D78C;
+.theme-success {
+  background-color: $color-success;
 }
 
-.status-running {
-  color: $color-warning;
-  background-color: transparent;
+.theme-danger {
+  background-color: $color-danger;
 }
 
-.status-skipped,
-.status-killed,
-.status-declined,
-.status-error,
-.status-failure {
-  background-color: #FF4164;
-}
-
-.status-waiting_on_dependencies,
-.status-pending,
-.status-blocked {
-  background-color: #c6cbd1; /* = rgba(25, 45, 70, 0.25); */
+.theme-info {
+  background-color: $color-info;
 }
 
 .hint {
@@ -107,8 +116,13 @@ svg {
   left: -1px;
 }
 
-.status-running > svg {
-  animation: spin 3.3333s linear infinite;
+.status-running {
+  color: $color-warning;
+  background-color: transparent;
+
+  > svg {
+    animation: spin 3.3333s linear infinite;
+  }
 }
 
 .status-pending > svg {

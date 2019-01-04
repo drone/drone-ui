@@ -1,13 +1,14 @@
 <template>
-  <section class="stage">
+  <section :class="{ stage: true, 'has-steps': hasSteps}">
     <header>
-      <Status :status="status"/>
-      <span :title="name">{{ name }}</span>
-      <time-elapsed :started="started" :stopped="stopped" v-if="started">
+      <Status :status="stage.status"/>
+      <span :title="stage.name">{{ stage.name }}</span>
+      <time-elapsed v-if="stage.started" :started="stage.started" :stopped="stage.started">
         <Hint position="top" align="right" showOn="hover">Full stage duration</Hint>
       </time-elapsed>
-      <IconArrowDropdown direction="down" class="arrow-dropdown"/>
+      <IconArrowDropdown v-if="hasSteps" direction="down" class="arrow-dropdown"/>
     </header>
+
     <div class="content">
       <slot></slot>
     </div>
@@ -23,15 +24,7 @@ import Hint from "./Hint";
 export default {
   name: "Stage",
   props: {
-    name: String,
-    os: String,
-    arch: String,
-    version: String,
-    variant: String,
-    status: String,
-    created: Number,
-    started: Number,
-    stopped: Number
+    stage: { type: Object, required: true }
   },
   components: {
     Hint,
@@ -40,8 +33,8 @@ export default {
     IconArrowDropdown
   },
   computed: {
-    duration() {
-      return "";
+    hasSteps() {
+      return this.stage.steps && this.stage.steps.length;
     }
   }
 };

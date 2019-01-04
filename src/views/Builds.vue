@@ -33,7 +33,7 @@ import MoreButton from "@/components/buttons/MoreButton.vue";
 import AlertError from "@/components/AlertError.vue";
 
 export default {
-  name: "builds",
+  name: "Builds",
   components: {
     Alert,
     RepoItem,
@@ -52,9 +52,18 @@ export default {
       return this.$store.state.builds[this.slug];
     },
     builds() {
-      const values = this.collection ? Object.values(this.collection.data) : [];
-      values.sort((a, b) => b.number - a.number);
-      return values;
+      if (!this.collection) return [];
+
+      const buildCollections = Object.values(this.collection.data);
+      const builds = [];
+
+      for (let i = 0; i < buildCollections.length; ++i) {
+        const data = buildCollections[i].data;
+        if (data) builds.push(data);
+      }
+
+      builds.sort((a, b) => b.number - a.number);
+      return builds;
     },
     showLoading() {
       return this.collection &&

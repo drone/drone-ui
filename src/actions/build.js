@@ -1,6 +1,7 @@
 import { instance, headers, token } from "./config";
 import { byBuildCreatedAtDesc } from '@/lib/reposSort'
 import { dispatchTypicalFetch } from "./_base";
+import { isBuildFinished } from "@/lib/buildHelper";
 
 /**
  * fetchBuilds fetches the build list and dispatches an
@@ -73,6 +74,30 @@ export const createBuild = async ({commit}, {namespace, name, build}) => {
     }
 }
 
+export const approveBuild = async (store, params) => {
+  const { namespace, name, build, stage } = params;
+
+  return dispatchTypicalFetch(store, params, "BUILD_APPROVE", () => {
+    return fetch(`${instance}/api/repos/${namespace}/${name}/builds/${build}/approve/${stage}`, {
+      headers,
+      method: "POST",
+      credentials: "same-origin"
+    });
+  }).then(() => store.dispatch("fetchBuild", params));
+};
+
+export const declineBuild = async (store, params) => {
+  const { namespace, name, build, stage } = params;
+
+  return dispatchTypicalFetch(store, params, "BUILD_DECLINE", () => {
+    return fetch(`${instance}/api/repos/${namespace}/${name}/builds/${build}/decline/${stage}`, {
+      headers,
+      method: "POST",
+      credentials: "same-origin"
+    });
+  }).then(() => store.dispatch("fetchBuild", params));
+};
+
 export const fetchBuildsFeed = async ({ commit }) => {
 	commit("BUILDS_FEED_LOADING");
 
@@ -80,7 +105,7 @@ export const fetchBuildsFeed = async ({ commit }) => {
   const res = await req.json();
 
   if (req.status < 300) {
-  	const builds = res.filter(x => !x.build.finished).sort(byBuildCreatedAtDesc);
+  	const builds = res.filter(x => !isBuildFinished(x.build)).sort(byBuildCreatedAtDesc);
     commit("BUILDS_FEED_SUCCESS", { builds });
   } else {
     commit("BUILDS_FEED_FAILURE", { error: res });

@@ -1,15 +1,15 @@
 <template>
   <div class="build">
-    <Loading v-if="buildLoading"/>
+    <Loading v-if="buildShowState === 'loading'"/>
 
-    <portal v-if="build && !buildLoading" to="secondary-page-header-actions">
+    <portal v-if="buildShowState === 'data'" to="secondary-page-header-actions">
       <div class="header-actions">
         <Button outline class="button-source" :href="build.link" target="_blank">
           <span>View source</span>
           <IconSource/>
         </Button>
 
-        <Button outline v-if="build.finished"
+        <Button outline v-if="isBuildFinished(build)"
                 class="button-restart"
                 @click.native="handleRestart"
                 :disabled="!isCollaborator">
@@ -29,7 +29,7 @@
     </portal>
 
     <RepoItem
-      v-if="build && !buildLoading"
+      v-if="buildShowState === 'data'"
       :number="build.number"
       :status="build.status"
       :title="build.message"
@@ -37,46 +37,29 @@
       :linkRepo="repo"
       :build="Object.assign({}, build, { message: null })"/>
 
-    <Loading v-if="!buildLoading && stagesLoading" text="Loading stages and steps"/>
+    <AlertError v-if="buildShowState === 'loadingError'" :error="this.buildCollection.error"/>
+    <Alert v-if="buildShowState === 'buildError'" theme="danger">{{ build.error }}</Alert>
 
-    <AlertError :error="buildLoadingErr"/>
+    <Loading v-if="buildShowState === 'data' && stagesShowState === 'loading'" text="Loading stages and steps"/>
 
-    <div class="build-content" v-if="build && !buildLoadingErr && !isBuildError && stagesLoaded">
+    <div class="build-content" v-if="buildShowState === 'data' && stagesShowState === 'data'">
       <div class="stages" ref="stages">
-        <div class="stage-container"
-             v-for="(_stage) in build.stages"
-             :key="_stage.id">
+        <div class="stage-container" v-for="(_stage) in build.stages" :key="_stage.id">
 
           <!--
             If the stage is not selected it is collapsed
             and rendered as a link. Clicking the link will
             change the route and expand the section.
           -->
-          <router-link
-            v-if="_stage !== stage"
-            v-bind:to="'/'+slug+'/'+build.number+'/'+_stage.number+'/1'">
-            <Stage
-              hoverable
-              v-bind:name="_stage.name"
-              v-bind:status="_stage.status"
-              v-bind:created="_stage.created"
-              v-bind:started="_stage.started"
-              v-bind:stopped="_stage.stopped">
-            </Stage>
+          <router-link v-if="_stage !== stage" :to="'/'+slug+'/'+build.number+'/'+_stage.number+'/1'">
+            <Stage :stage="_stage"/>
           </router-link>
 
           <!--
             If the stage is selected it is expanded, and
             all steps are displayed.
           -->
-          <Stage
-            v-if="_stage === stage"
-            v-bind:key="_stage.id"
-            v-bind:name="_stage.name"
-            v-bind:status="_stage.status"
-            v-bind:created="_stage.created"
-            v-bind:started="_stage.started"
-            v-bind:stopped="_stage.stopped">
+          <Stage v-else :stage="_stage">
             <div v-for="(_step) in _stage.steps" :key="_step.id" class="step-container">
               <Step v-if="_step === step"
                     selected
@@ -102,11 +85,11 @@
 
       <ScrollLock v-if="outputFullscreen"/>
 
-      <div class="stage-content">
+      <div class="stage-content" v-if="stage">
+        <Alert v-if="stageError" class="stage-error" theme="danger">{{ stage.name }}: {{ stage.error }}</Alert>
 
-        <Alert v-if="isStageError" class="stage-error" theme="danger">{{ stage.name }}: {{ stage.error }}</Alert>
-
-        <div class="output"
+        <div v-if="hasLogs"
+             class="output"
              :class="{'output-fullscreen': outputFullscreen, 'show-to-top': !logsLoading && showToTop}"
              ref="output">
           <div ref="topAnchor"></div>
@@ -169,12 +152,21 @@
             <IconArrow direction="up"/>
           </div>
         </div>
+
+        <!--<Card v-if="stage.status === 'Blocked'">-->
+
+        <!--</Card>-->
+
+        <Alert v-else-if="!stageError" :theme="getThemeByStatus(step ? step.status : stage.status)">
+          {{ stage.name }}{{ step ? ` – ${step.name}` : '' }}: {{ humanizeStatus(step ? step.status : stage.status) }}
+        </Alert>
+
+        <template v-if="stage && stage.status === 'blocked'">
+          <Button theme="danger" @click.native="declineBuild">Decline</Button>
+          <Button theme="primary" @click.native="approveBuild">Approve</Button>
+        </template>
       </div>
     </div>
-
-    <Alert v-if="isBuildError" class="alert be">
-      {{build.error}}
-    </Alert>
   </div>
 </template>
 
@@ -183,7 +175,6 @@ import Alert from "@/components/Alert.vue";
 import RepoItem from "@/components/RepoItem.vue";
 import Step from "@/components/Step.vue";
 import Stage from "@/components/Stage.vue";
-
 import IconCancel from "@/components/icons/IconCancel.vue";
 import Button from "@/components/buttons/Button.vue";
 import ButtonConfirm from "@/components/buttons/ButtonConfirm.vue";
@@ -197,6 +188,9 @@ import IconArrow from "../components/icons/IconArrow";
 import IconSource from "../components/icons/IconSource";
 import AlertError from "../components/AlertError";
 import TimeElapsed from "../components/TimeElapsed";
+import Status from "@/components/Status";
+
+import { isBuildFinished } from "@/lib/buildHelper";
 
 let previousScrollY = window.scrollY;
 const HEADER_HEIGHT = 56;
@@ -247,20 +241,33 @@ export default {
     repo() {
       return this.$store.state.repos[this.slug];
     },
-    build() {
-      const number = parseInt(this.$route.params.build);
+    buildCollection() {
+      const number = this.$route.params.build;
       const collection = this.$store.state.builds[this.slug];
       return collection && collection.data[number];
     },
+    build() {
+      return this.buildCollection.data;
+    },
+    buildShowState() {
+      if (this.buildCollection.lStatus === "error") return "loadingError";
+      if (this.build && this.build.error) return "buildError";
+      if (this.buildCollection.dStatus === "present") return "data";
+      if (this.buildCollection.lStatus === "loading") return "loading";
+    },
     stage() {
-      const number = parseInt(this.$route.params.stage || '1');
-      return this.build &&
-        this.build.stages &&
-        this.build.stages.find((stage) => {
-          return stage.number == number;
-        });
+      if (!this.build) return;
+
+      const number = parseInt(this.$route.params.stage) || "1";
+      return this.build.stages && this.build.stages.find(stage => stage.number === number);
+    },
+    stagesShowState() {
+      if (this.build && this.build.stages) return "data";
+      if (this.buildCollection.lStatus === "loading") return "loading";
     },
     step() {
+      if (!this.stage) return;
+
       const number = parseInt(this.$route.params.step || "1");
       return this.stage &&
         this.stage.steps &&
@@ -278,26 +285,13 @@ export default {
     logsLoading() {
       return this.$store.state.logsLoading;
     },
+    hasLogs() {
+      return (this.logs && this.logs.length > 0) || this.logsLoading;
+    },
     moreCount() {
       return Math.max(this.logs.length - this.logLimit, 0);
     },
-    buildLoading() {
-      const { buildLoaded, buildLoading } = this.$store.state;
-      return !buildLoaded && buildLoading;
-    },
-    buildLoadingErr() {
-      return this.$store.state.buildLoadingErr;
-    },
-    stagesLoading() {
-      return this.$store.state.buildLoading && !this.stagesLoaded;
-    },
-    stagesLoaded() {
-      return this.build && this.build.stages;
-    },
-    isBuildError() {
-      return this.build && this.build.error;
-    },
-    isStageError() {
+    stageError() {
       return this.stage && this.stage.error;
     },
     isCollaborator() {
@@ -308,6 +302,9 @@ export default {
     }
   },
   methods: {
+    getThemeByStatus: Status.getThemeByStatus,
+    humanizeStatus: Status.humanizeStatus,
+    isBuildFinished,
     handleCancel: function() {
       const { namespace, name, build } = this.$route.params;
       this.$store.dispatch("cancelBuild", { namespace, name, build });
@@ -402,6 +399,12 @@ export default {
       this.showToTop = this.outputFullscreen
         ? this.$refs.outputContent.scrollTop > 0
         : this.$refs.output.getBoundingClientRect().y < STAGES_TOP_BREAKPOINT;
+    },
+    approveBuild() {
+      this.$store.dispatch("approveBuild", { ...this.$store.state.route.params, stage: this.stage.number });
+    },
+    declineBuild() {
+      this.$store.dispatch("declineBuild", { ...this.$store.state.route.params, stage: this.stage.number });
     }
   },
   watch: {
@@ -493,10 +496,6 @@ export default {
   @include tablet {
     flex-direction: column;
   }
-
-  > .alert {
-    margin-left: 15px;
-  }
 }
 
 $stages-top: 20px;
@@ -527,6 +526,11 @@ $stages-top: 20px;
   .stage-error + .output {
     margin-top: 20px;
   }
+
+  @include tablet {
+    margin: 0;
+    width: 100%;
+  }
 }
 
 $output-border-radius: 6px;
@@ -541,11 +545,6 @@ $output-border-radius: 6px;
   box-shadow: 0px 0px 8px 1px #e8eaed;
   box-sizing: border-box;
   padding: 0;
-
-  @include tablet {
-    margin: 0;
-    width: 100%;
-  }
 }
 
 .output.show-to-top .to-top {
@@ -603,7 +602,7 @@ $output-border-radius: 6px;
 }
 
 $output-header-before-z-index: 1;
-$output-header-height: 46px;
+$output-header-height: 40px;
 $output-header-sticky-offset: $stages-top;
 
 .output-header {
@@ -629,8 +628,9 @@ $output-header-sticky-offset: $stages-top;
 .output-header-content {
   position: relative;
   background: #192d46;
-  padding: 8px 5px 7px 15px;
+  padding: 0 5px 0 15px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid transparent;
   font-size: 13px;
   color: rgba(255, 255, 255, 0.6);
   display: flex;
@@ -638,6 +638,7 @@ $output-header-sticky-offset: $stages-top;
   flex-shrink: 0;
   border-radius: 6px 6px 0 0;
   z-index: $output-header-before-z-index + 1;
+  height: 100%;
 }
 
 .output-title {
@@ -762,25 +763,26 @@ $output-header-sticky-offset: $stages-top;
 }
 </style>
 
-<style>
-.stage-container > a:hover,
-.stage-container > a:focus {
-  outline: none;
-}
+<style lang="scss">
+.stage-container > a {
+  &:hover,
+  &:focus {
+    .stage {
+      header {
+        background: rgba(25, 45, 70, 0.02);
+      }
 
-.stage-container > a:hover header,
-.stage-container > a:focus header {
-  background: rgba(25, 45, 70, 0.02);
-}
+      &.has-steps {
+        time {
+          display: none;
+        }
 
-.stage-container > a:hover time,
-.stage-container > a:focus time {
-  display: none;
-}
-
-.stage-container > a:hover .arrow-dropdown,
-.stage-container > a:focus .arrow-dropdown {
-  display: inline-block;
+        .arrow-dropdown {
+          display: inline-block;
+        }
+      }
+    }
+  }
 }
 
 .step-container > a:hover,

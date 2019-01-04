@@ -1,13 +1,15 @@
-import {
+export {
 	cancelBuild,
 	fetchBuild,
 	fetchBuilds,
 	createBuild,
+  approveBuild,
+  declineBuild,
   fetchBuildsFeed,
   streamEvents
 } from "./build";
 
-import {
+export {
 	deleteCron,
 	createCron,
 	updateCron,
@@ -15,24 +17,24 @@ import {
 	fetchCrons,
 } from "./cron";
 
-import {
+export {
 	fetchLogs,
   streamLogs
 } from "./logs";
 
-import {
+export {
 	fetchMembers,
 	deleteMember,
 } from "./member";
 
-import {
+export {
 	deleteNode,
 	fetchNode,
 	fetchNodes,
 	updateNode,
 } from "./node";
 
-import {
+export {
 	chownRepo,
 	disableRepo,
 	enableRepo,
@@ -43,7 +45,7 @@ import {
 	updateRepo,
 } from "./repo";
 
-import {
+export {
 	createSecret,
 	deleteSecret,
 	fetchSecret,
@@ -51,55 +53,14 @@ import {
 	updateSecret,
 } from "./secret";
 
-import {
+export {
 	fetchViewer,
 	fetchViewerToken,
 	syncAccount,
 	syncPoll,
 } from "./viewer";
 
-import {
+export {
   showNotification,
   hideNotification
 } from "./notifications"
-
-export default {
-	cancelBuild,
-	chownRepo,
-	createBuild,
-	createCron,
-	createSecret,
-	deleteCron,
-	deleteMember,
-	deleteNode,
-	deleteSecret,
-	disableRepo,
-	enableRepo,
-	fetchBuild,
-	fetchBuilds,
-  fetchBuildsFeed,
-	fetchCron,
-	fetchCrons,
-	fetchLogs,
-	fetchMembers,
-	fetchNode,
-	fetchNodes,
-	fetchRepo,
-	fetchReposLatest,
-	fetchSecret,
-	fetchSecrets,
-	fetchViewer,
-	fetchViewerToken,
-	repairRepo,
-	streamEvents,
-	streamLogs,
-	updateCron,
-	updateNode,
-	updateRepo,
-	updateSecret,
-  showNotification,
-  hideNotification,
-	syncRepos,
-	syncAccount,
-	syncPoll,
-}
