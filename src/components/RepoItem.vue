@@ -37,11 +37,11 @@
         </div>
 
         <div class="time">
-          <div class="time-elapsed">
+          <div v-if="showElapsedTime" class="time-elapsed">
             <Hint showOn="hover" align="center" position="bottom">Build duration</Hint>
-            <TimeElapsed v-if="build.started" :started="build.started" :stopped="build.finished"/>
+            <TimeElapsed :started="build.started" :stopped="build.finished"/>
           </div>
-          <span v-if="build.started && build.created" class="dot"></span>
+          <span v-if="showElapsedTime && build.created" class="dot"></span>
           <span v-if="build.created" class="time-started">
             <Hint showOn="hover" align="right" position="bottom">
               Build started: {{ build.created | moment(MOMENT_FULL_FORMAT) }}
@@ -62,6 +62,7 @@ import IconRepository from "@/components/icons/IconRepository.vue";
 import Button from "@/components/buttons/Button.vue";
 import Hint from "@/components/Hint.vue";
 import { MOMENT_FULL_FORMAT } from "@/lib/momentFormats";
+import { isBuildFinished } from "@/lib/buildHelper";
 
 export default {
   name: "RepoItem",
@@ -94,6 +95,9 @@ export default {
       if (event === "tag") return "created tag";
       if (event === "promote") return "promoted";
       return "pushed";
+    },
+    showElapsedTime() {
+      return isBuildFinished(this.build) ? !!this.build.finished : !!this.build.started;
     }
   }
 };
