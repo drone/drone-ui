@@ -197,6 +197,7 @@ const HEADER_HEIGHT = 56;
 const STAGES_TOP = HEADER_HEIGHT;
 const STAGES_PADDING = 20;
 const STAGES_TOP_BREAKPOINT = STAGES_TOP + STAGES_PADDING;
+const OUTPUT_HEADER_STICKY_OFFSET = 20;
 
 export default {
   name: "Build",
@@ -390,7 +391,7 @@ export default {
       const { output, outputHeader, visibilityFix } = this.$refs;
       const delta = outputHeader.offsetTop - output.offsetTop;
 
-      visibilityFix.style.top = "-" + Math.min(delta + 10, 80) + "px";
+      visibilityFix.style.top = "-" + Math.min(delta + OUTPUT_HEADER_STICKY_OFFSET, 80) + "px";
     },
     onOutputContentScroll() {
       this.actualizeShowToTop();
@@ -487,6 +488,8 @@ export default {
 
 .repo-item {
   margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
 }
 
 .build-content {
