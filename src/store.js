@@ -160,6 +160,7 @@ export default new Vuex.Store({
     secrets: {},
     crons: {},
     activity: {},
+    environments: createEmptyCollection([]),
 
     user: {
       data: null,

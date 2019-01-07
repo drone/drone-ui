@@ -55,7 +55,8 @@
     -->
 
     <Secrets />
-    <CronJobs />
+    <CronJobs :defaultBranch="repo.branch" />
+    <Environments />
     <Badges />
 
     <div v-if="repo.active && isAdmin" class="disable">
@@ -73,6 +74,7 @@
 <script>
 import Secrets from "../components/editable-list/Secrets.vue";
 import CronJobs from "../components/editable-list/CronJobs.vue";
+import Environments from "../components/editable-list/Environments.vue";
 import BaseCheckbox from "@/components/forms/BaseCheckbox.vue";
 import BaseRadioButtons from "@/components/forms/BaseRadioButtons.vue";
 import BaseInput from "@/components/forms/BaseInput.vue";
@@ -99,6 +101,7 @@ export default {
     BaseSelect,
     Secrets,
     CronJobs,
+    Environments,
     Card,
     CardGroup,
     Badges,
