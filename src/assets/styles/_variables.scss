@@ -5,8 +5,6 @@ $bp-mobile: 480px;
 /* [-----------](-----------)[-----------> */
 /*           480px       980px             */
 
-$body-color: #fbfbfb;
-
 $color-text: #192D46;
 $color-primary: #0564d7;
 $color-warning: #ff7d00;
@@ -14,11 +12,15 @@ $color-danger: #ff4164;
 $color-success: #19d78c;
 $color-info: #96a5be;
 
-$header-color: #192d46;
+$body-color: #fbfbfb;
+$border-color: rgba($color-text, 0.05);
+$bg-hover-color: mix($color-text, #fff, 3%);
+
+$header-color: $color-text;
 $header-height: 56px;
 $header-padding-side: 15px;
 
 $button-outline-hover-bg-opacity: 0.1;
 
-$step-selected-bg-color: #f8f9f9 // rgba(#fff, 0.03) on white bg
+$step-selected-bg-color: $bg-hover-color
 

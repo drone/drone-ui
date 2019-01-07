@@ -25,6 +25,12 @@
           <span>Cancel</span>
           <IconCancel/>
         </ButtonConfirm>
+
+        <Dropdown title="promote to" :buttonProps="{ outline: true }" align="right">
+          <div v-for="env in envs" :key="env.id" class="envs-dropdown-item" @click="() => promoteToEnv(env)">
+            {{ env.name }}
+          </div>
+        </Dropdown>
       </div>
     </portal>
 
@@ -188,6 +194,7 @@ import IconSource from "../components/icons/IconSource";
 import AlertError from "../components/AlertError";
 import TimeElapsed from "../components/TimeElapsed";
 import Status from "@/components/Status";
+import Dropdown from "@/components/Dropdown";
 
 import { isBuildFinished } from "@/lib/buildHelper";
 
@@ -201,6 +208,7 @@ const OUTPUT_HEADER_STICKY_OFFSET = 20;
 export default {
   name: "Build",
   components: {
+    Dropdown,
     TimeElapsed,
     AlertError,
     IconArrow,
@@ -304,6 +312,10 @@ export default {
     },
     readyToDownload() {
       return this.step && this.step.stopped && this.$store.state.logs && this.$store.state.logs.length;
+    },
+    envs() {
+      // todo real data
+      return [{ id: 1, name: "Fake environment 1" }, { id: 2, name: "Fake env2" }];
     }
   },
   methods: {
@@ -320,6 +332,13 @@ export default {
       this.$store.dispatch("createBuild", { namespace, name, build }).then(data => {
         this.$router.push(`/${namespace}/${name}/${data.build.number}`);
       });
+    },
+    promoteToEnv(env) {
+      const result = confirm(`Are you sure to promote build #${this.build.number} to ${env.name}?`);
+      if (result) {
+        // todo
+        alert("Sorry, not ready yet");
+      }
     },
     handleMore: function() {
       this.logLimit += this.logStep;
@@ -465,7 +484,7 @@ export default {
     margin-top: 10px;
   }
 
-  .button {
+  .button, .dropdown {
     margin: 5px;
   }
 }
@@ -489,6 +508,21 @@ export default {
 
 .button-source > svg {
   width: 24px;
+}
+
+.envs-dropdown-item {
+  padding: 10px 15px; // todo proper padding from design
+  white-space: nowrap;
+  cursor: pointer;
+
+  &:hover,
+  &:focus {
+    background-color: $bg-hover-color;
+  }
+
+  + .envs-dropdown-item {
+    border-top: 1px solid $border-color;
+  }
 }
 
 .repo-item {

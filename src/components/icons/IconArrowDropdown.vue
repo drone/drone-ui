@@ -11,10 +11,12 @@
 </template>
 
 <script>
+import * as validators from "@/lib/validators";
+
 export default {
-  name: "IconArrow",
+  name: "IconArrowDropdown",
   props: {
-    direction: String
+    direction: { type: String, default: "down", validator: validators.oneOf(["up", "down", "right", "left"]) }
   }
 };
 </script>
@@ -27,5 +29,9 @@ svg {
 
 .direction-right {
   transform: rotate(-90deg);
+}
+
+.direction-up {
+  transform: rotate(180deg);
 }
 </style>
