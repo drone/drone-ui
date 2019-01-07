@@ -43,135 +43,134 @@
     <Loading v-if="buildShowState === 'data' && stagesShowState === 'loading'" text="Loading stages and steps"/>
 
     <div class="build-content" v-if="buildShowState === 'data' && stagesShowState === 'data'">
-      <div class="stages" ref="stages">
-        <div class="stage-container" v-for="(_stage) in build.stages" :key="_stage.id">
+      <Card v-if="isBuildBlocked" class="alert-build-blocked" contentPadding="30px">
+        <div>Pipeline execution is blocked pending administrator approval</div>
+        <Button outline theme="default" size="l" @click.native="declineBuild">Decline</Button>
+        <Button theme="primary" size="l" @click.native="approveBuild">Approve</Button>
+      </Card>
 
-          <!--
-            If the stage is not selected it is collapsed
-            and rendered as a link. Clicking the link will
-            change the route and expand the section.
-          -->
-          <router-link v-if="_stage !== stage" :to="'/'+slug+'/'+build.number+'/'+_stage.number+'/1'">
-            <Stage :stage="_stage"/>
-          </router-link>
+      <template v-else>
+        <div class="stages" ref="stages">
+          <div class="stage-container" v-for="(_stage) in build.stages" :key="_stage.id">
 
-          <!--
-            If the stage is selected it is expanded, and
-            all steps are displayed.
-          -->
-          <Stage v-else :stage="_stage">
-            <div v-for="(_step) in _stage.steps" :key="_step.id" class="step-container">
-              <Step v-if="_step === step"
-                    selected
+            <!--
+              If the stage is not selected it is collapsed
+              and rendered as a link. Clicking the link will
+              change the route and expand the section.
+            -->
+            <router-link v-if="_stage !== stage" :to="'/'+slug+'/'+build.number+'/'+_stage.number+'/1'">
+              <Stage :stage="_stage"/>
+            </router-link>
+
+            <!--
+              If the stage is selected it is expanded, and
+              all steps are displayed.
+            -->
+            <Stage v-else :stage="_stage">
+              <div v-for="(_step) in _stage.steps" :key="_step.id" class="step-container">
+                <Step v-if="_step === step"
+                      selected
+                      :name="_step.name"
+                      :status="_step.status"
+                      :created="_step.created"
+                      :started="_step.started"
+                      :stopped="_step.stopped"/>
+
+                <router-link v-else :to="'/'+slug+'/'+build.number+'/'+_stage.number+'/'+_step.number">
+                  <Step
                     :name="_step.name"
                     :status="_step.status"
                     :created="_step.created"
                     :started="_step.started"
-                    :stopped="_step.stopped"/>
-
-              <router-link v-else :to="'/'+slug+'/'+build.number+'/'+_stage.number+'/'+_step.number">
-                <Step
-                  :name="_step.name"
-                  :status="_step.status"
-                  :created="_step.created"
-                  :started="_step.started"
-                  :stopped="_step.stopped">
-                </Step>
-              </router-link>
-            </div>
-          </Stage>
-        </div> <!-- end: step loop -->
-      </div>
-
-      <ScrollLock v-if="outputFullscreen"/>
-
-      <div class="stage-content" v-if="stage">
-        <Alert v-if="stageError" class="stage-error" theme="danger">{{ stage.name }}: {{ stage.error }}</Alert>
-
-        <div v-if="hasLogs"
-             class="output"
-             :class="{'output-fullscreen': outputFullscreen, 'show-to-top': !logsLoading && showToTop}"
-             ref="output">
-          <div ref="topAnchor"></div>
-
-          <div class="output-header" ref="outputHeader">
-            <div class="output-header-visibility-fix" ref="visibilityFix"/>
-            <div class="output-header-content">
-              <div class="output-title" :title="stage && step && `${stage.name} - ${step.name}`">
-                <span class="output-title-stage">{{ stage && stage.name }}</span>
-                <span class="output-title-step"> — {{ step && step.name }}</span>
+                    :stopped="_step.stopped">
+                  </Step>
+                </router-link>
               </div>
-              <time-elapsed v-if="step && step.started"
-                            :started="step.started"
-                            :stopped="step.stopped"
-                            class="output-time-elapsed"/>
-              <div class="output-actions">
-                <PlayButton v-if="step && !step.stopped"
-                            title="Follow logs"
-                            @click.native="toggleFollow"
-                            :pause="follow"/>
-                <div v-if="step && !step.stopped" class="divider"></div>
-                <Button outline borderless v-if="readyToDownload"
-                        title="Download"
-                        @click.native="download"
-                        theme="light"
-                        class="download">
-                  <IconDownload :close="outputFullscreen"/>
-                </Button>
-                <div v-if="readyToDownload" class="divider"></div>
-                <Button title="Fullscreen" @click.native="toggleOutputFullscreen" theme="light" outline borderless>
-                  <IconFullscreen :close="outputFullscreen"/>
-                </Button>
-              </div>
-            </div>
-          </div>
-          <div class="output-content" ref="outputContent" @scroll="onOutputContentScroll">
-            <Loading v-if="logsLoading"/>
-
-            <div class="output-content-actions" v-if="moreCount">
-              <Button size="l" outline borderless class="output-button" @click.native="handleMore">
-                Show {{Math.min(moreCount, logStep)}} lines more
-              </Button>
-            </div>
-
-            <table class="output-lines">
-              <tbody>
-              <tr v-for="line in shownLogs" :key="line.pos">
-                <td class="ol-pos">{{line.pos+1}}</td>
-                <td class="ol-html" v-html="line._html"></td>
-                <td class="ol-time">{{line.time}}s</td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-
-
-          <div ref="bottomAnchor"></div>
-
-          <div class="to-top" @click="scrollToTop">
-            <IconArrow direction="up"/>
-          </div>
+            </Stage>
+          </div> <!-- end: step loop -->
         </div>
 
-        <!--<Card v-if="stage.status === 'Blocked'">-->
+        <div class="stage-content" v-if="stage">
+          <Alert v-if="stageError" class="stage-error" theme="danger">{{ stage.name }}: {{ stage.error }}</Alert>
 
-        <!--</Card>-->
+          <ScrollLock v-if="outputFullscreen"/>
+          <div v-if="hasLogs"
+               class="output"
+               :class="{'output-fullscreen': outputFullscreen, 'show-to-top': !logsLoading && showToTop}"
+               ref="output">
+            <div ref="topAnchor"></div>
 
-        <Alert v-else-if="!stageError" :theme="getThemeByStatus(step ? step.status : stage.status)">
-          {{ stage.name }}{{ step ? ` – ${step.name}` : '' }}: {{ humanizeStatus(step ? step.status : stage.status) }}
-        </Alert>
+            <div class="output-header" ref="outputHeader">
+              <div class="output-header-visibility-fix" ref="visibilityFix"/>
+              <div class="output-header-content">
+                <div class="output-title" :title="stage && step && `${stage.name} - ${step.name}`">
+                  <span class="output-title-stage">{{ stage && stage.name }}</span>
+                  <span class="output-title-step"> — {{ step && step.name }}</span>
+                </div>
+                <time-elapsed v-if="step && step.started"
+                              :started="step.started"
+                              :stopped="step.stopped"
+                              class="output-time-elapsed"/>
+                <div class="output-actions">
+                  <PlayButton v-if="step && !step.stopped"
+                              title="Follow logs"
+                              @click.native="toggleFollow"
+                              :pause="follow"/>
+                  <div v-if="step && !step.stopped" class="divider"></div>
+                  <Button outline borderless v-if="readyToDownload"
+                          title="Download"
+                          @click.native="download"
+                          theme="light"
+                          class="download">
+                    <IconDownload :close="outputFullscreen"/>
+                  </Button>
+                  <div v-if="readyToDownload" class="divider"></div>
+                  <Button title="Fullscreen" @click.native="toggleOutputFullscreen" theme="light" outline borderless>
+                    <IconFullscreen :close="outputFullscreen"/>
+                  </Button>
+                </div>
+              </div>
+            </div>
+            <div class="output-content" ref="outputContent" @scroll="onOutputContentScroll">
+              <Loading v-if="logsLoading"/>
 
-        <template v-if="stage && stage.status === 'blocked'">
-          <Button theme="danger" @click.native="declineBuild">Decline</Button>
-          <Button theme="primary" @click.native="approveBuild">Approve</Button>
-        </template>
-      </div>
+              <div class="output-content-actions" v-if="moreCount">
+                <Button size="l" outline borderless class="output-button" @click.native="handleMore">
+                  Show {{Math.min(moreCount, logStep)}} lines more
+                </Button>
+              </div>
+
+              <table class="output-lines">
+                <tbody>
+                <tr v-for="line in shownLogs" :key="line.pos">
+                  <td class="ol-pos">{{line.pos+1}}</td>
+                  <td class="ol-html" v-html="line._html"></td>
+                  <td class="ol-time">{{line.time}}s</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+
+
+            <div ref="bottomAnchor"></div>
+
+            <div class="to-top" @click="scrollToTop">
+              <IconArrow direction="up"/>
+            </div>
+          </div>
+
+          <Alert v-else-if="!stageError" :theme="getThemeByStatus(step ? step.status : stage.status)">
+            {{ stage.name }}{{ step ? ` – ${step.name}` : "" }}: {{ humanizeStatus(step ? step.status : stage.status) }}
+          </Alert>
+        </div>
+      </template>
     </div>
   </div>
 </template>
 
 <script>
 import Alert from "@/components/Alert.vue";
+import Card from "@/components/Card.vue";
 import RepoItem from "@/components/RepoItem.vue";
 import Step from "@/components/Step.vue";
 import Stage from "@/components/Stage.vue";
@@ -206,6 +205,7 @@ export default {
     AlertError,
     IconArrow,
     Alert,
+    Card,
     RepoItem,
     Step,
     Stage,
@@ -255,6 +255,10 @@ export default {
       if (this.build && this.build.error) return "buildError";
       if (this.buildCollection.dStatus === "present") return "data";
       if (this.buildCollection.lStatus === "loading") return "loading";
+    },
+    isBuildBlocked() {
+      // todo, write a proper condition after backend will be ready
+      return this.stage && this.stage.status === "blocked";
     },
     stage() {
       if (!this.build) return;
@@ -402,6 +406,7 @@ export default {
         : this.$refs.output.getBoundingClientRect().y < STAGES_TOP_BREAKPOINT;
     },
     approveBuild() {
+      // todo approve/decline whole build
       this.$store.dispatch("approveBuild", { ...this.$store.state.route.params, stage: this.stage.number });
     },
     declineBuild() {
@@ -498,6 +503,20 @@ export default {
 
   @include tablet {
     flex-direction: column;
+  }
+}
+
+.alert-build-blocked {
+  flex-grow: 1;
+  text-align: center;
+  color: rgba($color-text, 0.6);
+
+  div {
+    margin-bottom: 20px;
+  }
+
+  .button + .button {
+    margin-left: 10px;
   }
 }
 
