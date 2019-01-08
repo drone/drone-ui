@@ -155,7 +155,7 @@
 
         <AlertError v-else-if="logsShowState === 'loadingError'" :error="logsCollection.error"/>
 
-        <Alert v-else-if="!state || logsShowState === 'empty'"
+        <Alert v-else-if="!step || logsShowState === 'empty'"
                :theme="getThemeByStatus(step ? step.status : stage.status)">
           {{ stage.name }}{{ step ? ` – ${step.name}` : '' }}: {{ humanizeStatus(step ? step.status : stage.status) }}
         </Alert>
