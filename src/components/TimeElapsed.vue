@@ -29,11 +29,11 @@ export default {
   },
   computed: {
     time: function() {
-      return [
-        this.hours ? `${this.hours}h` : "",
-        this.minutes ? `${this.minutes}m` : "",
-        `${this.seconds}s`
-      ].filter(x => x).join(" ");
+      return (
+        (this.hours ? this.addLeadingZeroIfNeeded(this.hours) + ":" : "") +
+        (this.addLeadingZeroIfNeeded(this.minutes) + ":") +
+        this.addLeadingZeroIfNeeded(this.seconds)
+      );
     },
     lapsedSeconds: function() {
       return Math.ceil((this.currentTime - this.started * 1000) / 1000);
@@ -63,6 +63,9 @@ export default {
         this.currentTime = Date.now();
         this.interval = setInterval(this.updateCurrentTime, 1000);
       }
+    },
+    addLeadingZeroIfNeeded(value) {
+      return value > 9 ? value : `0${value}`;
     }
   },
   watch: {

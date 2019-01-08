@@ -1,6 +1,6 @@
 <template>
   <div class="popup"
-       :class="{ [`position-${position}`]: true, [`align-${align}`]: true, 'width-same': width === 'same' }"
+       :class="{ [`position-${position}`]: true, [`align-${align}`]: true, }"
        :style="style">
     <slot></slot>
   </div>
@@ -11,20 +11,22 @@ export default {
   name: "Popup",
   props: {
     position: { type: String, required: true, validator: x => ["bottom"].includes(x) },
-    align: { type: String, required: true, validator: x => ["center", "right", "both"].includes(x) },
-    width: Number
+    align: { type: String, required: true, validator: x => ["center", "right", "both", "left"].includes(x) },
+    width: Number,
+    maxWidth: Number
   },
   computed: {
     style() {
       const result = {};
 
       if (this.position === "bottom") {
-        if (this.align === "right") {
+        if (["right", "left", "center"].includes(this.align)) {
           result.width = `${this.width}px`;
-        }
+          result.maxWidth = `${this.maxWidth}px`;
 
-        if (this.align === "center") {
-          result.marginLeft = `-${this.width / 2}px`;
+          if (this.align === "center") {
+            result.marginLeft = `-${this.width / 2}px`;
+          }
         }
       }
 
@@ -53,12 +55,13 @@ export default {
   left: 50%;
 }
 
+.popup.position-bottom.align-both,
 .popup.position-bottom.align-right {
   right: 0;
 }
 
-.popup.position-bottom.align-both {
-  right: 0;
+.popup.position-bottom.align-both,
+.popup.position-bottom.align-left {
   left: 0;
 }
 </style>

@@ -5,7 +5,7 @@
       <IconArrowDropdown :direction="opened ? 'up' : 'down'"/>
     </Button>
 
-    <Popup v-show="opened" position="bottom" :align="align"><slot/></Popup>
+    <Popup v-show="opened" position="bottom" v-bind="popupProps"><slot/></Popup>
   </div>
 </template>
 
@@ -19,8 +19,8 @@ export default {
   components: { IconArrowDropdown, Popup, Button },
   props: {
     title: { type: String, required: true },
-    align: { type: String, default: "center" },
-    buttonProps: Object
+    buttonProps: Object,
+    popupProps: Object
   },
   data() {
     return {

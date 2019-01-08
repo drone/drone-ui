@@ -4,6 +4,12 @@
 
     <portal v-if="buildShowState === 'data'" to="secondary-page-header-actions">
       <div class="header-actions">
+        <Dropdown title="promote to" :buttonProps="{ theme: 'primary' }" :popupProps="{ align: 'left', maxWidth: 300 }">
+          <div v-for="env in envs" :key="env.id" class="envs-dropdown-item" @click="() => promoteToEnv(env)">
+            {{ env.name }}
+          </div>
+        </Dropdown>
+
         <Button outline class="button-source" :href="build.link" target="_blank">
           <span>View source</span>
           <IconSource/>
@@ -25,12 +31,6 @@
           <span>Cancel</span>
           <IconCancel/>
         </ButtonConfirm>
-
-        <Dropdown title="promote to" :buttonProps="{ outline: true }" align="right">
-          <div v-for="env in envs" :key="env.id" class="envs-dropdown-item" @click="() => promoteToEnv(env)">
-            {{ env.name }}
-          </div>
-        </Dropdown>
       </div>
     </portal>
 
@@ -100,9 +100,9 @@
           <Alert v-if="stageError" class="stage-error" theme="danger">{{ stage.name }}: {{ stage.error }}</Alert>
 
           <ScrollLock v-if="outputFullscreen"/>
-          <div v-if="hasLogs"
+          <div v-if="['loading', 'data'].includes(logsShowState)"
                class="output"
-               :class="{'output-fullscreen': outputFullscreen, 'show-to-top': !logsLoading && showToTop}"
+               :class="{'output-fullscreen': outputFullscreen, 'show-to-top': logsShowState === 'data' && showToTop}"
                ref="output">
             <div ref="topAnchor"></div>
 
@@ -138,7 +138,7 @@
               </div>
             </div>
             <div class="output-content" ref="outputContent" @scroll="onOutputContentScroll">
-              <Loading v-if="logsLoading"/>
+              <Loading v-if="logsShowState === 'loading'"/>
 
               <div class="output-content-actions" v-if="moreCount">
                 <Button size="l" outline borderless class="output-button" @click.native="handleMore">
@@ -165,7 +165,10 @@
             </div>
           </div>
 
-          <Alert v-else-if="!stageError" :theme="getThemeByStatus(step ? step.status : stage.status)">
+          <AlertError v-else-if="logsShowState === 'loadingError'" :error="logsCollection.error"/>
+
+          <Alert v-else-if="!step || logsShowState === 'empty'"
+                 :theme="getThemeByStatus(step ? step.status : stage.status)">
             {{ stage.name }}{{ step ? ` – ${step.name}` : "" }}: {{ humanizeStatus(step ? step.status : stage.status) }}
           </Alert>
         </div>
@@ -292,14 +295,19 @@ export default {
       const from = Math.max(this.logs.length - this.logLimit, 0);
       return this.logs.slice(from);
     },
-    logs() {
+    logsCollection() {
       return this.$store.state.logs;
     },
-    logsLoading() {
-      return this.$store.state.logsLoading;
+    logs() {
+      return this.logsCollection.data;
     },
-    hasLogs() {
-      return (this.logs && this.logs.length > 0) || this.logsLoading;
+    logsShowState() {
+      if (this.logsCollection.lStatus === "error") return "loadingError";
+      if (this.logsCollection.dStatus === "present") {
+        if (this.logs.length) return "data";
+        return "empty";
+      }
+      if (this.logsCollection.lStatus === "loading") return "loading";
     },
     moreCount() {
       return Math.max(this.logs.length - this.logLimit, 0);
@@ -311,11 +319,15 @@ export default {
       return this.repo && this.repo.permissions && this.repo.permissions.write || false;
     },
     readyToDownload() {
-      return this.step && this.step.stopped && this.$store.state.logs && this.$store.state.logs.length;
+      return this.step && this.step.stopped && this.logsShowState === "data";
     },
     envs() {
       // todo real data
-      return [{ id: 1, name: "Fake environment 1" }, { id: 2, name: "Fake env2" }];
+      return [
+        { id: 1, name: "Fake environment 1" },
+        { id: 2, name: "Fake env2" },
+        { id: 3, name: "Very long environment name to broke our Dropdown. I really want to broke something" }
+      ];
     }
   },
   methods: {
@@ -440,12 +452,17 @@ export default {
      * dispatches a request to stream the logs.
      */
     step: function(newStep, oldStep) {
-      if (!newStep) return;
+      if (!newStep) {
+        this.$store.commit("LOG_CLEAR");
+        return;
+      }
 
       // If a new step is loaded, dispatch a request to
       // fetch the completed step logs, or if the step
       // is running, dispatch a request to stream the logs.
-      if (!oldStep || oldStep.id != newStep.id) {
+      if (!oldStep || oldStep.id !== newStep.id) {
+        this.$store.commit("LOG_CLEAR");
+
         this.follow = false;
         this.logLimit = 250;
 
@@ -511,9 +528,11 @@ export default {
 }
 
 .envs-dropdown-item {
-  padding: 10px 15px; // todo proper padding from design
+  padding: 13px 15px; // todo proper padding from design
   white-space: nowrap;
   cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   &:hover,
   &:focus {

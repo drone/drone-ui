@@ -172,18 +172,7 @@ export default new Vuex.Store({
       tokenLoading: false
     },
 
-    // todo use collection style (like object in builds[slug])
-    logs: [],
-    logsLoaded: false,
-    logsLoading: false,
-    logsLoadingErr: undefined,
-    logsFor: {
-      namespace: undefined,
-      name: undefined,
-      build: undefined,
-      stage: undefined,
-      step: undefined,
-    },
+    logs: createEmptyCollection([]),
 
     notifications: {}
   },
@@ -521,25 +510,20 @@ export default new Vuex.Store({
     },
 
     LOGS_FIND_LOADING(state){
-      state.logs = [];
-      state.logsLoading = true;
+      applyLoading(state.logs);
     },
-    LOGS_FIND_FAILURE(state, data){
-      state.logsLoading = false;
-      state.logsLoadingErr = data;
+    LOGS_FIND_FAILURE(state, error){
+      applyFailure(state.logs, error);
     },
     LOGS_FIND_SUCCESS(state, data){
       escapeLogs(data.lines);
-
-      state.logsLoadingErr = null;
-      state.logsLoading = false;
-      state.logs = data.lines;
+      applySuccess(state.logs, data.lines)
     },
     LOG_CLEAR(state) {
-      state.logs = [];
+      state.logs = createEmptyCollection([]);
     },
     LOG_WRITE(state, { lines }) {
-      if (!state.logs) state.logs = [];
+      applySuccess(state.logs)
       escapeLogs(lines);
       state.logs = state.logs.concat(lines);
     },
