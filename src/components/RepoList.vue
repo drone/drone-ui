@@ -4,7 +4,7 @@
 
     <Loading v-if="loading">{{emptyMessage}}</Loading>
 
-    <div v-if="!loading" class="list-item" v-for="repo in items" :key="repo.id">
+    <div v-if="!loading" class="list-item" v-for="repo in items" :key="`${repo.id}.${repo.build && repo.build.id}`">
       <RepoLink :repo="repo">
         <RepoItem v-bind='repoToProps(repo)'/>
       </RepoLink>
