@@ -73,7 +73,7 @@ export default {
   },
   methods: {
     trimMergeRef(ref) {
-      const match = ref.match(/\d/g);
+      const match = ref.match(/\d+/g);
       return match && match.length > 0 ? match[0] : ref;
     },
     trimTagRef(ref) {
