@@ -26,7 +26,6 @@ export const fetcher = ({dispatch, commit}) => (to, from, next) => {
   switch (name) {
     case "step":
     case "build":
-      commit("LOG_CLEAR");
       dispatch("fetchBuild", params);
       break;
     case "builds":

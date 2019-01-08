@@ -88,9 +88,9 @@
       <div class="stage-content" v-if="stage">
         <Alert v-if="stageError" class="stage-error" theme="danger">{{ stage.name }}: {{ stage.error }}</Alert>
 
-        <div v-if="hasLogs"
+        <div v-if="['loading', 'data'].includes(logsShowState)"
              class="output"
-             :class="{'output-fullscreen': outputFullscreen, 'show-to-top': !logsLoading && showToTop}"
+             :class="{'output-fullscreen': outputFullscreen, 'show-to-top': logsShowState === 'data' && showToTop}"
              ref="output">
           <div ref="topAnchor"></div>
 
@@ -126,7 +126,7 @@
             </div>
           </div>
           <div class="output-content" ref="outputContent" @scroll="onOutputContentScroll">
-            <Loading v-if="logsLoading"/>
+            <Loading v-if="logsShowState === 'loading'"/>
 
             <div class="output-content-actions" v-if="moreCount">
               <Button size="l" outline borderless class="output-button" @click.native="handleMore">
@@ -153,11 +153,10 @@
           </div>
         </div>
 
-        <!--<Card v-if="stage.status === 'Blocked'">-->
+        <AlertError v-else-if="logsShowState === 'loadingError'" :error="logsCollection.error"/>
 
-        <!--</Card>-->
-
-        <Alert v-else-if="!stageError" :theme="getThemeByStatus(step ? step.status : stage.status)">
+        <Alert v-else-if="!state || logsShowState === 'empty'"
+               :theme="getThemeByStatus(step ? step.status : stage.status)">
           {{ stage.name }}{{ step ? ` – ${step.name}` : '' }}: {{ humanizeStatus(step ? step.status : stage.status) }}
         </Alert>
 
@@ -280,14 +279,19 @@ export default {
       const from = Math.max(this.logs.length - this.logLimit, 0);
       return this.logs.slice(from);
     },
-    logs() {
+    logsCollection() {
       return this.$store.state.logs;
     },
-    logsLoading() {
-      return this.$store.state.logsLoading;
+    logs() {
+      return this.logsCollection.data;
     },
-    hasLogs() {
-      return (this.logs && this.logs.length > 0) || this.logsLoading;
+    logsShowState() {
+      if (this.logsCollection.lStatus === "error") return "loadingError";
+      if (this.logsCollection.dStatus === "present") {
+        if (this.logs.length) return "data";
+        return "empty";
+      }
+      if (this.logsCollection.lStatus === "loading") return "loading";
     },
     moreCount() {
       return Math.max(this.logs.length - this.logLimit, 0);
@@ -299,7 +303,7 @@ export default {
       return this.repo && this.repo.permissions && this.repo.permissions.write || false;
     },
     readyToDownload() {
-      return this.step && this.step.stopped && this.$store.state.logs && this.$store.state.logs.length;
+      return this.step && this.step.stopped && this.logsShowState === "data";
     }
   },
   methods: {
@@ -416,12 +420,17 @@ export default {
      * dispatches a request to stream the logs.
      */
     step: function(newStep, oldStep) {
-      if (!newStep) return;
+      if (!newStep) {
+        this.$store.commit("LOG_CLEAR");
+        return;
+      }
 
       // If a new step is loaded, dispatch a request to
       // fetch the completed step logs, or if the step
       // is running, dispatch a request to stream the logs.
-      if (!oldStep || oldStep.id != newStep.id) {
+      if (!oldStep || oldStep.id !== newStep.id) {
+        this.$store.commit("LOG_CLEAR");
+
         this.follow = false;
         this.logLimit = 250;
 
