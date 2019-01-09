@@ -125,78 +125,77 @@ export default {
 
 .button.theme-default {
   background-color: #192d46;
+
+  @include hf {
+    background-color: rgba(25, 45, 70, 0.8);
+  }
+
+  &.bordered {
+    @include hf {
+      border-color: #0564d7;
+    }
+  }
+
+  &.outline {
+    color: #192d46;
+
+    @include hf {
+      color: #0564d7;
+      background-color: transparent;
+    }
+  }
 }
 
 .button.theme-light {
   background-color: #fff;
+
+  &.outline {
+    color: #fff;
+  }
 }
 
 .button.theme-primary {
   background-color: #0564d7;
+
+  @include hf {
+    background-color: #085cc1;
+  }
+
+  &.outline {
+    color: #0564d7;
+
+    @include hf {
+      background-color: rgba(5, 100, 215, $button-outline-hover-bg-opacity);
+    }
+  }
 }
 
 .button.theme-danger {
-  background-color: #ff4164;
+  background-color: $color-danger;
+
+  @include hf {
+    background-color: #dd3e60;
+  }
+
+  &.bordered {
+    border-color: $color-danger;
+  }
+
+  &.outline {
+    color: $color-danger;
+
+    @include hf {
+      background-color: rgba(255, 65, 100, $button-outline-hover-bg-opacity);
+    }
+  }
 }
 
 .button.outline {
   background-color: transparent;
 }
 
-.button.theme-default.outline {
-  color: #192d46;
-}
-
-.button.theme-light.outline {
-  color: #fff;
-}
-
-.button.theme-primary.outline {
-  color: #0564d7;
-}
-
-.button.theme-danger.outline {
-  color: #ff4164;
-}
-
 .button:focus {
   outline: none;
-}
-
-.button.bordered:hover,
-.button.bordered:focus {
-  border-color: #0564d7;
-}
-
-.button.theme-default:focus,
-.button.theme-default:hover {
-  background-color: rgba(25, 45, 70, 0.8);
-}
-
-.button.theme-default.outline:focus,
-.button.theme-default.outline:hover {
-  color: #0564d7;
-  background-color: transparent;
-}
-
-.button.theme-primary:focus,
-.button.theme-primary:hover {
-  background-color: #085cc1;
-}
-
-.button.theme-primary.outline:focus,
-.button.theme-primary.outline:hover {
-  background-color: rgba(5, 100, 215, $button-outline-hover-bg-opacity);
-}
-
-.button.theme-danger:focus,
-.button.theme-danger:hover {
-  background-color: #dd3e60;
-}
-
-.button.theme-danger.outline:focus,
-.button.theme-danger.outline:hover {
-  background-color: rgba(255, 65, 100, $button-outline-hover-bg-opacity);
 }
 
 .button.loading {

@@ -66,8 +66,11 @@ export default {
     border-bottom: 1px solid rgba(25, 45, 70, 0.05);
     box-shadow: none;
     border-radius: 0;
-    padding-left: $header-padding-side;
-    padding-right: $header-padding-side;
+
+    @if ($header-padding-side != 15px) {
+      padding-left: $header-padding-side;
+      padding-right: $header-padding-side;
+    }
   }
 
   .repo-link.hover-type-box-shadow:focus .repo-item,

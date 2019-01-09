@@ -117,7 +117,7 @@ export default {
   transition: box-shadow linear 0.2s;
 
   @include mobile(true) {
-    padding: 10px;
+    padding: 10px 15px;
 
     .connector {
       width: 0;

@@ -59,14 +59,23 @@
     <Environments />
     <Badges />
 
-    <div v-if="repo.active && isAdmin" class="disable">
-      <ButtonConfirm @click="disable"
-                     theme="danger"
+    <div v-if="repo.active" class="actions">
+      <div v-if="isAdmin" class="disable">
+        <ButtonConfirm @click="disable"
+                       theme="danger"
+                       size="l"
+                       :message="`Are you sure to disable repository ${repo.slug}`">
+          Disable Repository
+        </ButtonConfirm>
+        <span>to stop processing builds.</span>
+      </div>
+
+      <ButtonConfirm outline theme='danger'
                      size="l"
-                     :message="`Are you sure to disable repository ${repo.slug}`">
-        Disable Repository
+                     @click="clearBuildsList"
+                     :message="`Are you sure to clear builds list for repository ${slug}?`">
+        Clear builds list
       </ButtonConfirm>
-      <span>to stop processing builds.</span>
     </div>
   </CardGroup>
 </template>
@@ -161,6 +170,10 @@ export default {
       const {namespace, name} = this.repo;
       this.$store.dispatch('repairRepo', {namespace, name});
     },
+    clearBuildsList() {
+      // todo
+      alert("Sorry, not implemented yet.");
+    }
   },
 };
 
@@ -182,18 +195,29 @@ const timeouts = [
 .disable {
   padding: 0 15px;
 
-  @include mobile {
+  @include tablet {
     text-align: center;
+    margin-bottom: 20px;
+  }
+
+  span {
+    margin: 15px 0 0 15px;
+    color: rgba(25, 45, 70, 0.6);
+
+    @include tablet {
+      display: block;
+      margin: 10px 0 0 0;
+    }
   }
 }
 
-.disable span {
-  margin: 15px 0 0 15px;
-  color: rgba(25, 45, 70, 0.6);
+.actions {
+  display: flex;
+  justify-content: space-between;
 
-  @include mobile {
-    display: block;
-    margin: 10px 0 0 0;
+  @include tablet {
+    flex-direction: column;
+    align-items: center;
   }
 }
 </style>
