@@ -525,7 +525,7 @@ export default new Vuex.Store({
     LOG_WRITE(state, { lines }) {
       applySuccess(state.logs)
       escapeLogs(lines);
-      state.logs = state.logs.concat(lines);
+      state.logs.data = state.logs.data.concat(lines);
     },
 
     NOTIFICATION_ADD(state, notification) {
