@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "ansi_up": "^3.0.0",
+    "highlight.js": "^9.13.1",
     "lodash.throttle": "^4.1.1",
     "portal-vue": "^1.5.0",
     "vue": "^2.5.17",
@@ -20,9 +21,9 @@
     "vuex-router-sync": "^5.0.0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.0.5",
-    "@vue/cli-plugin-eslint": "^3.0.5",
-    "@vue/cli-service": "^3.0.5",
+    "@vue/cli-plugin-babel": "^3.3.0",
+    "@vue/cli-plugin-eslint": "^3.3.0",
+    "@vue/cli-service": "^3.3.0",
     "@vue/eslint-config-prettier": "^3.0.5",
     "node-sass": "^4.10.0",
     "sass-loader": "^7.1.0",

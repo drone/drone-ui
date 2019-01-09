@@ -11,11 +11,13 @@ import store from "./store";
 import {sync} from 'vuex-router-sync';
 import {authorizer, defaultParams} from "./router/gates";
 import {fetcher} from "./router/fetch";
+import VueHighlightJS from "./lib/VueHighlightJS";
 
 Vue.use(VueMoment);
 Vue.use(Router);
 Vue.use(VueI18n);
 Vue.use(PortalVue);
+Vue.use(VueHighlightJS);
 Vue.config.productionTip = false;
 
 sync(store, router)

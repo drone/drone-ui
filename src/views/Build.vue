@@ -34,6 +34,10 @@
       </div>
     </portal>
 
+    <portal to="repo-nav">
+      <BuildNav :slug="slug" :buildNumber="$route.params.build"/>
+    </portal>
+
     <RepoItem
       v-if="buildShowState === 'data'"
       :number="build.number"
@@ -198,6 +202,7 @@ import AlertError from "../components/AlertError";
 import TimeElapsed from "../components/TimeElapsed";
 import Status from "@/components/Status";
 import Dropdown from "@/components/Dropdown";
+import BuildNav from "@/components/navs/BuildNav";
 
 import { isBuildFinished } from "@/lib/buildHelper";
 
@@ -226,6 +231,7 @@ export default {
     PlayButton,
     ScrollLock,
     Loading,
+    BuildNav,
     IconDownload,
     IconRestart,
     IconSource,
@@ -249,6 +255,12 @@ export default {
   computed: {
     slug() {
       return this.$route.params.namespace + "/" + this.$route.params.name;
+    },
+    buildStagesUrl() {
+      return `/${this.slug}/${this.$route.params.build}`;
+    },
+    viewConfigUrl() {
+      return `/${this.slug}/${this.$route.params.build}/config`;
     },
     repo() {
       return this.$store.state.repos[this.slug];

@@ -2,6 +2,7 @@ import Router from "vue-router";
 
 import Account from "../views/Account.vue";
 import Build from "../views/Build.vue";
+import BuildConfig from "../views/BuildConfig.vue";
 import Builds from "../views/Builds.vue";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
@@ -76,15 +77,20 @@ export default new Router({
               meta: { requiresAuth: true }
             },
             {
-              path: ":build/:stage/:step",
-              name: "step",
-              component: Build
-            },
-            {
               path: ":build",
               name: "build",
               component: Build
             },
+            {
+              path: ":build/config",
+              name: "build-config",
+              component: BuildConfig
+            },
+            {
+              path: ":build/:stage/:step",
+              name: "step",
+              component: Build
+            }
           ]
         }
       ],

@@ -14,6 +14,7 @@ export const fetcher = ({dispatch, commit}) => (to, from, next) => {
 
   switch (name) {
     case "build":
+    case "build-config":
     case "builds":
     case "repo":
     case "badges":

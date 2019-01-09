@@ -23,22 +23,8 @@
       <portal-target name="secondary-page-header-actions" slim/>
     </PageHeader>
 
-    <!--
-         this section provides the repository navigation bar. It is
-         enabled for all sub-pages with the exception of the build
-         page.
-    -->
-    <nav v-if="$route.params.build">
-      <router-link :to="'/'+slug" class="manually-active">
-        <IconArrow direction="left"/>
-        <span>Activity Feed</span>
-      </router-link>
-    </nav>
-
-    <nav v-else-if="showTabs">
-      <router-link :to="'/'+slug" :disabled="!repo.active">Activity Feed</router-link>
-      <router-link :to="'/'+slug + '/settings'" v-if="showSettings">Settings</router-link>
-    </nav>
+    <portal-target v-if="hasPortalContentFor('repo-nav')" name="repo-nav" slim/>
+    <RepoNav v-else :repo="repo" :user="user"/>
 
     <Alert v-if="repoEnablingErr && repoEnablingErr.status === 402">
       You have reached your repository activation limit.
@@ -73,10 +59,14 @@ import PageHeader from "@/components/PageHeader";
 import Link from "@/components/Link";
 import IconRestart from "@/components/icons/IconRestart.vue";
 import Loading from "@/components/Loading.vue";
+import RepoNav from "@/components/navs/RepoNav.vue";
+
+import { hasPortalContentFor } from "@/lib/portalHelper";
 
 export default {
   name: "repo",
   components: {
+    RepoNav,
     PageHeader,
     Alert,
     AlertError,
@@ -118,16 +108,6 @@ export default {
     showRouterOutlet() {
       return this.repo && this.repo.active;
     },
-    showTabs() {
-      return this.$route.name !== "build" && this.$route.name !== "step" && this.repo;
-    },
-    showSettings() {
-      return this.isCollaborator;
-    },
-    isCollaborator() {
-      return (this.repo && this.repo.permissions && this.repo.permissions.write) ||
-        (this.user && this.user.admin);
-    },
     build() {
       const collection = this.$store.state.builds[this.slug];
       return this.repo && collection && collection.data[this.$route.params.build];
@@ -137,6 +117,7 @@ export default {
     }
   },
   methods: {
+    hasPortalContentFor,
     handleActivate: function() {
       const {namespace, name} = this.$route.params;
       this.$store.dispatch('enableRepo', {
@@ -191,70 +172,11 @@ nav {
   padding-left: 15px;
   display: flex;
 
-  svg {
-    opacity: 0.6;
-  }
-
   @include mobile {
     padding-left: 10px;
     font-size: 13px;
     margin-bottom: 10px;
   }
-}
-
-nav a {
-  color: rgba(25, 45, 70, 0.6);
-  height: 18px;
-  line-height: 18px;
-  padding-bottom: 11px;
-  text-transform: uppercase;
-  margin-bottom: -1px;
-  letter-spacing: 0.5px;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  margin-right: 30px;
-  border-bottom: 1px solid transparent;
-
-  @include mobile {
-    letter-spacing: normal;
-    margin-right: 20px;
-    padding-bottom: 5px;
-  }
-}
-
-nav a.manually-active {
-  color: #192d46;
-}
-
-nav a:hover,
-nav a:focus {
-  color: #192d46;
-
-  svg {
-    opacity: 1;
-  }
-}
-
-nav a.manually-active:focus,
-nav a.manually-active:hover {
-  color: #0564d7;
-}
-
-nav a[disabled],
-nav a[disabled]:hover,
-nav a[disabled]:focus {
-  pointer-events: none;
-  color: rgba(25, 45, 70, 0.25);
-}
-
-nav a svg {
-  margin: 0 5px 0 0;
-}
-
-nav .router-link-exact-active {
-  border-color: #192d46;
-  color: #192d46;
 }
 
 .fade-enter-active, .fade-leave-active {
@@ -275,5 +197,51 @@ nav .router-link-exact-active {
 .activate p {
   margin-top: 15px;
   color: rgba(25, 45, 70, 0.6);
+}
+</style>
+
+<style lang="scss">
+@import "../assets/styles/mixins";
+
+.repo {
+  nav {
+    a {
+      color: rgba($color-text, 0.6);
+      height: 18px;
+      line-height: 18px;
+      padding-bottom: 11px;
+      text-transform: uppercase;
+      margin-bottom: -1px;
+      letter-spacing: 0.5px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      margin-right: 30px;
+      border-bottom: 1px solid transparent;
+
+      @include mobile {
+        letter-spacing: normal;
+        margin-right: 20px;
+        padding-bottom: 5px;
+      }
+
+      @include hf {
+        color: $color-text;
+      }
+
+      &[disabled],
+      &[disabled]:hover,
+      &[disabled]:focus {
+        pointer-events: none;
+        color: rgba($color-text, 0.25);
+      }
+
+      &.router-link-exact-active,
+      &.active {
+        border-color: $color-text;
+        color: $color-text;
+      }
+    }
+  }
 }
 </style>

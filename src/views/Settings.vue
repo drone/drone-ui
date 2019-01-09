@@ -125,8 +125,11 @@ export default {
       let repo = this.$store.state.repos[this.slug]
       return repo && {...repo};
     },
+    user() {
+      return this.$store.state.user.data;
+    },
     isRoot() {
-      return this.$store.state.user.data.admin;
+      return this.user.admin;
     },
     isAdmin() {
       const isAdmin = this.repo && this.repo.permissions && this.repo.permissions.admin;

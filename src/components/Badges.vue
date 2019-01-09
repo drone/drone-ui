@@ -11,7 +11,7 @@
     </div>
 
     <CodeSnippet>
-      <code>{{ code }}</code>
+      <code class="markdown">{{ code }}</code>
     </CodeSnippet>
   </Card>
 </template>
@@ -106,5 +106,9 @@ const langs = [
   @include tablet {
     width: 100%;
   }
+}
+
+code {
+  white-space: normal;
 }
 </style>

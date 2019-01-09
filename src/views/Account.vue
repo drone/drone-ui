@@ -16,17 +16,17 @@
             <code>{{ user.token }}</code>
           </CodeSnippet>
 
-          <CodeSnippet lang="terminal">
+          <CodeSnippet>
             <h3 slot="header">Example API Usage:</h3>
-            <code>curl -i {{ instance }}/api/user \</code>
-            <code class="out">-H "Authorization: Bearer {{ user.token }}"</code>
+            <code class="bash bash-terminal">curl -i {{ instance }}/api/user \</code>
+            <code class="bash bash-terminal-out">-H "Authorization: Bearer {{ user.token }}"</code>
           </CodeSnippet>
 
-          <CodeSnippet lang="terminal">
+          <CodeSnippet>
             <h3 slot="header">Example CLI Usage:</h3>
-            <code>export DRONE_SERVER={{ instance }}</code>
-            <code>export DRONE_TOKEN={{user.token}}</code>
-            <code>drone info</code>
+            <code class="bash bash-terminal">export DRONE_SERVER={{ instance }}</code>
+            <code class="bash bash-terminal">export DRONE_TOKEN={{user.token}}</code>
+            <code class="bash bash-terminal">drone info</code>
           </CodeSnippet>
         </CodeSnippetGroup>
       </Card>

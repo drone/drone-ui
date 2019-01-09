@@ -8,15 +8,14 @@
       <IconCopy/>
     </div>
   </header>
+
   <div ref="snippet" :class="{'with-copy': !$slots.header}">
     <div v-if="!$slots.header && copyAvailable" class="copy" @click="handleCopy">
       <transition name="fade"><Hint align="right" v-show="copied">Copied</Hint></transition>
       <IconCopy/>
     </div>
 
-    <pre :class="{ [`lang-${lang}`]: true }">
-      <slot></slot>
-    </pre>
+    <pre v-highlightjs><slot></slot></pre>
   </div>
 </div>
 </template>
@@ -30,9 +29,6 @@ export default {
   components: {
     IconCopy,
     Hint
-  },
-  props: {
-    lang: String
   },
   data() {
     return {
@@ -65,10 +61,13 @@ export default {
 };
 </script>
 
-<style scoped>
-div {
+<style scoped lang="scss">
+@import "../assets/styles/_variables.scss";
+
+.code-snippet {
   background-color: #fbfbfb;
   border-radius: 3px;
+  color: $color-text;
 }
 
 header {
@@ -76,7 +75,7 @@ header {
   display: flex;
   height: 50px;
   padding: 0px 15px;
-  border-bottom: 1px solid #eff0f2;
+  border-bottom: 1px solid rgba($color-text, 0.1);
 }
 
 header h1,
@@ -90,7 +89,6 @@ header h3 {
   font-stretch: normal;
   line-height: normal;
   letter-spacing: normal;
-  color: #192d46;
   flex: 1;
 }
 
@@ -102,19 +100,7 @@ pre {
   font-style: normal;
   font-stretch: normal;
   letter-spacing: normal;
-  color: #192d46;
   padding: 15px;
-  white-space: normal;
-}
-
-pre.lang-terminal code:before {
-  content: "$";
-  display: inline-block;
-  min-width: 20px;
-}
-
-pre.lang-terminal code.out:before {
-  content: ">";
 }
 
 .with-copy {
@@ -136,8 +122,28 @@ pre.lang-terminal code.out:before {
 code {
   display: block;
   line-height: 18px;
-  white-space: normal;
   word-break: break-all;
+
+  &.hljs {
+    background: transparent;
+    padding: 0;
+  }
+
+  &.bash-terminal,
+  &.bash-terminal-out {
+    &:before {
+      display: inline-block;
+      min-width: 20px;
+    }
+  }
+
+  &.bash-terminal:before {
+    content: "$";
+  }
+
+  &.bash-terminal-out:before {
+    content: ">";
+  }
 }
 
 .copy {
