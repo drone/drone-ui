@@ -19,6 +19,9 @@ If you want a feature badly in Drone, please voice your needs on the usual chann
 
 * https://github.com/drone/drone-ui/pull/196<br/>
   Render line breaks in commit messages.
+  
+* https://github.com/drone/drone-ui/pull/245<br/>
+  Build paging works when you click on "Show more builds"
 
 ## Try it locally
 
@@ -63,7 +66,7 @@ services:
 +     - DRONE_WWW=/drone-ui
 
 + drone-ui:
-+   image: laszlocloud/drone-ui:1
++   image: laszlocloud/drone-ui:2
 +   volumes:
 +     - drone-ui:/drone-ui
 
