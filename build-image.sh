@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TAG=1
+TAG=2
 
 docker build -t laszlocloud/drone-ui:$TAG .
 
