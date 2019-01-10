@@ -4,6 +4,10 @@
                 :items="items"
                 :dispatchCreate="dispatchCreate"
                 :dispatchDelete="dispatchDelete">
+    <Help slot="help" title="Secrets" href="https://docs.drone.io/config/secrets/pre-repository/">
+      To be used in build steps
+    </Help>
+
     <EditableListItem slot="item" slot-scope="slotProps"
                       :name="slotProps.item.name"
                       :deleting="slotProps.deleting"
@@ -24,6 +28,7 @@ import BaseTextArea from "@/components/forms/BaseTextArea.vue";
 import Button from "@/components/buttons/Button.vue";
 import EditableListItem from "@/components/editable-list/EditableListItem";
 import EditableList from "@/components/editable-list/EditableList";
+import Help from "@/components/Help";
 
 export default {
   name: "secrets",
@@ -33,6 +38,7 @@ export default {
     BaseCheckbox,
     BaseInput,
     BaseTextArea,
+    Help,
     Button
   },
   data() {

@@ -35,13 +35,21 @@ header {
   line-height: 50px;
   border-bottom: 1px solid rgba(25, 45, 70, 0.05);
   padding: 0 15px;
-  font-size: 16px;
-  font-weight: 600;
+  display: flex;
+  align-items: center;
 }
 
 footer {
   background-color: rgba(25, 45, 70, 0.03);
   border-top: 1px solid rgba(25, 45, 70, 0.05);
   padding: 15px;
+}
+</style>
+
+<style>
+.card > header > h2,
+.card > header > h3 {
+  font-size: 16px;
+  font-weight: 600;
 }
 </style>

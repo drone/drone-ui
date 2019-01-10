@@ -75,7 +75,7 @@ header {
   display: flex;
   height: 50px;
   padding: 0px 15px;
-  border-bottom: 1px solid rgba($color-text, 0.1);
+  border-bottom: 1px solid rgba($color-text, 0.05);
 }
 
 header h1,

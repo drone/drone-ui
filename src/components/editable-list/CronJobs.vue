@@ -4,6 +4,10 @@
                 :items="items"
                 :dispatchCreate="dispatchCreate"
                 :dispatchDelete="dispatchDelete">
+    <!--todo-->
+    <!--<Help slot="help" title="Crons" href="https://docs.drone.io/config/secrets/pre-repository/">-->
+    <!--</Help>-->
+
     <EditableListItem slot="item" slot-scope="slotProps"
                       :name="slotProps.item.name"
                       :tags="[slotProps.item.expr, slotProps.item.branch]"
@@ -26,10 +30,12 @@ import EditableList from "@/components/editable-list/EditableList";
 import EditableListItem from "@/components/editable-list/EditableListItem.vue";
 import BaseInput from "@/components/forms/BaseInput.vue";
 import BaseSelect from "@/components/forms/BaseSelect.vue";
+import Help from "@/components/Help";
 
 export default {
   name: "CronJobs",
   components: {
+    Help,
     EditableList,
     EditableListItem,
     BaseInput,

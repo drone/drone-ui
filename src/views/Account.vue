@@ -90,4 +90,8 @@ h1 {
   color: #192d46;
   margin: 30px 0px;
 }
+
+code {
+  white-space: normal;
+}
 </style>

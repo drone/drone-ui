@@ -1,6 +1,7 @@
 <template>
   <Card contentPadding="0 15px" class="editable-list">
-    <h2 slot="header">{{ title }}</h2>
+    <h2 class="title" slot="header">{{ title }}</h2>
+    <slot name="help" slot="header"/>
 
     <div v-if="items.length === 0" class="alert">
       Your {{ title }} List is Empty.
@@ -18,7 +19,6 @@
         <div class="error-message" v-if="error">{{ error.message || error.toString() }}</div>
       </div>
     </form>
-
   </Card>
 </template>
 
@@ -78,6 +78,10 @@ export default {
 </script>
 
 <style scoped>
+.title {
+  flex-grow: 1;
+}
+
 .alert {
   color: rgba(25, 45, 70, 0.6);
   padding: 45px 0;

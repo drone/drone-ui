@@ -4,6 +4,11 @@
                 :items="items"
                 :dispatchCreate="dispatchCreate"
                 :dispatchDelete="dispatchDelete">
+    <!-- todo link to doc -->
+    <Help slot="help" title="Environments">
+      To be used to promote a build to.
+    </Help>
+
     <template slot="item">
       <EditableListItem slot-scope="slotProps"
                         :name="slotProps.item.name"
@@ -21,10 +26,12 @@
 import BaseInput from "@/components/forms/BaseInput";
 import EditableList from "@/components/editable-list/EditableList";
 import EditableListItem from "@/components/editable-list/EditableListItem";
+import Help from "@/components/Help";
 
 export default {
   name: "Environments",
   components: {
+    Help,
     BaseInput,
     EditableListItem,
     EditableList
