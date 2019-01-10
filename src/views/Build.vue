@@ -4,7 +4,10 @@
 
     <portal v-if="buildShowState === 'data'" to="secondary-page-header-actions">
       <div class="header-actions">
-        <Dropdown title="promote to" :buttonProps="{ theme: 'primary' }" :popupProps="{ align: 'left', maxWidth: 300 }">
+        <Dropdown class="button-promote"
+                  title="promote to"
+                  :buttonProps="{ theme: 'primary' }"
+                  :popupProps="{ align: 'left', maxWidth: 300 }">
           <div v-for="env in envs" :key="env.id" class="envs-dropdown-item" @click="() => promoteToEnv(env)">
             {{ env.name }}
           </div>
@@ -508,6 +511,8 @@ export default {
 .header-actions {
   margin: -5px;
   align-self: flex-start;
+  display: flex;
+  flex-wrap: wrap;
 
   @include mobile {
     margin-top: 10px;
@@ -537,6 +542,12 @@ export default {
 
 .button-source > svg {
   width: 24px;
+}
+
+.button-promote {
+  @include mobile {
+    order: 2;
+  }
 }
 
 .envs-dropdown-item {
