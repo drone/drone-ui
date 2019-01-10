@@ -10,7 +10,8 @@
         v-for="build in builds"
         :key="build.id"
         :to="'/'+slug + '/' + build.number">
-        <RepoItem :number="build.number"
+        <RepoItem hoverable
+                  :number="build.number"
                   :title="build.message"
                   :status="build.status"
                   :build="shrinkBuild(build)"
@@ -27,7 +28,7 @@
 
 <script>
 import Alert from "@/components/Alert.vue";
-import RepoItem from "@/components/RepoItem.vue";
+import RepoItem from "@/components/list-items/RepoItem.vue";
 import Loading from "@/components/Loading.vue";
 import MoreButton from "@/components/buttons/MoreButton.vue";
 import AlertError from "@/components/AlertError.vue";
@@ -109,11 +110,6 @@ export default {
 .build:hover,
 .build:focus {
   outline: none;
-}
-
-.build:hover .repo-item,
-.build:focus .repo-item {
-  box-shadow: 0 4px 10px 0 rgba(25, 45, 70, 0.25);
 }
 
 .build + .build {

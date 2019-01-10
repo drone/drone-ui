@@ -1,8 +1,12 @@
 <template>
-  <section class="card">
-    <header v-if="$slots.header"><slot name="header"></slot></header>
-    <div class="content" :style="contentStyle"><slot></slot></div>
-    <footer v-if="$slots.footer"><slot name="footer"></slot></footer>
+  <section :class="{ card: true, hoverable }">
+    <slot v-if="slim"/>
+
+    <template v-else>
+      <header v-if="$slots.header"><slot name="header"></slot></header>
+      <div class="card-content" :style="contentStyle"><slot></slot></div>
+      <footer v-if="$slots.footer"><slot name="footer"></slot></footer>
+    </template>
   </section>
 </template>
 
@@ -11,23 +15,35 @@ export default {
   name: "Card",
   props: {
     header: String,
-    contentPadding: { type: String, default: "15px" }
+    contentPadding: { type: String },
+    slim: { type: Boolean, default: false },
+    hoverable: { type: Boolean, default: false }
   },
   computed: {
     contentStyle() {
-      return { padding: this.contentPadding };
+      return this.contentPadding ? { padding: this.contentPadding } : null;
     }
   }
 };
 </script>
 
-<style scoped>
-section {
+<style scoped lang="scss">
+@import "../assets/styles/mixins";
+
+.card {
   border-radius: 3px;
   box-sizing: border-box;
   border: solid 1px #EDEEF1;
   background: #fff;
-  box-shadow: 0 2px 4px 0 rgba(25, 45, 70, 0.05);
+  box-shadow: $box-shadow;
+
+  &.hoverable {
+    transition: box-shadow linear 0.2s;
+
+    @include hf {
+      box-shadow: $box-shadow-hover;
+    }
+  }
 }
 
 header {
@@ -37,6 +53,12 @@ header {
   padding: 0 15px;
   display: flex;
   align-items: center;
+}
+
+.card-content {
+  padding: 15px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 footer {

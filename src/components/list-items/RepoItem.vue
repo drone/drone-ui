@@ -1,6 +1,10 @@
 <template>
-  <section class="repo-item"
-           :class="{ [`build-${build ? 'yes' : 'no'}`]: true, [`active-${active ? 'yes' : 'no'}`]: true }">
+  <Card slim :hoverable="hoverable"
+        :class="{
+          [`build-${build ? 'yes' : 'no'}`]: true,
+          [`active-${active ? 'yes' : 'no'}`]: true,
+          'repo-item': true
+          }">
     <div class="container-left">
       <template v-if="status" >
         <Status :status="status"/>
@@ -28,14 +32,7 @@
 
       <div v-if="build" class="build">
         <img :src="avatar" alt="avatar"/>
-        <div class="description">
-          <span>{{build.author_login}}</span>
-          <span> {{action}} </span>
-          <RepoItemLabel type="actionTarget" :build="build" :repo="linkRepo" :link="!!linkRepo"/>
-          <RepoItemLabel class="to" type="to" :build="build" :repo="linkRepo" :link="!!linkRepo" prefix=" to "/>
-          <span class="commit-message" v-if="build.message" :title="build.message"> — {{ build.message }}</span>
-        </div>
-
+        <BuildDescription :build="build" :linkRepo="linkRepo"/>
         <div class="time">
           <div v-if="showElapsedTime" class="time-elapsed">
             <Hint showOn="hover" align="center" position="bottom">Build duration</Hint>
@@ -51,22 +48,25 @@
         </div>
       </div>
     </div>
-  </section>
+  </Card>
 </template>
 
 <script>
-import Status from "./Status.vue";
-import TimeElapsed from "./TimeElapsed.vue";
-import RepoItemLabel from "./RepoItemLabel.vue";
+import Status from "@/components/Status.vue";
+import TimeElapsed from "@/components/TimeElapsed.vue";
+import RepoItemLabel from "@/components/list-items/RepoItemLabel.vue";
 import IconRepository from "@/components/icons/IconRepository.vue";
 import Button from "@/components/buttons/Button.vue";
 import Hint from "@/components/Hint.vue";
 import { MOMENT_FULL_FORMAT } from "@/lib/momentFormats";
 import { isBuildFinished } from "@/lib/buildHelper";
+import BuildDescription from "@/components/list-items//BuildDescription";
+import Card from "@/components/Card";
 
 export default {
   name: "RepoItem",
   props: {
+    hoverable: { type: Boolean, default: false },
     active: { type: Boolean, default: true },
     number: Number,
     status: String,
@@ -76,6 +76,8 @@ export default {
     linkRepo: Object
   },
   components: {
+    Card,
+    BuildDescription,
     Status,
     RepoItemLabel,
     TimeElapsed,
@@ -89,13 +91,6 @@ export default {
     };
   },
   computed: {
-    action() {
-      const { event } = this.build;
-      if (event === "pull_request") return "opened pull request";
-      if (event === "tag") return "created tag";
-      if (event === "promote") return "promoted";
-      return "pushed";
-    },
     showElapsedTime() {
       return isBuildFinished(this.build) ? !!this.build.finished : !!this.build.started;
     }
@@ -104,17 +99,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../assets/styles/mixins";
+@import "../../assets/styles/mixins";
 
 .repo-item {
   border-radius: 3px;
   box-sizing: border-box;
-  box-shadow: 0 2px 4px 0 rgba(25, 45, 70, 0.05);
-  border: solid 1px #edeef1;
-  background-color: #ffffff;
   color: #192d46;
   padding: 15px;
-  transition: box-shadow linear 0.2s;
 
   @include mobile(true) {
     padding: 10px 15px;
@@ -144,7 +135,7 @@ export default {
       float: left;
     }
 
-    .description {
+    .build-description {
       white-space: normal;
       margin-right: 0;
       line-height: 24px;
@@ -246,27 +237,12 @@ export default {
   height: 20px;
 }
 
-.description {
+.build-description {
   flex-grow: 1;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  line-height: normal;
-  color: rgba(25, 45, 70, 0.6);
   margin-right: 15px;
-
-  .divider {
-    height: 5px;
-    display: none;
-  }
-
-  .commit-message {
-    font-style: italic;
-
-    .divider {
-      height: 2px;
-    }
-  }
 }
 
 .time {
@@ -295,19 +271,21 @@ export default {
 </style>
 
 <style lang="scss">
-@import "../assets/styles/mixins";
+@import "../../assets/styles/mixins";
 
-.description .to .repo-item-label {
+.build-description .to .repo-item-label {
   display: inline-block;
   max-width: 35%;
   vertical-align: bottom;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 .repo-item {
   @include mobile(true) {
-    .description .to .repo-item-label {
+    .build-description .to .repo-item-label {
       max-width: none;
       display: inline;
       vertical-align: baseline;

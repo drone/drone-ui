@@ -187,7 +187,7 @@
 <script>
 import Alert from "@/components/Alert.vue";
 import Card from "@/components/Card.vue";
-import RepoItem from "@/components/RepoItem.vue";
+import RepoItem from "@/components/list-items/RepoItem.vue";
 import Step from "@/components/Step.vue";
 import Stage from "@/components/Stage.vue";
 import IconCancel from "@/components/icons/IconCancel.vue";

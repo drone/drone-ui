@@ -30,10 +30,10 @@ export default {
       if (this.type === "actionTarget") {
         if (event === "pull_request") return { text: "#" + this.trimMergeRef(ref), href: this.hrefPR };
         if (event === "tag") return { text: this.trimTagRef(ref), href: this.hrefTag };
-        if (event === "promote") return { text: this.branch, href: this.hrefBranch };
+        if (event === "promote" && this.branch) return { text: this.branch, href: this.hrefBranch };
         return { text: this.commitShaShort, href: this.hrefCommit };
       } else if (this.type === "to") {
-        if (event === "push" || event === "pull_request") {
+        if (["push", "pull_request"].includes(event) && this.branch) {
           return { text: this.branch, href: this.hrefBranch };
         }
       }
@@ -89,12 +89,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../assets/styles/variables";
+@import "../../assets/styles/variables";
 
 .repo-item-label {
   background-color: rgba($color-primary, 0.07);
   color: $color-primary;
-  padding: 0 4px;
+  padding: 1.5px 4px;
   border-radius: 2px;
 }
 

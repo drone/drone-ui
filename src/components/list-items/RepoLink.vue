@@ -1,9 +1,6 @@
 <template>
-  <router-link class="repo-link"
-               :to="to"
-               :class="{ [`hover-type-${hoverType}`]: true, 'repo-active': repo.active }"
-               :tabindex="focusable ? 0 : -1">
-    <slot></slot>
+  <router-link class="repo-link" :to="to" :tabindex="focusable ? 0 : -1">
+    <slot/>
   </router-link>
 </template>
 
@@ -12,7 +9,6 @@ export default {
   name: "RepoLink",
   props: {
     repo: Object,
-    hoverType: { type: String, default: "box-shadow" },
     focusable: { type: Boolean, default: true }
   },
   computed: {
@@ -32,13 +28,8 @@ export default {
 </style>
 
 <style>
-.repo-link.hover-type-box-shadow:focus {
+.repo-link:focus {
   outline: none;
-}
-
-.repo-link.hover-type-box-shadow:focus .repo-item,
-.repo-link.hover-type-box-shadow:hover .repo-item {
-  box-shadow: 0 4px 10px 0 rgba(25, 45, 70, 0.2);
 }
 
 .repo-link .repo-item.build-no.active-yes .header .title {

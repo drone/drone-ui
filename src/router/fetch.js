@@ -13,18 +13,6 @@ export const fetcher = ({dispatch, commit}) => (to, from, next) => {
     // metadata so that we can dynamically dispatch.
 
   switch (name) {
-    case "build":
-    case "build-config":
-    case "builds":
-    case "repo":
-    case "badges":
-    case "settings":
-    case "step":
-      dispatch("fetchRepo", params);
-      break;
-  }
-
-  switch (name) {
     case "step":
     case "build":
       dispatch("fetchBuild", params);

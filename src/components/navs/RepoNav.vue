@@ -1,6 +1,8 @@
 <template>
   <nav v-if="repo">
     <router-link :to="`/${repo.slug}`" :disabled="!repo.active">Activity Feed</router-link>
+    <router-link :to="`/${repo.slug}/branches`" :disabled="!repo.active">Branches</router-link>
+    <router-link :to="`/${repo.slug}/environments`" :disabled="!repo.active">Environments</router-link>
     <router-link v-if="isCollaborator" :to="`/${repo.slug}/settings`">Settings</router-link>
   </nav>
 </template>

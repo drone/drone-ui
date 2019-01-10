@@ -7,7 +7,6 @@
               v-for="(repo, index) in repos"
               :focusable="false"
               :class="{selected: selectionIndex === index }"
-              :hoverType="'none'"
               :key="`${repo.id}-${repo.build && repo.build.id}`"
               :repo="repo"
               @mouseenter.native="onItemHover(index)"
@@ -24,8 +23,8 @@
 
 <script>
 import Popup from "@/components/Popup.vue";
-import RepoLink from "@/components/RepoLink";
-import RepoItem from "@/components/RepoItem";
+import RepoLink from "@/components/list-items/RepoLink";
+import RepoItem from "@/components/list-items/RepoItem";
 
 export default {
   name: "ReposPopup",

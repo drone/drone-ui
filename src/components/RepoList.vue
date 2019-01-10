@@ -14,12 +14,13 @@
 
 <script>
 import Alert from "@/components/Alert.vue";
-import RepoLink from "@/components/RepoLink.vue";
-import RepoItem from "@/components/RepoItem.vue";
+import RepoLink from "@/components/list-items/RepoLink.vue";
+import RepoItem from "@/components/list-items/RepoItem.vue";
 import Loading from "@/components/Loading.vue";
 
 function defaultRepoToProps(repo) {
   return {
+    hoverable: true,
     active: repo.active,
     title: `${repo.namespace}/${repo.name}`,
     build: repo.build,

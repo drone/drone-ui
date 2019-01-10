@@ -79,6 +79,10 @@ export default {
     Loading,
     Link
   },
+  mounted() {
+    const { name, namespace } = this.$route.params;
+    this.$store.dispatch("fetchRepo", { name, namespace });
+  },
   computed: {
     slug() {
       return this.$route.params.namespace + '/' + this.$route.params.name;
@@ -168,14 +172,25 @@ h1 {
 
 nav {
   border-bottom: 1px solid rgba(25, 45, 70, 0.05);
-  margin-bottom: 20px;
-  padding-left: 15px;
+  padding: 0 15px 20px;
   display: flex;
+  overflow: auto;
 
   @include mobile {
-    padding-left: 10px;
+    padding: 0 10px 10px;
     font-size: 13px;
-    margin-bottom: 10px;
+  }
+
+  // to fix padding in the end in case of scroll
+  &:after {
+    content: "";
+    display: inline-block;
+    width: 15px;
+    flex-shrink: 0;
+
+    @include mobile {
+      width: 10px;
+    }
   }
 }
 
@@ -216,17 +231,24 @@ nav {
       font-weight: 500;
       display: flex;
       align-items: center;
-      margin-right: 30px;
       border-bottom: 1px solid transparent;
+      white-space: nowrap;
 
       @include mobile {
         letter-spacing: normal;
-        margin-right: 20px;
         padding-bottom: 5px;
       }
 
       @include hf {
         color: $color-text;
+      }
+
+      & + a {
+        margin-left: 30px;
+
+        @include mobile {
+          margin-left: 20px;
+        }
       }
 
       &[disabled],
