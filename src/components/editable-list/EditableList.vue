@@ -110,7 +110,9 @@ export default {
   }
 
   textarea {
-    height: 60px;
+    min-height: 60px;
+    min-width: 100%;
+    max-width: 100%;
   }
 
   select {

@@ -1,11 +1,11 @@
 <template>
-  <div class="dropdown">
+  <div class="dropdown" v-click-outside="close">
     <Button @click.native="toggle" v-bind="buttonProps">
       <span>{{ title }}</span>
       <IconArrowDropdown :direction="opened ? 'up' : 'down'"/>
     </Button>
 
-    <Popup v-show="opened" position="bottom" v-bind="popupProps"><slot/></Popup>
+    <Popup v-if="opened" position="bottom" v-bind="popupProps"><slot/></Popup>
   </div>
 </template>
 
@@ -30,6 +30,9 @@ export default {
   methods: {
     toggle() {
       this.opened = !this.opened;
+    },
+    close() {
+      if (this.opened) this.opened = false;
     }
   }
 };

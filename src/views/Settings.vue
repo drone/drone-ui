@@ -7,8 +7,19 @@
         <label class="control-label">Project settings</label>
         <div class="controls">
           <BaseCheckbox v-model="repo.protected">Protected</BaseCheckbox>
-          <BaseCheckbox v-model="repo.trusted" v-if="isRoot">Trusted</BaseCheckbox>
+          <BaseCheckbox v-if="isRoot" v-model="repo.trusted">Trusted</BaseCheckbox>
         </div>
+
+        <Help title="Project settings">
+          <p class="help-p">
+            <a href="https://docs.drone.io/user-guide/signature/" target="_blank" class="link">Protected</a>
+            - If Enabled, blocks pipelines until an admin approve.
+          </p>
+          <p class="help-p">
+            <a href="https://docs.drone.io/administration/user/admins/" target="_blank" class="link">Trusted</a>
+            - Enables privileged capabilities: an ability to start privileged containers and mount host machine volumes.
+          </p>
+        </Help>
       </div>
 
       <div class="control-group">
@@ -18,6 +29,8 @@
                             name="visibility"
                             :options="{ public: 'Public', private: 'Private', internal: 'Internal'}"/>
         </div>
+        <!-- todo href for help -->
+        <Help title="Project visibility">Provides the repository visibility level.</Help>
       </div>
 
       <div v-if="isRoot" class="control-group">
@@ -25,6 +38,8 @@
         <div class="controls">
           <BaseSelect v-model="repo.timeout" :options="timeoutsOptions"/>
         </div>
+        <!--todo help for timeout. Now I don't know what is it-->
+        <!--<Help title="Timeout">Text text</Help>-->
       </div>
 
       <div class="control-group">
@@ -36,6 +51,9 @@
                      autocapitalize="off"
                      spellcheck="false"/>
         </div>
+        <Help title="Configuration" href="https://docs.drone.io/user-guide/">
+          The name of a file with the pipeline definition.
+        </Help>
       </div>
 
       <div class="control-actions">
@@ -93,6 +111,7 @@ import CardGroup from "@/components/CardGroup.vue";
 import Button from "@/components/buttons/Button.vue";
 import ButtonConfirm from "@/components/buttons/ButtonConfirm.vue";
 import Badges from "@/components/Badges.vue";
+import Help from "@/components/Help.vue";
 
 export default {
   name: "settings",
@@ -104,6 +123,7 @@ export default {
     };
   },
   components: {
+    Help,
     BaseCheckbox,
     BaseRadioButtons,
     BaseInput,
@@ -191,8 +211,39 @@ const timeouts = [
 <style scoped lang="scss">
 @import "../assets/styles/mixins";
 
-.control-group .controls .base-checkbox + .base-checkbox {
-  margin-left: 48px;
+.control-group {
+  .controls {
+    & + .help {
+      flex-shrink: 0;
+    }
+
+    .base-checkbox + .base-checkbox {
+      margin-left: 48px;
+    }
+  }
+
+  @include tablet {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+.control-label {
+  @include tablet {
+    line-height: 18px;
+    order: -2;
+    flex-grow: 1;
+  }
+}
+
+.help {
+  @include tablet {
+    order: -1;
+  }
+}
+
+.help-p + .help-p {
+  margin-top: 10px;
 }
 
 .disable {

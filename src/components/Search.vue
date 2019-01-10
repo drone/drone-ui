@@ -22,8 +22,6 @@
 </template>
 
 <script>
-import ClickOutside from "vue-click-outside";
-
 import BaseForm from "@/components/forms/BaseForm";
 import BaseInput from "@/components/forms/BaseInput";
 import Overlay from "@/components/Overlay";
@@ -42,9 +40,6 @@ export default {
     BaseForm,
     BaseInput,
     ReposPopup
-  },
-  directives: {
-    ClickOutside
   },
   props: {
     placeholder: String

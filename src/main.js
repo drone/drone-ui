@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueI18n from "vue-i18n";
 import VueMoment from "vue-moment";
 import PortalVue from "portal-vue";
+import ClickOutside from "vue-click-outside";
 
 import App from "./App.vue";
 import Router from "vue-router";
@@ -18,6 +19,7 @@ Vue.use(Router);
 Vue.use(VueI18n);
 Vue.use(PortalVue);
 Vue.use(VueHighlightJS);
+Vue.directive("click-outside", ClickOutside);
 Vue.config.productionTip = false;
 
 sync(store, router)

@@ -14,6 +14,8 @@
     <Footer />
 
     <Notifications/>
+
+    <portal-target name="body"/>
   </div>
 </template>
 
