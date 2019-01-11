@@ -515,9 +515,10 @@ export default new Vuex.Store({
     LOGS_FIND_FAILURE(state, error){
       applyFailure(state.logs, error);
     },
-    LOGS_FIND_SUCCESS(state, data){
-      escapeLogs(data.lines);
-      applySuccess(state.logs, data.lines)
+    LOGS_FIND_SUCCESS(state, data) {
+      const lines = data.lines || [];
+      escapeLogs(lines);
+      applySuccess(state.logs, lines);
     },
     LOG_CLEAR(state) {
       state.logs = createEmptyCollection([]);
