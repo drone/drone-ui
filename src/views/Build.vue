@@ -230,6 +230,7 @@ export default {
   },
   mounted() {
     window.addEventListener("scroll", this.onScroll);
+    this.loadLogsForStep(this.step);
   },
   destroyed() {
     window.removeEventListener("scroll", this.onScroll);
@@ -417,6 +418,15 @@ export default {
     },
     declineBuild() {
       this.$store.dispatch("declineBuild", { ...this.$store.state.route.params, stage: this.stage.number });
+    },
+    loadLogsForStep(step) {
+      if (!step) console.warn("invalid step argument. loadLogsForStep skipped"); //eslint-disable-line
+
+      if (step.stopped) {
+        this.$store.dispatch("fetchLogs", this.$route.params);
+      } else if (step.started) {
+        this.$store.dispatch("streamLogs", this.$route.params);
+      }
     }
   },
   watch: {
@@ -440,12 +450,7 @@ export default {
 
         this.follow = false;
         this.logLimit = 250;
-
-        if (newStep.stopped) {
-          this.$store.dispatch("fetchLogs", this.$route.params);
-        } else if (newStep.started) {
-          this.$store.dispatch("streamLogs", this.$route.params);
-        }
+        this.loadLogsForStep(newStep);
 
         // If the step remains the same, but a propery changes,
         // dispatch a request to stream logs if the step changes
