@@ -3,7 +3,7 @@
     <header>
       <Status :status="stage.status"/>
       <span :title="stage.name">{{ stage.name }}</span>
-      <time-elapsed v-if="stage.started" :started="stage.started" :stopped="stage.started">
+      <time-elapsed v-if="stage.started" :started="stage.started" :stopped="stage.stopped">
         <Hint position="top" align="right" showOn="hover">Full stage duration</Hint>
       </time-elapsed>
       <IconArrowDropdown v-if="hasSteps" direction="down" class="arrow-dropdown"/>
@@ -69,6 +69,7 @@ span {
   font-weight: 600;
   margin-left: 10px;
   font-size: 14px;
+  line-height: 18px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
