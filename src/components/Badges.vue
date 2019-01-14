@@ -45,7 +45,7 @@ export default {
       return this.$route.params.namespace + "/" + this.$route.params.name;
     },
     image() {
-      const branchSuffix = this.branch ? `?branch=${this.branch}` : "";
+      const branchSuffix = this.branch ? `?ref=/refs/heads/${this.branch}` : "";
       return `${this.instance}/api/badges/${this.name}/status.svg${branchSuffix}`;
     },
     code() {
@@ -53,7 +53,7 @@ export default {
         case "markdown":
           return `[![Build Status](${this.image})](${this.instance}/${this.name})`;
         case "markup":
-          return `<a href="${this.instance}/${this.name}"><img src="${this.image}${this.branchSuffix}" /></a>`;
+          return `<a href="${this.instance}/${this.name}"><img src="${this.image}" /></a>`;
         case "ccmenu":
           return `${this.instance}/api/badges/${this.name}/cc.xml`;
       }
