@@ -496,16 +496,16 @@ export default new Vuex.Store({
     //
 
     VIEWER_SYNC_STARTING(state) {
-      state.user.syncing = true;
-      state.user.syncingError = null;
+      state.user.data.syncing = true;
+      state.user.data.syncingError = null;
     },
     VIEWER_SYNC_FAILURE(state, error) {
-      state.user.syncing = false;
-      state.user.syncingError = error;
+      state.user.data.syncing = false;
+      state.user.data.syncingError = error;
     },
     VIEWER_SYNC_SUCCESS(state) {
-      state.user.syncing = false;
-      state.user.syncingError = null;
+      state.user.data.syncing = false;
+      state.user.data.syncingError = null;
     },
 
     LOGS_FIND_LOADING(state){

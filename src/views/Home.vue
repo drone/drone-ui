@@ -76,10 +76,10 @@ export default {
       return this.loadingStatus === "error" ? this.$store.state.latestLoadingError : null;
     },
     syncing() {
-      return this.$store.state.user && this.$store.state.user.syncing;
+      return this.$store.state.user && this.$store.state.user.data.syncing;
     },
     syncingError() {
-      return this.$store.state.user ? this.$store.state.user.syncingError : null;
+      return this.$store.state.user ? this.$store.state.user.data.syncingError : null;
     },
     count() {
       return Object.keys(this.latest).length;
