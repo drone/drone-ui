@@ -286,7 +286,10 @@ export default {
       return this.logsCollection.data;
     },
     logsShowState() {
-      if (this.logsCollection.lStatus === "error") return "loadingError";
+      if (this.logsCollection.lStatus === "error") {
+        if (this.logsCollection.error.status !== 404) return "loadingError";
+        return "empty";
+      }
       if (this.logsCollection.dStatus === "present") {
         if (this.logs.length) return "data";
         return "empty";

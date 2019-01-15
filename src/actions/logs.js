@@ -21,7 +21,7 @@ export const fetchLogs = async ({commit}, params) => {
 	const res = await req.json();
 
 	if (req.status > 299) {
-		commit(LOGS_FIND_FAILURE, {...params, error: res});
+		commit(LOGS_FIND_FAILURE, {...params, error: { status: req.status, message: res.message } });
 	} else {
 		commit(LOGS_FIND_SUCCESS, {...params, lines: res});
 	}

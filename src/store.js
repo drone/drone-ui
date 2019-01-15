@@ -511,7 +511,7 @@ export default new Vuex.Store({
     LOGS_FIND_LOADING(state){
       applyLoading(state.logs);
     },
-    LOGS_FIND_FAILURE(state, error){
+    LOGS_FIND_FAILURE(state, { error }) {
       applyFailure(state.logs, error);
     },
     LOGS_FIND_SUCCESS(state, data) {

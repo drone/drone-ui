@@ -29,6 +29,7 @@ export default {
 
 .card {
   text-align: center;
+  word-wrap: break-word;
 }
 
 .secondary {
