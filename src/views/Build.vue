@@ -520,6 +520,7 @@ $stages-top: 20px;
   width: 270px;
   position: sticky;
   top: $header-height + $stages-top;
+  min-width: 0; // important for white-space: nowrap
 
   @include tablet {
     flex: 1 0 auto;
