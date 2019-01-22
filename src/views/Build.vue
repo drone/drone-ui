@@ -479,7 +479,7 @@ export default {
 
 .button-restart,
 .button-cancel {
-  width: 116px;
+  min-width: 116px;
   text-align: left;
 
   svg {

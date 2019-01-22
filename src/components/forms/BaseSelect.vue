@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: "BaseInput",
+  name: "BaseSelect",
   props: {
     value: null,
     options: Array
