@@ -806,4 +806,23 @@ $output-header-sticky-offset: $stages-top;
   outline: none;
   background-color: rgba(25, 45, 70, 0.02);
 }
+
+// prettier-ignore
+.output-lines .ol-html {
+  .ansi-black-fg { color: #5b5b5b; }
+  .ansi-red-fg { color: #e23131; }
+  .ansi-green-fg { color: #4dca7e; }
+  .ansi-yellow-fg { color: #c7b441; }
+  .ansi-blue-fg { color: #2ba3d0; }
+  .ansi-magenta-fg { color: #e948e9; }
+  .ansi-cyan-fg { color: #4eeeee; }
+  .ansi-black-bg { background-color: #404040; }
+  .ansi-red-bg { background-color: #ec3c3c; }
+  .ansi-green-bg { background-color: #76c84c; }
+  .ansi-yellow-bg { background-color: #e8b73b; }
+  .ansi-blue-bg { background-color: #3a5ad0; }
+  .ansi-magenta-bg { background-color: #c440b6; }
+  .ansi-cyan-bg { background-color: #32d2d9; }
+  .ansi-white-bg { background-color: #aeaeae; }
+}
 </style>
