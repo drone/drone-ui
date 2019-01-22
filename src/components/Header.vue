@@ -26,14 +26,13 @@
       <UserMenu :user="user"/>
     </div>
 
-    <div v-if="!userPresent" class="login">
-      <a href="/login" class="button">Login</a>
-    </div>
+    <Button v-if="!userPresent" href="/login" class="login" size="l" theme="light">Login</Button>
   </header>
 </template>
 
 <script>
 import Logo from "@/components/logos/Logo.vue";
+import Button from "@/components/buttons/Button";
 import Search from "@/components/Search";
 import UserMenu from "@/components/UserMenu";
 import IconMagnifier from "@/components/icons/IconMagnifier";
@@ -42,6 +41,7 @@ import BuildsFeedIndicator from "@/components/BuildsFeedIndicator";
 export default {
   name: "Header",
   components: {
+    Button,
     BuildsFeedIndicator,
     Search,
     Logo,
@@ -98,10 +98,12 @@ export default {
 <style scoped lang="scss">
 @import "../assets/styles/mixins";
 
+$header-opacity-percent: 97%;
+
 .header {
   height: $header-height;
   box-shadow: 0 2px 4px 0 rgba(25, 45, 70, 0.05);
-  background-color: rgba($header-color, 0.97);
+  background-color: rgba($header-color, $header-opacity-percent / 100%);
   align-items: center;
   box-sizing: border-box;
   display: flex;
@@ -208,19 +210,14 @@ export default {
   }
 }
 
-.login {
-  text-align: right;
-  flex: 1;
-}
+// todo Move it to light theme to Button after merge with 1.1.0
+.button.login.theme-light {
+  background-color: rgba(255, 255, 255, 0.1);
 
-.login .button {
-  border: none;
-  background: #0060da;
-  border-radius: 3px;
-  color: #fff;
-  font-size: 12px;
-  padding: 10px 20px;
-  text-transform: uppercase;
+  @include hf {
+    background-color: #fff;
+    color: mix($header-color, $body-color, $header-opacity-percent);
+  }
 }
 </style>
 
