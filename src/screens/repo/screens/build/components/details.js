@@ -14,7 +14,7 @@ export class Details extends Component {
 			<div className={styles.info}>
 				<StatusLabel status={build.status} />
 
-				<section className={styles.message}>{build.message}</section>
+				<section className={styles.message}>{build.title || build.message}</section>
 
 				<section>
 					<BuildTime

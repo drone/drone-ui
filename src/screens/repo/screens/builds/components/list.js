@@ -21,7 +21,7 @@ export class Item extends Component {
 				</div>
 
 				<div className={styles.body}>
-					<h3>{build.message}</h3>
+					<h3>{build.title || build.message}</h3>
 				</div>
 
 				<div className={styles.meta}>
