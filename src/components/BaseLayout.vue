@@ -12,6 +12,8 @@
     </main>
 
     <Footer />
+    <SystemAlert v-if="isLicenseExceeded">Your Server License Is Expired</SystemAlert>
+    <SystemAlert v-if="isLicenseExpired">Your License Limit Is Exceeded</SystemAlert>
 
     <Notifications/>
   </div>
@@ -19,6 +21,7 @@
 
 <script>
 import Footer from "./Footer.vue";
+import SystemAlert from "./SystemAlert.vue";
 import Notifications from "@/components/Notifications.vue";
 import BuildsFeedPanel from "@/components/BuildsFeedPanel";
 import Title from "@/components/utils/Title";
@@ -29,7 +32,16 @@ export default {
     Title,
     Footer,
     Notifications,
-    BuildsFeedPanel
+    BuildsFeedPanel,
+    SystemAlert,
+  },
+  computed: {
+    isLicenseExceeded() {
+      return window && window.LICENSE_LIMIT_EXCEEDED;
+    },
+    isLicenseExpired() {
+      return window && window.LICENSE_EXPIRED;
+    }
   }
 };
 </script>
