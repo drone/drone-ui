@@ -241,6 +241,9 @@ export default {
     repo() {
       return this.$store.state.repos[this.slug];
     },
+    user() {
+      return this.$store.state.user && this.$store.state.user.data;
+    },
     buildCollection() {
       const number = this.$route.params.build;
       const collection = this.$store.state.builds[this.slug];
@@ -303,7 +306,7 @@ export default {
       return this.stage && this.stage.error;
     },
     isCollaborator() {
-      return this.repo && this.repo.permissions && this.repo.permissions.write || false;
+      return (this.repo && this.repo.permissions && this.repo.permissions.write) || (this.user && this.user.admin) || false;
     },
     readyToDownload() {
       return this.step && this.step.stopped && this.logsShowState === "data";

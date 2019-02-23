@@ -17,7 +17,7 @@ function byBuildPresence(a, b) {
 }
 
 export function byBuildCreatedAtDesc(a, b) {
-  return (a.build ? a.build.created : 0) - (b.build ? b.build.created : 0);
+  return (b.build ? b.build.created : 0) - (a.build ? a.build.created : 0);
 }
 
 function combineConditions() {
@@ -36,7 +36,7 @@ function combineConditions() {
   };
 }
 
-const condition = combineConditions(byStatus, byBuildPresence, byRepoNameAsc);
+const condition = combineConditions(byBuildCreatedAtDesc, byStatus, byRepoNameAsc);
 
 export default function reposSort(repos) {
   return repos.slice(0).sort(condition);
