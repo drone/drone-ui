@@ -4,6 +4,14 @@
       <h2 slot="header">Main</h2>
 
       <div class="control-group">
+        <label class="control-label">Project webhooks</label>
+        <div class="controls">
+          <BaseCheckbox v-model="repo.ignore_pull_requests">Disable Pull Requests</BaseCheckbox>
+          <BaseCheckbox v-model="repo.ignore_forks">Disable Forks</BaseCheckbox>
+        </div>
+      </div>
+
+      <div class="control-group">
         <label class="control-label">Project settings</label>
         <div class="controls">
           <BaseCheckbox v-model="repo.protected">Protected</BaseCheckbox>
