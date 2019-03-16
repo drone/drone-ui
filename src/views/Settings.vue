@@ -194,7 +194,7 @@ const timeouts = [
 
 .disable span {
   margin: 15px 0 0 15px;
-  color: rgba(25, 45, 70, 0.6);
+  color: $color-text-secondary;
 
   @include mobile {
     display: block;

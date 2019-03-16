@@ -26,7 +26,9 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../assets/styles/variables";
+
 div.container {
   align-items: center;
   display: flex;
@@ -39,7 +41,7 @@ div.container {
   width: 340px;
   padding: 70px 20px 30px;
   border-radius: 5px;
-  box-shadow: 0 2px 4px 0 rgba(25, 45, 70, 0.05);
+  box-shadow: 0 2px 4px 0 $border-color;
   background-color: #ffffff;
   position: relative;
 }

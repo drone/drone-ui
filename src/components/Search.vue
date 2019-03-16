@@ -134,6 +134,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "../assets/styles/variables";
+
 form {
   position: relative;
   text-align: center;
@@ -171,11 +173,11 @@ form.opened-yes {
   position: absolute;
   top: 10px;
   right: 10px;
-  border: solid 1px rgba(25, 45, 70, 0.25);
+  border: solid 1px rgba($color-text, 0.25);
   border-radius: 2px;
   text-align: center;
   line-height: 16px;
-  color: rgba(25, 45, 70, 0.5);
+  color: $color-text-secondary;
   pointer-events: none;
   user-select: none;
   z-index: 25;

@@ -3,7 +3,10 @@
     <AlertError v-if="loadingError" :error="loadingError"/>
 
     <template v-else>
-      <Alert v-if="showEmptyListAlert">Your Build List is Empty.</Alert>
+      <Alert v-if="showEmptyListAlert">
+        <IconDroneSleep/>
+        <div class="empty-message">Your Build List is Empty.</div>
+      </Alert>
 
       <router-link
         class="build"
@@ -31,6 +34,7 @@ import RepoItem from "@/components/RepoItem.vue";
 import Loading from "@/components/Loading.vue";
 import MoreButton from "@/components/buttons/MoreButton.vue";
 import AlertError from "@/components/AlertError.vue";
+import IconDroneSleep from "@/components/icons/IconDroneSleep";
 
 export default {
   name: "Builds",
@@ -39,7 +43,8 @@ export default {
     RepoItem,
     Loading,
     AlertError,
-    MoreButton
+    MoreButton,
+    IconDroneSleep
   },
   computed: {
     slug() {
@@ -92,15 +97,25 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+@import "../assets/styles/variables";
+
 .builds .build .repo-item .header .number,
 .builds .build:hover .repo-item .header {
-  color: #0564d7;
+  color: $color-primary;
 }
 </style>
 
 <style scoped lang="scss">
 @import "../assets/styles/mixins";
+
+.icon-drone-sleep {
+  margin-bottom: 20px;
+}
+
+.empty-message {
+  color: $color-text-secondary;
+}
 
 .build {
   display: block;
@@ -113,7 +128,7 @@ export default {
 
 .build:hover .repo-item,
 .build:focus .repo-item {
-  box-shadow: 0 4px 10px 0 rgba(25, 45, 70, 0.25);
+  box-shadow: 0 4px 10px 0 rgba($color-text, 0.25);
 }
 
 .build + .build {
@@ -122,7 +137,7 @@ export default {
 
 .loading {
   margin: 20px 0;
-  color: rgba(25, 45, 70, 0.6);
+  color: $color-text-secondary;
 }
 
 .more-button {

@@ -65,9 +65,11 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../assets/styles/variables";
+
 div {
-  background-color: #fbfbfb;
+  background-color: rgba($color-text, 0.02);
   border-radius: 3px;
 }
 
@@ -90,7 +92,7 @@ header h3 {
   font-stretch: normal;
   line-height: normal;
   letter-spacing: normal;
-  color: #192d46;
+  color: $color-text;
   flex: 1;
 }
 
@@ -102,7 +104,7 @@ pre {
   font-style: normal;
   font-stretch: normal;
   letter-spacing: normal;
-  color: #192d46;
+  color: $color-text;
   padding: 15px;
   white-space: normal;
 }
@@ -160,7 +162,7 @@ code {
 }
 
 svg {
-  fill: #192d46;
+  fill: $color-text;
   opacity: 0.25;
   width: 22px;
   height: 22px;

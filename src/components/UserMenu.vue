@@ -62,7 +62,9 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../assets/styles/variables";
+
 .user-menu {
   display: inline-block;
   position: relative;
@@ -79,7 +81,7 @@ export default {
 .user-menu .popup a {
   display: block;
   padding: 11px 30px 11px 15px;
-  color: #192d46;
+  color: $color-text;
 }
 
 .user-menu .popup a.logout {
@@ -88,12 +90,12 @@ export default {
 
 .user-menu .popup a:focus,
 .user-menu .popup a:hover {
-  background: rgba(25, 45, 70, 0.03);
+  background: rgba($color-text, 0.03);
   outline: none;
 }
 
 .user-menu .popup a + a {
-  border-top: 1px solid rgba(25, 45, 70, 0.05);
+  border-top: 1px solid $border-color;
 }
 
 .avatar {

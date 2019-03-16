@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1303.4" height="711.7">
+    <linearGradient id="aa" gradientUnits="userSpaceOnUse" x1="651.692" y1="92.309" x2="651.692" y2="449.291">
+        <stop offset="0" stop-color="#fff"/>
+        <stop offset="1" stop-color="#d1e3f6"/>
+    </linearGradient>
+    <path fill="url(#aa)" d="M0 .4h1303.4v711.3H0z"/>
+    <linearGradient id="b" gradientUnits="userSpaceOnUse" x1="627.916" y1="193.795" x2="641.148" y2="428.628">
+        <stop offset="0" stop-color="#fff"/>
+        <stop offset="1" stop-color="#d1e3f6"/>
+    </linearGradient>
+    <path d="M0 218.5c251.1 50.8 558.1-18.4 776.1-18.4s493.3 73.5 493.3 73.5l-342 173.2L0 353.9V218.5z" fill="url(#b)"/>
+    <linearGradient id="c" gradientUnits="userSpaceOnUse" x1="768.774" y1="220.93" x2="781.576" y2="360.588">
+        <stop offset="0" stop-color="#fff"/>
+        <stop offset="1" stop-color="#d1e3f6"/>
+    </linearGradient>
+    <path d="M1243.7 267.5c-200.3 91.5-316.5-27.5-509.4-9.1-191.8 18.3-266.6 61.7-426.5 67.6 236.1 121.4 744.7 97.6 935.9-58.5z"
+          fill="url(#c)"/>
+    <linearGradient id="d" gradientUnits="userSpaceOnUse" x1="643.824" y1="213.596" x2="648.75" y2="371.242">
+        <stop offset="0" stop-color="#fff"/>
+        <stop offset="1" stop-color="#d1e3f6"/>
+    </linearGradient>
+    <path d="M0 302.4c211-91.8 383.5 23.1 683.5 23.1s423.8-85.7 619.9-85.7V691H0V302.4z" fill="url(#d)"/>
+    <linearGradient id="e" gradientUnits="userSpaceOnUse" x1="630.332" y1="474.63" x2="652.831" y2="668.12">
+        <stop offset="0" stop-color="#fff"/>
+        <stop offset="1" stop-color="#d1e3f6"/>
+    </linearGradient>
+    <path d="M1303.4 605c-271.9 28.9-448.9-26.7-687.4-26.7S113 633.9 0 633.9v77.8h1303.4V605z" fill="url(#e)"/>
+    <linearGradient id="f" gradientUnits="userSpaceOnUse" x1="651.692" y1="710.519" x2="651.692" y2="655.04">
+        <stop offset="0" stop-color="#fff"/>
+        <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <path fill="url(#f)" d="M0 653.9h1303.4v57.8H0z"/>
+    <linearGradient id="g" gradientUnits="userSpaceOnUse" x1="651.692" y1="-29.749" x2="651.692" y2="-110.988"
+                    gradientTransform="matrix(1 0 0 -1.4846 0 -41.583)">
+        <stop offset="0" stop-color="#fff"/>
+        <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <path fill="url(#g)" d="M0 0h1303.4v125.6H0z"/>
+</svg>

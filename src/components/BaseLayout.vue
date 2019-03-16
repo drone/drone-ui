@@ -4,14 +4,16 @@
 
     <slot name="header"></slot>
 
-    <main id="base-layout-main">
-      <div class="container">
-        <slot></slot>
-      </div>
-      <BuildsFeedPanel v-if="$store.state.mediaType === 'desktop' && $store.getters.userPresent" />
-    </main>
+    <div class="layout-content">
+      <div class="layout-content-center">
+        <main class="container"><slot></slot></main>
 
-    <Footer />
+        <Footer />
+      </div>
+
+      <BuildsFeedPanel v-if="$store.state.mediaType === 'desktop' && $store.getters.userPresent" />
+    </div>
+
     <SystemAlert v-if="isLicenseExceeded">Your Server License Is Expired</SystemAlert>
     <SystemAlert v-if="isLicenseExpired">Your License Limit Is Exceeded</SystemAlert>
 
@@ -50,7 +52,7 @@ export default {
 @import "../assets/styles/mixins";
 
 .container {
-  padding-bottom: 80px;
+  padding-bottom: 60px;
   flex-grow: 1;
   min-width: 0; // important for children with white-space: nowrap
 
@@ -77,12 +79,23 @@ export default {
   }
 }
 
-main {
+.layout-content {
   box-sizing: border-box;
   position: relative;
   flex-grow: 1;
   display: flex;
   padding-top: $header-height;
+}
+
+.layout-content-center {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex-grow: 1;
+  width: 100%;
 }
 
 footer {

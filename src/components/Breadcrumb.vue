@@ -42,7 +42,9 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../assets/styles/variables";
+
 .breadcrumbs {
   padding: 5px 0;
   max-width: 100%;
@@ -64,7 +66,7 @@ export default {
 
 .divider {
   padding: 0 8px;
-  color: rgba(25, 45, 70, 0.6);
+  color: $color-text-secondary;
   vertical-align: bottom;
 }
 </style>

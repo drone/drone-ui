@@ -18,7 +18,9 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../../assets/styles/variables";
+
 button.more-button {
   display: flex;
   text-transform: none;
@@ -42,7 +44,7 @@ button.more-button:focus span {
 
 button.more-button:hover svg,
 button.more-button:focus svg {
-  color: #0564d7;
+  color: $color-primary;
 }
 
 button svg + span {
@@ -56,7 +58,7 @@ span {
 }
 
 svg {
-  color: rgba(25, 45, 70, 0.6);
+  color: $color-text-secondary;
   margin: 5px 0 0;
 }
 </style>

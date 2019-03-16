@@ -14,10 +14,12 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../../assets/styles/variables";
+
 select {
-  color: #192d46;
-  border: 1px solid rgba(25, 45, 70, 0.25);
+  color: $color-text;
+  border: 1px solid rgba($color-text, 0.25);
   border-radius: 3px;
   box-sizing: border-box;
   font-size: 14px;
@@ -30,11 +32,11 @@ select {
 }
 
 select:focus {
-  border-color: #0564D7;
+  border-color: $color-primary;
   outline: none;
 }
 
 select::placeholder {
-  color: rgba(25, 45, 70, 0.6);
+  color: $color-text-secondary;
 }
 </style>

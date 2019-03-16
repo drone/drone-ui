@@ -34,13 +34,15 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../assets/styles/variables";
+
 .popup {
   position: absolute;
   background: #fff;
   z-index: 1;
   border-radius: 3px;
-  box-shadow: 0 2px 4px 0 rgba(25, 45, 70, 0.05);
+  box-shadow: 0 2px 4px 0 $border-color;
   border: solid 1px #edeef1;
 }
 
@@ -63,16 +65,18 @@ export default {
 }
 </style>
 
-<style>
+<style lang="scss">
+@import "../assets/styles/variables";
+
 .repo-link.hover-type-box-shadow:hover .repo-item {
-  box-shadow: 0 4px 10px 0 rgba(25, 45, 70, 0.25);
+  box-shadow: 0 4px 10px 0 rgba($color-text, 0.25);
 }
 
 .repo-link .repo-item h3 {
-  color: #0564d7;
+  color: $color-primary;
 }
 
 .repo-link .repo-item-inactive h3 {
-  color: #192d46;
+  color: $color-text;
 }
 </style>

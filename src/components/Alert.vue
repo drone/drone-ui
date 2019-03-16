@@ -33,7 +33,7 @@ export default {
 }
 
 .secondary {
-  color: rgba(25, 45, 70, 0.6);
+  color: $color-text-secondary;
   margin-top: 8px;
 }
 

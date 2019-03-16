@@ -49,9 +49,11 @@
       <span slot="secondary">{{ repoEnablingErr.message }}.</span>
     </Alert>
     <Alert v-else-if="repoEnabling">Activating...</Alert>
-    <Card v-else-if="showActivatePrompt" class="activate" contentPadding="30px">
-      <Button theme="primary" @click.native="handleActivate" :disabled="repoEnabling" size="l">Activate</Button>
-      <p>Activate this repository.</p>
+    <Card v-else-if="showActivatePrompt" class="activate" contentPadding="40px">
+      <IconActivateGear/>
+      <Button theme="primary" @click.native="handleActivate" :disabled="repoEnabling" size="l">
+        Activate repository
+      </Button>
     </Card>
     <!--
         this is the router outlet for all repository pages, including
@@ -67,6 +69,7 @@ import AlertError from "@/components/AlertError.vue";
 import Breadcrumb from "@/components/Breadcrumb.vue";
 import IconArrow from "@/components/icons/IconArrow.vue";
 import IconCancel from "@/components/icons/IconCancel.vue";
+import IconActivateGear from "@/components/icons/IconActivateGear.vue";
 import Button from "@/components/buttons/Button.vue";
 import Card from "@/components/Card.vue";
 import PageHeader from "@/components/PageHeader";
@@ -84,6 +87,7 @@ export default {
     IconArrow,
     IconCancel,
     IconRestart,
+    IconActivateGear,
     Button,
     Card,
     Loading,
@@ -186,7 +190,7 @@ h1 {
 }
 
 nav {
-  border-bottom: 1px solid rgba(25, 45, 70, 0.05);
+  border-bottom: 1px solid $border-color;
   margin-bottom: 20px;
   padding-left: 15px;
   display: flex;
@@ -203,7 +207,7 @@ nav {
 }
 
 nav a {
-  color: rgba(25, 45, 70, 0.6);
+  color: $color-text-secondary;
   height: 18px;
   line-height: 18px;
   padding-bottom: 11px;
@@ -224,12 +228,12 @@ nav a {
 }
 
 nav a.manually-active {
-  color: #192d46;
+  color: $color-text;
 }
 
 nav a:hover,
 nav a:focus {
-  color: #192d46;
+  color: $color-text;
 
   svg {
     opacity: 1;
@@ -238,14 +242,14 @@ nav a:focus {
 
 nav a.manually-active:focus,
 nav a.manually-active:hover {
-  color: #0564d7;
+  color: $color-primary;
 }
 
 nav a[disabled],
 nav a[disabled]:hover,
 nav a[disabled]:focus {
   pointer-events: none;
-  color: rgba(25, 45, 70, 0.25);
+  color: rgba($color-text, 0.25);
 }
 
 nav a svg {
@@ -253,8 +257,8 @@ nav a svg {
 }
 
 nav .router-link-exact-active {
-  border-color: #192d46;
-  color: #192d46;
+  border-color: $color-text;
+  color: $color-text;
 }
 
 .fade-enter-active, .fade-leave-active {
@@ -272,8 +276,8 @@ nav .router-link-exact-active {
   text-align: center;
 }
 
-.activate p {
-  margin-top: 15px;
-  color: rgba(25, 45, 70, 0.6);
+.icon-activate-gear {
+  margin: 0 auto 30px;
+  display: block;
 }
 </style>

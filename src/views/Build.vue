@@ -94,8 +94,7 @@
              ref="output">
           <div ref="topAnchor"></div>
 
-          <div class="output-header" ref="outputHeader">
-            <div class="output-header-visibility-fix" ref="visibilityFix"/>
+          <div class="output-header">
             <div class="output-header-content">
               <div class="output-title" :title="stage && step && `${stage.name} - ${step.name}`">
                 <span class="output-title-stage">{{ stage && stage.name }}</span>
@@ -376,13 +375,12 @@ export default {
       if (this.outputFullscreen) return;
 
       const delta = window.scrollY - previousScrollY;
-      const { stages, output, outputHeader, visibilityFix } = this.$refs;
+      const { stages, output } = this.$refs;
 
       previousScrollY = window.scrollY;
 
       if (stages) this.alignStages(stages, delta);
       if (output) this.actualizeShowToTop();
-      if (output && outputHeader && visibilityFix) this.fixContentVisibilityInStickyOffset();
     },
     alignStages(stages, delta) {
       const stagesRect = stages.getBoundingClientRect();
@@ -396,12 +394,6 @@ export default {
 
         stages.style.top = `${newTop}px`;
       }
-    },
-    fixContentVisibilityInStickyOffset() {
-      const { output, outputHeader, visibilityFix } = this.$refs;
-      const delta = outputHeader.offsetTop - output.offsetTop;
-
-      visibilityFix.style.top = "-" + Math.min(delta + OUTPUT_HEADER_STICKY_OFFSET, 80) + "px";
     },
     onOutputContentScroll() {
       this.actualizeShowToTop();
@@ -559,7 +551,7 @@ $output-border-radius: 6px;
   font-size: 12px;
   font-family: 'Roboto Mono', monospace;
   font-weight: 300;
-  background-color: #192d46;
+  background-color: $terminal-color;
   border-radius: $output-border-radius;
   box-shadow: 0px 0px 8px 1px #e8eaed;
   box-sizing: border-box;
@@ -592,10 +584,6 @@ $output-border-radius: 6px;
     position: static;
   }
 
-  .output-header-visibility-fix {
-    display: none;
-  }
-
   .output-content {
     overflow: auto;
   }
@@ -622,22 +610,12 @@ $output-border-radius: 6px;
 
 $output-header-before-z-index: 1;
 $output-header-height: 40px;
-$output-header-sticky-offset: $stages-top;
+$output-header-sticky-offset: 0;
 
 .output-header {
   position: sticky;
   top: $header-height + $output-header-sticky-offset;
   height: $output-header-height;
-
-  .output-header-visibility-fix {
-    position: absolute;
-    top: -$output-header-sticky-offset;
-    bottom: $output-header-height - $output-border-radius;
-    left: -10px; // hide box-shadow of content
-    right: -10px;
-    background: $body-color;
-    z-index: $output-header-before-z-index;
-  }
 
   @include mobile {
     top: 0;
@@ -646,7 +624,7 @@ $output-header-sticky-offset: $stages-top;
 
 .output-header-content {
   position: relative;
-  background: #192d46;
+  background: $terminal-color;
   padding: 0 5px 0 15px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   border-top: 1px solid transparent;
@@ -767,7 +745,7 @@ $output-header-sticky-offset: $stages-top;
   cursor: pointer;
   width: 21px;
   height: 30px;
-  background: #192d46;
+  background: $color-text;
   color: rgba(255, 255, 255, 0.75);
   display: none;
   border-bottom-right-radius: 6px;
@@ -783,12 +761,14 @@ $output-header-sticky-offset: $stages-top;
 </style>
 
 <style lang="scss">
+@import "../assets/styles/variables";
+
 .stage-container > a {
   &:hover,
   &:focus {
     .stage {
       header {
-        background: rgba(25, 45, 70, 0.02);
+        background: rgba($color-text, 0.02);
       }
 
       &.has-steps {
@@ -807,20 +787,20 @@ $output-header-sticky-offset: $stages-top;
 .step-container > a:hover,
 .step-container > a:focus {
   outline: none;
-  background-color: rgba(25, 45, 70, 0.02);
+  background-color: rgba($color-text, 0.02);
 }
 
 // prettier-ignore
 .output-lines .ol-html {
   .ansi-black-fg { color: #5b5b5b; }
-  .ansi-red-fg { color: #e23131; }
+  .ansi-red-fg { color: $color-danger; }
   .ansi-green-fg { color: #4dca7e; }
   .ansi-yellow-fg { color: #c7b441; }
   .ansi-blue-fg { color: #2ba3d0; }
   .ansi-magenta-fg { color: #e948e9; }
   .ansi-cyan-fg { color: #4eeeee; }
   .ansi-black-bg { background-color: #404040; }
-  .ansi-red-bg { background-color: #ec3c3c; }
+  .ansi-red-bg { background-color: rgba($color-danger, 0.3); }
   .ansi-green-bg { background-color: #76c84c; }
   .ansi-yellow-bg { background-color: #e8b73b; }
   .ansi-blue-bg { background-color: #3a5ad0; }

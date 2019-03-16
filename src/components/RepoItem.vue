@@ -107,12 +107,12 @@ export default {
 @import "../assets/styles/mixins";
 
 .repo-item {
-  border-radius: 3px;
+  border-radius: 4px;
   box-sizing: border-box;
-  box-shadow: 0 2px 4px 0 rgba(25, 45, 70, 0.05);
-  border: solid 1px #edeef1;
-  background-color: #ffffff;
-  color: #192d46;
+  box-shadow: 0 2px 4px 0 rgba($color-text, 0.1);
+  border: solid 1px $border-color;
+  background-color: rgba(#ffffff, 0.75);
+  color: $color-text;
   padding: 15px;
   transition: box-shadow linear 0.2s;
 
@@ -163,8 +163,12 @@ export default {
     }
   }
 
-  &.repo-item.build-no.active-no .header .title {
-    opacity: 0.6;
+  &.repo-item.build-no.active-no {
+    background-color: rgba(#ffffff, 0.75);
+
+    .header .title {
+      opacity: 0.6;
+    }
   }
 }
 
@@ -172,7 +176,7 @@ export default {
   height: 22px;
   font-size: 18px;
   line-height: normal;
-  color: #192d46;
+  color: $color-text;
   display: flex;
   align-items: flex-start;
 
@@ -188,6 +192,7 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
   flex-grow: 1;
+  margin-top: -1px;
 }
 
 .container-left {
@@ -206,8 +211,8 @@ export default {
   height: 15px;
   opacity: 0.2;
   border-bottom-left-radius: 8px;
-  border-left: solid 1px #192d46;
-  border-bottom: solid 1px #192d46;
+  border-left: solid 1px $color-text;
+  border-bottom: solid 1px $color-text;
   margin-left: 9px;
 }
 
@@ -215,7 +220,7 @@ export default {
   width: 20px;
   height: 20px;
   margin-right: 10px;
-  color: #c6cbd1;
+  color: $color-info;
   flex-shrink: 0;
 }
 
@@ -231,7 +236,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: rgba(25, 45, 70, 0.6);
+  color: $color-text-secondary;
 
   .header + & {
     margin-top: 6px;
@@ -252,7 +257,7 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
   line-height: normal;
-  color: rgba(25, 45, 70, 0.6);
+  color: $color-text-secondary;
   margin-right: 15px;
 
   .divider {
@@ -288,7 +293,7 @@ export default {
   display: inline-block;
   width: 3px;
   height: 3px;
-  background: rgba(25, 45, 70, 0.25);
+  background: rgba($color-text, 0.25);
   border-radius: 50%;
   margin: 0 6px;
 }

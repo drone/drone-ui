@@ -2,16 +2,18 @@
   <a class="link"><slot></slot></a>
 </template>
 
-<style>
+<style lang="scss">
+@import "../assets/styles/variables";
+
 .link {
   text-decoration: none;
-  color: #0564d7;
+  color: $color-primary;
 }
 
 .link:focus,
 .link:hover {
   position: relative;
-  color: #0564d7;
+  color: $color-primary;
   outline: none;
 }
 

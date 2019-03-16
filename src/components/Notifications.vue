@@ -31,7 +31,9 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../assets/styles/variables";
+
 .notifications {
   position: fixed;
   bottom: 15px;
@@ -41,7 +43,7 @@ export default {
 .notification {
   position: relative;
   max-width: 300px;
-  background: rgba(25, 45, 70, 0.9);
+  background: rgba($color-text, 0.9);
   border-radius: 2px;
   padding: 11px 60px 11px 15px;
   color: #fff;

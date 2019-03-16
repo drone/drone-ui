@@ -1,5 +1,5 @@
 <template>
-  <section :class="{ stage: true, 'has-steps': hasSteps}">
+  <section :class="{ stage: true, 'has-steps': hasSteps, 'has-content': hasContent}">
     <header>
       <Status :status="stage.status"/>
       <span :title="stage.name">{{ stage.name }}</span>
@@ -35,29 +35,37 @@ export default {
   computed: {
     hasSteps() {
       return this.stage.steps && this.stage.steps.length;
+    },
+    hasContent() {
+      return !!this.$slots.default;
     }
   }
 };
 </script>
 
 <style scoped lang="scss">
+@import "../assets/styles/variables";
+
 .stage {
-  background: #FFF;
-  box-shadow: 0 2px 4px 0 rgba(25, 45, 70, .05);
-  border: 1px solid #edeef1;
-  border-radius: 3px;
+  background: rgba(#ffffff, 0.75);
+  box-shadow: 0 2px 4px 0 rgba($color-text, 0.1);
+  border: 1px solid rgba($color-text, 0.1);
+  border-radius: 4px;
   box-sizing: border-box;
   user-select: none;
+
+  &.has-content header {
+    border-bottom: solid 1px rgba($color-text, 0.1);
+  }
 }
 
 header {
   align-items: center;
-  border-bottom: solid 1px rgba(25, 45, 70, 0.1);
   display: flex;
   height: 40px;
   padding: 0 15px;
   user-select: none;
-  color: #192d46;
+  color: $color-text;
 }
 
 .status {
@@ -79,7 +87,7 @@ span {
   font-size: 13px;
   font-weight: 400;
   flex-shrink: 0;
-  color: #192d46;
+  color: $color-text;
   position: relative;
 
   .hint {
@@ -89,7 +97,7 @@ span {
 
 .arrow-dropdown {
   display: none;
-  color: rgba(25, 45, 70, 0.6);
+  color: $color-text-secondary;
 }
 
 .content {
@@ -118,7 +126,7 @@ span {
 
     > a {
       display: block;
-      color: #192d46;
+      color: $color-text;
 
       &:hover,
       &:focus {

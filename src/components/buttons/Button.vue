@@ -112,7 +112,7 @@ export default {
 }
 
 .button.bordered {
-  border: 1px solid rgba(25, 45, 70, 0.25);
+  border: 1px solid rgba($color-text, 0.25);
 }
 
 .button.bordered.size-m {
@@ -124,7 +124,7 @@ export default {
 }
 
 .button.theme-default {
-  background-color: #192d46;
+  background-color: $color-text;
 }
 
 .button.theme-light {
@@ -132,7 +132,7 @@ export default {
 }
 
 .button.theme-primary {
-  background-color: #0564d7;
+  background-color: $color-primary;
 }
 
 .button.theme-danger {
@@ -144,7 +144,7 @@ export default {
 }
 
 .button.theme-default.outline {
-  color: #192d46;
+  color: $color-text;
 }
 
 .button.theme-light.outline {
@@ -152,7 +152,7 @@ export default {
 }
 
 .button.theme-primary.outline {
-  color: #0564d7;
+  color: $color-primary;
 }
 
 .button.theme-danger.outline {
@@ -165,17 +165,17 @@ export default {
 
 .button.bordered:hover,
 .button.bordered:focus {
-  border-color: #0564d7;
+  border-color: $color-primary;
 }
 
 .button.theme-default:focus,
 .button.theme-default:hover {
-  background-color: rgba(25, 45, 70, 0.8);
+  background-color: rgba($color-text, 0.8);
 }
 
 .button.theme-default.outline:focus,
 .button.theme-default.outline:hover {
-  color: #0564d7;
+  color: $color-primary;
   background-color: transparent;
 }
 
@@ -229,7 +229,7 @@ export default {
 .button:hover[disabled] {
   cursor: not-allowed;
   opacity: 0.25;
-  border-color: rgba(25, 45, 70, 0.5);
-  color: #192d46;
+  border-color: rgba($color-text, 0.5);
+  color: $color-text;
 }
 </style>

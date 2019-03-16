@@ -68,10 +68,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "../assets/styles/variables";
+
 .hint {
   position: absolute;
   max-width: 300px;
-  background: rgba(25, 45, 70, 0.9);
+  background: rgba($color-text, 0.9);
   border-radius: 2px;
   padding: 6px 8px;
   color: #fff;
@@ -86,7 +88,7 @@ export default {
   .triangle {
     bottom: -5px;
     border-bottom-width: 0;
-    border-top-color: rgba(25, 45, 70, 0.9);
+    border-top-color: rgba($color-text, 0.9);
   }
 }
 
@@ -97,7 +99,7 @@ export default {
   .triangle {
     top: -5px;
     border-top-width: 0;
-    border-bottom-color: rgba(25, 45, 70, 0.9);
+    border-bottom-color: rgba($color-text, 0.9);
   }
 }
 

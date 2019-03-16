@@ -37,13 +37,13 @@ export default {
 }
 
 .control-group + .control-group {
-  border-top: 1px solid rgba(25, 45, 70, 0.05);
+  border-top: 1px solid $border-color;
 }
 
 .control-group .control-label {
   flex: 0 0 150px;
   margin-right: 15px;
-  color: rgba(25, 45, 70, 0.6);
+  color: $color-text-secondary;
 
   @include tablet {
     flex-basis: auto;
@@ -57,7 +57,7 @@ export default {
 }
 
 .control-actions {
-  border-top: 1px solid rgba(25, 45, 70, 0.05);
+  border-top: 1px solid $border-color;
   padding-top: 15px;
 }
 

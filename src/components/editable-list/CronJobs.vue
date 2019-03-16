@@ -1,97 +1,66 @@
 <template>
-  <Card contentPadding="0 15px">
-    <h2 slot="header">Cron Jobs</h2>
+  <EditableList title="Cron Jobs"
+                itemCreateButtonTitle="add a cron job"
+                :items="items"
+                :dispatchCreate="dispatchCreate"
+                :dispatchDelete="dispatchDelete">
+    <IconCronJobsEmpty slot="empty"/>
 
-    <div v-if="crons.length === 0" class="alert">
-      Your Cron List is Empty.
-    </div>
+    <EditableListItem slot="item" slot-scope="slotProps"
+                      :name="slotProps.item.name"
+                      :tags="[slotProps.item.expr, slotProps.item.branch]"
+                      :deleting="slotProps.deleting"
+                      @delete="slotProps.onDelete"/>
 
-    <EditableListItem v-for="cron in crons"
-                      :key="cron.id"
-                      :name="cron.name"
-                      :tags="[cron.expr, cron.branch]"
-                      :deleting="deleting[cron.id]"
-                      @delete="handleDelete(cron)"
-    />
-
-    <form @submit.prevent="handleSubmit" autocomplete="off" slot="footer">
+    <template slot="fields">
       <BaseInput placeholder="Cron Job Name" name="cron.name" v-model="cron.name" type="text"/>
       <BaseInput :placeholder="`Cron Job Branch (default: ${defaultBranch})`"
                  name="cron.branch"
                  v-model="cron.branch"
                  type="text"/>
       <BaseSelect v-model="cron.expr" name="cron.expr" :options="cronExprOptions"/>
-
-      <div class="control-actions">
-        <Button type="submit" theme="primary" size="l" :loading="creating">Add a Cron Job</Button>
-        <div class="error-message" v-if="error">{{ error.message }}</div>
-      </div>
-    </form>
-
-  </Card>
+    </template>
+  </EditableList>
 </template>
 
 <script>
+import EditableList from "@/components/editable-list/EditableList";
 import EditableListItem from "@/components/editable-list/EditableListItem.vue";
-import Card from "@/components/Card.vue";
 import BaseInput from "@/components/forms/BaseInput.vue";
 import BaseSelect from "@/components/forms/BaseSelect.vue";
-import Button from "@/components/buttons/Button.vue";
+import IconCronJobsEmpty from "@/components/icons/IconCronJobsEmpty";
 
 export default {
-  name: "cron",
+  name: "CronJobs",
   components: {
+    EditableList,
     EditableListItem,
-    Card,
     BaseInput,
     BaseSelect,
-    Button
+    IconCronJobsEmpty
+  },
+  props: {
+    defaultBranch: { type: String, default: "master" }
   },
   data() {
     return {
-      error: null,
-      creating: false,
-      deleting: {},
-      cron: {
-        name: "",
-        expr: "@weekly",
-        branch: ""
-      }
+      cron: { name: "", expr: "@weekly", branch: "" }
     };
   },
   computed: {
     slug() {
       return this.$route.params.namespace + '/' + this.$route.params.name;
     },
-    crons() {
+    items() {
       const crons = this.$store.state.crons[this.slug];
       return Object.values(crons || {})
     },
     cronExprOptions() {
       return ["@hourly", "@daily", "@weekly", "@monthly", "@yearly"].map(x => [x, x]);
-    },
-    defaultBranch() {
-      return (this.repo && this.repo.branch) || "master";
     }
   },
   methods: {
-    handleDelete: function (cron) {
-      const {namespace, name} = this.$route.params;
-
-      this.$set(this.deleting, cron.id, true);
-      this.$store
-        .dispatch("deleteCron", { namespace, name, cron })
-        .then(() => {
-          this.$store.dispatch("showNotification", { message: "Successfully deleted" });
-          this.$delete(this.deleting, cron.id);
-          this.error = null;
-        })
-        .catch(error => {
-          this.error = error;
-          this.$delete(this.deleting, cron.id);
-        });
-    },
-    handleSubmit: function() {
+    dispatchCreate() {
       const { namespace, name } = this.$route.params;
       const cron = {
         name: this.cron.name,
@@ -99,58 +68,22 @@ export default {
         branch: this.cron.branch || this.defaultBranch
       };
 
-      this.creating = true;
-      this.$store
-        .dispatch("createCron", { namespace, name, cron })
-        .then(() => {
-          this.$store.dispatch("showNotification", { message: "Successfully saved" });
-          this.creating = false;
-          this.cron = { name: "", expr: "@weekly", branch: "" };
-          this.error = null;
-        })
-        .catch(error => {
-          this.error = error;
-          this.creating = false;
-        });
+      return this.$store.dispatch("createCron", { namespace, name, cron }).then(() => {
+        this.cron = { name: "", expr: "@weekly", branch: "" };
+      });
+    },
+
+    dispatchDelete(item) {
+      const { namespace, name } = this.$route.params;
+      return this.$store.dispatch("deleteCron", { namespace, name, cron: item });
     }
   }
 };
 </script>
 
 <style scoped>
-.alert {
-  color: rgba(25, 45, 70, 0.6);
-  padding: 45px 0;
-  text-align: center;
-}
-
-form input[type="text"],
-form textarea {
+.icon-cron-jobs-empty {
   display: block;
-  margin-bottom: 15px;
-  width: 100%;
-  border-color: rgba(25, 45, 70, 0.15);
-}
-
-select {
-  border-color: rgba(25, 45, 70, 0.15);
-}
-
-.editable-list-item + .editable-list-item {
-  border-top: 1px solid rgba(25, 45, 70, 0.05);
-}
-
-form select {
-  margin-bottom: 15px;
-}
-
-.actions {
-  display: flex;
-  align-items: center;
-}
-
-.error-message {
-  color: #ff4164;
-  margin-left: 15px;
+  margin: 0 auto 20px;
 }
 </style>

@@ -1,6 +1,8 @@
 <template>
   <transition name="fade">
-    <div class="overlay" v-show="opened"/>
+    <div class="overlay" v-show="opened">
+      <slot/>
+    </div>
   </transition>
 </template>
 
@@ -17,7 +19,7 @@ export default {
 @import "../assets/styles/variables";
 
 .overlay {
-  background: rgba($header-color, 0.9);
+  background: $overlay-color;
   position: fixed;
   top: 0;
   right: 0;

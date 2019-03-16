@@ -13,12 +13,8 @@
       </div>
     </PageHeader>
 
-    <transition name="fade">
-      <Alert v-show="syncing" class="alert-syncing">
-        Your repository list is being synchronized.
-        <small slot="secondary">This could take between 30 and 60 seconds to complete.</small>
-      </Alert>
-    </transition>
+
+    <OverlaySyncing :opened="syncing" v-if="mediaType === 'desktop'"/>
 
     <AlertError :error="loadingError || syncingError"/>
     <RepoList v-if="!loadingError"
@@ -40,6 +36,7 @@ import MoreButton from "@/components/buttons/MoreButton.vue";
 import Button from "@/components/buttons/Button.vue";
 import RepoList from "@/components/RepoList.vue";
 import PageHeader from "@/components/PageHeader";
+import OverlaySyncing from "@/components/OverlaySyncing";
 
 import reposSort from "@/lib/reposSort";
 
@@ -56,11 +53,12 @@ export default {
     Button,
     IconSync,
     RepoList,
+    OverlaySyncing
   },
   data() {
     return {
       all: false,
-    }
+    };
   },
   computed: {
     latest() {
@@ -86,6 +84,9 @@ export default {
     },
     showMore() {
       return this.loadingStatus === "loaded" && !this.all && this.count > LIMIT;
+    },
+    mediaType() {
+      return this.$store.state.mediaType;
     }
   },
   methods: {
@@ -117,12 +118,12 @@ export default {
 <style scoped lang="scss">
 @import "../assets/styles/mixins";
 
-.syncing {
+.button.syncing {
   opacity: 0.6;
-}
 
-.syncing svg {
-  animation: spin 1s linear infinite;
+  svg {
+    animation: spin 1s linear infinite;
+  }
 }
 
 .alert {
@@ -133,12 +134,6 @@ export default {
   font-style: italic;
 }
 
-.fade-enter-active {
-  transition: opacity 0.75s;
-}
-.fade-leave-active {
-  transition: none;
-}
 .fade-enter {
   opacity: 0;
 }

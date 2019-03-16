@@ -2,11 +2,13 @@
   <span class="tag"><slot></slot></span>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../assets/styles/variables";
+
 span {
   display: inline-block;
-  background: rgba(25, 45, 70, 0.03);
-  color: rgba(25, 45, 70, 0.6);
+  background: rgba($color-text, 0.03);
+  color: $color-text-secondary;
   font-size: 11px;
   text-transform: uppercase;
   padding: 0 10px;

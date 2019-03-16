@@ -78,7 +78,9 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../assets/styles/variables";
+
 h1 {
   height: 41px;
   font-size: 30px;
@@ -87,7 +89,7 @@ h1 {
   font-stretch: normal;
   line-height: normal;
   letter-spacing: normal;
-  color: #192d46;
+  color: $color-text;
   margin: 30px 0px;
 }
 </style>

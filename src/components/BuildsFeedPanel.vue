@@ -51,19 +51,19 @@ export default {
 
 .builds-feed-panel {
   .page-header {
-    padding: 0 ($header-padding-side - 10px) 0 $header-padding-side;
+    padding: 0 ($header-padding-side - 5px) 0 $header-padding-side;
   }
 
   .alert {
     margin: 0 $header-padding-side;
     box-shadow: none;
-    color: rgba(25, 45, 70, 0.6);
+    color: $color-text-secondary;
   }
 
   .repo-item.media-mobile {
     border: none;
-    border-top: 1px solid rgba(25, 45, 70, 0.05);
-    border-bottom: 1px solid rgba(25, 45, 70, 0.05);
+    border-top: 1px solid $border-color;
+    border-bottom: 1px solid $border-color;
     box-shadow: none;
     border-radius: 0;
     padding-left: $header-padding-side;
@@ -75,7 +75,7 @@ export default {
     box-shadow: none;
 
     .header {
-      color: #0564d7;
+      color: $color-primary;
     }
   }
 

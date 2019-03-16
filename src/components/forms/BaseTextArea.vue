@@ -11,10 +11,12 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../../assets/styles/variables";
+
 textarea {
-  color: #192d46;
-  border: 1px solid rgba(25, 45, 70, 0.25);
+  color: $color-text;
+  border: 1px solid rgba($color-text, 0.25);
   border-radius: 3px;
   box-sizing: border-box;
   font-size: 14px;
@@ -24,11 +26,11 @@ textarea {
 }
 
 textarea:focus {
-  border-color: #0564D7;
+  border-color: $color-primary;
   outline: none;
 }
 
 textarea::placeholder {
-  color: rgba(25, 45, 70, 0.6);
+  color: $color-text-secondary;
 }
 </style>

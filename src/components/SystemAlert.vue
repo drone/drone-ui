@@ -2,9 +2,11 @@
   <footer><slot></slot></footer>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../assets/styles/variables";
+
 footer {
-  box-shadow: 0 -2px 6px 0px rgba(25, 45, 70, 0.05);
+  box-shadow: 0 -2px 6px 0px $border-color;
   position: fixed;
   bottom: 0px;
   left: 0px;

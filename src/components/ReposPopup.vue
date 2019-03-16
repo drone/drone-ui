@@ -95,13 +95,15 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../assets/styles/variables";
+
 .repo-link {
   outline: none;
 }
 
 .repo-link.selected {
-  background: rgba(25, 45, 70, 0.02);
+  background: $step-selected-bg-color;
 }
 
 .repo-link.selected .repo-item {
@@ -109,7 +111,7 @@ export default {
 }
 
 .repo-link + .repo-link {
-  border-top: 1px solid rgba(25, 45, 70, 0.05);
+  border-top: 1px solid $border-color;
 }
 
 .repo-item {
@@ -119,7 +121,7 @@ export default {
 
 .text {
   text-align: center;
-  color: rgba(25, 45, 70, 0.6);
+  color: $color-text-secondary;
   padding: 16px;
 }
 </style>

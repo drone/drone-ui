@@ -24,10 +24,8 @@ footer {
   align-items: center;
   z-index: 1;
 
-  box-shadow: 0 -2px 6px 0px rgba(25, 45, 70, 0.05);
   box-sizing: border-box;
   min-height: 60px;
-  background: #fff;
 
   @include tablet {
     padding-top: 20px;
@@ -43,16 +41,16 @@ nav.nav-right {
 }
 
 nav a {
-  color: rgba(25, 45, 70, 0.6);
+  color: $color-text-secondary;
 
   & + a {
-    margin-left: $header-padding-side;
+    margin-left: 30px;
   }
 }
 
 nav a:hover,
 nav a:focus {
-  color: #192d46;
+  color: $color-text;
   outline: none;
 }
 </style>

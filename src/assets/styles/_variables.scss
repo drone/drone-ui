@@ -5,20 +5,28 @@ $bp-mobile: 480px;
 /* [-----------](-----------)[-----------> */
 /*           480px       980px             */
 
-$body-color: #fbfbfb;
+$body-color: #f5faff;
+$body-background-size: 100% 100%;
 
-$color-text: #192D46;
-$color-primary: #0564d7;
-$color-warning: #ff7d00;
+$color-text: #1e375a;
+$color-text-secondary: rgba(#1e375a, 0.6);
+$color-primary: #2364d2;
+$color-warning: #ffbe00;
 $color-danger: #ff4164;
 $color-success: #19d78c;
 $color-info: #96a5be;
 
-$header-color: #192d46;
+$border-color: rgba($color-text, 0.05);
+
+$header-color: $color-text;
 $header-height: 56px;
 $header-padding-side: 15px;
 
+$overlay-color: rgba($color-text, 0.9);
+
+$terminal-color: $color-text;
+
 $button-outline-hover-bg-opacity: 0.1;
 
-$step-selected-bg-color: #f8f9f9 // rgba(#fff, 0.03) on white bg
+$step-selected-bg-color: rgba($color-text, 0.03)
 

@@ -98,12 +98,10 @@ export default {
 <style scoped lang="scss">
 @import "../assets/styles/mixins";
 
-$header-opacity-percent: 97%;
-
 .header {
   height: $header-height;
-  box-shadow: 0 2px 4px 0 rgba(25, 45, 70, 0.05);
-  background-color: rgba($header-color, $header-opacity-percent / 100%);
+  box-shadow: 0 2px 4px 0 $border-color;
+  background-color: $header-color;
   align-items: center;
   box-sizing: border-box;
   display: flex;
@@ -216,7 +214,7 @@ $header-opacity-percent: 97%;
 
   @include hf {
     background-color: #fff;
-    color: mix($header-color, $body-color, $header-opacity-percent);
+    color: $body-color;
   }
 }
 </style>
