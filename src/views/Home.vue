@@ -13,7 +13,7 @@
       </div>
     </PageHeader>
 
-    <OverlaySyncing :opened="{ syncing }" v-if="mediaType === 'desktop'"/>
+    <OverlaySyncing :opened="syncing" v-if="mediaType === 'desktop'"/>
 
     <AlertError :error="loadingError || syncingError"/>
     <RepoList v-if="!loadingError"
