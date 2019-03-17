@@ -61,6 +61,11 @@ export default {
     handleAnimation(anim) {
       this.anim = anim;
       this.anim.addEventListener("complete", this.onSegmentComplete);
+      if (this.opened && anim.isPaused) {
+        this.animationComplete = false;
+        this.anim.playSegments([1, 2]);
+        setTimeout(() => this.anim.playSegments(segmentStart), fadeDuration);
+      }
     },
     onSegmentComplete() {
       if (this.anim.firstFrame === segmentStart[0]) {
