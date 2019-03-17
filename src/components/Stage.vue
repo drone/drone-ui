@@ -47,7 +47,7 @@ export default {
 @import "../assets/styles/variables";
 
 .stage {
-  background: rgba(#ffffff, 0.75);
+  background: #ffffff;
   box-shadow: 0 2px 4px 0 rgba($color-text, 0.1);
   border: 1px solid rgba($color-text, 0.1);
   border-radius: 4px;

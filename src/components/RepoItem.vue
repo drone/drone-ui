@@ -111,7 +111,7 @@ export default {
   box-sizing: border-box;
   box-shadow: 0 2px 4px 0 rgba($color-text, 0.1);
   border: solid 1px $border-color;
-  background-color: rgba(#ffffff, 0.75);
+  background-color: #ffffff;
   color: $color-text;
   padding: 15px;
   transition: box-shadow linear 0.2s;
@@ -164,7 +164,7 @@ export default {
   }
 
   &.repo-item.build-no.active-no {
-    background-color: rgba(#ffffff, 0.75);
+    background-color: #ffffff;
 
     .header .title {
       opacity: 0.6;

@@ -28,7 +28,7 @@ section {
   border-radius: 3px;
   box-sizing: border-box;
   border: solid 1px #EDEEF1;
-  background: rgba(#ffffff, 0.75);
+  background: #ffffff;
   box-shadow: 0 2px 4px 0 $border-color;
 }
 
