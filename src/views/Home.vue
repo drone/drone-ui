@@ -13,8 +13,6 @@
       </div>
     </PageHeader>
 
-    <OverlaySyncing :opened="syncing" v-if="mediaType === 'desktop'"/>
-
     <AlertError :error="loadingError || syncingError"/>
     <RepoList v-if="!loadingError"
               :items="sortLimit(latest)"
@@ -35,7 +33,6 @@ import MoreButton from "@/components/buttons/MoreButton.vue";
 import Button from "@/components/buttons/Button.vue";
 import RepoList from "@/components/RepoList.vue";
 import PageHeader from "@/components/PageHeader";
-import OverlaySyncing from "@/components/OverlaySyncing";
 
 import reposSort from "@/lib/reposSort";
 
@@ -51,8 +48,7 @@ export default {
     MoreButton,
     Button,
     IconSync,
-    RepoList,
-    OverlaySyncing
+    RepoList
   },
   data() {
     return {
