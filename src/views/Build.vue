@@ -95,6 +95,7 @@
           <div ref="topAnchor"></div>
 
           <div class="output-header">
+            <div class="output-header-corners"></div>
             <div class="output-header-content">
               <div class="output-title" :title="stage && step && `${stage.name} - ${step.name}`">
                 <span class="output-title-stage">{{ stage && stage.name }}</span>
@@ -579,7 +580,10 @@ $output-border-radius: 6px;
   flex-direction: column;
   z-index: 50;
   box-shadow: none;
-
+  
+  .output-header-corners {
+    display: none;
+  }
   .output-header {
     position: static;
   }
@@ -610,15 +614,43 @@ $output-border-radius: 6px;
 
 $output-header-before-z-index: 1;
 $output-header-height: 40px;
-$output-header-sticky-offset: 0;
+$output-header-sticky-offset: 20px;
 
 .output-header {
   position: sticky;
   top: $header-height + $output-header-sticky-offset;
   height: $output-header-height;
+  &:before {
+    content: "";
+    position: absolute;
+    left: -5px;
+    right: -5px;
+    height: $output-header-sticky-offset;
+    background: $body-color;
+    z-index: 3;
+    top: -$output-header-sticky-offset;
+  }
 
   @include mobile {
     top: 0;
+  }
+}
+
+.output-header-corners {
+  height: 6px;
+  position: absolute;
+  left: -5px;
+  right: -5px;
+  background: $body-color;
+  
+  &:before {
+    content: "";
+    position: absolute;
+    left: 5px;
+    right: 5px;
+    background: $terminal-color;
+    height: 6px;
+    border-radius: 6px 6px 0 0;
   }
 }
 
