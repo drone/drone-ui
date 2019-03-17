@@ -561,10 +561,7 @@ $output-border-radius: 6px;
 
 .output.show-to-top .to-top {
   display: block;
-}
-
-.output.show-to-top .output-content {
-  margin-bottom: -30px;
+  margin-top: -30px
 }
 
 .output-fullscreen {
