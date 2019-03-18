@@ -94,8 +94,8 @@
              ref="output">
           <div ref="topAnchor"></div>
 
-          <div class="output-header">
-            <div class="output-header-corners"></div>
+          <div class="output-header" ref="outputHeader">
+            <div class="output-header-visibility-fix" ref="visibilityFix"/>
             <div class="output-header-content">
               <div class="output-title" :title="stage && step && `${stage.name} - ${step.name}`">
                 <span class="output-title-stage">{{ stage && stage.name }}</span>
@@ -376,12 +376,14 @@ export default {
       if (this.outputFullscreen) return;
 
       const delta = window.scrollY - previousScrollY;
-      const { stages, output } = this.$refs;
+      const { stages, output, outputHeader, visibilityFix } = this.$refs;
 
       previousScrollY = window.scrollY;
 
       if (stages) this.alignStages(stages, delta);
       if (output) this.actualizeShowToTop();
+      if (output && outputHeader && visibilityFix) this.fixContentVisibilityInStickyOffset();
+
     },
     alignStages(stages, delta) {
       const stagesRect = stages.getBoundingClientRect();
@@ -395,6 +397,12 @@ export default {
 
         stages.style.top = `${newTop}px`;
       }
+    },
+    fixContentVisibilityInStickyOffset() {
+      const { output, outputHeader, visibilityFix } = this.$refs;
+      const delta = outputHeader.offsetTop - output.offsetTop;
+
+      visibilityFix.style.top = "-" + Math.min(delta + OUTPUT_HEADER_STICKY_OFFSET, 80) + "px";
     },
     onOutputContentScroll() {
       this.actualizeShowToTop();
@@ -497,7 +505,7 @@ export default {
 .repo-item {
   margin-bottom: 20px;
   position: relative;
-  z-index: 1;
+  z-index: 1; // box-shadow higher than .output-header-visibility-fix
 }
 
 .build-content {
@@ -517,6 +525,7 @@ $stages-top: 20px;
   position: sticky;
   top: $header-height + $stages-top;
   min-width: 0; // important for white-space: nowrap
+  z-index: 1; // Status' hint upper than .repo-item
 
   @include tablet {
     flex: 1 0 auto;
@@ -577,10 +586,11 @@ $output-border-radius: 6px;
   flex-direction: column;
   z-index: 50;
   box-shadow: none;
-  
-  .output-header-corners {
+
+  .output-header-visibility-fix {
     display: none;
   }
+
   .output-header {
     position: static;
   }
@@ -617,38 +627,20 @@ $output-header-sticky-offset: 20px;
   position: sticky;
   top: $header-height + $output-header-sticky-offset;
   height: $output-header-height;
-  &:before {
-    content: "";
-    position: absolute;
-    left: -5px;
-    right: -5px;
-    height: $output-header-sticky-offset;
-    background: $body-color;
-    z-index: 3;
-    top: -$output-header-sticky-offset;
-  }
 
   @include mobile {
     top: 0;
   }
 }
 
-.output-header-corners {
-  height: 6px;
+.output-header-visibility-fix {
   position: absolute;
-  left: -5px;
-  right: -5px;
+  top: -$output-header-sticky-offset;
+  bottom: $output-header-height - $output-border-radius;
+  left: -10px; // hide box-shadow of content
+  right: -10px;
   background: $body-color;
-  
-  &:before {
-    content: "";
-    position: absolute;
-    left: 5px;
-    right: 5px;
-    background: $terminal-color;
-    height: 6px;
-    border-radius: 6px 6px 0 0;
-  }
+  z-index: $output-header-before-z-index;
 }
 
 .output-header-content {

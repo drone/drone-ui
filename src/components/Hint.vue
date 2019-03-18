@@ -79,37 +79,37 @@ export default {
   color: #fff;
   font-size: 13px;
   z-index: 1000;
-}
 
-.position-top {
-  margin-bottom: 10px;
-  bottom: 100%;
+  &.position-top {
+    margin-bottom: 10px;
+    bottom: 100%;
 
-  .triangle {
-    bottom: -5px;
-    border-bottom-width: 0;
-    border-top-color: rgba($color-text, 0.9);
+    .triangle {
+      bottom: -5px;
+      border-bottom-width: 0;
+      border-top-color: rgba($color-text, 0.9);
+    }
   }
-}
 
-.position-bottom {
-  margin-top: 10px;
-  top: 100%;
+  &.position-bottom {
+    margin-top: 10px;
+    top: 100%;
 
-  .triangle {
-    top: -5px;
-    border-top-width: 0;
-    border-bottom-color: rgba($color-text, 0.9);
+    .triangle {
+      top: -5px;
+      border-top-width: 0;
+      border-bottom-color: rgba($color-text, 0.9);
+    }
   }
-}
 
-.align-center {
-  left: 50%;
-  transform: translateX(-50%);
-
-  .triangle {
+  &.align-center {
     left: 50%;
-    margin-left: -5px;
+    transform: translateX(-50%);
+
+    .triangle {
+      left: 50%;
+      margin-left: -5px;
+    }
   }
 }
 

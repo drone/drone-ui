@@ -2,7 +2,7 @@
   <section class="repo-item"
            :class="{ [`build-${build ? 'yes' : 'no'}`]: true, [`active-${active ? 'yes' : 'no'}`]: true }">
     <div class="container-left">
-      <template v-if="status" >
+      <template v-if="status">
         <Status :status="status"/>
         <div class="connector"></div>
       </template>
@@ -163,12 +163,8 @@ export default {
     }
   }
 
-  &.repo-item.build-no.active-no {
-    background-color: #ffffff;
-
-    .header .title {
-      opacity: 0.6;
-    }
+  &.repo-item.build-no.active-no .header .title {
+    opacity: 0.6;
   }
 }
 
