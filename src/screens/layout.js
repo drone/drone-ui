@@ -129,33 +129,31 @@ export default class Default extends Component {
 						)}
 					</div>
 
-
 					<div className={styles.menu}>
-			            <Switch>
-			              <Route
-			                path="/account/repos"
-			                exact={true}
-			                component={UserReposMenu}
-			              />
-			              <Route
-			                path="/account/"
-			                exact={false}
-			                component={undefined}
-			              />BuildMenu
-			              <Route
-			                path="/:owner/:repo/:build(\d*)/:proc(\d*)"
-			                exact={true}
-			                component={BuildMenu}
-			              />
-			              <Route
-			                path="/:owner/:repo/:build(\d*)"
-			                exact={true}
-			                component={BuildMenu}
-			              />
-			              <Route path="/:owner/:repo" exact={false} component={RepoMenu} />
-			            </Switch>
+						<Switch>
+							<Route
+								path="/account/repos"
+								exact={true}
+								component={UserReposMenu}
+							/>
+							<Route
+								path="/account/"
+								exact={false}
+								component={undefined}
+							/>BuildMenu
+							<Route
+								path="/:owner/:repo/:build(\d*)/:proc(\d*)"
+								exact={true}
+								component={BuildMenu}
+							/>
+							<Route
+								path="/:owner/:repo/:build(\d*)"
+								exact={true}
+								component={BuildMenu}
+							/>
+							<Route path="/:owner/:repo" exact={false} component={RepoMenu} />
+						</Switch>
 					</div>
-
 
 					<Switch>
 						<Route path="/account/token" exact={true} component={UserTokens} />

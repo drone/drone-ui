@@ -14,7 +14,7 @@ export class Details extends Component {
 			<div className={styles.info}>
 				<StatusLabel status={build.status} />
 
-				<section className={styles.message} style={{whiteSpace: 'pre-line'}}>
+				<section className={styles.message} style={{ whiteSpace: "pre-line" }}>
 					{build.message}
 				</section>
 

@@ -36,6 +36,6 @@ export default class UserReposMenu extends Component {
 			</section>
 		);
 
-		return <Menu items={[]} right={right} />
+		return <Menu items={[]} right={right} />;
 	}
 }

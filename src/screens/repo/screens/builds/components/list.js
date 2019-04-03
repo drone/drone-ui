@@ -21,7 +21,7 @@ export class Item extends Component {
 				</div>
 
 				<div className={styles.body}>
-					<h3>{build.message.split('\n')[0]}</h3>
+					<h3>{build.message.split("\n")[0]}</h3>
 				</div>
 
 				<div className={styles.meta}>
