@@ -179,10 +179,17 @@ const timeouts = [
 
 <style scoped lang="scss">
 @import "../assets/styles/mixins";
+@import "../assets/styles/mixins";
 
 .control-group .controls .base-checkbox + .base-checkbox {
   margin-left: 48px;
+  @include tablet {
+    margin-left: 0px;
+    margin-top: 10px;
+    display: block;
+  }
 }
+
 
 .disable {
   padding: 0 15px;
