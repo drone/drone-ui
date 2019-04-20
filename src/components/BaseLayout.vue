@@ -96,6 +96,10 @@ export default {
 main {
   flex-grow: 1;
   width: 100%;
+  // Hack for proper truncating as per https://github.com/drone/drone-ui/issues/275
+  @include tablet {
+    width: 100vw;
+  }
 }
 
 footer {
