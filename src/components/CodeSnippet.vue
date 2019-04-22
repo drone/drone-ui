@@ -85,7 +85,7 @@ header h1,
 header h2,
 header h3 {
   height: 18px;
-  font-family: 'Roboto Mono', monospace;
+  font-family: Menlo, Courier, monospace;
   font-size: 13px;
   font-weight: 500;
   font-style: normal;
@@ -98,7 +98,7 @@ header h3 {
 
 pre {
   opacity: 0.75;
-  font-family: 'Roboto Mono', monospace;
+  font-family: Menlo, Courier, monospace;
   font-size: 13px;
   font-weight: normal;
   font-style: normal;

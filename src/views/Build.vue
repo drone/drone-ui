@@ -559,7 +559,7 @@ $output-border-radius: 6px;
 .output {
   color: #FFF;
   font-size: 12px;
-  font-family: 'Roboto Mono', monospace;
+  font-family: Menlo, Courier, monospace;
   font-weight: 300;
   background-color: $terminal-color;
   border-radius: $output-border-radius;
@@ -741,7 +741,7 @@ $output-header-sticky-offset: 20px;
 .output-button.button.outline.theme-default {
   width: 100%;
   background-color: rgba(216, 216, 216, 0.07);
-  font-family: "Roboto Mono", monospace;
+  font-family: Menlo, Courier, monospace;
   text-transform: none;
   font-size: 13px;
   color: rgba(255, 255, 255, 0.5);
