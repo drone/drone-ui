@@ -91,7 +91,6 @@ export default {
   },
   computed: {
     action() {
-      console.log(this.build);
       const { event } = this.build;
       if (event === "pull_request") return "opened pull request";
       if (event === "tag") return "created tag";
