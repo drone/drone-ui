@@ -14,7 +14,7 @@
         :key="build.id"
         :to="'/'+slug + '/' + build.number">
         <RepoItem :number="build.number"
-                  :title="build.message"
+                  :title="build.title || build.message"
                   :status="build.status"
                   :build="shrinkBuild(build)"
                   :avatar="build.author_avatar"

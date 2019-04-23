@@ -32,7 +32,7 @@
       v-if="buildShowState === 'data'"
       :number="build.number"
       :status="build.status"
-      :title="build.message"
+      :title="build.title || build.message"
       :avatar="build.author_avatar"
       :linkRepo="repo"
       :build="Object.assign({}, build, { message: null })"/>
