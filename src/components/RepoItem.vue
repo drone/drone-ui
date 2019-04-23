@@ -27,9 +27,9 @@
       </div>
 
       <div v-if="build" class="build">
-        <img :src="avatar" alt="avatar"/>
+        <img v-if="avatar" :src="avatar" alt="avatar"/>
         <div class="description">
-          <span>{{build.author_login}}</span>
+          <span>{{actor}}</span>
           <span> {{action}} </span>
           <RepoItemLabel type="actionTarget" :build="build" :repo="linkRepo" :link="!!linkRepo"/>
           <RepoItemLabel class="to" type="to" :build="build" :repo="linkRepo" :link="!!linkRepo" prefix=" to "/>
@@ -72,6 +72,7 @@ export default {
     status: String,
     title: String,
     avatar: String,
+    actor: String,
     build: Object,
     linkRepo: Object
   },
@@ -90,6 +91,7 @@ export default {
   },
   computed: {
     action() {
+      console.log(this.build);
       const { event } = this.build;
       if (event === "pull_request") return "opened pull request";
       if (event === "tag") return "created tag";
