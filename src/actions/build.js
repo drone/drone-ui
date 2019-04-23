@@ -119,6 +119,9 @@ export const streamEvents = ({ commit, state, getters }) => {
   events.onmessage = function(event) {
     const repo = JSON.parse(event.data);
 
+    if (window && window.DEBUG) {
+      console.debug(repo)
+    }
     if (state.latest[repo.slug] || !getters.userPresent) {
       commit("BUILD_EVENT", { repo });
     }
