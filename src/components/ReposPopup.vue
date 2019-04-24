@@ -18,7 +18,7 @@
                 :build="repo.build"
                 :status="repo.build && repo.build.status"
                 :actor="repo.build && getBuildActor(repo.build)"
-                :avatar="repo.build && getBuildAvatar(repo.build)"/>
+                :avatar="repo.build && repo.build.author_avatar"/>
     </RepoLink>
   </Popup>
 </template>
@@ -27,7 +27,7 @@
 import Popup from "@/components/Popup.vue";
 import RepoLink from "@/components/RepoLink";
 import RepoItem from "@/components/RepoItem";
-import { getBuildActor, getBuildAvatar } from "@/lib/buildHelper"
+import { getBuildActor } from "@/lib/buildHelper"
 
 export default {
   name: "ReposPopup",
@@ -55,9 +55,6 @@ export default {
   methods: {
     getBuildActor(build) {
       return getBuildActor(build);
-    },
-    getBuildAvatar(build) {
-      return getBuildAvatar(build);
     },
     onKeyPress(e) {
       if (e.key === "ArrowUp") {

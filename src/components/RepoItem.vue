@@ -27,7 +27,7 @@
       </div>
 
       <div v-if="build" class="build">
-        <img v-if="avatar" :src="avatar" alt="avatar"/>
+        <img :src="avatar" alt="avatar"/>
         <div class="description">
           <span>{{actor}}</span>
           <span> {{action}} </span>

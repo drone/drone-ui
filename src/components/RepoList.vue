@@ -20,7 +20,7 @@ import Alert from "@/components/Alert.vue";
 import RepoLink from "@/components/RepoLink.vue";
 import RepoItem from "@/components/RepoItem.vue";
 import Loading from "@/components/Loading.vue";
-import { getBuildActor, getBuildAvatar } from "@/lib/buildHelper"
+import { getBuildActor } from "@/lib/buildHelper"
 
 function defaultRepoToProps(repo) {
   return {
@@ -29,7 +29,7 @@ function defaultRepoToProps(repo) {
     build: repo.build,
     status: repo.build && repo.build.status,
     actor: repo.build && getBuildActor(repo.build),
-    avatar: repo.build && getBuildAvatar(repo.build)
+    avatar: repo.build && repo.build.author_avatar
   };
 }
 
