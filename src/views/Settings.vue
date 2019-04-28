@@ -56,7 +56,8 @@
                      autocomplete="off"
                      autocorrect="off"
                      autocapitalize="off"
-                     spellcheck="false"/>
+                     spellcheck="false"
+                     type="text"/>
         </div>
         <Help title="Configuration" href="https://docs.drone.io/user-guide/">
           The name of a file with the pipeline definition.

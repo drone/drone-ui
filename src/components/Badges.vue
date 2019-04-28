@@ -5,7 +5,7 @@
 
     <div class="options">
       <BaseSelect v-model="lang" :options="langs"/>
-      <BaseInput v-model="branch" placeholder="master"/>
+      <BaseInput v-model="branch" placeholder="master" type="text"/>
     </div>
 
     <CodeSnippet>

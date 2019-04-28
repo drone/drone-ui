@@ -1,7 +1,7 @@
 <template>
   <div class="page-search">
     <BaseForm class="form">
-      <BaseInput ref="input" placeholder="Search repositories or jump to …" v-model="query"/>
+      <BaseInput ref="input" type="search" placeholder="Search repositories or jump to …" v-model="query"/>
     </BaseForm>
 
     <RepoList v-if="queryTrimmed" :items="results" emptyMessage="Repositories not found."/>
