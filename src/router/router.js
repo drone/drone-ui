@@ -84,10 +84,10 @@ export default new Router({
               path: ":build",
               name: "build",
               component: Build
-            },
+            }
           ]
         }
-      ],
-    },
+      ]
+    }
   ]
 });

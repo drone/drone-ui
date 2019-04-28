@@ -27,7 +27,7 @@ export default {
 section {
   border-radius: 3px;
   box-sizing: border-box;
-  border: solid 1px #EDEEF1;
+  border: solid 1px #edeef1;
   background: #ffffff;
   box-shadow: 0 2px 4px 0 $border-color;
 }
@@ -37,13 +37,21 @@ header {
   line-height: 50px;
   border-bottom: 1px solid $border-color;
   padding: 0 15px;
-  font-size: 16px;
-  font-weight: 600;
+  display: flex;
+  align-items: center;
 }
 
 footer {
   background-color: rgba($color-text, 0.02);
   border-top: 1px solid $border-color;
   padding: 15px;
+}
+</style>
+
+<style>
+.card > header > h2,
+.card > header > h3 {
+  font-size: 16px;
+  font-weight: 600;
 }
 </style>

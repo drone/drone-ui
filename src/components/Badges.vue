@@ -1,9 +1,7 @@
 <template>
   <Card>
-    <div slot="header" class="header">
-      <h2>Badges</h2>
-      <img :src="image"/>
-    </div>
+    <h2 slot="header">Badges</h2>
+    <img slot="header" :src="image" alt="badge"/>
 
     <div class="options">
       <BaseSelect v-model="lang" :options="langs"/>
@@ -61,11 +59,7 @@ export default {
   }
 };
 
-const langs = [
-  ["markdown", "Markdown"],
-  ["markup", "Markup"],
-  ["ccmenu", "CCMenu"]
-];
+const langs = [["markdown", "Markdown"], ["markup", "Markup"], ["ccmenu", "CCMenu"]];
 </script>
 
 <style scoped lang="scss">
@@ -76,7 +70,7 @@ const langs = [
   align-items: center;
 }
 
-.header h2 {
+h2 {
   flex-grow: 1;
 }
 

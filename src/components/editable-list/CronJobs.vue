@@ -5,6 +5,9 @@
                 :dispatchCreate="dispatchCreate"
                 :dispatchDelete="dispatchDelete">
     <IconCronJobsEmpty slot="empty"/>
+    <!--todo-->
+    <!--<Help slot="help" title="Crons" href="https://docs.drone.io/config/secrets/pre-repository/">-->
+    <!--</Help>-->
 
     <EditableListItem slot="item" slot-scope="slotProps"
                       :name="slotProps.item.name"
@@ -29,6 +32,7 @@ import EditableListItem from "@/components/editable-list/EditableListItem.vue";
 import BaseInput from "@/components/forms/BaseInput.vue";
 import BaseSelect from "@/components/forms/BaseSelect.vue";
 import IconCronJobsEmpty from "@/components/icons/IconCronJobsEmpty";
+import Help from "@/components/Help";
 
 export default {
   name: "CronJobs",
@@ -37,7 +41,8 @@ export default {
     EditableListItem,
     BaseInput,
     BaseSelect,
-    IconCronJobsEmpty
+    IconCronJobsEmpty,
+    Help
   },
   props: {
     defaultBranch: { type: String, default: "master" }
@@ -49,11 +54,11 @@ export default {
   },
   computed: {
     slug() {
-      return this.$route.params.namespace + '/' + this.$route.params.name;
+      return this.$route.params.namespace + "/" + this.$route.params.name;
     },
     items() {
       const crons = this.$store.state.crons[this.slug];
-      return Object.values(crons || {})
+      return Object.values(crons || {});
     },
     cronExprOptions() {
       return ["@hourly", "@daily", "@weekly", "@monthly", "@yearly"].map(x => [x, x]);

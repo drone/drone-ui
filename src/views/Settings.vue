@@ -17,6 +17,16 @@
           <BaseCheckbox v-model="repo.protected">Protected</BaseCheckbox>
           <BaseCheckbox v-model="repo.trusted" v-if="isRoot">Trusted</BaseCheckbox>
         </div>
+        <Help title="Project settings">
+          <p class="help-p">
+            <a href="https://docs.drone.io/user-guide/signature/" target="_blank" class="link">Protected</a>
+            - If Enabled, blocks pipelines until an admin approve.
+          </p>
+          <p class="help-p">
+            <a href="https://docs.drone.io/administration/user/admins/" target="_blank" class="link">Trusted</a>
+            - Enables privileged capabilities: an ability to start privileged containers and mount host machine volumes.
+          </p>
+        </Help>
       </div>
 
       <div class="control-group">
@@ -26,6 +36,8 @@
                             name="visibility"
                             :options="{ public: 'Public', private: 'Private', internal: 'Internal'}"/>
         </div>
+        <!-- todo href for help -->
+        <Help title="Project visibility">Provides the repository visibility level.</Help>
       </div>
 
       <div v-if="isRoot" class="control-group">
@@ -33,6 +45,8 @@
         <div class="controls">
           <BaseSelect v-model="repo.timeout" :options="timeoutsOptions"/>
         </div>
+        <!--todo help for timeout. Now I don't know what is it-->
+        <!--<Help title="Timeout">Text text</Help>-->
       </div>
 
       <div class="control-group">
@@ -44,6 +58,9 @@
                      autocapitalize="off"
                      spellcheck="false"/>
         </div>
+        <Help title="Configuration" href="https://docs.drone.io/user-guide/">
+          The name of a file with the pipeline definition.
+        </Help>
       </div>
 
       <div class="control-actions">
@@ -90,6 +107,7 @@ import CardGroup from "@/components/CardGroup.vue";
 import Button from "@/components/buttons/Button.vue";
 import ButtonConfirm from "@/components/buttons/ButtonConfirm.vue";
 import Badges from "@/components/Badges.vue";
+import Help from "@/components/Help.vue";
 
 export default {
   name: "settings",
@@ -111,15 +129,16 @@ export default {
     CardGroup,
     Badges,
     ButtonConfirm,
-    Button
+    Button,
+    Help
   },
   computed: {
     slug() {
-      return this.$route.params.namespace + '/' + this.$route.params.name;
+      return this.$route.params.namespace + "/" + this.$route.params.name;
     },
     repo() {
-      let repo = this.$store.state.repos[this.slug]
-      return repo && {...repo};
+      let repo = this.$store.state.repos[this.slug];
+      return repo && { ...repo };
     },
     isRoot() {
       return this.$store.state.user.data.admin;
@@ -129,12 +148,15 @@ export default {
       return this.isRoot || isAdmin;
     },
     timeoutsOptions() {
-      return timeouts.map(timeout => [timeout, timeout > 90 ? timeout / 60 + " hours" : timeout + " minutes"])
+      return timeouts.map(timeout => [timeout, timeout > 90 ? timeout / 60 + " hours" : timeout + " minutes"]);
     }
   },
   methods: {
     save() {
-      const { repo: { namespace, name }, repo } = this;
+      const {
+        repo: { namespace, name },
+        repo
+      } = this;
       const updatedRepo = { ...repo, timeout: parseInt(repo.timeout) };
       this.saving = true;
 
@@ -150,46 +172,68 @@ export default {
           this.saving = false;
         });
     },
-    disable: function (event) {
-      const {namespace, name} = this.$route.params;
-      this.$store.dispatch('disableRepo', {namespace, name});
+    disable: function(event) {
+      const { namespace, name } = this.$route.params;
+      this.$store.dispatch("disableRepo", { namespace, name });
     },
-    enable: function (event) {
-      const {namespace, name} = this.$route.params;
-      this.$store.dispatch('enableRepo', {namespace, name});
+    enable: function(event) {
+      const { namespace, name } = this.$route.params;
+      this.$store.dispatch("enableRepo", { namespace, name });
     },
-    chown: function (event) {
-      const {namespace, name} = this.repo;
-      this.$store.dispatch('chownRepo', {namespace, name});
+    chown: function(event) {
+      const { namespace, name } = this.repo;
+      this.$store.dispatch("chownRepo", { namespace, name });
     },
-    repair: function (event) {
-      const {namespace, name} = this.repo;
-      this.$store.dispatch('repairRepo', {namespace, name});
-    },
-  },
+    repair: function(event) {
+      const { namespace, name } = this.repo;
+      this.$store.dispatch("repairRepo", { namespace, name });
+    }
+  }
 };
 
 // enumerated list of timeout values for simplified
 // and touch-friendly user experience.
-const timeouts = [
-  15, 30, 60, 90, 120, 180, 240, 300, 360, 420,
-  480, 540, 600, 660, 720, 1080, 1440, 2880, 4320,
-]
+const timeouts = [15, 30, 60, 90, 120, 180, 240, 300, 360, 420, 480, 540, 600, 660, 720, 1080, 1440, 2880, 4320];
 </script>
 
 <style scoped lang="scss">
 @import "../assets/styles/mixins";
 @import "../assets/styles/mixins";
 
-.control-group .controls .base-checkbox + .base-checkbox {
-  margin-left: 48px;
+.control-group {
+  .controls {
+    & + .help {
+      flex-shrink: 0;
+    }
+    .base-checkbox + .base-checkbox {
+      margin-left: 48px;
+      @include tablet {
+        margin-left: 0px;
+        margin-top: 10px;
+        display: block;
+      }
+    }
+  }
   @include tablet {
-    margin-left: 0px;
-    margin-top: 10px;
-    display: block;
+    flex-direction: row;
+    flex-wrap: wrap;
   }
 }
-
+.control-label {
+  @include tablet {
+    line-height: 18px;
+    order: -2;
+    flex-grow: 1;
+  }
+}
+.help {
+  @include tablet {
+    order: -1;
+  }
+}
+.help-p + .help-p {
+  margin-top: 10px;
+}
 
 .disable {
   padding: 0 15px;

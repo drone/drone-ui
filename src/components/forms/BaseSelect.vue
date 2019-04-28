@@ -27,7 +27,9 @@ select {
   height: 40px;
   line-height: 40px;
   -webkit-appearance: none;
-  background: #fff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><polygon fill='#98a1ab' points='0,30 100, 30 50,90'/></svg>") no-repeat center right 10px;
+  background: #fff
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><polygon fill='#98a1ab' points='0,30 100, 30 50,90'/></svg>")
+    no-repeat center right 10px;
   background-size: 10px;
 }
 

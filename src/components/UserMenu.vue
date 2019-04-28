@@ -5,7 +5,7 @@
        v-click-outside="close">
     <img class='avatar' :src="user.avatar" alt="avatar"/>
 
-    <Popup :position="'bottom'" :align="'right'" :style="style">
+    <Popup :position="'bottom'" :align="'right'" :evict="!this.opened">
       <router-link to="/account" @focus.native="open" @blur.native="closeDelayed">User settings</router-link>
       <a href="/logout" class="logout" @focus="open" @blur="closeDelayed">
         {{ $t("labels.logout") }}
@@ -15,16 +15,12 @@
 </template>
 
 <script>
-import ClickOutside from "vue-click-outside";
 import Popup from "@/components/Popup.vue";
 
 export default {
   name: "UserMenu",
   components: {
     Popup
-  },
-  directives: {
-    ClickOutside
   },
   props: {
     user: Object
@@ -35,11 +31,6 @@ export default {
       nextOpened: false,
       clicked: false
     };
-  },
-  computed: {
-    style() {
-      return { top: this.opened ? undefined : "-999px" };
-    }
   },
   methods: {
     toggle() {
@@ -71,30 +62,30 @@ export default {
 }
 
 .user-menu.clicked {
-  outline: none
+  outline: none;
 }
 
-.user-menu .popup {
+.popup {
   white-space: nowrap;
 }
 
-.user-menu .popup a {
+.popup a {
   display: block;
   padding: 11px 30px 11px 15px;
   color: $color-text;
 }
 
-.user-menu .popup a.logout {
+.popup a.logout {
   color: #ff4164;
 }
 
-.user-menu .popup a:focus,
-.user-menu .popup a:hover {
+.popup a:focus,
+.popup a:hover {
   background: rgba($color-text, 0.03);
   outline: none;
 }
 
-.user-menu .popup a + a {
+.popup a + a {
   border-top: 1px solid $border-color;
 }
 

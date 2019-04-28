@@ -24,6 +24,7 @@ export default {
   }
 
   .controls {
+    flex-grow: 1;
     @include tablet {
       width: 100%;
     }

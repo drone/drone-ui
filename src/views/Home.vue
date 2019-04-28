@@ -52,7 +52,7 @@ export default {
   },
   data() {
     return {
-      all: false,
+      all: false
     };
   },
   computed: {
@@ -60,7 +60,7 @@ export default {
       return this.$store.state.latest;
     },
     loadingStatus() {
-      return this.$store.state.latestStatus
+      return this.$store.state.latestStatus;
     },
     showLoading() {
       return this.loadingStatus === "loading" && this.$store.state.latestUpdated === 0;
@@ -97,7 +97,7 @@ export default {
     },
     sync: function() {
       if (!this.syncing) {
-        this.$store.dispatch('syncAccount');
+        this.$store.dispatch("syncAccount");
       }
     },
     repoToProps(repo) {

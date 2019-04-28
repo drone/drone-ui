@@ -15,10 +15,10 @@ footer {
   min-height: 60px;
   max-height: 60px;
   background: #ff4164;
-  color: #FFF;
+  color: #fff;
   z-index: 2;
-  font-size:14px;
-  text-align:center;
+  font-size: 14px;
+  text-align: center;
   display: flex;
   justify-content: center;
   text-transform: uppercase;
