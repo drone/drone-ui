@@ -23,6 +23,7 @@ textarea {
   padding: 0 15px;
   height: 40px;
   line-height: 40px;
+  -webkit-appearance: none;
 }
 
 textarea:focus {

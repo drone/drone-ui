@@ -23,6 +23,7 @@ input {
   padding: 10px 15px;
   height: 40px;
   line-height: 20px;
+  -webkit-appearance: none;
   background: #fff;
 }
 
