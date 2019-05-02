@@ -43,7 +43,7 @@ export default {
       return this.$route.params.namespace + "/" + this.$route.params.name;
     },
     image() {
-      const branchSuffix = this.branch ? `?ref=/refs/heads/${this.branch}` : "";
+      const branchSuffix = this.branch ? `?ref=refs/heads/${this.branch}` : "";
       return `${this.instance}/api/badges/${this.name}/status.svg${branchSuffix}`;
     },
     code() {
