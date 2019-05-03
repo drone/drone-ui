@@ -11,6 +11,8 @@ import { List, Item } from "./components";
 
 import style from "./index.less";
 
+import Collapsible from 'react-collapsible';
+
 const binding = (props, context) => {
 	return { feed: ["feed"] };
 };
@@ -21,13 +23,22 @@ export default class Sidebar extends Component {
 	constructor(props, context) {
 		super(props, context);
 
+		this.setState({
+			favs: JSON.parse(localStorage.getItem('favs') || '[]'),
+			favsOpen: localStorage.getItem('favsOpen') === "true",
+			allOpen: localStorage.getItem('allOpen') === "true"
+		});
+
 		this.handleFilter = this.handleFilter.bind(this);
+		this.toggleFavs = this.toggleItem.bind(this, 'favsOpen');
+		this.toggleAll = this.toggleItem.bind(this, 'allOpen');
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
 		return (
 			this.props.feed !== nextProps.feed ||
-			this.state.filter !== nextState.filter
+			this.state.filter !== nextState.filter ||
+			this.state.favs.length !== nextState.favs.length
 		);
 	}
 
@@ -35,6 +46,52 @@ export default class Sidebar extends Component {
 		this.setState({
 			filter: e.target.value,
 		});
+	}
+
+	toggleItem = item => {
+		localStorage.setItem(item, !(localStorage.getItem(item) === "true"));
+	}
+
+	renderFeed = (list, renderFavs) => {
+		return (
+			<div>
+				<List>{list.map(item => this.renderItem(item, renderFavs))}</List>
+			</div>
+		);
+	}
+
+	renderItem = (item, renderFavs) => {
+		const favs = this.state.favs;
+		if (renderFavs && !favs.includes(item.full_name)) {
+			return null;
+		}
+		return (
+			<Link to={`/${item.full_name}`} key={item.full_name}>
+				<Item item={item} onFave={this.onFave} faved={favs.includes(item.full_name)}/>
+			</Link>
+		);
+	}
+
+	onFave = full_name => {
+		if (!this.state.favs.includes(full_name)) {
+			this.setState(state => {
+				const list = state.favs.concat(full_name);
+
+				return {
+					favs: list
+				}
+			});
+		} else {
+			this.setState(state => {
+				const list = state.favs.filter(v => v !== full_name);
+
+				return {
+					favs: list
+				}
+			});
+		}
+
+		localStorage.setItem('favs', JSON.stringify(this.state.favs));
 	}
 
 	render() {
@@ -48,42 +105,44 @@ export default class Sidebar extends Component {
 		};
 
 		const filtered = list.filter(filterFunc).sort(compareFeedItem);
-
+		const favsOpen = this.state.favsOpen;
+		const allOpen = this.state.allOpen;
 		return (
 			<div className={style.feed}>
 				{LOGO}
-				<input
-					type="text"
-					placeholder="Search …"
-					onChange={this.handleFilter}
-				/>
-				{feed.loaded === false ? (
-					LOADING
-				) : feed.error ? (
-					ERROR
-				) : list.length === 0 ? (
-					EMPTY
-				) : filtered.length > 0 ? (
-					renderFeed(filtered)
-				) : (
-					NO_MATCHES
-				)}
+				<Collapsible trigger="Starred" triggerTagName="div" transitionTime={200} open={favsOpen} onOpen={this.toggleFavs} onClose={this.toggleFavs} triggerOpenedClassName={style.Collapsible__trigger} triggerClassName={style.Collapsible__trigger}>
+					{feed.loaded === false ? (
+						LOADING
+					) : feed.error ? (
+						ERROR
+					) : list.length === 0 ? (
+						EMPTY
+					) : (
+						this.renderFeed(list, true)
+					)}
+				</Collapsible>
+				<Collapsible trigger="Repos" triggerTagName="div" transitionTime={200} open={allOpen} onOpen={this.toggleAll} onClose={this.toggleAll} triggerOpenedClassName={style.Collapsible__trigger} triggerClassName={style.Collapsible__trigger}>
+					<input
+						type="text"
+						placeholder="Search …"
+						onChange={this.handleFilter}
+					/>
+					{feed.loaded === false ? (
+						LOADING
+					) : feed.error ? (
+						ERROR
+					) : list.length === 0 ? (
+						EMPTY
+					) : filtered.length > 0 ? (
+						this.renderFeed(filtered.sort(compareFeedItem), false)
+					) : (
+						NO_MATCHES
+					)}
+				</Collapsible>
 			</div>
 		);
 	}
 }
-
-const renderFeed = list => {
-	return <List>{list.map(renderItem)}</List>;
-};
-
-const renderItem = item => {
-	return (
-		<Link to={`/${item.full_name}`} key={item.full_name}>
-			<Item item={item} />
-		</Link>
-	);
-};
 
 const LOGO = (
 	<div className={style.brand}>
