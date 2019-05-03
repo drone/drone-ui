@@ -11,6 +11,8 @@ import { List, Item } from "./components";
 
 import style from "./index.less";
 
+import Collapsible from 'react-collapsible';
+
 const binding = (props, context) => {
 	return { feed: ["feed"] };
 };
@@ -21,13 +23,22 @@ export default class Sidebar extends Component {
 	constructor(props, context) {
 		super(props, context);
 
+		this.setState({
+			starred: JSON.parse(localStorage.getItem('starred') || '[]'),
+			starredOpen: (localStorage.getItem('starredOpen') || "true") === "true",
+			reposOpen: (localStorage.getItem('reposOpen') || "true") === "true"
+		});
+
 		this.handleFilter = this.handleFilter.bind(this);
+		this.toggleStarred = this.toggleItem.bind(this, 'starredOpen');
+		this.toggleAll = this.toggleItem.bind(this, 'reposOpen');
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
 		return (
 			this.props.feed !== nextProps.feed ||
-			this.state.filter !== nextState.filter
+			this.state.filter !== nextState.filter ||
+			this.state.starred.length !== nextState.starred.length
 		);
 	}
 
@@ -35,6 +46,50 @@ export default class Sidebar extends Component {
 		this.setState({
 			filter: e.target.value,
 		});
+	}
+
+	toggleItem = item => {
+		this.setState(state => {
+			return { [item]: !state[item] }
+		});
+
+		localStorage.setItem(item, this.state[item]);
+	}
+
+	renderFeed = (list, renderStarred) => {
+		return (
+			<div>
+				<List>{list.map(item => this.renderItem(item, renderStarred))}</List>
+			</div>
+		);
+	}
+
+	renderItem = (item, renderStarred) => {
+		const starred = this.state.starred;
+		if (renderStarred && !starred.includes(item.full_name)) {
+			return null;
+		}
+		return (
+			<Link to={`/${item.full_name}`} key={item.full_name}>
+				<Item item={item} onFave={this.onFave} faved={starred.includes(item.full_name)}/>
+			</Link>
+		);
+	}
+
+	onFave = full_name => {
+		if (!this.state.starred.includes(full_name)) {
+			this.setState(state => {
+				const list = state.starred.concat(full_name);
+				return { starred: list }
+			});
+		} else {
+			this.setState(state => {
+				const list = state.starred.filter(v => v !== full_name);
+				return { starred: list }
+			});
+		}
+
+		localStorage.setItem('starred', JSON.stringify(this.state.starred));
 	}
 
 	render() {
@@ -48,42 +103,44 @@ export default class Sidebar extends Component {
 		};
 
 		const filtered = list.filter(filterFunc).sort(compareFeedItem);
-
+		const starredOpen = this.state.starredOpen;
+		const reposOpen = this.state.reposOpen;
 		return (
 			<div className={style.feed}>
 				{LOGO}
-				<input
-					type="text"
-					placeholder="Search …"
-					onChange={this.handleFilter}
-				/>
-				{feed.loaded === false ? (
-					LOADING
-				) : feed.error ? (
-					ERROR
-				) : list.length === 0 ? (
-					EMPTY
-				) : filtered.length > 0 ? (
-					renderFeed(filtered)
-				) : (
-					NO_MATCHES
-				)}
+				<Collapsible trigger="Starred" triggerTagName="div" transitionTime={200} open={starredOpen} onOpen={this.toggleStarred} onClose={this.toggleStarred} triggerOpenedClassName={style.Collapsible__trigger} triggerClassName={style.Collapsible__trigger}>
+					{feed.loaded === false ? (
+						LOADING
+					) : feed.error ? (
+						ERROR
+					) : list.length === 0 ? (
+						EMPTY
+					) : (
+						this.renderFeed(list, true)
+					)}
+				</Collapsible>
+				<Collapsible trigger="Repos" triggerTagName="div" transitionTime={200} open={reposOpen} onOpen={this.toggleAll} onClose={this.toggleAll} triggerOpenedClassName={style.Collapsible__trigger} triggerClassName={style.Collapsible__trigger}>
+					<input
+						type="text"
+						placeholder="Search …"
+						onChange={this.handleFilter}
+					/>
+					{feed.loaded === false ? (
+						LOADING
+					) : feed.error ? (
+						ERROR
+					) : list.length === 0 ? (
+						EMPTY
+					) : filtered.length > 0 ? (
+						this.renderFeed(filtered.sort(compareFeedItem), false)
+					) : (
+						NO_MATCHES
+					)}
+				</Collapsible>
 			</div>
 		);
 	}
 }
-
-const renderFeed = list => {
-	return <List>{list.map(renderItem)}</List>;
-};
-
-const renderItem = item => {
-	return (
-		<Link to={`/${item.full_name}`} key={item.full_name}>
-			<Item item={item} />
-		</Link>
-	);
-};
 
 const LOGO = (
 	<div className={style.brand}>

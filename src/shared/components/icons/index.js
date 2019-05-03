@@ -15,6 +15,7 @@ import PlayIcon from "./play";
 import RefreshIcon from "./refresh";
 import RemoveIcon from "./remove";
 import ScheduleIcon from "./schedule";
+import StarIcon from "./star";
 import SyncIcon from "./sync";
 import TagIcon from "./tag";
 import TimelapseIcon from "./timelapse";
@@ -37,6 +38,7 @@ export {
 	RefreshIcon,
 	RemoveIcon,
 	ScheduleIcon,
+	StarIcon,
 	SyncIcon,
 	TagIcon,
 	TimelapseIcon,
