@@ -213,11 +213,11 @@ export default new Vuex.Store({
     },
     REPO_LIST_LATEST_SUCCESS(state, { res }) {
       const latest = {};
-      res.forEach(item => latest[item.slug] = item);
+      res.forEach(item => (latest[item.slug] = item));
 
       state.latest = latest;
       state.latestStatus = "loaded";
-      state.latestUpdated = Math.round((new Date()).getTime() / 1000);
+      state.latestUpdated = Math.round(new Date().getTime() / 1000);
     },
 
     //
@@ -234,7 +234,7 @@ export default new Vuex.Store({
       state.repoEnabling = true;
       state.repoEnablingErr = undefined;
     },
-    REPO_ENABLE_FAILURE(state, {error}) {
+    REPO_ENABLE_FAILURE(state, { error }) {
       state.repoEnabling = false;
       state.repoEnablingErr = error;
     },
@@ -245,7 +245,7 @@ export default new Vuex.Store({
     },
 
     REPO_DISABLE_LOADING(state) {},
-    REPO_DISABLE_FAILURE(state, {error}) {},
+    REPO_DISABLE_FAILURE(state, { error }) {},
     REPO_DISABLE_SUCCESS(state, { repo }) {
       state.repoEnabling = false;
       state.repoEnablingErr = undefined;
@@ -300,7 +300,7 @@ export default new Vuex.Store({
     // build
     //
 
-    BUILD_FIND_LOADING(state, { params }){
+    BUILD_FIND_LOADING(state, { params }) {
       const slug = `${params.namespace}/${params.name}`;
 
       if (!state.builds[slug]) insertEmptyBuildsCollection(state.builds, slug, params.page);
@@ -331,35 +331,35 @@ export default new Vuex.Store({
     // secrets
     //
 
-    SECRET_LIST_LOADING(state){},
-    SECRET_LIST_FAILURE(state){},
-    SECRET_LIST_SUCCESS(state, { params, res }){
+    SECRET_LIST_LOADING(state) {},
+    SECRET_LIST_FAILURE(state) {},
+    SECRET_LIST_SUCCESS(state, { params, res }) {
       const slug = `${params.namespace}/${params.name}`;
       let set = {};
       res.map(item => {
-				set[item.name] = item;
-			});
+        set[item.name] = item;
+      });
       Vue.set(state.secrets, slug, set);
     },
 
-    SECRET_CREATE_LOADING(state){},
+    SECRET_CREATE_LOADING(state) {},
     SECRET_CREATE_FAILURE(state, e) {
       Vue.set(state, "secretCreationError", e.error);
     },
-    SECRET_CREATE_SUCCESS(state, data){
+    SECRET_CREATE_SUCCESS(state, data) {
       const slug = `${data.namespace}/${data.name}`;
       let secrets = state.secrets[slug];
       if (!secrets) {
-        Vue.set(state.secrets, slug, {[data.secret.name]: data.secret});
+        Vue.set(state.secrets, slug, { [data.secret.name]: data.secret });
       } else {
         Vue.set(secrets, data.secret.name, data.secret);
         Vue.set(state.secrets, slug, secrets);
       }
     },
 
-    SECRET_DELETE_LOADING(state){},
-    SECRET_DELETE_FAILURE(state, data){},
-    SECRET_DELETE_SUCCESS(state, data){
+    SECRET_DELETE_LOADING(state) {},
+    SECRET_DELETE_FAILURE(state, data) {},
+    SECRET_DELETE_SUCCESS(state, data) {
       const slug = `${data.namespace}/${data.name}`;
       let secrets = state.secrets[slug];
       if (secrets) {
@@ -372,39 +372,39 @@ export default new Vuex.Store({
     // cron
     //
 
-    CRON_LIST_LOADING(state){},
-    CRON_LIST_FAILURE(state, e){
-      console.log(e)
+    CRON_LIST_LOADING(state) {},
+    CRON_LIST_FAILURE(state, e) {
+      console.log(e);
     },
-    CRON_LIST_SUCCESS(state, data){
+    CRON_LIST_SUCCESS(state, data) {
       const slug = `${data.namespace}/${data.name}`;
       let set = {};
-			data.secrets.map(item => {
-				set[item.name] = item;
-			});
+      data.secrets.map(item => {
+        set[item.name] = item;
+      });
       Vue.set(state.crons, slug, set);
     },
-  
-    CRON_CREATE_LOADING(state){},
+
+    CRON_CREATE_LOADING(state) {},
     CRON_CREATE_FAILURE(state, e) {
       Vue.set(state, "cronCreationError", e.error);
     },
-    CRON_CREATE_SUCCESS(state, data){
+    CRON_CREATE_SUCCESS(state, data) {
       const slug = `${data.namespace}/${data.name}`;
       let crons = state.crons[slug];
       if (!crons) {
-        Vue.set(state.crons, slug, {[data.cron.name]: data.cron});
+        Vue.set(state.crons, slug, { [data.cron.name]: data.cron });
       } else {
         Vue.set(crons, data.cron.name, data.cron);
         Vue.set(state.crons, slug, crons);
       }
     },
 
-    CRON_DELETE_LOADING(state){},
-    CRON_DELETE_FAILURE(state, e){
-      console.log(e)
+    CRON_DELETE_LOADING(state) {},
+    CRON_DELETE_FAILURE(state, e) {
+      console.log(e);
     },
-    CRON_DELETE_SUCCESS(state, data){
+    CRON_DELETE_SUCCESS(state, data) {
       const slug = `${data.namespace}/${data.name}`;
       let crons = state.crons[slug];
       if (crons) {
@@ -418,13 +418,13 @@ export default new Vuex.Store({
     //
 
     VIEWER_FIND_LOADING(state) {
-      applyLoading(state.user)
+      applyLoading(state.user);
     },
-    VIEWER_FIND_FAILURE(state, { error }){
-      applyFailure(state.user, error)
+    VIEWER_FIND_FAILURE(state, { error }) {
+      applyFailure(state.user, error);
     },
-    VIEWER_FIND_SUCCESS(state, { res }){
-      applySuccess(state.user, res)
+    VIEWER_FIND_SUCCESS(state, { res }) {
+      applySuccess(state.user, res);
     },
 
     //
@@ -508,7 +508,7 @@ export default new Vuex.Store({
       state.user.data.syncingError = null;
     },
 
-    LOGS_FIND_LOADING(state){
+    LOGS_FIND_LOADING(state) {
       applyLoading(state.logs);
     },
     LOGS_FIND_FAILURE(state, { error }) {
@@ -523,7 +523,7 @@ export default new Vuex.Store({
       state.logs = createEmptyCollection([]);
     },
     LOG_WRITE(state, { lines }) {
-      applySuccess(state.logs)
+      applySuccess(state.logs);
       escapeLogs(lines);
       state.logs.data = state.logs.data.concat(lines);
     },

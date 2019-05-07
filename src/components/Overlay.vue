@@ -25,7 +25,7 @@ export default {
   right: 0;
   left: 0;
   bottom: 0;
-  z-index: 10;
+  z-index: $overlay-z-index;
   display: block;
   transition-duration: 0.25s;
 }

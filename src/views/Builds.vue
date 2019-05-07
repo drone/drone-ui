@@ -73,9 +73,11 @@ export default {
       return builds;
     },
     showLoading() {
-      return this.collection &&
+      return (
+        this.collection &&
         this.collection.lStatus === "loading" &&
-        (this.collection.dStatus === "empty" || this.collection.lPage > 1);
+        (this.collection.dStatus === "empty" || this.collection.lPage > 1)
+      );
     },
     loadingError() {
       return this.collection.lStatus === "error" ? this.collection.error : null;
@@ -93,7 +95,7 @@ export default {
       return getBuildActor(build);
     },
     showMore() {
-      this.$store.dispatch('fetchBuilds', { ...this.$route.params, page: this.collection.page + 1})
+      this.$store.dispatch("fetchBuilds", { ...this.$route.params, page: this.collection.page + 1 });
     },
     shrinkBuild(build) {
       return { ...build, message: null };

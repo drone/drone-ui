@@ -231,6 +231,9 @@ export default {
   },
   mounted() {
     window.addEventListener("scroll", this.onScroll);
+    // Load logs for the step on initial mounting
+    // Check why we don't do this on data loading
+    this.loadLogsForStep(this.step);
   },
   destroyed() {
     window.removeEventListener("scroll", this.onScroll);
@@ -273,11 +276,13 @@ export default {
       if (!this.stage) return;
 
       const number = parseInt(this.$route.params.step || "1");
-      return this.stage &&
+      return (
+        this.stage &&
         this.stage.steps &&
-        this.stage.steps.find((step) => {
+        this.stage.steps.find(step => {
           return step.number === number;
-        });
+        })
+      );
     },
     shownLogs() {
       const from = Math.max(this.logs.length - this.logLimit, 0);
@@ -307,7 +312,9 @@ export default {
       return this.stage && this.stage.error;
     },
     isCollaborator() {
-      return (this.repo && this.repo.permissions && this.repo.permissions.write) || (this.user && this.user.admin) || false;
+      return (
+        (this.repo && this.repo.permissions && this.repo.permissions.write) || (this.user && this.user.admin) || false
+      );
     },
     readyToDownload() {
       return this.step && this.step.stopped && this.logsShowState === "data";
@@ -387,7 +394,6 @@ export default {
       if (stages) this.alignStages(stages, delta);
       if (output) this.actualizeShowToTop();
       if (output && outputHeader && visibilityFix) this.fixContentVisibilityInStickyOffset();
-
     },
     alignStages(stages, delta) {
       const stagesRect = stages.getBoundingClientRect();
@@ -421,6 +427,18 @@ export default {
     },
     declineBuild() {
       this.$store.dispatch("declineBuild", { ...this.$store.state.route.params, stage: this.stage.number });
+    },
+    loadLogsForStep(step) {
+      if (!step) {
+        console.warn("invalid step argument. loadLogsForStep skipped");
+        return;
+      }
+
+      if (step.stopped) {
+        this.$store.dispatch("fetchLogs", this.$route.params);
+      } else if (step.started) {
+        this.$store.dispatch("streamLogs", this.$route.params);
+      }
     }
   },
   watch: {
@@ -444,12 +462,7 @@ export default {
 
         this.follow = false;
         this.logLimit = 250;
-
-        if (newStep.stopped) {
-          this.$store.dispatch("fetchLogs", this.$route.params);
-        } else if (newStep.started) {
-          this.$store.dispatch("streamLogs", this.$route.params);
-        }
+        this.loadLogsForStep(newStep);
 
         // If the step remains the same, but a propery changes,
         // dispatch a request to stream logs if the step changes
@@ -561,7 +574,7 @@ $stages-top: 20px;
 $output-border-radius: 6px;
 
 .output {
-  color: #FFF;
+  color: #fff;
   font-size: 12px;
   font-family: Menlo, Courier, monospace;
   font-weight: 300;
@@ -574,7 +587,7 @@ $output-border-radius: 6px;
 
 .output.show-to-top .to-top {
   display: block;
-  margin-top: -30px
+  margin-top: -30px;
 }
 
 .output-fullscreen {

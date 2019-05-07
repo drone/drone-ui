@@ -92,4 +92,8 @@ h1 {
   color: $color-text;
   margin: 30px 0px;
 }
+
+code {
+  white-space: normal;
+}
 </style>

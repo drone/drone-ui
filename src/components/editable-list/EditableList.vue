@@ -1,6 +1,7 @@
 <template>
   <Card contentPadding="0 15px" class="editable-list">
-    <h2 slot="header">{{ title }}</h2>
+    <h2 class="title" slot="header">{{ title }}</h2>
+    <slot name="help" slot="header"/>
 
     <div v-if="items.length === 0" class="empty">
       <slot name="empty"/>
@@ -81,6 +82,10 @@ export default {
 <style scoped lang="scss">
 @import "../../assets/styles/variables";
 
+.title {
+  flex-grow: 1;
+}
+
 .empty {
   color: $color-text-secondary;
   padding: 30px 0;
@@ -115,7 +120,9 @@ export default {
   }
 
   textarea {
-    height: 60px;
+    min-height: 60px;
+    min-width: 100%;
+    max-width: 100%;
   }
 
   select {

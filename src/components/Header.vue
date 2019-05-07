@@ -59,19 +59,22 @@ export default {
       return this.$store.getters.userPresent;
     },
     loading() {
-      const { state, state: { route } } = this.$store;
+      const {
+        state,
+        state: { route }
+      } = this.$store;
       const slug = `${route.params.namespace}/${route.params.name}`;
       const buildNumber = route.params.build;
 
       return (
         state.latestStatus === "loading" || // latest
         (route.name === "builds" && state.builds[slug] && state.builds[slug].lStatus === "loading") || // builds
-        (
-          route.name === "build" && state.builds[slug] && state.builds[slug].data[buildNumber] &&
-          state.builds[slug].data[buildNumber].lStatus === "loading"
-        ) ||
-        (state.repoLoading) ||
-        (state.user.tokenLoading)
+        (route.name === "build" &&
+          state.builds[slug] &&
+          state.builds[slug].data[buildNumber] &&
+          state.builds[slug].data[buildNumber].lStatus === "loading") ||
+        state.repoLoading ||
+        state.user.tokenLoading
       );
     },
     showBuildsFeedIndicatorLink() {
@@ -116,14 +119,14 @@ export default {
     bottom: 0;
     right: 0;
     background-image: linear-gradient(
-        -45deg,
-        rgba(255, 255, 255, .05) 25%,
-        transparent 25%,
-        transparent 50%,
-        rgba(255, 255, 255, .05) 50%,
-        rgba(255, 255, 255, .05) 75%,
-        transparent 75%,
-        transparent
+      -45deg,
+      rgba(255, 255, 255, 0.05) 25%,
+      transparent 25%,
+      transparent 50%,
+      rgba(255, 255, 255, 0.05) 50%,
+      rgba(255, 255, 255, 0.05) 75%,
+      transparent 75%,
+      transparent
     );
     z-index: 1;
     background-size: 50px 50px;

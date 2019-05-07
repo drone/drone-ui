@@ -18,6 +18,8 @@
     <SystemAlert v-if="isLicenseExpired">Your License Limit Is Exceeded</SystemAlert>
 
     <Notifications/>
+
+    <portal-target name="body"/>
   </div>
 </template>
 
@@ -35,7 +37,7 @@ export default {
     Footer,
     Notifications,
     BuildsFeedPanel,
-    SystemAlert,
+    SystemAlert
   },
   computed: {
     isLicenseExceeded() {

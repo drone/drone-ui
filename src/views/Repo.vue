@@ -95,7 +95,7 @@ export default {
   },
   computed: {
     slug() {
-      return this.$route.params.namespace + '/' + this.$route.params.name;
+      return this.$route.params.namespace + "/" + this.$route.params.name;
     },
     repo() {
       return this.$store.state.repos[this.slug];
@@ -113,7 +113,7 @@ export default {
       return !this.repo && this.$store.state.repoLoading;
     },
     error() {
-      const {repoLoading, repoLoaded, repoLoadingErr} = this.$store.state;
+      const { repoLoading, repoLoaded, repoLoadingErr } = this.$store.state;
       return repoLoaded && repoLoadingErr;
     },
     showActivatePrompt() {
@@ -129,8 +129,7 @@ export default {
       return this.isCollaborator;
     },
     isCollaborator() {
-      return (this.repo && this.repo.permissions && this.repo.permissions.write) ||
-        (this.user && this.user.admin);
+      return (this.repo && this.repo.permissions && this.repo.permissions.write) || (this.user && this.user.admin);
     },
     build() {
       const collection = this.$store.state.builds[this.slug];
@@ -142,10 +141,10 @@ export default {
   },
   methods: {
     handleActivate: function() {
-      const {namespace, name} = this.$route.params;
-      this.$store.dispatch('enableRepo', {
+      const { namespace, name } = this.$route.params;
+      this.$store.dispatch("enableRepo", {
         namespace: namespace,
-        name: name,
+        name: name
       });
     }
   }
@@ -261,10 +260,12 @@ nav .router-link-exact-active {
   color: $color-text;
 }
 
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active,
+.fade-leave-active {
   transition: opacity 2s;
 }
-.fade-enter, .fade-leave-to {
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
 }
 

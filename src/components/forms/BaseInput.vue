@@ -26,8 +26,8 @@ input {
   background: #fff;
 }
 
-input[type="search"] {
-  -webkit-appearance: none;
+input[type="search"], input[type=text] {
+  appearance: none;
 }
 
 input:focus {

@@ -3,14 +3,14 @@ const ROUTES_WITH_TOGGLE_BEHAVIOUR = ["search", "builds-feed"];
 /**
  * Returns a router gate that dispatches http requests
  * to fetch data based on the requested route.
- * 
+ *
  * @param {*} store
  */
-export const fetcher = ({dispatch, commit}) => (to, from, next) => {
-    const {name, params} = to;
+export const fetcher = ({ dispatch, commit }) => (to, from, next) => {
+  const { name, params } = to;
 
-    // TODO we should be able attach actions to the route
-    // metadata so that we can dynamically dispatch.
+  // TODO we should be able attach actions to the route
+  // metadata so that we can dynamically dispatch.
 
   switch (name) {
     case "build":

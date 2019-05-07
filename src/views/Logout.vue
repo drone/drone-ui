@@ -21,7 +21,7 @@ div.container {
 .logout {
   width: 300px;
 
-  background: #FFF;
+  background: #fff;
   border: 1px solid #e8eaed;
   border-radius: 3px;
   box-shadow: 0px 0px 8px 1px #e8eaed;

@@ -12,7 +12,7 @@ import Alert from "@/components/Alert.vue";
 export default {
   name: "loginerr",
   components: {
-    Alert,
+    Alert
   },
   computed: {
     error() {
@@ -35,6 +35,6 @@ div.container {
 }
 
 div.container > div {
-    min-width: 300px;
+  min-width: 300px;
 }
 </style>
