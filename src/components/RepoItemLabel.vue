@@ -36,6 +36,9 @@ export default {
         if (event === "push" || event === "pull_request") {
           return { text: this.branch, href: this.hrefBranch };
         }
+        if (event === "promote" && this.promotionTarget) {
+          return { text: this.promotionTarget };
+        }
       }
     },
     hrefPR() {
@@ -69,6 +72,9 @@ export default {
     },
     commitShaShort() {
       return this.commitSha && this.commitSha.substr(0, 8);
+    },
+    promotionTarget() {
+      return this.build.deploy_to;
     }
   },
   methods: {
