@@ -53,9 +53,7 @@ export default {
     }
   },
   methods: {
-    getBuildActor(build) {
-      return getBuildActor(build);
-    },
+    getBuildActor,
     onKeyPress(e) {
       if (e.key === "ArrowUp") {
         const nextIndex = this.selectionIndex - 1;

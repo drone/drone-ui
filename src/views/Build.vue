@@ -321,9 +321,7 @@ export default {
     }
   },
   methods: {
-    getBuildActor(build) {
-      return getBuildActor(build);
-    },
+    getBuildActor,
     getThemeByStatus: Status.getThemeByStatus,
     humanizeStatus: Status.humanizeStatus,
     isBuildFinished,

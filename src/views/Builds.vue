@@ -91,9 +91,7 @@ export default {
     }
   },
   methods: {
-    getBuildActor(build) {
-      return getBuildActor(build);
-    },
+    getBuildActor,
     showMore() {
       this.$store.dispatch("fetchBuilds", { ...this.$route.params, page: this.collection.page + 1 });
     },
