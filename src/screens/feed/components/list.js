@@ -5,15 +5,29 @@ import BuildTime from "shared/components/build_time";
 
 import styles from "./list.less";
 
+import {StarIcon, ScheduleIcon} from "shared/components/icons/index";
+
 export const List = ({ children }) => (
 	<div className={styles.list}>{children}</div>
 );
 
 export class Item extends Component {
+	constructor(props) {
+		super(props);
+
+		this.handleFave = this.handleFave.bind(this);
+	}
+
+	handleFave(e) {
+		e.preventDefault();
+		this.props.onFave(this.props.item.full_name);
+	}
+
 	render() {
-		const { item } = this.props;
+		const { item, faved } = this.props;
 		return (
 			<div className={styles.item}>
+				<div onClick={this.handleFave}><StarIcon filled={faved} size={16} className={styles.star}/></div>
 				<div className={styles.header}>
 					<div className={styles.title}>{item.full_name}</div>
 					<div className={styles.icon}>
@@ -32,6 +46,7 @@ export class Item extends Component {
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
-		return this.props.item !== nextProps.item;
+		return this.props.item !== nextProps.item ||
+		this.props.faved !== nextProps.faved;
 	}
 }
