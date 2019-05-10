@@ -5,5 +5,17 @@ pipeline:
       - yarn install
       - yarn run lesshint
       - yarn run test
-      - yarn run lint
+      # - yarn run lint
       - yarn run build
+  
+  release:
+    when:
+      event: tag
+    image: docker
+    commands:
+      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+      - docker build -t laszlocloud/drone-ui:$DRONE_TAG .
+      - docker push laszlocloud/drone-ui:$DRONE_TAG
+    secrets: [docker_username, docker_password]
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
