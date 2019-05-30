@@ -20,7 +20,7 @@
         <Help title="Project settings">
           <p class="help-p">
             <a href="https://docs.drone.io/user-guide/signature/" target="_blank" class="link">Protected</a>
-            - If Enabled, blocks pipelines until an admin approve.
+            - If Enabled, blocks pipeline if the yaml signature cannot be verified.
           </p>
           <p class="help-p">
             <a href="https://docs.drone.io/administration/user/admins/" target="_blank" class="link">Trusted</a>
