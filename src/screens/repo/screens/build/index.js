@@ -21,7 +21,6 @@ import {
 	Approval,
 	Details,
 	ProcList,
-	ProcListItem,
 } from "./components";
 
 import { branch } from "baobab-react/higher-order";
@@ -102,6 +101,10 @@ export default class BuildLogs extends Component {
 				props.match.params.build,
 			);
 		}
+	}
+
+	shouldComponentUpdate(nextProps, nextState) {
+		return this.props !== nextProps && nextProps.build.procs[0].children !== undefined
 	}
 
 	render() {
@@ -188,27 +191,14 @@ export default class BuildLogs extends Component {
 					<div className={styles.right}>
 						<Details build={build} />
 						<section className={styles.sticky}>
-							<ProcList>
 								{build.procs.map(function(rootProc){
-									return rootProc.children.map(function(child) {
-										return (
-											<Link
-												to={`/${repo.full_name}/${build.number}/${child.pid}`}
-												key={`${repo.full_name}-${build.number}-${child.pid}`}
-											>
-												<ProcListItem
-													key={child.pid}
-													name={child.name}
-													start={child.start_time}
-													finish={child.end_time}
-													state={child.state}
-													selected={child.pid === selectedProc.pid}
-												/>
-											</Link>
-										);
-									})
+									return (<ProcList
+										repo={repo}
+										build={build}
+										rootProc={rootProc}
+										selectedProc={selectedProc}
+										/>)
 								})}
-							</ProcList>
 						</section>
 					</div>
 					<div className={styles.left}>
