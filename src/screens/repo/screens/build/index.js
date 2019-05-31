@@ -5,7 +5,6 @@ import {
 	fetchBuild,
 	approveBuild,
 	declineBuild,
-	assertBuildMatrix,
 } from "shared/utils/build";
 import {
 	STATUS_BLOCKED,
@@ -21,8 +20,6 @@ import Breadcrumb, { SEPARATOR } from "shared/components/breadcrumb";
 import {
 	Approval,
 	Details,
-	MatrixList,
-	MatrixItem,
 	ProcList,
 	ProcListItem,
 } from "./components";
@@ -126,10 +123,6 @@ export default class BuildLogs extends Component {
 			return this.renderLoading();
 		}
 
-		if (assertBuildMatrix(build)) {
-			return this.renderMatrix();
-		}
-
 		return this.renderSimple();
 	}
 
@@ -189,36 +182,31 @@ export default class BuildLogs extends Component {
 		const selectedProc = match.params.proc ? findChildProcess(build.procs, match.params.proc) : build.procs[0].children[0];
 		const selectedProcParent = findChildProcess(build.procs, selectedProc.ppid);
 
-		let data = Object.assign({}, build);
-		if (assertBuildMatrix(data)) {
-			data.started_at = selectedProcParent.start_time;
-			data.finish_at = selectedProcParent.finish_time;
-			data.status = selectedProcParent.state;
-		}
-
 		return (
 			<div className={styles.host}>
 				<div className={styles.columns}>
 					<div className={styles.right}>
-						<Details build={data} />
+						<Details build={build} />
 						<section className={styles.sticky}>
 							<ProcList>
-								{selectedProcParent.children.map(function(child) {
-									return (
-										<Link
-											to={`/${repo.full_name}/${build.number}/${child.pid}`}
-											key={`${repo.full_name}-${build.number}-${child.pid}`}
-										>
-											<ProcListItem
-												key={child.pid}
-												name={child.name}
-												start={child.start_time}
-												finish={child.end_time}
-												state={child.state}
-												selected={child.pid === selectedProc.pid}
-											/>
-										</Link>
-									);
+								{build.procs.map(function(rootProc){
+									return rootProc.children.map(function(child) {
+										return (
+											<Link
+												to={`/${repo.full_name}/${build.number}/${child.pid}`}
+												key={`${repo.full_name}-${build.number}-${child.pid}`}
+											>
+												<ProcListItem
+													key={child.pid}
+													name={child.name}
+													start={child.start_time}
+													finish={child.end_time}
+													state={child.state}
+													selected={child.pid === selectedProc.pid}
+												/>
+											</Link>
+										);
+									})
 								})}
 							</ProcList>
 						</section>
@@ -235,46 +223,6 @@ export default class BuildLogs extends Component {
 							build={this.props.build}
 							proc={selectedProc}
 						/>
-					</div>
-				</div>
-			</div>
-		);
-	}
-
-	renderMatrix() {
-		const { repo, build, match } = this.props;
-
-		if (match.params.proc) {
-			return this.renderSimple();
-		}
-
-		return (
-			<div className={styles.host}>
-				<div className={styles.columns}>
-					<div className={styles.right}>
-						<Details build={build} />
-					</div>
-					<div className={styles.left}>
-						<MatrixList>
-							{build.procs.map(child => {
-								return (
-									<Link
-										to={`/${repo.full_name}/${build.number}/${child.children[0]
-											.pid}`}
-										key={`${repo.full_name}-${build.number}-${child.children[0]
-											.pid}`}
-									>
-										<MatrixItem
-											number={child.pid}
-											start={child.start_time}
-											finish={child.end_time}
-											status={child.state}
-											environ={child.environ}
-										/>
-									</Link>
-								);
-							})}
-						</MatrixList>
 					</div>
 				</div>
 			</div>
