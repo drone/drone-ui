@@ -186,14 +186,14 @@ export default class BuildLogs extends Component {
 
 	renderSimple() {
 		const { repo, build, match } = this.props;
-		const proc = findChildProcess(build.procs || [], match.params.proc || 2);
-		const parent = findChildProcess(build.procs, proc.ppid);
+		const selectedProc = match.params.proc ? findChildProcess(build.procs, match.params.proc) : build.procs[0].children[0];
+		const selectedProcParent = findChildProcess(build.procs, selectedProc.ppid);
 
 		let data = Object.assign({}, build);
 		if (assertBuildMatrix(data)) {
-			data.started_at = parent.start_time;
-			data.finish_at = parent.finish_time;
-			data.status = parent.state;
+			data.started_at = selectedProcParent.start_time;
+			data.finish_at = selectedProcParent.finish_time;
+			data.status = selectedProcParent.state;
 		}
 
 		return (
@@ -203,7 +203,7 @@ export default class BuildLogs extends Component {
 						<Details build={data} />
 						<section className={styles.sticky}>
 							<ProcList>
-								{parent.children.map(function(child) {
+								{selectedProcParent.children.map(function(child) {
 									return (
 										<Link
 											to={`/${repo.full_name}/${build.number}/${child.pid}`}
@@ -215,7 +215,7 @@ export default class BuildLogs extends Component {
 												start={child.start_time}
 												finish={child.end_time}
 												state={child.state}
-												selected={child.pid === proc.pid}
+												selected={child.pid === selectedProc.pid}
 											/>
 										</Link>
 									);
@@ -224,17 +224,16 @@ export default class BuildLogs extends Component {
 						</section>
 					</div>
 					<div className={styles.left}>
-						{proc && proc.error ? (
-							<div className={styles.logerror}>{proc.error}</div>
+						{selectedProc && selectedProc.error ? (
+							<div className={styles.logerror}>{selectedProc.error}</div>
 						) : null}
-						{parent && parent.error ? (
-							<div className={styles.logerror}>{parent.error}</div>
+						{selectedProcParent && selectedProcParent.error ? (
+							<div className={styles.logerror}>{selectedProcParent.error}</div>
 						) : null}
 						<Output
 							match={this.props.match}
 							build={this.props.build}
-							parent={parent}
-							proc={proc}
+							proc={selectedProc}
 						/>
 					</div>
 				</div>

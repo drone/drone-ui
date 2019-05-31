@@ -17,7 +17,7 @@ const binding = (props, context) => {
 	const { owner, repo, build, proc } = props.match.params;
 	const slug = repositorySlug(owner, repo);
 	const number = parseInt(build);
-	const pid = parseInt(proc || 2);
+	const pid = parseInt(props.proc.pid);
 
 	return {
 		logs: ["logs", "data", slug, number, pid, "data"],
@@ -33,7 +33,6 @@ const binding = (props, context) => {
 export default class Output extends Component {
 	constructor(props, context) {
 		super(props, context);
-
 		this.handleFollow = this.handleFollow.bind(this);
 	}
 
