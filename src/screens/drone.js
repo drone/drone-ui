@@ -12,12 +12,12 @@ import { fetchFeedOnce, subscribeToFeedOnce } from "shared/utils/feed";
 
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-if (module.hot) {
-	require('preact/devtools');
-}
-
 // eslint-disable-next-line no-unused-vars
 import styles from "./drone.less";
+
+if (module.hot) {
+	require("preact/devtools");
+}
 
 class App extends Component {
 	render() {

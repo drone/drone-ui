@@ -5,7 +5,7 @@ pipeline:
       - yarn install
       - yarn run lesshint
       - yarn run test
-      # - yarn run lint
+      - yarn run lint
       - yarn run build
   
   release:
