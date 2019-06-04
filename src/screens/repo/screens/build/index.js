@@ -1,12 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-import {
-	fetchBuild,
-	approveBuild,
-	declineBuild,
-	assertBuildMatrix,
-} from "shared/utils/build";
+import { fetchBuild, approveBuild, declineBuild } from "shared/utils/build";
 import {
 	STATUS_BLOCKED,
 	STATUS_DECLINED,
@@ -18,14 +13,7 @@ import { fetchRepository } from "shared/utils/repository";
 
 import Breadcrumb, { SEPARATOR } from "shared/components/breadcrumb";
 
-import {
-	Approval,
-	Details,
-	MatrixList,
-	MatrixItem,
-	ProcList,
-	ProcListItem,
-} from "./components";
+import { Approval, Details, ProcList } from "./components";
 
 import { branch } from "baobab-react/higher-order";
 import { inject } from "config/client/inject";
@@ -107,6 +95,13 @@ export default class BuildLogs extends Component {
 		}
 	}
 
+	shouldComponentUpdate(nextProps, nextState) {
+		return (
+			this.props !== nextProps &&
+			nextProps.build.procs[0].children !== undefined
+		);
+	}
+
 	render() {
 		const { repo, build } = this.props;
 
@@ -124,10 +119,6 @@ export default class BuildLogs extends Component {
 
 		if (!build.procs) {
 			return this.renderLoading();
-		}
-
-		if (assertBuildMatrix(build)) {
-			return this.renderMatrix();
 		}
 
 		return this.renderSimple();
@@ -186,96 +177,42 @@ export default class BuildLogs extends Component {
 
 	renderSimple() {
 		const { repo, build, match } = this.props;
-		const proc = findChildProcess(build.procs || [], match.params.proc || 2);
-		const parent = findChildProcess(build.procs, proc.ppid);
-
-		let data = Object.assign({}, build);
-		if (assertBuildMatrix(data)) {
-			data.started_at = parent.start_time;
-			data.finish_at = parent.finish_time;
-			data.status = parent.state;
-		}
-
-		return (
-			<div className={styles.host}>
-				<div className={styles.columns}>
-					<div className={styles.right}>
-						<Details build={data} />
-						<section className={styles.sticky}>
-							<ProcList>
-								{parent.children.map(function(child) {
-									return (
-										<Link
-											to={`/${repo.full_name}/${build.number}/${child.pid}`}
-											key={`${repo.full_name}-${build.number}-${child.pid}`}
-										>
-											<ProcListItem
-												key={child.pid}
-												name={child.name}
-												start={child.start_time}
-												finish={child.end_time}
-												state={child.state}
-												selected={child.pid === proc.pid}
-											/>
-										</Link>
-									);
-								})}
-							</ProcList>
-						</section>
-					</div>
-					<div className={styles.left}>
-						{proc && proc.error ? (
-							<div className={styles.logerror}>{proc.error}</div>
-						) : null}
-						{parent && parent.error ? (
-							<div className={styles.logerror}>{parent.error}</div>
-						) : null}
-						<Output
-							match={this.props.match}
-							build={this.props.build}
-							parent={parent}
-							proc={proc}
-						/>
-					</div>
-				</div>
-			</div>
-		);
-	}
-
-	renderMatrix() {
-		const { repo, build, match } = this.props;
-
-		if (match.params.proc) {
-			return this.renderSimple();
-		}
+		const selectedProc = match.params.proc
+			? findChildProcess(build.procs, match.params.proc)
+			: build.procs[0].children[0];
+		const selectedProcParent = findChildProcess(build.procs, selectedProc.ppid);
 
 		return (
 			<div className={styles.host}>
 				<div className={styles.columns}>
 					<div className={styles.right}>
 						<Details build={build} />
-					</div>
-					<div className={styles.left}>
-						<MatrixList>
-							{build.procs.map(child => {
+						<section className={styles.sticky}>
+							{build.procs.map(function(rootProc) {
 								return (
-									<Link
-										to={`/${repo.full_name}/${build.number}/${child.children[0]
-											.pid}`}
-										key={`${repo.full_name}-${build.number}-${child.children[0]
-											.pid}`}
-									>
-										<MatrixItem
-											number={child.pid}
-											start={child.start_time}
-											finish={child.end_time}
-											status={child.state}
-											environ={child.environ}
-										/>
-									</Link>
+									<ProcList
+										key={rootProc.pid}
+										repo={repo}
+										build={build}
+										rootProc={rootProc}
+										selectedProc={selectedProc}
+									/>
 								);
 							})}
-						</MatrixList>
+						</section>
+					</div>
+					<div className={styles.left}>
+						{selectedProc && selectedProc.error ? (
+							<div className={styles.logerror}>{selectedProc.error}</div>
+						) : null}
+						{selectedProcParent && selectedProcParent.error ? (
+							<div className={styles.logerror}>{selectedProcParent.error}</div>
+						) : null}
+						<Output
+							match={this.props.match}
+							build={this.props.build}
+							proc={selectedProc}
+						/>
 					</div>
 				</div>
 			</div>
