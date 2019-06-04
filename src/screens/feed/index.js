@@ -70,11 +70,11 @@ export default class Sidebar extends Component {
 			return null;
 		}
 		return (
-			<Link to={`/${item.fullName}`} key={item.fullName}>
+			<Link to={`/${item.full_name}`} key={item.full_name}>
 				<Item
 					item={item}
 					onFave={this.onFave}
-					faved={starred.includes(item.fullName)}
+					faved={starred.includes(item.full_name)}
 				/>
 			</Link>
 		);
