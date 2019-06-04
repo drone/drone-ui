@@ -14,7 +14,7 @@ import { ExpandIcon, PauseIcon, PlayIcon } from "shared/components/icons/index";
 import styles from "./index.less";
 
 const binding = (props, context) => {
-	const { owner, repo, build, proc } = props.match.params;
+	const { owner, repo, build } = props.match.params;
 	const slug = repositorySlug(owner, repo);
 	const number = parseInt(build);
 	const pid = parseInt(props.proc.pid);

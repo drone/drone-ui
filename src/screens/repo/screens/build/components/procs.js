@@ -8,12 +8,20 @@ import { Elapsed, formatTime } from "./elapsed";
 import styles from "./procs.less";
 
 const renderEnviron = data => {
-	return ( <div>{data[0]}={data[1]}</div> );
+	return (
+		<div>
+			{data[0]}={data[1]}
+		</div>
+	);
 };
 
 const ProcListHolder = ({ vars, children }) => (
 	<div className={styles.list}>
-		{ vars.environ ? <div className={styles.vars}>{Object.entries(vars.environ).map(renderEnviron)}</div>: null }
+		{vars.environ ? (
+			<div className={styles.vars}>
+				{Object.entries(vars.environ).map(renderEnviron)}
+			</div>
+		) : null}
 		{children}
 	</div>
 );
@@ -23,9 +31,8 @@ export class ProcList extends Component {
 		const { repo, build, rootProc, selectedProc } = this.props;
 		return (
 			<ProcListHolder vars={rootProc}>
-			{
-				this.props.rootProc.children.map(function(child) {
-					return(
+				{this.props.rootProc.children.map(function(child) {
+					return (
 						<Link
 							to={`/${repo.full_name}/${build.number}/${child.pid}`}
 							key={`${repo.full_name}-${build.number}-${child.pid}`}
@@ -39,14 +46,12 @@ export class ProcList extends Component {
 								selected={child.pid === selectedProc.pid}
 							/>
 						</Link>
-					)}
-				)
-			}
+					);
+				})}
 			</ProcListHolder>
 		);
-
 	}
-};
+}
 
 export const ProcListItem = ({ name, start, finish, state, selected }) => (
 	<div className={classnames(styles.item, selected ? styles.selected : null)}>

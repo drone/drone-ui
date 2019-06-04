@@ -1,11 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-import {
-	fetchBuild,
-	approveBuild,
-	declineBuild,
-} from "shared/utils/build";
+import { fetchBuild, approveBuild, declineBuild } from "shared/utils/build";
 import {
 	STATUS_BLOCKED,
 	STATUS_DECLINED,
@@ -17,11 +13,7 @@ import { fetchRepository } from "shared/utils/repository";
 
 import Breadcrumb, { SEPARATOR } from "shared/components/breadcrumb";
 
-import {
-	Approval,
-	Details,
-	ProcList,
-} from "./components";
+import { Approval, Details, ProcList } from "./components";
 
 import { branch } from "baobab-react/higher-order";
 import { inject } from "config/client/inject";
@@ -104,7 +96,10 @@ export default class BuildLogs extends Component {
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
-		return this.props !== nextProps && nextProps.build.procs[0].children !== undefined
+		return (
+			this.props !== nextProps &&
+			nextProps.build.procs[0].children !== undefined
+		);
 	}
 
 	render() {
@@ -182,7 +177,9 @@ export default class BuildLogs extends Component {
 
 	renderSimple() {
 		const { repo, build, match } = this.props;
-		const selectedProc = match.params.proc ? findChildProcess(build.procs, match.params.proc) : build.procs[0].children[0];
+		const selectedProc = match.params.proc
+			? findChildProcess(build.procs, match.params.proc)
+			: build.procs[0].children[0];
 		const selectedProcParent = findChildProcess(build.procs, selectedProc.ppid);
 
 		return (
@@ -191,14 +188,17 @@ export default class BuildLogs extends Component {
 					<div className={styles.right}>
 						<Details build={build} />
 						<section className={styles.sticky}>
-								{build.procs.map(function(rootProc){
-									return (<ProcList
+							{build.procs.map(function(rootProc) {
+								return (
+									<ProcList
+										key={rootProc.pid}
 										repo={repo}
 										build={build}
 										rootProc={rootProc}
 										selectedProc={selectedProc}
-										/>)
-								})}
+									/>
+								);
+							})}
 						</section>
 					</div>
 					<div className={styles.left}>
