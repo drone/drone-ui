@@ -11,7 +11,7 @@ import { List, Item } from "./components";
 
 import style from "./index.less";
 
-import Collapsible from 'react-collapsible';
+import Collapsible from "react-collapsible";
 
 const binding = (props, context) => {
 	return { feed: ["feed"] };
@@ -24,14 +24,14 @@ export default class Sidebar extends Component {
 		super(props, context);
 
 		this.setState({
-			starred: JSON.parse(localStorage.getItem('starred') || '[]'),
-			starredOpen: (localStorage.getItem('starredOpen') || "true") === "true",
-			reposOpen: (localStorage.getItem('reposOpen') || "true") === "true"
+			starred: JSON.parse(localStorage.getItem("starred") || "[]"),
+			starredOpen: (localStorage.getItem("starredOpen") || "true") === "true",
+			reposOpen: (localStorage.getItem("reposOpen") || "true") === "true",
 		});
 
 		this.handleFilter = this.handleFilter.bind(this);
-		this.toggleStarred = this.toggleItem.bind(this, 'starredOpen');
-		this.toggleAll = this.toggleItem.bind(this, 'reposOpen');
+		this.toggleStarred = this.toggleItem.bind(this, "starredOpen");
+		this.toggleAll = this.toggleItem.bind(this, "reposOpen");
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
@@ -50,11 +50,11 @@ export default class Sidebar extends Component {
 
 	toggleItem = item => {
 		this.setState(state => {
-			return { [item]: !state[item] }
+			return { [item]: !state[item] };
 		});
 
 		localStorage.setItem(item, this.state[item]);
-	}
+	};
 
 	renderFeed = (list, renderStarred) => {
 		return (
@@ -62,35 +62,39 @@ export default class Sidebar extends Component {
 				<List>{list.map(item => this.renderItem(item, renderStarred))}</List>
 			</div>
 		);
-	}
+	};
 
 	renderItem = (item, renderStarred) => {
 		const starred = this.state.starred;
-		if (renderStarred && !starred.includes(item.full_name)) {
+		if (renderStarred && !starred.includes(item.fullName)) {
 			return null;
 		}
 		return (
-			<Link to={`/${item.full_name}`} key={item.full_name}>
-				<Item item={item} onFave={this.onFave} faved={starred.includes(item.full_name)}/>
+			<Link to={`/${item.fullName}`} key={item.fullName}>
+				<Item
+					item={item}
+					onFave={this.onFave}
+					faved={starred.includes(item.fullName)}
+				/>
 			</Link>
 		);
-	}
+	};
 
-	onFave = full_name => {
-		if (!this.state.starred.includes(full_name)) {
+	onFave = fullName => {
+		if (!this.state.starred.includes(fullName)) {
 			this.setState(state => {
-				const list = state.starred.concat(full_name);
-				return { starred: list }
+				const list = state.starred.concat(fullName);
+				return { starred: list };
 			});
 		} else {
 			this.setState(state => {
-				const list = state.starred.filter(v => v !== full_name);
-				return { starred: list }
+				const list = state.starred.filter(v => v !== fullName);
+				return { starred: list };
 			});
 		}
 
-		localStorage.setItem('starred', JSON.stringify(this.state.starred));
-	}
+		localStorage.setItem("starred", JSON.stringify(this.state.starred));
+	};
 
 	render() {
 		const { feed } = this.props;
@@ -99,7 +103,7 @@ export default class Sidebar extends Component {
 		const list = feed.data ? Object.values(feed.data) : [];
 
 		const filterFunc = item => {
-			return !filter || item.full_name.indexOf(filter) !== -1;
+			return !filter || item.fullName.indexOf(filter) !== -1;
 		};
 
 		const filtered = list.filter(filterFunc).sort(compareFeedItem);
@@ -108,7 +112,16 @@ export default class Sidebar extends Component {
 		return (
 			<div className={style.feed}>
 				{LOGO}
-				<Collapsible trigger="Starred" triggerTagName="div" transitionTime={200} open={starredOpen} onOpen={this.toggleStarred} onClose={this.toggleStarred} triggerOpenedClassName={style.Collapsible__trigger} triggerClassName={style.Collapsible__trigger}>
+				<Collapsible
+					trigger="Starred"
+					triggerTagName="div"
+					transitionTime={200}
+					open={starredOpen}
+					onOpen={this.toggleStarred}
+					onClose={this.toggleStarred}
+					triggerOpenedClassName={style.Collapsible__trigger}
+					triggerClassName={style.Collapsible__trigger}
+				>
 					{feed.loaded === false ? (
 						LOADING
 					) : feed.error ? (
@@ -119,7 +132,16 @@ export default class Sidebar extends Component {
 						this.renderFeed(list, true)
 					)}
 				</Collapsible>
-				<Collapsible trigger="Repos" triggerTagName="div" transitionTime={200} open={reposOpen} onOpen={this.toggleAll} onClose={this.toggleAll} triggerOpenedClassName={style.Collapsible__trigger} triggerClassName={style.Collapsible__trigger}>
+				<Collapsible
+					trigger="Repos"
+					triggerTagName="div"
+					transitionTime={200}
+					open={reposOpen}
+					onOpen={this.toggleAll}
+					onClose={this.toggleAll}
+					triggerOpenedClassName={style.Collapsible__trigger}
+					triggerClassName={style.Collapsible__trigger}
+				>
 					<input
 						type="text"
 						placeholder="Search …"
