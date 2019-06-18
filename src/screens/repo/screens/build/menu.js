@@ -2,11 +2,7 @@ import React, { Component } from "react";
 import RepoMenu from "../builds/menu";
 import { RefreshIcon, CloseIcon } from "shared/components/icons";
 
-import {
-	cancelBuild,
-	restartBuild,
-	assertBuildMatrix,
-} from "shared/utils/build";
+import { cancelBuild, restartBuild } from "shared/utils/build";
 import { findChildProcess } from "shared/utils/proc";
 import { repositorySlug } from "shared/utils/repository";
 
@@ -53,22 +49,18 @@ export default class BuildMenu extends Component {
 	}
 
 	render() {
-		const { build, match } = this.props;
-		const { proc } = match.params;
-
-		const hideCancel = assertBuildMatrix(build) && !proc;
+		const { build } = this.props;
 
 		const rightSide = !build ? (
 			undefined
 		) : (
 			<section>
-				{build.status === "pending" ||
-				build.status === "running" ? !hideCancel ? (
+				{build.status === "pending" || build.status === "running" ? (
 					<button onClick={this.handleCancel}>
 						<CloseIcon />
 						<span>Cancel</span>
 					</button>
-				) : null : (
+				) : (
 					<button onClick={this.handleRestart}>
 						<RefreshIcon />
 						<span>Restart Build</span>
