@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import classnames from "classnames";
 
-import Status from "shared/components/status";
 import { Elapsed, formatTime } from "./elapsed";
+import { default as Status, StatusText } from "shared/components/status";
 
 import styles from "./procs.less";
 
@@ -15,11 +15,19 @@ const renderEnviron = data => {
 	);
 };
 
-const ProcListHolder = ({ vars, children }) => (
+const ProcListHolder = ({ vars, renderName, children }) => (
 	<div className={styles.list}>
+		{renderName && vars.name !== "drone" ? (
+			<div>
+				<StatusText status={vars.state} text={vars.name} />
+			</div>
+		) : null}
 		{vars.environ ? (
-			<div className={styles.vars}>
-				{Object.entries(vars.environ).map(renderEnviron)}
+			<div>
+				<StatusText
+					status={vars.state}
+					text={Object.entries(vars.environ).map(renderEnviron)}
+				/>
 			</div>
 		) : null}
 		{children}
@@ -28,9 +36,9 @@ const ProcListHolder = ({ vars, children }) => (
 
 export class ProcList extends Component {
 	render() {
-		const { repo, build, rootProc, selectedProc } = this.props;
+		const { repo, build, rootProc, selectedProc, renderName } = this.props;
 		return (
-			<ProcListHolder vars={rootProc}>
+			<ProcListHolder vars={rootProc} renderName={renderName}>
 				{this.props.rootProc.children.map(function(child) {
 					return (
 						<Link
@@ -66,26 +74,3 @@ export const ProcListItem = ({ name, start, finish, state, selected }) => (
 		</div>
 	</div>
 );
-
-// function List({ children }) {
-// 	return <div className={styles.list}>{children}</div>;
-// }
-//
-// function ListItem({ name, start, finish, state, selected }) {
-// 	const classes = classnames(styles.item, selected ? styles.selected : null);
-// 	return (
-// 		<div className={classes}>
-// 			<h3>{name}</h3>
-//
-// 			{finish ? (
-// 				<time>{formatTime(finish, start)}</time>
-// 			) : (
-// 				<Timer start={start} />
-// 			)}
-//
-// 			<div>
-// 				<Status status={state} />
-// 			</div>
-// 		</div>
-// 	);
-// }
