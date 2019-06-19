@@ -66,7 +66,7 @@ export default class Sidebar extends Component {
 
 	renderItem = (item, renderStarred) => {
 		const starred = this.state.starred;
-		if (renderStarred && !starred.includes(item.fullName)) {
+		if (renderStarred && !starred.includes(item.full_name)) {
 			return null;
 		}
 		return (
@@ -103,7 +103,7 @@ export default class Sidebar extends Component {
 		const list = feed.data ? Object.values(feed.data) : [];
 
 		const filterFunc = item => {
-			return !filter || item.fullName.indexOf(filter) !== -1;
+			return !filter || item.full_name.indexOf(filter) !== -1;
 		};
 
 		const filtered = list.filter(filterFunc).sort(compareFeedItem);
