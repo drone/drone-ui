@@ -40,6 +40,7 @@ export default class Settings extends Component {
 		this.handleProtectedChange = this.handleProtectedChange.bind(this);
 		this.handleVisibilityChange = this.handleVisibilityChange.bind(this);
 		this.handleTimeoutChange = this.handleTimeoutChange.bind(this);
+		this.handlePathChange = this.handlePathChange.bind(this);
 		this.handleChange = this.handleChange.bind(this);
 	}
 
@@ -64,6 +65,16 @@ export default class Settings extends Component {
 
 		return (
 			<div className={styles.root}>
+				<section>
+					<h2>Pipeline Path</h2>
+					<div>
+						<input
+							type="text"
+							value={repo.config_file}
+							onBlur={this.handlePathChange}
+						/>
+					</div>
+				</section>
 				<section>
 					<h2>Repository Hooks</h2>
 					<div>
@@ -205,6 +216,10 @@ export default class Settings extends Component {
 
 	handleTimeoutChange(e) {
 		this.handleChange("timeout", parseInt(e.target.value));
+	}
+
+	handlePathChange(e) {
+		this.handleChange("config_file", e.target.value);
 	}
 
 	handleChange(prop, value) {
