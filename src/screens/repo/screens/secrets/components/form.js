@@ -83,9 +83,9 @@ export class Form extends Component {
 					placeholder="Secret Name"
 					onChange={this._handleNameChange}
 				/>
-				<textarea
-					rows="1"
+				<input
 					name="value"
+					type="password"
 					value={this.state.value}
 					placeholder="Secret Value"
 					onChange={this._handleValueChange}
