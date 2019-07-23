@@ -8,6 +8,7 @@ import {
 } from "shared/constants/events";
 
 import styles from "./form.less";
+import "./security.css";
 
 export class Form extends Component {
 	constructor(props, context) {
@@ -83,13 +84,14 @@ export class Form extends Component {
 					placeholder="Secret Name"
 					onChange={this._handleNameChange}
 				/>
-				<input
+				<textarea
+					rows="1"
 					name="value"
-					type="password"
+					class="hide_secret"
 					value={this.state.value}
 					placeholder="Secret Value"
 					onChange={this._handleValueChange}
-				/>
+				></textarea>
 				<section>
 					<h2>Events</h2>
 					<div>
