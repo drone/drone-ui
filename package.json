@@ -50,7 +50,8 @@
     "react-screen-size": "^1.0.1",
     "react-timeago": "^3.4.3",
     "react-title-component": "^1.0.1",
-    "react-transition-group": "^1.2.0"
+    "react-transition-group": "^1.2.0",
+    "text-security": "^1.2.0"
   },
   "devDependencies": {
     "babel-core": "^6.25.0",
