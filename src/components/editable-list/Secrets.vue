@@ -85,8 +85,8 @@ export default {
 };
 </script>
 
+<style src="text-security/dist/text-security-disc.css"></style>
 <style scoped>
-@import "../../../node_modules/text-security/dist/text-security-disc.css";
 .hide_secret {
     font-family: 'text-security-disc';
 }
