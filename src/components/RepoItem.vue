@@ -14,7 +14,7 @@
       <div class="header" :title="title">
         <span class="title">
           <span class="number" v-if="number">#{{ number }}. </span>
-          <span>{{ title }}</span>
+          <span>{{ title.split('\n')[0] }}</span>
         </span>
 
         <Button outline borderless
