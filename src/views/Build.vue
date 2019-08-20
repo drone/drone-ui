@@ -129,14 +129,11 @@
             <Loading v-if="logsShowState === 'loading'"/>
 
             <div class="output-content-actions" v-if="moreCount">
-              <Button size="l" outline borderless class="output-button" @click.native="handleAll">
-                Show all lines
-              </Button>
-            </div>
-
-            <div class="output-content-actions" v-if="moreCount">
               <Button size="l" outline borderless class="output-button" @click.native="handleMore">
                 Show {{Math.min(moreCount, logStep)}} lines more
+              </Button>
+              <Button size="l" outline borderless class="output-button" @click.native="handleAll">
+                Show all lines
               </Button>
             </div>
 
@@ -761,6 +758,11 @@ $output-header-sticky-offset: 20px;
 .output-content-actions {
   padding: 0 15px;
   margin-bottom: 15px;
+  display: flex;
+}
+
+.output-content-actions .button:last-of-type {
+  margin-left: 10px;
 }
 
 .output-button.button.outline.theme-default {
