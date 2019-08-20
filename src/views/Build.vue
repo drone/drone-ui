@@ -129,6 +129,12 @@
             <Loading v-if="logsShowState === 'loading'"/>
 
             <div class="output-content-actions" v-if="moreCount">
+              <Button size="l" outline borderless class="output-button" @click.native="handleAll">
+                Show all lines
+              </Button>
+            </div>
+
+            <div class="output-content-actions" v-if="moreCount">
               <Button size="l" outline borderless class="output-button" @click.native="handleMore">
                 Show {{Math.min(moreCount, logStep)}} lines more
               </Button>
@@ -336,6 +342,9 @@ export default {
     },
     handleMore: function() {
       this.logLimit += this.logStep;
+    },
+    handleAll: function() {
+      this.logLimit = this.logs.length;
     },
     toggleOutputFullscreen() {
       this.outputFullscreen = !this.outputFullscreen;
