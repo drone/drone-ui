@@ -386,7 +386,9 @@ export default {
       link.download = `logs_${namespace}_${name}_${stage}_${step}.log`;
       link.href = URL.createObjectURL(blob);
       link.target = "_blank";
+      document.body.appendChild(link);
       link.click();
+      document.body.removeChild(link);
     },
     onScroll() {
       if (this.outputFullscreen) return;
