@@ -14,8 +14,8 @@
       <BuildsFeedPanel v-if="$store.state.mediaType === 'desktop' && $store.getters.userPresent" />
     </div>
 
-    <SystemAlert v-if="isLicenseExceeded">Your Server License Is Expired</SystemAlert>
-    <SystemAlert v-if="isLicenseExpired">Your License Limit Is Exceeded</SystemAlert>
+    <SystemAlert v-if="isLicenseExpired">Your Server License Is Expired</SystemAlert>
+    <SystemAlert v-if="isLicenseExceeded">Your License Limit Is Exceeded</SystemAlert>
 
     <Notifications/>
 
