@@ -24,4 +24,12 @@ footer {
   text-transform: uppercase;
   align-items: center;
 }
+
+footer a {
+  background: rgba(255,255,255,0.15);
+  border-radius: 3px;
+  color: #ffffff;
+  margin-left: 20px;
+  padding: 10px 20px;
+}
 </style>
