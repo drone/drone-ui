@@ -18,6 +18,7 @@
                   :status="build.status"
                   :build="shrinkBuild(build)"
                   :avatar="build.author_avatar"
+                  :actor="getBuildActor(build)"
                   :linkRepo="repo"/>
       </router-link>
 
@@ -35,6 +36,7 @@ import Loading from "@/components/Loading.vue";
 import MoreButton from "@/components/buttons/MoreButton.vue";
 import AlertError from "@/components/AlertError.vue";
 import IconDroneSleep from "@/components/icons/IconDroneSleep";
+import { getBuildActor } from "@/lib/buildHelper";
 
 export default {
   name: "Builds",
@@ -89,6 +91,7 @@ export default {
     }
   },
   methods: {
+    getBuildActor,
     showMore() {
       this.$store.dispatch("fetchBuilds", { ...this.$route.params, page: this.collection.page + 1 });
     },

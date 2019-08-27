@@ -33,6 +33,7 @@
       :number="build.number"
       :status="build.status"
       :title="build.title || build.message"
+      :actor="getBuildActor(build)"
       :avatar="build.author_avatar"
       :linkRepo="repo"
       :build="Object.assign({}, build, { message: null })"/>
@@ -192,7 +193,7 @@ import AlertError from "../components/AlertError";
 import TimeElapsed from "../components/TimeElapsed";
 import Status from "@/components/Status";
 
-import { isBuildFinished } from "@/lib/buildHelper";
+import { isBuildFinished, getBuildActor } from "@/lib/buildHelper";
 
 let previousScrollY = window.scrollY;
 const HEADER_HEIGHT = 56;
@@ -323,6 +324,7 @@ export default {
     }
   },
   methods: {
+    getBuildActor,
     getThemeByStatus: Status.getThemeByStatus,
     humanizeStatus: Status.humanizeStatus,
     isBuildFinished,
