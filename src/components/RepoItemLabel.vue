@@ -30,14 +30,19 @@ export default {
       if (this.type === "actionTarget") {
         if (event === "pull_request") return { text: "#" + this.trimMergeRef(ref), href: this.hrefPR };
         if (event === "tag") return { text: this.trimTagRef(ref), href: this.hrefTag };
-        if (event === "promote") return { text: this.branch, href: this.hrefBranch };
+        if (event === "promote") return { text: this.promotionTarget };
+        if (event === "rollback") return { text: this.promotionTarget };
+        if (event === "cron") return { text: this.cron };
         return { text: this.commitShaShort, href: this.hrefCommit };
       } else if (this.type === "to") {
         if (event === "push" || event === "pull_request") {
           return { text: this.branch, href: this.hrefBranch };
         }
-        if (event === "promote" && this.promotionTarget) {
-          return { text: this.promotionTarget };
+        if (event === "rollback") {
+          return { text: this.commitShaShort };
+        }
+        if (event === "promote") {
+          return { text: this.commitShaShort };
         }
       }
     },
@@ -66,6 +71,9 @@ export default {
     },
     branch() {
       return this.build.target;
+    },
+    cron() {
+      return this.build.cron;
     },
     commitSha() {
       return this.build.after;
