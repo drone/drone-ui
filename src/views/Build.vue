@@ -632,6 +632,8 @@ $output-border-radius: 6px;
   }
 
   .ol-html {
+    word-break: break-word;
+    white-space: pre-wrap;
     padding-right: 0;
   }
 
@@ -648,6 +650,7 @@ $output-header-sticky-offset: 20px;
   position: sticky;
   top: $header-height + $output-header-sticky-offset;
   height: $output-header-height;
+  min-height: $output-header-height;
 
   @include mobile {
     top: 0;
@@ -744,7 +747,7 @@ $output-header-sticky-offset: 20px;
 }
 
 .ol-html {
-  word-break: break-all;
+  word-break: break-word;
   white-space: pre-wrap;
   padding-right: 15px;
 }
