@@ -6,8 +6,6 @@
 </template>
 
 <script>
-const GITHUB_BASE = "https://github.com";
-
 export default {
   name: "RepoItemLink",
   props: {
@@ -47,27 +45,16 @@ export default {
       }
     },
     hrefPR() {
-      if (this.provider === "github") {
-        return `${GITHUB_BASE}/${this.repo.slug}/pull/${this.trimMergeRef(this.build.ref)}`;
-      }
+      return `/link/${this.repo.slug}/tree/${this.build.ref}`;
     },
     hrefTag() {
-      if (this.provider === "github") return null; // it's impossible to choose 'tag' or 'releases/tag'
+      return `/link/${this.repo.slug}/tree/${this.build.ref}`;
     },
     hrefBranch() {
-      if (this.provider === "github") return `${GITHUB_BASE}/${this.repo.slug}/tree/${this.build.target}`;
+      return `/link/${this.repo.slug}/tree/refs/heads/${this.build.target}`;
     },
     hrefCommit() {
-      if (this.provider === "github") return `${GITHUB_BASE}/${this.repo.slug}/commit/${this.build.after}`;
-    },
-    provider() {
-      if (!this.link) return;
-
-      const { git_ssh_url } = this.repo;
-
-      if (git_ssh_url && git_ssh_url.startsWith("git@github.com:")) return "github";
-
-      return "unknown";
+      return `/link/${this.repo.slug}/commit/${this.build.after}`;
     },
     branch() {
       return this.build.target;
