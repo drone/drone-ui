@@ -4,7 +4,7 @@
 
     <portal v-if="buildShowState === 'data'" to="secondary-page-header-actions">
       <div class="header-actions">
-        <Button outline class="button-source" :href="build.link" target="_blank">
+        <Button outline class="button-source" :href="link" target="_blank">
           <span>View source</span>
           <IconSource/>
         </Button>
@@ -257,6 +257,10 @@ export default {
     },
     build() {
       return this.buildCollection.data;
+    },
+    link() {
+      return this.build && this.repo &&
+        `/link/${this.repo.slug}/tree/${this.build.ref}?sha=${this.build.after}`
     },
     buildShowState() {
       if (this.buildCollection.lStatus === "error") return "loadingError";
