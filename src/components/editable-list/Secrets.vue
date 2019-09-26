@@ -10,7 +10,7 @@
       To be used in build steps
     </Help>
 
-    <EditableListItem slot="item" slot-scope="slotProps"
+    <EditableListItem slot="item" slot-scope="slotProps" :tags="tags(slotProps.item)"
                       :name="slotProps.item.name"
                       :deleting="slotProps.deleting"
                       @delete="slotProps.onDelete"/>
@@ -75,6 +75,10 @@ export default {
       return this.$store.dispatch("createSecret", { namespace, name, secret }).then(() => {
         this.secret = { name: "", data: "", pullRequest: false };
       });
+    },
+
+    tags(item) {
+      return item.pull_request ? ["pull request"] : [];
     },
 
     dispatchDelete(item) {
