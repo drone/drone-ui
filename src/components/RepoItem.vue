@@ -277,6 +277,15 @@ export default {
   }
 }
 
+.page-builds-feed .description .commit-message {
+  font-style: italic;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+}
+
 .time {
   flex-shrink: 0;
   display: flex;
