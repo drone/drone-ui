@@ -21,8 +21,8 @@ import Hint from "@/components/Hint";
 
 import * as validators from "@/lib/validators";
 
-const DANGER_THEME_STATUSES = ["failure", "error"];
-const INFO_THEME_STATUSES = ["killed", "skipped", "declined", "waiting_on_dependencies", "pending", "blocked"];
+const DANGER_THEME_STATUSES = ["failure", "error", "killed"];
+const INFO_THEME_STATUSES = ["skipped", "declined", "waiting_on_dependencies", "pending", "blocked"];
 const WARNING_THEME_STATUSES = ["running"];
 const SUCCESS_THEME_STATUSES = ["success"];
 
