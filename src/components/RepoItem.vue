@@ -103,6 +103,7 @@ export default {
       return "pushed";
     },
     showElapsedTime() {
+      if (!this.build.started) return false;
       return isBuildFinished(this.build) ? !!this.build.finished : !!this.build.started;
     }
   }
