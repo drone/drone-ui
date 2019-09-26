@@ -130,8 +130,7 @@ export const streamEvents = ({ commit, state, getters }) => {
     if (window && window.DEBUG) {
       console.debug(repo);
     }
-    if (state.latest[repo.slug] || !getters.userPresent) {
-      commit("BUILD_EVENT", { repo });
-    }
+
+    commit("BUILD_EVENT", { repo });
   };
 };

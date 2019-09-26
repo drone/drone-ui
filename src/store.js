@@ -452,7 +452,11 @@ export default new Vuex.Store({
       }
 
       const latest = state.latest[repo.slug];
-      if (latest && (!latest.build || latest.build.number <= repo.build.number)) {
+      if (!latest) {
+        return;
+      }
+
+      if (!latest.build || latest.build.number <= repo.build.number) {
         Vue.set(state.latest, repo.slug, repo);
       }
 
