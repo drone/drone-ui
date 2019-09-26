@@ -19,11 +19,11 @@
         </div>
         <Help title="Project settings">
           <p class="help-p">
-            <a href="https://docs.drone.io/user-guide/signature/" target="_blank" class="link">Protected</a>
+            <a href="https://docs.drone.io/configure/signature/" target="_blank" class="link">Protected</a>
             - If Enabled, blocks pipeline if the yaml signature cannot be verified.
           </p>
           <p class="help-p">
-            <a href="https://docs.drone.io/administration/user/admins/" target="_blank" class="link">Trusted</a>
+            <a href="https://docker-runner.docs.drone.io/configuration/steps/#privileged-mode" target="_blank" class="link">Trusted</a>
             - Enables privileged capabilities: an ability to start privileged containers and mount host machine volumes.
           </p>
         </Help>
@@ -59,7 +59,7 @@
                      spellcheck="false"
                      type="text"/>
         </div>
-        <Help title="Configuration" href="https://docs.drone.io/user-guide/">
+        <Help title="Configuration" href="https://docs.drone.io/configure/overview/">
           The name of a file with the pipeline definition.
         </Help>
       </div>

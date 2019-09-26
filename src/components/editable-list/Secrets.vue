@@ -6,8 +6,8 @@
                 :dispatchDelete="dispatchDelete">
     <IconSecretsEmpty slot="empty"/>
 
-    <Help slot="help" title="Secrets" href="https://docs.drone.io/user-guide/secrets/">
-      To be used in build steps
+    <Help slot="help" title="Secrets" href="https://docs.drone.io/configure/secrets/">
+      To be used in pipeline steps
     </Help>
 
     <EditableListItem slot="item" slot-scope="slotProps" :tags="tags(slotProps.item)"
