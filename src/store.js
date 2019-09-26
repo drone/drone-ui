@@ -14,6 +14,16 @@ function mergeRepoChanges(prev, next) {
   };
 }
 
+function updateBuildsFeedByBuild(state, build) {
+  const builds = state.buildsFeed.data;
+  for (let i = 0; i < builds.length; ++i) {
+    if (builds[i].build.id === build.id) {
+      Vue.delete(state.buildsFeed.data, i);
+      break;
+    }
+  }
+}
+
 function updateBuildsFeedByBuildEvent(state, event) {
   const builds = state.buildsFeed.data;
   let index = -1;
@@ -481,6 +491,8 @@ export default new Vuex.Store({
       if (state.builds[slug]) {
         insertBuildCollection(state.builds[slug].data, slug, build);
       }
+
+      updateBuildsFeedByBuild(state, build)
     },
 
     BUILDS_FEED_LOADING(state) {
