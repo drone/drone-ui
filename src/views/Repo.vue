@@ -51,7 +51,8 @@
     <Alert v-else-if="repoEnabling">Activating...</Alert>
     <Card v-else-if="showActivatePrompt" class="activate" contentPadding="40px">
       <IconActivateGear/>
-      <Button theme="primary" @click.native="handleActivate" :disabled="repoEnabling" size="l">
+      <span v-if="!isAdmin" class="alert-admin-activate">Please contact a repository administrator to activate this project.</span>
+      <Button v-if="isAdmin" theme="primary" @click.native="handleActivate" :disabled="repoEnabling" size="l">
         Activate repository
       </Button>
     </Card>
@@ -130,6 +131,9 @@ export default {
     },
     isCollaborator() {
       return (this.repo && this.repo.permissions && this.repo.permissions.write) || (this.user && this.user.admin);
+    },
+    isAdmin() {
+      return (this.repo && this.repo.permissions && this.repo.permissions.admin);
     },
     build() {
       const collection = this.$store.state.builds[this.slug];
@@ -280,5 +284,13 @@ nav .router-link-exact-active {
 .icon-activate-gear {
   margin: 0 auto 30px;
   display: block;
+}
+
+.alert-admin-activate {
+  max-width: 300px;
+  line-height: 18px;
+  display: block;
+  color: #2364d2;
+  margin: 0px auto;
 }
 </style>

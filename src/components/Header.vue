@@ -219,6 +219,10 @@ export default {
     background-color: #fff;
     color: $body-color;
   }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
 }
 </style>
 
