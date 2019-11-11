@@ -8,6 +8,12 @@
         <div class="empty-message">Your Build List is Empty.</div>
       </Alert>
 
+      <div class="build-filter" v-if="!showEmptyListAlert">
+        <Card>
+          <label class="control-label">Branch</label> <BaseSelect :options="branches" v-model="defaultBranch"/>
+        </Card>
+      </div>
+
       <router-link
         class="build"
         v-for="build in builds"
@@ -18,7 +24,8 @@
                   :status="build.status"
                   :build="shrinkBuild(build)"
                   :avatar="build.author_avatar"
-                  :linkRepo="repo"/>
+                  :linkRepo="repo"
+                  v-if="defaultBranch === '(All)' || defaultBranch === build.target"/>
       </router-link>
 
       <MoreButton v-if="showHasMore" @click.native="showMore">Show more</MoreButton>
@@ -30,6 +37,8 @@
 
 <script>
 import Alert from "@/components/Alert.vue";
+import BaseSelect from "@/components/forms/BaseSelect.vue";
+import Card from "@/components/Card.vue";
 import RepoItem from "@/components/RepoItem.vue";
 import Loading from "@/components/Loading.vue";
 import MoreButton from "@/components/buttons/MoreButton.vue";
@@ -40,11 +49,18 @@ export default {
   name: "Builds",
   components: {
     Alert,
+    BaseSelect,
+    Card,
     RepoItem,
     Loading,
     AlertError,
     MoreButton,
     IconDroneSleep
+  },
+  data: function () {
+    return {
+      defaultBranch: ""
+    }
   },
   computed: {
     slug() {
@@ -70,6 +86,28 @@ export default {
       builds.sort((a, b) => b.number - a.number);
       return builds;
     },
+    branches() {
+      const counts = {};
+      let branches = new Set();
+      branches.add("(All)");
+      this.builds.forEach( build => {
+        if (typeof counts[build.target] === 'undefined') {
+          counts[build.target] = 0;
+        }
+        counts[build.target]++;
+        branches = branches.add(build.target);
+      });
+      branches = [... branches];
+      // Sort branches by most builds but prefer master if it's in there
+      branches = branches.sort((a, b) => {
+        if (b === "master") {
+          return 1;
+        }
+        return counts[b] - counts[a];
+      });
+      this.defaultBranch = branches[0];
+      return branches.map(branch => [branch, branch]);
+    },
     showLoading() {
       return (
         this.collection &&
@@ -94,6 +132,9 @@ export default {
     },
     shrinkBuild(build) {
       return { ...build, message: null };
+    },
+    input(branch) {
+      this.defaultBranch = branch;
     }
   }
 };
@@ -111,7 +152,7 @@ export default {
 <style scoped lang="scss">
 @import "../assets/styles/mixins";
 
-.icon-drone-sleep {
+.icon-drone-sleep, .build-filter {
   margin-bottom: 20px;
 }
 
@@ -148,5 +189,11 @@ export default {
   @include mobile {
     margin-left: 7px;
   }
+}
+
+.build-filter .control-label {
+  margin-left: 10px;
+  margin-right: 30px;
+  font-size: 1.1em;
 }
 </style>
