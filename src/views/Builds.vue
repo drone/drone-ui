@@ -132,9 +132,6 @@ export default {
     },
     shrinkBuild(build) {
       return { ...build, message: null };
-    },
-    input(branch) {
-      this.defaultBranch = branch;
     }
   }
 };
