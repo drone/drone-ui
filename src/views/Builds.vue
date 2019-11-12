@@ -87,9 +87,8 @@ export default {
       return builds;
     },
     branches() {
-      const counts = {};
-      let branches = new Set();
-      branches.add("(All)");
+      const counts = {"(All)": 0};
+      let branches = new Set(["(All)"]);
       this.builds.forEach( build => {
         if (typeof counts[build.target] === 'undefined') {
           counts[build.target] = 0;
@@ -100,7 +99,13 @@ export default {
       branches = [... branches];
       // Sort branches by most builds but prefer master if it's in there
       branches = branches.sort((a, b) => {
-        if (b === "master") {
+        if (b === "(All)" && a === "master") {
+          return 1;
+        }
+        if (b === "master" && a === "(All)") {
+          return -1;
+        }
+        if (b === "master" || b === '(All)') {
           return 1;
         }
         return counts[b] - counts[a];
