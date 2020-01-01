@@ -38,12 +38,17 @@ export default {
   padding: $header-padding-side;
 }
 .modal-content {
-  box-shadow: 0 2px 4px 0 rgba(25, 45, 70, 0.05);
-  border: solid 1px #edeef1;
   border-radius: 3px;
   min-width: 0;
   @include themed {
+    border: solid 1px tget("border-color");
     background: tget("surface-color");
+  }
+  @include themed-only(default) {
+    box-shadow: 0 2px 4px 0 rgba(25, 45, 70, 0.05);
+  }
+  @include themed-only(dark) {
+    box-shadow: 0 2px 4px 0 darken(tget("body-color"), 20%);
   }
 }
 </style>
