@@ -4,17 +4,22 @@
 
 <style lang="scss">
 @import "../assets/styles/variables";
+@import "../assets/styles/mixins";
 
 .link {
   text-decoration: none;
-  color: $color-primary;
+  @include themed {
+    color: tget("color-primary");
+  }
 }
 
 .link:focus,
 .link:hover {
   position: relative;
-  color: $color-primary;
   outline: none;
+  @include themed {
+    color: tget("color-primary");
+  }
 }
 
 .link:focus:after,

@@ -97,6 +97,7 @@ export default {
 
 <style scoped lang="scss">
 @import "../assets/styles/variables";
+@import "../assets/styles/mixins";
 
 .repo-link {
   outline: none;
@@ -111,7 +112,9 @@ export default {
 }
 
 .repo-link + .repo-link {
-  border-top: 1px solid $border-color;
+  @include themed {
+    border-top: 1px solid tget("border-color");
+  }
 }
 
 .repo-item {
@@ -121,7 +124,9 @@ export default {
 
 .text {
   text-align: center;
-  color: $color-text-secondary;
   padding: 16px;
+  @include themed {
+    color: tget("color-text-secondary");
+  }
 }
 </style>

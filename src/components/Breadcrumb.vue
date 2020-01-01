@@ -44,6 +44,8 @@ export default {
 
 <style scoped lang="scss">
 @import "../assets/styles/variables";
+@import "../assets/styles/mixins";
+
 
 .breadcrumbs {
   padding: 5px 0;
@@ -66,7 +68,9 @@ export default {
 
 .divider {
   padding: 0 8px;
-  color: $color-text-secondary;
   vertical-align: bottom;
+  @include themed {
+    color: tget("color-text-secondary");
+  }
 }
 </style>

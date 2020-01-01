@@ -112,7 +112,9 @@ export default {
 }
 
 .button.bordered {
-  border: 1px solid rgba($color-text, 0.25);
+  @include themed {
+    border: 1px solid rgba(tget("color-text"), 0.25);
+  }
 }
 
 .button.bordered.size-m {
@@ -124,27 +126,40 @@ export default {
 }
 
 .button.theme-default {
-  background-color: $color-text;
+  @include themed {
+    background-color: tget("color-text");
+  }
 }
 
 .button.theme-light {
-  background-color: #fff;
+  @include themed {
+    background-color: #fff;
+  }
 }
 
 .button.theme-primary {
-  background-color: $color-primary;
+  @include themed {
+    background-color: tget("color-primary");
+  }
 }
 
 .button.theme-danger {
-  background-color: #ff4164;
+  @include themed {
+    background-color: tget("color-danger");
+  }
 }
 
 .button.outline {
-  background-color: transparent;
+  @include themed {
+    background-color: transparent;
+  }
 }
 
 .button.theme-default.outline {
-  color: $color-text;
+  @include themed {
+    background-color: transparent;
+    color: tget("color-text");
+  }
 }
 
 .button.theme-light.outline {
@@ -152,51 +167,71 @@ export default {
 }
 
 .button.theme-primary.outline {
-  color: $color-primary;
+  @include themed {
+    color: tget("color-primary");
+  }
 }
 
 .button.theme-danger.outline {
-  color: #ff4164;
+  @include themed {
+    color: tget("color-danger");
+  }
 }
 
 .button:focus {
-  outline: none;
+  @include themed {
+    outline: none;
+  }
 }
 
 .button.bordered:hover,
 .button.bordered:focus {
-  border-color: $color-primary;
+  @include themed {
+    border-color: tget("color-primary");
+  }
 }
 
 .button.theme-default:focus,
 .button.theme-default:hover {
-  background-color: rgba($color-text, 0.8);
+  @include themed {
+    background-color: rgba(tget("color-text"), 0.8);
+  }
 }
 
 .button.theme-default.outline:focus,
 .button.theme-default.outline:hover {
-  color: $color-primary;
-  background-color: transparent;
+  @include themed {
+    background-color: transparent;
+    color: tget("color-primary");
+  }
 }
 
 .button.theme-primary:focus,
 .button.theme-primary:hover {
-  background-color: #085cc1;
+  @include themed {
+    background-color: #085cc1;
+  }
 }
 
 .button.theme-primary.outline:focus,
 .button.theme-primary.outline:hover {
-  background-color: rgba(5, 100, 215, $button-outline-hover-bg-opacity);
+  @include themed {
+    background-color: rgba(5, 100, 215, tget("button-outline-hover-bg-opacity"));
+  }
 }
 
 .button.theme-danger:focus,
 .button.theme-danger:hover {
-  background-color: #dd3e60;
+  @include themed {
+    background-color: #dd3e60;
+  }
 }
 
 .button.theme-danger.outline:focus,
 .button.theme-danger.outline:hover {
-  background-color: rgba(255, 65, 100, $button-outline-hover-bg-opacity);
+  @include themed {
+    background-color: rgba(255, 65, 100, tget("button-outline-hover-bg-opacity"));
+  }
 }
 
 .button.loading {
@@ -222,14 +257,19 @@ export default {
 }
 
 .button.theme-danger.outline.loading:before {
-  border-color: #dd3e60;
+  @include themed {
+    border-color: #dd3e60;
+  }
 }
 
 .button[disabled],
 .button:hover[disabled] {
   cursor: not-allowed;
   opacity: 0.25;
-  border-color: rgba($color-text, 0.5);
-  color: $color-text;
+
+  @include themed {
+    border-color: rgba(tget("color-text"), 0.5);
+    color: tget("color-text");
+  }
 }
 </style>

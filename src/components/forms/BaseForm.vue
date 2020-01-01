@@ -38,13 +38,17 @@ export default {
 }
 
 .control-group + .control-group {
-  border-top: 1px solid $border-color;
+  @include themed {
+    border-top: 1px solid tget("border-color");
+  }
 }
 
 .control-group .control-label {
   flex: 0 0 150px;
   margin-right: 15px;
-  color: $color-text-secondary;
+  @include themed {
+    color: tget("color-text-secondary");
+  }
 
   @include tablet {
     flex-basis: auto;
@@ -58,8 +62,10 @@ export default {
 }
 
 .control-actions {
-  border-top: 1px solid $border-color;
   padding-top: 15px;
+  @include themed {
+    border-top: 1px solid tget("border-color");
+  }
 }
 
 .control-actions > .error-message {

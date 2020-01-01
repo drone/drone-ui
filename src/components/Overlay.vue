@@ -17,9 +17,9 @@ export default {
 
 <style scoped lang="scss">
 @import "../assets/styles/variables";
+@import "../assets/styles/mixins";
 
 .overlay {
-  background: $overlay-color;
   position: fixed;
   top: 0;
   right: 0;
@@ -28,5 +28,8 @@ export default {
   z-index: $overlay-z-index;
   display: block;
   transition-duration: 0.25s;
+  @include themed {
+    background: tget("overlay-color");
+  }
 }
 </style>

@@ -116,12 +116,19 @@ export default {
 .repo-item {
   border-radius: 4px;
   box-sizing: border-box;
-  box-shadow: 0 2px 4px 0 rgba($color-text, 0.1);
   border: solid 1px $border-color;
-  background-color: #ffffff;
-  color: $color-text;
   padding: 15px;
-  transition: box-shadow linear 0.2s;
+  transition: box-shadow linear 0.2s, background linear 0.2s;
+  @include themed {
+    color: tget("color-text");
+    background: tget("surface-color");
+  }
+  @include themed-only(default) {
+    box-shadow: 0 2px 4px 0 rgba(tget("color-text"), 0.1);
+  }
+  @include themed-only(dark) {
+    box-shadow: 0 2px 4px 0 rgba(tget("body-color"), 0.5);
+  }
 
   @include mobile(true) {
     padding: 10px;
@@ -179,7 +186,9 @@ export default {
   height: 22px;
   font-size: 18px;
   line-height: normal;
-  color: $color-text;
+  @include themed {
+    color: tget("color-text");
+  }
   display: flex;
   align-items: flex-start;
 
@@ -214,16 +223,20 @@ export default {
   height: 15px;
   opacity: 0.2;
   border-bottom-left-radius: 8px;
-  border-left: solid 1px $color-text;
-  border-bottom: solid 1px $color-text;
   margin-left: 9px;
+  @include themed {
+    border-left: solid 1px tget("color-text");
+    border-bottom: solid 1px tget("color-text");
+  }
 }
 
 .icon-repository {
   width: 20px;
   height: 20px;
   margin-right: 10px;
-  color: $color-info;
+  @include themed {
+    color: tget("color-info");
+  }
   flex-shrink: 0;
 }
 
@@ -239,7 +252,9 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: $color-text-secondary;
+  @include themed {
+    color: tget("color-text-secondary");
+  }
 
   .header + & {
     margin-top: 6px;
@@ -260,7 +275,9 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
   line-height: normal;
-  color: $color-text-secondary;
+  @include themed {
+    color: tget("color-text-secondary");
+  }
   margin-right: 15px;
 
   .divider {
@@ -305,9 +322,11 @@ export default {
   display: inline-block;
   width: 3px;
   height: 3px;
-  background: rgba($color-text, 0.25);
   border-radius: 50%;
   margin: 0 6px;
+  @include themed {
+    background: rgba(tget("color-text"), 0.25);
+  }
 }
 </style>
 

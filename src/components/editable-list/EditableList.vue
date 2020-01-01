@@ -81,15 +81,18 @@ export default {
 
 <style scoped lang="scss">
 @import "../../assets/styles/variables";
+@import "../../assets/styles/mixins";
 
 .title {
   flex-grow: 1;
 }
 
 .empty {
-  color: $color-text-secondary;
   padding: 30px 0;
   text-align: center;
+  @include themed {
+    color: tget("color-text-secondary");
+  }
 }
 
 .editable-list-item-wrapper + .editable-list-item-wrapper {
@@ -109,6 +112,7 @@ export default {
 
 <style lang="scss">
 @import "../../assets/styles/variables";
+@import "../../assets/styles/mixins";
 
 .editable-list form {
   input[type="text"],
@@ -116,7 +120,9 @@ export default {
     display: block;
     margin-bottom: 15px;
     width: 100%;
-    border-color: rgba($color-text, 0.15);
+    @include themed {
+      border-color: rgba(tget("color-text"), 0.15);
+    }
   }
 
   textarea {
@@ -126,12 +132,16 @@ export default {
   }
 
   select {
-    border-color: rgba($color-text, 0.15);
     margin-bottom: 15px;
+    @include themed {
+      border-color: rgba(tget("color-text"), 0.15);
+    }
   }
 
   .base-checkbox label:before {
-    border-color: rgba($color-text, 0.15);
+    @include themed {
+      border-color: rgba(tget("color-text"), 0.15);
+    }
   }
 }
 </style>

@@ -33,6 +33,7 @@ export default {
 
 <style lang="scss">
 @import "../assets/styles/variables";
+@import "../assets/styles/mixins";
 
 .repo-link.hover-type-box-shadow:focus {
   outline: none;
@@ -40,14 +41,24 @@ export default {
 
 .repo-link.hover-type-box-shadow:focus .repo-item,
 .repo-link.hover-type-box-shadow:hover .repo-item {
-  box-shadow: 0 4px 10px 0 rgba($color-text, 0.2);
+  @include themed-only(dark) {
+    background: lighten(tget("surface-color"), 3%);
+    box-shadow: 0 4px 10px 0 darken(tget("body-color"), 20%);
+  }
+  @include themed-only(default) {
+    box-shadow: 0 4px 10px 0 rgba(tget("color-text"), 0.2);
+  }
 }
 
 .repo-link .repo-item.active-yes .header .title {
-  color: $color-primary;
+  @include themed {
+    color: tget("color-primary");
+  }
 }
 
 .repo-link .repo-item.build-no.active-no .header .title {
-  color: $color-text;
+  @include themed {
+    color: tget("color-text");
+  }
 }
 </style>

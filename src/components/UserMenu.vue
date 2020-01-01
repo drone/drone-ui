@@ -55,6 +55,7 @@ export default {
 
 <style scoped lang="scss">
 @import "../assets/styles/variables";
+@import "../assets/styles/mixins";
 
 .user-menu {
   display: inline-block;
@@ -72,7 +73,9 @@ export default {
 .popup a {
   display: block;
   padding: 11px 30px 11px 15px;
-  color: $color-text;
+  @include themed {
+    color: tget("color-text");
+  }
 }
 
 .popup a.logout {
@@ -81,12 +84,16 @@ export default {
 
 .popup a:focus,
 .popup a:hover {
-  background: rgba($color-text, 0.03);
   outline: none;
+  @include themed {
+    background: rgba(tget("color-text"), 0.03);
+  }
 }
 
 .popup a + a {
-  border-top: 1px solid $border-color;
+  @include themed {
+    border-top: 1px solid tget("border-color");
+  }
 }
 
 .avatar {

@@ -6,17 +6,26 @@ html {
 
 html, body {
   box-sizing: border-box;
-  color: $color-text;
   font-size: 14px;
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
   min-height: 100%;
   margin: 0px;
   padding: 0px;
   width: 100%;
+
+  @include themed(true) {
+    color: tget("color-text");
+  }
 }
 
 body {
-  background: $body-color;
+  @include themed(true) {
+    background: tget("body-color");
+  }
+
+  &.no-transition * {
+    transition: none !important;
+  }
 }
 
 a {

@@ -193,10 +193,12 @@ h1 {
 }
 
 nav {
-  border-bottom: 1px solid $border-color;
   margin-bottom: 20px;
   padding-left: 15px;
   display: flex;
+  @include themed {
+    border-bottom: 1px solid tget("border-color");
+  }
 
   svg {
     opacity: 0.6;
@@ -210,7 +212,6 @@ nav {
 }
 
 nav a {
-  color: $color-text-secondary;
   height: 18px;
   line-height: 18px;
   padding-bottom: 11px;
@@ -222,6 +223,9 @@ nav a {
   align-items: center;
   margin-right: 30px;
   border-bottom: 1px solid transparent;
+  @include themed {
+    color: tget("color-text-secondary");
+  }
 
   @include mobile {
     letter-spacing: normal;
@@ -231,12 +235,16 @@ nav a {
 }
 
 nav a.manually-active {
-  color: $color-text;
+  @include themed {
+    color: tget("color-text");
+  }
 }
 
 nav a:hover,
 nav a:focus {
-  color: $color-text;
+  @include themed {
+    color: tget("color-text");
+  }
 
   svg {
     opacity: 1;
@@ -245,14 +253,18 @@ nav a:focus {
 
 nav a.manually-active:focus,
 nav a.manually-active:hover {
-  color: $color-primary;
+  @include themed {
+    color: tget("color-primary");
+  }
 }
 
 nav a[disabled],
 nav a[disabled]:hover,
 nav a[disabled]:focus {
   pointer-events: none;
-  color: rgba($color-text, 0.25);
+  @include themed {
+    color: rgba(tget("color-text"), 0.25);
+  }
 }
 
 nav a svg {
@@ -260,8 +272,10 @@ nav a svg {
 }
 
 nav .router-link-exact-active {
-  border-color: $color-text;
-  color: $color-text;
+  @include themed {
+    border-color: tget("color-text");
+    color: tget("color-text");
+  }
 }
 
 .fade-enter-active,
@@ -290,7 +304,9 @@ nav .router-link-exact-active {
   max-width: 300px;
   line-height: 18px;
   display: block;
-  color: #2364d2;
   margin: 0px auto;
+  @include themed {
+    color: tget("color-primary");
+  }
 }
 </style>

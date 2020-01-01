@@ -21,13 +21,16 @@ export default {
 
 <style scoped lang="scss">
 @import "../assets/styles/variables";
+@import "../assets/styles/mixins";
 
 .panel {
   width: 360px;
-  box-shadow: 0 2px 4px 0 rgba($color-text, 0.1);
   overflow: hidden;
   flex-shrink: 0;
   display: none;
+  @include themed {
+    box-shadow: 0 2px 4px 0 rgba(tget("color-text"), 0.1);
+  }
 
   &.opened-yes {
     display: block;
@@ -50,8 +53,10 @@ export default {
   position: fixed;
   top: $header-height;
   bottom: 0;
-  background-color: #fff;
   overflow: auto;
-  border: 1px solid rgba($color-text, 0.1);
+  @include themed {
+    background-color: tget("surface-color");
+    border: 1px solid rgba(tget("color-text"), 0.1);
+  }
 }
 </style>

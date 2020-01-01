@@ -80,6 +80,7 @@ export default {
 
 <style scoped lang="scss">
 @import "../assets/styles/variables";
+@import "../assets/styles/mixins";
 
 .status {
   display: inline-block;
@@ -93,15 +94,21 @@ export default {
 }
 
 .theme-success {
-  background-color: $color-success;
+  @include themed {
+    background-color: tget("color-success");
+  }
 }
 
 .theme-danger {
-  background-color: $color-danger;
+  @include themed {
+    background-color: tget("color-danger");
+  }
 }
 
 .theme-info {
-  background-color: $color-info;
+  @include themed {
+    background-color: tget("color-info");
+  }
 }
 
 .hint {

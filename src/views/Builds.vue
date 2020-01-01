@@ -101,10 +101,13 @@ export default {
 
 <style lang="scss">
 @import "../assets/styles/variables";
+@import "../assets/styles/mixins";
 
 .builds .build .repo-item .header .number,
 .builds .build:hover .repo-item .header {
-  color: $color-primary;
+  @include themed {
+    color: tget("color-primary");
+  }
 }
 </style>
 
@@ -116,7 +119,9 @@ export default {
 }
 
 .empty-message {
-  color: $color-text-secondary;
+  @include themed {
+    color: tget("color-text-secondary");
+  }
 }
 
 .build {
@@ -130,7 +135,13 @@ export default {
 
 .build:hover .repo-item,
 .build:focus .repo-item {
-  box-shadow: 0 4px 10px 0 rgba($color-text, 0.25);
+  @include themed-only(dark) {
+    background: lighten(tget("surface-color"), 3%);
+    box-shadow: 0 4px 10px 0 darken(tget("body-color"), 20%);
+  }
+  @include themed-only(default) {
+    box-shadow: 0 4px 10px 0 rgba(tget("color-text"), 0.25);
+  }
 }
 
 .build + .build {
@@ -139,7 +150,9 @@ export default {
 
 .loading {
   margin: 20px 0;
-  color: $color-text-secondary;
+  @include themed {
+    color: tget("color-text-secondary");
+  }
 }
 
 .more-button {

@@ -67,10 +67,13 @@ export default {
 
 <style scoped lang="scss">
 @import "../assets/styles/variables";
+@import "../assets/styles/mixins";
 
 div {
-  background-color: rgba($color-text, 0.02);
   border-radius: 3px;
+  @include themed {
+    background-color: rgba(tget("color-text"), 0.02);
+  }
 }
 
 header {
@@ -78,7 +81,12 @@ header {
   display: flex;
   height: 50px;
   padding: 0px 15px;
-  border-bottom: 1px solid #eff0f2;
+  @include themed-only(dark) {
+    border-bottom: 1px solid tget("border-color");
+  }
+  @include themed-only(default) {
+    border-bottom: 1px solid #eff0f2;
+  }
 }
 
 header h1,
@@ -92,8 +100,10 @@ header h3 {
   font-stretch: normal;
   line-height: normal;
   letter-spacing: normal;
-  color: $color-text;
   flex: 1;
+  @include themed {
+    color: tget("color-text");
+  }
 }
 
 pre {
@@ -104,9 +114,11 @@ pre {
   font-style: normal;
   font-stretch: normal;
   letter-spacing: normal;
-  color: $color-text;
   padding: 15px;
   white-space: normal;
+  @include themed {
+    color: tget("color-text");
+  }
 }
 
 pre.lang-terminal code:before {
@@ -162,9 +174,11 @@ code {
 }
 
 svg {
-  fill: $color-text;
   opacity: 0.25;
   width: 22px;
   height: 22px;
+  @include themed {
+    fill: tget("color-text");
+  }
 }
 </style>

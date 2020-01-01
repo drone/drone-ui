@@ -586,11 +586,15 @@ $output-border-radius: 6px;
   font-size: 12px;
   font-family: Menlo, Courier, monospace;
   font-weight: 300;
-  background-color: $terminal-color;
   border-radius: $output-border-radius;
-  box-shadow: 0px 0px 8px 1px #e8eaed;
   box-sizing: border-box;
   padding: 0;
+  @include themed {
+    background-color: tget("terminal-color");
+  }
+  @include themed-only(default) {
+    box-shadow: 0px 0px 8px 1px #e8eaed;
+  }
 }
 
 .output.show-to-top .to-top {
@@ -667,13 +671,14 @@ $output-header-sticky-offset: 20px;
   bottom: $output-header-height - $output-border-radius;
   left: -10px; // hide box-shadow of content
   right: -10px;
-  background: $body-color;
   z-index: $output-header-before-z-index;
+  @include themed {
+    background: tget("body-color");
+  }
 }
 
 .output-header-content {
   position: relative;
-  background: $terminal-color;
   padding: 0 5px 0 15px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   border-top: 1px solid transparent;
@@ -685,6 +690,9 @@ $output-header-sticky-offset: 20px;
   border-radius: 6px 6px 0 0;
   z-index: $output-header-before-z-index + 1;
   height: 100%;
+  @include themed {
+    background-color: tget("terminal-color");
+  }
 }
 
 .output-title {
@@ -800,10 +808,15 @@ $output-header-sticky-offset: 20px;
   cursor: pointer;
   width: 21px;
   height: 30px;
-  background: $color-text;
   color: rgba(255, 255, 255, 0.75);
   display: none;
   border-bottom-right-radius: 6px;
+  @include themed-only(dark) {
+    background: tget("terminal-color");
+  }
+  @include themed-only(default) {
+    background: tget("color-text");
+  }
 }
 
 .to-top > svg {
@@ -817,13 +830,16 @@ $output-header-sticky-offset: 20px;
 
 <style lang="scss">
 @import "../assets/styles/variables";
+@import "../assets/styles/mixins";
 
 .stage-container > a {
   &:hover,
   &:focus {
     .stage {
       header {
-        background: rgba($color-text, 0.02);
+        @include themed {
+          background: rgba(tget("color-text"), 0.02);
+        }
       }
 
       &.has-steps {
@@ -842,7 +858,9 @@ $output-header-sticky-offset: 20px;
 .step-container > a:hover,
 .step-container > a:focus {
   outline: none;
-  background-color: rgba($color-text, 0.02);
+  @include themed {
+    background-color: rgba(tget("color-text"), 0.02);
+  }
 }
 
 // prettier-ignore

@@ -26,6 +26,7 @@ export default {
 
 <style scoped lang="scss">
 @import "../assets/styles/variables";
+@import "../assets/styles/mixins";
 
 .card {
   text-align: center;
@@ -33,8 +34,10 @@ export default {
 }
 
 .secondary {
-  color: $color-text-secondary;
   margin-top: 8px;
+  @include themed {
+    color: tget("color-text-secondary");
+  }
 }
 
 .theme-info,
@@ -47,18 +50,26 @@ export default {
 }
 
 .theme-success {
-  background-color: $color-success;
+  @include themed {
+    background-color: tget("color-success");
+  }
 }
 
 .theme-info {
-  background-color: $color-info;
+  @include themed {
+    background-color: tget("color-info");
+  }
 }
 
 .theme-warning {
-  background-color: $color-warning;
+  @include themed {
+    background-color: tget("color-warning");
+  }
 }
 
 .theme-danger {
-  background-color: $color-danger;
+  @include themed {
+    background-color: tget("color-danger");
+  }
 }
 </style>

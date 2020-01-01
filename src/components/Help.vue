@@ -51,14 +51,22 @@ export default {
   height: 18px;
   line-height: 18px;
   border-radius: 50%;
-  background: rgba($color-text, 0.3);
   text-align: center;
   font-weight: 700;
-  color: #fff;
   cursor: pointer;
   user-select: none;
-  @include hf {
-    background: rgba($color-text, 0.6);
+  @include themed {
+    color: tget("surface-color");
+    
+    @include hf {
+      background: rgba(tget("color-text"), 0.6);
+    }
+  }
+  @include themed-only(default) {
+    background: rgba(tget("color-text"), 0.3);
+  }
+  @include themed-only(dark) {
+    background: rgba(tget("color-text"), 0.4);
   }
 }
 .popup {
@@ -67,8 +75,10 @@ export default {
 .header {
   line-height: 18px;
   padding: 11px 15px;
-  border-bottom: 1px solid rgba($color-text, 0.05);
   font-weight: 600;
+  @include themed {
+    border-bottom: 1px solid rgba(tget("color-text"), 0.05);
+  }
 }
 .content {
   padding: 10px 15px;

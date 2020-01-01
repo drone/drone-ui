@@ -20,6 +20,7 @@ export default {
 
 <style scoped lang="scss">
 @import "../../assets/styles/variables";
+@import "../../assets/styles/mixins";
 
 button.more-button {
   display: flex;
@@ -44,7 +45,9 @@ button.more-button:focus span {
 
 button.more-button:hover svg,
 button.more-button:focus svg {
-  color: $color-primary;
+  @include themed {
+    color: tget("color-primary");
+  }
 }
 
 button svg + span {
@@ -58,7 +61,9 @@ span {
 }
 
 svg {
-  color: $color-text-secondary;
+  @include themed {
+    color: tget("color-text-secondary");
+  }
   margin: 5px 0 0;
 }
 </style>

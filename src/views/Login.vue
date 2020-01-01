@@ -28,6 +28,7 @@ export default {
 
 <style scoped lang="scss">
 @import "../assets/styles/variables";
+@import "../assets/styles/mixins";
 
 div.container {
   align-items: center;
@@ -41,9 +42,11 @@ div.container {
   width: 340px;
   padding: 70px 20px 30px;
   border-radius: 5px;
-  box-shadow: 0 2px 4px 0 $border-color;
-  background-color: #ffffff;
   position: relative;
+  @include themed {
+    background-color: tget("surface-color");
+    box-shadow: 0 2px 4px 0 tget("border-color");
+  }
 }
 
 .logo {
