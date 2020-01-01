@@ -7,6 +7,7 @@
 
     <Popup :position="'bottom'" :align="'right'" :evict="!this.opened">
       <router-link to="/account" @focus.native="open" @blur.native="closeDelayed">User settings</router-link>
+      <DarkThemeControl class="section"></DarkThemeControl>
       <a href="/logout" class="logout" @focus="open" @blur="closeDelayed">
         {{ $t("labels.logout") }}
       </a>
@@ -16,11 +17,13 @@
 
 <script>
 import Popup from "@/components/Popup.vue";
+import DarkThemeControl from "@/components/DarkThemeControl.vue";
 
 export default {
   name: "UserMenu",
   components: {
-    Popup
+    Popup,
+    DarkThemeControl
   },
   props: {
     user: Object
@@ -67,12 +70,17 @@ export default {
 }
 
 .popup {
+  min-width: 300px;
   white-space: nowrap;
 }
 
 .popup a {
   display: block;
-  padding: 11px 30px 11px 15px;
+}
+
+.popup a,
+.popup .section {
+  padding: 14px 15px;
   @include themed {
     color: tget("color-text");
   }
@@ -90,7 +98,7 @@ export default {
   }
 }
 
-.popup a + a {
+.popup > *:not(:first-child) {
   @include themed {
     border-top: 1px solid tget("border-color");
   }
