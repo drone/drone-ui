@@ -47,6 +47,9 @@ div.container {
     background-color: tget("surface-color");
     box-shadow: 0 2px 4px 0 tget("border-color");
   }
+  @include themed-only(dark) {
+    box-shadow: 0 2px 4px 0 darken(tget("body-color"), 20%);
+  }
 }
 
 .logo {
@@ -54,11 +57,16 @@ div.container {
   padding: 16px;
   margin-bottom: 30px;
   position: absolute;
-  background: #fbfbfb;
   top: -41px;
   left: 50%;
   margin-left: -41px;
   border-radius: 50%;
+  @include themed-only(default) {
+    background: #fbfbfb;
+  }
+  @include themed-only(dark) {
+    background: #000;
+  }
 }
 
 .logo > svg {

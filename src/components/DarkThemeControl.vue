@@ -2,7 +2,7 @@
   <UserMenuSection>
     <div class="left" @click.stop.prevent="">
       <p>Dark theme</p>
-      <span>Dark theme setting will apply to this browser only</span>
+      <span>Dark theme setting will apply to this browser only.</span>
     </div>
     <template slot="right">
       <BaseSwitch v-model="darkThemeEnabled"></BaseSwitch>
