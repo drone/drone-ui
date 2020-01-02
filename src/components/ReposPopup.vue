@@ -104,11 +104,15 @@ export default {
 }
 
 .repo-link.selected {
-  background: $step-selected-bg-color;
+  @include themed {
+    background: tget("step-selected-bg-color");
+  }
 }
 
 .repo-link.selected .repo-item {
-  background: none;
+  @include themed {
+    background: none;
+  }
 }
 
 .repo-link + .repo-link {

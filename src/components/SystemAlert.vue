@@ -4,9 +4,9 @@
 
 <style scoped lang="scss">
 @import "../assets/styles/variables";
+@import "../assets/styles/mixins";
 
 footer {
-  box-shadow: 0 -2px 6px 0px $border-color;
   position: fixed;
   bottom: 0px;
   left: 0px;
@@ -23,6 +23,9 @@ footer {
   justify-content: center;
   text-transform: uppercase;
   align-items: center;
+  @include themed {
+    box-shadow: 0 -2px 6px 0px tget("border-color");
+  }
 }
 
 footer a {

@@ -124,8 +124,10 @@ svg {
 }
 
 .status-running {
-  color: $color-warning;
   background-color: transparent;
+  @include themed {
+    color: tget("color-warning");
+  }
 
   > svg {
     animation: spin 3.3333s linear infinite;

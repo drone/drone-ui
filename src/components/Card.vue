@@ -52,9 +52,9 @@ header {
 }
 
 footer {
-  border-top: 1px solid $border-color;
   padding: 15px;
   @include themed {
+    border-top: 1px solid tget("border-color");
     background-color: rgba(tget("color-text"), 0.02);
   }
 }

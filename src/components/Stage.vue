@@ -56,6 +56,12 @@ export default {
     box-shadow: 0 2px 4px 0 rgba(tget("color-text"), 0.1);
     border: 1px solid rgba(tget("color-text"), 0.1);
   }
+  @include themed-only(default) {
+    box-shadow: 0 2px 4px 0 rgba(tget("color-text"), 0.1);
+  }
+  @include themed-only(dark) {
+    box-shadow: 0 2px 4px 0 darken(tget("body-color"), 20%);
+  }
 
   &.has-content header {
     @include themed {

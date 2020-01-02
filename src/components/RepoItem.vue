@@ -116,8 +116,8 @@ export default {
 .repo-item {
   border-radius: 4px;
   box-sizing: border-box;
-  border: solid 1px $border-color;
   padding: 15px;
+  border: solid 1px $border-color;
   transition: box-shadow linear 0.2s, background linear 0.2s;
   @include themed {
     color: tget("color-text");

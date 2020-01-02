@@ -226,8 +226,10 @@ export default {
   background-color: rgba(255, 255, 255, 0.1);
 
   @include hf {
-    background-color: #fff;
-    color: $body-color;
+    @include themed {
+      background-color: tget("surface-color");
+      color: tget("body-color");
+    }
   }
 
   &:hover {
