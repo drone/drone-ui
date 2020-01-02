@@ -10,7 +10,6 @@
 </template>
 
 <script>
-
 export default {
   name: "UserMenuSection"
 };

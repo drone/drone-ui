@@ -57,7 +57,7 @@ export default {
   user-select: none;
   @include themed {
     color: tget("surface-color");
-    
+
     @include hf {
       background: rgba(tget("color-text"), 0.6);
     }

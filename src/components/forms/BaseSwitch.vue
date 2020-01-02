@@ -29,7 +29,7 @@ export default {
 .base-switch {
   $bg-disabled-color: rgba(0, 0, 0, 0.26);
   $lever-disabled-color: #fff;
-  
+
   position: relative;
 
   input {

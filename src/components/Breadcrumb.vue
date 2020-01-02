@@ -46,7 +46,6 @@ export default {
 @import "../assets/styles/variables";
 @import "../assets/styles/mixins";
 
-
 .breadcrumbs {
   padding: 5px 0;
   max-width: 100%;

@@ -259,8 +259,7 @@ export default {
       return this.buildCollection.data;
     },
     link() {
-      return this.build && this.repo &&
-        `/link/${this.repo.slug}/tree/${this.build.ref}?sha=${this.build.after}`
+      return this.build && this.repo && `/link/${this.repo.slug}/tree/${this.build.ref}?sha=${this.build.after}`;
     },
     buildShowState() {
       if (this.buildCollection.lStatus === "error") return "loadingError";

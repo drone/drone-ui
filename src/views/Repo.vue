@@ -133,7 +133,7 @@ export default {
       return (this.repo && this.repo.permissions && this.repo.permissions.write) || (this.user && this.user.admin);
     },
     isAdmin() {
-      return (this.repo && this.repo.permissions && this.repo.permissions.admin);
+      return this.repo && this.repo.permissions && this.repo.permissions.admin;
     },
     build() {
       const collection = this.$store.state.builds[this.slug];

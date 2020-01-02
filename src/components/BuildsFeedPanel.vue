@@ -50,7 +50,6 @@ export default {
 @import "../assets/styles/variables";
 @import "../assets/styles/mixins";
 
-
 .builds-feed-panel {
   .page-header {
     padding: 0 ($header-padding-side - 5px) 0 $header-padding-side;
