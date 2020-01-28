@@ -1,7 +1,8 @@
 <template>
   <Card>
     <h2 slot="header">Badges</h2>
-    <img slot="header" :src="image" alt="badge"/>
+    <img slot="header" :src="status" alt="badge"/>
+    <img slot="header" :src="coverage" alt="badge"/>
 
     <div class="options">
       <BaseSelect v-model="lang" :options="langs"/>
@@ -9,7 +10,8 @@
     </div>
 
     <CodeSnippet>
-      <code>{{ code }}</code>
+      <code>{{ codeStatus }}</code>
+      <code>{{ codeCoverage }}</code>
     </CodeSnippet>
   </Card>
 </template>
@@ -42,18 +44,32 @@ export default {
     name() {
       return this.$route.params.namespace + "/" + this.$route.params.name;
     },
-    image() {
+    status() {
       const branchSuffix = this.branch ? `?ref=refs/heads/${this.branch}` : "";
       return `${this.instance}/api/badges/${this.name}/status.svg${branchSuffix}`;
     },
-    code() {
+    coverage() {
+      const branchSuffix = this.branch ? `?ref=refs/heads/${this.branch}` : "";
+      return `${this.instance}/api/badges/${this.name}/coverage.svg${branchSuffix}`;
+    },
+    codeStatus() {
       switch (this.lang) {
         case "markdown":
-          return `[![Build Status](${this.image})](${this.instance}/${this.name})`;
+          return `[![Build Status](${this.status})](${this.instance}/${this.name})`;
         case "markup":
-          return `<a href="${this.instance}/${this.name}"><img src="${this.image}" /></a>`;
+          return `<a href="${this.instance}/${this.name}"><img src="${this.status}" /></a>`;
         case "ccmenu":
           return `${this.instance}/api/badges/${this.name}/cc.xml`;
+      }
+    },
+    codeCoverage() {
+      switch (this.lang) {
+        case "markdown":
+          return `[![Coverage](${this.coverage})](${this.instance}/${this.name})`;
+        case "markup":
+          return `<a href="${this.instance}/${this.name}"><img src="${this.coverage}" /></a>`;
+        case "ccmenu":
+          return ``;
       }
     }
   }

@@ -64,6 +64,24 @@
         </Help>
       </div>
 
+      <div class="control-group">
+        <label class="control-label">Coverage parsing</label>
+        <div class="controls">
+          <BaseInput v-model="repo.coverage_parsing"
+                     autocomplete="off"
+                     autocorrect="off"
+                     autocapitalize="off"
+                     spellcheck="false"
+                     type="text"/>
+        </div>
+        <Help title="Coverage parsing">
+          <p class="help-p">A regular expression that will be used to find the test coverage output in the log. Leave blank to disable.</p>
+          <p class="help-p">Below are examples of regex for existing tools:</p>
+          <p class="help-p">Go <code>\(statements\).*\d+.\d+%</code></p>
+          <p class="help-p">NET Core: <code>Total.*\d+.\d+%</code></p>
+        </Help>
+      </div>
+
       <div class="control-actions">
         <Button theme="primary" size="l" @click.native="save" :loading="saving">Save</Button>
         <div class="error-message" v-if="error">{{ error.message }}</div>
@@ -234,6 +252,9 @@ const timeouts = [15, 30, 60, 90, 120, 180, 240, 300, 360, 420, 480, 540, 600, 6
 }
 .help-p + .help-p {
   margin-top: 10px;
+}
+.help code{
+  background: #eee;
 }
 
 .disable {
