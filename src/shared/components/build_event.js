@@ -51,7 +51,7 @@ export default class BuildEvent extends Component {
 						)}
 					</div>
 				</div>
-				<a href={link} target="_blank">
+				<a href={link}>
 					<LaunchIcon />
 				</a>
 			</div>
