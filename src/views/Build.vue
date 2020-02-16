@@ -736,6 +736,7 @@ $output-header-sticky-offset: 20px;
 .output-lines {
   width: 100%;
   line-height: 19px;
+  font-variant-ligatures: none;
 }
 
 .ol-pos,
