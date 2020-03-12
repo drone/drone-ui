@@ -45,20 +45,16 @@ export default {
       }
     },
     hrefPR() {
-      return this.build && this.repo &&
-        `/link/${this.repo.slug}/tree/${this.build.ref}`;
+      return this.build && this.repo && `/link/${this.repo.slug}/tree/${this.build.ref}`;
     },
     hrefTag() {
-      return this.build && this.repo &&
-        `/link/${this.repo.slug}/tree/${this.build.ref}`;
+      return this.build && this.repo && `/link/${this.repo.slug}/tree/${this.build.ref}`;
     },
     hrefBranch() {
-      return this.build && this.repo &&
-        `/link/${this.repo.slug}/tree/refs/heads/${this.build.target}`;
+      return this.build && this.repo && `/link/${this.repo.slug}/tree/refs/heads/${this.build.target}`;
     },
     hrefCommit() {
-      return this.build && this.repo &&
-        `/link/${this.repo.slug}/commit/${this.build.after}`;
+      return this.build && this.repo && `/link/${this.repo.slug}/commit/${this.build.after}`;
     },
     branch() {
       return this.build.target;

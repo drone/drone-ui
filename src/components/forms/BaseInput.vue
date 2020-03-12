@@ -26,7 +26,8 @@ input {
   background: #fff;
 }
 
-input[type="search"], input[type=text] {
+input[type="search"],
+input[type="text"] {
   appearance: none;
 }
 

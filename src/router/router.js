@@ -12,6 +12,8 @@ import Repo from "../views/Repo.vue";
 import Settings from "../views/Settings.vue";
 import Search from "../views/Search.vue";
 import BuildsFeed from "../views/BuildsFeed.vue";
+import Pulls from "../views/Pulls.vue";
+import Pushes from "../views/Pushes.vue";
 
 export default new Router({
   mode: "history",
@@ -68,6 +70,16 @@ export default new Router({
               path: "",
               name: "builds",
               component: Builds
+            },
+            {
+              path: "pushes",
+              name: "pushes",
+              component: Pushes
+            },
+            {
+              path: "pulls",
+              name: "pulls",
+              component: Pulls
             },
             {
               path: "settings",
