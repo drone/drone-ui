@@ -34,7 +34,7 @@
         <span>Activity Feed</span>
       </router-link>
     </nav>
-<!-- /:namespace/:name -->
+    
     <nav v-else-if="showTabs">
       <router-link :to="'/'+slug" :disabled="!repo.active">Activity Feed</router-link>
       <router-link :to="'/'+slug + '/pushes'" v-if="showSettings">Pushes</router-link>
