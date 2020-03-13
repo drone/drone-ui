@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="logout">
-      <h1>Your are now signed out</h1>
+      <h1>You are now signed out</h1>
     </div>
   </div>
 </template>
