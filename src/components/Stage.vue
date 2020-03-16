@@ -45,17 +45,28 @@ export default {
 
 <style scoped lang="scss">
 @import "../assets/styles/variables";
+@import "../assets/styles/mixins";
 
 .stage {
-  background: #ffffff;
-  box-shadow: 0 2px 4px 0 rgba($color-text, 0.1);
-  border: 1px solid rgba($color-text, 0.1);
   border-radius: 4px;
   box-sizing: border-box;
   user-select: none;
+  @include themed {
+    background: tget("surface-color");
+    box-shadow: 0 2px 4px 0 rgba(tget("color-text"), 0.1);
+    border: 1px solid rgba(tget("color-text"), 0.1);
+  }
+  @include themed-only(default) {
+    box-shadow: 0 2px 4px 0 rgba(tget("color-text"), 0.1);
+  }
+  @include themed-only(dark) {
+    box-shadow: 0 2px 4px 0 darken(tget("body-color"), 20%);
+  }
 
   &.has-content header {
-    border-bottom: solid 1px rgba($color-text, 0.1);
+    @include themed {
+      border-bottom: solid 1px rgba(tget("color-text"), 0.1);
+    }
   }
 }
 
@@ -65,7 +76,9 @@ header {
   height: 40px;
   padding: 0 15px;
   user-select: none;
-  color: $color-text;
+  @include themed {
+    color: tget("color-text");
+  }
 }
 
 .status {
@@ -87,8 +100,10 @@ span {
   font-size: 13px;
   font-weight: 400;
   flex-shrink: 0;
-  color: $color-text;
   position: relative;
+  @include themed {
+    color: tget("color-text");
+  }
 
   .hint {
     white-space: nowrap;
@@ -97,7 +112,9 @@ span {
 
 .arrow-dropdown {
   display: none;
-  color: $color-text-secondary;
+  @include themed {
+    color: tget("color-text-secondary");
+  }
 }
 
 .content {
@@ -113,6 +130,7 @@ span {
 
 <style lang="scss">
 @import "../assets/styles/variables";
+@import "../assets/styles/mixins";
 
 .stage > .content {
   > .step-container {
@@ -126,14 +144,20 @@ span {
 
     > a {
       display: block;
-      color: $color-text;
+      @include themed {
+        color: tget("color-text");
+      }
 
       &:hover,
       &:focus {
-        background: $step-selected-bg-color;
+        @include themed {
+          background: tget("step-selected-bg-color");
+        }
 
         .status.status-running svg circle {
-          fill: $step-selected-bg-color;
+          @include themed {
+            fill: tget("step-selected-bg-color");
+          }
         }
       }
     }

@@ -30,3 +30,44 @@
     @content
   }
 }
+
+@mixin themed($attached: false) {
+  @each $theme, $map in $themes {
+    $wrapped-selector: ".theme--#{$theme} &";
+    @if $attached {
+      $wrapped-selector: "&.theme--#{$theme}";
+    }
+    #{$wrapped-selector} {
+      $theme-map: () !global;
+
+      @each $key, $value in $map {
+        $theme-map: map-merge($theme-map, ($key: $value)) !global;
+      }
+
+      @content;
+      $theme-map: null !global;
+    }
+  }
+}
+
+@mixin themed-only($theme: default, $attached: false) {
+  $wrapped-selector: ".theme--#{$theme} &";
+  @if $attached {
+    $wrapped-selector: "&.theme--#{$theme}";
+  }
+  #{$wrapped-selector} {
+    $theme-map: () !global;
+    
+    $map: map-get($themes, $theme);
+    @each $key, $value in $map {
+      $theme-map: map-merge($theme-map, ($key: $value)) !global;
+    }
+
+    @content;
+    $theme-map: null !global;
+  }
+}
+
+@function tget($key) {
+  @return map-get($theme-map, $key);
+}

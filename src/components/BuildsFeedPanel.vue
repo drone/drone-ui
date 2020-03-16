@@ -48,6 +48,7 @@ export default {
 
 <style lang="scss">
 @import "../assets/styles/variables";
+@import "../assets/styles/mixins";
 
 .builds-feed-panel {
   .page-header {
@@ -57,17 +58,21 @@ export default {
   .alert {
     margin: 0 $header-padding-side;
     box-shadow: none;
-    color: $color-text-secondary;
+    @include themed {
+      color: tget("color-text-secondary");
+    }
   }
 
   .repo-item.media-mobile {
     border: none;
-    border-top: 1px solid $border-color;
-    border-bottom: 1px solid $border-color;
     box-shadow: none;
     border-radius: 0;
     padding-left: $header-padding-side;
     padding-right: $header-padding-side;
+    @include themed {
+      border-top: 1px solid tget("border-color");
+      border-bottom: 1px solid tget("border-color");
+    }
   }
 
   .repo-link.hover-type-box-shadow:focus .repo-item,
@@ -75,7 +80,9 @@ export default {
     box-shadow: none;
 
     .header {
-      color: $color-primary;
+      @include themed {
+        color: tget("color-primary");
+      }
     }
   }
 

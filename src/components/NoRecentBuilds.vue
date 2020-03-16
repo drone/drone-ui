@@ -18,7 +18,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../assets/styles/_variables.scss";
+@import "../assets/styles/variables.scss";
+@import "../assets/styles/mixins";
 
 .no-recent-builds {
   text-align: center;
@@ -29,7 +30,9 @@ export default {
 }
 
 .message {
-  color: $color-text-secondary;
   line-height: normal;
+  @include themed {
+    color: tget("color-text-secondary");
+  }
 }
 </style>

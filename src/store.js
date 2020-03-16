@@ -492,7 +492,7 @@ export default new Vuex.Store({
         insertBuildCollection(state.builds[slug].data, slug, build);
       }
 
-      updateBuildsFeedByBuild(state, build)
+      updateBuildsFeedByBuild(state, build);
     },
 
     BUILDS_FEED_LOADING(state) {

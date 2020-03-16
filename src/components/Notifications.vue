@@ -33,6 +33,7 @@ export default {
 
 <style scoped lang="scss">
 @import "../assets/styles/variables";
+@import "../assets/styles/mixins";
 
 .notifications {
   position: fixed;
@@ -43,10 +44,12 @@ export default {
 .notification {
   position: relative;
   max-width: 300px;
-  background: rgba($color-text, 0.9);
   border-radius: 2px;
   padding: 11px 60px 11px 15px;
   color: #fff;
+  @include themed {
+    background: rgba(tget("color-text"), 0.9);
+  }
 }
 
 .notification + .notification {

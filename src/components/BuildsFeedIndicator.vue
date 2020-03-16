@@ -85,9 +85,12 @@ export default {
 
 <style lang="scss">
 @import "../assets/styles/variables";
+@import "../assets/styles/mixins";
 
 .builds-feed-indicator .gear > g {
-  fill: $header-color;
+  @include themed {
+    fill: tget("header-color");
+  }
 }
 
 .builds-feed-indicator.status-done {
@@ -96,7 +99,9 @@ export default {
   }
 
   .circle {
-    background-color: $header-color;
+    @include themed {
+      background-color: tget("header-color");
+    }
   }
 
   .label {
@@ -109,7 +114,9 @@ export default {
     }
 
     .label {
-      color: $header-color;
+      @include themed {
+        color: tget("header-color");
+      }
     }
   }
 }
@@ -119,12 +126,16 @@ export default {
     animation: spin 5s linear infinite;
 
     .line {
-      fill: $color-warning;
       fill-opacity: 1;
+      @include themed {
+        fill: tget("color-warning");
+      }
     }
 
     .bg {
-      fill: $header-color;
+      @include themed {
+        fill: tget("header-color");
+      }
     }
   }
 
@@ -133,14 +144,18 @@ export default {
   }
 
   .label {
-    color: $color-warning;
+    @include themed {
+      color: tget("color-warning");
+    }
   }
 
   &.filled {
     .gear {
       .line,
       .bg {
-        fill: $color-warning;
+        @include themed {
+          fill: tget("color-warning");
+        }
         fill-opacity: 1;
       }
     }

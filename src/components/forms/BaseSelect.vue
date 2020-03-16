@@ -16,10 +16,9 @@ export default {
 
 <style scoped lang="scss">
 @import "../../assets/styles/variables";
+@import "../../assets/styles/mixins";
 
 select {
-  color: $color-text;
-  border: 1px solid rgba($color-text, 0.25);
   border-radius: 3px;
   box-sizing: border-box;
   font-size: 14px;
@@ -27,18 +26,26 @@ select {
   height: 40px;
   line-height: 40px;
   -webkit-appearance: none;
-  background: #fff
-    url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxMDAnIGhlaWdodD0nMTAwJz48cG9seWdvbiBmaWxsPScjOThhMWFiJyBwb2ludHM9JzAsMzAgMTAwLCAzMCA1MCw5MCcvPjwvc3ZnPg==")
-    no-repeat center right 10px;
-  background-size: 10px;
+  @include themed {
+    color: tget("color-text");
+    border: 1px solid rgba(tget("color-text"), 0.25);
+    background: tget("surface-color")
+      url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxMDAnIGhlaWdodD0nMTAwJz48cG9seWdvbiBmaWxsPScjOThhMWFiJyBwb2ludHM9JzAsMzAgMTAwLCAzMCA1MCw5MCcvPjwvc3ZnPg==")
+      no-repeat center right 10px;
+    background-size: 10px;
+  }
 }
 
 select:focus {
-  border-color: $color-primary;
   outline: none;
+  @include themed {
+    border-color: tget("color-primary");
+  }
 }
 
 select::placeholder {
-  color: $color-text-secondary;
+  @include themed {
+    color: tget("color-text-secondary");
+  }
 }
 </style>

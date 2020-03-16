@@ -199,7 +199,6 @@ const timeouts = [15, 30, 60, 90, 120, 180, 240, 300, 360, 420, 480, 540, 600, 6
 
 <style scoped lang="scss">
 @import "../assets/styles/mixins";
-@import "../assets/styles/mixins";
 
 .control-group {
   .controls {
@@ -246,7 +245,9 @@ const timeouts = [15, 30, 60, 90, 120, 180, 240, 300, 360, 420, 480, 540, 600, 6
 
 .disable span {
   margin: 15px 0 0 15px;
-  color: $color-text-secondary;
+  @include themed {
+    color: tget("color-text-secondary");
+  }
 
   @include mobile {
     display: block;

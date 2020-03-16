@@ -5,29 +5,91 @@ $bp-mobile: 480px;
 /* [-----------](-----------)[-----------> */
 /*           480px       980px             */
 
+$surface-color: #ffffff;
+$surface-color--dark: #161616;
+
 $body-color: #f7f8fa;
+$body-color--dark: #0a0a0a;
+
 $body-background-size: 100% 100%;
 
 $color-text: #1e375a;
-$color-text-secondary: rgba(#1e375a, 0.6);
+$color-text--dark: #e7f1ff;
+
+$color-text-secondary: rgba($color-text, 0.6);
+$color-text-secondary--dark: rgba($color-text--dark, 0.6);
+
 $color-primary: #2364d2;
+$color-primary--dark: #4188ff;
+
 $color-warning: #ffbe00;
+$color-warning--dark: desaturate($color-warning, 20%);
+
 $color-danger: #ff4164;
+$color-danger--dark: desaturate($color-danger, 20%);
+
 $color-success: #19d78c;
+$color-success--dark: desaturate($color-success, 20%);
+
 $color-info: #96a5be;
+$color-info--dark: desaturate($color-info, 20%);
 
 $border-color: rgba($color-text, 0.05);
+$border-color--dark: rgba($color-text--dark, 0.08);
 
 $header-color: rgba($color-text, 0.97);
+$header-color--dark: rgb(24, 24, 24);
+
 $header-height: 56px;
 $header-padding-side: 15px;
 
 $overlay-color: rgba($color-text, 0.9);
+$overlay-color--dark: rgba($body-color--dark, 0.9);
+
 $overlay-z-index: 10;
 
 $terminal-color: $color-text;
+$terminal-color--dark: darken($color-text, 12%);
 
 $button-outline-hover-bg-opacity: 0.1;
+$button-outline-hover-bg-opacity--dark: 0.15;
 
-$step-selected-bg-color: rgba($color-text, 0.03)
+$step-selected-bg-color: rgba($color-text, 0.03);
+$step-selected-bg-color--dark: rgba($color-text--dark, 0.05);
 
+$themes: (
+  default: (
+    surface-color: $surface-color,
+    body-color: $body-color,
+    color-text: $color-text,
+    color-text-secondary: $color-text-secondary,
+    color-primary: $color-primary,
+    color-warning: $color-warning,
+    color-danger: $color-danger,
+    color-success: $color-success,
+    color-info: $color-info,
+    border-color: $border-color,
+    header-color: $header-color,
+    overlay-color: $overlay-color,
+    terminal-color: $terminal-color,
+    button-outline-hover-bg-opacity: $button-outline-hover-bg-opacity,
+    step-selected-bg-color: $step-selected-bg-color
+  ),
+  dark: (
+    surface-color: $surface-color--dark,
+    body-color: $body-color--dark,
+    color-text: $color-text--dark,
+    color-text-secondary: $color-text-secondary--dark,
+    color-primary: $color-primary--dark,
+    color-warning: $color-warning--dark,
+    color-danger: $color-danger--dark,
+    color-success: $color-success--dark,
+    color-info: $color-info--dark,
+    border-color: $border-color--dark,
+    header-color: $header-color--dark,
+    overlay-color: $overlay-color--dark,
+    terminal-color: $terminal-color--dark,
+    button-outline-hover-bg-opacity: $button-outline-hover-bg-opacity--dark,
+    step-selected-bg-color: $step-selected-bg-color--dark
+  ),
+);

@@ -22,16 +22,21 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../assets/styles/mixins";
+
 div.container {
   align-items: center;
-  background: #fbfbfb;
   box-sizing: border-box;
   display: flex;
   justify-content: center;
   padding: 30px;
   height: 100%;
   width: 100%;
+
+  @include themed {
+    background: tget("body-color");
+  }
 }
 
 div.container > div {

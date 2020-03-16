@@ -34,6 +34,7 @@ export default {
 
 <style scoped lang="scss">
 @import "../assets/styles/variables";
+@import "../assets/styles/mixins";
 
 .step {
   align-items: center;
@@ -43,7 +44,9 @@ export default {
   height: 40px;
 
   &.selected {
-    background-color: $step-selected-bg-color;
+    @include themed {
+      background-color: tget("step-selected-bg-color");
+    }
   }
 }
 
@@ -62,37 +65,49 @@ export default {
 }
 
 time {
-  color: $color-text-secondary;
   text-align: right;
   flex-shrink: 0;
   margin-left: 10px;
   font-size: 13px;
+  @include themed {
+    color: tget("color-text-secondary");
+  }
 }
 
 .icon-arrow-dropdown {
   flex-shrink: 0;
-  color: $color-text-secondary;
+  @include themed {
+    color: tget("color-text-secondary");
+  }
 }
 
 section:after {
   content: " ";
-  border-left: 1px solid rgba($color-text, 0.1);
   width: 1px;
   position: absolute;
   top: 0;
   bottom: 0;
   left: 24px;
+  @include themed {
+    border-left: 1px solid rgba(tget("color-text"), 0.1);
+  }
 }
 </style>
 
 <style lang="scss">
 @import "../assets/styles/variables";
+@import "../assets/styles/mixins";
 
 .step > .status.status-running svg circle {
-  fill: #fff;
+  // fill: #fff;
+  @include themed {
+    fill: tget("surface-color");
+  }
 }
 
 .step.selected > .status.status-running svg circle {
-  fill: $step-selected-bg-color;
+  @include themed {
+    fill: tget("step-selected-bg-color");
+  }
 }
 </style>

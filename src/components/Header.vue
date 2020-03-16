@@ -104,12 +104,18 @@ export default {
 .header {
   height: $header-height;
   box-shadow: 0 2px 4px 0 $border-color;
-  background-color: $header-color;
   align-items: center;
   box-sizing: border-box;
   display: flex;
   padding: 0 $header-padding-side;
   justify-content: space-between;
+  @include themed {
+    background-color: tget("header-color");
+  }
+  @include themed-only(dark) {
+    background-color: tget("header-color");
+    box-shadow: 0 2px 4px 0 #000000;
+  }
 
   &.loading:before {
     content: "";
@@ -194,11 +200,15 @@ export default {
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 50%;
   color: #fff;
-  background-color: $header-color;
+  @include themed {
+    background-color: tget("header-color");
+  }
 
   &.filled {
-    color: $header-color;
     background-color: #fff;
+    @include themed {
+      color: tget("header-color");
+    }
   }
 
   svg {
@@ -216,8 +226,10 @@ export default {
   background-color: rgba(255, 255, 255, 0.1);
 
   @include hf {
-    background-color: #fff;
-    color: $body-color;
+    @include themed {
+      background-color: tget("surface-color");
+      color: tget("body-color");
+    }
   }
 
   &:hover {
@@ -228,6 +240,7 @@ export default {
 
 <style lang="scss">
 @import "../assets/styles/variables";
+@import "../assets/styles/mixins";
 
 .header > .search {
   > .base-input {
@@ -236,8 +249,11 @@ export default {
 
   &.opened-no {
     > .base-input {
-      background-color: mix(#fff, $header-color, 10%);
       color: #fff;
+
+      @include themed {
+        background-color: mix(#fff, tget("header-color"), 10%);
+      }
 
       &::placeholder {
         color: rgba(255, 255, 255, 0.6);

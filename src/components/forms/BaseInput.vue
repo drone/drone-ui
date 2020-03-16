@@ -13,29 +13,37 @@ export default {
 
 <style scoped lang="scss">
 @import "../../assets/styles/variables";
+@import "../../assets/styles/mixins";
 
 input {
-  color: $color-text;
-  border: 1px solid rgba($color-text, 0.25);
   border-radius: 3px;
   box-sizing: border-box;
   font-size: 14px;
   padding: 10px 15px;
   height: 40px;
   line-height: 20px;
-  background: #fff;
+  @include themed {
+    background: tget("surface-color");
+    color: tget("color-text");
+    border: 1px solid rgba(tget("color-text"), 0.25);
+  }
 }
 
-input[type="search"], input[type=text] {
+input[type="search"],
+input[type="text"] {
   appearance: none;
 }
 
 input:focus {
-  border-color: $color-primary;
   outline: none;
+  @include themed {
+    border-color: tget("color-primary");
+  }
 }
 
 input::placeholder {
-  color: $color-text-secondary;
+  @include themed {
+    color: tget("color-text-secondary");
+  }
 }
 </style>

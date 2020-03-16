@@ -69,16 +69,24 @@ export default {
 
 <style scoped lang="scss">
 @import "../assets/styles/variables";
+@import "../assets/styles/mixins";
 
 .hint {
   position: absolute;
   max-width: 300px;
-  background: rgba($color-text, 0.9);
   border-radius: 2px;
   padding: 6px 8px;
-  color: #fff;
   font-size: 13px;
   z-index: 1000;
+  @include themed {
+    color: tget("surface-color");
+  }
+  @include themed-only(default) {
+    background: rgba(tget("color-text"), 0.9);
+  }
+  @include themed-only(dark) {
+    background: rgba(tget("color-text"), 0.95);
+  }
 
   &.position-top {
     margin-bottom: 10px;
@@ -87,7 +95,9 @@ export default {
     .triangle {
       bottom: -5px;
       border-bottom-width: 0;
-      border-top-color: rgba($color-text, 0.9);
+      @include themed {
+        border-top-color: rgba(tget("color-text"), 0.9);
+      }
     }
   }
 
@@ -98,7 +108,9 @@ export default {
     .triangle {
       top: -5px;
       border-top-width: 0;
-      border-bottom-color: rgba($color-text, 0.9);
+      @include themed {
+        border-bottom-color: rgba(tget("color-text"), 0.9);
+      }
     }
   }
 

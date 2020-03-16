@@ -60,24 +60,32 @@ label:before {
   position: absolute;
   width: 18px;
   height: 18px;
-  border: 1px solid rgba($color-text, 0.25);
   border-radius: 50%;
   top: 0;
   left: 0;
-  background-color: #fff;
+  @include themed {
+    background-color: tget("surface-color");
+    border: 1px solid rgba(tget("color-text"), 0.25);
+  }
 }
 
 label:hover:before {
-  border-color: $color-primary;
+  @include themed {
+    border-color: tget("color-primary");
+  }
 }
 
 input:focus + label:before {
-  box-shadow: 0 0 4px 1px $color-primary;
+  @include themed {
+    box-shadow: 0 0 4px 1px tget("color-primary");
+  }
 }
 
 input:checked + label:before {
-  background: $color-primary;
   border-color: transparent;
+  @include themed {
+    background: tget("color-primary");
+  }
 }
 
 input:checked + label:after {

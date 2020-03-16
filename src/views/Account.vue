@@ -80,6 +80,7 @@ export default {
 
 <style scoped lang="scss">
 @import "../assets/styles/variables";
+@import "../assets/styles/mixins";
 
 h1 {
   height: 41px;
@@ -89,8 +90,10 @@ h1 {
   font-stretch: normal;
   line-height: normal;
   letter-spacing: normal;
-  color: $color-text;
   margin: 30px 0px;
+  @include themed {
+    color: tget("color-text");
+  }
 }
 
 code {

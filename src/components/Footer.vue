@@ -41,7 +41,9 @@ nav.nav-right {
 }
 
 nav a {
-  color: $color-text-secondary;
+  @include themed {
+    color: tget("color-text-secondary");
+  }
 
   & + a {
     margin-left: 30px;
@@ -50,7 +52,9 @@ nav a {
 
 nav a:hover,
 nav a:focus {
-  color: $color-text;
   outline: none;
+  @include themed {
+    color: tget("color-text");
+  }
 }
 </style>

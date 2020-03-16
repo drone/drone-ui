@@ -45,20 +45,16 @@ export default {
       }
     },
     hrefPR() {
-      return this.build && this.repo &&
-        `/link/${this.repo.slug}/tree/${this.build.ref}`;
+      return this.build && this.repo && `/link/${this.repo.slug}/tree/${this.build.ref}`;
     },
     hrefTag() {
-      return this.build && this.repo &&
-        `/link/${this.repo.slug}/tree/${this.build.ref}`;
+      return this.build && this.repo && `/link/${this.repo.slug}/tree/${this.build.ref}`;
     },
     hrefBranch() {
-      return this.build && this.repo &&
-        `/link/${this.repo.slug}/tree/refs/heads/${this.build.target}`;
+      return this.build && this.repo && `/link/${this.repo.slug}/tree/refs/heads/${this.build.target}`;
     },
     hrefCommit() {
-      return this.build && this.repo &&
-        `/link/${this.repo.slug}/commit/${this.build.after}`;
+      return this.build && this.repo && `/link/${this.repo.slug}/commit/${this.build.after}`;
     },
     branch() {
       return this.build.target;
@@ -95,16 +91,26 @@ export default {
 
 <style scoped lang="scss">
 @import "../assets/styles/variables";
+@import "../assets/styles/mixins";
 
 .repo-item-label {
-  background-color: rgba($color-primary, 0.07);
-  color: $color-primary;
   padding: 0 4px;
   border-radius: 2px;
+  @include themed {
+    color: tget("color-primary");
+  }
+  @include themed-only(default) {
+    background-color: rgba(tget("color-primary"), 0.07);
+  }
+  @include themed-only(dark) {
+    background-color: rgba(tget("color-primary"), 0.11);
+  }
 }
 
 a.repo-item-label:hover,
 a.repo-item-label:focus {
-  background-color: rgba($color-primary, $button-outline-hover-bg-opacity);
+  @include themed {
+    background-color: rgba(tget("color-primary"), tget("button-outline-hover-bg-opacity"));
+  }
 }
 </style>

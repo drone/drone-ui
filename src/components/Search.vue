@@ -132,6 +132,7 @@ export default {
 
 <style scoped lang="scss">
 @import "../assets/styles/variables";
+@import "../assets/styles/mixins";
 
 form {
   position: relative;
@@ -170,14 +171,16 @@ form.opened-yes {
   position: absolute;
   top: 10px;
   right: 10px;
-  border: solid 1px rgba($color-text, 0.25);
   border-radius: 2px;
   text-align: center;
   line-height: 16px;
-  color: $color-text-secondary;
   pointer-events: none;
   user-select: none;
   z-index: 25;
+  @include themed {
+    border: solid 1px rgba(tget("color-text"), 0.25);
+    color: tget("color-text-secondary");
+  }
 }
 
 .popup {
