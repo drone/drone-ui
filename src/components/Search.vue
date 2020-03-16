@@ -95,6 +95,7 @@ export default {
     onItemSelect() {
       this.$refs.searchInput.$el.blur();
       this.clear();
+      this.close();
     },
     clear() {
       this.query = "";
