@@ -34,9 +34,11 @@
         <span>Activity Feed</span>
       </router-link>
     </nav>
-
+    
     <nav v-else-if="showTabs">
       <router-link :to="'/'+slug" :disabled="!repo.active">Activity Feed</router-link>
+      <router-link :to="'/'+slug + '/pushes'" v-if="showSettings">Pushes</router-link>
+      <router-link :to="'/'+slug + '/pulls'" v-if="showSettings">Pulls</router-link>
       <router-link :to="'/'+slug + '/settings'" v-if="showSettings">Settings</router-link>
     </nav>
 
@@ -133,7 +135,7 @@ export default {
       return (this.repo && this.repo.permissions && this.repo.permissions.write) || (this.user && this.user.admin);
     },
     isAdmin() {
-      return (this.repo && this.repo.permissions && this.repo.permissions.admin);
+      return this.repo && this.repo.permissions && this.repo.permissions.admin;
     },
     build() {
       const collection = this.$store.state.builds[this.slug];

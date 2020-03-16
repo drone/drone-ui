@@ -64,8 +64,10 @@ export default {
 
       for (let i = 0; i < buildCollections.length; ++i) {
         const data = buildCollections[i].data;
-        
-        if (data) builds.push(data);
+
+        if (data && data.event === "pull_request") {
+          builds.push(data);
+        }
       }
 
       builds.sort((a, b) => b.number - a.number);
