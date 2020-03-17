@@ -37,6 +37,7 @@
 
     <nav v-else-if="showTabs">
       <router-link :to="'/'+slug" :disabled="!repo.active">Activity Feed</router-link>
+      <router-link :to="'/'+slug + '/branches'" :disabled="!repo.active">Branches</router-link>
       <router-link :to="'/'+slug + '/settings'" v-if="showSettings">Settings</router-link>
     </nav>
 

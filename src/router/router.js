@@ -3,6 +3,7 @@ import Router from "vue-router";
 import Account from "../views/Account.vue";
 import Build from "../views/Build.vue";
 import Builds from "../views/Builds.vue";
+import Branches from "../views/Branches.vue";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import LoginErr from "../views/LoginErr.vue";
@@ -74,6 +75,11 @@ export default new Router({
               name: "settings",
               component: Settings,
               meta: { requiresAuth: true }
+            },
+            {
+              path: "branches",
+              name: "branches",
+              component: Branches
             },
             {
               path: ":build/:stage/:step",

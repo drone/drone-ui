@@ -13,6 +13,7 @@ export const fetcher = ({ dispatch, commit }) => (to, from, next) => {
   // metadata so that we can dynamically dispatch.
 
   switch (name) {
+    case "branches":
     case "build":
     case "builds":
     case "repo":
