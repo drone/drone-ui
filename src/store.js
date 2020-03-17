@@ -298,7 +298,7 @@ export default new Vuex.Store({
 
       applySuccess(state.branches[slug]);
       res.forEach(item =>
-        Vue.set(state.branches[slug].data, item.number, {
+        Vue.set(state.branches[slug].data, item.target, {
           data: item,
           lStatus: "loaded",
           dStatus: "present",
