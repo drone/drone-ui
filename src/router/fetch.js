@@ -32,6 +32,10 @@ export const fetcher = ({ dispatch, commit }) => (to, from, next) => {
     case "builds":
       dispatch("fetchBuilds", { ...params, page: 1 });
       break;
+    case "branches":
+      // TODO: update to fetch builds by branch
+      dispatch("fetchBranches", params);
+      break;
     case "home":
       dispatch("fetchReposLatest", params);
       break;

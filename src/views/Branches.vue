@@ -33,7 +33,6 @@ export default {
   mounted() {
     // todo proper fetch action
     const { name, namespace } = this.$route.params;
-    this.$store.dispatch("fetchBuilds", { name, namespace, page: 1 });
   },
   computed: {
     slug() {
@@ -44,7 +43,7 @@ export default {
     },
     collection() {
       // todo use proper collection;
-      const collection = this.$store.state.builds[this.slug];
+      const collection = this.$store.state.branches[this.slug];
       return collection ? { ...collection, data: collection.data } : null;
     },
     items() {

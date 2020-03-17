@@ -6,6 +6,7 @@ export {
   approveBuild,
   declineBuild,
   fetchBuildsFeed,
+  fetchBranches,
   streamEvents
 } from "./build";
 

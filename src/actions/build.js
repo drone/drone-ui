@@ -19,6 +19,21 @@ export const fetchBuilds = (store, params) => {
 };
 
 /**
+ * fetchBuilds fetches the build list and dispatches an
+ * event to update the store.
+ */
+export const fetchBranches = (store, params) => {
+  const { namespace, name } = params;
+
+  return dispatchTypicalFetch(store, params, "BRANCH_LIST", () => {
+    return fetch(`${instance}/api/repos/${namespace}/${name}/builds/branches`, {
+      headers,
+      credentials: "same-origin"
+    });
+  });
+};
+
+/**
  * fetchBuild fetches the build and dispatches an event
  * to update the store.
  */

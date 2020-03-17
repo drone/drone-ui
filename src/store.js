@@ -135,6 +135,10 @@ export default new Vuex.Store({
     repoEnabling: false,
     repoEnablingErr: undefined,
 
+    branches: {
+
+    },
+
     builds: {
       /*
       EXAMPLE:
@@ -269,6 +273,40 @@ export default new Vuex.Store({
     REPO_CHOWN_LOADING(state) {},
     REPO_CHOWN_SUCCESS(state) {},
     REPO_CHOWN_FAILURE(state) {},
+
+    //
+    // branch list
+    //
+
+    BRANCH_LIST_LOADING(state, { params }) {
+      const slug = `${params.namespace}/${params.name}`;
+
+      if (!state.branches[slug]) {
+        insertEmptyBuildsCollection(state.branches, slug);
+      }
+
+      applyLoading(state.branches[slug]);
+    },
+
+    BRANCH_LIST_FAILURE(state, { params, error }) {
+      const slug = `${params.namespace}/${params.name}`;
+      applyFailure(state.branches[slug], error);
+    },
+
+    BRANCH_LIST_SUCCESS(state, { params, res }) {
+      const slug = `${params.namespace}/${params.name}`;
+
+      applySuccess(state.branches[slug]);
+      res.forEach(item =>
+        Vue.set(state.branches[slug].data, item.number, {
+          data: item,
+          lStatus: "loaded",
+          dStatus: "present",
+          error: undefined
+        })
+      );
+    },
+
 
     //
     // build list
