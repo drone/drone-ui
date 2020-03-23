@@ -17,7 +17,7 @@
 
     <template slot="fields">
       <BaseInput name="secret.name" v-model="secret.name" placeholder="Secret Name" type="text"/>
-      <BaseTextArea name="secret.data" v-model="secret.data" placeholder="Secret Value"/>
+      <BaseTextArea name="secret.data" v-model="secret.data" class="hide-secret" placeholder="Secret Value"/>
       <BaseCheckbox v-model="secret.pullRequest" style="margin-bottom: 12px;">Allow Pull Requests</BaseCheckbox>
     </template>
   </EditableList>
@@ -89,7 +89,12 @@ export default {
 };
 </script>
 
+<style src="text-security/dist/text-security-disc.css"></style>
 <style scoped>
+.hide-secret {
+    font-family: 'text-security-disc';
+}
+
 .icon-secrets-empty {
   display: block;
   margin: 0 auto 20px;
