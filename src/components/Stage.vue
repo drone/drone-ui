@@ -77,7 +77,7 @@ span {
   font-weight: 600;
   margin-left: 10px;
   font-size: 14px;
-  line-height: 18px;
+  line-height: 20px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
