@@ -48,10 +48,6 @@ export default {
     flex-wrap: wrap;
   }
 
-  .to {
-    display: none !important;
-  }
-
   .content {
     display: flex;
     align-items: center;
