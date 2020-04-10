@@ -19,7 +19,7 @@ export const fetchBuilds = (store, params) => {
 };
 
 /**
- * fetchBuilds fetches the build list and dispatches an
+ * fetchBranches fetches the build list and dispatches an
  * event to update the store.
  */
 export const fetchBranches = (store, params) => {
@@ -27,6 +27,21 @@ export const fetchBranches = (store, params) => {
 
   return dispatchTypicalFetch(store, params, "BRANCH_LIST", () => {
     return fetch(`${instance}/api/repos/${namespace}/${name}/builds/branches`, {
+      headers,
+      credentials: "same-origin"
+    });
+  });
+};
+
+/**
+ * fetchDeployments fetches the build list and dispatches an
+ * event to update the store.
+ */
+export const fetchDeployments = (store, params) => {
+  const { namespace, name } = params;
+
+  return dispatchTypicalFetch(store, params, "DEPLOYMENT_LIST", () => {
+    return fetch(`${instance}/api/repos/${namespace}/${name}/builds/deployments`, {
       headers,
       credentials: "same-origin"
     });
@@ -82,6 +97,29 @@ export const createBuild = async ({ commit }, { namespace, name, build }) => {
   commit(BUILD_RETRY_LOADING);
 
   const req = await fetch(`${instance}/api/repos/${namespace}/${name}/builds/${build}`, {
+    headers,
+    method: "POST",
+    credentials: "same-origin"
+  });
+  const res = await req.json();
+
+  if (req.status < 300) {
+    const data = { namespace, name, build: res };
+    commit(BUILD_RETRY_SUCCESS, data);
+    return data;
+  } else {
+    commit(BUILD_RETRY_FAILURE, { namespace, name, error: res });
+  }
+};
+
+/**
+ * createDeployment swapns the a new build from an existing entry
+ * and dispatches an event to add the object to the store.
+ */
+export const createDeployment = async ({ commit }, { namespace, name, build, target, action }) => {
+  commit(BUILD_RETRY_LOADING);
+
+  const req = await fetch(`${instance}/api/repos/${namespace}/${name}/builds/${build}/${action}?target=${target}`, {
     headers,
     method: "POST",
     credentials: "same-origin"

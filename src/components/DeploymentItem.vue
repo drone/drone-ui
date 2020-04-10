@@ -1,0 +1,98 @@
+<template>
+  <Card class="deployment-item" slim :hoverable="hoverable">
+    <div class="deployment">{{ branch }}</div>
+    <BuildDescription :build="shrinkedBuild" :linkRepo="linkRepo"/>
+    <Status :status="status"/>
+  </Card>
+</template>
+
+<script>
+import Status from "@/components/Status.vue";
+import Card from "@/components/Card.vue";
+import BuildDescription from "@/components/BuildDescription";
+import RepoItemLabel from "@/components/RepoItemLabel";
+export default {
+  name: "DeploymentItem",
+  props: {
+    hoverable: { type: Boolean, default: false },
+    branch: { type: String, required: true },
+    status: { type: String, required: true },
+    build: { type: Object, required: true },
+    linkRepo: Object
+  },
+  components: {
+    Card,
+    BuildDescription,
+    Status
+  },
+  computed: {
+    action() {
+      const { event } = this.build;
+      if (event === "promote") return "promoted";
+      if (event === "rollback") return "rollbacked";
+      throw new Error(`invalid event: ${event}`);
+    },
+    shrinkedBuild() {
+      return { ...this.build };
+    }
+  }
+};
+</script>
+
+<style lang="scss">
+@import "../assets/styles/mixins";
+.deployment-item {
+  display: flex;
+  align-items: center;
+  @include tablet {
+    flex-wrap: wrap;
+  }
+
+  .to {
+    display: none !important;
+  }
+
+  .content {
+    display: flex;
+    align-items: center;
+    flex: 1 1 auto;
+    @include tablet {
+      flex-wrap: wrap;
+    }
+  }
+
+  .build-description {
+    flex-grow: 1;
+    margin-right: 10px;
+    @include tablet {
+      order: 2;
+      margin-top: 10px;
+      width: 100%;
+      margin-right: 0;
+    }
+  }
+
+  .status {
+    flex-shrink: 0;
+  }
+}
+
+.deployment {
+  max-width: 170px;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 10px;
+  background: $color-primary-bg;
+  border-radius: 2px;
+  font-weight: 600;
+  color: $color-primary;
+  margin-right: 15px;
+  flex-shrink: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  @include tablet {
+    margin-right: auto;
+  }
+}
+</style>

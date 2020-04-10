@@ -14,6 +14,7 @@ export const fetcher = ({ dispatch, commit }) => (to, from, next) => {
 
   switch (name) {
     case "branches":
+    case "deployments":
     case "build":
     case "builds":
     case "repo":
@@ -35,6 +36,10 @@ export const fetcher = ({ dispatch, commit }) => (to, from, next) => {
     case "branches":
       // TODO: update to fetch builds by branch
       dispatch("fetchBranches", params);
+      break;
+    case "deployments":
+      // TODO: update to fetch builds by deployments
+      dispatch("fetchDeployments", params);
       break;
     case "home":
       dispatch("fetchReposLatest", params);

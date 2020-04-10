@@ -9,6 +9,43 @@
           <IconSource/>
         </Button>
 
+        <div style="position: relative; display: inline-block">
+          <Button outline
+                  class="button-deploy"
+                  @click.native="openDeployModal"
+                  :disabled="!isCollaborator">
+            <span>Deploy</span>
+            <IconPlay/>
+          </Button>
+          <Modal className="deployment-modal" position="bottom" align="right" v-if="showDeploymentModal" width="315">
+            <h2 class="header">Deploy #{{build.number}}</h2>
+            <div class="control-group">
+              <label class="control-label">Action</label>
+              <div class="controls">
+                <BaseRadioButtons v-model="deployment.action"
+                                  name="visibility"
+                                  :options="{ promote: 'Promote', rollback: 'Rollback'}"/>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">To</label>
+              <div class="controls">
+                <BaseInput v-model="deployment.target"
+                           style="width: 100%"
+                           autocomplete="off"
+                           autocorrect="off"
+                           autocapitalize="off"
+                           spellcheck="false"
+                           type="text"/>
+              </div>
+            </div>
+            <div class="control-actions">
+              <Button theme="primary" @click.native="handleDeploy">Deploy</Button>
+              <Button outline @click.native="closeDeployModal">Cancel</Button>
+            </div>
+          </Modal>
+        </div>
+
         <Button outline v-if="isBuildFinished(build)"
                 class="button-restart"
                 @click.native="handleRestart"
@@ -184,13 +221,17 @@ import PlayButton from "@/components/buttons/PlayButton.vue";
 import IconFullscreen from "@/components/icons/IconFullscreen.vue";
 import IconDownload from "@/components/icons/IconDownload.vue";
 import IconRestart from "@/components/icons/IconRestart.vue";
+import IconPlay from "@/components/icons/IconPlay.vue";
+import IconArrow from "@/components/icons/IconArrow";
+import IconSource from "@/components/icons/IconSource";
 import ScrollLock from "@/components/utils/ScrollLock.vue";
 import Loading from "@/components/Loading.vue";
-import IconArrow from "../components/icons/IconArrow";
-import IconSource from "../components/icons/IconSource";
-import AlertError from "../components/AlertError";
-import TimeElapsed from "../components/TimeElapsed";
+import AlertError from "@/components/AlertError";
+import TimeElapsed from "@/components/TimeElapsed";
 import Status from "@/components/Status";
+import Modal from "@/components/Modal";
+import BaseRadioButtons from "@/components/forms/BaseRadioButtons";
+import BaseInput from "@/components/forms/BaseInput";
 
 import { isBuildFinished } from "@/lib/buildHelper";
 
@@ -219,8 +260,12 @@ export default {
     Loading,
     IconDownload,
     IconRestart,
+    IconPlay,
     IconSource,
-    IconFullscreen
+    IconFullscreen,
+    Modal,
+    BaseRadioButtons,
+    BaseInput
   },
   data() {
     return {
@@ -228,7 +273,12 @@ export default {
       follow: false,
       logStep: 250,
       logLimit: 250,
-      showToTop: false
+      showToTop: false,
+      showDeploymentModal: false,
+      deployment: {
+        action: "promote",
+        target: "",
+      }
     };
   },
   mounted() {
@@ -341,11 +391,26 @@ export default {
         this.$router.push(`/${namespace}/${name}/${data.build.number}`);
       });
     },
+    handleDeploy: function() {
+      const { namespace, name, build } = this.$route.params;
+
+      this.$store.dispatch("createDeployment", { namespace, name, build, target: this.deployment.target, action: this.deployment.action }).then(data => {
+        this.showDeploymentModal = false;
+        this.deployment = {action: "promote", target: ""};
+        this.$router.push(`/${namespace}/${name}/${data.build.number}`);
+      });
+    },
     handleMore: function() {
       this.logLimit += this.logStep;
     },
     handleAll: function() {
       this.logLimit = this.logs.length;
+    },
+    openDeployModal: function() {
+      this.showDeploymentModal = true;
+    },
+    closeDeployModal: function() {
+      this.showDeploymentModal = false;
     },
     toggleOutputFullscreen() {
       this.outputFullscreen = !this.outputFullscreen;
@@ -490,6 +555,30 @@ export default {
 };
 </script>
 
+<style lang="scss">
+.deployment-modal {
+  .header {
+    font-size: 22px;
+  }
+
+  .modal-content {
+    width: 494px;
+  }
+
+  .control-group,
+  .control-actions,
+  .header {
+    padding: 11px 15px;
+  }
+
+  .control-actions {
+    .button + .button {
+      margin-left: 5px;
+    }
+  }
+}
+</style>
+
 <style scoped lang="scss">
 @import "../assets/styles/mixins";
 
@@ -507,6 +596,7 @@ export default {
 }
 
 .button-restart,
+.button-deploy,
 .button-cancel {
   min-width: 116px;
   text-align: left;
