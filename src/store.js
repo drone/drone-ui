@@ -332,8 +332,9 @@ export default new Vuex.Store({
       const slug = `${params.namespace}/${params.name}`;
 
       applySuccess(state.deployments[slug]);
+
       res.forEach(item =>
-        Vue.set(state.deployments[slug].data, item.target, {
+        Vue.set(state.deployments[slug].data, item.deploy_to, {
           data: item,
           lStatus: "loaded",
           dStatus: "present",
