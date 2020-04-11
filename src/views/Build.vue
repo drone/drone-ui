@@ -18,7 +18,7 @@
         </Button>
 
         <Modal className="deployment-modal" v-if="showDeploymentModal">
-          <DeploymentForm @submit="handleDeploy" @cancel="closeDeployModal" :buildNumber="build.number" />
+          <DeploymentForm @submit="handleDeploy" @cancel="closeDeployModal" :buildNumber="build.number" :targets="deployTargets" />
         </Modal>
 
         <Button outline v-if="isBuildFinished(build)"
@@ -268,6 +268,12 @@ export default {
     },
     user() {
       return this.$store.state.user && this.$store.state.user.data;
+    },
+    deployments() {
+      return this.$store.state.deployments[this.slug].data;
+    },
+    deployTargets() {
+      return Object.keys(this.deployments);
     },
     buildCollection() {
       const number = this.$route.params.build;

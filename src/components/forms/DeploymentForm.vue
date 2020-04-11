@@ -18,20 +18,24 @@
       </div>
     </div>
     <div class="control-group">
-        <div class="control-label">
-          <label>To</label>
-        </div>
-        <div class="controls">
-          <BaseInput
-            v-model="target"
-            name="target"
-            autocomplete="off"
-            autocorrect="off"
-            autocapitalize="off"
-            spellcheck="false"
-            type="text"
-          />
-        </div>
+      <div class="control-label">
+        <label>To</label>
+      </div>
+      <div class="controls">
+        <BaseInput
+          v-model="target"
+          list="targets"
+          name="target"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
+          spellcheck="false"
+          type="text"
+        />
+        <datalist id="targets">
+          <option v-for="option in targets" :key="option">{{option}}</option>
+        </datalist>
+      </div>
     </div>
     <div class="control-group">
       <label class="control-label">Parameters</label>
@@ -100,7 +104,8 @@ export default {
     }
   },
   props: {
-    buildNumber: {type: Number, required: true}
+    buildNumber: {type: Number, required: true},
+    targets: {type: Array, default() { return [] }}
   },
   methods: {
     handleSubmit(e) {
