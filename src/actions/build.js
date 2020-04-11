@@ -116,10 +116,13 @@ export const createBuild = async ({ commit }, { namespace, name, build }) => {
  * createDeployment swapns the a new build from an existing entry
  * and dispatches an event to add the object to the store.
  */
-export const createDeployment = async ({ commit }, { namespace, name, build, target, action }) => {
+export const createDeployment = async ({ commit }, { namespace, name, build, target, action, params }) => {
   commit(BUILD_RETRY_LOADING);
 
-  const req = await fetch(`${instance}/api/repos/${namespace}/${name}/builds/${build}/${action}?target=${target}`, {
+  const query = {target, ...params};
+  const encode = encodeURIComponent;
+  const queryString = Object.keys(query).map(key => encode(key) + '=' + encode(query[key])).join('&');
+  const req = await fetch(`${instance}/api/repos/${namespace}/${name}/builds/${build}/${action}?${queryString}`, {
     headers,
     method: "POST",
     credentials: "same-origin"

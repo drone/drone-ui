@@ -1,6 +1,6 @@
 <template>
   <portal to="body">
-    <div :class="{ [className]: true, modal: true }">
+    <div :class="{ [className]: Boolean(className), modal: true }">
       <Overlay opened/>
 
       <div class="modal-container">
