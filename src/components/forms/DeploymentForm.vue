@@ -82,6 +82,12 @@ import BaseForm from "@/components/forms/BaseForm";
 
 export default {
   name: "DeploymentForm",
+  components: {
+    Button,
+    BaseRadioButtons,
+    BaseInput,
+    BaseForm
+  },
   data() {
     return {
       action: "promote",
@@ -113,13 +119,7 @@ export default {
     handleRmParam(key) {
       this.$delete(this.params, key);
     }
-  },
-  components: {
-    Button,
-    BaseRadioButtons,
-    BaseInput,
-    BaseForm,
-  },
+  }
 };
 </script>
 
