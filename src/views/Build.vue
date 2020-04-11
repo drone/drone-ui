@@ -370,6 +370,7 @@ export default {
       const { namespace, name, build } = this.$route.params;
 
       this.$store.dispatch("createDeployment", { namespace, name, build, ...deployment }).then(data => {
+        this.showDeploymentModal = false;
         this.$router.push(`/${namespace}/${name}/${data.build.number}`);
       });
     },
