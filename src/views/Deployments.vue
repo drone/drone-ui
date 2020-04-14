@@ -42,13 +42,11 @@ export default {
       return this.$store.state.repos[this.slug];
     },
     collection() {
-      // todo use proper collection;
       const collection = this.$store.state.deployments[this.slug];
       return collection ? { ...collection, data: collection.data } : null;
     },
     items() {
-      // todo remove slice
-      return this.collection ? Object.values(this.collection.data).slice(0, 2).map(x => x.data) : [];
+      return this.collection ? Object.values(this.collection.data).map(x => x.data) : [];
     },
     showState() {
       if (!this.collection) return;
