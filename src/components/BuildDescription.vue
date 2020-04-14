@@ -21,9 +21,10 @@ export default {
   },
   computed: {
     whodunnit() {
-      if (event === "promote") return this.build.trigger;
-      if (event === "rollback") return this.build.trigger;
-      return this.build.author_login;
+      const { event, trigger, author_login } = this.build;
+      if (event === "promote") return trigger;
+      if (event === "rollback") return trigger;
+      return author_login;
     },
     action() {
       const { event } = this.build;
