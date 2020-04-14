@@ -26,13 +26,6 @@ export default {
     Status
   },
   computed: {
-    action() {
-      const { event } = this.build;
-      if (event === "pull_request") return "opened pull request";
-      if (event === "tag") return "created tag";
-      if (event === "promote") return "promoted";
-      return "pushed";
-    },
     shrinkedBuild() {
       return { ...this.build };
     }

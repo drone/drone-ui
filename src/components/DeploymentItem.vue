@@ -26,12 +26,6 @@ export default {
     Status
   },
   computed: {
-    action() {
-      const { event } = this.build;
-      if (event === "promote") return "promoted";
-      if (event === "rollback") return "rollbacked";
-      throw new Error(`invalid event: ${event}`);
-    },
     shrinkedBuild() {
       return { ...this.build };
     }

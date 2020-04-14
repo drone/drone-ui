@@ -1,6 +1,6 @@
 <template>
   <div class="build-description">
-    <span>{{ build.author_login }}</span>
+    <span>{{ whodunnit }}</span>
     <span> {{ action }} </span>
     <RepoItemLabel type="actionTarget" :build="build" :repo="linkRepo" :link="!!linkRepo"/>
     <RepoItemLabel class="to" type="to" :build="build" :repo="linkRepo" :link="!!linkRepo" prefix=" to "/>
@@ -20,11 +20,17 @@ export default {
     RepoItemLabel
   },
   computed: {
+    whodunnit() {
+      if (event === "promote") return this.build.trigger;
+      if (event === "rollback") return this.build.trigger;
+      return this.build.author_login;
+    },
     action() {
       const { event } = this.build;
       if (event === "pull_request") return "opened pull request";
       if (event === "tag") return "created tag";
       if (event === "promote") return "promoted";
+      if (event === "rollback") return "reverted";
       return "pushed";
     }
   }
