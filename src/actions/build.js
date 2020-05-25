@@ -4,14 +4,14 @@ import { dispatchTypicalFetch } from "./_base";
 import { isBuildFinished } from "@/lib/buildHelper";
 
 /**
- * fetchBuilds fetches the build list and dispatches an
+ * fetchBranches fetches the build list and dispatches an
  * event to update the store.
  */
-export const fetchBuilds = (store, params) => {
-  const { namespace, name, page = 1 } = params;
+export const fetchBranches = (store, params) => {
+  const { namespace, name } = params;
 
-  return dispatchTypicalFetch(store, params, "BUILD_LIST", () => {
-    return fetch(`${instance}/api/repos/${namespace}/${name}/builds?page=${page}`, {
+  return dispatchTypicalFetch(store, params, "BRANCH_LIST", () => {
+    return fetch(`${instance}/api/repos/${namespace}/${name}/builds/branches`, {
       headers,
       credentials: "same-origin"
     });
@@ -22,11 +22,11 @@ export const fetchBuilds = (store, params) => {
  * fetchBuilds fetches the build list and dispatches an
  * event to update the store.
  */
-export const fetchBranches = (store, params) => {
-  const { namespace, name } = params;
+export const fetchBuilds = (store, params) => {
+  const { namespace, name, page = 1 } = params;
 
-  return dispatchTypicalFetch(store, params, "BRANCH_LIST", () => {
-    return fetch(`${instance}/api/repos/${namespace}/${name}/builds/branches`, {
+  return dispatchTypicalFetch(store, params, "BUILD_LIST", () => {
+    return fetch(`${instance}/api/repos/${namespace}/${name}/builds?page=${page}`, {
       headers,
       credentials: "same-origin"
     });
@@ -149,3 +149,43 @@ export const streamEvents = ({ commit, state, getters }) => {
     commit("BUILD_EVENT", { repo });
   };
 };
+
+/**
+ * fetchEnvironments fetches environment list and dispatches 
+ * an event to update the store.
+ */
+export const fetchEnvironments = (store, params ) => {
+  const { namespace, name } = params;
+
+  return dispatchTypicalFetch(store, params, "ENVIRONMENT_LIST", () => {
+    return fetch(`${instance}/api/repos/${namespace}/${name}/builds/deployments`, {
+      headers,
+      credentials: "same-origin"
+    });
+  });
+}
+
+export const deployToEnvironment = async ({ commit }, { namespace, name, build, target, action, params }) => {
+  commit(BUILD_RETRY_LOADING);
+
+  const queryParams = { target, ...params };
+  const parameters = Object.keys(queryParams)
+    .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(queryParams[key]))
+    .join('&');
+
+  const request = await fetch(`${instance}/api/repos/${namespace}/${name}/builds/${build}/${action}?${parameters}`, {
+    method: "POST",
+    headers,
+    credentials: "same-origin"
+  });
+
+  const response = await request.json();
+
+  if (200 <= request.status && request.status < 300) {
+    const payload = { namespace, name, build: response };
+    commit(BUILD_RETRY_SUCCESS, payload);
+    return payload;
+  } else {
+    commit(BUILD_RETRY_FAILURE, { namespace, name , error: response });
+  }
+}

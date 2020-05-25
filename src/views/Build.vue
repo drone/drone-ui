@@ -9,6 +9,17 @@
           <IconSource/>
         </Button>
 
+        <Button outline 
+                class="button-environments"
+                @click.native="openEnvironmentsModal"
+                :disabled="!isCollaborator">
+          <span>Environments</span>
+        </Button>
+
+        <Modal class="environments-modal" v-if="showEnvironmentsModal">
+          <EnvironmentsForm @submit="handleEnvironments" @cancel="closeEnvironmentsModal" :targets="environmentTargets" />
+        </Modal>
+
         <Button outline v-if="isBuildFinished(build)"
                 class="button-restart"
                 @click.native="handleRestart"
@@ -191,6 +202,8 @@ import IconSource from "../components/icons/IconSource";
 import AlertError from "../components/AlertError";
 import TimeElapsed from "../components/TimeElapsed";
 import Status from "@/components/Status";
+import Modal from "@/components/Modal.vue";
+import EnvironmentsForm from "@/components/forms/EnvironmentsForm.vue";
 
 import { isBuildFinished } from "@/lib/buildHelper";
 
@@ -220,7 +233,9 @@ export default {
     IconDownload,
     IconRestart,
     IconSource,
-    IconFullscreen
+    IconFullscreen,
+    Modal,
+    EnvironmentsForm
   },
   data() {
     return {
@@ -228,7 +243,8 @@ export default {
       follow: false,
       logStep: 250,
       logLimit: 250,
-      showToTop: false
+      showToTop: false,
+      showEnvironmentsModal: false
     };
   },
   mounted() {
@@ -324,6 +340,12 @@ export default {
     },
     readyToDownload() {
       return this.step && this.step.stopped && this.logsShowState === "data";
+    },
+    environments() {
+      return this.$store.state.environments[this.slug].data;
+    },
+    environmentTargets() {
+      return Object.keys(this.environments);
     }
   },
   methods: {
@@ -447,6 +469,20 @@ export default {
       } else if (step.started) {
         this.$store.dispatch("streamLogs", this.$route.params);
       }
+    },
+    handleEnvironments: function(environment) {
+      const { namespace, name, build } = this.$route.params;
+
+      this.$store.dispatch("deployToEnvironment", { namespace, name, build, ...environment }).then(data => {
+        this.showEnvironmentsModal = false;
+        this.$$router.push(`/${namespace}/${name}/${data.build.number}`);
+      });
+    },
+    closeEnvironmentsModal: function() {
+      this.showEnvironmentsModal = false;
+    },
+    openEnvironmentsModal: function() {
+      this.showEnvironmentsModal = true;
     }
   },
   watch: {
@@ -507,6 +543,7 @@ export default {
 }
 
 .button-restart,
+.button-environments,
 .button-cancel {
   min-width: 116px;
   text-align: left;
@@ -863,5 +900,18 @@ $output-header-sticky-offset: 20px;
   .ansi-magenta-bg { background-color: #c440b6; }
   .ansi-cyan-bg { background-color: #32d2d9; }
   .ansi-white-bg { background-color: #aeaeae; }
+}
+
+.environments-modal {
+  .header {
+    font-size: 22px;
+    padding: 15px 15px;
+  }
+
+  .control-actions {
+    .button + .button {
+      margin-left: 5px;
+    }
+  }
 }
 </style>

@@ -20,7 +20,9 @@ export const fetcher = ({ dispatch, commit }) => (to, from, next) => {
     case "badges":
     case "settings":
     case "step":
+    case "environments":
       dispatch("fetchRepo", params);
+      dispatch("fetchEnvironments", params);
       break;
   }
 

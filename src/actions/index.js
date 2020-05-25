@@ -7,7 +7,9 @@ export {
   declineBuild,
   fetchBuildsFeed,
   fetchBranches,
-  streamEvents
+  streamEvents,
+  fetchEnvironments,
+  deployToEnvironment
 } from "./build";
 
 export { deleteCron, createCron, updateCron, fetchCron, fetchCrons } from "./cron";

@@ -187,7 +187,11 @@ export default new Vuex.Store({
 
     logs: createEmptyCollection([]),
 
-    notifications: {}
+    notifications: {},
+
+    environments: {
+
+    }
   },
   getters: {
     userPresent(state) {
@@ -591,6 +595,38 @@ export default new Vuex.Store({
 
     SAVE_FROM_ROUTE(state, from) {
       state.from = from;
+    },
+
+    //
+    // environment list
+    //
+
+    ENVIRONMENT_LIST_LOADING(state, { params }) {
+      const slug = `${params.namespace}/${params.name}`;
+
+      if(!state.environments[slug]) {
+        insertEmptyBuildsCollection(state.environments, slug);
+      }
+
+      applyLoading(state.environments[slug]);
+    },
+
+    ENVIRONMENT_LIST_FAILURE(state, { params }) {
+      const slug = `${params.namespace}/${params.name}`;
+      applyFailure(state.environments[slug]);
+    },
+
+    ENVIRONMENT_LIST_SUCCESS(state, { params, res }) {
+      const slug = `${params.namespace}/${params.name}`;
+      applySuccess(state.environments[slug]);
+
+      res.forEach(item => 
+        Vue.set(state.environments[slug].data, item.deploy_to, {
+          data: item, 
+          lStatus: "loaded",
+          dStatus: "present",
+          error: undefined
+        }));
     }
   },
   actions

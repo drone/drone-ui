@@ -1,5 +1,8 @@
 module.exports = {
   lintOnSave: false,
   productionSourceMap: false,
-  outputDir: "dist/files"
+  outputDir: "dist/files",
+  configureWebpack: {
+    devtool: 'source-map'
+  }
 };
