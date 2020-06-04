@@ -28,22 +28,6 @@
           </datalist>
         </div>
       </div>
-      <!-- <EditableList title="Environment variables"
-                    itemCreateButtonTitle="add a variable"
-                    :items="parameters"
-                    :dispatchCreate="dispatchCreate"
-                    :dispatchDelete="dispatchDelete">
-        <EditableListItemWithValue slot="item" 
-                                   slot-scope="slotProps" 
-                                   :name="slotProps.item.name"
-                                   :value="slotProps.item.value"
-                                   :deleting="slotProps.deleting"
-                                   @delete="slotProps.onDelete"/>
-        <template slot="fields">
-          <BaseInput name="parameterInput.key" v-model="parameterInput.key" placeholder="Variable Name" type="text"/>
-          <BaseTextArea name="parameterInput.value" v-model="parameterInput.value" placeholder="Variable Value"/>
-        </template>
-      </EditableList> -->
       <div class="control-actions">
         <Button type="submit" size="l" theme="primary">Apply</Button>
         <Button type="button" size="l" outline @click.native="handleCancel" id="cancel-button">Cancel</Button>
