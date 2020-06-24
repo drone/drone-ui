@@ -2,9 +2,9 @@
 
 <template>
   <div class="editable-list-item">
-    <span class="name">{{ name }}</span>
+    <span class="item-name">{{ name }}</span>
 
-    <span class="name">{{ value }}</span>
+    <span class="item-value">{{ value }}</span>
 
     <Button theme="danger" outline borderless @click.native="$emit('delete')" :loading="deleting">
       Delete
@@ -41,7 +41,15 @@ export default {
   }
 }
 
-.name {
+.item-name {
+  flex-grow: 1;
+
+  @include mobile {
+    margin-bottom: 15px;
+  }
+}
+
+.item-value {
   flex-grow: 1;
 
   @include mobile {
