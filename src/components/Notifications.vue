@@ -38,6 +38,7 @@ export default {
   position: fixed;
   bottom: 15px;
   left: 15px;
+  z-index: $overlay-z-index + 10;
 }
 
 .notification {

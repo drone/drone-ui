@@ -168,12 +168,11 @@ export const fetchEnvironments = (store, params ) => {
 export const deployToEnvironment = async ({ commit }, { namespace, name, build, target, action, params }) => {
   commit(BUILD_RETRY_LOADING);
 
-  const queryParams = { target, ...params };
-  const parameters = Object.keys(queryParams)
-    .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(queryParams[key]))
+  const parameters = Object.keys(params)
+    .map(key => {console.log(key); return encodeURIComponent(params[key].name) + '=' + encodeURIComponent(params[key].value)})
     .join('&');
 
-  const request = await fetch(`${instance}/api/repos/${namespace}/${name}/builds/${build}/${action}?${parameters}`, {
+  const request = await fetch(`${instance}/api/repos/${namespace}/${name}/builds/${build}/${action}?target=${target}&${parameters}`, {
     method: "POST",
     headers,
     credentials: "same-origin"

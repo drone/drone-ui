@@ -475,7 +475,7 @@ export default {
 
       this.$store.dispatch("deployToEnvironment", { namespace, name, build, ...environment }).then(data => {
         this.showEnvironmentsModal = false;
-        this.$$router.push(`/${namespace}/${name}/${data.build.number}`);
+        this.$router.push(`/${namespace}/${name}/${data.build.number}`);
       });
     },
     closeEnvironmentsModal: function() {
