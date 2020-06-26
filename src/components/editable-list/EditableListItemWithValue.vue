@@ -45,6 +45,7 @@ export default {
 .name {
   display: flex;
   flex-grow: 1;
+  padding-right: 14px;
 
   @include mobile {
     margin-bottom: 15px;
@@ -56,7 +57,7 @@ export default {
   flex-grow: 1;
   flex-direction: row;
   flex-wrap: wrap;
-  padding: 0 15px;
+  padding-right: 14px;
 
   @include mobile {
     margin-bottom: 15px;
