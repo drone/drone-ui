@@ -24,13 +24,13 @@ export default {
 <style lang="scss">
 @import "../assets/styles/variables";
 .modal-container {
-  position: fixed;
+  position: absolute;
   top: 0;
   bottom: 0;
   right: 0;
   left: 0;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   z-index: $overlay-z-index + 1;
   padding: $header-padding-side;
@@ -41,5 +41,6 @@ export default {
   border: solid 1px #edeef1;
   border-radius: 3px;
   min-width: 0;
+  margin: 45px auto;
 }
 </style>
