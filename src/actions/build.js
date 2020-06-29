@@ -169,7 +169,7 @@ export const deployToEnvironment = async ({ commit }, { namespace, name, build, 
   commit(BUILD_RETRY_LOADING);
 
   const parameters = Object.keys(params)
-    .map(key => {console.log(key); return encodeURIComponent(params[key].name) + '=' + encodeURIComponent(params[key].value)})
+    .map(key => encodeURIComponent(params[key].name) + '=' + encodeURIComponent(params[key].value))
     .join('&');
 
   const request = await fetch(`${instance}/api/repos/${namespace}/${name}/builds/${build}/${action}?target=${target}&${parameters}`, {
