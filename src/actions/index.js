@@ -3,10 +3,12 @@ export {
   fetchBuild,
   fetchBuilds,
   createBuild,
+  createDeployment,
   approveBuild,
   declineBuild,
   fetchBuildsFeed,
   fetchBranches,
+  fetchDeployments,
   streamEvents
 } from "./build";
 

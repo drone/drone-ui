@@ -47,8 +47,8 @@ export default {
       return collection ? { ...collection, data: collection.data } : null;
     },
     items() {
-      // todo remove slice
-      return this.collection ? Object.values(this.collection.data).slice(0, 2).map(x => x.data) : [];
+      // return this.collection ? Object.values(this.collection.data).map(x => x.data) : [];
+      return this.collection ? Object.values(this.collection.data).slice(0, 10).map(x => x.data) : [];
     },
     showState() {
       if (!this.collection) return;
