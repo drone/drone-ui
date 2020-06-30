@@ -135,9 +135,8 @@ export default new Vuex.Store({
     repoEnabling: false,
     repoEnablingErr: undefined,
 
-    branches: {
-
-    },
+    branches: {},
+    deployments: {},
 
     builds: {
       /*
@@ -307,6 +306,36 @@ export default new Vuex.Store({
       );
     },
 
+    DEPLOYMENT_LIST_LOADING(state, { params }) {
+      const slug = `${params.namespace}/${params.name}`;
+
+      if (!state.deployments[slug]) {
+        insertEmptyBuildsCollection(state.deployments, slug);
+      }
+
+      applyLoading(state.deployments[slug]);
+    },
+
+    DEPLOYMENT_LIST_FAILURE(state, { params, error }) {
+      const slug = `${params.namespace}/${params.name}`;
+      applyFailure(state.deployments[slug], error);
+    },
+
+
+    DEPLOYMENT_LIST_SUCCESS(state, { params, res }) {
+      const slug = `${params.namespace}/${params.name}`;
+
+      applySuccess(state.deployments[slug]);
+
+      res.forEach(item =>
+        Vue.set(state.deployments[slug].data, item.deploy_to, {
+          data: item,
+          lStatus: "loaded",
+          dStatus: "present",
+          error: undefined
+        })
+      );
+    },
 
     //
     // build list

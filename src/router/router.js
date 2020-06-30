@@ -4,6 +4,7 @@ import Account from "../views/Account.vue";
 import Build from "../views/Build.vue";
 import Builds from "../views/Builds.vue";
 import Branches from "../views/Branches.vue";
+import Deployments from "../views/Deployments.vue";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import LoginErr from "../views/LoginErr.vue";
@@ -80,6 +81,11 @@ export default new Router({
               path: "branches",
               name: "branches",
               component: Branches
+            },
+            {
+              path: "deployments",
+              name: "deployments",
+              component: Deployments
             },
             {
               path: ":build/:stage/:step",
