@@ -17,17 +17,15 @@
           <IconRestart/>
         </Button>
 
-        <Button theme="primary" v-if="isBuildFinished(build)"
+        <Button theme="primary" v-if="showDeployButton"
                 class="button-promote"
-                @click.native="openDeployModal"
-                :disabled="!isCollaborator">
+                @click.native="openDeployModal">
           <span>Deploy</span>
           <IconDeploy/>
         </Button>
 
-        <ButtonConfirm v-else outline
+        <ButtonConfirm v-if="showCancelButton" outline
                        @click="handleCancel"
-                       :disabled="!isCollaborator"
                        :message="`Are you sure to cancel build #${build.number}?`"
                        class="button-cancel">
           <span>Cancel</span>
@@ -343,6 +341,12 @@ export default {
     },
     readyToDownload() {
       return this.step && this.step.stopped && this.logsShowState === "data";
+    },
+    showDeployButton() {
+      return this.build && this.isBuildFinished(this.build) && this.isCollaborator;
+    },
+    showCancelButton() {
+      return this.build && !this.isBuildFinished(this.build) && this.isCollaborator;
     }
   },
   methods: {
