@@ -7,7 +7,7 @@
       <Card v-if="items.length < 1">Your Build List is Empty.</Card>
 
       <router-link v-for="build in items" :key="build.id" :to="`/${slug}/${build.number}`">
-        <BranchItem hoverable
+        <DeploymentItem hoverable
                     :branch="build.deploy_to"
                     :status="build.status"
                     :build="build"
@@ -19,14 +19,14 @@
 
 <script>
 import Card from "@/components/Card.vue";
-import BranchItem from "@/components/BranchItem.vue";
+import DeploymentItem from "@/components/DeploymentItem.vue";
 import Loading from "@/components/Loading.vue";
 import AlertError from "@/components/AlertError.vue";
 export default {
   name: "Deployments",
   components: {
     Card,
-    BranchItem,
+    DeploymentItem,
     Loading,
     AlertError
   },
@@ -48,7 +48,7 @@ export default {
     },
     items() {
       // return this.collection ? Object.values(this.collection.data).map(x => x.data) : [];
-      return this.collection ? Object.values(this.collection.data).slice(0, 10).map(x => x.data) : [];
+      return this.collection ? Object.values(this.collection.data).map(x => x.data).sort((a, b) => b.number - a.number).slice(0, 10) : [];
     },
     showState() {
       if (!this.collection) return;
