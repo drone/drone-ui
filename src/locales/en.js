@@ -27,6 +27,7 @@ export default {
     home: "Home",
     history: "History",
     internal: "Internal", // internal visibility (requires login)
+    job_queue: "Job queue",
     last_login: "Last Login",
     latest: "Latest",
     lines_covered: "Covered Lines",
@@ -70,7 +71,8 @@ export default {
     account_token: "Account Token",
     coverage_badge: "Coverage Badge",
     repository_settings: "Repository Settings",
-    repository_token: "Respository Token"
+    repository_token: "Respository Token",
+    job_queue: "Job Queue"
   }
   // phrases: {
   // 	created_branch: branch => `created branch ${branch}`,

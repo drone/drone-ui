@@ -42,6 +42,10 @@ export const fetcher = ({ dispatch, commit }) => (to, from, next) => {
     case "home":
       dispatch("fetchReposLatest", params);
       break;
+    case "admin-queue":
+      dispatch("fetchIncompleteBuilds", params);
+      dispatch("fetchJobQueue", params);
+      break;
     case "settings":
       dispatch("fetchSecrets", params);
       dispatch("fetchCrons", params);

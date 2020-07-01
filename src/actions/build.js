@@ -176,6 +176,26 @@ export const fetchBuildsFeed = async ({ commit }) => {
   }
 };
 
+/**
+ * fetchJobQueue fetches the job queue and dispatches an event
+ * to update the store.
+ */
+export const fetchJobQueue = store => {
+  return dispatchTypicalFetch(store, null, "JOB_QUEUE", () => {
+    return fetch(`${instance}/api/queue`, { headers, credentials: "same-origin" });
+  });
+};
+
+/**
+ * fetchIncompleteBuilds fetches the incomplete build list and
+ * dispatches an event to update the store.
+ */
+export const fetchIncompleteBuilds = store => {
+  return dispatchTypicalFetch(store, null, "INCOMPLETE_BUILDS", () => {
+    return fetch(`${instance}/api/builds/incomplete`, { headers, credentials: "same-origin" });
+  });
+};
+
 export const streamEvents = ({ commit, state, getters }) => {
   const path = `${instance}/api/stream${token ? `?access_token=${token}` : ""}`;
   const events = new EventSource(path);

@@ -7,6 +7,9 @@
 
     <Popup :position="'bottom'" :align="'right'" :evict="!this.opened">
       <router-link to="/account" @focus.native="open" @blur.native="closeDelayed">User settings</router-link>
+      <router-link to="/admin/queue" v-if="user.admin" @focus.native="open" @blur.native="closeDelayed">
+        {{ $t("labels.job_queue") }}
+      </router-link>
       <a href="/logout" class="logout" @focus="open" @blur="closeDelayed">
         {{ $t("labels.logout") }}
       </a>

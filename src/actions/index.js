@@ -7,6 +7,8 @@ export {
   approveBuild,
   declineBuild,
   fetchBuildsFeed,
+  fetchJobQueue,
+  fetchIncompleteBuilds,
   fetchBranches,
   fetchDeployments,
   streamEvents
