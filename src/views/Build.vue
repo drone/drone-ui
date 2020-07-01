@@ -17,6 +17,14 @@
           <IconRestart/>
         </Button>
 
+        <Button theme="primary" v-if="isBuildFinished(build)"
+                class="button-promote"
+                @click.native="openDeployModal"
+                :disabled="!isCollaborator">
+          <span>Deploy</span>
+          <IconDeploy/>
+        </Button>
+
         <ButtonConfirm v-else outline
                        @click="handleCancel"
                        :disabled="!isCollaborator"
@@ -27,6 +35,10 @@
         </ButtonConfirm>
       </div>
     </portal>
+
+    <Modal className="deployment-modal" v-if="showDeploymentModal">
+      <DeploymentForm @submit="handleDeploy" @cancel="closeDeployModal" />
+    </Modal>
 
     <RepoItem
       v-if="buildShowState === 'data'"
@@ -180,10 +192,13 @@ import Stage from "@/components/Stage.vue";
 import IconCancel from "@/components/icons/IconCancel.vue";
 import Button from "@/components/buttons/Button.vue";
 import ButtonConfirm from "@/components/buttons/ButtonConfirm.vue";
+import DeploymentForm from "@/components/forms/DeploymentForm.vue";
 import PlayButton from "@/components/buttons/PlayButton.vue";
+import IconDeploy from "@/components/icons/IconDeploy.vue";
 import IconFullscreen from "@/components/icons/IconFullscreen.vue";
 import IconDownload from "@/components/icons/IconDownload.vue";
 import IconRestart from "@/components/icons/IconRestart.vue";
+import Modal from "@/components/Modal.vue";
 import ScrollLock from "@/components/utils/ScrollLock.vue";
 import Loading from "@/components/Loading.vue";
 import IconArrow from "../components/icons/IconArrow";
@@ -206,7 +221,7 @@ export default {
   components: {
     TimeElapsed,
     AlertError,
-    IconArrow,
+    DeploymentForm,
     Alert,
     RepoItem,
     Step,
@@ -217,7 +232,10 @@ export default {
     PlayButton,
     ScrollLock,
     Loading,
+    Modal,
+    IconArrow,
     IconDownload,
+    IconDeploy,
     IconRestart,
     IconSource,
     IconFullscreen
@@ -228,7 +246,8 @@ export default {
       follow: false,
       logStep: 250,
       logLimit: 250,
-      showToTop: false
+      showToTop: false,
+      showDeploymentModal: false,
     };
   },
   mounted() {
@@ -334,6 +353,13 @@ export default {
       const { namespace, name, build } = this.$route.params;
       this.$store.dispatch("cancelBuild", { namespace, name, build });
     },
+    handleDeploy: function(deployment) {
+      const { namespace, name, build } = this.$route.params;
+      this.$store.dispatch("createDeployment", { namespace, name, build, ...deployment }).then(data => {
+        this.showDeploymentModal = false;
+        this.$router.push(`/${namespace}/${name}/${data.build.number}`);
+      });
+    },
     handleRestart: function() {
       const { namespace, name, build } = this.$route.params;
 
@@ -346,6 +372,12 @@ export default {
     },
     handleAll: function() {
       this.logLimit = this.logs.length;
+    },
+    openDeployModal: function() {
+      this.showDeploymentModal = true;
+    },
+    closeDeployModal: function() {
+      this.showDeploymentModal = false;
     },
     toggleOutputFullscreen() {
       this.outputFullscreen = !this.outputFullscreen;
