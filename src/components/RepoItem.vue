@@ -51,6 +51,14 @@
         </div>
       </div>
     </div>
+    <div v-if="showParams && !!build.params" style="margin-top: 20px;">
+      <div style="display: table; margin-top: 10px;  margin-left: 20px; border-collapse: separate; border-spacing: 10px;">
+        <div v-for="(value, key) in build.params" :key="key" style="display: table-row; padding: 10px">
+          <div style="display: table-cell; width: 30%"><code>{{key}}</code></div>
+          <div style="display: table-cell;"><code>{{value}}</code></div>
+        </div>
+      </div>
+    </div>
   </section>
 </template>
 
@@ -73,7 +81,8 @@ export default {
     title: String,
     avatar: String,
     build: Object,
-    linkRepo: Object
+    linkRepo: Object,
+    showParams: Boolean,
   },
   components: {
     Status,

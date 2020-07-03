@@ -45,7 +45,8 @@
       :title="build.title || build.message"
       :avatar="build.author_avatar"
       :linkRepo="repo"
-      :build="Object.assign({}, build, { message: null })"/>
+      :build="Object.assign({}, build, { message: null })"
+      :showParams="true"/>
 
     <AlertError v-if="buildShowState === 'loadingError'" :error="this.buildCollection.error"/>
     <Alert v-if="buildShowState === 'buildError'" theme="danger">{{ build.error }}</Alert>
