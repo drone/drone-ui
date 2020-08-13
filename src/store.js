@@ -106,6 +106,18 @@ function insertBuildCollection(data, number, build) {
   Vue.set(data, build.number, createPresentCollection(build));
 }
 
+function mergeLogs(previousLogs, newLogs) {
+  let logs = [];
+
+  for (var log of previousLogs) {
+    logs[log.pos] = log;
+  }
+  for (var log of newLogs) {
+    logs[log.pos] = log;
+  }
+  return logs;
+}
+
 export default new Vuex.Store({
   state: {
     mediaType: window.innerWidth >= 980 ? "desktop" : window.innerWidth > 480 ? "tablet" : "mobile",
@@ -608,7 +620,7 @@ export default new Vuex.Store({
     LOG_WRITE(state, { lines }) {
       applySuccess(state.logs);
       escapeLogs(lines);
-      state.logs.data = state.logs.data.concat(lines);
+      state.logs.data = mergeLogs(state.logs.data, lines);
     },
 
     NOTIFICATION_ADD(state, notification) {
