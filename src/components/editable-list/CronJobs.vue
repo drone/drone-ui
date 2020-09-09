@@ -6,7 +6,7 @@
                 :dispatchDelete="dispatchDelete">
     <IconCronJobsEmpty slot="empty"/>
     <Help slot="help" title="Crons" href="https://docs.drone.io/configure/cron/">
-    Setup regularly schedule pipeline executions.
+    Setup regularly scheduled pipeline executions.
     </Help>
 
     <EditableListItem slot="item" slot-scope="slotProps"
