@@ -789,7 +789,7 @@ $output-header-sticky-offset: 20px;
 
 .ol-html {
   word-break: break-word;
-  white-space: pre-wrap;
+  white-space: pre-line;
   padding-right: 15px;
 }
 
