@@ -85,15 +85,44 @@ export const cancelBuild = async ({ commit }, { namespace, name, build }) => {
   }
 };
 
+
+export const BUILD_CREATE_LOADING = "BUILD_CREATE_LOADING";
+export const BUILD_CREATE_SUCCESS = "BUILD_CREATE_SUCCESS";
+export const BUILD_CREATE_FAILURE = "BUILD_CREATE_FAILURE";
+
+export const createBuild = async ({ commit }, { namespace, name, branch, commitHash }) => {
+  commit(BUILD_CREATE_LOADING);
+
+  let url = `${instance}/api/repos/${namespace}/${name}/builds?branch=${branch}`;
+  if (commitHash) {
+    url += `&commit=${commitHash}`;
+  }
+
+  const req = await fetch(url, {
+    headers,
+    method: "POST",
+    credentials: "same-origin"
+  });
+  const res = await req.json();
+
+  if (req.status < 300) {
+    const data = { namespace, name, build: res };
+    commit(BUILD_CREATE_SUCCESS, data);
+    return data;
+  } else {
+    commit(BUILD_CREATE_FAILURE, { namespace, name, error: res });
+  }
+};
+
 export const BUILD_RETRY_LOADING = "BUILD_RETRY_LOADING";
 export const BUILD_RETRY_SUCCESS = "BUILD_RETRY_SUCCESS";
 export const BUILD_RETRY_FAILURE = "BUILD_RETRY_FAILURE";
 
 /**
- * createBuild swapns the a new build from an existing entry
+ * retryBuild swaps the a new build from an existing entry
  * and dispatches an event to add the object to the store.
  */
-export const createBuild = async ({ commit }, { namespace, name, build }) => {
+export const retryBuild = async ({ commit }, { namespace, name, build }) => {
   commit(BUILD_RETRY_LOADING);
 
   const req = await fetch(`${instance}/api/repos/${namespace}/${name}/builds/${build}`, {

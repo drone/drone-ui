@@ -8,6 +8,17 @@
         <div class="empty-message">Your Build List is Empty.</div>
       </Alert>
 
+      <portal to="secondary-page-header-actions">
+        <div class="header-actions">
+          <Button theme="primary"
+                  class="button-new-build"
+                  @click.native="openNewBuildModal">
+            <span>New Build</span>
+            <IconPlay/>
+          </Button>
+        </div>
+      </portal>
+
       <router-link
         class="build"
         v-for="build in builds"
@@ -21,6 +32,10 @@
                   :linkRepo="repo"/>
       </router-link>
 
+      <Modal className="new-build-modal" v-if="showNewBuildModal">
+        <NewBuildForm @submit="handleNewBuild" @cancel="closeNewBuildModal" />
+      </Modal>
+
       <MoreButton v-if="showHasMore" @click.native="showMore">Show more</MoreButton>
     </template>
 
@@ -32,9 +47,14 @@
 import Alert from "@/components/Alert.vue";
 import RepoItem from "@/components/RepoItem.vue";
 import Loading from "@/components/Loading.vue";
+import Button from "@/components/buttons/Button.vue";
+import Modal from "@/components/Modal.vue";
 import MoreButton from "@/components/buttons/MoreButton.vue";
 import AlertError from "@/components/AlertError.vue";
 import IconDroneSleep from "@/components/icons/IconDroneSleep";
+import IconPlay from "@/components/icons/IconPlay";
+import NewBuildForm from "@/components/forms/NewBuildForm.vue";
+
 
 export default {
   name: "Builds",
@@ -44,7 +64,16 @@ export default {
     Loading,
     AlertError,
     MoreButton,
-    IconDroneSleep
+    Button,
+    IconDroneSleep,
+    IconPlay,
+    NewBuildForm,
+    Modal,
+  },
+  data() {
+    return {
+      showNewBuildModal: false,
+    };
   },
   computed: {
     slug() {
@@ -89,6 +118,19 @@ export default {
     }
   },
   methods: {
+    openNewBuildModal: function() {
+      this.showNewBuildModal = true;
+    },
+    closeNewBuildModal: function() {
+      this.showNewBuildModal = false;
+    },
+    handleNewBuild: function(newBuildParams) {
+      const { namespace, name, build } = this.$route.params;
+      this.$store.dispatch("createBuild", { namespace, name, build, ...newBuildParams }).then(data => {
+        this.showNewBuildModal = false;
+        this.$router.push(`/${namespace}/${name}/${data.build.number}`);
+      });
+    },
     showMore() {
       this.$store.dispatch("fetchBuilds", { ...this.$route.params, page: this.collection.page + 1 });
     },
@@ -147,6 +189,19 @@ export default {
 
   @include mobile {
     margin-left: 7px;
+  }
+}
+
+.header-actions {
+  margin: -5px;
+  align-self: flex-start;
+
+  @include mobile {
+    margin-top: 10px;
+  }
+
+  .button {
+    margin: 5px;
   }
 }
 </style>

@@ -366,8 +366,7 @@ export default {
     },
     handleRestart: function() {
       const { namespace, name, build } = this.$route.params;
-
-      this.$store.dispatch("createBuild", { namespace, name, build }).then(data => {
+      this.$store.dispatch("retryBuild", { namespace, name, build }).then(data => {
         this.$router.push(`/${namespace}/${name}/${data.build.number}`);
       });
     },

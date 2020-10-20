@@ -1,8 +1,9 @@
 export {
   cancelBuild,
+  createBuild,
   fetchBuild,
   fetchBuilds,
-  createBuild,
+  retryBuild,
   createDeployment,
   approveBuild,
   declineBuild,
