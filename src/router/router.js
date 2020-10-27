@@ -15,9 +15,16 @@ import Settings from "../views/Settings.vue";
 import Search from "../views/Search.vue";
 import BuildsFeed from "../views/BuildsFeed.vue";
 
+var basePath;
+if (window.BASE_URL) {
+  var parser = document.createElement('a');
+  parser.href = window.BASE_URL;
+  basePath = parser.pathname
+}
+
 export default new Router({
   mode: "history",
-  base: "/",
+  base: basePath || "/",
   routes: [
     {
       path: "/login/form",
