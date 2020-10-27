@@ -7,7 +7,7 @@
 
     <Popup :position="'bottom'" :align="'right'" :evict="!this.opened">
       <router-link to="/account" @focus.native="open" @blur.native="closeDelayed">User settings</router-link>
-      <a href="/logout" class="logout" @focus="open" @blur="closeDelayed">
+      <a :href="`${this.instance}/logout`" class="logout" @focus="open" @blur="closeDelayed">
         {{ $t("labels.logout") }}
       </a>
     </Popup>
@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import { instance } from "@/actions/config.js";
 import Popup from "@/components/Popup.vue";
 
 export default {
@@ -29,7 +30,8 @@ export default {
     return {
       opened: false,
       nextOpened: false,
-      clicked: false
+      clicked: false,
+      instance: instance
     };
   },
   methods: {

@@ -26,11 +26,12 @@
       <UserMenu :user="user"/>
     </div>
 
-    <Button v-if="!userPresent" href="/login" class="login" size="l" theme="light">Login</Button>
+    <Button v-if="!userPresent" :href="`${this.instance}/login`" class="login" size="l" theme="light">Login</Button>
   </header>
 </template>
 
 <script>
+import { instance } from "@/actions/config.js";
 import Logo from "@/components/logos/Logo.vue";
 import Button from "@/components/buttons/Button";
 import Search from "@/components/Search";
@@ -80,6 +81,11 @@ export default {
     showBuildsFeedIndicatorLink() {
       return this.mediaType !== "desktop" && this.userPresent;
     }
+  },
+  data() {
+    return {
+      instance: instance
+    };
   },
   methods: {
     urlOrGoBack(routeName) {

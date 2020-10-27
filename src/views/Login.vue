@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="login">
-      <form action="/login" method="POST">
+      <form :action="`${this.instance}/login`" method="POST">
         <div class="logo"><Logo /></div>
         <BaseInput name="username" placeholder="Login" type="text" />
         <BaseInput name="password" placeholder="Password" type="password" />
@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import { instance } from "@/actions/config.js";
 import Logo from "@/components/logos/Logo.vue";
 import BaseInput from "@/components/forms/BaseInput.vue";
 import Button from "@/components/buttons/Button.vue";
@@ -22,7 +23,12 @@ export default {
     Logo,
     BaseInput,
     Button
-  }
+  },
+  data() {
+    return {
+      instance: instance
+    };
+  },
 };
 </script>
 
