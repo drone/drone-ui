@@ -4,6 +4,7 @@ export {
   fetchBuilds,
   createBuild,
   createDeployment,
+  debugBuild,
   approveBuild,
   declineBuild,
   fetchBuildsFeed,

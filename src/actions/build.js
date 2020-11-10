@@ -90,13 +90,36 @@ export const BUILD_RETRY_SUCCESS = "BUILD_RETRY_SUCCESS";
 export const BUILD_RETRY_FAILURE = "BUILD_RETRY_FAILURE";
 
 /**
- * createBuild swapns the a new build from an existing entry
+ * createBuild spawns the a new build from an existing entry
  * and dispatches an event to add the object to the store.
  */
 export const createBuild = async ({ commit }, { namespace, name, build }) => {
   commit(BUILD_RETRY_LOADING);
 
   const req = await fetch(`${instance}/api/repos/${namespace}/${name}/builds/${build}`, {
+    headers,
+    method: "POST",
+    credentials: "same-origin"
+  });
+  const res = await req.json();
+
+  if (req.status < 300) {
+    const data = { namespace, name, build: res };
+    commit(BUILD_RETRY_SUCCESS, data);
+    return data;
+  } else {
+    commit(BUILD_RETRY_FAILURE, { namespace, name, error: res });
+  }
+};
+
+/**
+ * debugBuild spawns the a new build from an existing entry
+ * and dispatches an event to add the object to the store.
+ */
+export const debugBuild = async ({ commit }, { namespace, name, build }) => {
+  commit(BUILD_RETRY_LOADING);
+
+  const req = await fetch(`${instance}/api/repos/${namespace}/${name}/builds/${build}?debug=true`, {
     headers,
     method: "POST",
     credentials: "same-origin"

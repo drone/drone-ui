@@ -2,12 +2,12 @@
   <BaseForm @submit.native.prevent="handleSubmit" class="form">
     <header>
       <h2 class="title">
-        Create a Deployment
+        <span>Build # {{number}}</span>
       </h2>
     </header>
     <div class="control-group">
       <div class="control-label">
-        <label>Type</label>
+        <label>Action</label>
       </div>
       <div class="controls">
         <BaseRadioButtons 
@@ -19,7 +19,7 @@
     </div>
     <div class="control-group">
       <div class="control-label">
-        <label>Target</label>
+        <label>Environment</label>
       </div>
       <div class="controls">
         <BaseInput
@@ -69,7 +69,7 @@
       </div>
     </div>
     <div class="control-actions">
-      <Button type="submit" size="l" theme="primary">Deploy</Button>
+      <Button type="submit" size="l" theme="primary">Submit</Button>
       <Button type="button" size="l" outline @click.native="handleCancel">Cancel</Button>
     </div>
   </BaseForm>
@@ -100,7 +100,13 @@ export default {
     }
   },
   props: {
-    targets: {type: Array, default() { return [] }}
+    number: {
+      type: Number
+    },
+    targets: {
+      type: Array,
+      default() { return [] }
+    }
   },
   methods: {
     handleSubmit(e) {

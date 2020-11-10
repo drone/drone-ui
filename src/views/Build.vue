@@ -17,10 +17,16 @@
           <IconRestart/>
         </Button>
 
-        <Button theme="primary" v-if="showDeployButton"
+        <Button outline v-if="isBuildFinished(build)"
+                class="button-debug"
+                @click.native="handleDebug"
+                :disabled="!isCollaborator">
+          <IconBug/>
+        </Button>
+
+        <Button outline v-if="showDeployButton"
                 class="button-promote"
                 @click.native="openDeployModal">
-          <span>Deploy</span>
           <IconDeploy/>
         </Button>
 
@@ -35,7 +41,7 @@
     </portal>
 
     <Modal className="deployment-modal" v-if="showDeploymentModal">
-      <DeploymentForm @submit="handleDeploy" @cancel="closeDeployModal" />
+      <DeploymentForm @submit="handleDeploy" @cancel="closeDeployModal" :number="build.number" />
     </Modal>
 
     <RepoItem
@@ -193,6 +199,7 @@ import ButtonConfirm from "@/components/buttons/ButtonConfirm.vue";
 import DeploymentForm from "@/components/forms/DeploymentForm.vue";
 import PlayButton from "@/components/buttons/PlayButton.vue";
 import IconDeploy from "@/components/icons/IconDeploy.vue";
+import IconBug from "@/components/icons/IconBug.vue";
 import IconFullscreen from "@/components/icons/IconFullscreen.vue";
 import IconDownload from "@/components/icons/IconDownload.vue";
 import IconRestart from "@/components/icons/IconRestart.vue";
@@ -232,6 +239,7 @@ export default {
     Loading,
     Modal,
     IconArrow,
+    IconBug,
     IconDownload,
     IconDeploy,
     IconRestart,
@@ -364,6 +372,13 @@ export default {
         this.$router.push(`/${namespace}/${name}/${data.build.number}`);
       });
     },
+    handleDebug: function() {
+      const { namespace, name, build } = this.$route.params;
+
+      this.$store.dispatch("debugBuild", { namespace, name, build }).then(data => {
+        this.$router.push(`/${namespace}/${name}/${data.build.number}`);
+      });
+    }, 
     handleRestart: function() {
       const { namespace, name, build } = this.$route.params;
 
