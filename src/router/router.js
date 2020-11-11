@@ -14,6 +14,7 @@ import Repo from "../views/Repo.vue";
 import Settings from "../views/Settings.vue";
 import Search from "../views/Search.vue";
 import BuildsFeed from "../views/BuildsFeed.vue";
+import JobQueue from "../views/JobQueue.vue";
 
 export default new Router({
   mode: "history",
@@ -61,6 +62,12 @@ export default new Router({
           name: "builds-feed",
           component: BuildsFeed,
           meta: { requiresAuth: true }
+        },
+        {
+          path: "/admin/queue",
+          name: "admin-queue",
+          component: JobQueue,
+          meta: { requiresRoot: true }
         },
         {
           path: "/:namespace/:name",

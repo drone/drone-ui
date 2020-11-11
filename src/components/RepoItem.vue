@@ -13,6 +13,14 @@
     <div class="content">
       <div class="header" :title="title">
         <span class="title">
+          <span v-if="showRepo && !!linkRepo">
+            <router-link
+              class="repository"
+              :to="'/'+linkRepo.slug + '/'">
+              {{linkRepo.slug}}
+            </router-link>
+            -
+          </span>
           <span class="number" v-if="number">#{{ number }}. </span>
           <span>{{ title.split('\n')[0] }}</span>
         </span>
@@ -73,6 +81,7 @@ export default {
     title: String,
     avatar: String,
     build: Object,
+    showRepo: { type: Boolean, default: false },
     linkRepo: Object
   },
   components: {

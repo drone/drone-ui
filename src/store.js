@@ -170,6 +170,10 @@ export default new Vuex.Store({
       error: undefined
     },
 
+    jobQueue: createEmptyCollection([]),
+
+    incompleteBuilds: createEmptyCollection([]),
+
     secrets: {},
     crons: {},
     activity: {},
@@ -191,6 +195,9 @@ export default new Vuex.Store({
   getters: {
     userPresent(state) {
       return state.user.dStatus === "present";
+    },
+    userIsRoot(state) {
+      return state.user.dStatus === "present" && state.user.data !== null && state.user.data.admin;
     }
   },
   mutations: {
@@ -572,6 +579,40 @@ export default new Vuex.Store({
     BUILDS_FEED_SUCCESS(state, { builds }) {
       state.buildsFeed.status = "loaded";
       state.buildsFeed.data = builds;
+    },
+
+    //
+    // job queue
+    //
+
+    JOB_QUEUE_RESET(state) {
+      Vue.set(state, "jobQueue", createEmptyCollection([]));
+    },
+    JOB_QUEUE_LOADING(state) {
+      applyLoading(state.jobQueue);
+    },
+    JOB_QUEUE_FAILURE(state, { error }) {
+      applyFailure(state.jobQueue, error);
+    },
+    JOB_QUEUE_SUCCESS(state, { res }) {
+      applySuccess(state.jobQueue, res);
+    },
+
+    //
+    // incomplete builds
+    //
+
+    INCOMPLETE_BUILDS_RESET(state) {
+      Vue.set(state, "incompleteBuilds", createEmptyCollection([]));
+    },
+    INCOMPLETE_BUILDS_LOADING(state) {
+      applyLoading(state.incompleteBuilds);
+    },
+    INCOMPLETE_BUILDS_FAILURE(state, { error }) {
+      applyFailure(state.incompleteBuilds, error);
+    },
+    INCOMPLETE_BUILDS_SUCCESS(state, { res }) {
+      applySuccess(state.incompleteBuilds, res);
     },
 
     //

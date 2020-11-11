@@ -29,7 +29,7 @@ const i18n = new VueI18n({
 
 // configure routing.
 router.beforeEach(defaultParams);
-router.beforeEach(authorizer(store, window));
+router.beforeEach(authorizer(store));
 router.beforeEach(fetcher(store));
 
 // dispatch requests to subscribe to the global event
