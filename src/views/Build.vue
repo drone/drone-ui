@@ -57,10 +57,11 @@
 
           <!--
             If the stage is selected it is expanded, and
-            all steps are displayed.
+            all steps are displayed. Clicking on the stage
+            header will collapse/expand the section.
           -->
-          <Stage v-else :stage="_stage">
-            <div v-for="(_step) in _stage.steps" :key="_step.id" class="step-container">
+          <Stage v-else :stage="_stage" :is-selected="true" :is-expanded="isStageExpanded" @click="toggleStage">
+            <div v-show="isStageExpanded" v-for="(_step) in _stage.steps" :key="_step.id" class="step-container" :aria-hidden="!isStageExpanded">
               <Step v-if="_step === step"
                     selected
                     :name="_step.name"
@@ -228,7 +229,8 @@ export default {
       follow: false,
       logStep: 250,
       logLimit: 250,
-      showToTop: false
+      showToTop: false,
+      isStageExpanded: true
     };
   },
   mounted() {
@@ -447,6 +449,9 @@ export default {
       } else if (step.started) {
         this.$store.dispatch("streamLogs", this.$route.params);
       }
+    },
+    toggleStage() {
+      this.isStageExpanded = !this.isStageExpanded;
     }
   },
   watch: {
@@ -467,6 +472,7 @@ export default {
       // is running, dispatch a request to stream the logs.
       if (!oldStep || oldStep.id !== newStep.id) {
         this.$store.commit("LOG_CLEAR");
+        this.isStageExpanded = true;
 
         this.follow = false;
         this.logLimit = 250;
@@ -828,6 +834,10 @@ $output-header-sticky-offset: 20px;
       }
 
       &.has-steps {
+        .stage-title {
+          padding-right: 5px;
+        }
+
         time {
           display: none;
         }

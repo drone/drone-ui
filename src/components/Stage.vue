@@ -1,15 +1,17 @@
 <template>
-  <section :class="{ stage: true, 'has-steps': hasSteps, 'has-content': hasContent}">
-    <header>
-      <Status :status="stage.status"/>
-      <span :title="stage.name">{{ stage.name }}</span>
-      <time-elapsed v-if="stage.started" :started="stage.started" :stopped="stage.stopped">
-        <Hint position="top" align="right" showOn="hover">Full stage duration</Hint>
-      </time-elapsed>
-      <IconArrowDropdown v-if="hasSteps" direction="down" class="arrow-dropdown"/>
-    </header>
+  <section :class="{ stage: true, 'has-steps': hasSteps, 'has-content': hasContent, expanded: isExpanded}">
+    <component :is="isSelected && hasContent ? 'button' : 'div'" @click="emitClick" :aria-label="stageButtonLabel">
+      <header>
+        <Status :status="stage.status"/>
+        <span :title="stage.name" class="stage-title">{{ stage.name }}</span>
+        <time-elapsed v-if="stage.started" :started="stage.started" :stopped="stage.stopped">
+          <Hint position="top" align="right" showOn="hover">Full stage duration</Hint>
+        </time-elapsed>
+        <IconArrowDropdown v-if="hasSteps" direction="down" class="arrow-dropdown"/>
+      </header>
+    </component>
 
-    <div class="content">
+    <div v-if="isSelected && hasContent" class="content">
       <slot></slot>
     </div>
   </section>
@@ -24,7 +26,9 @@ import Hint from "./Hint";
 export default {
   name: "Stage",
   props: {
-    stage: { type: Object, required: true }
+    stage: { type: Object, required: true },
+    isSelected: { type: Boolean, required: false, default: false },
+    isExpanded: { type: Boolean, required: false, default: false }
   },
   components: {
     Hint,
@@ -38,6 +42,16 @@ export default {
     },
     hasContent() {
       return !!this.$slots.default;
+    },
+    stageButtonLabel() {
+      if (!this.isSelected) return null
+
+      return this.isExpanded ? "Collapse this stage" : "Expand this stage"
+    }
+  },
+  methods: {
+    emitClick() {
+      this.isSelected && this.$emit("click");
     }
   }
 };
@@ -54,7 +68,51 @@ export default {
   box-sizing: border-box;
   user-select: none;
 
-  &.has-content header {
+  &:hover,
+  &:focus {
+    &.has-steps {
+      .stage-title {
+        padding-right: 5px;
+      }
+
+      .time-elapsed {
+        display: none;
+      }
+
+      .arrow-dropdown {
+        display: inline-block;
+      }
+    }
+
+    &.expanded {
+      .arrow-dropdown {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  button {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    text-align: left;
+    width: 100%;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:hover,
+    &:focus {
+      outline: none;
+
+      header {
+        background-color: rgba($color-text, 0.02);
+      }
+    }
+  }
+
+  &.has-content.expanded header {
     border-bottom: solid 1px rgba($color-text, 0.1);
   }
 }
