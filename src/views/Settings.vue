@@ -36,8 +36,20 @@
                             name="visibility"
                             :options="{ public: 'Public', private: 'Private', internal: 'Internal'}"/>
         </div>
-        <!-- todo href for help -->
-        <Help title="Project visibility">Provides the repository visibility level.</Help>
+        <Help title="Project visibility">
+          <p class="help-p">
+            <a href="https://docs.drone.io/setting/#public" target="_blank" class="link">Public</a>
+            - If Enabled, visible by anyone.
+          </p>
+          <p class="help-p">
+            <a href="https://docs.drone.io/setting/#private" target="_blank" class="link">Private</a>
+            - If Enabled, visible by anyone with access.
+          </p>
+          <p class="help-p">
+            <a href="https://docs.drone.io/setting/#internal" target="_blank" class="link">Internal</a>
+            - If Enabled, visible by any authenticated user.
+          </p>
+        </Help>
       </div>
 
       <div v-if="isRoot" class="control-group">
