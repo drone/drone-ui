@@ -16,7 +16,8 @@ const cx = classNames.bind(css);
 const getSummaryMeta = (builds) => {
   if (builds.length === 1) {
     const build = builds[0];
-    const [number, ...units] = formatDistanceStrict(new Date(build.duration * 1000), new Date(), { addSuffix: true }).split(' ');
+    const latest = build.created;
+    const [number, ...units] = formatDistanceStrict(new Date(latest * 1000), new Date(), { addSuffix: true }).split(' ');
     return {
       median: build.duration,
       latest: {
