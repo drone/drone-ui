@@ -14,7 +14,10 @@ const cx = classNames.bind(css);
 /* local helpers */
 
 const getSummaryMeta = (builds) => {
-  if (builds.length === 1) {
+  // hotfix to prevent index out of bounds errors when
+  // apptendint to calculate the median build times for
+  // a repository with 2 builds or fewer.
+  if (builds.length < 3) {
     const build = builds[0];
     const latest = build.created;
     const [number, ...units] = formatDistanceStrict(new Date(latest * 1000), new Date(), { addSuffix: true }).split(' ');
