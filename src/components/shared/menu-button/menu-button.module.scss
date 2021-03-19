@@ -1,0 +1,74 @@
+@import "styles/mixins";
+
+.wrapper {
+  display: flex;
+  border-radius: 4px;
+  &-menu {
+    position: relative;
+  }
+}
+
+.btn {
+  padding: 5px 10px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.2px;
+  color: #0278d5;
+  background-color: #fff;
+  border: 1px solid #0278d5;
+  cursor: pointer;
+  &:focus {
+    outline: none;
+    background-color: #e6faff;
+  }
+  &:active {
+    background-color: #0278d5;
+    color: #fff;
+  }
+  &-primary {
+    border-radius: 4px 0 0 4px;
+  }
+  &-menu-controller {
+    border-radius: 0 4px 4px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    border-left: none;
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
+}
+
+.menu {
+  position: absolute;
+  top: calc(100% + 5px);
+  z-index: 3;
+  background-color: #fff;
+  min-width: 100px;
+  border-radius: 4px;
+  box-shadow: 0px 0px 2px rgba(40, 41, 61, 0.04), 0px 4px 8px rgba(96, 97, 112, 0.16);
+  overflow: hidden;
+  &-left {
+    left: 0;
+  }
+  &-right {
+    right: 0;
+  }
+  &-item {
+    padding: 5px 10px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    &:focus {
+      outline: none;
+      background-color: #e6faff;
+      color: #0278d5;
+    }
+    @include hover {
+      color: #0278d5;
+    }
+  }
+}

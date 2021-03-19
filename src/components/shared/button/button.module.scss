@@ -1,0 +1,40 @@
+@import "styles/mixins";
+@import "styles/_variables";
+
+.base {
+  font-family: $font-family-primary;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  outline: none;
+  transition: 0.3s;
+  -webkit-appearance: none;
+  svg + span {
+    margin-left: 10px;
+  }
+}
+
+.plain {
+  padding: 0;
+  text-decoration: none;
+  cursor: pointer;
+  background: none;
+  border: none;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.theme {
+  &-plain {
+    composes: plain;
+  }
+
+  &-primary {
+    composes: base;
+    composes: plain;
+  }
+}

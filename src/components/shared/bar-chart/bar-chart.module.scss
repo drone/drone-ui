@@ -1,0 +1,60 @@
+.wrapper {
+  display: flex;
+  margin: 5px 0;
+}
+
+.y-axis {
+  display: flex;
+  flex-flow: column-reverse;
+  justify-content: space-between;
+  margin: -5px 0;
+  padding: 0 5px;
+  height: calc(100% + 10px);
+  span {
+    font-size: 8px;
+    line-height: 12px;
+    letter-spacing: 0.05em;
+    color: #9293ab;
+    text-align: end;
+  }
+}
+
+.chart-grid {
+  flex: 1 1 100%;
+  display: grid;
+  overflow-x: auto;
+}
+
+.bar-background {
+  height: 100%;
+  background: #f3f3fa;
+  border-radius: 100px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.bar {
+  border-radius: 100px;
+  transition: height 0.2s ease;
+  background: transparent;
+  width: 100%;
+  min-height: 20px;
+  cursor: pointer;
+  &-running {
+    background-color: #FFCC00;
+    // background: linear-gradient(45deg, #FDED72, #FFCC00);
+  }
+  &-success {
+    background-color: #06C270;
+    // background: linear-gradient(45deg, #57EBA1, #06C270);
+  }
+  &-failure,
+  &-killed,
+  &-error {
+    background-color: #FF3B3B;
+    // background: linear-gradient(45deg, #FF8080, #FF3B3B);
+  }
+  &-pending {
+    background-color: transparent;
+  }
+}

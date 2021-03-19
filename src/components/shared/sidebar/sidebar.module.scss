@@ -1,0 +1,111 @@
+@import "styles/_variables";
+@import "styles/mixins";
+
+.wrapper {
+  @include flex;
+  z-index: 1;
+  position: relative;
+}
+
+.sidebar {
+  @include flex($direction: column, $align-x: space-between, $align-y: center);
+  height: 100vh;
+  padding: 8px 0 6px;
+  width: 64px;
+  background-color: $color-primary-9;
+  box-shadow: 3px 0 5px rgba(0, 0, 0, 0.2);
+  @media screen and (max-width: 768px) {
+    height: 64px;
+    width: 100%;
+    padding: 8px;
+    @include flex($direction: row, $align-x: space-between, $align-y: center);
+    flex-wrap: nowrap;
+  }
+}
+
+.top,
+.bottom {
+  @include flex($direction: column, $align-x: center, $align-y: center);
+  width: 100%;
+  @media screen and (max-width: 768px) {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: auto;
+  }
+}
+
+.sidebar-item {
+  @include flex($align-y: center, $align-x: center);
+  width: 100%;
+  height: 64px;
+  background-color: transparent;
+  transition: background-color 0.2s ease;
+  color: #fff;
+  text-decoration: none;
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+  &-active {
+    background-color: #07182b;
+  }
+
+  &:not(.logo) {
+    height: 54px;
+  }
+
+  &:not(&-active):not(.logo) {
+    @include hover {
+      background-color: #082952;
+    }
+  }
+  .avatar {
+    width: 24px;
+    height: 24px;
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .sidebar-item {
+    height: 64px;
+    width: 54px;
+  
+    &.logo {
+      width: 64px;
+      height: 64px;
+    }
+  }
+}
+
+.anonymous {
+  text-decoration: none;
+  position: relative;
+  span {
+    position: absolute;
+    left: calc(100% + 5px);
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 5px;
+    white-space: nowrap;
+    border-radius: 4px;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.3s ease;
+  }
+  div {
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFF;
+  }
+  &:hover {
+    span {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+}

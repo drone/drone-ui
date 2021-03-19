@@ -1,0 +1,8 @@
+@import "styles/_variables";
+@import "styles/mixins";
+
+.error-wrapper {
+  > * + * {
+    margin-top: 10px;
+  }
+}

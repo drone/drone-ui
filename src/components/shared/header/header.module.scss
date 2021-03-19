@@ -1,0 +1,49 @@
+.header {
+  display: flex;
+  flex-direction: column;
+
+  &-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.heading {
+  // margin-top: 0;
+  // margin-bottom: 15px;
+  // font-size: 32px;
+}
+
+.breadcrumbs {
+  align-items: center;
+  margin-bottom: 11px;
+
+  > a {
+    color: hotpink;
+    text-decoration: none;
+  }
+
+  > * + * {
+    margin-left: 5px;
+
+    &::before {
+      margin-right: 5px;
+      color: black;
+      content: "←";
+    }
+  }
+}
+
+.buttons {
+  display: flex;
+
+  button + button {
+    margin-left: 10px;
+  }
+}
+
+.back-to-feed {
+  color: black;
+  text-decoration: none;
+}

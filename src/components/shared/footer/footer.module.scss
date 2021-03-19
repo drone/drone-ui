@@ -1,0 +1,14 @@
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 56px;
+  padding: 0 15px;
+
+  nav {
+    a + a {
+      margin-left: 15px;
+    }
+  }
+}

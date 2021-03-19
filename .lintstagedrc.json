@@ -1,0 +1,4 @@
+{
+  "*.{js,jsx}": "eslint --fix --ignore-path .gitignore",
+  "*.{css,sass,scss,md,html}": "stylelint --fix --ignore-path .gitignore"
+}

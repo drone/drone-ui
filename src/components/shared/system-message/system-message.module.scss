@@ -1,0 +1,17 @@
+.wrapper {
+  padding: 20px;
+  text-align: center;
+  color: #fff;
+  font-weight: 500;
+  border-radius: 4px;
+  font-size: 14px;
+  &-success {
+    background: #09c270;
+  }
+  &-danger {
+    background: #ff3c3c;
+  }
+  &-warning {
+    background-color: orange;
+  }
+}

@@ -1,0 +1,144 @@
+
+.list a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+// .header {
+//   display: grid;
+//   grid-template-columns: 24px 600px auto;
+//   grid-gap: 15px;
+//   padding: 15px;
+
+//   div {
+//     font-size: 11px;
+//     font-weight: 700;
+//     line-height: 14px;
+//     text-transform: uppercase;
+//     user-select: none;
+//   }
+
+//   visibility: hidden;
+// }
+
+.item {
+  display: grid;
+  grid-template-rows: 24px auto;// 100px 200px auto;
+  grid-gap: 10px;
+
+  padding: 19px 15px;
+  margin-bottom: 10px;
+  text-align: left;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 1px rgba(40, 41, 61, 0.08), 0 0.5px 2px rgba(96, 97, 112, 0.16);
+
+  &:hover {
+    box-shadow: 0 1px 6px -3px rgba(0, 0, 0, 0.5);
+    box-shadow: 2px 0 -3px rgba(40, 41, 61, 0.08), 0 2px 2px rgba(96, 97, 112, 0.16);
+  }
+
+  img {
+    width: 24px;
+    height: 24px;
+    margin-left: 24px;
+    border-radius: 50%;
+  }
+
+  .date {
+    padding-right: 5px;
+  }
+
+  &.inactive {
+    grid-gap: 0px;
+    grid-template-rows: 24px;
+    .detail {
+      display: none;
+    }
+  }
+}
+
+.title {
+  display: grid;
+  grid-template-columns: 24px 600px auto;
+  grid-gap: 15px;
+}
+
+.detail {
+  display: grid;
+  grid-template-columns: 24px 600px auto;
+  grid-gap: 15px;
+
+  &.inactive {
+    display: none;
+  }
+
+  &> div {
+    display: flex;
+    align-items: center;
+    color: #627386;
+    font-size: 13px;
+    line-height: 26px;
+  }
+
+  // &> :nth-child(2) {
+  // }
+
+  &> :nth-child(3) {
+    justify-content: flex-end;
+    font-size: 13px;
+    text-align: right;
+  }
+
+  strong {
+
+    background: #F3F3FA;
+    border-radius: 8px;
+    color: #22222a;
+    line-height: 26px;
+    padding: 0px 8px;
+    font-weight: 400;
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    margin-right: 8px;
+
+    svg {
+      color: #9293AB;
+      width: 20px;
+      height: 20px;
+      margin-right: 4px;
+    }
+
+
+    //TODO REMOVE:
+    // margin-left: 26px;
+  }
+
+  span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 600px;
+  }
+}
+
+// .commit {
+//   padding-left: 50px;
+// }
+
+.title div {
+  display: flex;
+  align-items: center;
+  color: #627386;
+
+  &:nth-child(2) {
+    color: black;
+    font-weight: 400;
+    font-size: 15px;
+  }
+
+  &:nth-child(3) {
+    justify-content: flex-end;
+  }
+}

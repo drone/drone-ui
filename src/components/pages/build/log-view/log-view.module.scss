@@ -1,0 +1,24 @@
+@import "styles/mixins";
+@import "styles/_variables";
+
+.inner {
+  display: flex;
+  background-color: #fff;
+}
+
+.navbar {
+  width: 400px;
+  overflow-y: scroll;
+}
+
+.logs {
+  flex: 1;
+}
+
+.page-wrapper {
+  padding: 0;
+  & [data-container="non-logs"] {
+    padding-top: 25px;
+    padding-right: 60px;
+  }
+}

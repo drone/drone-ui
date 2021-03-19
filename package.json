@@ -1,61 +1,78 @@
 {
-  "name": "drone-ui",
+  "name": "drone-ui-react",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "start": "react-scripts start",
+    "build": "GENERATE_SOURCEMAP=false react-scripts build",
+    "postbuild": "rm -rf ./dist/files; mv ./build ./dist/files",
+    "serve": "npx http-server ./build -p 3001",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint": "npm run lint:js & npm run lint:styles",
+    "lint:fix": "npm run lint:js:fix & npm run lint:styles:fix",
+    "lint:js": "eslint --ext .js,.jsx --ignore-path .gitignore .",
+    "lint:js:fix": "eslint --fix --ext .js,.jsx --ignore-path .gitignore .",
+    "lint:styles": "stylelint --ignore-path .gitignore '{**/*,*}.{css,sass,scss,html}'",
+    "lint:styles:fix": "stylelint --fix --ignore-path .gitignore '{**/*,*}.{css,sass,scss,html}'"
   },
   "dependencies": {
-    "ansi_up": "^3.0.0",
-    "lodash.throttle": "^4.1.1",
-    "portal-vue": "^1.5.0",
-    "vue": "^2.5.17",
-    "vue-click-outside": "^1.0.7",
-    "vue-i18n": "^8.2.1",
-    "vue-moment": "^4.1.0",
-    "vue-router": "^3.0.1",
-    "vuex": "^3.0.1",
-    "vuex-router-sync": "^5.0.0"
+    "@emotion/core": "^10.1.1",
+    "@emotion/styled": "^10.0.27",
+    "@projectstorm/react-diagrams": "^6.0.1-beta.7",
+    "ansi_up": "^4.0.4",
+    "axios": "^0.21.0",
+    "classnames": "^2.2.6",
+    "closest": "0.0.1",
+    "dagre": "^0.8.5",
+    "date-fns": "^2.16.1",
+    "lodash": "^4.17.20",
+    "normalize.css": "^8.0.1",
+    "pathfinding": "^0.4.18",
+    "paths-js": "^0.4.11",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.1",
+    "react-copy-to-clipboard": "^5.0.3",
+    "react-dom": "^17.0.1",
+    "react-router-dom": "^5.2.0",
+    "react-split-pane": "^0.1.92",
+    "react-toastify": "^7.0.3",
+    "resize-observer-polyfill": "^1.5.1",
+    "swr": "^0.3.9"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.5.1",
-    "@vue/cli-plugin-eslint": "^3.5.1",
-    "@vue/cli-service": "^3.5.1",
-    "@vue/eslint-config-prettier": "^3.0.5",
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "@testing-library/jest-dom": "^5.11.6",
+    "@testing-library/react": "^11.2.2",
+    "@testing-library/user-event": "^12.5.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": "^4.3.5",
+    "lint-staged": "^10.5.3",
     "node-sass": "^4.14.1",
-    "sass-loader": "^7.1.0",
-    "vue-template-compiler": "^2.5.17"
+    "react-scripts": "^4.0.1",
+    "stylelint": "^13.8.0",
+    "stylelint-config-css-modules": "^2.2.0",
+    "stylelint-config-recess-order": "^2.3.0",
+    "stylelint-config-recommended-scss": "^4.2.0",
+    "stylelint-config-standard": "^20.0.0",
+    "stylelint-order": "^4.1.0",
+    "stylelint-scss": "^3.18.0"
   },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "@vue/prettier"
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
     ],
-    "rules": {},
-    "parserOptions": {
-      "parser": "babel-eslint"
-    }
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ],
-  "engines": {
-    "npm": "<=5"
-  },
-  "prettier": {
-    "printWidth": 120
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

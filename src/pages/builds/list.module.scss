@@ -1,0 +1,143 @@
+
+.list {
+  display: block;
+
+  a {
+    text-decoration: none;
+    cursor: pointer;
+  }
+}
+
+.list-item {
+  display: grid;
+  grid-template-columns: 32px auto;
+  grid-gap: 5px;
+  padding: 19px 15px;
+  padding-right: 24px;
+  margin-bottom: 10px;
+  text-align: left;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 1px rgba(40, 41, 61, 0.08), 0 0.5px 2px rgba(96, 97, 112, 0.16);
+
+  &:hover {
+    box-shadow: 0 1px 6px -3px rgba(0, 0, 0, 0.5);
+    box-shadow: 2px 0 -3px rgba(40, 41, 61, 0.08), 0 2px 2px rgba(96, 97, 112, 0.16);
+  }
+}
+
+.status {
+  display: grid;
+  grid-template-rows: 24px auto;
+  grid-gap: 5px;
+}
+
+.container {
+  display: grid;
+  grid-template-rows: 24px auto;
+  grid-gap: 5px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.connector {
+  width: 22px;
+  height: 15px;
+  border-bottom-left-radius: 24px;
+  border-left: 2px solid #D9DAE5;
+  border-bottom: 2px solid #D9DAE5;
+  margin-left: 9px;
+}
+
+.commit {
+  max-width: 800px;
+  min-width: 0px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+  color: black;
+  font-size: 16px;
+}
+
+.number {
+  color: black;
+  color: #9293AB;
+  font-size: 16px;
+  white-space: nowrap;
+  min-width: 32px;
+  padding-right: 6px;
+
+  &:before {
+      content: "#";
+      margin-right: 3px;
+  }
+  &:after {
+      content: ".";
+  }
+}
+
+.body {
+  display: grid;
+  grid-template-columns: auto 100px;
+  grid-gap: 15px;
+}
+
+
+
+.content {
+  color: #627386;
+  display: grid;
+  grid-template-columns: auto 200px;
+  grid-gap: 15px;
+}
+
+.timing {
+  text-align: right;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.elapsed {
+  font-size: 13px;
+  line-height: unset;
+}
+
+.dot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  span {
+    display: inline-block;
+    width: 3px;
+    height: 3px;
+    background: rgba(30,55,90,.25);
+    border-radius: 50%;
+    margin: 0 6px;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .content {
+    color: #627386;
+    display: grid;
+    grid-template-columns: unset;
+    grid-template-columns: auto;
+    grid-gap: 2px;
+  }
+
+  .timing {
+    text-align: left;
+    justify-content: flex-end;
+    margin-top: 12px;
+  }
+}

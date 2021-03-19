@@ -1,0 +1,205 @@
+@import "styles/_variables";
+@import "styles/mixins";
+
+.wrapper {
+  max-width: 100%;
+  color: #f3f3fa;
+  background-color: #0b0b0d;
+  position: relative;
+  display: flex;
+  flex-flow: column;
+  min-height: 500px;
+}
+
+.header {
+  box-sizing: border-box;
+  background-color: inherit;
+  padding: 0;
+  border-bottom: none;
+  flex: 0 0 52px;
+  &-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    padding-top: 14px;
+    padding-bottom: 13px;
+    padding-left: 27px;
+    padding-right: 25px;
+    border-bottom: 1px solid #22222a;
+    border-radius: inherit;
+    background-color: inherit;
+    z-index: 2;
+  }
+  .info,
+  .controls {
+    display: inline-flex;
+  }
+  .controls {
+    svg {
+      color: #B0B1C3;
+      width: 22px;
+      height: 22px;
+      transition: color 0.2s ease;
+      &:hover {
+        color: #fff;
+      }
+    }
+    & > * + * {
+      margin-left: 20px;
+      color: inherit;
+    }
+  }
+  .info {
+    font-size: 10px;
+    line-height: 24px;
+    h3 {
+      font-weight: 500;
+      color: #b0b1c3;
+      font-size: 14px;
+      line-height: 24px;
+      margin-right: 10px;
+      text-transform: uppercase;
+    }
+  }
+  .step-time-elapsed {
+    font-size: inherit;
+    line-height: inherit;
+  }
+}
+
+.terminal {
+  padding: 17px 27px;
+  margin: 0;
+  font-family: "Roboto Mono", Courier, monospace;
+  background-color: inherit;
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: 0.2px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  flex: auto;
+}
+
+.output {
+  display: table;
+}
+
+.line {
+  display: table-row;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+.line-number {
+  display: table-cell;
+  padding-right: 28px;
+  text-align: end;
+  white-space: nowrap;
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: 0.2px;
+  color: #6b6d85;
+}
+
+.line-content {
+  display: table-cell;
+  width: 100%;
+}
+
+.line-time {
+  display: table-cell;
+  padding-left: 28px;
+  text-align: end;
+  white-space: nowrap;
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: 0.2px;
+  color: #6b6d85;
+}
+
+.footer {
+  padding-left: 27px;
+  padding-right: 25px;
+  background: #22222a;
+  border-top: 1px solid hsla(0, 0%, 100%, 0.05);
+  display: flex;
+  justify-content: space-between;
+  font-family: $font-family-code;
+  flex: 0 0 60px;
+  position: relative;
+  .summary {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  .summary-title {
+    margin-bottom: 10px;
+    color: #9293ab;
+    flex: 1 1 100%;
+  }
+  .summary-info {
+    display: flex;
+    align-items: center;
+    color: #f3f3fa;
+    flex: 1;
+  }
+  .summary-status {
+    margin-right: 15px;
+    svg {
+      color: #22222a;
+    }
+  }
+  .summary-controls {
+    display: flex;
+    align-items: center;
+  }
+  .scroll-to-top-btn {
+    font-size: 20px;
+    right: 25px;
+    bottom: 16px;
+    color: #6b6d85;
+    transform: translateX(5px);
+  }
+
+  .tmate-link {
+    border: none;
+    font-family: Inter;
+    text-transform: uppercase;
+    line-height: 32px;
+    border-radius: 8px;
+    padding: 0px 18px;
+    background: #4F5162;
+    box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.04), 0px 2px 4px rgba(0, 0, 0, 0.32);
+    transition: all 0.2s ease;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.8);
+    &:hover {
+      color: #fff;
+    }
+  }
+}
+
+.btn-download {
+  height: 22px;
+
+  svg {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+.btn-show-all-logs {
+  color: #fff;
+  background: #22222a;
+  border-radius: 6px;
+  font-size: 12px;
+  line-height: 16px;
+  color: #b0b1c4;
+  font-family: $font-family-code;
+  padding: 6px 9px;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 5px;
+}

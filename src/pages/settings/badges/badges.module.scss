@@ -1,0 +1,61 @@
+@import "styles/_variables";
+
+.title {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+  color: #22222a;
+}
+
+.inner {
+  background: #ffffff;
+  box-shadow: 0px 0px 1px rgba(40, 41, 61, 0.08), 0px 0.5px 2px rgba(96, 97, 112, 0.16);
+  border-radius: 8px;
+  padding: 26px 33px;
+  position: relative;
+
+  img {
+    position: absolute;
+    right: 33px;
+    top: 26px;
+  }
+}
+
+.group-badge {
+  margin-bottom: 24px;
+  display: flex;
+  & > * + * {
+    margin-left: 33px;
+  }
+}
+
+.badge-snippet {
+  position: relative;
+  white-space: pre-wrap;
+  background: #f3f3fa;
+  padding: 9px 61px 9px 22px;
+  font-family: $font-family-code;
+  border-radius: 8px;
+  opacity: 0.75;
+  font-size: 12px;
+  line-height: 26px;
+  color: #000000;
+}
+
+.copy-btn {
+  position: absolute;
+  right: 17px;
+  top: 9px;
+  color: #8f90a6;
+  font-weight: 500;
+  svg {
+    width: 22px;
+    height: 22px;
+    transition: color .2s ease;
+  }
+  &:hover {
+    svg {
+      color: #383946;
+    }
+  }
+}
