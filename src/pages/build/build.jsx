@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import React, {
-  useCallback, useState, useEffect,
+  useCallback, useState, useLayoutEffect,
 } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
@@ -44,13 +44,13 @@ export default function Build({ userIsAdminOrHasWritePerm }) {
 
   const { showError } = useToast();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     // set state to error if request threw an error, build threw an error
     // or user has manually entered url with invalid stage count
     if (isError || data?.error || (data && (data?.stages?.length ?? 0) < stage)) {
       setState(ERROR);
     } else if (isLoading || data) {
-      if (data?.status === 'blocked') {
+      if (data?.status === 'pending' && data.stages?.[stage - 1]?.status === 'blocked') {
         setState(RESOLVED_BLOCKED);
       } else {
         setState(RESOLVED);
@@ -115,7 +115,7 @@ export default function Build({ userIsAdminOrHasWritePerm }) {
       await axiosWrapper(`/api/repos/${namespace}/${name}/builds/${build}/approve/${stage}`, {
         method: 'POST',
       });
-      await mutate(true);
+      await mutate();
     } catch (e) {
       showError(`Unable to approve build: ${e.message}`);
       // eslint-disable-next-line
@@ -128,7 +128,7 @@ export default function Build({ userIsAdminOrHasWritePerm }) {
       await axiosWrapper(`/api/repos/${namespace}/${name}/builds/${build}/decline/${stage}`, {
         method: 'POST',
       });
-      await mutate(true);
+      await mutate();
     } catch (e) {
       showError(`Unable to decline build: ${e.message}`);
       // eslint-disable-next-line

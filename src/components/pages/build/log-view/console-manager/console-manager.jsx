@@ -16,6 +16,7 @@ import { ACTION_LIST, logsReducer, logsInitFn } from './console-manager.state';
 import {
   getIntentFromStepStatus,
   getLogsErrorContent,
+  getNoLogsContent,
 } from './console-manager.utils';
 
 const cx = classNames.bind(styles);
@@ -62,7 +63,6 @@ export default function LogViewConsoleManager(props) {
   const {
     dynamicHeightRef, dynamicHeight,
   } = useDynamicHeight();
-
   /* Hooks  */
   // logs fetch
   useLogs(
@@ -116,6 +116,7 @@ export default function LogViewConsoleManager(props) {
           <div className={cx('error-wrapper')}>
             <SystemMessage intent="danger">
               {getLogsErrorContent({
+                buildStatus: state.buildStatus,
                 stageStatus: state.stageStatus,
                 stageName: state.stageName,
                 stepName: state.stepData.name,
@@ -130,14 +131,13 @@ export default function LogViewConsoleManager(props) {
       return (
         <NonLogsContainer style={{ padding: '25px 60px' }}>
           <SystemMessage intent={getIntentFromStepStatus(state.stepData.status)}>
-            {state.stageName}
-            {' '}
-            {state.stepData.name && (
-              `- ${state.stepData.name} `
-            )}
-            :
-            {' '}
-            {state.stepData.name ? state.stepData.status : state.stageStatus}
+            {getNoLogsContent({
+              buildStatus: state.buildStatus,
+              stageStatus: state.stageStatus,
+              stageName: state.stageName,
+              stepName: state.stepData.name,
+              stepStatus: state.stepData.status,
+            })}
           </SystemMessage>
         </NonLogsContainer>
       );

@@ -3,6 +3,7 @@ import { STATES } from '_constants';
 import {
   mayBeExtractTmateLink,
   getNextCompState,
+  getNextCompStateFromBuildStatus,
 } from './console-manager.utils';
 // separate module in order
 // to avoid circular dep
@@ -56,6 +57,7 @@ export const logsInitFn = (props) => {
 };
 
 export const logsReducer = (state, action) => {
+  console.log(state, action.type);
   switch (action.type) {
     case ACTION_LIST.TOGGLE_LOGS_FOLLOWING:
       return { ...state, shouldFollowLogs: !state.shouldFollowLogs };
@@ -65,8 +67,7 @@ export const logsReducer = (state, action) => {
       return {
         ...state,
         buildStatus: action.payload,
-        compState: ['killed', 'error'].includes(action.payload)
-          && !state.logs?.length && state.compState !== STATES.LOADING ? STATES.NO_LOGS_AVAILABLE : state.compState,
+        compState: getNextCompStateFromBuildStatus({ buildStatus: action.payload, state }),
       };
     case ACTION_LIST.UPDATE_HAS_BUILD_DEBUG_MODE:
       return { ...state, hasBuildDebugMode: action.payload };
@@ -79,7 +80,19 @@ export const logsReducer = (state, action) => {
     case ACTION_LIST.UPDATE_STAGE_NAME:
       return { ...state, stageName: action.payload };
     case ACTION_LIST.UPDATE_IS_DATA_LOADING:
-      return { ...state, isDataLoading: action.payload };
+      return {
+        ...state,
+        isDataLoading: action.payload,
+        compState: action.payload ? STATES.LOADING
+          : getNextCompState(
+            {
+              stageStatus: state.stageStatus,
+              stepStatus: state.stepData.status,
+              logsExist: state.logs?.length,
+              currentCompState: state.compState,
+            },
+          ),
+      };
     case ACTION_LIST.UPDATE_STEP_DATA:
       return {
         ...state,

@@ -15,7 +15,7 @@ export const getIntentFromStepStatus = (status) => {
 };
 
 export const getLogsErrorContent = ({
-  stageStatus, stageName, stepName, stepError, logsHookError,
+  buildStatus, stageStatus, stageName, stepName, stepError, logsHookError,
 }) => {
   if (stageStatus === 'skipped') {
     return `${stageName}: Skipped`;
@@ -26,11 +26,28 @@ export const getLogsErrorContent = ({
   } if (stepError) {
     return `${stepName}: ${stepError}`;
   } if (logsHookError) {
-    const msg = logsHookError.message === 'sql: no rows in result set' ? 'Step does not exist' : logsHookError.message;
-    return msg;
+    if (logsHookError.message === 'sql: no rows in result set') {
+      return buildStatus === 'killed' ? 'This pipeline was cancelled' : 'Step does not exist';
+    }
+    return logsHookError.message;
   }
 
   return 'Something went wrong, please, reload the page or restart the build';
+};
+
+export const getNoLogsContent = ({
+  buildStatus, stageName, stepName, stepStatus, stageStatus,
+}) => {
+  if (buildStatus === 'declined') {
+    return 'This pipeline was declined';
+  }
+  const message = [stageName];
+  if (stepName) {
+    message.push(`- ${stepName}: ${stepStatus}`);
+  } else {
+    message.push(`: ${stageStatus}`);
+  }
+  return message.join(' ');
 };
 
 export const mayBeExtractTmateLink = (logLine, stepStatus, hasBuildDebugMode) => {
@@ -73,5 +90,19 @@ export const getNextCompState = ({
       return logsExist ? STATES.RESOLVED : STATES.NO_LOGS_AVAILABLE;
     default:
       return currentCompState;
+  }
+};
+
+export const getNextCompStateFromBuildStatus = ({
+  buildStatus, state,
+}) => {
+  switch (buildStatus) {
+    case 'declined':
+      return STATES.NO_LOGS_AVAILABLE;
+    case 'error':
+    case 'killed':
+      return !state.logs?.length && state.compState !== STATES.LOADING ? STATES.NO_LOGS_AVAILABLE : state.compState;
+    default:
+      return state.compState;
   }
 };
