@@ -82,7 +82,9 @@ const Header = (props) => {
       </div>
       {data ? (
         <div className={cx('meta')}>
-          <Elapsed started={data.started} finished={data.finished} withLetters withIcon />
+          {data.started > 0 && (
+            <Elapsed started={data.started} finished={data.finished} withLetters withIcon />
+          )}
           <div className={cx('date')}>
             <CalendarIcon />
             {getFullDateRepresentation({ date: data.created })}

@@ -63,7 +63,7 @@ const Summary = (props) => {
   const history = useHistory();
 
   const handleBarClick = useCallback(({ number }) => history.push(`/${namespace}/${name}/${number}`), [namespace, name, history]);
-  console.log(barData)
+
   const { median, latest } = useMemo(() => getSummaryMeta(barData), [barData]);
   return (
     <div className={cx('wrapper', className)}>
