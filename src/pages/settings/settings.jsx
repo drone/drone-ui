@@ -47,7 +47,7 @@ const SettingsInactive = ({
   </section>
 );
 
-export default function Settings({ repo }) {
+export default function Settings({ user, repo }) {
   const { namespace, name } = useParams();
   const {
     mutate,
@@ -119,7 +119,11 @@ export default function Settings({ repo }) {
             </nav>
           </aside>
           <Switch>
-            <Route path="/:namespace/:name/settings" component={(props) => <General {...props} repo={repo} />} exact />
+            <Route
+              path="/:namespace/:name/settings"
+              component={(props) => <General {...props} repo={repo} user={user} />}
+              exact
+            />
             <Route path="/:namespace/:name/settings/secrets" component={Secrets} />
             <Route path="/:namespace/:name/settings/cron" component={Cron} />
             <Route path="/:namespace/:name/settings/badges" component={Badges} />

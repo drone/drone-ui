@@ -19,7 +19,7 @@ const buildTimeoutsOptions = (timeouts) => timeouts.map((timeout) => ({
   key: timeout > 90 ? `${timeout / 60} hours` : `${timeout} minutes`,
 }));
 
-export default function General({ repo }) {
+export default function General({ user, repo }) {
   const { namespace, name } = useParams();
   const {
     mutate,
@@ -110,6 +110,8 @@ export default function General({ repo }) {
               </Switch>
             </div>
           </FormSection>
+          {user?.admin && (
+
           <FormSection className={cx('form-section-row')} title="Project Settings">
             <div className={cx('switch-row')}>
 
@@ -140,6 +142,7 @@ export default function General({ repo }) {
               </p>
             </div>
           </FormSection>
+          )}
           <FormSection className={cx('form-section-row')} title="Project Visibility">
             <ul className={cx('visibility-container')}>
               <li className={cx('visibility-card-wrapper')}>
