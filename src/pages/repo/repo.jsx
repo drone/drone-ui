@@ -156,7 +156,9 @@ const getTabProps = ({
 
 const Repo = ({ user }) => {
   const { params } = useRouteMatch();
-  const { namespace, name } = params;
+  const {
+    namespace, name, build, stage = 1, step = 1,
+  } = params;
   const [context] = useContext(AppContext);
   const { isRepoNavDisabled } = context;
   const [isModalShowing, toggleModal] = useModal();
@@ -302,6 +304,7 @@ const Repo = ({ user }) => {
       </Route>
       <Routes.Build
         path="/:namespace/:name/:build/:stage?/:step?"
+        key={`${namespace}/${name}/${build}/${stage}/${step}`}
         componentProps={{
           user,
           userIsAdminOrHasWritePerm,

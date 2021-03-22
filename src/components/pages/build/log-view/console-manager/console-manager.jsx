@@ -42,6 +42,15 @@ const useLogsActionTypes = {
   setIsLoading: ACTION_LIST.UPDATE_ARE_LOGS_LOADING,
 };
 
+const stepDefferedLogsStates = [
+  'running',
+  'pending',
+  'skipped',
+  'waiting_on_dependencies',
+];
+
+const stageDefferedLogsStates = stepDefferedLogsStates.slice(1);
+
 export default function LogViewConsoleManager(props) {
   const { consoleProps } = props;
   const params = useParams();
@@ -56,7 +65,16 @@ export default function LogViewConsoleManager(props) {
 
   /* Hooks  */
   // logs fetch
-  useLogs(dispatch, useLogsActionTypes, params, state.compState !== STATES.STREAM_ON && !['running', 'pending', 'skipped', 'waiting_on_dependecies'].includes(state.stepData.status) && state.stageStatus !== 'pending');
+  useLogs(
+    dispatch,
+    useLogsActionTypes,
+    params,
+    state.compState !== STATES.STREAM_ON
+    && !!state.stageStatus
+    && !!state.stepData.status
+    && !stageDefferedLogsStates.includes(state.stageStatus)
+    && !stepDefferedLogsStates.includes(state.stepData.status),
+  );
 
   // logs stream
   useStreamLogs(dispatch,
@@ -109,11 +127,7 @@ export default function LogViewConsoleManager(props) {
         </NonLogsContainer>
       );
     case STATES.NO_LOGS_AVAILABLE:
-      return state.buildStatus === 'pending' ? (
-        <NonLogsContainer style={{ padding: '25px 60px' }}>
-          <SystemMessage intent="warning">Pending...</SystemMessage>
-        </NonLogsContainer>
-      ) : (
+      return (
         <NonLogsContainer style={{ padding: '25px 60px' }}>
           <SystemMessage intent={getIntentFromStepStatus(state.stepData.status)}>
             {state.stageName}

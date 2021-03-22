@@ -19,7 +19,6 @@ export const ACTION_LIST = {
   UPDATE_ARE_LOGS_LOADING: 'update_are_logs_loading',
   UPDATE_HAS_BUILD_DEBUG_MODE: 'update_has_build_debug_mode',
   SET_LOGS: 'set_logs',
-  RESET_LOGS: 'reset_logs',
 };
 
 // reducer init fn
@@ -32,14 +31,12 @@ export const logsInitFn = (props) => {
     stageName,
     stepData = {},
   } = props;
-  let initialCompState = STATES.IDLE;
-  if (isDataLoading || stepData.status === 'pending') {
+  let initialCompState = STATES.LOADING;
+  if (isDataLoading || [buildStatus, stageStatus, stepData.status].includes('pending')) {
     initialCompState = STATES.LOADING;
   } else if (stageStatus === 'error') {
     initialCompState = STATES.ERROR;
-  } else if (buildStatus === 'pending') {
-    initialCompState = STATES.NO_LOGS_AVAILABLE;
-  } else if (!stepData.status === 'running') {
+  } else if (stepData.status === 'running') {
     initialCompState = STATES.STREAM_ON;
   }
   return {
@@ -65,7 +62,12 @@ export const logsReducer = (state, action) => {
     case ACTION_LIST.SET_SHOW_ALL_LOGS:
       return { ...state, showAllLogs: true };
     case ACTION_LIST.UPDATE_BUILD_STATUS:
-      return { ...state, buildStatus: action.payload };
+      return {
+        ...state,
+        buildStatus: action.payload,
+        compState: ['killed', 'error'].includes(action.payload)
+          && !state.logs?.length && state.compState !== STATES.LOADING ? STATES.NO_LOGS_AVAILABLE : state.compState,
+      };
     case ACTION_LIST.UPDATE_HAS_BUILD_DEBUG_MODE:
       return { ...state, hasBuildDebugMode: action.payload };
     case ACTION_LIST.UPDATE_STAGE_STATUS:
@@ -105,16 +107,11 @@ export const logsReducer = (state, action) => {
           state.hasBuildDebugMode,
         ),
       };
-    case ACTION_LIST.RESET_LOGS:
-      return {
-        ...state,
-        logs: [],
-      };
     case ACTION_LIST.SET_LOGS:
       return {
         ...state,
         logs: action.payload,
-        compState: action.payload.length ? state.compState : STATES.NO_LOGS_AVAILABLE,
+        compState: !action.payload.length && state.compState !== STATES.LOADING ? STATES.NO_LOGS_AVAILABLE : state.compState,
       };
     case ACTION_LIST.UPDATE_ARE_LOGS_LOADING:
       return {

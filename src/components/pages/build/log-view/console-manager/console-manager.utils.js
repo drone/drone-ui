@@ -17,7 +17,9 @@ export const getIntentFromStepStatus = (status) => {
 export const getLogsErrorContent = ({
   stageStatus, stageName, stepName, stepError, logsHookError,
 }) => {
-  if (stageStatus === 'error') {
+  if (stageStatus === 'skipped') {
+    return `${stageName}: Skipped`;
+  } if (stageStatus === 'error') {
     return `${stageName}: ${stepName} - Error`;
   } if (stageStatus === 'killed') {
     return `${stageName}: ${stepName} - Killed (Cancelled)`;
@@ -31,20 +33,6 @@ export const getLogsErrorContent = ({
   return 'Something went wrong, please, reload the page or restart the build';
 };
 
-/* @NOTE:
-/ we can not omit per-line check due to
-/ absence of obvious "halt" point while
-/ step is running in debug. Compare performance:
-/ 1. Previous implementation:
-/   - on each 'logs' state change, cut the last 8 lines - n
-/   - check every single of them for 'web session' - 8 (worst case)
-/   - do the extraction - 1
-/   Time Complexity: O(8n + 1)
-/ 2. Current:
-/   - on each 'logs' state change, check the last line that being appended
-/   - do the extraction - 1
-/   Complexity: O(n + 1)
-*/
 export const mayBeExtractTmateLink = (logLine, stepStatus, hasBuildDebugMode) => {
   // if the pipeline step is running and if the pipeline
   // step is in debug mode, check the log line for the tmate
@@ -64,6 +52,8 @@ export const getNextCompState = ({
     return STATES.ERROR;
   }
   switch (stepStatus) {
+    case 'skipped':
+      return STATES.NO_LOGS_AVAILABLE;
     case 'error':
       return STATES.ERROR;
     case 'killed':
