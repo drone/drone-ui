@@ -19,7 +19,7 @@ import css from './diagram.module.scss';
 
 const cx = classNames.bind(css);
 
-const isGraph = (items) => items.some((item) => item.options.depends_on?.length);
+const isGraph = (items, diagramKind) => diagramKind === 'stage' || items.some((item) => item.options.depends_on?.length);
 
 const connectNodes = (node1, node2, linksStore) => {
   const portOut = node1.getPort('out');
@@ -33,6 +33,7 @@ const connectNodes = (node1, node2, linksStore) => {
 const Diagram = (props) => {
   const {
     items, nodeSelectHandler, selectedNodeNumber, graphOffsetX, graphOffsetY,
+    kind = 'step',
   } = props;
   const dagreEngine = useMemo(() => new DagreEngine({
     graph: {
@@ -83,7 +84,7 @@ const Diagram = (props) => {
   // create links
   const linkModels = useMemo(() => {
     const links = [];
-    if (isGraph(nodeModels)) {
+    if (isGraph(nodeModels, kind)) {
       nodeModels.forEach((model, idx) => {
         // we do not need to work with the last node
         if (idx === nodeModels.length - 1) return;
@@ -122,7 +123,7 @@ const Diagram = (props) => {
       });
     }
     return links;
-  }, [nodeModels]);
+  }, [nodeModels, kind]);
 
   // setup the diagram engine
   const engine = useMemo(() => createEngine(), []);

@@ -46,6 +46,7 @@ const GraphView = (props) => {
       >
         <div className={cx('graph-stages')}>
           <Diagram
+            kind="stage"
             items={data?.stages}
             nodeSelectHandler={stageSelectHandler}
             selectedNodeNumber={stage}
