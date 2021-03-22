@@ -93,15 +93,21 @@ export default function LogViewConsoleManager(props) {
   }, [props.hasBuildDebugMode]);
 
   useEffect(() => {
-    dispatch({ type: ACTION_LIST.UPDATE_BUILD_STATUS, payload: props.buildStatus });
+    if (props.buildStatus) {
+      dispatch({ type: ACTION_LIST.UPDATE_BUILD_STATUS, payload: props.buildStatus });
+    }
   }, [props.buildStatus]);
 
   useEffect(() => {
-    dispatch({ type: ACTION_LIST.UPDATE_STAGE_STATUS, payload: props.stageStatus });
+    if (props.stageStatus) {
+      dispatch({ type: ACTION_LIST.UPDATE_STAGE_STATUS, payload: props.stageStatus });
+    }
   }, [props.stageStatus]);
 
   useEffect(() => {
-    dispatch({ type: ACTION_LIST.UPDATE_STAGE_NAME, payload: props.stageName });
+    if (props.stageName) {
+      dispatch({ type: ACTION_LIST.UPDATE_STAGE_NAME, payload: props.stageName });
+    }
   }, [props.stageName]);
 
   useEffect(() => {

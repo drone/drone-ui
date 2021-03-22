@@ -57,7 +57,7 @@ export const logsInitFn = (props) => {
 };
 
 export const logsReducer = (state, action) => {
-  console.log(state, action.type);
+  console.log(state, action);
   switch (action.type) {
     case ACTION_LIST.TOGGLE_LOGS_FOLLOWING:
       return { ...state, shouldFollowLogs: !state.shouldFollowLogs };

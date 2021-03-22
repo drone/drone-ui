@@ -101,6 +101,9 @@ export const getNextCompStateFromBuildStatus = ({
       return STATES.NO_LOGS_AVAILABLE;
     case 'error':
     case 'killed':
+      if (state.stageStatus === 'skipped') {
+        return STATES.NO_LOGS_AVAILABLE;
+      }
       return !state.logs?.length && state.compState !== STATES.LOADING ? STATES.NO_LOGS_AVAILABLE : state.compState;
     default:
       return state.compState;
