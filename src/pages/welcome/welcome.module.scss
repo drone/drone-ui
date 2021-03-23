@@ -2,13 +2,14 @@
 
 .wrapper {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
   padding: 0;
 }
 
 .login {
   flex: 0 0 580px;
   padding: 100px;
+  height: inherit;
   background-color: #fff;
 }
 
