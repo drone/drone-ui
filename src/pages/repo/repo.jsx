@@ -73,6 +73,7 @@ const NewBuildForm = ({ handleSubmit, handleCancel }) => {
           placeholder="master"
           value={state.target}
           name="branch"
+          autoFocus="true"
           onChange={handleFieldChange('target')}
         />
       </FormSection>

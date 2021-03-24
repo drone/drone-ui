@@ -121,6 +121,7 @@ const NewUserForm = ({ handleSubmit, handleCancel }) => {
           value={state.login}
           name="login"
           width={400}
+          autoFocus="true"
           required
           onChange={handleFieldChange('login')}
         />

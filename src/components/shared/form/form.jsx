@@ -12,7 +12,14 @@ const Form = (props) => {
   } = props;
 
   return (
-    <form className={classNames(cx('form'), className)} {...rest}>
+    <form
+      className={classNames(cx('form'), className)}
+      spellCheck="false"
+      autoCapitalize="false"
+      autoCorrect="false"
+      autoComplete="false"
+      {...rest}
+    >
       {title && (
       <h2 className={cx('form-title')}>{title}</h2>
       )}

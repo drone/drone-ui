@@ -5,27 +5,15 @@
     margin-bottom: 15px;
     display: flex;
     flex-flow: column;
-    span {
-      color: #6b6d85;
-      font-size: 12px;
-      margin-bottom: 6px;
-    }
-    input:not([type="radio"]) {
-      border: 1px solid #e4e4eb;
-      box-sizing: border-box;
-      border-radius: 4px;
-      padding: 6px 12px;
-      width: 200px;
-    }
+    // input:not([type="radio"]) {
+    //   border: 1px solid #e4e4eb;
+    //   box-sizing: border-box;
+    //   border-radius: 4px;
+    //   padding: 6px 12px;
+    //   width: 200px;
+    // }
   }
   &-radio {
-    display: inline-flex;
-    align-items: center;
-    justify-content: flex-start;
-    input {
-      margin: 0;
-      margin-right: 6px;
-    }
     &-group {
       width: 200px;
       display: flex;
@@ -52,6 +40,7 @@
       }
     }
     &-fields {
+      display: flex;
       button {
         color: #0092e4;
       }

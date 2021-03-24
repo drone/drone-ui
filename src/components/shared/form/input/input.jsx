@@ -34,6 +34,8 @@ const Input = (props) => {
           id={name}
           style={{ width, ...style }}
           spellCheck="false"
+          autoComplete="false"
+          autoCorrect="false"
           {...rest}
         />
       </div>

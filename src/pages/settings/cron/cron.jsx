@@ -39,6 +39,7 @@ const NewCronForm = ({ handleSubmit, handleCancel }) => {
           value={state.name}
           name="cron-name"
           width={350}
+          autoFocus="true"
           onChange={handleCronChange('name')}
         />
         <Field.Input
