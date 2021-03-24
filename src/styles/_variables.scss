@@ -9,7 +9,20 @@
   --red-dark: #ff3b3b;
   --red-medium: #ff5c5c;
   --red-light: #ff8080;
+  /* Breakpoints */
+  --bp-xl: 1800px; // 1920 - 120px of side paddings
+  --bp-lg: 1366px;
+  --bp-md: 1024px;
+  --bp-sm: 768px;
+  --bp-xs: 576px;
+  --bp-xxs: 414px;
 }
+
+$bp-lg-down: 1366px - 0.01px;
+$bp-md-down: 1024px - 0.01px;
+$bp-sm-down: 768px - 0.01px;
+$bp-xs-down: 576px - 0.01px;
+$bp-xxs-down: 414px - 0.01px;
 
 /* @NOTE: the stuff below will gone */
 

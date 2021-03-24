@@ -1,6 +1,5 @@
-@import "styles/mixins";
-
 @import "styles/_variables";
+@import "styles/mixins";
 
 @keyframes fadeIn {
   0% {
@@ -51,16 +50,4 @@
 .content {
   flex-grow: 1;
   width: 100%;
-}
-
-.desktop-hidden {
-  @media screen and (min-width: 768px) {
-    display: none;
-  }
-}
-
-.mobile-hidden {
-  @media screen and (max-width: 768px) {
-    display: none;
-  }
 }

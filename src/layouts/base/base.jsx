@@ -12,9 +12,6 @@ export default function Base(props) {
   } = props;
   return (
     <>
-      {/* <div className={cx('desktop-hidden')}>
-        {children[0]}
-      </div> */}
       <div className={cx('wrapper')}>
         {children[0]}
         <div className={cx('inner')}>
