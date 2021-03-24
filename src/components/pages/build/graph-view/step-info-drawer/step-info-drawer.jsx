@@ -43,7 +43,6 @@ const StepInfoDrawer = (props) => {
         <Button onClick={handleStepDrawerHide}><CloseIcon /></Button>
       </div>
 
-
       <div className={cx('step-meta')}>
         {!['pending', 'skipped', 'blocked', 'waiting_on_dependencies'].includes(stepData?.status) ? (
           <dl>
@@ -64,8 +63,8 @@ const StepInfoDrawer = (props) => {
         isDataLoading={isDataLoading}
         hasBuildDebugMode={data?.debug || false}
         buildStatus={data?.status}
-        stageStatus={data?.stages?.[stage]?.status}
-        stageName={data?.stages?.[stage]?.name}
+        stageStatus={data?.stages?.[stage - 1]?.status}
+        stageName={data?.stages?.[stage - 1]?.name}
         stepData={stepData}
         consoleProps={{
           showFooter: false,

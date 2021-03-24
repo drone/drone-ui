@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
 import React, {
-  useEffect, useReducer,
+  useEffect, useReducer, useLayoutEffect,
 } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -84,19 +84,22 @@ export default function LogViewConsoleManager(props) {
 
   /* Effects */
 
-  useEffect(() => {
-    dispatch({ type: ACTION_LIST.UPDATE_IS_DATA_LOADING, payload: props.isDataLoading });
-  }, [props.isDataLoading]);
+  // @TODO: that is not enough to clean state
+  // during build stage/step navigation
+  useLayoutEffect(() => {
+    dispatch({ type: ACTION_LIST.SET_LOGS, payload: [] });
+    return () => {
+      dispatch({ type: ACTION_LIST.SET_LOGS, payload: [] });
+    };
+  }, [params.stage, params.step]);
 
   useEffect(() => {
     dispatch({ type: ACTION_LIST.UPDATE_HAS_BUILD_DEBUG_MODE, payload: props.hasBuildDebugMode });
   }, [props.hasBuildDebugMode]);
 
-  useEffect(() => {
-    if (props.buildStatus) {
-      dispatch({ type: ACTION_LIST.UPDATE_BUILD_STATUS, payload: props.buildStatus });
-    }
-  }, [props.buildStatus]);
+  useLayoutEffect(() => {
+    dispatch({ type: ACTION_LIST.UPDATE_IS_DATA_LOADING, payload: props.isDataLoading });
+  }, [props.isDataLoading]);
 
   useEffect(() => {
     if (props.stageStatus) {
@@ -113,6 +116,12 @@ export default function LogViewConsoleManager(props) {
   useEffect(() => {
     dispatch({ type: ACTION_LIST.UPDATE_STEP_DATA, payload: props.stepData });
   }, [props.stepData]);
+
+  useEffect(() => {
+    if (props.buildStatus) {
+      dispatch({ type: ACTION_LIST.UPDATE_BUILD_STATUS, payload: props.buildStatus });
+    }
+  }, [props.buildStatus]);
 
   // render state switch statement
   switch (state.compState) {

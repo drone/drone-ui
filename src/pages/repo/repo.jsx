@@ -305,7 +305,6 @@ const Repo = ({ user }) => {
       </Route>
       <Routes.Build
         path="/:namespace/:name/:build/:stage?/:step?"
-        key={`${namespace}/${name}/${build}/${stage}/${step}`}
         componentProps={{
           user,
           userIsAdminOrHasWritePerm,
