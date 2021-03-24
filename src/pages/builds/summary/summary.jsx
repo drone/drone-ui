@@ -19,7 +19,7 @@ const getSummaryMeta = (builds) => {
   // a repository with 2 builds or fewer.
   if (builds.length < 3) {
     const build = builds[0];
-    const latest = build.created;
+    const latest = build.timeStarted;
     const [number, ...units] = formatDistanceStrict(new Date(latest * 1000), new Date(), { addSuffix: true }).split(' ');
     return {
       median: build.duration,
