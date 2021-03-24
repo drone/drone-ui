@@ -1,7 +1,9 @@
+@import "styles/_variables";
+@import "styles/mixins";
 
 .list {
   display: block;
-
+  list-style-type: none;
   a {
     text-decoration: none;
     cursor: pointer;
@@ -9,9 +11,7 @@
 }
 
 .list-item {
-  display: grid;
-  grid-template-columns: 32px auto;
-  grid-gap: 5px;
+  display: flex;
   padding: 19px 15px;
   padding-right: 24px;
   margin-bottom: 10px;
@@ -27,15 +27,20 @@
 }
 
 .status {
-  display: grid;
-  grid-template-rows: 24px auto;
-  grid-gap: 5px;
+  display: flex;
+  flex: 0 0 24px;
+  flex-flow: column;
+  margin-right: 5px;
 }
 
 .container {
-  display: grid;
-  grid-template-rows: 24px auto;
-  grid-gap: 5px;
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+  overflow: hidden;
+  & > * + * {
+    margin-top: 10px;
+  }
 }
 
 .header {
@@ -44,19 +49,21 @@
   align-content: center;
   overflow: hidden;
   white-space: nowrap;
+  width: 100%;
 }
 
 .connector {
   width: 22px;
   height: 15px;
   border-bottom-left-radius: 24px;
-  border-left: 2px solid #D9DAE5;
-  border-bottom: 2px solid #D9DAE5;
-  margin-left: 9px;
+  border-left: 2px solid #d9dae5;
+  border-bottom: 2px solid #d9dae5;
+  margin-left: 11px;
+  margin-top: 5px;
 }
 
 .commit {
-  max-width: 800px;
+  max-width: 80%;
   min-width: 0px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -64,46 +71,58 @@
   display: block;
   color: black;
   font-size: 16px;
+  @include xxs-down {
+    max-width: 70%;
+  }
 }
 
 .number {
   color: black;
-  color: #9293AB;
+  color: #9293ab;
   font-size: 16px;
   white-space: nowrap;
   min-width: 32px;
-  padding-right: 6px;
+  margin-right: 6px;
 
   &:before {
-      content: "#";
-      margin-right: 3px;
+    content: "#";
+    margin-right: 3px;
   }
   &:after {
-      content: ".";
+    content: ".";
   }
 }
-
-.body {
-  display: grid;
-  grid-template-columns: auto 100px;
-  grid-gap: 15px;
-}
-
-
 
 .content {
   color: #627386;
-  display: grid;
-  grid-template-columns: auto 200px;
-  grid-gap: 15px;
+  display: flex;
+  flex-flow: column;
+}
+
+.activity {
+  // @NOTE: rewrite after activity component gets refactored
+  @include xxs-down {
+    flex-wrap: wrap;
+    span:not(:nth-of-type(1)):not(:nth-of-type(2)) {
+      flex: 1 1 100%;
+    }
+    div:not(:first-child) {
+      margin: 5px 0;
+    }
+  }
 }
 
 .timing {
   text-align: right;
   white-space: nowrap;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: flex-end;
+  @include sm-down {
+    text-align: left;
+    justify-content: flex-end;
+    margin-top: 12px;
+  }
 }
 
 .elapsed {
@@ -120,24 +139,8 @@
     display: inline-block;
     width: 3px;
     height: 3px;
-    background: rgba(30,55,90,.25);
+    background: rgba(30, 55, 90, 0.25);
     border-radius: 50%;
     margin: 0 6px;
-  }
-}
-
-@media only screen and (max-width: 992px) {
-  .content {
-    color: #627386;
-    display: grid;
-    grid-template-columns: unset;
-    grid-template-columns: auto;
-    grid-gap: 2px;
-  }
-
-  .timing {
-    text-align: left;
-    justify-content: flex-end;
-    margin-top: 12px;
   }
 }

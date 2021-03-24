@@ -4,13 +4,13 @@ import React, {
 } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 
+import BuildList from 'components/pages/repo/build-list';
 import Button from 'components/shared/button';
 import ZeroState from 'components/shared/zero-state';
 import { useCustomTitle } from 'hooks';
 import { useBuilds } from 'hooks/swr';
 
 import styles from './builds.module.scss';
-import { List } from './list';
 import Summary from './summary';
 
 const cx = classNames.bind(styles);
@@ -51,7 +51,7 @@ export default function Builds({ repo }) {
         <h2 className={cx('section-title')}>Summary</h2>
         <Summary data={data} totalBuildsCounter={repo?.counter} className={cx('summary')} />
         <h2 className={cx('section-title')}>Executions</h2>
-        <List data={data} url={url} />
+        <BuildList data={data} url={url} />
         {(!isLoading && !isEndReached && data.length) ? (
           <div>
             <Button className={cx('btn', 'btn-show-more')} onClick={handleShowMoreClick}>Show more &#8595;</Button>

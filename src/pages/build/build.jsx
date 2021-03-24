@@ -115,7 +115,7 @@ export default function Build({ userIsAdminOrHasWritePerm }) {
       await axiosWrapper(`/api/repos/${namespace}/${name}/builds/${build}/approve/${stage}`, {
         method: 'POST',
       });
-      await mutate(true);
+      await mutate();
     } catch (e) {
       showError(`Unable to approve build: ${e.message}`);
       // eslint-disable-next-line
@@ -128,7 +128,7 @@ export default function Build({ userIsAdminOrHasWritePerm }) {
       await axiosWrapper(`/api/repos/${namespace}/${name}/builds/${build}/decline/${stage}`, {
         method: 'POST',
       });
-      await mutate(true);
+      await mutate();
     } catch (e) {
       showError(`Unable to decline build: ${e.message}`);
       // eslint-disable-next-line
