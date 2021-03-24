@@ -12,54 +12,6 @@ import styles from './repos-recent.module.scss';
 
 const cx = classNames.bind(styles);
 
-const ReposRecent_ = (props) => {
-  const { repos } = props;
-  return (
-    <div className={cx('cards')}>
-      {!!repos?.length && props.repos.map(({
-        namespace, name, build, id,
-      }) => (
-        <Link to={`/${namespace}/${name}`} key={id}>
-          <div className={cx('card')}>
-            <div className={cx('header')}>
-              <h3 className={cx('title')}>
-                <span className={cx('namespace')}>{namespace}</span>
-                <span>{name}</span>
-              </h3>
-              <div>
-                <Status status={build?.status} />
-              </div>
-            </div>
-            <div className={cx('body')}>
-              <Label
-                event={build?.event}
-                commit={build?.after}
-                branch={build?.target}
-                environment={build?.deploy_to}
-                refs={build?.ref}
-              />
-              <span>{build?.title || build?.message}</span>
-            </div>
-            <div className={cx('footer')}>
-              <div>
-                <Avatar
-                  className={cx('avatar')}
-                  path={build?.author_avatar}
-                  alt={build?.sender}
-                  text={build?.sender}
-                />
-              </div>
-              {build && (
-              <div>{formatDistanceStrict(new Date(build.created * 1000), new Date(), { addSuffix: true })}</div>
-              )}
-            </div>
-          </div>
-        </Link>
-      ))}
-    </div>
-  );
-};
-
 const ReposRecent = (props) => {
   const { repos } = props;
   return (
