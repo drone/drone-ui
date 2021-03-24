@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import React, { useEffect, useState } from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useParams } from 'react-router-dom';
 
@@ -69,6 +69,10 @@ export default function Main() {
     setIsSnippetCopied(true);
   };
 
+  const currentSnippet = useMemo(() => buildSnippet({
+    syntax: badge.snippetSyntax, image, namespace, name,
+  }), [badge.snippetSyntax, image, namespace, name]);
+
   useEffect(() => {
     let timeout;
     if (isSnippetCopied) {
@@ -108,7 +112,7 @@ export default function Main() {
           </div>
           <pre className={cx('badge-snippet')}>
             <CopyToClipboard
-              text={badge.snippetSyntax}
+              text={currentSnippet}
               onCopy={handleCopyClick}
             >
               <Button className={cx('copy-btn')} type="button">
@@ -116,9 +120,7 @@ export default function Main() {
               </Button>
             </CopyToClipboard>
             <code>
-              {buildSnippet({
-                syntax: badge.snippetSyntax, image, namespace, name,
-              })}
+              {currentSnippet}
             </code>
           </pre>
         </Form>
