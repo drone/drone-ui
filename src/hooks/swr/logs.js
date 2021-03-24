@@ -21,24 +21,34 @@ function escapeLogs(logs) {
 
 // this hooks accepts dispatch fn from reducer
 // instead of keeping state internally
+
 const useLogs = (dispatch, actionTypes, {
   namespace, name, build, stage = 1, step = 1,
 }, shouldFetchLogs) => {
-  const { data, error } = useSWR(shouldFetchLogs ? `/api/repos/${namespace}/${name}/builds/${build}/logs/${stage}/${step}` : null);
+  const { data, error } = useSWR(() => (shouldFetchLogs === true ? `/api/repos/${namespace}/${name}/builds/${build}/logs/${stage}/${step}` : null));
   const formattedLogs = useMemo(() => escapeLogs(data), [data]);
 
   useEffect(() => {
-    dispatch({ type: actionTypes.setLogs, payload: formattedLogs });
-  }, [dispatch, formattedLogs, actionTypes]);
+    if (shouldFetchLogs && formattedLogs.length) {
+      dispatch({ type: actionTypes.setLogs, payload: formattedLogs });
+    }
+  }, [dispatch, formattedLogs, actionTypes.setLogs, shouldFetchLogs]);
 
   useEffect(() => {
-    dispatch({ type: actionTypes.setError, payload: error });
-    if (data === undefined && !error) {
-      dispatch({ type: actionTypes.setIsLoading, payload: true });
-    } else {
-      dispatch({ type: actionTypes.setIsLoading, payload: false });
+    if (shouldFetchLogs) {
+      if (data === undefined && !error) {
+        dispatch({ type: actionTypes.setIsLoading, payload: true });
+      } else {
+        dispatch({ type: actionTypes.setIsLoading, payload: false });
+      }
     }
-  }, [dispatch, data, error, actionTypes]);
+  }, [dispatch, data, actionTypes.setIsLoading, shouldFetchLogs, error]);
+
+  useEffect(() => {
+    if (shouldFetchLogs) {
+      dispatch({ type: actionTypes.setError, payload: error });
+    }
+  }, [error, dispatch, shouldFetchLogs, actionTypes.setError]);
 };
 
 // same as previous hook, no internal state
