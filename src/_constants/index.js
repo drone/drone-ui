@@ -2,7 +2,8 @@
 const token = process.env.REACT_APP_DRONE_TOKEN || '';
 
 // default server address.
-const instance = process.env.REACT_APP_DRONE_SERVER || '';
+const instance = process.env.REACT_APP_DRONE_SERVER
+ || `${window.location.protocol}//${window.location.host}`;
 
 const LOGS_LIMIT = 250;
 

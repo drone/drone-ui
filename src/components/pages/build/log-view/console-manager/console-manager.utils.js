@@ -15,36 +15,41 @@ export const getIntentFromStepStatus = (status) => {
 };
 
 export const getLogsErrorContent = ({
-  stageStatus, stageName, stepName, stepError, logsHookError,
+  buildStatus, stageStatus, stageName, stepName, stepError, logsHookError,
 }) => {
-  if (stageStatus === 'error') {
+  if (stageStatus === 'skipped') {
+    return `${stageName}: Skipped`;
+  } if (stageStatus === 'error') {
     return `${stageName}: ${stepName} - Error`;
   } if (stageStatus === 'killed') {
     return `${stageName}: ${stepName} - Killed (Cancelled)`;
   } if (stepError) {
     return `${stepName}: ${stepError}`;
   } if (logsHookError) {
-    const msg = logsHookError.message === 'sql: no rows in result set' ? 'Step does not exist' : logsHookError.message;
-    return msg;
+    if (logsHookError.message === 'sql: no rows in result set') {
+      return buildStatus === 'killed' ? 'This pipeline was cancelled' : 'Step does not exist';
+    }
+    return logsHookError.message;
   }
 
   return 'Something went wrong, please, reload the page or restart the build';
 };
 
-/* @NOTE:
-/ we can not omit per-line check due to
-/ absence of obvious "halt" point while
-/ step is running in debug. Compare performance:
-/ 1. Previous implementation:
-/   - on each 'logs' state change, cut the last 8 lines - n
-/   - check every single of them for 'web session' - 8 (worst case)
-/   - do the extraction - 1
-/   Time Complexity: O(8n + 1)
-/ 2. Current:
-/   - on each 'logs' state change, check the last line that being appended
-/   - do the extraction - 1
-/   Complexity: O(n + 1)
-*/
+export const getNoLogsContent = ({
+  buildStatus, stageName, stepName, stepStatus, stageStatus,
+}) => {
+  if (buildStatus === 'declined') {
+    return 'This pipeline was declined';
+  }
+  const message = [stageName];
+  if (stepName) {
+    message.push(`- ${stepName}: ${stepStatus}`);
+  } else {
+    message.push(`: ${stageStatus}`);
+  }
+  return message.join(' ');
+};
+
 export const mayBeExtractTmateLink = (logLine, stepStatus, hasBuildDebugMode) => {
   // if the pipeline step is running and if the pipeline
   // step is in debug mode, check the log line for the tmate
@@ -64,6 +69,8 @@ export const getNextCompState = ({
     return STATES.ERROR;
   }
   switch (stepStatus) {
+    case 'skipped':
+      return STATES.NO_LOGS_AVAILABLE;
     case 'error':
       return STATES.ERROR;
     case 'killed':
@@ -83,5 +90,22 @@ export const getNextCompState = ({
       return logsExist ? STATES.RESOLVED : STATES.NO_LOGS_AVAILABLE;
     default:
       return currentCompState;
+  }
+};
+
+export const getNextCompStateFromBuildStatus = ({
+  buildStatus, state,
+}) => {
+  switch (buildStatus) {
+    case 'declined':
+      return STATES.NO_LOGS_AVAILABLE;
+    case 'error':
+    case 'killed':
+      if (state.stageStatus === 'skipped') {
+        return STATES.NO_LOGS_AVAILABLE;
+      }
+      return !state.logs?.length && state.compState !== STATES.LOADING ? STATES.NO_LOGS_AVAILABLE : state.compState;
+    default:
+      return state.compState;
   }
 };

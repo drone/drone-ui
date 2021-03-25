@@ -49,6 +49,7 @@ const NewSecretForm = ({ handleSubmit, handleCancel }) => {
           label="Name"
           name="secret-name"
           width={350}
+          autoFocus="true"
           onChange={handleSecretChange('name')}
         />
         <Field.TextArea

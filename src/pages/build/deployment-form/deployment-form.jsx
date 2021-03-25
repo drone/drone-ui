@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 
 import Button from 'components/shared/button';
+import Form, { Field, FormSection } from 'components/shared/form';
 
 import css from './deployment-form.module.scss';
 
@@ -57,61 +58,74 @@ const DeploymentForm = ({ handleSubmit, handleCancel }) => {
     }
   };
   return (
-    <form className={cx('deployment-form')}>
-      <div className={cx('deployment-form-row')}>
-        <span>Type</span>
+    <Form className={cx('deployment-form')}>
+      <FormSection
+        title="Type"
+        className={cx('deployment-form-row')}
+      >
         <div className={cx('deployment-form-radio-group')}>
-          <div className={cx('deployment-form-radio')}>
-            <input
-              id="promote"
-              type="radio"
-              value="promote"
-              checked={state.action === 'promote'}
-              onChange={handleDeploymentChange('action')}
-            />
-            <label htmlFor="promote">Promote</label>
+          <Field.Radio
+            id="promote"
+            name="promote"
+            label="Promote"
+            value="promote"
+            checked={state.action === 'promote'}
+            onChange={handleDeploymentChange('action')}
+          />
+          <Field.Radio
+            id="rollback"
+            name="rollback"
+            label="Rollback"
+            value="rollback"
+            checked={state.action === 'rollback'}
+            onChange={handleDeploymentChange('action')}
+          />
+        </div>
+      </FormSection>
+      <FormSection
+        className={cx('deployment-form-row')}
+        title="Target"
+      >
+        <Field.Input
+          autoFocus="true"
+          name="production"
+          placeholder="production"
+          value={state.target}
+          onChange={handleDeploymentChange('target')}
+        />
+      </FormSection>
+      <FormSection title="Parameters" className={cx('deployment-form-row')}>
+        {state.parameters.length ? (
+          <div className={cx('deployment-form-parameters-list')}>
+            {state.parameters.map(({ key, id }) => (
+              <div className={cx('deployment-form-parameters')} key={id}>
+                <span type="text" placeholder="key">{key}</span>
+                <Button type="button" onClick={handleRemoveParameter(id)}>Remove</Button>
+              </div>
+            ))}
           </div>
-          <div className={cx('deployment-form-radio')}>
-            <input
-              id="rollback"
-              type="radio"
-              value="rollback"
-              checked={state.action === 'rollback'}
-              onChange={handleDeploymentChange('action')}
-            />
-            <label htmlFor="rollback">Rollback</label>
-          </div>
+        ) : null}
+        <div className={cx('deployment-form-parameters-fields')}>
+          <Field.Input
+            placeholder="key"
+            name="key"
+            value={parameterState.key}
+            onChange={handleParameterChange('key')}
+          />
+          <Field.Input
+            placeholder="value"
+            name="value"
+            value={parameterState.value}
+            onChange={handleParameterChange('value')}
+          />
+          <Button onClick={handleAddParameter}>+ Add</Button>
         </div>
-      </div>
-      <div>
-        <div className={cx('deployment-form-row')}>
-          <span>Target</span>
-          <input type="text" placeholder="production" value={state.target} onChange={handleDeploymentChange('target')} />
-        </div>
-        <div className={cx('deployment-form-row')}>
-          <span>Parameters</span>
-          {state.parameters.length ? (
-            <div className={cx('deployment-form-parameters-list')}>
-              {state.parameters.map(({ key, id }) => (
-                <div className={cx('deployment-form-parameters')} key={id}>
-                  <span type="text" placeholder="key">{key}</span>
-                  <Button type="button" onClick={handleRemoveParameter(id)}>Remove</Button>
-                </div>
-              ))}
-            </div>
-          ) : null}
-          <div className={cx('deployment-form-parameters-fields')}>
-            <input type="text" placeholder="key" value={parameterState.key} onChange={handleParameterChange('key')} />
-            <input type="text" placeholder="value" value={parameterState.value} onChange={handleParameterChange('value')} />
-            <Button type="button" onClick={handleAddParameter}>+ Add</Button>
-          </div>
-        </div>
-        <div className={cx('deployment-form-controls')}>
-          <Button type="button" onClick={handleSubmitMiddleware}>Deploy</Button>
-          <Button type="button" onClick={handleCancel}>Cancel</Button>
-        </div>
-      </div>
-    </form>
+      </FormSection>
+      <FormSection className={cx('deployment-form-controls')}>
+        <Button type="button" onClick={handleSubmitMiddleware}>Deploy</Button>
+        <Button type="button" onClick={handleCancel}>Cancel</Button>
+      </FormSection>
+    </Form>
   );
 };
 

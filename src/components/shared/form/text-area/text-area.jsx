@@ -17,7 +17,17 @@ const TextArea = (props) => {
       {label && (
       <Label htmlFor={name}>{label}</Label>
       )}
-      <textarea className={cx('text-area')} name={name} id={name} style={{ width }} {...rest} />
+      <textarea
+        className={cx('text-area')}
+        name={name}
+        id={name}
+        style={{ width }}
+        autoCapitalize="false"
+        autoComplete="false"
+        autoCorrect="false"
+        spellCheck="false"
+        {...rest}
+      />
     </div>
   );
 };

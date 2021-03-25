@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import React, {
-  useCallback, useState, useEffect,
+  useCallback, useState, useLayoutEffect,
 } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
@@ -44,13 +44,13 @@ export default function Build({ userIsAdminOrHasWritePerm }) {
 
   const { showError } = useToast();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     // set state to error if request threw an error, build threw an error
     // or user has manually entered url with invalid stage count
     if (isError || data?.error || (data && (data?.stages?.length ?? 0) < stage)) {
       setState(ERROR);
     } else if (isLoading || data) {
-      if (data?.status === 'blocked') {
+      if (data?.status === 'pending' && data.stages?.[stage - 1]?.status === 'blocked') {
         setState(RESOLVED_BLOCKED);
       } else {
         setState(RESOLVED);
@@ -61,14 +61,21 @@ export default function Build({ userIsAdminOrHasWritePerm }) {
   const handleViewModeClick = (mode) => () => setIsGraphView(mode === 'graph');
 
   const handleDeploySubmit = useCallback(async ({ action, target, parameters }) => {
-    const queryParams = { target: target || 'production', ...parameters };
+    const queryParams = parameters
+      .map(({ key, value }) => ({ key, value }))
+      .reduce((acc, { key, value }) => ({ ...acc, [key]: value }), {});
+    queryParams.target = target || 'production';
     const encode = encodeURIComponent;
     const queryString = Object.entries(queryParams).map(([key, value]) => `${encode(key)}=${encode(value)}`).join('&');
     try {
       const res = await axiosWrapper(`${instance}/api/repos/${namespace}/${name}/builds/${build}/${action}?${queryString}`, {
         method: 'POST',
       });
-      history.push(`/${namespace}/${name}/${res.build.number}`);
+      if (res) {
+        history.push(`/${namespace}/${name}/${res.number}`);
+      } else {
+        showError('Unable to create new deploy in this repo');
+      }
     } catch (e) {
       showError(`Unable to create new deploy: ${e.message}`);
       // eslint-disable-next-line

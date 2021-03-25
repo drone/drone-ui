@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
 import React, {
-  useEffect, useReducer,
+  useEffect, useReducer, useLayoutEffect,
 } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -16,6 +16,7 @@ import { ACTION_LIST, logsReducer, logsInitFn } from './console-manager.state';
 import {
   getIntentFromStepStatus,
   getLogsErrorContent,
+  getNoLogsContent,
 } from './console-manager.utils';
 
 const cx = classNames.bind(styles);
@@ -42,6 +43,15 @@ const useLogsActionTypes = {
   setIsLoading: ACTION_LIST.UPDATE_ARE_LOGS_LOADING,
 };
 
+const stepDefferedLogsStates = [
+  'running',
+  'pending',
+  'skipped',
+  'waiting_on_dependencies',
+];
+
+const stageDefferedLogsStates = stepDefferedLogsStates.slice(1);
+
 export default function LogViewConsoleManager(props) {
   const { consoleProps } = props;
   const params = useParams();
@@ -53,10 +63,18 @@ export default function LogViewConsoleManager(props) {
   const {
     dynamicHeightRef, dynamicHeight,
   } = useDynamicHeight();
-
   /* Hooks  */
   // logs fetch
-  useLogs(dispatch, useLogsActionTypes, params, state.compState !== STATES.STREAM_ON && !['running', 'pending', 'skipped', 'waiting_on_dependecies'].includes(state.stepData.status) && state.stageStatus !== 'pending');
+  useLogs(
+    dispatch,
+    useLogsActionTypes,
+    params,
+    state.compState !== STATES.STREAM_ON
+    && !!state.stageStatus
+    && !!state.stepData.status
+    && !stageDefferedLogsStates.includes(state.stageStatus)
+    && !stepDefferedLogsStates.includes(state.stepData.status),
+  );
 
   // logs stream
   useStreamLogs(dispatch,
@@ -66,29 +84,44 @@ export default function LogViewConsoleManager(props) {
 
   /* Effects */
 
-  useEffect(() => {
-    dispatch({ type: ACTION_LIST.UPDATE_IS_DATA_LOADING, payload: props.isDataLoading });
-  }, [props.isDataLoading]);
+  // @TODO: that is not enough to clean state
+  // during build stage/step navigation
+  useLayoutEffect(() => {
+    dispatch({ type: ACTION_LIST.SET_LOGS, payload: [] });
+    return () => {
+      dispatch({ type: ACTION_LIST.SET_LOGS, payload: [] });
+    };
+  }, [params.stage, params.step]);
 
   useEffect(() => {
     dispatch({ type: ACTION_LIST.UPDATE_HAS_BUILD_DEBUG_MODE, payload: props.hasBuildDebugMode });
   }, [props.hasBuildDebugMode]);
 
-  useEffect(() => {
-    dispatch({ type: ACTION_LIST.UPDATE_BUILD_STATUS, payload: props.buildStatus });
-  }, [props.buildStatus]);
+  useLayoutEffect(() => {
+    dispatch({ type: ACTION_LIST.UPDATE_IS_DATA_LOADING, payload: props.isDataLoading });
+  }, [props.isDataLoading]);
 
   useEffect(() => {
-    dispatch({ type: ACTION_LIST.UPDATE_STAGE_STATUS, payload: props.stageStatus });
+    if (props.stageStatus) {
+      dispatch({ type: ACTION_LIST.UPDATE_STAGE_STATUS, payload: props.stageStatus });
+    }
   }, [props.stageStatus]);
 
   useEffect(() => {
-    dispatch({ type: ACTION_LIST.UPDATE_STAGE_NAME, payload: props.stageName });
+    if (props.stageName) {
+      dispatch({ type: ACTION_LIST.UPDATE_STAGE_NAME, payload: props.stageName });
+    }
   }, [props.stageName]);
 
   useEffect(() => {
     dispatch({ type: ACTION_LIST.UPDATE_STEP_DATA, payload: props.stepData });
   }, [props.stepData]);
+
+  useEffect(() => {
+    if (props.buildStatus) {
+      dispatch({ type: ACTION_LIST.UPDATE_BUILD_STATUS, payload: props.buildStatus });
+    }
+  }, [props.buildStatus]);
 
   // render state switch statement
   switch (state.compState) {
@@ -98,6 +131,7 @@ export default function LogViewConsoleManager(props) {
           <div className={cx('error-wrapper')}>
             <SystemMessage intent="danger">
               {getLogsErrorContent({
+                buildStatus: state.buildStatus,
                 stageStatus: state.stageStatus,
                 stageName: state.stageName,
                 stepName: state.stepData.name,
@@ -109,21 +143,16 @@ export default function LogViewConsoleManager(props) {
         </NonLogsContainer>
       );
     case STATES.NO_LOGS_AVAILABLE:
-      return state.buildStatus === 'pending' ? (
-        <NonLogsContainer style={{ padding: '25px 60px' }}>
-          <SystemMessage intent="warning">Pending...</SystemMessage>
-        </NonLogsContainer>
-      ) : (
+      return (
         <NonLogsContainer style={{ padding: '25px 60px' }}>
           <SystemMessage intent={getIntentFromStepStatus(state.stepData.status)}>
-            {state.stageName}
-            {' '}
-            {state.stepData.name && (
-              `- ${state.stepData.name} `
-            )}
-            :
-            {' '}
-            {state.stepData.name ? state.stepData.status : state.stageStatus}
+            {getNoLogsContent({
+              buildStatus: state.buildStatus,
+              stageStatus: state.stageStatus,
+              stageName: state.stageName,
+              stepName: state.stepData.name,
+              stepStatus: state.stepData.status,
+            })}
           </SystemMessage>
         </NonLogsContainer>
       );
