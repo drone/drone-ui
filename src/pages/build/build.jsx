@@ -61,14 +61,21 @@ export default function Build({ userIsAdminOrHasWritePerm }) {
   const handleViewModeClick = (mode) => () => setIsGraphView(mode === 'graph');
 
   const handleDeploySubmit = useCallback(async ({ action, target, parameters }) => {
-    const queryParams = { target: target || 'production', ...parameters };
+    const queryParams = parameters
+      .map(({ key, value }) => ({ key, value }))
+      .reduce((acc, { key, value }) => ({ ...acc, [key]: value }), {});
+    queryParams.target = target || 'production';
     const encode = encodeURIComponent;
     const queryString = Object.entries(queryParams).map(([key, value]) => `${encode(key)}=${encode(value)}`).join('&');
     try {
       const res = await axiosWrapper(`${instance}/api/repos/${namespace}/${name}/builds/${build}/${action}?${queryString}`, {
         method: 'POST',
       });
-      history.push(`/${namespace}/${name}/${res.build.number}`);
+      if (res) {
+        history.push(`/${namespace}/${name}/${res.number}`);
+      } else {
+        showError('Unable to create new deploy in this repo');
+      }
     } catch (e) {
       showError(`Unable to create new deploy: ${e.message}`);
       // eslint-disable-next-line
