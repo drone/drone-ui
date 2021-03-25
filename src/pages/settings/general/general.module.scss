@@ -1,4 +1,5 @@
 @import "styles/_variables";
+@import "styles/mixins";
 
 .inner {
   background: #ffffff;
@@ -41,6 +42,13 @@
         font-weight: normal;
         color: #383946;
       }
+      @include sm-down {
+        flex-flow: column;
+        > * + * {
+          margin-left: 0px;
+          margin-top: 20px;
+        }
+      }
     }
   }
 }
@@ -54,6 +62,14 @@
     font-size: 13px;
     line-height: 13px;
     color: #9293ab;
+  }
+  @include md-down {
+    flex-wrap: wrap;
+    .note {
+      flex: 1 1 100%;
+      text-align: start;
+      margin-top: 10px;
+    }
   }
 }
 
@@ -94,6 +110,9 @@
     &:focus {
       outline: none;
     }
+    @include sm-down {
+      justify-content: center;
+    }
   }
 }
 
@@ -104,6 +123,13 @@
     & > * + * {
       margin-left: 25px;
     }
+    @include sm-down {
+      flex-flow: column;
+      & > * + * {
+        margin-left: 0px;
+        margin-top: 25px;
+      }
+    }
   }
   &-card-wrapper {
     flex: 0 0 250px;
@@ -111,6 +137,9 @@
     flex-flow: column;
     justify-content: center;
     align-items: center;
+    @include lg-down {
+      flex: 1 1 100%;
+    }
   }
   &-card {
     height: 100%;
@@ -133,6 +162,9 @@
       text-align: center;
       color: #6b6d85;
     }
+    @include sm-down {
+      width: 100%;
+    }
   }
 }
 .controls {
@@ -140,4 +172,10 @@
   padding-top: 15px;
   display: flex;
   justify-content: space-between;
+  @include sm-down {
+    flex-flow: column;
+    & > * + * {
+      margin-top: 20px;
+    }
+  }
 }

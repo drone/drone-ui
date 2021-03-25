@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React, { useLayoutEffect } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
 
+import Avatar from 'components/shared/avatar';
 import Status from 'components/shared/status';
 import ZeroState from 'components/shared/zero-state';
 import { useBranches } from 'hooks/swr';
@@ -66,6 +67,7 @@ Branches.propTypes = {
 //
 
 function BranchListView(props) {
+  const { data } = props;
   return (
     <>
       <div className={cx('branch-list-header')}>
@@ -76,30 +78,29 @@ function BranchListView(props) {
         <div>Message</div>
       </div>
       <div className={cx('branch-list')}>
-        {props.data.map((build) => (
+        {data.map((build) => (
           <Link to={`${build.number}`} key={build.id}>
-            <BranchListItem data={build} />
+            <div className={cx('branch-list-item')}>
+              <div>
+                <Status status={build.status} />
+              </div>
+              <div className={cx('target')}>{build.target}</div>
+              <div className={cx('commit')}>{build.after.slice(0, 8)}</div>
+              <div>
+                <Avatar
+                  className={cx('avatar')}
+                  path={build.author_avatar}
+                  alt={build.author_login}
+                  text={build.author_login}
+                />
+                <span>{build.author_login}</span>
+              </div>
+              {build.message && (
+                <div className={cx('message')}><span>{build.message}</span></div>
+              )}
+            </div>
           </Link>
         ))}
-      </div>
-    </>
-  );
-}
-
-function BranchListItem({ data }) {
-  return (
-    <>
-      <div className={cx('branch-list-item')}>
-        <div>
-          <Status status={data.status} />
-        </div>
-        <div>{data.target}</div>
-        <div>{data.after.slice(0, 8)}</div>
-        <div>
-          <img src={data.author_avatar} />
-          <span>{data.author_login}</span>
-        </div>
-        <div><span>{data.message}</span></div>
       </div>
     </>
   );

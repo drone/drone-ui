@@ -1,3 +1,6 @@
+@import "styles/_variables";
+@import "styles/mixins";
+
 .select {
   display: flex;
   flex-flow: column;
@@ -6,7 +9,7 @@
     font-size: 13px;
     line-height: 16px;
     letter-spacing: 0.2px;
-    color: #4F5162;
+    color: #4f5162;
     display: inline-flex;
     align-items: center;
     margin-bottom: 7px;
@@ -27,6 +30,9 @@
       transform: translateY(-50%) rotate(-45deg);
       border-bottom: 1px solid #26a3f2;
       border-left: 1px solid #26a3f2;
+    }
+    @include sm-down {
+      width: 100% !important;
     }
   }
   &-input {

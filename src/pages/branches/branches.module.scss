@@ -1,5 +1,8 @@
+@import "styles/_variables";
+@import "styles/mixins";
+
 .wrapper {
-  max-width: 1700px;
+  max-width: var(--bp-xl);
   margin: 0px auto;
   padding-top: 54px;
 }
@@ -21,31 +24,6 @@
   border: 1px solid #ccc;
 }
 
-.branch {
-  display: flex;
-  padding: 0 10px;
-  margin-right: 15px;
-  color: hotpink;
-  text-decoration: none;
-  white-space: nowrap;
-  background-color: lighten(hotpink, 25%);
-}
-
-.description {
-  flex: 1;
-  margin: 0;
-  overflow: hidden;
-  font-style: italic;
-  color: lightslategray;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.commit {
-  composes: branch;
-  display: inline-block;
-}
-
 .branch-list {
   display: block;
 }
@@ -55,6 +33,12 @@
   grid-template-columns: 24px 300px 100px 200px auto;
   grid-gap: 15px;
   padding: 15px;
+  @include md-down {
+    grid-template-columns: 24px 1fr 100px 1fr 1fr;
+  }
+  @include sm-down {
+    display: none;
+  }
 }
 
 .branch-list-header div {
@@ -84,6 +68,34 @@
     box-shadow: 0 1px 6px -3px rgba(0, 0, 0, 0.5);
     box-shadow: 2px 0 -3px rgba(40, 41, 61, 0.08), 0 2px 2px rgba(96, 97, 112, 0.16);
   }
+  @include md-down {
+    grid-template-columns: 24px 1fr 100px 1fr 1fr;
+  }
+  @include sm-down {
+    display: flex;
+    flex-wrap: wrap;
+    .commit {
+      margin-left: auto;
+    }
+    .message {
+      flex: 1 1 100%;
+    }
+  }
+  @include xs-down {
+    .target {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+  @include xxs-down {
+    .target {
+      flex: 0 0 85%;
+    }
+    .commit {
+      margin-left: 0;
+    }
+  }
 }
 
 .branch-list-item div {
@@ -106,7 +118,7 @@
     }
   }
 
-  img {
+  .avatar {
     width: 24px;
     height: 24px;
     margin-right: 10px;
