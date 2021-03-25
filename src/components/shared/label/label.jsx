@@ -137,7 +137,7 @@ export const BuildLabel = ({ className, build }) => {
  * @param {string} ref reference path
  */
 function trimRef(ref) {
-  return ref?.replace("refs/heads/", "")
+  return ref?.replace("refs/heads/", "")?.replace("refs/tags/", "")
 }
 
 /**
