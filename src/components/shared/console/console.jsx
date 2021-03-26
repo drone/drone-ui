@@ -6,6 +6,7 @@ import React, {
 
 import Button from 'components/shared/button';
 import Status from 'components/shared/status';
+import { ReactComponent as CloseIcon } from 'svg/close.svg';
 import { ReactComponent as DownloadIcon } from 'svg/download-cloud.svg';
 import { ReactComponent as PauseIcon } from 'svg/pause.svg';
 import { ReactComponent as PlayIcon } from 'svg/play.svg';
@@ -28,7 +29,9 @@ const ConsoleHeader = (props) => {
     shouldFollowLogs,
     handleDownloadClick,
     showDownloadBtn,
+    showCloseBtn,
     showFollowLogsBtn,
+    onCloseBtnClick,
   } = props;
   return (
     <header className={cx('header')}>
@@ -50,10 +53,17 @@ const ConsoleHeader = (props) => {
           )}
           {showDownloadBtn && (
             <Button
-              className={cx('btn-download ')}
               onClick={handleDownloadClick}
             >
               <DownloadIcon />
+            </Button>
+          )}
+          {showCloseBtn && (
+            <Button
+              className={cx('btn-close')}
+              onClick={onCloseBtnClick}
+            >
+              <CloseIcon />
             </Button>
           )}
         </div>
@@ -66,15 +76,19 @@ const ConsoleHeader = (props) => {
 ConsoleHeader.propTypes = {
   shouldFollowLogs: PropTypes.bool.isRequired,
   showFollowLogsBtn: PropTypes.bool,
+  showCloseBtn: PropTypes.bool,
   showDownloadBtn: PropTypes.bool,
   areLogsLoading: PropTypes.bool.isRequired,
   toggleFollowLogs: PropTypes.func.isRequired,
   handleDownloadClick: PropTypes.func.isRequired,
+  onCloseBtnClick: PropTypes.func,
 };
 
 ConsoleHeader.defaultProps = {
   showFollowLogsBtn: false,
   showDownloadBtn: false,
+  showCloseBtn: false,
+  onCloseBtnClick: undefined,
 };
 
 const ConsoleFooter = (props) => {
@@ -209,6 +223,8 @@ const Console = React.forwardRef((props, ref) => {
     showDownloadBtn,
     showFollowLogsBtn,
     logsBlobName,
+    showCloseBtn,
+    onCloseBtnClick,
   } = props;
 
   const [showAllLogs, setShowAllLogs] = useState(false);
@@ -244,9 +260,11 @@ const Console = React.forwardRef((props, ref) => {
         areLogsLoading={areLogsLoading}
         showDownloadBtn={showDownloadBtn}
         showFollowLogsBtn={showFollowLogsBtn}
+        showCloseBtn={showCloseBtn}
         shouldFollowLogs={shouldFollowLogs}
         toggleFollowLogs={toggleFollowLogs}
         handleDownloadClick={handleDownloadClick}
+        onCloseBtnClick={onCloseBtnClick}
       />
       )}
       <pre
@@ -287,6 +305,7 @@ Console.propTypes = {
   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   showHeader: PropTypes.bool,
   showFooter: PropTypes.bool,
+  showCloseBtn: PropTypes.bool,
   shownLogsLimit: PropTypes.number,
   tmateLink: PropTypes.string,
   logs: PropTypes.arrayOf(PropTypes.shape({
@@ -306,6 +325,7 @@ Console.propTypes = {
   showDownloadBtn: PropTypes.bool,
   showFollowLogsBtn: PropTypes.bool,
   logsBlobName: PropTypes.string,
+  onCloseBtnClick: PropTypes.func,
 };
 
 Console.defaultProps = {
@@ -319,6 +339,8 @@ Console.defaultProps = {
   stepData: {},
   showDownloadBtn: false,
   showFollowLogsBtn: false,
+  showCloseBtn: false,
+  onCloseBtnClick: undefined,
   logsBlobName: 'step_logs',
 };
 

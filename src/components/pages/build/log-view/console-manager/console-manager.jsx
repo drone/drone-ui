@@ -176,8 +176,7 @@ export default function LogViewConsoleManager(props) {
       showDownloadBtn={state.stepData?.stopped && state.compState === STATES.RESOLVED}
       showFollowLogsBtn={state.compState === STATES.STREAM_ON}
       logsBlobName={logsBlobName}
-      showHeader={consoleProps.showHeader}
-      showFooter={consoleProps.showFooter}
+      {...consoleProps}
     />
   );
 }

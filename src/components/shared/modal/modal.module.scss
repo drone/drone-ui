@@ -20,6 +20,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  &.plain {
+    .modal-inner {
+      padding: 0;
+      border-radius: 0;
+      width: 100vw;
+    }
+  }
 }
 
 .modal-inner {
