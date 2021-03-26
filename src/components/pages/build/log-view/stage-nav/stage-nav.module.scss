@@ -1,4 +1,5 @@
 @import "styles/_variables.scss";
+@import "styles/mixins.scss";
 
 .wrapper {
   display: flex;
@@ -6,6 +7,9 @@
   align-self: flex-start;
   * {
     font-family: $font-family-primary;
+  }
+  @include sm-down {
+    width: 100%;
   }
 }
 
@@ -30,6 +34,9 @@
     letter-spacing: 0.2px;
     color: #9293ab;
   }
+  @include sm-down {
+    padding: 14px 20px;
+  }
 }
 
 .inner {
@@ -38,6 +45,10 @@
   align-self: flex-start;
   position: relative;
   min-height: 500px;
+  @include md-down {
+    min-height: unset;
+    height: auto !important;
+  }
 }
 .stage {
   background: #ffffff;
@@ -78,7 +89,7 @@
       transition: transform 0.2s ease;
       margin-right: 10px;
       &-disabled {
-        stroke: #96a5be; 
+        stroke: #96a5be;
       }
     }
     &-expanded {
@@ -218,6 +229,9 @@
       text-overflow: ellipsis;
       white-space: nowrap;
       max-width: 180px;
+      @include xxs-down {
+        max-width: 145px;
+      }
     }
   }
 }

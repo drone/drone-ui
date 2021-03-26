@@ -9,6 +9,11 @@
     margin-right: 6px;
   }
 
+  p {
+    display: inline-flex;
+    align-items: center;
+  }
+
   span {
     margin: 0px 2px;
     display: inline-block;
@@ -28,7 +33,7 @@
     text-decoration: none;
     color: #4f5162;
     div {
-      color: #0063F7;
+      color: #0063f7;
     }
     &:hover {
       div {

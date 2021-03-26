@@ -9,10 +9,16 @@
 .navbar {
   width: 400px;
   overflow-y: scroll;
+  @include sm-down {
+    width: 100%;
+  }
 }
 
 .logs {
   flex: 1;
+  @include sm-down {
+    display: none;
+  }
 }
 
 .page-wrapper {

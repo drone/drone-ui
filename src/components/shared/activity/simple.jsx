@@ -18,55 +18,83 @@ const cx = classNames.bind(styles);
 
 const PushActivity = (props) => (
   <div className={cx('activity', props.className || '')}>
-    <Avatar path={props.avatar} alt={props.actor} text={props.actor} className={cx('avatar')} />
-    <span>{props.actor}</span>
-    <span>pushed</span>
-    {wrapCommitLink(<CommitLabel className={cx('label')} commit={props?.commit.substr(0, 8)} />, props)}
-    <span>to</span>
-    {wrapReferenceLink(<BranchLabel className={cx('label')} branch={props?.branch} />, props)}
+    <p style={{ display: 'inline-flex' }}>
+      <Avatar path={props.avatar} alt={props.actor} text={props.actor} className={cx('avatar')} />
+      <span>{props.actor}</span>
+    </p>
+    <p>
+      <span>pushed</span>
+      {wrapCommitLink(<CommitLabel className={cx('label')} commit={props?.commit.substr(0, 8)} />, props)}
+    </p>
+    <p>
+      <span>to</span>
+      {wrapReferenceLink(<BranchLabel className={cx('label')} branch={props?.branch} />, props)}
+    </p>
   </div>
 );
 
 const PullRequestActivity = (props) => (
   <div className={cx('activity', props.className || '')}>
-    <Avatar path={props.avatar} alt={props.actor} text={props.actor} className={cx('avatar')} />
-    <span>{props.actor}</span>
-    <span>{props.action == 'opened' ? 'opened' : 'synchronized'}</span>
-    <span>pull request</span>
-    {wrapReferenceLink(<PullRequestLabel className={cx('label')} pr={props.refs} />, props)}
-    <span>to</span>
-    {wrapReferenceLink(<BranchLabel className={cx('label')} branch={props?.branch} />, props)}
+    <p>
+      <Avatar path={props.avatar} alt={props.actor} text={props.actor} className={cx('avatar')} />
+      <span>{props.actor}</span>
+    </p>
+    <p>
+      <span>{props.action == 'opened' ? 'opened' : 'synchronized'}</span>
+      <span>pull request</span>
+      {wrapReferenceLink(<PullRequestLabel className={cx('label')} pr={props.refs} />, props)}
+    </p>
+    <p>
+      <span>to</span>
+      {wrapReferenceLink(<BranchLabel className={cx('label')} branch={props?.branch} />, props)}
+    </p>
   </div>
 );
 
 const TagActivity = (props) => (
   <div className={cx('activity', props.className || '')}>
-    <Avatar path={props.avatar} alt={props.actor} text={props.actor} className={cx('avatar')} />
-    <span>{props.actor}</span>
-    <span>created</span>
-    {wrapReferenceLink(<TagLabel className={cx('label')} tag={props.refs} />, props)}
+    <p>
+      <Avatar path={props.avatar} alt={props.actor} text={props.actor} className={cx('avatar')} />
+      <span>{props.actor}</span>
+    </p>
+    <p>
+      <span>created</span>
+      {wrapReferenceLink(<TagLabel className={cx('label')} tag={props.refs} />, props)}
+    </p>
   </div>
 );
 
 const PromoteActivity = (props) => (
   <div className={cx('activity', props.className || '')}>
-    <Avatar path={props.avatar} alt={props.actor} text={props.actor} className={cx('avatar')} />
-    <span>{props.sender}</span>
-    <span>promoted build</span>
-    {wrapBuildLink(<BuildLabel className={cx('label')} build={props.number} />, props)}
-    <span>to</span>
-    <EnvironmentLabel className={cx('label')} environment={props.target} />
+    <p>
+      <Avatar path={props.avatar} alt={props.actor} text={props.actor} className={cx('avatar')} />
+      <span>{props.sender}</span>
+    </p>
+    <p>
+      <span>promoted build</span>
+      {wrapBuildLink(<BuildLabel className={cx('label')} build={props.number} />, props)}
+    </p>
+    <p>
+      <span>to</span>
+      <EnvironmentLabel className={cx('label')} environment={props.target} />
+    </p>
   </div>
 );
 
 const RollbackActivity = (props) => (
   <div className={cx('activity', props.className || '')}>
-    <Avatar path={props.avatar} alt={props.actor} text={props.actor} className={cx('avatar')} />
-    <span>{props.actor}</span>
-    <span>rolled back</span>
-    <EnvironmentLabel className={cx('label')} environment={props.target} />
-    <span>to build</span>
-    {wrapBuildLink(<BuildLabel className={cx('label')} build={props.number} />, props)}
+    <p>
+      <Avatar path={props.avatar} alt={props.actor} text={props.actor} className={cx('avatar')} />
+      <span>{props.actor}</span>
+    </p>
+    <p>
+      <span>rolled back</span>
+      <EnvironmentLabel className={cx('label')} environment={props.target} />
+    </p>
+    <p>
+      <span>to build</span>
+      {wrapBuildLink(<BuildLabel className={cx('label')} build={props.number} />, props)}
+    </p>
   </div>
 );
 
