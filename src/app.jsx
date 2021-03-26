@@ -36,7 +36,7 @@ const GlobalRequestWrapper = ({ render }) => {
   }, [data, context, setContext]);
 
   useStreamBuildEvents();
-  useRecentBuilds();
+  useRecentBuilds(!!data);
   return isLoading ? null : render({ user: data });
 };
 

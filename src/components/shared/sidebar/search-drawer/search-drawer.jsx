@@ -41,7 +41,7 @@ SearchCard.propTypes = {
 };
 
 const SearchDrawer = ({ isShown, hide }) => {
-  const { data } = useLatestRepos();
+  const { data } = useLatestRepos(true);
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
 

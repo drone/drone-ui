@@ -42,10 +42,10 @@ const useBuilds = ({ namespace, name }, swrOptions = {}) => {
   };
 };
 
-const useRecentBuilds = () => {
+const useRecentBuilds = (shouldFetch) => {
   const {
     data, isLoading, isError, mutate,
-  } = useSWRBase('/api/user/builds/recent');
+  } = useSWRBase(shouldFetch ? '/api/user/builds/recent' : null);
   const { setFaviconStateTo } = useFavicon();
   const { pathname } = useLocation();
   const [namespace, name] = pathname.split('/').filter(Boolean);

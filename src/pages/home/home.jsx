@@ -23,7 +23,7 @@ const cx = classNames.bind(styles);
 // on show more click
 const REPOS_CHUNK_SIZE = 50;
 
-export default function Home() {
+export default function Home({ user }) {
   const [context, setContext] = useContext(AppContext);
   const [showAllRepos, setShowAllRepos] = useState(false);
   const [isActiveOnly, setIsActiveOnly] = useLocalStorage('home_show_active_only_repos', false);
@@ -31,7 +31,7 @@ export default function Home() {
   const { showError } = useToast();
   const { hasSyncReqFiredOff, isError: syncError } = useSyncAccount(shouldStartSync);
 
-  const { data, isLoading, mutate } = useLatestRepos();
+  const { data, isLoading, mutate } = useLatestRepos(!!user);
   const { isSynced, isSyncing, isError: viewerError } = useViewer({ withPolling: hasSyncReqFiredOff });
 
   useCustomTitle();
