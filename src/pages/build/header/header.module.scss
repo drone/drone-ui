@@ -151,9 +151,9 @@
     & > div:last-of-type {
       display: flex;
       flex-wrap: wrap;
-      p {
+      [data-type="chunk"] {
         flex: 1 1 100%;
-        + p {
+        + [data-type="chunk"] {
           margin-top: 6px;
         }
       }

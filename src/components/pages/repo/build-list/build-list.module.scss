@@ -100,14 +100,14 @@
 }
 
 .activity {
-  // @NOTE: rewrite after activity component gets refactored
-  @include xxs-down {
+  @include xs-down {
+    display: flex;
     flex-wrap: wrap;
-    span:not(:nth-of-type(1)):not(:nth-of-type(2)) {
+    [data-type="chunk"] {
       flex: 1 1 100%;
-    }
-    div:not(:first-child) {
-      margin: 5px 0;
+      + [data-type="chunk"] {
+        margin-top: 6px;
+      }
     }
   }
 }

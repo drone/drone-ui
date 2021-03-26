@@ -18,83 +18,83 @@ const cx = classNames.bind(styles);
 
 const PushActivity = (props) => (
   <div className={cx('activity', props.className || '')}>
-    <p style={{ display: 'inline-flex' }}>
+    <div className={cx('chunk')} data-type="chunk">
       <Avatar path={props.avatar} alt={props.actor} text={props.actor} className={cx('avatar')} />
       <span>{props.actor}</span>
-    </p>
-    <p>
+    </div>
+    <div className={cx('chunk')} data-type="chunk">
       <span>pushed</span>
       {wrapCommitLink(<CommitLabel className={cx('label')} commit={props?.commit.substr(0, 8)} />, props)}
-    </p>
-    <p>
+    </div>
+    <div className={cx('chunk')} data-type="chunk">
       <span>to</span>
       {wrapReferenceLink(<BranchLabel className={cx('label')} branch={props?.branch} />, props)}
-    </p>
+    </div>
   </div>
 );
 
 const PullRequestActivity = (props) => (
   <div className={cx('activity', props.className || '')}>
-    <p>
+    <div className={cx('chunk')} data-type="chunk">
       <Avatar path={props.avatar} alt={props.actor} text={props.actor} className={cx('avatar')} />
       <span>{props.actor}</span>
-    </p>
-    <p>
+    </div>
+    <div className={cx('chunk')} data-type="chunk">
       <span>{props.action == 'opened' ? 'opened' : 'synchronized'}</span>
       <span>pull request</span>
       {wrapReferenceLink(<PullRequestLabel className={cx('label')} pr={props.refs} />, props)}
-    </p>
-    <p>
+    </div>
+    <div className={cx('chunk')} data-type="chunk">
       <span>to</span>
       {wrapReferenceLink(<BranchLabel className={cx('label')} branch={props?.branch} />, props)}
-    </p>
+    </div>
   </div>
 );
 
 const TagActivity = (props) => (
   <div className={cx('activity', props.className || '')}>
-    <p>
+    <div className={cx('chunk')} data-type="chunk">
       <Avatar path={props.avatar} alt={props.actor} text={props.actor} className={cx('avatar')} />
       <span>{props.actor}</span>
-    </p>
-    <p>
+    </div>
+    <div className={cx('chunk')} data-type="chunk">
       <span>created</span>
       {wrapReferenceLink(<TagLabel className={cx('label')} tag={props.refs} />, props)}
-    </p>
+    </div>
   </div>
 );
 
 const PromoteActivity = (props) => (
   <div className={cx('activity', props.className || '')}>
-    <p>
+    <div className={cx('chunk')} data-type="chunk">
       <Avatar path={props.avatar} alt={props.actor} text={props.actor} className={cx('avatar')} />
       <span>{props.sender}</span>
-    </p>
-    <p>
+    </div>
+    <div className={cx('chunk')} data-type="chunk">
       <span>promoted build</span>
       {wrapBuildLink(<BuildLabel className={cx('label')} build={props.number} />, props)}
-    </p>
-    <p>
+    </div>
+    <div className={cx('chunk')} data-type="chunk">
       <span>to</span>
       <EnvironmentLabel className={cx('label')} environment={props.target} />
-    </p>
+    </div>
   </div>
 );
 
 const RollbackActivity = (props) => (
   <div className={cx('activity', props.className || '')}>
-    <p>
+    <div className={cx('chunk')} data-type="chunk">
       <Avatar path={props.avatar} alt={props.actor} text={props.actor} className={cx('avatar')} />
       <span>{props.actor}</span>
-    </p>
-    <p>
+    </div>
+    <div className={cx('chunk')} data-type="chunk">
       <span>rolled back</span>
       <EnvironmentLabel className={cx('label')} environment={props.target} />
-    </p>
-    <p>
+    </div>
+    <div className={cx('chunk')} data-type="chunk">
       <span>to build</span>
       {wrapBuildLink(<BuildLabel className={cx('label')} build={props.number} />, props)}
-    </p>
+    </div>
   </div>
 );
 

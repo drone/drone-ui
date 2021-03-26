@@ -20,7 +20,7 @@
     height: 180px;
     justify-content: center;
     align-items: flex-start;
-    padding: 0px 32px;
+    padding: 0px 20px;
   }
 }
 
@@ -30,6 +30,11 @@
   filter: drop-shadow(0px 4px 4px rgba(207, 207, 207, 0.25));
   background-color: #fff;
   padding: 0px 60px;
+  @include sm-down {
+    padding: 0px 20px;
+    overflow-x: scroll;
+  }
+
   .tab {
     text-decoration: none;
     font-size: 14px;
@@ -62,35 +67,6 @@
     &-disabled {
       opacity: 0.5;
       cursor: not-allowed;
-    }
-  }
-  @include sm-down {
-    padding: 0px;
-    flex-wrap: wrap;
-    .tab {
-      flex: 1 1 50%;
-      border: 1px solid transparent;
-      transition: border-color 0.2s ease;
-      &:not(.tab-active) {
-        &:nth-child(1),
-        &:nth-child(3) {
-          border-right-color: rgba(0, 0, 0, 0.1);
-        }
-        &:nth-child(1),
-        &:nth-child(2) {
-          border-bottom-color: rgba(0, 0, 0, 0.1);
-        }
-      }
-      &-active {
-        &:before {
-          display: none;
-        }
-        background: #f3f3fa;
-        color: #0378d4;
-      }
-      + .tab {
-        margin-left: 0;
-      }
     }
   }
 }
