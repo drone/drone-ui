@@ -32,7 +32,7 @@ export default function RouteGuard(props) {
   if (visibility !== VISIBILITY_LEVELS.PUBLIC && isUserAuthenticated === false) {
     return <Redirect to="/welcome" />;
   }
-  return <NotFound />;
+  return <NotFound user={user} />;
 }
 
 RouteGuard.propTypes = {

@@ -221,7 +221,7 @@ const Repo = ({ user }) => {
     return null;
   }
   if (isError?.message === 'Not Found' || isError?.message === 'Unauthorized') {
-    return <NotFound />;
+    return <NotFound user={user} />;
   }
   return (
     <Switch>

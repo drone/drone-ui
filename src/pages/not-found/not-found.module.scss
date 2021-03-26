@@ -34,8 +34,22 @@
     text-align: center;
 
     sub {
-      color: #9293AB;
+      color: #9293ab;
       margin-left: 8px;
     }
   }
+}
+
+.btn {
+  box-shadow: 0px 0px 1px rgba(40, 41, 61, 0.08), 0px 0.5px 2px rgba(96, 97, 112, 0.16);
+  background-color: #0278d5;
+  color: white;
+  padding: 10px 24px;
+  padding-left: 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  text-decoration: none;
+  height: 36px;
 }

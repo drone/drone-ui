@@ -26,7 +26,7 @@ const ERROR = 'error';
 const RESOLVED = 'resolved';
 const RESOLVED_BLOCKED = 'resolved_blocked';
 
-export default function Build({ userIsAdminOrHasWritePerm }) {
+export default function Build({ user, userIsAdminOrHasWritePerm }) {
   const params = useParams();
   const {
     namespace, name, build, stage = 1, step = 1,
@@ -171,8 +171,8 @@ export default function Build({ userIsAdminOrHasWritePerm }) {
 
   switch (state) {
     case ERROR:
-      if (isError?.message === 'Not Found') {
-        content = (<NotFound />);
+      if (isError?.message === 'Not Found' || isError?.message === 'sql: no rows in result set') {
+        content = (<NotFound user={user} />);
         return content;
       }
       content = (
