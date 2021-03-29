@@ -20,11 +20,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  &.plain {
+  &.fullscreen {
     .modal-inner {
-      padding: 0;
       border-radius: 0;
       width: 100vw;
+      height: 100vh;
     }
   }
 }
@@ -36,8 +36,8 @@
   border-radius: 6px;
   padding: 30px;
   @include sm-down {
-    padding: 15px;
-    width: 96vw;
+    padding: 20px;
+    width: calc(100% - 40px);
   }
 }
 
@@ -51,7 +51,6 @@
   padding-right: 0;
   padding-left: 0;
   margin-bottom: 15px;
-
   h3 {
     margin: 0;
     font-size: 20px;

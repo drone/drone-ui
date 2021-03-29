@@ -52,13 +52,14 @@ const LogView = (props) => {
       </section>
       <Modal
         isShowing={isModalShowing}
-        appearance="plain"
+        mode="fullscreen"
         hide={toggleModal}
       >
         <ConsoleManager
           consoleProps={{
             showCloseBtn: true,
             onCloseBtnClick: toggleModal,
+            className: cx('console-mobile'),
           }}
           isDataLoading={isDataLoading}
           hasBuildDebugMode={data?.debug || false}

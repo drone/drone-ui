@@ -37,7 +37,7 @@
     font-size: 14px;
     line-height: 24px;
     &-active {
-      background: #F3F3FA;
+      background: #f3f3fa;
       color: #0378d4;
     }
   }
@@ -117,8 +117,8 @@
 
 @media only screen and (max-width: 768px) {
   .wrapper {
-    padding-left: 32px;
-    padding-right: 32px;
+    padding-left: 20px;
+    padding-right: 20px;
   }
 
   .settings-nav {

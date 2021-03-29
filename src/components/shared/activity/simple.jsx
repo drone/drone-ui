@@ -64,11 +64,11 @@ const TagActivity = (props) => (
   </div>
 );
 
-const PromoteActivity = (props) => (
+const PromoteActivity = (props) => console.log(props) || (
   <div className={cx('activity', props.className || '')}>
     <div className={cx('chunk')} data-type="chunk">
       <Avatar path={props.avatar} alt={props.actor} text={props.actor} className={cx('avatar')} />
-      <span>{props.sender}</span>
+      <span>{props.actor}</span>
     </div>
     <div className={cx('chunk')} data-type="chunk">
       <span>promoted build</span>

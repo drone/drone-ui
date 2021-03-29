@@ -18,7 +18,7 @@ export const useModal = () => {
 
 const Modal = ({
   isShowing, title, children, hide,
-  appearance = 'default',
+  mode = 'default',
 }) => {
   const modalRef = useRef(null);
   useOnClickOutside(modalRef, hide);
@@ -34,14 +34,12 @@ const Modal = ({
     return ReactDOM.createPortal(
       <>
         <div className={cx('overlay')} />
-        <div className={cx('modal-wrapper', `${appearance}`)} tabIndex={-1} role="dialog" aria-modal aria-hidden>
+        <div className={cx('modal-wrapper', `${mode}`)} tabIndex={-1} role="dialog" aria-modal aria-hidden>
           <div className={cx('modal-inner')} ref={modalRef}>
-            {appearance === 'default' && (
             <header className={cx('modal-header')}>
               <h3 className={cx('modal-title')}>{title}</h3>
               <Button theme="plain" type="button" onClick={hide}><CloseIcon /></Button>
             </header>
-            )}
             <div className={cx('modal-content')}>{children}</div>
           </div>
         </div>

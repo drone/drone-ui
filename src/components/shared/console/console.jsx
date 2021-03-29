@@ -211,6 +211,7 @@ LogsLine.propTypes = {
 
 const Console = React.forwardRef((props, ref) => {
   const {
+    className,
     height,
     showHeader,
     showFooter,
@@ -250,7 +251,7 @@ const Console = React.forwardRef((props, ref) => {
 
   return (
     <div
-      className={cx('wrapper')}
+      className={cx('wrapper', className)}
       ref={ref}
       style={{ height }}
     >

@@ -135,6 +135,7 @@
     grid-column: 1;
     display: flex;
     flex-flow: wrap;
+    overflow: hidden;
     & > div:last-of-type {
       margin-top: 12px;
       flex: 1 1 100%;
