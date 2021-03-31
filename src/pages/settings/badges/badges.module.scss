@@ -20,7 +20,7 @@
     right: 33px;
     top: 26px;
   }
-  @include sm-down {
+  @include md-down {
     padding-top: 52px;
   }
 }
@@ -55,9 +55,11 @@
   line-height: 26px;
   color: #000000;
   code {
-    white-space: pre;
     overflow: auto;
     display: block;
+  }
+  @include sm-down {
+    white-space: pre;
   }
 }
 

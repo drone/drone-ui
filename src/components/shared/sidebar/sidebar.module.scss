@@ -50,7 +50,10 @@
   }
 
   &:not(.logo) {
-    height: 64px;
+    height: 54px;
+    @include sm-down {
+      height: 64px;
+    }
   }
 
   &:not(&-active):not(.logo) {
