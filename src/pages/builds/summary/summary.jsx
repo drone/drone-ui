@@ -57,7 +57,7 @@ const Summary = (props) => {
     number: build.number,
     duration: (build?.finished || Math.floor(Date.now() / 1000)) - (build.started || build.created),
     status: build.status,
-    timeStarted: build.started,
+    timeStarted: build.started || 0,
   })).filter(({ timeStarted }) => timeStarted > 0).reverse(), [data]);
   const { namespace, name } = useParams();
   const history = useHistory();
