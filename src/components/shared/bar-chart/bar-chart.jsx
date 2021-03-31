@@ -82,7 +82,7 @@ const BarChart = (props) => {
     if (data.length < barsShown) {
       const barPlaceholders = Array
         .from({ length: barsShown - data.length },
-          (_, i) => ({ number: barsShown - data.length + i }));
+          (_, i) => ({ number: data.length + i + 1 }));
       return withHeight.concat(barPlaceholders);
     }
     return withHeight;
@@ -115,13 +115,15 @@ const BarChart = (props) => {
                 role="button"
                 aria-label={bar.number}
                 tabIndex={0}
+                key={bar.number}
+                data-test={bar.number}
                 onClick={handleBarClick(bar)}
                 onKeyPress={handleBarClick(bar)}
               />
             );
           }
           return (
-            <div className={cx('bar-background')} key={bar.number}>
+            <div data-test={bar.number} className={cx('bar-background')} key={bar.number}>
               {actualBar}
             </div>
           );
