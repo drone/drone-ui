@@ -30,6 +30,7 @@ const LogView = (props) => {
             hasBuildDebugMode={data?.debug || false}
             buildStatus={data?.status}
             stageStatus={data?.stages?.[stage - 1]?.status}
+            stageNumber={data?.stages?.[stage - 1]?.number}
             stageName={data?.stages?.[stage - 1]?.name}
             stepData={data?.stages?.[stage - 1]?.steps?.[step - 1]}
           />
