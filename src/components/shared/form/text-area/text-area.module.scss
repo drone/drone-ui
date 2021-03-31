@@ -1,4 +1,5 @@
 @import "styles/_variables";
+@import "styles/mixins";
 
 .text-area {
   &-wrapper {
@@ -18,6 +19,9 @@
   line-height: 22px;
   color: #343a41;
   resize: none;
+  @include sm-down {
+    width: 100% !important;
+  }
   &::placeholder {
     color: #8f90a6;
     font-size: 13px;

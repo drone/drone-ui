@@ -14,12 +14,11 @@
   width: 64px;
   background-color: $color-primary-9;
   box-shadow: 3px 0 5px rgba(0, 0, 0, 0.2);
-  @media screen and (max-width: 768px) {
+  @include sm-down {
     height: 64px;
+    padding: 0;
     width: 100%;
-    padding: 8px;
-    @include flex($direction: row, $align-x: space-between, $align-y: center);
-    flex-wrap: nowrap;
+    @include flex($direction: row, $align-x: space-between, $align-y: center, $wrap: nowrap);
   }
 }
 
@@ -27,7 +26,7 @@
 .bottom {
   @include flex($direction: column, $align-x: center, $align-y: center);
   width: 100%;
-  @media screen and (max-width: 768px) {
+  @include sm-down {
     flex-direction: row;
     flex-wrap: nowrap;
     width: auto;
@@ -52,6 +51,9 @@
 
   &:not(.logo) {
     height: 54px;
+    @include sm-down {
+      height: 64px;
+    }
   }
 
   &:not(&-active):not(.logo) {
@@ -66,11 +68,11 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@include sm-down {
   .sidebar-item {
     height: 64px;
-    width: 54px;
-  
+    width: 64px;
+
     &.logo {
       width: 64px;
       height: 64px;
@@ -93,14 +95,14 @@
     transition: 0.3s ease;
   }
   div {
-    background: rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 50%;
     width: 30px;
     height: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #FFF;
+    color: #fff;
   }
   &:hover {
     span {

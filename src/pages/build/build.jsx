@@ -176,16 +176,18 @@ export default function Build({ user, userIsAdminOrHasWritePerm }) {
         return content;
       }
       content = (
-        <NonLogsContainer style={{ padding: '25px 60px' }}>
+        <NonLogsContainer className={cx('no-logs')}>
           <SystemMessage intent="danger">
-            {data?.error || isError?.message || 'Something went wrong. It is highly likely that this page does not exist'}
+            {data?.error
+             || isError?.message
+             || 'Something went wrong. It is highly likely that this page does not exist'}
           </SystemMessage>
         </NonLogsContainer>
       );
       break;
     case RESOLVED_BLOCKED:
       content = (
-        <NonLogsContainer className={cx('blocked-card')}>
+        <NonLogsContainer className={cx('blocked')}>
           {userIsAdminOrHasWritePerm ? (
             <>
               <Button

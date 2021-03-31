@@ -33,12 +33,18 @@ const Header = (props) => {
   if (data && data.status !== 'blocked') {
     if (['pending', 'running'].includes(data.status)) {
       controls = (
-        <Button className={cx('cancel-button')} onClick={handleCancelClick}>Cancel</Button>
+        <Button
+          className={cx('cancel-button', 'controls')}
+          onClick={handleCancelClick}
+        >
+          Cancel
+        </Button>
       );
     } else if (userIsAdminOrHasWritePerm) {
       controls = (
         <DotsMenu
           id="build-actions"
+          className={cx('controls')}
           menuItems={[{
             value: 'restart',
             content: 'Restart',
@@ -81,16 +87,19 @@ const Header = (props) => {
         </Button>
       </div>
       {data ? (
-        <div className={cx('meta')}>
-          {data.started > 0 && (
+        <>
+          <div className={cx('meta')}>
+            {data.started > 0 && (
             <Elapsed started={data.started} finished={data.finished} withLetters withIcon />
-          )}
-          <div className={cx('date')}>
-            <CalendarIcon />
-            {getFullDateRepresentation({ date: data.created })}
+            )}
+            <div className={cx('date')}>
+              <CalendarIcon />
+              {getFullDateRepresentation({ date: data.created })}
+            </div>
+            {controls}
           </div>
           {controls}
-        </div>
+        </>
       ) : null}
 
       <div className={cx('title')}>

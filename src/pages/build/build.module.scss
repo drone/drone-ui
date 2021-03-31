@@ -1,7 +1,7 @@
 @import "styles/mixins";
 @import "styles/_variables";
 
-.blocked-card {
+.blocked {
   padding: 20px;
   display: flex;
   align-items: center;
@@ -17,6 +17,15 @@
     font-size: 12px;
     line-height: 14px;
     color: #4f5162;
+  }
+  @include sm-down {
+    margin: 20px;
+  }
+}
+.no-logs {
+  padding: 25px 60px;
+  @include sm-down {
+    padding: 0px;
   }
 }
 .controls {

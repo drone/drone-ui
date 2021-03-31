@@ -1,9 +1,19 @@
+@import "styles/_variables";
+@import "styles/mixins";
+
 .wrapper {
   display: flex;
+  @include md-down {
+    flex-wrap: wrap;
+  }
+  @include sm-down {
+    display: none;
+  }
 }
 
 .info {
   margin-right: 19px;
+
   .summary {
     list-style: none;
     display: grid;
@@ -29,6 +39,17 @@
       grid-row: 2;
     }
   }
+  @include md-down {
+    flex: 1 1 100%;
+    margin-right: 0;
+    margin-bottom: 19px;
+    .summary {
+      grid-template-columns: repeat(2, 1fr);
+      li {
+        min-height: 100px;
+      }
+    }
+  }
   .title {
     font-weight: 500;
     font-size: 14px;
@@ -51,7 +72,7 @@
     height: 100%;
     &-heading {
       font-size: 13px;
-      color: #9293AB;
+      color: #9293ab;
       line-height: 13px;
       height: 13px;
     }
@@ -74,7 +95,7 @@
       .status {
         text-transform: capitalize;
         &-running {
-          color: #FCB519;
+          color: #fcb519;
         }
         &-success {
           color: #1d841d;
@@ -82,10 +103,10 @@
         &-failure,
         &-killed,
         &-error {
-          color: #B41710;
+          color: #b41710;
         }
         &-pending {
-          color: #4F5162;
+          color: #4f5162;
         }
       }
     }
@@ -99,10 +120,7 @@
   border-radius: 6px;
   padding: 27px 43px 27px 27px;
   min-height: 210px;
-}
-
-@media only screen and (max-width: 768px) {
-  .wrapper {
-    display: none;
+  @include md-down {
+    flex: 1 1 100%;
   }
 }

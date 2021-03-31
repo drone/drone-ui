@@ -1,4 +1,5 @@
 @import "styles/_variables";
+@import "styles/mixins";
 
 .title {
   font-weight: 600;
@@ -19,6 +20,9 @@
     right: 33px;
     top: 26px;
   }
+  @include md-down {
+    padding-top: 52px;
+  }
 }
 
 .group-badge {
@@ -26,6 +30,16 @@
   display: flex;
   & > * + * {
     margin-left: 33px;
+  }
+  @include sm-down {
+    flex-wrap: wrap;
+    & > * {
+      flex: 1 1 100%;
+    }
+    & > * + * {
+      margin-top: 24px;
+      margin-left: 0;
+    }
   }
 }
 
@@ -40,6 +54,13 @@
   font-size: 12px;
   line-height: 26px;
   color: #000000;
+  code {
+    overflow: auto;
+    display: block;
+  }
+  @include sm-down {
+    white-space: pre;
+  }
 }
 
 .copy-btn {
@@ -51,7 +72,7 @@
   svg {
     width: 22px;
     height: 22px;
-    transition: color .2s ease;
+    transition: color 0.2s ease;
   }
   &:hover {
     svg {

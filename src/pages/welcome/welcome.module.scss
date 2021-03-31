@@ -1,9 +1,17 @@
 @import "styles/_variables";
+@import "styles/mixins";
 
 .wrapper {
   display: flex;
   min-height: 100vh;
   padding: 0;
+  @include md-down {
+    flex-flow: column;
+  }
+  @include sm-down {
+    display: block;
+    height: 100vh;
+  }
 }
 
 .login {
@@ -11,6 +19,14 @@
   padding: 100px;
   height: inherit;
   background-color: #fff;
+  @include md-down {
+    flex: 0 0 auto;
+  }
+  @include sm-down {
+    padding: 20px;
+    display: flex;
+    flex-flow: column;
+  }
 }
 
 .kicker {
@@ -41,6 +57,9 @@
     padding-top: 8px;
     color: #9293ab;
   }
+  @include sm-down {
+    margin-bottom: auto;
+  }
 }
 
 .illustration {
@@ -49,6 +68,12 @@
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
+  svg {
+    height: 100%;
+  }
+  @include sm-down {
+    display: none;
+  }
 }
 
 .btn {

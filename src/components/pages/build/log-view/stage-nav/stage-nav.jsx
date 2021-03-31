@@ -18,6 +18,7 @@ export default function StageNav(props) {
     isDataLoading,
     stages = [],
     className,
+    onStepClick,
   } = props;
   const {
     namespace, name, build, stage = 1,
@@ -82,6 +83,7 @@ export default function StageNav(props) {
                   name={name}
                   build={build}
                   stageInPath={stage}
+                  onStepClick={onStepClick}
                 />
               );
             })}
@@ -102,6 +104,7 @@ const StageDefault = (props) => {
     namespace,
     build,
     stageInPath,
+    onStepClick,
   } = props;
   const [isExpanded, setIsExpanded] = useState(stageNumber == stageInPath);
   const toggleIsExpanded = () => setIsExpanded((prev) => !prev);
@@ -147,6 +150,7 @@ const StageDefault = (props) => {
               }}
               to={`/${namespace}/${name}/${build}/${stageNumber}/${stepIndex + 1}`}
               exact
+              onClick={onStepClick}
             >
               <Status className={cx('status')} status={status} />
               <span className={cx('name')}>{stepName}</span>

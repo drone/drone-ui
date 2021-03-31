@@ -3,7 +3,7 @@ import getFullDateRepresentation from './get-full-date-representation';
 import { humanizeEvent, humanizeStepStatus } from './humanizers';
 import pick from './pick';
 import searchRepos from './search-repos';
-import sortRepos from './sort-repos';
+import sortRepos, { byBuildCreatedAtDesc, byRepoNameAsc } from './sort-repos';
 
 export {
   axiosWrapper,
@@ -13,4 +13,6 @@ export {
   humanizeStepStatus,
   getFullDateRepresentation,
   pick,
+  byBuildCreatedAtDesc,
+  byRepoNameAsc,
 };

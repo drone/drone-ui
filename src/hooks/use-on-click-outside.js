@@ -8,7 +8,6 @@ const useOnClickOutside = (ref, handler) => {
         if (!ref.current || ref.current.contains(event.target)) {
           return;
         }
-
         handler(event);
       };
 

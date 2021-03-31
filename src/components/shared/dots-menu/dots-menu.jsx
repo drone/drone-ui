@@ -23,7 +23,7 @@ const renderMenuItems = (items, getMenuItemHandlers) => items.map((item, idx) =>
 
 const Menu = (props) => {
   const {
-    id, isMenuOpen, hideMenu, menuItems, onMenuItemSelect, menuAlignment,
+    id, className, isMenuOpen, hideMenu, menuItems, onMenuItemSelect, menuAlignment,
   } = props;
   const menuRef = useRef();
   const getMenuItemHandlers = (value) => ({
@@ -75,7 +75,7 @@ const Menu = (props) => {
   }, [isMenuOpen]);
   return (
     <div
-      className={cx('menu', `menu-${menuAlignment}`)}
+      className={cx('menu', `menu-${menuAlignment}`, className)}
       role="menu"
       tabIndex="-1"
       hidden={!isMenuOpen}

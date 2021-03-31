@@ -1,9 +1,18 @@
 @import "styles/_variables";
+@import "styles/mixins";
 
 .wrapper {
   padding-top: 54px;
   max-width: 1700px;
   margin: 0px auto;
+  @include sm-down {
+    padding-left: 20px;
+    padding-right: 20px;
+
+    h2:first-of-type {
+      display: none;
+    }
+  }
 }
 
 .section-title {
@@ -20,25 +29,6 @@
   margin-bottom: 54px;
 }
 
-.build-list {
-  display: block;
-}
-
-.build-list-header {
-  display: grid;
-  grid-template-columns: 24px 300px 100px 200px auto;
-  grid-gap: 15px;
-  padding: 15px;
-}
-
-.build-list-header div {
-  font-size: 11px;
-  font-weight: 700;
-  line-height: 14px;
-  text-transform: uppercase;
-  user-select: none;
-}
-
 .btn {
   padding: 6px 20px;
   border-radius: 4px;
@@ -52,24 +42,5 @@
     color: #0092e4;
     box-shadow: none;
     text-transform: capitalize;
-  }
-}
-
-@media only screen and (max-width: 768px) {
-  .header {
-    flex-direction: column;
-    height: 180px;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 0px 32px;
-  }
-
-  .wrapper {
-    padding-left: 32px;
-    padding-right: 32px;
-
-    h2:first-of-type {
-      display: none;
-    }
   }
 }

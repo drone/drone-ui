@@ -127,7 +127,7 @@ export default function LogViewConsoleManager(props) {
   switch (state.compState) {
     case STATES.ERROR:
       return (
-        <NonLogsContainer style={{ padding: '25px 60px' }}>
+        <NonLogsContainer className={cx('no-logs')}>
           <div className={cx('error-wrapper')}>
             <SystemMessage intent="danger">
               {getLogsErrorContent({
@@ -144,7 +144,7 @@ export default function LogViewConsoleManager(props) {
       );
     case STATES.NO_LOGS_AVAILABLE:
       return (
-        <NonLogsContainer style={{ padding: '25px 60px' }}>
+        <NonLogsContainer className={cx('no-logs')}>
           <SystemMessage intent={getIntentFromStepStatus(state.stepData.status)}>
             {getNoLogsContent({
               buildStatus: state.buildStatus,
@@ -176,8 +176,7 @@ export default function LogViewConsoleManager(props) {
       showDownloadBtn={state.stepData?.stopped && state.compState === STATES.RESOLVED}
       showFollowLogsBtn={state.compState === STATES.STREAM_ON}
       logsBlobName={logsBlobName}
-      showHeader={consoleProps.showHeader}
-      showFooter={consoleProps.showFooter}
+      {...consoleProps}
     />
   );
 }

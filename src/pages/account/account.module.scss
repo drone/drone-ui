@@ -1,4 +1,5 @@
 @import "styles/_variables";
+@import "styles/mixins";
 
 .header {
   padding: 0px 60px;
@@ -21,12 +22,18 @@
     text-transform: uppercase;
     text-decoration: none;
   }
+  @include sm-down {
+    padding: 0px 20px;
+  }
 }
 
 .wrapper {
   max-width: 916px;
   margin: 0 auto;
   padding-top: 80px;
+  @include sm-down {
+    padding-top: 60px;
+  }
 }
 
 .title {

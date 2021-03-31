@@ -1,3 +1,6 @@
+@import "styles/_variables";
+@import "styles/mixins";
+
 .overlay,
 .modal-wrapper {
   position: fixed;
@@ -17,6 +20,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  &.fullscreen {
+    .modal-inner {
+      border-radius: 0;
+      width: 100vw;
+      height: 100vh;
+    }
+  }
 }
 
 .modal-inner {
@@ -25,6 +35,10 @@
   background-color: #fff;
   border-radius: 6px;
   padding: 30px;
+  @include sm-down {
+    padding: 20px;
+    width: calc(100% - 40px);
+  }
 }
 
 .modal-header {
@@ -37,7 +51,6 @@
   padding-right: 0;
   padding-left: 0;
   margin-bottom: 15px;
-
   h3 {
     margin: 0;
     font-size: 20px;

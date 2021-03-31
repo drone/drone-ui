@@ -1,4 +1,4 @@
-function byRepoNameAsc(a, b) {
+export function byRepoNameAsc(a, b) {
   if (a.slug < b.slug) return -1;
   if (a.slug > b.slug) return 1;
   return 0;
@@ -9,7 +9,7 @@ function byStatus(a, b) {
   return Number(b.active) - Number(a.active);
 }
 
-function byBuildCreatedAtDesc(a, b) {
+export function byBuildCreatedAtDesc(a, b) {
   return (b.build?.created ?? 0) - (a.build?.created ?? 0);
 }
 

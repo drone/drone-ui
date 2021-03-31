@@ -4,6 +4,8 @@ import React, {
 } from 'react';
 
 import { isLicenseExceeded, isLicenseExpired } from '_constants';
+import Repos from 'components/pages/home/repos';
+import ReposRecent from 'components/pages/home/repos-recent';
 import Button from 'components/shared/button';
 import Input from 'components/shared/form/input';
 import Switch from 'components/shared/switch';
@@ -12,10 +14,9 @@ import ZeroState from 'components/shared/zero-state';
 import { AppContext } from 'context';
 import { useLocalStorage, useCustomTitle, useToast } from 'hooks';
 import { useViewer, useLatestRepos, useSyncAccount } from 'hooks/swr';
+import { byBuildCreatedAtDesc, byRepoNameAsc } from 'utils';
 
-import { Cards } from './card';
 import styles from './home.module.scss';
-import { RepoList } from './repos';
 
 const cx = classNames.bind(styles);
 
@@ -48,13 +49,13 @@ export default function Home({ user }) {
   const sorted = useMemo(
     () => filtered
       .slice(0)
-      .sort(sortByName)
+      .sort(byRepoNameAsc)
       .slice(0, showAllRepos ? filtered.length : REPOS_CHUNK_SIZE) ?? [],
     [filtered, showAllRepos],
   );
 
   const recent = useMemo(
-    () => data?.slice(0).sort(sortByBuild).filter((repo) => !!repo.build)?.slice(0, 6) ?? [],
+    () => data?.slice(0).sort(byBuildCreatedAtDesc).filter((repo) => !!repo.build)?.slice(0, 6) ?? [],
     [data],
   );
 
@@ -110,9 +111,14 @@ export default function Home({ user }) {
             />
           </div>
         </div>
-        <RepoList repos={sorted} />
+        <Repos repos={sorted} />
         {!showAllRepos && sorted.length >= REPOS_CHUNK_SIZE && (
-        <Button className={cx('btn', 'btn-show-more')} onClick={handleLoadMoreClick}>Show more &#8595;</Button>
+        <Button
+          className={cx('btn', 'btn-show-more')}
+          onClick={handleLoadMoreClick}
+        >
+          Show more &#8595;
+        </Button>
         )}
       </>
     );
@@ -174,22 +180,12 @@ export default function Home({ user }) {
       <section className={cx('wrapper')}>
         {!!recent.length && (
         <>
-          <h2 className={cx('section-title')}>Recent Activity</h2>
-          <Cards repos={recent} />
+          <h2 className={cx('section-title', 'section-title-recent')}>Recent Activity</h2>
+          <ReposRecent repos={recent} />
         </>
         )}
         {content}
       </section>
     </>
   );
-}
-
-function sortByName(a, b) {
-  if (a.slug < b.slug) return -1;
-  if (a.slug > b.slug) return 1;
-  return 0;
-}
-
-function sortByBuild(a, b) {
-  return (b.build?.created ?? 0) - (a.build?.created ?? 0);
 }

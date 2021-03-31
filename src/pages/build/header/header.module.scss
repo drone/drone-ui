@@ -9,13 +9,27 @@
   row-gap: 12px;
   padding: 19px 31px;
   padding-right: 25px;
+  @include md-down {
+    // grid-template-rows: repeat(5, minmax(28px, 1fr));
+    grid-template-rows: 28px 28px 1fr 28px;
+    grid-template-columns: 1fr;
+  }
+  @include sm-down {
+    padding: 20px;
+  }
+  @include xs-down {
+    grid-template-rows: 28px 28px 1fr 28px;
+  }
 }
 
 .breadcrumbs {
-  grid-column: 1/9;
+  grid-column: 1/5;
   grid-row: 1;
   &-inner {
     margin-bottom: 0;
+  }
+  @include md-down {
+    grid-column: 1;
   }
 }
 
@@ -49,6 +63,12 @@
       border-color: transparent;
     }
   }
+  @include md-down {
+    grid-column: 1;
+  }
+  @include sm-down {
+    display: none;
+  }
 }
 
 .meta {
@@ -65,11 +85,30 @@
   &:last-child {
     margin-left: 12px;
   }
+  @include md-down {
+    grid-row: 4;
+    grid-column: 1;
+    .controls {
+      display: none;
+    }
+  }
+  @include xs-down {
+    justify-content: flex-start;
+  }
+  + .controls {
+    display: none;
+    @include md-down {
+      display: inline-flex;
+      grid-column: 1;
+      grid-row: 1;
+      justify-self: flex-end;
+    }
+  }
 }
 
 .activity {
-  grid-column: 1/9;
   grid-row: 3;
+  grid-column: 1/9;
   display: inline-flex;
   align-items: center;
   .status {
@@ -88,6 +127,38 @@
     overflow: hidden;
     white-space: nowrap;
     border-right: 1px solid rgba(0, 0, 0, 0.2);
+  }
+  @include lg-down {
+    grid-column: 1/-1;
+  }
+  @include md-down {
+    grid-column: 1;
+    display: flex;
+    flex-flow: wrap;
+    overflow: hidden;
+    & > div:last-of-type {
+      margin-top: 12px;
+      flex: 1 1 100%;
+    }
+    .message {
+      border: none;
+    }
+  }
+  @include xs-down {
+    .message {
+      margin-right: 0;
+      max-width: 85%;
+    }
+    & > div:last-of-type {
+      display: flex;
+      flex-wrap: wrap;
+      [data-type="chunk"] {
+        flex: 1 1 100%;
+        + [data-type="chunk"] {
+          margin-top: 6px;
+        }
+      }
+    }
   }
 }
 
@@ -135,6 +206,12 @@
           fill: #9293ab;
         }
       }
+    }
+  }
+  @include md-down {
+    grid-column: 1;
+    h1 {
+      max-width: 100%;
     }
   }
 }

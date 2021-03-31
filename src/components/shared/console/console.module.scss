@@ -9,6 +9,10 @@
   display: flex;
   flex-flow: column;
   min-height: 500px;
+  @include sm-down {
+    min-height: unset;
+    height: 100vh !important;
+  }
 }
 
 .header {
@@ -31,6 +35,9 @@
     border-radius: inherit;
     background-color: inherit;
     z-index: 2;
+    @include sm-down {
+      padding: 14px 20px;
+    }
   }
   .info,
   .controls {
@@ -38,7 +45,7 @@
   }
   .controls {
     svg {
-      color: #B0B1C3;
+      color: #b0b1c3;
       width: 22px;
       height: 22px;
       transition: color 0.2s ease;
@@ -49,6 +56,12 @@
     & > * + * {
       margin-left: 20px;
       color: inherit;
+    }
+    .btn-close {
+      svg {
+        width: 16px;
+        height: 16px;
+      }
     }
   }
   .info {
@@ -80,6 +93,9 @@
   overflow-x: hidden;
   overflow-y: auto;
   flex: auto;
+  @include sm-down {
+    padding: 17px 20px;
+  }
 }
 
 .output {
@@ -101,6 +117,9 @@
   line-height: 20px;
   letter-spacing: 0.2px;
   color: #6b6d85;
+  @include sm-down {
+    padding-right: 20px;
+  }
 }
 
 .line-content {
@@ -170,7 +189,7 @@
     line-height: 32px;
     border-radius: 8px;
     padding: 0px 18px;
-    background: #4F5162;
+    background: #4f5162;
     box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.04), 0px 2px 4px rgba(0, 0, 0, 0.32);
     transition: all 0.2s ease;
     text-decoration: none;
@@ -178,15 +197,6 @@
     &:hover {
       color: #fff;
     }
-  }
-}
-
-.btn-download {
-  height: 22px;
-
-  svg {
-    width: 22px;
-    height: 22px;
   }
 }
 

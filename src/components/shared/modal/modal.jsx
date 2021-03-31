@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import React, { useRef, useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 
 import Button from 'components/shared/button';
@@ -18,14 +18,23 @@ export const useModal = () => {
 
 const Modal = ({
   isShowing, title, children, hide,
+  mode = 'default',
 }) => {
   const modalRef = useRef(null);
   useOnClickOutside(modalRef, hide);
+  useLayoutEffect(() => {
+    if (isShowing) {
+      window.document.body.style.overflow = 'hidden';
+    } else {
+      window.document.body.style.overflow = 'unset';
+    }
+    return () => window.document.body.style.oveflow = 'unset';
+  }, [isShowing]);
   if (isShowing) {
     return ReactDOM.createPortal(
       <>
         <div className={cx('overlay')} />
-        <div className={cx('modal-wrapper')} tabIndex={-1} role="dialog" aria-modal aria-hidden>
+        <div className={cx('modal-wrapper', `${mode}`)} tabIndex={-1} role="dialog" aria-modal aria-hidden>
           <div className={cx('modal-inner')} ref={modalRef}>
             <header className={cx('modal-header')}>
               <h3 className={cx('modal-title')}>{title}</h3>
