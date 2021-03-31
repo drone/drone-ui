@@ -96,7 +96,13 @@
 .content {
   color: #627386;
   display: flex;
-  flex-flow: column;
+  justify-content: space-between;
+  align-items: center;
+  @include md-down {
+    flex-flow: column;
+    justify-content: unset;
+    align-items: unset;
+  }
 }
 
 .activity {
