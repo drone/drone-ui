@@ -13,6 +13,7 @@ export const ACTION_LIST = {
   UPDATE_IS_DATA_LOADING: 'update_is_data_loading',
   UPDATE_BUILD_STATUS: 'update_build_status',
   UPDATE_STAGE_STATUS: 'update_stage_status',
+  UPDATE_STAGE_NUMBER: 'update_stage_number',
   UPDATE_STAGE_NAME: 'update_stage_name',
   UPDATE_STEP_DATA: 'update_step_data',
   UPDATE_LOGS_HOOK_ERROR: 'update_logs_hook_error',
@@ -29,6 +30,7 @@ export const logsInitFn = (props) => {
     hasBuildDebugMode,
     buildStatus,
     stageStatus,
+    stageNumber,
     stageName,
     stepData = {},
   } = props;
@@ -49,6 +51,7 @@ export const logsInitFn = (props) => {
     isDataLoading,
     stageName,
     stageStatus,
+    stageNumber,
     buildStatus,
     logsHookError: {},
     tmateLink: '',
@@ -78,6 +81,8 @@ export const logsReducer = (state, action) => {
       };
     case ACTION_LIST.UPDATE_STAGE_NAME:
       return { ...state, stageName: action.payload };
+    case ACTION_LIST.UPDATE_STAGE_NUMBER:
+      return { ...state, stageNumber: action.payload };
     case ACTION_LIST.UPDATE_IS_DATA_LOADING:
       return {
         ...state,

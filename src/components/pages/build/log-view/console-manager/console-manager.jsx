@@ -53,10 +53,10 @@ const stepDefferedLogsStates = [
 const stageDefferedLogsStates = stepDefferedLogsStates.slice(1);
 
 export default function LogViewConsoleManager(props) {
-  const { consoleProps } = props;
+  const { consoleProps, ...rest } = props;
   const params = useParams();
   /* State */
-  const [state, dispatch] = useReducer(logsReducer, props, logsInitFn);
+  const [state, dispatch] = useReducer(logsReducer, rest, logsInitFn);
   // derived
   const logsBlobName = `logs_${params.namespace}_${params.name}_${params.build}_${params.stage}_${params.step}`;
   /* Refs */
@@ -69,7 +69,11 @@ export default function LogViewConsoleManager(props) {
     dispatch,
     useLogsActionTypes,
     params,
-    state.compState !== STATES.STREAM_ON
+    state.stageNumber
+    && state.stepData?.number
+    && (params.step || 1) == state.stepData.number
+    && (params.stage || 1) == state.stageNumber
+    && state.compState !== STATES.STREAM_ON
     && !!state.stageStatus
     && !!state.stepData.status
     && !stageDefferedLogsStates.includes(state.stageStatus)
@@ -88,9 +92,6 @@ export default function LogViewConsoleManager(props) {
   // during build stage/step navigation
   useLayoutEffect(() => {
     dispatch({ type: ACTION_LIST.SET_LOGS, payload: [] });
-    return () => {
-      dispatch({ type: ACTION_LIST.SET_LOGS, payload: [] });
-    };
   }, [params.stage, params.step]);
 
   useEffect(() => {
@@ -100,6 +101,12 @@ export default function LogViewConsoleManager(props) {
   useLayoutEffect(() => {
     dispatch({ type: ACTION_LIST.UPDATE_IS_DATA_LOADING, payload: props.isDataLoading });
   }, [props.isDataLoading]);
+
+  useEffect(() => {
+    if (props.stageNumber) {
+      dispatch({ type: ACTION_LIST.UPDATE_STAGE_NUMBER, payload: props.stageNumber });
+    }
+  }, [props.stageNumber]);
 
   useEffect(() => {
     if (props.stageStatus) {
@@ -187,6 +194,7 @@ LogViewConsoleManager.propTypes = {
   hasBuildDebugMode: PropTypes.bool,
   buildStatus: PropTypes.string,
   stageStatus: PropTypes.string,
+  stageNumber: PropTypes.number,
   stageName: PropTypes.string,
   stepData: PropTypes.shape({
     status: PropTypes.string,
@@ -207,6 +215,7 @@ LogViewConsoleManager.defaultProps = {
   buildStatus: '',
   stageStatus: '',
   stageName: '',
+  stageNumber: 0,
   consoleProps: {
     showHeader: true,
     showFooter: true,
