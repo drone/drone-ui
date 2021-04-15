@@ -72,7 +72,7 @@ const PromoteActivity = (props) => console.log(props) || (
     </div>
     <div className={cx('chunk')} data-type="chunk">
       <span>promoted build</span>
-      {wrapBuildLink(<BuildLabel className={cx('label')} build={props.number} />, props)}
+      {wrapBuildLink(<BuildLabel className={cx('label')} build={props.parent} />, props)}
     </div>
     <div className={cx('chunk')} data-type="chunk">
       <span>to</span>
