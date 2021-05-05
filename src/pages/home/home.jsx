@@ -3,13 +3,11 @@ import React, {
   useEffect, useState, useMemo, useContext,
 } from 'react';
 
-import { isLicenseExceeded, isLicenseExpired } from '_constants';
 import Repos from 'components/pages/home/repos';
 import ReposRecent from 'components/pages/home/repos-recent';
 import Button from 'components/shared/button';
 import Input from 'components/shared/form/input';
 import Switch from 'components/shared/switch';
-import SystemMessage from 'components/shared/system-message';
 import ZeroState from 'components/shared/zero-state';
 import { AppContext } from 'context';
 import { useLocalStorage, useCustomTitle, useToast } from 'hooks';
@@ -147,36 +145,6 @@ export default function Home({ user }) {
           {(isSyncing || hasSyncReqFiredOff) ? 'Syncing' : 'Sync'}
         </button>
       </header>
-      <div
-        className={cx('system-messages-wrapper')}
-        hidden={!isLicenseExceeded && !isLicenseExpired}
-      >
-        {isLicenseExpired && (
-        <SystemMessage intent="danger" className={cx('message-with-link')}>
-          Your Server License is Expired.
-          <a
-            href="https://docs.drone.io/license-is-expired"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn more
-
-          </a>
-        </SystemMessage>
-        )}
-        {isLicenseExceeded && (
-        <SystemMessage intent="danger" className={cx('message-with-link')}>
-          Your License Limit is Exceeded.
-          <a
-            href="https://docs.drone.io/license-is-exceeded"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn more
-          </a>
-        </SystemMessage>
-        )}
-      </div>
       <section className={cx('wrapper')}>
         {!!recent.length && (
         <>

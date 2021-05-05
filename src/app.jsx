@@ -7,6 +7,7 @@ import { SWRConfig } from 'swr';
 
 import { VISIBILITY_LEVELS } from '_constants';
 import Sidebar from 'components/shared/sidebar';
+import License from 'pages/license';
 import { AppContextProvider, AppContext } from 'context';
 import { useRecentBuilds, useStreamBuildEvents, useViewer } from 'hooks/swr';
 import { Layouts } from 'layouts';
@@ -56,6 +57,7 @@ export default function App() {
                     </Route>
                     <Route path={'/*'}>
                       <Sidebar user={user} />
+                      <License />
                     </Route>
                   </Switch>
 

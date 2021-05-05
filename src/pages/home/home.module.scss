@@ -121,11 +121,13 @@
 }
 
 .system-messages-wrapper {
-  padding: 0 60px;
-  margin-top: 26px;
-  & > * + * {
-    margin-top: 26px;
-  }
+  position: fixed;
+  bottom: 30px;
+  left: 125px;
+  right: 60px;
+  z-index: 999;
+  user-select: none;
+
   .message-with-link {
     a {
       margin-left: 10px;
@@ -137,6 +139,11 @@
         opacity: 0.9;
       }
     }
+  }
+
+  @media only screen and (max-width: 750px) {
+    left: 20px;
+    right: 20px;
   }
 }
 
