@@ -9,6 +9,7 @@ import Deployments from 'pages/deployments';
 import Home from 'pages/home';
 import Login from 'pages/login';
 import NotFound from 'pages/not-found';
+import Register from 'pages/register';
 import Repo from 'pages/repo';
 import Settings from 'pages/settings';
 import SettingsAdmin from 'pages/settings-admin';
@@ -23,6 +24,7 @@ export const Routes = {
   Login: (props) => <p>Redirecting to Github Auth...</p>,
   Logout: (props) => <RouteGuard component={Welcome} {...props} />,
   LoginError: (props) => <RouteGuard component={Welcome} {...props} />,
+  Register: (props) => <RouteGuard component={Register} {...props} />,
   Account: (props) => <RouteGuard component={Account} {...props} />,
   // @TODO: add a proper admin settings page
   Admin: (props) => <RouteGuard component={() => <h1>Admin Settings</h1>} {...props} />,

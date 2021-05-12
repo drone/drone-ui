@@ -51,7 +51,7 @@ export default function App() {
               <>
                 <Layouts.Base>
                   <Switch>
-                    <Route path={['/welcome', '/login/form', '/login/error', '/logout']} exact />
+                    <Route path={['/welcome', '/login/form', '/login/error', '/logout', '/register']} exact />
                     <Route path={['/settings*']} exact>
                       <Sidebar user={user} />
                     </Route>
@@ -72,6 +72,13 @@ export default function App() {
                     />
                     <Routes.Welcome
                       path="/welcome"
+                      componentProps={{
+                        user,
+                      }}
+                      exact
+                    />
+                    <Routes.Register
+                      path="/register"
                       componentProps={{
                         user,
                       }}
