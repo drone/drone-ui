@@ -22,7 +22,7 @@ export default function NotFound({ user }) {
           <span>We are sorry, the resource you requested cannot be found.</span>
           <sub>That's all we know.</sub>
         </p>
-        {user && (
+        {!user && (
           <Button
             as="link"
             to="/welcome"

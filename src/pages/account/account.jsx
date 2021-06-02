@@ -62,7 +62,7 @@ export default function Account() {
         },
         api: {
           copied: false,
-          snippet: [`curl -i ${instance}/api/user`, `-H "Authorization: Bearer ${data.token}"`],
+          snippet: [`curl -i ${instance}/api/user \\`, `-H "Authorization: Bearer ${data.token}"`],
         },
         cli: {
           copied: false,
