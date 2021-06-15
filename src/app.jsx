@@ -9,7 +9,7 @@ import { VISIBILITY_LEVELS } from '_constants';
 import Sidebar from 'components/shared/sidebar';
 import License from 'pages/license';
 import { AppContextProvider, AppContext } from 'context';
-import { useRecentBuilds, useStreamBuildEvents, useViewer } from 'hooks/swr';
+import { useStreamBuildEvents, useViewer } from 'hooks/swr';
 import { Layouts } from 'layouts';
 import { axiosWrapper } from 'utils';
 import 'react-toastify/dist/ReactToastify.min.css';
@@ -37,7 +37,6 @@ const GlobalRequestWrapper = ({ render }) => {
   }, [data, context, setContext]);
 
   useStreamBuildEvents();
-  useRecentBuilds(!!data);
   return isLoading ? null : render({ user: data });
 };
 

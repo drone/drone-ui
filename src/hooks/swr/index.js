@@ -1,5 +1,5 @@
 import {
-  useBuild, useBuilds, useRecentBuilds, useStreamBuildEvents,
+  useBuild, useBuilds, useStreamBuildEvents,
 } from './builds';
 import { useLogs, useStreamLogs } from './logs';
 import { useRepo, useLatestRepos } from './repo';
@@ -15,7 +15,6 @@ export {
   useSyncAccount,
   useBuild,
   useBuilds,
-  useRecentBuilds,
   useBranches,
   useDeployments,
   useRepo,

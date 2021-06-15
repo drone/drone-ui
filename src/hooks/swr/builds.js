@@ -42,35 +42,6 @@ const useBuilds = ({ namespace, name }, swrOptions = {}) => {
   };
 };
 
-const useRecentBuilds = (shouldFetch) => {
-  const {
-    data, isLoading, isError, mutate,
-  } = useSWRBase(shouldFetch ? '/api/user/builds/recent' : null);
-  const { setFaviconStateTo } = useFavicon();
-  const { pathname } = useLocation();
-  const [namespace, name] = pathname.split('/').filter(Boolean);
-
-  const runningBuilds = useMemo(() => {
-    const builds = data?.map(({ build, slug }) => ({ ...build, slug })).filter(({ status }) => status === 'running') ?? [];
-    return builds;
-  }, [data]);
-
-  useEffect(() => {
-    if (runningBuilds.length && runningBuilds.some((build) => build.slug === `${namespace}/${name}`)) {
-      setFaviconStateTo(FAVICON_STATES.RUNNING);
-    } else {
-      setFaviconStateTo(FAVICON_STATES.DEFAULT);
-    }
-  }, [runningBuilds, setFaviconStateTo, namespace, name]);
-
-  return {
-    data: runningBuilds,
-    isLoading,
-    isError,
-    mutate,
-  };
-};
-
 const useBuild = ({ namespace, name, build }) => useSWRBase(`/api/repos/${namespace}/${name}/builds/${build}`);
 
 /* useStreamBuildEvents helpers */
@@ -101,33 +72,6 @@ const updateLatestRepos = (repo) => async (latest) => {
     }
     return latest.slice(0, repoIndexInLatest).concat(repo, latest.slice(repoIndexInLatest + 1));
   }
-};
-
-// recent builds updater
-const updateRecentRepos = (repo) => async (recent) => {
-  // if there is no cache data,
-  // add this build to builds feed
-  if (!Array.isArray(recent) || !recent.length) {
-    return [repo];
-  }
-  // if there is, check if recent includes matching repo
-  const foundIndex = recent
-    .findIndex(
-      (repoEntity) => repo.id === repoEntity.id && repo.build.id === repoEntity.build.id,
-    );
-  // check the build state
-  const isFinished = repo.build.finished || repo.build.status === 'declined';
-  if (foundIndex >= 0) {
-    if (isFinished) {
-      // remove from recent builds if build is finished
-      return recent.filter(({ id }) => id !== repo.id);
-    } if (!foundIndex) {
-      return [repo].concat(recent.slice(1));
-    }
-    // add to recent builds otherwise
-    return recent.slice(0, foundIndex).concat(repo, recent.slice(foundIndex + 1));
-  }
-  return recent.concat(repo);
 };
 
 // activity feed updater
@@ -224,8 +168,9 @@ const useStreamBuildEvents = () => {
       default:
     }
 
-    mutateGlobal('/api/user/repos?latest=true', updateLatestRepos(repo), false);
-    mutateGlobal('/api/user/builds/recent', updateRecentRepos(repo), false);
+    requestAnimationFrame(() => {
+      mutateGlobal('/api/user/repos?latest=true', updateLatestRepos(repo), false);
+    });
   };
 
   useEffect(() => {
@@ -238,5 +183,5 @@ const useStreamBuildEvents = () => {
 };
 
 export {
-  useBuilds, useRecentBuilds, useBuild, useStreamBuildEvents,
+  useBuilds, useBuild, useStreamBuildEvents,
 };
