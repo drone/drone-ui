@@ -76,11 +76,12 @@ const useBuild = ({ namespace, name, build }) => useSWRBase(`/api/repos/${namesp
 /* useStreamBuildEvents helpers */
 
 // pages that are sensitive to build events updates
+// TODO WTF is this code
 const streamDependants = [
   { regex: new RegExp(/^\/$/), page: 'Home' },
   { regex: new RegExp(/^\/builds-feed$/), page: 'BuildsFeed' },
-  { regex: new RegExp(/^\/[a-z0-9-]+?\/[a-z0-9-]+?$/), page: 'Builds' },
-  { regex: new RegExp(/^\/[a-z0-9-]+?\/[a-z0-9-]+?\/[0-9]+?(\/[0-9]+?\/[0-9]+?)?$/), page: 'Build' },
+  { regex: new RegExp(/^\/[a-zA-Z0-9-_.]+?\/[a-zA-Z0-9-_.]+?$/), page: 'Builds' },
+  { regex: new RegExp(/^\/[a-zA-Z0-9-_.]+?\/[a-zA-Z0-9-_.]+?\/[0-9]+?(\/[0-9]+?\/[0-9]+?)?$/), page: 'Build' },
 ];
 
 // latest repos updater
