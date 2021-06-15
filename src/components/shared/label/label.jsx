@@ -7,6 +7,7 @@ import { ReactComponent as Number } from 'svg/scm/number.svg';
 import { ReactComponent as PullRequest } from 'svg/scm/pr.svg';
 import { ReactComponent as Tag } from 'svg/scm/tag.svg';
 import { ReactComponent as Box } from 'svg/scm/box.svg';
+import { ReactComponent as Clock } from 'svg/clock.svg';
 
 import styles from './label.module.scss';
 
@@ -113,6 +114,21 @@ export const EnvironmentLabel = ({ className, environment }) => {
     <div className={cx('root', className || '')}>
       <Box />
       {environment}
+    </div>
+  );
+};
+
+/**
+ * CronLabel renders a label for a cron execution.
+ * @param {object} props Component props
+ * @param {string} props.className
+ * @param {string} props.name
+ */
+export const CronLabel = ({ className, name }) => {
+  return (
+    <div className={cx('root', className || '')}>
+      <Clock />
+      {name}
     </div>
   );
 };

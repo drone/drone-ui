@@ -3,6 +3,7 @@ export {
   BranchLabel,
   BuildLabel,
   CommitLabel,
+  CronLabel,
   EnvironmentLabel,
   PullRequestLabel,
   TagLabel,

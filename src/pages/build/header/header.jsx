@@ -129,6 +129,8 @@ const Header = (props) => {
               branch={data.target}
               target={data.deploy_to}
               refs={data.ref}
+              cron={data.cron}
+              parent={build.parent}
               deeplink
             />
           </div>

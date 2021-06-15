@@ -5,6 +5,7 @@ import React from 'react';
 import Avatar from 'components/shared/avatar';
 import {
   CommitLabel,
+  CronLabel,
   BranchLabel,
   BuildLabel,
   EnvironmentLabel,
@@ -93,7 +94,19 @@ const RollbackActivity = (props) => (
     </div>
     <div className={cx('chunk')} data-type="chunk">
       <span>to build</span>
-      {wrapBuildLink(<BuildLabel className={cx('label')} build={props.number} />, props)}
+      {wrapBuildLink(<BuildLabel className={cx('label')} build={props.parent} />, props)}
+    </div>
+  </div>
+);
+
+const CronActivity = (props) => (
+  <div className={cx('activity', props.className || '')}>
+    <div className={cx('chunk')} data-type="chunk">
+      <Avatar path={props.avatar} alt={props.actor} text={props.actor} className={cx('avatar')} />
+    </div>
+    <div className={cx('chunk')} data-type="chunk">
+      <span>executed scheduled task</span>
+      <CronLabel className={cx('label')} name={props.cron} />
     </div>
   </div>
 );
@@ -129,6 +142,8 @@ const SimpleActivity = (props) => {
       return PromoteActivity(props);
     case 'rollback':
       return RollbackActivity(props);
+    case 'cron':
+      return CronActivity(props);
     default:
       return PushActivity(props);
   }

@@ -39,6 +39,8 @@ const BuildList = (props) => {
                     commit={build.after}
                     branch={build.target}
                     target={build.deploy_to}
+                    parent={build.parent}
+                    cron={build.cron}
                     refs={build.ref}
                   />
                   <div className={cx('timing')}>
