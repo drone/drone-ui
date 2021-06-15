@@ -65,7 +65,7 @@ const TagActivity = (props) => (
   </div>
 );
 
-const PromoteActivity = (props) => console.log(props) || (
+const PromoteActivity = (props) => (
   <div className={cx('activity', props.className || '')}>
     <div className={cx('chunk')} data-type="chunk">
       <Avatar path={props.avatar} alt={props.actor} text={props.actor} className={cx('avatar')} />
