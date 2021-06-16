@@ -56,9 +56,9 @@ const streamDependants = [
 ];
 
 // latest repos updater
-const updateLatestRepos = (repo) => async (latest) => {
+const updateLatestRepos = (repo) => (latest) => {
   // if there is no data in cache, do nothing
-  if (!Array.isArray(latest) || !latest.length) {
+  if (!latest || !Array.isArray(latest) || !latest.length) {
     return latest;
   }
   const repoIndexInLatest = latest.findIndex(({ id }) => repo.id === id);
