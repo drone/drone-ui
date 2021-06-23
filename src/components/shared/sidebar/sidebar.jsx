@@ -92,7 +92,9 @@ export default function Sidebar(props) {
           {bottomPart}
         </nav>
       </aside>
-      <SearchDrawer isShown={isSearchDrawerShown} hide={hideSearchDrawer} />
+      {!!user ? (
+        <SearchDrawer isShown={isSearchDrawerShown} hide={hideSearchDrawer} />
+      ) : undefined}
     </>
   );
 }
