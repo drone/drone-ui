@@ -1,12 +1,12 @@
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react'; // eslint-disable-line
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 
 import Button from 'components/shared/button';
 import { useOnClickOutside } from 'hooks';
-import { useLatestRepos } from 'hooks/swr';
+import { useStore } from 'hooks/store';
 import { ReactComponent as ArrowBack } from 'svg/arrow.svg';
 import { ReactComponent as SearchIcon } from 'svg/search.svg';
 import { searchRepos, sortRepos } from 'utils';
@@ -41,7 +41,10 @@ SearchCard.propTypes = {
 };
 
 const SearchDrawer = ({ isShown, hide }) => {
-  const { data } = useLatestRepos(true);
+  const { repos, reloadOnce } = useStore();
+  const data = useMemo(() => !!repos ? Object.values(repos) : undefined, [repos]);
+  useEffect(() => reloadOnce(), [reloadOnce]);
+
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
 

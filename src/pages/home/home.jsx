@@ -3,6 +3,7 @@ import React, {
   useEffect, useState, useMemo, useContext,
 } from 'react';
 
+import { useStore } from 'hooks/store';
 import Repos from 'components/pages/home/repos';
 import ReposRecent from 'components/pages/home/repos-recent';
 import Button from 'components/shared/button';
@@ -11,7 +12,7 @@ import Switch from 'components/shared/switch';
 import ZeroState from 'components/shared/zero-state';
 import { AppContext } from 'context';
 import { useLocalStorage, useCustomTitle, useToast } from 'hooks';
-import { useViewer, useLatestRepos, useSyncAccount } from 'hooks/swr';
+import { useViewer, useSyncAccount } from 'hooks/swr';
 import { byBuildCreatedAtDesc, byRepoNameAsc } from 'utils';
 
 import styles from './home.module.scss';
@@ -30,9 +31,12 @@ export default function Home({ user }) {
   const { showError } = useToast();
   const { hasSyncReqFiredOff, isError: syncError } = useSyncAccount(shouldStartSync);
 
-  const { data, isLoading, mutate } = useLatestRepos(!!user);
   const { isSynced, isSyncing, isError: viewerError } = useViewer({ withPolling: hasSyncReqFiredOff });
 
+  const { repos, error, reload, reloadOnce } = useStore(); // eslint-disable-line
+  const data = !!repos ? Object.values(repos) : undefined;
+  const isLoading = !data && !error;
+  useEffect(() => reloadOnce(), [reloadOnce]);
   useCustomTitle();
 
   const [filter, setFilter] = useState('');
@@ -68,12 +72,12 @@ export default function Home({ user }) {
   useEffect(() => {
     if (isSynced) {
       setShouldStartSync(false);
-      mutate();
+      reload();
       if (context.isAccSyncing) {
         setContext({ ...context, isAccSyncing: false });
       }
     }
-  }, [isSynced, context, setContext, mutate]);
+  }, [isSynced, context, setContext, reload]);
 
   const handleSyncClick = () => setShouldStartSync(true);
 

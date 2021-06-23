@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom';
 import {
   useSWRInfinite, mutate as mutateGlobal,
 } from 'swr';
+import { useStore } from 'hooks/store';
 
 import { instance, token, FAVICON_STATES } from '_constants';
 import { useFavicon } from 'hooks';
@@ -139,6 +140,7 @@ const updateBuild = (location, repo) => {
 
 // hook body
 const useStreamBuildEvents = () => {
+  const { update } = useStore();
   const [, setState] = useState();
   const forceRerender = useCallback(
     () => {
@@ -170,6 +172,7 @@ const useStreamBuildEvents = () => {
 
     requestAnimationFrame(() => {
       mutateGlobal('/api/user/repos?latest=true', updateLatestRepos(repo), false);
+      update(repo);
     });
   };
 
@@ -179,7 +182,7 @@ const useStreamBuildEvents = () => {
     eventSource.onmessage = handleEventSourceMessage;
     eventSource.onerror = forceRerender;
     return () => eventSource.close();
-  }, [forceRerender]);
+  }, [forceRerender]); // eslint-disable-line
 };
 
 export {
