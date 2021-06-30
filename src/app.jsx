@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 import {
-  Route, BrowserRouter, Switch,
+  Route, BrowserRouter, Switch, useLocation, Redirect,
 } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { SWRConfig } from 'swr';
@@ -41,6 +41,7 @@ const GlobalRequestWrapper = ({ render }) => {
 };
 
 export default function App() {
+  const { pathname } = useLocation();
   return (
     <React.StrictMode>
       <SWRConfig value={swrConfig}>
@@ -61,6 +62,7 @@ export default function App() {
                   </Switch>
 
                   <Switch>
+                    <Redirect from="/:url*(/+)" to={pathname.slice(0, -1)} />
                     <Routes.Home
                       path="/"
                       componentProps={{
