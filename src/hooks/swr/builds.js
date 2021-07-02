@@ -170,10 +170,8 @@ const useStreamBuildEvents = () => {
       default:
     }
 
-    requestAnimationFrame(() => {
-      mutateGlobal('/api/user/repos?latest=true', updateLatestRepos(repo), false);
-      update(repo);
-    });
+    mutateGlobal('/api/user/repos?latest=true', updateLatestRepos(repo), false);
+    update(repo);
   };
 
   useEffect(() => {

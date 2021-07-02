@@ -37,6 +37,15 @@ export default function Home({ user }) {
             >
               Learn more
             </a>
+            or
+            <a
+              href="https://drone.io/enterprise"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Purchase License
+
+            </a>
           </SystemMessage>
         </div>
       )}
