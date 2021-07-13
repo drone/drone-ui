@@ -127,20 +127,37 @@ export default function LogViewConsoleManager(props) {
   switch (state.compState) {
     case STATES.ERROR:
       return (
-        <NonLogsContainer className={cx('no-logs')}>
-          <div className={cx('error-wrapper')}>
-            <SystemMessage intent="danger">
-              {getLogsErrorContent({
-                buildStatus: state.buildStatus,
-                stageStatus: state.stageStatus,
-                stageName: state.stageName,
-                stepName: state.stepData.name,
-                stepError: state.stepData.error,
-                logsHookError: state.logsHookError,
-              })}
-            </SystemMessage>
-          </div>
-        </NonLogsContainer>
+        <div>
+          <NonLogsContainer className={cx('no-logs')}>
+            <div className={cx('error-wrapper')}>
+              <SystemMessage intent="danger">
+                {getLogsErrorContent({
+                  buildStatus: state.buildStatus,
+                  stageStatus: state.stageStatus,
+                  stageName: state.stageName,
+                  stepName: state.stepData.name,
+                  stepError: state.stepData.error,
+                  logsHookError: state.logsHookError,
+                })}
+              </SystemMessage>
+            </div>
+          </NonLogsContainer>
+          <Console
+            ref={dynamicHeightRef}
+            height={dynamicHeight}
+            shownLogsLimit={LOGS_LIMIT}
+            tmateLink={state.tmateLink}
+            logs={state.logs}
+            showLogsLoadingLine={state.compState === STATES.LOADING
+              || (state.compState === STATES.STREAM_ON && !state.logs.length)}
+            areLogsLoading={state.compState === STATES.LOADING}
+            stepData={state.stepData}
+            showDownloadBtn={state.stepData?.stopped && state.compState === STATES.RESOLVED}
+            showFollowLogsBtn={state.compState === STATES.STREAM_ON}
+            logsBlobName={logsBlobName}
+            {...consoleProps}
+          />
+        </div>
       );
     case STATES.NO_LOGS_AVAILABLE:
       return (
@@ -170,7 +187,7 @@ export default function LogViewConsoleManager(props) {
       tmateLink={state.tmateLink}
       logs={state.logs}
       showLogsLoadingLine={state.compState === STATES.LOADING
-      || (state.compState === STATES.STREAM_ON && !state.logs.length)}
+        || (state.compState === STATES.STREAM_ON && !state.logs.length)}
       areLogsLoading={state.compState === STATES.LOADING}
       stepData={state.stepData}
       showDownloadBtn={state.stepData?.stopped && state.compState === STATES.RESOLVED}
