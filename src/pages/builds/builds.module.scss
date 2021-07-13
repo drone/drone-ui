@@ -2,7 +2,7 @@
 @import "styles/mixins";
 
 .wrapper {
-  padding-top: 54px;
+  padding-top: 0px;
   max-width: 1700px;
   margin: 0px auto;
   @include sm-down {
@@ -42,5 +42,42 @@
     color: #0092e4;
     box-shadow: none;
     text-transform: capitalize;
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-top: 5px;
+  & > * + * {
+    margin-left: 24px;
+  }
+
+  @include md-down {
+      flex: 1 1 100%;
+      padding: 10px 0px;
+      & > * + * {
+        margin-left: 0;
+        margin-top: 12px;
+      }
+      flex-flow: column;
+      justify-content: center;
+      align-items: flex-end;
+  }
+}
+
+
+
+.select {
+  padding: 8px 12px 8px 34px;
+  font-size: 14px;
+
+  @include md-down {
+    padding: 0;
+    width: 100%;
+    input {
+      width: 100% !important;
+    }
   }
 }
