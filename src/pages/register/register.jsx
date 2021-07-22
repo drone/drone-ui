@@ -42,7 +42,7 @@ export default function LoginForm() {
           <DroneLogo />
         </div>
         <div className={cx('header')}>
-          <h1 className={cx('title')}>Complete your Drone Regstration.</h1>
+          <h1 className={cx('title')}>Complete your Drone Registration.</h1>
         </div>
         <Form className={cx('form')} onSubmit={(e) => e.preventDefault()}>
           <FormSection>
