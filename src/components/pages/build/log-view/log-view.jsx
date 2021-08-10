@@ -86,7 +86,7 @@ LogView.propTypes = {
       status: PropTypes.string,
       name: PropTypes.string,
       error: PropTypes.string,
-      steps: PropTypes.arrayOf(),
+      steps: PropTypes.arrayOf(PropTypes.shape),
     })),
   }).isRequired,
 };
