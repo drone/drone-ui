@@ -19,12 +19,12 @@ export const getLogsErrorContent = ({
 }) => {
   if (stageStatus === 'skipped') {
     return `${stageName}: Skipped`;
-  } if (stageStatus === 'error') {
-    return `${stageName}: ${stepName} - Error`;
   } if (stageStatus === 'killed') {
     return `${stageName}: ${stepName} - Killed (Cancelled)`;
   } if (stepError) {
     return `${stepName}: ${stepError}`;
+  } if (stageStatus === 'error') {
+    return `${stageName}: ${stepName} - Error`;
   } if (logsHookError) {
     if (logsHookError.message === 'sql: no rows in result set') {
       return buildStatus === 'killed' ? 'This pipeline was cancelled' : 'Step does not exist';
@@ -36,7 +36,7 @@ export const getLogsErrorContent = ({
 };
 
 export const getNoLogsContent = ({
-  buildStatus, stageName, stepName, stepStatus, stageStatus,
+  buildStatus, stageName, stepName, stepStatus, stageStatus, stageError,
 }) => {
   if (buildStatus === 'declined') {
     return 'This pipeline was declined';
@@ -44,6 +44,8 @@ export const getNoLogsContent = ({
   const message = [stageName];
   if (stepName) {
     message.push(`- ${stepName}: ${stepStatus}`);
+  } else if (stageError) {
+    message.push(`: ${stageError}`);
   } else {
     message.push(`: ${stageStatus}`);
   }

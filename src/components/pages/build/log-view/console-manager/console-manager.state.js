@@ -14,6 +14,7 @@ export const ACTION_LIST = {
   UPDATE_BUILD_STATUS: 'update_build_status',
   UPDATE_STAGE_STATUS: 'update_stage_status',
   UPDATE_STAGE_NAME: 'update_stage_name',
+  UPDATE_STAGE_ERROR: 'update_stage_error',
   UPDATE_STEP_DATA: 'update_step_data',
   UPDATE_LOGS_HOOK_ERROR: 'update_logs_hook_error',
   UPDATE_LOGS: 'update_logs',
@@ -30,6 +31,7 @@ export const logsInitFn = (props) => {
     buildStatus,
     stageStatus,
     stageName,
+    stageError,
     stepData = {},
   } = props;
   let initialCompState = STATES.LOADING;
@@ -49,6 +51,7 @@ export const logsInitFn = (props) => {
     isDataLoading,
     stageName,
     stageStatus,
+    stageError,
     buildStatus,
     logsHookError: {},
     tmateLink: '',
@@ -123,7 +126,8 @@ export const logsReducer = (state, action) => {
       return {
         ...state,
         logs: action.payload,
-        compState: !action.payload.length && state.compState !== STATES.LOADING ? STATES.NO_LOGS_AVAILABLE : state.compState,
+        compState: !action.payload.length && state.compState !== STATES.LOADING
+          ? STATES.NO_LOGS_AVAILABLE : state.compState,
       };
     case ACTION_LIST.UPDATE_ARE_LOGS_LOADING:
       return {
@@ -137,6 +141,13 @@ export const logsReducer = (state, action) => {
               currentCompState: state.compState,
             },
           ),
+      };
+    case ACTION_LIST.UPDATE_STAGE_ERROR:
+      return {
+        ...state,
+        stageError: state.compState === STATES.NO_LOGS_AVAILABLE ? action.payload : undefined,
+        compState: !action.payload.length && state.compState !== STATES.LOADING
+          ? STATES.NO_LOGS_AVAILABLE : state.compState,
       };
     default:
       return state;

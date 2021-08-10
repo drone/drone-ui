@@ -5,7 +5,7 @@ import React, {
 } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { LOGS_LIMIT, STATES } from '_constants';
+import { LOGS_LIMIT, STATES, STEP_STATES } from '_constants';
 import Console from 'components/shared/console';
 import SystemMessage from 'components/shared/system-message';
 import { useDynamicHeight } from 'hooks';
@@ -53,7 +53,9 @@ const stepDefferedLogsStates = [
 const stageDefferedLogsStates = stepDefferedLogsStates.slice(1);
 
 export default function LogViewConsoleManager(props) {
-  const { consoleProps } = props;
+  const {
+    consoleProps, hasBuildDebugMode, isDataLoading, stageStatus, stageName, stepData, buildStatus, stageError
+  } = props;
   const params = useParams();
   /* State */
   const [state, dispatch] = useReducer(logsReducer, props, logsInitFn);
@@ -94,70 +96,79 @@ export default function LogViewConsoleManager(props) {
   }, [params.stage, params.step]);
 
   useEffect(() => {
-    dispatch({ type: ACTION_LIST.UPDATE_HAS_BUILD_DEBUG_MODE, payload: props.hasBuildDebugMode });
-  }, [props.hasBuildDebugMode]);
+    dispatch({ type: ACTION_LIST.UPDATE_HAS_BUILD_DEBUG_MODE, payload: hasBuildDebugMode });
+  }, [hasBuildDebugMode]);
 
   useLayoutEffect(() => {
-    dispatch({ type: ACTION_LIST.UPDATE_IS_DATA_LOADING, payload: props.isDataLoading });
-  }, [props.isDataLoading]);
+    dispatch({ type: ACTION_LIST.UPDATE_IS_DATA_LOADING, payload: isDataLoading });
+  }, [isDataLoading]);
 
   useEffect(() => {
-    if (props.stageStatus) {
-      dispatch({ type: ACTION_LIST.UPDATE_STAGE_STATUS, payload: props.stageStatus });
+    if (stageStatus) {
+      dispatch({ type: ACTION_LIST.UPDATE_STAGE_STATUS, payload: stageStatus });
     }
-  }, [props.stageStatus]);
+  }, [stageStatus]);
 
   useEffect(() => {
-    if (props.stageName) {
-      dispatch({ type: ACTION_LIST.UPDATE_STAGE_NAME, payload: props.stageName });
+    if (stageName) {
+      dispatch({ type: ACTION_LIST.UPDATE_STAGE_NAME, payload: stageName });
     }
-  }, [props.stageName]);
+  }, [stageName]);
 
   useEffect(() => {
-    dispatch({ type: ACTION_LIST.UPDATE_STEP_DATA, payload: props.stepData });
-  }, [props.stepData]);
+    dispatch({ type: ACTION_LIST.UPDATE_STEP_DATA, payload: stepData });
+  }, [stepData]);
 
   useEffect(() => {
-    if (props.buildStatus) {
-      dispatch({ type: ACTION_LIST.UPDATE_BUILD_STATUS, payload: props.buildStatus });
+    if (buildStatus) {
+      dispatch({ type: ACTION_LIST.UPDATE_BUILD_STATUS, payload: buildStatus });
     }
-  }, [props.buildStatus]);
+  }, [buildStatus]);
 
+  useEffect(() => {
+    if (stageError) {
+      dispatch({ type: ACTION_LIST.UPDATE_STAGE_ERROR, payload: stageError });
+    }
+  }, [stageError]);
+
+  if (state?.stepData?.status === STEP_STATES.ERROR) {
+    return (
+      <NonLogsContainer className={cx('no-logs')}>
+        <div className={cx('error-wrapper')}>
+          <SystemMessage intent="danger">
+            {getLogsErrorContent({
+              buildStatus: state.buildStatus,
+              stageStatus: state.stageStatus,
+              stageName: state.stageName,
+              stepName: state.stepData.name,
+              stepError: state.stepData.error,
+              logsHookError: state.logsHookError,
+            })}
+          </SystemMessage>
+        </div>
+      </NonLogsContainer>
+    );
+  }
   // render state switch statement
-  switch (state.compState) {
-    case STATES.ERROR:
-      return (
-        <NonLogsContainer className={cx('no-logs')}>
-          <div className={cx('error-wrapper')}>
-            <SystemMessage intent="danger">
-              {getLogsErrorContent({
-                buildStatus: state.buildStatus,
-                stageStatus: state.stageStatus,
-                stageName: state.stageName,
-                stepName: state.stepData.name,
-                stepError: state.stepData.error,
-                logsHookError: state.logsHookError,
-              })}
-            </SystemMessage>
-          </div>
-        </NonLogsContainer>
-      );
+  switch (state?.compState) {
     case STATES.NO_LOGS_AVAILABLE:
       return (
         <NonLogsContainer className={cx('no-logs')}>
-          <SystemMessage intent={getIntentFromStepStatus(state.stepData.status)}>
+          <SystemMessage intent={getIntentFromStepStatus(state.stageStatus)}>
             {getNoLogsContent({
               buildStatus: state.buildStatus,
               stageStatus: state.stageStatus,
               stageName: state.stageName,
               stepName: state.stepData.name,
               stepStatus: state.stepData.status,
+              stageError: state.stageError,
             })}
           </SystemMessage>
         </NonLogsContainer>
       );
     case STATES.IDLE:
       return null;
+    case STATES.ERROR:
     case STATES.STREAM_ON:
     case STATES.RESOLVED:
     default:
@@ -187,6 +198,7 @@ LogViewConsoleManager.propTypes = {
   buildStatus: PropTypes.string,
   stageStatus: PropTypes.string,
   stageName: PropTypes.string,
+  stageError: PropTypes.string,
   stepData: PropTypes.shape({
     status: PropTypes.string,
     error: PropTypes.string,
@@ -200,14 +212,25 @@ LogViewConsoleManager.propTypes = {
   }),
 };
 
+NonLogsContainer.propTypes = {
+  className: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+  style: PropTypes.string,
+};
+
 LogViewConsoleManager.defaultProps = {
   stepData: {},
   hasBuildDebugMode: false,
   buildStatus: '',
   stageStatus: '',
   stageName: '',
+  stageError: undefined,
   consoleProps: {
     showHeader: true,
     showFooter: true,
   },
+};
+
+NonLogsContainer.defaultProps = {
+  style: undefined,
 };

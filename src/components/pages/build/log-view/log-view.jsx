@@ -1,4 +1,5 @@
 import classNames from 'classnames/bind';
+import PropTypes from 'prop-types';
 import React, { useCallback, useState, useLayoutEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -20,7 +21,9 @@ const LogView = (props) => {
   } = props;
   const [isModalShowing, toggleModal] = useModal();
   const [shouldHandleStepClick, setShouldHandleStepClick] = useState(false);
-  const handleStepClick = useCallback(() => (shouldHandleStepClick ? toggleModal() : {}), [shouldHandleStepClick, toggleModal]);
+  const handleStepClick = useCallback(
+    () => (shouldHandleStepClick ? toggleModal() : {}), [shouldHandleStepClick, toggleModal],
+  );
 
   useLayoutEffect(() => {
     if (window.innerWidth < 768) {
@@ -45,6 +48,7 @@ const LogView = (props) => {
               buildStatus={data?.status}
               stageStatus={data?.stages?.[stage - 1]?.status}
               stageName={data?.stages?.[stage - 1]?.name}
+              stageError={data?.stages?.[stage - 1]?.error}
               stepData={data?.stages?.[stage - 1]?.steps?.[step - 1]}
             />
           </div>
@@ -71,6 +75,20 @@ const LogView = (props) => {
       </Modal>
     </>
   );
+};
+
+LogView.propTypes = {
+  isDataLoading: PropTypes.bool.isRequired,
+  data: PropTypes.shape({
+    debug: PropTypes.bool,
+    status: PropTypes.string,
+    stages: PropTypes.arrayOf(PropTypes.shape({
+      status: PropTypes.string,
+      name: PropTypes.string,
+      error: PropTypes.string,
+      steps: PropTypes.arrayOf(),
+    })),
+  }).isRequired,
 };
 
 export default LogView;
