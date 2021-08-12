@@ -1,5 +1,6 @@
 import classNames from 'classnames/bind';
 import { formatDistanceStrict } from 'date-fns';
+import PropTypes from 'prop-types';
 import React, {
   useCallback, useMemo,
 } from 'react';
@@ -14,29 +15,14 @@ const cx = classNames.bind(css);
 /* local helpers */
 
 const getSummaryMeta = (builds) => {
-  // hotfix to prevent index out of bounds errors when
-  // apptendint to calculate the median build times for
-  // a repository with 2 builds or fewer.
-  if (builds.length < 3) {
-    const build = builds[0];
-    const latest = build.timeStarted;
-    const [number, ...units] = formatDistanceStrict(new Date(latest * 1000), new Date(), { addSuffix: true }).split(' ');
-    return {
-      median: build.duration,
-      latest: {
-        number,
-        units: units.join(' '),
-        status: build.status,
-      },
-    };
-  }
-
   const sortedByDuration = builds.slice().sort((a, b) => a.duration - b.duration);
   const sortedByStarted = builds.slice().sort((a, b) => a.timeStarted - b.timeStarted);
 
-  const median = Math.floor((sortedByDuration.length % 2
-    ? sortedByDuration[Math.ceil(sortedByDuration.length / 2)]
-    : sortedByDuration[sortedByDuration.length / 2]).duration / 60);
+  const middle = Math.floor(sortedByDuration.length / 2);
+  const median = Math.floor((
+    sortedByDuration.length % 2
+      ? sortedByDuration[middle].duration / 60
+      : (sortedByDuration[middle - 1].duration + sortedByDuration[middle].duration) / 120));
   const medianReadable = median === 0 ? '< 1' : median;
 
   const latest = sortedByStarted[sortedByStarted.length - 1].timeStarted;
@@ -58,7 +44,7 @@ const Summary = (props) => {
     duration: (build?.finished || Math.floor(Date.now() / 1000)) - (build.started || build.created),
     status: build.status,
     timeStarted: build.started || 0,
-  })).filter(({ timeStarted }) => timeStarted > 0).reverse(), [data]);
+  })).filter(({ timeStarted }) => timeStarted >= 0).reverse(), [data]);
   const { namespace, name } = useParams();
   const history = useHistory();
 
@@ -117,6 +103,22 @@ const Summary = (props) => {
       </div>
     </div>
   );
+};
+
+Summary.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.shape({
+    number: PropTypes.number,
+    finished: PropTypes.number,
+    started: PropTypes.number,
+    created: PropTypes.number,
+    status: PropTypes.string,
+  })).isRequired,
+  totalBuildsCounter: PropTypes.number.isRequired,
+  className: PropTypes.string,
+};
+
+Summary.defaultProps = {
+  className: undefined,
 };
 
 export default Summary;
