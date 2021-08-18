@@ -27,7 +27,7 @@
     "dagre": "^0.8.5",
     "date-fns": "^2.16.1",
     "immer": "^9.0.3",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "normalize.css": "^8.0.1",
     "pathfinding": "^0.4.18",
     "paths-js": "^0.4.11",
