@@ -1,0 +1,54 @@
+.activity {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+
+  .avatar {
+    width: 24px;
+    height: 24px;
+    margin-right: 6px;
+  }
+
+  .chunk {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .info {
+    margin: 0px 2px;
+    display: inline-block;
+    color: #4f5162;
+  }
+
+  strong {
+    text-decoration: none;
+    background: #f3f3fa;
+    border-radius: 8px;
+    line-height: 24px;
+    color: #22222a;
+    padding: 0px 8px;
+  }
+
+  a {
+    text-decoration: none;
+    color: #4f5162;
+    div {
+      color: #0063f7;
+    }
+    &:hover {
+      div {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.label {
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+.avatar {
+  width: 24px;
+  height: 24px;
+}

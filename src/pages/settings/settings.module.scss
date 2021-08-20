@@ -1,0 +1,127 @@
+.header {
+  padding: 26px 33px;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  grid-template-rows: auto;
+  column-gap: 44px;
+  padding-top: 22px;
+  padding-right: 60px;
+  padding-bottom: 60px;
+  padding-left: 60px;
+
+  margin: 0px auto;
+  max-width: 1400px;
+  margin-top: 54px;
+}
+
+.settings-nav {
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+  &-item {
+    text-decoration: none;
+    color: black;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 17px;
+    padding-right: 17px;
+    position: relative;
+    background-color: transparent;
+    transition: background-color 0.2s ease;
+    border-radius: 5px;
+    flex: 1;
+    width: 100%;
+    font-size: 14px;
+    line-height: 24px;
+    &-active {
+      background: #f3f3fa;
+      color: #0378d4;
+    }
+  }
+}
+
+.inactive {
+  &-wrapper {
+    padding: 0;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 54px;
+  }
+  &-inner {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    > svg {
+      margin-top: 48px;
+      margin-bottom: 48px;
+      width: 202px;
+      height: 160px;
+    }
+    h2 {
+      font-weight: 500;
+      font-size: 22px;
+      line-height: 28px;
+      color: #4f5162;
+    }
+    p {
+      margin: 0;
+      margin-top: 12px;
+      font-size: 15px;
+      line-height: 22px;
+      color: #4f5162;
+      max-width: 350px;
+      text-align: center;
+    }
+    button {
+      box-shadow: 0px 0px 1px rgba(40, 41, 61, 0.08), 0px 0.5px 2px rgba(96, 97, 112, 0.16);
+      background-color: #0278d5;
+      color: white;
+      padding: 10px 24px;
+      padding-left: 20px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      text-transform: uppercase;
+      text-decoration: none;
+      height: 36px;
+      margin-top: 26px;
+    }
+  }
+}
+
+@media only screen and (max-width: 1250px) {
+  .wrapper {
+    grid-template-columns: unset;
+    grid-template-rows: auto;
+    margin-top: 16px;
+    display: block;
+  }
+
+  .settings-nav {
+    margin-bottom: 36px;
+    max-width: 400px;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .settings-nav {
+    margin-bottom: 36px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .wrapper {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .settings-nav {
+    max-width: unset;
+  }
+}

@@ -1,35 +1,70 @@
-# drone-ui
+## Drone UI
 
-## Configuration
+### Getting started
 
-Create a `.env.development.local` file with the drone server address (no trailing slash) and your drone user token:
+1. **Clone this repository**
 
-```
-VUE_APP_DRONE_SERVER=https://drone.company.com
-VUE_APP_DRONE_TOKEN=f0af17449a83681de22db7ce16672f16
+   ```bash
+   git clone https://github.com/drone/drone-ui.git
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   npm install
+   ```
+
+3. **Copy .env.example and rename it into .env**
+
+   ```bash
+   cp .env.example .env.development.local
+   ```
+
+4. **Fill required variables. For example:**
+
+   ```text
+   REACT_APP_DRONE_SERVER=https://drone.company.com
+   REACT_APP_DRONE_TOKEN=<your_drone_token>
+   ```
+
+### Run the app
+
+```bash
+npm run start
 ```
 
-## Project setup
-```
-npm install
-```
+### Build the app
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
+```bash
 npm run build
 ```
 
-### Run your tests
+### Run the built app
+
+```bash
+npm run serve
 ```
+
+### Run linters
+
+```bash
+npm run lint
+```
+
+### Run linters and fix auto fixable problems
+
+```bash
+npm run lint:fix
+```
+
+### Run your tests
+
+```bash
 npm run test
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
+## Commits
+
+We use Conventional Commits for commit messages. You can read more about Conventional Commits [here](https://www.conventionalcommits.org/en/v1.0.0/). [Here](https://cheatography.com/albelop/cheat-sheets/conventional-commits/) you can find a useful Conventional Commits Cheat Sheet.
+
+We try to make our commits "atomic". [Here](https://www.freshconsulting.com/atomic-commits/) and [here](https://en.wikipedia.org/wiki/Atomic_commit) you can read more about Atomic commits.

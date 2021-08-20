@@ -1,0 +1,30 @@
+.breadcrumb {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 11px;
+}
+
+.breadcrumb-item {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #383946;
+  user-select: none;
+
+  a {
+    line-height: 16px;
+    font-size: 14px;
+    color: #9293ab;
+    text-decoration: none;
+  }
+}
+
+.breadcrumb-spacer {
+  display: inline-flex;
+  align-items: center;
+  margin: 0 8px;
+  color: #9293ab;
+  width: 18px;
+  height: 18px;
+}

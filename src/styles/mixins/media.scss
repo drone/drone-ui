@@ -1,0 +1,34 @@
+@mixin lg-down {
+  // 1365.99 - 1024
+  @media only screen and (max-width: $bp-lg-down) {
+    @content;
+  }
+}
+
+@mixin md-down {
+  // 1023.99 - 768
+  @media only screen and (max-width: $bp-md-down) {
+    @content;
+  }
+}
+
+@mixin sm-down {
+  // 767.99 - 576
+  @media only screen and (max-width: $bp-sm-down) {
+    @content;
+  }
+}
+
+@mixin xs-down {
+  // 575.99 - 414
+  @media only screen and (max-width: $bp-xs-down) {
+    @content;
+  }
+}
+
+@mixin xxs-down {
+  // 413.99px - 320
+  @media only screen and (max-width: $bp-xxs-down) {
+    @content;
+  }
+}

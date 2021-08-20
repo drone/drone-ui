@@ -1,0 +1,27 @@
+.system-messages-wrapper {
+  position: fixed;
+  bottom: 30px;
+  left: 125px;
+  right: 60px;
+  z-index: 999;
+  user-select: none;
+
+  .message-with-link {
+    a {
+      margin-left: 10px;
+      margin-right: 10px;
+      text-decoration: none;
+      color: inherit;
+      border-bottom: 1px solid #fff;
+      transition: opacity 0.2s ease-in-out;
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 750px) {
+    left: 20px;
+    right: 20px;
+  }
+}

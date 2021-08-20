@@ -1,0 +1,70 @@
+// CSS reset
+// Global styles
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family-primary);
+  font-size: $font-size-base;
+  font-weight: $font-weight-base;
+  line-height: $line-height-base;
+  color: $color-gray-800;
+  background-color: #f8f9fa;
+}
+
+header {
+  padding-top: 12px;
+  padding-right: 60px;
+  padding-bottom: 12px;
+  padding-left: 60px;
+  background: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+  h1 {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 28px;
+  }
+
+  @media only screen and (max-width: 768px) {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+}
+
+section {
+  // max-width: 1270px;
+  // margin-right: auto;
+  // margin-left: auto;
+  padding-top: 22px;
+  padding-right: 60px;
+  padding-bottom: 60px;
+  padding-left: 60px;
+  @media only screen and (max-width: 768px) {
+    padding-top: 22px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+  }
+}
+
+.container {
+  // max-width: 1270px;
+  // margin-right: auto;
+  // margin-left: auto;
+}
+
+/** Classes for the displayed toast **/
+.Toastify__toast--success {
+  background-color: #09c270;
+}
+.Toastify__toast--warning {
+  background-color: orange;
+}
+.Toastify__toast--error {
+  background-color: #ff3c3c;
+}

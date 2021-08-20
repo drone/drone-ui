@@ -1,0 +1,237 @@
+@import "styles/_variables.scss";
+@import "styles/mixins.scss";
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  * {
+    font-family: $font-family-primary;
+  }
+  @include sm-down {
+    width: 100%;
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 22px 14px 31px;
+  border-bottom: 1px solid rgba(217, 218, 230, 0.5);
+  .title {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: 0.05em;
+    color: #6b6d85;
+    text-transform: uppercase;
+  }
+  .counter {
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    letter-spacing: 0.2px;
+    color: #9293ab;
+  }
+  @include sm-down {
+    padding: 14px 20px;
+  }
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  position: relative;
+  min-height: 500px;
+  @include md-down {
+    min-height: unset;
+    height: auto !important;
+  }
+}
+.stage {
+  background: #ffffff;
+  text-decoration: none;
+  position: sticky;
+  border-bottom: 1px solid rgba(217, 218, 230, 0.5);
+  &-expanded:last-child {
+    border-bottom: none;
+  }
+
+  &-header {
+    padding-top: 14px;
+    padding-bottom: 14px;
+    padding-left: 31px;
+    padding-right: 22px;
+    margin: 0;
+    font-weight: 500;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+    font-size: 14px;
+    line-height: 24px;
+    color: #22222a;
+    position: sticky;
+    top: 0px;
+    background: inherit;
+    z-index: 1;
+    appearance: none;
+    cursor: pointer;
+    &:focus {
+      outline: none;
+    }
+    .chevron {
+      transform: rotate(-90deg);
+      width: 16px;
+      height: 16px;
+      transition: transform 0.2s ease;
+      margin-right: 10px;
+      &-disabled {
+        stroke: #96a5be;
+      }
+    }
+    &-expanded {
+      padding-bottom: 7px;
+      .chevron {
+        transform: rotate(0deg);
+      }
+    }
+    &-unselectable {
+      cursor: not-allowed;
+    }
+  }
+  &-status {
+    width: 16px;
+    height: 16px;
+    margin-right: 10px;
+  }
+
+  &-steps {
+    margin: 0;
+    list-style: none;
+    li + li {
+      margin-top: 5px;
+    }
+
+    margin: 0px 0px 24px 66px;
+  }
+  .toggler {
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    &:focus {
+      outline: none;
+    }
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+    &-expanded {
+      transform: rotate(180deg);
+    }
+  }
+
+  .time {
+    margin-left: auto;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 13px;
+    flex: 0 0 auto;
+    user-select: none;
+    color: #9293ab;
+  }
+  .steps-header {
+    margin-left: 16px;
+    margin-top: 12px;
+    margin-bottom: 16px;
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 14px;
+    letter-spacing: 0.2px;
+    color: #9293ab;
+    text-transform: uppercase;
+    position: relative;
+    display: flex;
+    align-items: center;
+    user-select: none;
+    .divider {
+      margin-left: 16px;
+      width: 100%;
+      height: 1px;
+      background: rgba(217, 218, 230, 0.5);
+    }
+  }
+
+  &-step {
+    display: flex;
+    align-items: center;
+    padding-top: 11px;
+    padding-bottom: 11px;
+    padding-left: 16px;
+    padding-right: 22px;
+    text-decoration: none;
+    position: relative;
+    z-index: 0;
+    font-size: 13px;
+    line-height: 1;
+    color: #22222a;
+    &::before {
+      position: absolute;
+      top: 0px;
+      right: 0;
+      bottom: 0px;
+      left: 0px;
+      content: "";
+      background-color: #e6faff;
+      border-radius: 5px 0 0 5px;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      z-index: -1;
+    }
+
+    &-active {
+      font-weight: 600;
+      color: #0278d5;
+      &::before {
+        opacity: 1;
+      }
+      .time {
+        color: #0278d5;
+      }
+    }
+    &:not(&-unselectable):hover {
+      &::before {
+        opacity: 1;
+      }
+    }
+    &-unselectable {
+      user-select: none;
+      cursor: not-allowed;
+    }
+
+    .status {
+      margin-right: 7px;
+      width: 16px;
+      height: 16px;
+      svg {
+        width: inherit;
+        height: inherit;
+      }
+    }
+
+    .name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 180px;
+      @include xxs-down {
+        max-width: 145px;
+      }
+    }
+  }
+}

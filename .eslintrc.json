@@ -1,0 +1,41 @@
+{
+  "extends": ["react-app", "airbnb", "airbnb/hooks", "airbnb/whitespace"],
+  "rules": {
+    "max-len": [1, {
+      "code": 120,
+      "ignoreTemplateLiterals": true,
+      "ignoreComments": true
+    }],
+    "jsx-a11y/label-has-associated-control": [2, {
+      "assert": "htmlFor"
+    }],
+    "react/jsx-props-no-spreading": "off",
+    "react/jsx-sort-props": [
+      "warn",
+      {
+        "callbacksLast": true,
+        "shorthandLast": true,
+        "noSortAlphabetically": true
+      }
+    ],
+    "import/order": [
+      "warn",
+      {
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ],
+    "import/prefer-default-export": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "moduleDirectory":["node_modules", "src/"]
+      }
+    }
+  }
+}

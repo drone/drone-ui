@@ -1,0 +1,8 @@
+@mixin no-scrollbar {
+  -ms-overflow-style: none; // IE 10+
+  scrollbar-width: none; // Firefox
+  &::-webkit-scrollbar {
+    width: 0; // Safari and Chrome
+    height: 0;
+  }
+}

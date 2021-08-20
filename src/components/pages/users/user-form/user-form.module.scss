@@ -1,0 +1,83 @@
+@import "styles/_variables";
+@import "styles/mixins";
+
+.new-user-form {
+  display: flex;
+  flex-flow: column;
+  min-width: 400px;
+  @include sm-down {
+    min-width: unset;
+  }
+  &-column {
+    display: flex;
+    flex-flow: column;
+    &-list {
+      span {
+        margin-bottom: 12px;
+      }
+    }
+  }
+  &-parameters {
+    display: flex;
+    & > * + * {
+      margin-left: 10px;
+    }
+    button {
+      color: #e43326;
+    }
+    &-list {
+      margin: 6px 0 12px;
+      & > * + * {
+        margin-top: 5px;
+      }
+    }
+    &-fields {
+      display: flex;
+      button {
+        color: #0092e4;
+      }
+      & > * + * {
+        margin-left: 10px;
+      }
+    }
+  }
+  &-controls {
+    padding-top: 15px;
+    display: flex;
+    & > * + * {
+      margin-left: 10px;
+    }
+    button {
+      padding: 6px 26px;
+      border-radius: 8px;
+      box-shadow: 0px 0px 1px rgba(40, 41, 61, 0.04), 0px 2px 4px rgba(96, 97, 112, 0.16);
+      box-sizing: border-box;
+      border: 1px solid #0278d5;
+      &.save {
+        background-color: #0278d5;
+        color: white;
+      }
+      &.cancel {
+        background: #fff;
+        color: #0278d5;
+      }
+      &.delete {
+        background-color: transparent;
+        color: #da291d;
+        letter-spacing: 1px;
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+        border: none;
+        box-shadow: none;
+        svg {
+          width: 16px;
+          height: 16px;
+        }
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+  }
+}

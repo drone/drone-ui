@@ -1,0 +1,38 @@
+@import "styles/mixins";
+@import "styles/_variables";
+
+.inner {
+  display: flex;
+  background-color: #fff;
+}
+
+.navbar {
+  width: 400px;
+  overflow-y: scroll;
+  @include sm-down {
+    width: 100%;
+  }
+}
+
+.logs {
+  flex: 1;
+  @include sm-down {
+    display: none;
+  }
+}
+
+.page-wrapper {
+  padding: 0;
+  & [data-container="non-logs"] {
+    padding-top: 25px;
+    padding-right: 60px;
+  }
+}
+
+.console-mobile {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}

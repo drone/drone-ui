@@ -1,0 +1,152 @@
+@import "styles/_variables";
+@import "styles/mixins";
+
+.list {
+  display: block;
+  list-style-type: none;
+  a {
+    text-decoration: none;
+    cursor: pointer;
+  }
+}
+
+.list-item {
+  display: flex;
+  padding: 19px 15px;
+  padding-right: 24px;
+  margin-bottom: 10px;
+  text-align: left;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 1px rgba(40, 41, 61, 0.08), 0 0.5px 2px rgba(96, 97, 112, 0.16);
+
+  &:hover {
+    box-shadow: 0 1px 6px -3px rgba(0, 0, 0, 0.5);
+    box-shadow: 2px 0 -3px rgba(40, 41, 61, 0.08), 0 2px 2px rgba(96, 97, 112, 0.16);
+  }
+}
+
+.status {
+  display: flex;
+  flex: 0 0 24px;
+  flex-flow: column;
+  margin-right: 5px;
+}
+
+.container {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+  overflow: hidden;
+  & > * + * {
+    margin-top: 10px;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.connector {
+  width: 22px;
+  height: 15px;
+  border-bottom-left-radius: 24px;
+  border-left: 2px solid #d9dae5;
+  border-bottom: 2px solid #d9dae5;
+  margin-left: 11px;
+  margin-top: 5px;
+}
+
+.commit {
+  max-width: 80%;
+  min-width: 0px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+  color: black;
+  font-size: 16px;
+  @include xxs-down {
+    max-width: 70%;
+  }
+}
+
+.number {
+  color: black;
+  color: #9293ab;
+  font-size: 16px;
+  white-space: nowrap;
+  min-width: 32px;
+  margin-right: 6px;
+
+  &:before {
+    content: "#";
+    margin-right: 3px;
+  }
+  &:after {
+    content: ".";
+  }
+}
+
+.content {
+  color: #627386;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  @include md-down {
+    flex-flow: column;
+    justify-content: unset;
+    align-items: unset;
+  }
+}
+
+.activity {
+  @include xs-down {
+    display: flex;
+    flex-wrap: wrap;
+    [data-type="chunk"] {
+      flex: 1 1 100%;
+      + [data-type="chunk"] {
+        margin-top: 6px;
+      }
+    }
+  }
+}
+
+.timing {
+  text-align: right;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  @include sm-down {
+    text-align: left;
+    justify-content: flex-end;
+    margin-top: 12px;
+  }
+}
+
+.elapsed {
+  font-size: 13px;
+  line-height: unset;
+}
+
+.dot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  span {
+    display: inline-block;
+    width: 3px;
+    height: 3px;
+    background: rgba(30, 55, 90, 0.25);
+    border-radius: 50%;
+    margin: 0 6px;
+  }
+}

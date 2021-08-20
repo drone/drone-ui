@@ -1,0 +1,12 @@
+.label {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+  letter-spacing: 0.2px;
+  color: #4F5162;
+  display: inline-flex;
+  align-items: center;
+  & > * + * {
+    margin-left: 5px;
+  }
+}

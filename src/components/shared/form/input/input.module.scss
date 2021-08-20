@@ -1,0 +1,61 @@
+@import "styles/_variables";
+@import "styles/mixins";
+
+.input {
+  &-wrapper {
+    display: flex;
+    flex-flow: column;
+    & > * + * {
+      margin-top: 7px;
+    }
+  }
+  border: 1px solid #e4e4eb;
+  box-sizing: border-box;
+  border-radius: 4px;
+  padding: 6px 12px;
+  min-width: 200px;
+  font-size: 14px;
+  line-height: 22px;
+  color: #343a41;
+  @include sm-down {
+    width: 100% !important;
+  }
+  &-with-icon {
+    padding: 6px 12px 6px 34px;
+  }
+  &::placeholder {
+    color: #8f90a6;
+    font-size: 14px;
+    line-height: 22px;
+    letter-spacing: -0.00928571px;
+  }
+  &:focus {
+    outline: none;
+  }
+  &:not(:read-only):focus {
+    border-color: #26a3f2;
+  }
+  &:read-only {
+    user-select: none;
+    cursor: not-allowed;
+    color: #8f90a6;
+    background: rgba(143, 144, 166, 0.1);
+    font-style: italic;
+  }
+  &-inner {
+    position: relative;
+    .icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 14px;
+      height: 14px;
+      &-search {
+        path {
+          stroke: #4f5162;
+        }
+      }
+    }
+  }
+}

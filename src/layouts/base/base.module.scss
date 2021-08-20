@@ -1,0 +1,53 @@
+@import "styles/_variables";
+@import "styles/mixins";
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes slideOut {
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    height: auto;
+  }
+}
+
+.inner {
+  display: flex;
+  flex: 1;
+  flex-flow: column;
+  overflow-y: auto;
+}
+
+.content {
+  flex-grow: 1;
+  width: 100%;
+}

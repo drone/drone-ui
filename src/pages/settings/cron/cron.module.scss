@@ -1,0 +1,164 @@
+@import "styles/_variables";
+
+.inner {
+  background: #ffffff;
+  box-shadow: 0px 0px 1px rgba(40, 41, 61, 0.08), 0px 0.5px 2px rgba(96, 97, 112, 0.16);
+  border-radius: 8px;
+  padding: 26px 33px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.btn-new {
+  background-color: #0278d5;
+  color: white;
+  padding: 10px 24px;
+  padding-left: 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  text-decoration: none;
+  height: 36px;
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  span {
+    font-size: 13px !important; // TODO fix base style so we can remove
+  }
+}
+
+.group {
+  &-fields {
+    h3 {
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 20px;
+      color: #22222a;
+      margin-bottom: 15px;
+    }
+    & > * + * {
+      margin-top: 10px;
+    }
+  }
+}
+
+.zero {
+  margin: 24px auto;
+  max-width: 350px;
+  text-align: center;
+
+  h2 {
+    font-weight: 600;
+    font-size: 24px;
+    color: #22222a;
+  }
+
+  p {
+    margin-top: 12px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #9293ab;
+  }
+}
+
+.controls {
+  padding-top: 15px;
+  & > * + * {
+    margin-left: 10px;
+  }
+  button {
+    padding: 6px 26px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 1px rgba(40, 41, 61, 0.04), 0px 2px 4px rgba(96, 97, 112, 0.16);
+    box-sizing: border-box;
+    border: 1px solid #0278d5;
+  }
+  button:first-child {
+    background-color: #0278d5;
+    color: white;
+  }
+  button:last-child {
+    background: #fff;
+    color: #0278d5;
+  }
+}
+
+//
+
+.actions {
+  text-align: right;
+  margin-bottom: 30px;
+}
+
+.card {
+  padding: 24px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 1px rgba(40, 41, 61, 0.08), 0 0.5px 2px rgba(96, 97, 112, 0.16);
+}
+
+.cron-list {
+  display: block;
+}
+
+.cron-list-wrapper {
+  overflow-y: auto;
+}
+
+.cron-list-header {
+  display: grid;
+  grid-template-columns: auto 100px 100px 200px 24px;
+  grid-gap: 15px;
+  padding: 15px;
+}
+
+.cron-list-header div {
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 14px;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+.cron-list-item {
+  display: grid;
+  grid-template-columns: auto 100px 100px 200px 24px;
+  grid-gap: 15px;
+  box-shadow: inset 0px 0.5px 0px rgba(143, 144, 166, 0.5);
+
+  padding: 19px 15px;
+  text-align: left;
+  background: #fff;
+}
+
+.cron-list-item div {
+  display: flex;
+  align-items: center;
+  color: #627386;
+  font-size: 14px;
+
+  &:nth-child(1) {
+    color: black;
+  }
+
+  svg {
+    color: #b0b1c3;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .wrapper {
+    display: block;
+  }
+  .cron-list-header,
+  .cron-list-item {
+    min-width: 500px;
+  }
+}

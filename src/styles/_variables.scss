@@ -1,0 +1,87 @@
+// Variables
+:root {
+  /* Typography */
+  --font-family-primary: Inter, Arial, sans-serif;
+  --font-family-code: "Roboto Mono", "Lucida Console", "Monaco", monospace;
+  /* Spacing */
+  --margin-xs: 5px;
+  /* Color Scheme */
+  --red-dark: #ff3b3b;
+  --red-medium: #ff5c5c;
+  --red-light: #ff8080;
+  /* Breakpoints */
+  --bp-xl: 1800px; // 1920 - 120px of side paddings
+  --bp-lg: 1366px;
+  --bp-md: 1024px;
+  --bp-sm: 768px;
+  --bp-xs: 576px;
+  --bp-xxs: 414px;
+}
+
+$bp-lg-down: 1366px - 0.01px;
+$bp-md-down: 1024px - 0.01px;
+$bp-sm-down: 768px - 0.01px;
+$bp-xs-down: 576px - 0.01px;
+$bp-xxs-down: 414px - 0.01px;
+
+/* @NOTE: the stuff below will gone */
+
+/* Typography */
+$font-family-primary: Inter, Arial, sans-serif;
+$font-family-code: "Roboto Mono", "Lucida Console", "Monaco", monospace;
+
+$font-size-xs: 10px;
+$font-size-sm: 12px;
+$font-size-base: 13px;
+$font-size-md: 14px;
+$font-size-lg: 16px;
+$font-size-xl: 20px;
+
+$line-height-even: 1;
+$line-height-sm: 1.2;
+$line-height-base: 1.3;
+$line-height-md: 1.5;
+$line-height-lg: 1.75;
+$line-height-xl: 2;
+
+$font-weight-base: 400;
+$font-weight-md: 500;
+$font-weight-lg: 700;
+
+$letter-spacing-base: 0.2px;
+$letter-spacing-md: 0.4px;
+$letter-spacing-lg: 0.5px;
+
+/* Colors */
+
+// Primary
+$color-primary-1: #f2f8fd;
+$color-primary-5: #00ade4;
+$color-primary-7: #0278d5;
+$color-primary-9: #0a3364;
+
+// Light
+$color-light-600: #fff;
+
+// Gray
+$color-gray-200: #d9dae5;
+$color-gray-300: #b0b1c3;
+$color-gray-400: #9293ab;
+$color-gray-500: #6b6d85;
+$color-gray-600: #4f5162;
+$color-gray-700: #383946;
+$color-gray-800: #22222a;
+
+// Red
+$color-red-500: #e43326;
+$color-red-600: #da291d;
+
+// Orange
+$color-orange-100: #fff0e6;
+$color-orange-700: #ff7020;
+
+// Green
+$color-green-600: #42ab45;
+
+// Misc
+$transition-period-base: 0.3s;

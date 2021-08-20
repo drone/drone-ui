@@ -1,0 +1,132 @@
+@import "styles/_variables";
+@import "styles/mixins";
+
+.wrapper {
+  max-width: 1700px;
+  margin: 0px auto;
+  padding-top: 54px;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+
+  .card + .card {
+    margin-top: 15px;
+  }
+}
+
+.card {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  padding: 15px;
+  border: 1px solid #ccc;
+}
+
+.deployment-list {
+  display: block;
+}
+
+.deployment-list-header {
+  display: grid;
+  grid-template-columns: 24px 300px 100px 200px auto;
+  grid-gap: 15px;
+  padding: 15px;
+  @include md-down {
+    grid-template-columns: 24px 1fr 100px 1fr 1fr;
+  }
+  @include sm-down {
+    display: none;
+  }
+}
+
+.deployment-list-header div {
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 14px;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+.deployment-list-item {
+  display: grid;
+  grid-template-columns: 24px 300px 100px 200px auto;
+  grid-gap: 15px;
+
+  // border-radius: 4px;
+  // border-left: 4px solid #09c270;
+
+  padding: 19px 15px;
+  margin-bottom: 10px;
+  text-align: left;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 1px rgba(40, 41, 61, 0.08), 0 0.5px 2px rgba(96, 97, 112, 0.16);
+
+  &:hover {
+    box-shadow: 0 1px 6px -3px rgba(0, 0, 0, 0.5);
+    box-shadow: 2px 0 -3px rgba(40, 41, 61, 0.08), 0 2px 2px rgba(96, 97, 112, 0.16);
+  }
+
+  .avatar {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+  }
+
+  @include md-down {
+    grid-template-columns: 24px 1fr 100px 1fr 1fr;
+  }
+  @include sm-down {
+    display: flex;
+    flex-wrap: wrap;
+    .commit {
+      margin-left: auto;
+    }
+    .message {
+      flex: 1 1 100%;
+    }
+  }
+  @include xs-down {
+    .target {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+  @include xxs-down {
+    .target {
+      flex: 0 0 85%;
+    }
+    .commit {
+      margin-left: 0;
+    }
+  }
+}
+
+.deployment-list-item div {
+  display: flex;
+  align-items: center;
+  color: #627386;
+
+  &:nth-child(2) {
+    color: black;
+  }
+
+  &:nth-child(5) {
+    overflow: hidden;
+    span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      min-width: 0px;
+      max-width: 500px;
+    }
+  }
+}
+
+.deployment-list a {
+  text-decoration: none;
+  cursor: pointer;
+}

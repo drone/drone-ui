@@ -1,0 +1,59 @@
+@import "styles/_variables";
+@import "styles/mixins";
+
+.overlay,
+.modal-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.overlay {
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-wrapper {
+  z-index: 1010;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &.fullscreen {
+    .modal-inner {
+      border-radius: 0;
+      width: 100vw;
+      height: 100vh;
+    }
+  }
+}
+
+.modal-inner {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 6px;
+  padding: 30px;
+  @include sm-down {
+    padding: 20px;
+    width: calc(100% - 40px);
+  }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: none;
+  padding-top: 0;
+  padding-bottom: 15px;
+  padding-right: 0;
+  padding-left: 0;
+  margin-bottom: 15px;
+  h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 500;
+  }
+}

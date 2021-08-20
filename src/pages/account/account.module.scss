@@ -1,0 +1,107 @@
+@import "styles/_variables";
+@import "styles/mixins";
+
+.header {
+  padding: 0px 60px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  height: 80px;
+  min-height: 80px;
+  max-height: 80px;
+
+  a {
+    background-color: #0278d5;
+    color: white;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  @include sm-down {
+    padding: 0px 20px;
+  }
+}
+
+.wrapper {
+  max-width: 916px;
+  margin: 0 auto;
+  padding-top: 80px;
+  @include sm-down {
+    padding-top: 60px;
+  }
+}
+
+.title {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.01em;
+  color: #9293ab;
+  &-wrapper {
+    margin-bottom: 34px;
+  }
+}
+
+.label {
+  display: inline-flex;
+  margin-bottom: 18px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  color: #22222a;
+}
+
+.row {
+  position: relative;
+  & + .row {
+    margin-top: 30px;
+    padding-top: 30px;
+  }
+}
+
+.snippet {
+  white-space: pre-wrap;
+  background: #ffffff;
+  padding: 22px 69px 22px 25px;
+  font-family: $font-family-code;
+  border-radius: 8px;
+  position: relative;
+  font-size: 14px;
+  line-height: 20px;
+  color: #383946;
+  box-shadow: 0 0 1px rgba(40, 41, 61, 0.08), 0 0.5px 2px rgba(96, 97, 112, 0.16);
+
+  code {
+    overflow-y: auto;
+    white-space: nowrap;
+    display: block;
+  }
+
+  code div span {
+    margin-right: 10px;
+    user-select: none;
+  }
+}
+
+.copy-btn {
+  position: absolute;
+  right: 25px;
+  top: 22px;
+  color: #8f90a6;
+  font-weight: 500;
+  text-transform: uppercase;
+  svg {
+    width: 22px;
+    height: 22px;
+  }
+  &:hover {
+    svg {
+      color: #383946;
+    }
+  }
+}

@@ -1,0 +1,50 @@
+.activity {
+  display: inline-flex;
+  align-items: center;
+  color: #4f5162;
+  & > * + * {
+    margin-left: 9px;
+  }
+
+  div:first-of-type {
+    width: 18px;
+    height: 18px;
+  }
+
+  span,
+  strong {
+    display: inline-block;
+    white-space: nowrap;
+  }
+
+  a,
+  strong {
+    text-decoration: none;
+    background: #f3f3fa;
+    border-radius: 8px;
+    line-height: 24px;
+    color: #22222a;
+    padding: 0px 8px;
+    white-space: nowrap;
+  }
+  a {
+    color: #2364d2;
+  }
+  svg {
+    margin-right: 10px;
+    path {
+      fill: #9293ab;
+    }
+  }
+  .icon-branches {
+    width: 8px;
+    height: 11px;
+  }
+  .icon-node {
+    width: 12px;
+    height: 8px;
+  }
+  .avatar {
+    border: 1px solid #343030;
+  }
+}

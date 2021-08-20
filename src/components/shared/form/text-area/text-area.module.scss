@@ -1,0 +1,36 @@
+@import "styles/_variables";
+@import "styles/mixins";
+
+.text-area {
+  &-wrapper {
+    display: flex;
+    flex-flow: column;
+    & > * + * {
+      margin-top: 7px;
+    }
+  }
+  border: 1px solid #e4e4eb;
+  box-sizing: border-box;
+  border-radius: 4px;
+  padding: 6px 12px;
+  min-width: 200px;
+  font-size: 14px;
+  font-family: $font-family-code;
+  line-height: 22px;
+  color: #343a41;
+  resize: none;
+  @include sm-down {
+    width: 100% !important;
+  }
+  &::placeholder {
+    color: #8f90a6;
+    font-size: 13px;
+    line-height: 22px;
+    letter-spacing: -0.00928571px;
+    font-family: $font-family-primary;
+  }
+  &:focus {
+    outline: none;
+    border-color: #26a3f2;
+  }
+}

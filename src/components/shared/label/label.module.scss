@@ -1,0 +1,22 @@
+.root {
+  align-items: center;
+  background: #F3F3FA;
+  border-radius: 8px;
+  color: #22222a;
+  display: inline-flex;
+  font-weight: 400;
+  line-height: 26px;
+  margin-right: 8px;
+  padding: 0px 8px;
+
+  svg {
+    color: #9293ab;
+    width: 20px;
+    height: 20px;
+    margin-right: 4px;
+  }
+
+  sub {
+    margin: 0px 2px;
+  }
+}

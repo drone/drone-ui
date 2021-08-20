@@ -1,0 +1,77 @@
+@import "styles/mixins";
+
+.wrapper {
+  display: flex;
+  &-menu {
+    position: relative;
+  }
+}
+
+.btn-menu-controller {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  width: 24px;
+  background-color: transparent;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  padding: 0;
+  outline: none;
+  svg {
+    stroke: rgba(0, 0, 0, 0.38);
+  }
+  i {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.38);
+    + i {
+      margin-top: 2px;
+    }
+  }
+  &:focus {
+    outline: none;
+  }
+  &:active,
+  &.is-open {
+    border: 1px solid transparent;
+    background-color: rgba(0, 0, 0, 0.1);
+    cursor: default;
+  }
+  &.is-focused:not(&:active) {
+    border: 1px solid rgba(#0278d5, 0.7);
+  }
+}
+
+.menu {
+  position: absolute;
+  top: calc(100% + 5px);
+  z-index: 3;
+  background-color: #fff;
+  min-width: 100px;
+  border-radius: 4px;
+  box-shadow: 0px 0px 2px rgba(40, 41, 61, 0.04), 0px 4px 8px rgba(96, 97, 112, 0.16);
+  overflow: hidden;
+  &-left {
+    left: 0;
+  }
+  &-right {
+    right: 0;
+  }
+  &-item {
+    padding: 5px 10px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    &:focus {
+      outline: none;
+      background-color: #e6faff;
+      color: #0278d5;
+    }
+    @include hover {
+      color: #0278d5;
+    }
+  }
+}
