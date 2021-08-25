@@ -149,6 +149,7 @@ const StageDefault = (props) => {
                 return (match || (stageNumber == stageInPath && !stepIdx));
               }}
               to={`/${namespace}/${name}/${build}/${stageNumber}/${stepIndex + 1}`}
+              title={stepName}
               exact
               onClick={onStepClick}
             >
