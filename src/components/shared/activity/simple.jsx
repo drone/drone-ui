@@ -82,7 +82,7 @@ const PullRequestActivity = ({
     <div className={cx('chunk')} data-type="chunk">
       <span className={cx('info')}>to</span>
       {wrapReferenceLink(<BranchLabel className={cx('label')} branch={branch} />, {
-        namespace, name, commit, deeplink,
+        namespace, name, refs, deeplink,
       })}
     </div>
   </div>
