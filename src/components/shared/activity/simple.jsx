@@ -42,7 +42,7 @@ function wrapBuildLink(child, {
 }
 
 const PushActivity = ({
-  className, avatar, actor, commit, branch, namespace, name, deeplink,
+  className, avatar, actor, commit, branch, namespace, name, deeplink, refs,
 }) => (
   <div className={cx('activity', className)}>
     <div className={cx('chunk')} data-type="chunk">
@@ -58,7 +58,7 @@ const PushActivity = ({
     <div className={cx('chunk')} data-type="chunk">
       <span className={cx('info')}>to</span>
       {wrapReferenceLink(<BranchLabel className={cx('label')} branch={branch} />, {
-        namespace, name, commit, deeplink,
+        namespace, name, refs, deeplink,
       })}
     </div>
   </div>
@@ -76,7 +76,7 @@ const PullRequestActivity = ({
       <span className={cx('info')}>{action === 'opened' ? 'opened' : 'synchronized'}</span>
       <span className={cx('info')}>pull request</span>
       {wrapReferenceLink(<PullRequestLabel className={cx('label')} pr={refs} />, {
-        namespace, name, commit, deeplink,
+        namespace, name, refs, deeplink,
       })}
     </div>
     <div className={cx('chunk')} data-type="chunk">
