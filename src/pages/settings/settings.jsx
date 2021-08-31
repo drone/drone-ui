@@ -57,7 +57,7 @@ export default function Settings({ user, repo }) {
 
   const { showError, showSuccess } = useToast();
 
-  const GeneralMemo = useCallback(() => <General repo={repo} user={user} />, [repo, user]);
+  const GeneralCallback = useCallback(() => <General repo={repo} user={user} />, [repo, user]);
 
   useEffect(() => {
     // disable nav links if repo is not active
@@ -124,7 +124,7 @@ export default function Settings({ user, repo }) {
           <Switch>
             <Route
               path="/:namespace/:name/settings"
-              component={GeneralMemo}
+              component={GeneralCallback}
               exact
             />
             <Route path="/:namespace/:name/settings/secrets" component={Secrets} />
