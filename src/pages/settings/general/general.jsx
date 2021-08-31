@@ -20,7 +20,7 @@ const buildTimeoutsOptions = (timeouts) => timeouts.map((timeout) => ({
   key: timeout > 90 ? `${timeout / 60} hours` : `${timeout} minutes`,
 }));
 
-export default function General({ repo, user }) {
+export default function General({ user, repo }) {
   const { namespace, name } = useParams();
   const {
     mutate,
