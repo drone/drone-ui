@@ -42,7 +42,7 @@ function wrapBuildLink(child, {
 }
 
 const PushActivity = ({
-  className, avatar, actor, commit, branch, namespace, name, deeplink,
+  className, avatar, actor, commit, branch, namespace, name, deeplink, refs,
 }) => (
   <div className={cx('activity', className)}>
     <div className={cx('chunk')} data-type="chunk">
@@ -58,14 +58,14 @@ const PushActivity = ({
     <div className={cx('chunk')} data-type="chunk">
       <span className={cx('info')}>to</span>
       {wrapReferenceLink(<BranchLabel className={cx('label')} branch={branch} />, {
-        namespace, name, commit, deeplink,
+        namespace, name, refs, deeplink,
       })}
     </div>
   </div>
 );
 
 const PullRequestActivity = ({
-  className, avatar, actor, branch, action, refs, namespace, name, commit, deeplink,
+  className, avatar, actor, branch, action, refs, namespace, name, deeplink,
 }) => (
   <div className={cx('activity', className)}>
     <div className={cx('chunk')} data-type="chunk">
@@ -76,20 +76,20 @@ const PullRequestActivity = ({
       <span className={cx('info')}>{action === 'opened' ? 'opened' : 'synchronized'}</span>
       <span className={cx('info')}>pull request</span>
       {wrapReferenceLink(<PullRequestLabel className={cx('label')} pr={refs} />, {
-        namespace, name, commit, deeplink,
+        namespace, name, refs, deeplink,
       })}
     </div>
     <div className={cx('chunk')} data-type="chunk">
       <span className={cx('info')}>to</span>
       {wrapReferenceLink(<BranchLabel className={cx('label')} branch={branch} />, {
-        namespace, name, commit, deeplink,
+        namespace, name, refs, deeplink,
       })}
     </div>
   </div>
 );
 
 const TagActivity = ({
-  className, avatar, actor, refs, namespace, name, commit, deeplink,
+  className, avatar, actor, refs, namespace, name, deeplink,
 }) => (
   <div className={cx('activity', className)}>
     <div className={cx('chunk')} data-type="chunk">
@@ -99,7 +99,7 @@ const TagActivity = ({
     <div className={cx('chunk')} data-type="chunk">
       <span className={cx('info')}>created</span>
       {wrapReferenceLink(<TagLabel className={cx('label')} tag={refs} />, {
-        namespace, name, commit, deeplink,
+        namespace, name, refs, deeplink,
       })}
     </div>
   </div>
@@ -218,48 +218,48 @@ PushActivity.propTypes = {
   branch: PropTypes.string,
   namespace: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  deeplink: PropTypes.string.isRequired,
+  deeplink: PropTypes.bool,
+  refs: PropTypes.string.isRequired,
 };
 
 PushActivity.defaultProps = {
   className: '',
   commit: undefined,
   branch: undefined,
+  deeplink: undefined,
 };
 
 PullRequestActivity.propTypes = {
   className: PropTypes.string,
   avatar: PropTypes.string.isRequired,
   actor: PropTypes.string.isRequired,
-  commit: PropTypes.string,
   branch: PropTypes.string,
   namespace: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  deeplink: PropTypes.string.isRequired,
+  deeplink: PropTypes.bool,
   refs: PropTypes.string.isRequired,
   action: PropTypes.string.isRequired,
 };
 
 PullRequestActivity.defaultProps = {
   className: '',
-  commit: undefined,
   branch: undefined,
+  deeplink: undefined,
 };
 
 TagActivity.propTypes = {
   className: PropTypes.string,
   avatar: PropTypes.string.isRequired,
   actor: PropTypes.string.isRequired,
-  commit: PropTypes.string,
   namespace: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  deeplink: PropTypes.string.isRequired,
+  deeplink: PropTypes.bool,
   refs: PropTypes.string.isRequired,
 };
 
 TagActivity.defaultProps = {
   className: '',
-  commit: undefined,
+  deeplink: undefined,
 };
 
 PromoteActivity.propTypes = {
@@ -269,7 +269,7 @@ PromoteActivity.propTypes = {
   commit: PropTypes.string,
   namespace: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  deeplink: PropTypes.string.isRequired,
+  deeplink: PropTypes.bool,
   parent: PropTypes.string.isRequired,
   target: PropTypes.string.isRequired,
 };
@@ -277,6 +277,7 @@ PromoteActivity.propTypes = {
 PromoteActivity.defaultProps = {
   className: '',
   commit: undefined,
+  deeplink: undefined,
 };
 
 RollbackActivity.propTypes = {
@@ -286,7 +287,7 @@ RollbackActivity.propTypes = {
   commit: PropTypes.string,
   namespace: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  deeplink: PropTypes.string.isRequired,
+  deeplink: PropTypes.bool,
   parent: PropTypes.string.isRequired,
   target: PropTypes.string.isRequired,
 };
@@ -294,6 +295,7 @@ RollbackActivity.propTypes = {
 RollbackActivity.defaultProps = {
   className: '',
   commit: undefined,
+  deeplink: undefined,
 };
 
 CronActivity.propTypes = {
