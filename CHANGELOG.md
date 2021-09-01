@@ -1,27 +1,18 @@
 # Changelog
 
-## [v2.0.1](https://github.com/drone/drone-ui/tree/v2.0.1) (2021-08-20)
+## [v2.1.0](https://github.com/drone/drone-ui/tree/v2.1.0) (2021-09-01)
 
-[Full Changelog](https://github.com/drone/drone-ui/compare/v2.0.0...v2.0.1)
+[Full Changelog](https://github.com/drone/drone-ui/compare/v2.0.1...v2.1.0)
 
 **Implemented enhancements:**
 
-- new go file [\#366](https://github.com/drone/drone-ui/pull/366) ([d1wilko](https://github.com/d1wilko))
+- add new repo setting toggles and generate go binary [\#374](https://github.com/drone/drone-ui/pull/374) ([d1wilko](https://github.com/d1wilko))
+- add tooltip to long build step names [\#371](https://github.com/drone/drone-ui/pull/371) ([d1wilko](https://github.com/d1wilko))
 
 **Fixed bugs:**
 
-- fix off centre alt avatar bug [\#368](https://github.com/drone/drone-ui/pull/368) ([d1wilko](https://github.com/d1wilko))
-- fix single pending build bug and simplify median build time logic [\#367](https://github.com/drone/drone-ui/pull/367) ([d1wilko](https://github.com/d1wilko))
-- show error message for steps and stages [\#365](https://github.com/drone/drone-ui/pull/365) ([d1wilko](https://github.com/d1wilko))
-
-**Closed issues:**
-
-- UI crashes when no builds are found [\#364](https://github.com/drone/drone-ui/issues/364)
-
-**Merged pull requests:**
-
-- Merging drone2 branch into master [\#369](https://github.com/drone/drone-ui/pull/369) ([d1wilko](https://github.com/d1wilko))
-- allow ~ in project name [\#361](https://github.com/drone/drone-ui/pull/361) ([muffl0n](https://github.com/muffl0n))
+- stop general settings from remounting on each new build [\#373](https://github.com/drone/drone-ui/pull/373) ([d1wilko](https://github.com/d1wilko))
+- fix branch link bug [\#372](https://github.com/drone/drone-ui/pull/372) ([rohow](https://github.com/rohow))
 
 
 
