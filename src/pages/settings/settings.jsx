@@ -1,4 +1,5 @@
 import classNames from 'classnames/bind';
+import PropTypes from 'prop-types';
 import React, {
   useEffect, useContext, useCallback,
 } from 'react';
@@ -23,7 +24,7 @@ import styles from './settings.module.scss';
 const cx = classNames.bind(styles);
 
 const SettingsInactive = ({
-  namespace, name, showActivationBtn, activationHandler,
+  showActivationBtn, activationHandler,
 }) => (
   <section className={cx('inactive-wrapper')}>
     <div className={cx('inactive-inner')}>
@@ -55,6 +56,8 @@ export default function Settings({ user, repo }) {
   const [, setContext] = useContext(AppContext);
 
   const { showError, showSuccess } = useToast();
+
+  const GeneralCallback = useCallback(() => <General repo={repo} user={user} />, [repo, user]);
 
   useEffect(() => {
     // disable nav links if repo is not active
@@ -121,7 +124,7 @@ export default function Settings({ user, repo }) {
           <Switch>
             <Route
               path="/:namespace/:name/settings"
-              component={(props) => <General {...props} repo={repo} user={user} />}
+              component={GeneralCallback}
               exact
             />
             <Route path="/:namespace/:name/settings/secrets" component={Secrets} />
@@ -131,8 +134,6 @@ export default function Settings({ user, repo }) {
         </section>
       ) : (
         <SettingsInactive
-          namespace={namespace}
-          name={name}
           showActivationBtn={repo?.permissions?.admin ?? false}
           activationHandler={handleEnableRepo}
         />
@@ -140,3 +141,18 @@ export default function Settings({ user, repo }) {
     </>
   );
 }
+
+SettingsInactive.propTypes = {
+  showActivationBtn: PropTypes.bool.isRequired,
+  activationHandler: PropTypes.func.isRequired,
+};
+
+Settings.propTypes = {
+  repo: PropTypes.shape({
+    active: PropTypes.bool.isRequired,
+    permissions: PropTypes.shape({
+      admin: PropTypes.bool,
+    }),
+  }).isRequired,
+  user: PropTypes.shape().isRequired,
+};

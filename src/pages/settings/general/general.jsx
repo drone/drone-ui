@@ -1,4 +1,5 @@
 import classNames from 'classnames/bind';
+import PropTypes from 'prop-types';
 import React, { useState, useLayoutEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -33,7 +34,13 @@ export default function General({ user, repo }) {
   useLayoutEffect(() => {
     if (repo) {
       setSettings(
-        pick(repo)(['ignore_pull_requests', 'ignore_forks', 'protected', 'trusted', 'visibility', 'timeout', 'config_path']),
+        pick(repo)(['ignore_pull_requests',
+          'ignore_forks',
+          'protected',
+          'trusted',
+          'visibility',
+          'timeout',
+          'config_path']),
       );
     }
   }, [repo]);
@@ -54,7 +61,7 @@ export default function General({ user, repo }) {
     }
   };
 
-  const handleSettingsSubmit = async (event) => {
+  const handleSettingsSubmit = async () => {
     try {
       const res = await axiosWrapper(`/api/repos/${namespace}/${name}`, { method: 'PATCH', data: { ...settings, timeout: +settings.timeout } });
       mutate(res);
@@ -228,3 +235,10 @@ export default function General({ user, repo }) {
     </div>
   );
 }
+
+General.propTypes = {
+  repo: PropTypes.shape().isRequired,
+  user: PropTypes.shape({
+    admin: PropTypes.bool.isRequired,
+  }).isRequired,
+};
