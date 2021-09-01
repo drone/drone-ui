@@ -40,7 +40,11 @@ export default function General({ user, repo }) {
           'trusted',
           'visibility',
           'timeout',
-          'config_path']),
+          'config_path',
+          'auto_cancel_pull_requests',
+          'auto_cancel_pushes',
+          'auto_cancel_running',
+        ]),
       );
     }
   }, [repo]);
@@ -79,7 +83,22 @@ export default function General({ user, repo }) {
       case 'ignore_forks':
       case 'protected':
       case 'trusted':
+      case 'auto_cancel_running':
         setSettings((prev) => ({ ...prev, [field]: !prev[field] }));
+        break;
+      case 'auto_cancel_pull_requests':
+        setSettings((prev) => ({
+          ...prev,
+          [field]: !prev[field],
+          auto_cancel_running: prev.auto_cancel_pushes ? prev.auto_cancel_running : false,
+        }));
+        break;
+      case 'auto_cancel_pushes':
+        setSettings((prev) => ({
+          ...prev,
+          [field]: !prev[field],
+          auto_cancel_running: prev.auto_cancel_pull_requests ? prev.auto_cancel_running : false,
+        }));
         break;
       case 'visibility':
       case 'config_path':
@@ -96,7 +115,6 @@ export default function General({ user, repo }) {
         <Form className={cx('form')}>
           <FormSection className={cx('form-section-row')} title="Project Webhooks">
             <div className={cx('switch-row')}>
-
               <Switch
                 id="ignore_pull_requests"
                 checked={settings.ignore_pull_requests}
@@ -106,46 +124,76 @@ export default function General({ user, repo }) {
               </Switch>
             </div>
             <div className={cx('switch-row')}>
-
               <Switch
                 id="ignore_forks"
                 checked={settings.ignore_forks}
                 onChange={handleSettingsChange('ignore_forks')}
               >
                 Disable forks
-
               </Switch>
             </div>
           </FormSection>
           {user?.admin && (
-
           <FormSection className={cx('form-section-row')} title="Project Settings">
             <div className={cx('switch-row')}>
-
               <Switch
                 id="protected"
                 checked={settings.protected}
                 onChange={handleSettingsChange('protected')}
               >
                 Protected
-
               </Switch>
               <p className={cx('note')}>
                 Blocks a pipeline if the yaml signature cannot be verified.
               </p>
             </div>
             <div className={cx('switch-row')}>
-
               <Switch
                 id="trusted"
                 checked={settings.trusted}
                 onChange={handleSettingsChange('trusted')}
               >
                 Trusted
-
               </Switch>
               <p className={cx('note')}>
                 Enables privileged container settings.
+              </p>
+            </div>
+            <div className={cx('switch-row')}>
+              <Switch
+                id="auto_cancel_pull_requests"
+                checked={settings.auto_cancel_pull_requests}
+                onChange={handleSettingsChange('auto_cancel_pull_requests')}
+              >
+                Auto cancel pull requests
+              </Switch>
+              <p className={cx('note')}>
+                Automatically cancel pending pull request builds.
+              </p>
+            </div>
+            <div className={cx('switch-row')}>
+              <Switch
+                id="auto_cancel_pushes"
+                checked={settings.auto_cancel_pushes}
+                onChange={handleSettingsChange('auto_cancel_pushes')}
+              >
+                Auto cancel pushes
+              </Switch>
+              <p className={cx('note')}>
+                Automatically cancel pending push builds.
+              </p>
+            </div>
+            <div className={cx('switch-row')}>
+              <Switch
+                id="auto_cancel_running"
+                checked={settings.auto_cancel_running}
+                disabled={!settings.auto_cancel_pull_requests && !settings.auto_cancel_pushes}
+                onChange={handleSettingsChange('auto_cancel_running')}
+              >
+                Auto cancel running
+              </Switch>
+              <p className={cx('note')}>
+                Automatically cancel running builds if newer commit pushed.
               </p>
             </div>
           </FormSection>
