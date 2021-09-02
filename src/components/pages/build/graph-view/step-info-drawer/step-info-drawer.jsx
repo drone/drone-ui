@@ -1,4 +1,5 @@
 import classNames from 'classnames/bind';
+import PropTypes from 'prop-types';
 import React, {
   useRef,
 } from 'react';
@@ -24,7 +25,8 @@ const StepInfoDrawer = (props) => {
     hide,
   } = props;
   const { stage = 1, step = 1 } = useParams();
-  const stepData = data?.stages?.[stage - 1]?.steps?.[step - 1];
+  const runner = data?.stages[stage - 1]?.machine;
+  const stepData = data?.stages[stage - 1]?.steps[step - 1];
   const drawerRef = useRef();
   if (!isShown || !stepData) {
     return null;
@@ -56,6 +58,8 @@ const StepInfoDrawer = (props) => {
             )}
             <dt>Duration:</dt>
             <dd><Elapsed started={stepData?.started} finished={stepData?.stopped} withLetters /></dd>
+            <dt>Runner:</dt>
+            <dd>{runner}</dd>
           </dl>
         ) : <div>Step data is unavailable</div>}
       </div>
@@ -73,6 +77,31 @@ const StepInfoDrawer = (props) => {
       />
     </div>
   );
+};
+
+StepInfoDrawer.propTypes = {
+  data: PropTypes.shape({
+    stages: PropTypes.arrayOf(PropTypes.shape({
+      status: PropTypes.string,
+      name: PropTypes.string,
+      machine: PropTypes.string,
+      steps: PropTypes.arrayOf(PropTypes.shape({
+        name: PropTypes.string,
+        status: PropTypes.string,
+        started: PropTypes.number,
+        stopped: PropTypes.number,
+      })),
+    })),
+    debug: PropTypes.bool,
+    status: PropTypes.string,
+  }),
+  isDataLoading: PropTypes.bool.isRequired,
+  isShown: PropTypes.bool.isRequired,
+  hide: PropTypes.func.isRequired,
+};
+
+StepInfoDrawer.defaultProps = {
+  data: undefined,
 };
 
 export default StepInfoDrawer;
