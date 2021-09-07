@@ -1,32 +1,32 @@
 import {
-  useMemo, useEffect, useState, useCallback,
+  useEffect, useState, useCallback,
 } from 'react';
-import { useLocation } from 'react-router-dom';
 import {
   useSWRInfinite, mutate as mutateGlobal,
 } from 'swr';
-import { useStore } from 'hooks/store';
 
-import { instance, token, FAVICON_STATES } from '_constants';
-import { useFavicon } from 'hooks';
+import { instance, token } from '_constants';
+import { useStore } from 'hooks/store';
 
 import useSWRBase from './use-swr-base';
 
-const useBuilds = ({ namespace, name }, swrOptions = {}) => {
+const MAX_PAGE_LENGTH = 50;
+
+const useBuilds = ({ namespace, name }) => {
   const getKey = (pageIndex, previousPageData) => {
     const index = pageIndex + 1;
-    if (previousPageData && previousPageData.length < 50) {
+    if (previousPageData && previousPageData.length < MAX_PAGE_LENGTH) {
       return null;
     }
-    return `/api/repos/${namespace}/${name}/builds?page=${index}&per_page=50`; // SWR key
+    return `/api/repos/${namespace}/${name}/builds?page=${index}&per_page=${MAX_PAGE_LENGTH}`; // SWR key
   };
 
   const {
     data, size, setSize, error, mutate,
-  } = useSWRInfinite(getKey, swrOptions);
+  } = useSWRInfinite(getKey);
 
   const isEndReached = data?.some((cluster) => {
-    if (!cluster.length || cluster.length < 50) {
+    if (!cluster.length || cluster.length < MAX_PAGE_LENGTH) {
       return true;
     }
     return false;
@@ -71,8 +71,9 @@ const updateLatestRepos = (repo) => (latest) => {
     if (repoIndexInLatest === 0) {
       return [repo, ...latest.slice(1)];
     }
-    return latest.slice(0, repoIndexInLatest).concat(repo, latest.slice(repoIndexInLatest + 1));
+    return [...latest.slice(0, repoIndexInLatest), repo, ...latest.slice(repoIndexInLatest + 1)];
   }
+  return latest;
 };
 
 // activity feed updater
@@ -100,7 +101,7 @@ const updateBuilds = async (slug, repo) => {
   /
   / probably, it makes sense to use paginated data without useSWR
   */
-  const path = `arg@"many"@"/api/repos${slug}/builds?page=1&per_page=50"`;
+  const path = `arg@"many"@"/api/repos${slug}/builds?page=1&per_page=${MAX_PAGE_LENGTH}"`;
   mutateGlobal(path, async (builds) => {
     const { build } = repo;
     /* if no cache or no data,
@@ -117,11 +118,13 @@ const updateBuilds = async (slug, repo) => {
     /* update the builds list
     */
     if (foundBuildIndex > 0) {
-      return [unwrappedBuilds.slice(0, foundBuildIndex).concat(build, unwrappedBuilds.slice(foundBuildIndex + 1))];
+      return [[...unwrappedBuilds.slice(0, foundBuildIndex), build, ...unwrappedBuilds.slice(foundBuildIndex + 1)]];
     } if (!foundBuildIndex) {
-      return [[build].concat(unwrappedBuilds.slice(1))];
+      return [[build, ...unwrappedBuilds.slice(1)]];
+    } if (unwrappedBuilds.length > MAX_PAGE_LENGTH) {
+      return [[build, ...unwrappedBuilds.slice(0, unwrappedBuilds.length - 1)]];
     }
-    return [[build].concat(unwrappedBuilds.slice(0, unwrappedBuilds.length - 1))];
+    return [[build, ...unwrappedBuilds]];
   },
   false);
 };
