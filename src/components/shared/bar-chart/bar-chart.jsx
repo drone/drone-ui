@@ -82,7 +82,7 @@ const BarChart = (props) => {
     if (data.length < barsShown) {
       const barPlaceholders = Array
         .from({ length: barsShown - data.length },
-          (_, i) => ({ number: data.length + i + 1 }));
+          (_, i) => ({ number: 0 - i }));
       return withHeight.concat(barPlaceholders);
     }
     return withHeight;
@@ -143,12 +143,14 @@ BarChart.propTypes = {
   height: PropTypes.number.isRequired,
   onClick: PropTypes.func.isRequired,
   minBarWidth: PropTypes.number,
+  minGapWidth: PropTypes.number,
   barsShown: PropTypes.number,
 };
 
 BarChart.defaultProps = {
   className: '',
   minBarWidth: MIN_BAR_WIDTH,
+  minGapWidth: MIN_GAP_WIDTH,
   barsShown: BARS_SHOWN,
 };
 

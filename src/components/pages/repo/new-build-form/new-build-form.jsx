@@ -85,11 +85,13 @@ const NewBuildForm = ({ handleSubmit, handleCancel }) => {
         ) : null}
         <div className={cx('new-build-form-parameters-fields')}>
           <Field.Input
+            name="newKey"
             placeholder="key"
             value={parameterState.key}
             onChange={handleParameterChange('key')}
           />
           <Field.Input
+            name="newVal"
             placeholder="value"
             value={parameterState.value}
             onChange={handleParameterChange('value')}
