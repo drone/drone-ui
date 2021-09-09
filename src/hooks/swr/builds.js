@@ -77,7 +77,7 @@ const updateLatestRepos = (repo) => (latest) => {
 };
 
 // activity feed updater
-const updateBuilds = async (slug, repo) => {
+const updateBuilds = async (slug, repo, newBuild = null) => {
   if (`/${repo.namespace}/${repo.name}` !== slug) {
     // no need to do anything actually since user
     // is on the activity feed of another repo
@@ -103,7 +103,7 @@ const updateBuilds = async (slug, repo) => {
   */
   const path = `arg@"many"@"/api/repos${slug}/builds?page=1&per_page=${MAX_PAGE_LENGTH}"`;
   mutateGlobal(path, async (builds) => {
-    const { build } = repo;
+    const build = newBuild ?? repo.build;
     /* if no cache or no data,
     / just return an array with received build
     */
@@ -187,5 +187,5 @@ const useStreamBuildEvents = () => {
 };
 
 export {
-  useBuilds, useBuild, useStreamBuildEvents,
+  useBuilds, useBuild, useStreamBuildEvents, updateBuilds,
 };

@@ -1,4 +1,5 @@
 import classNames from 'classnames/bind';
+import PropTypes from 'prop-types';
 import React, {
   useCallback, useMemo, useContext,
 } from 'react';
@@ -13,7 +14,7 @@ import Button from 'components/shared/button';
 import Modal, { useModal } from 'components/shared/modal';
 import { AppContext } from 'context';
 import { useToast } from 'hooks';
-import { useRepo } from 'hooks/swr';
+import { useRepo, updateBuilds } from 'hooks/swr';
 import NotFound from 'pages/not-found';
 import { Routes } from 'routes/routes';
 import { ReactComponent as DemoIcon } from 'svg/demo.svg';
@@ -57,7 +58,7 @@ const getTabProps = ({
 const Repo = ({ user }) => {
   const { params } = useRouteMatch();
   const {
-    namespace, name, build, stage = 1, step = 1,
+    namespace, name,
   } = params;
   const [context] = useContext(AppContext);
   const { isRepoNavDisabled } = context;
@@ -106,16 +107,17 @@ const Repo = ({ user }) => {
       }
     }
     try {
-      await axiosWrapper(endpoint, {
+      const newBuild = await axiosWrapper(endpoint, {
         method: 'POST',
       });
       showSuccess('New build has started successfully');
+      updateBuilds(window.location.pathname, repo, newBuild);
     } catch (e) {
       showError(`Unable to start a new build: ${e.message}`);
       // eslint-disable-next-line no-console
       console.warn(e.message);
     }
-  }, [name, namespace, showError, showSuccess]);
+  }, [name, namespace, showError, showSuccess, repo]);
   if (isRepoDataLoading) {
     return null;
   }
@@ -212,6 +214,12 @@ const Repo = ({ user }) => {
       />
     </Switch>
   );
+};
+
+Repo.propTypes = {
+  user: PropTypes.shape({
+    admin: PropTypes.bool,
+  }).isRequired,
 };
 
 export default Repo;
