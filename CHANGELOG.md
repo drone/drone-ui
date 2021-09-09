@@ -13,6 +13,10 @@
 - kicking off new build manually will push build to build list [\#378](https://github.com/drone/drone-ui/pull/378) ([d1wilko](https://github.com/d1wilko))
 - fix builds stream event behaviour [\#377](https://github.com/drone/drone-ui/pull/377) ([d1wilko](https://github.com/d1wilko))
 
+**Merged pull requests:**
+
+- release v2.2.0 [\#379](https://github.com/drone/drone-ui/pull/379) ([d1wilko](https://github.com/d1wilko))
+
 ## [v2.1.0](https://github.com/drone/drone-ui/tree/v2.1.0) (2021-09-01)
 
 [Full Changelog](https://github.com/drone/drone-ui/compare/v2.0.1...v2.1.0)
