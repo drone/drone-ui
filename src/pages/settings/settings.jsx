@@ -18,7 +18,7 @@ import { axiosWrapper } from 'utils';
 import Badges from './badges';
 import Cron from './cron';
 import General from './general';
-import Secrets from './secrets';
+import { Secrets, OrgSecrets } from './secrets';
 import styles from './settings.module.scss';
 
 const cx = classNames.bind(styles);
@@ -119,6 +119,15 @@ export default function Settings({ user, repo }) {
               >
                 Badges
               </NavLink>
+              <h3 className={cx('settings-nav-section-header')}>Organization</h3>
+              <NavLink
+                className={cx('settings-nav-item')}
+                activeClassName={cx('settings-nav-item-active')}
+                to={`/${namespace}/${name}/settings/org-secrets`}
+                exact
+              >
+                Secrets
+              </NavLink>
             </nav>
           </aside>
           <Switch>
@@ -130,6 +139,7 @@ export default function Settings({ user, repo }) {
             <Route path="/:namespace/:name/settings/secrets" component={Secrets} />
             <Route path="/:namespace/:name/settings/cron" component={Cron} />
             <Route path="/:namespace/:name/settings/badges" component={Badges} />
+            <Route path="/:namespace/:name/settings/org-secrets" component={OrgSecrets} />
           </Switch>
         </section>
       ) : (

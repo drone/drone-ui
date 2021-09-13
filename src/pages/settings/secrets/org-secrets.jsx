@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import Button from 'components/shared/button';
 import Modal, { useModal } from 'components/shared/modal';
 import { useToast } from 'hooks';
-import { useSecrets } from 'hooks/swr';
+import { useOrgSecrets } from 'hooks/swr';
 import { ReactComponent as DemoIcon } from 'svg/demo.svg';
 import { axiosWrapper } from 'utils';
 
@@ -14,40 +14,40 @@ import { NewSecretForm, SecretListView } from './shared';
 
 const cx = classNames.bind(styles);
 
-export default function Secrets() {
-  const { namespace, name } = useParams();
-  const { data, isLoading, mutate } = useSecrets({ namespace, name });
+export default function OrgSecrets() {
+  const { namespace } = useParams();
+  const { data, isLoading, mutate } = useOrgSecrets({ namespace });
   const [isModalShowing, toggleModal] = useModal();
   const { showError, showSuccess } = useToast();
 
   const handleAddSecret = useCallback(async (values) => {
     try {
-      const res = await axiosWrapper(`/api/repos/${namespace}/${name}/secrets`,
+      const res = await axiosWrapper(`/api/secrets/${namespace}`,
         {
           method: 'POST',
           data: values,
         });
       mutate((prev) => prev.concat(res), false);
-      showSuccess('Secret has been added successfully');
+      showSuccess('Organization secret has been added successfully');
     } catch (e) {
-      showError(`Unable to add secret: ${e.message}`);
+      showError(`Unable to add organization secret: ${e.message}`);
       // eslint-disable-next-line no-console
       console.warn(e.message);
     }
-  }, [mutate, namespace, name, showSuccess, showError]);
+  }, [mutate, namespace, showSuccess, showError]);
 
   const handleRemoveSecret = (secretName) => async () => {
     // eslint-disable-next-line no-alert
-    const userAgreed = window.confirm('Are you sure you want to delete this secret?');
+    const userAgreed = window.confirm('Are you sure you want to delete this organization secret?');
     if (userAgreed) {
       try {
-        await axiosWrapper(`/api/repos/${namespace}/${name}/secrets/${secretName}`, {
+        await axiosWrapper(`/api/secrets/${namespace}/${secretName}`, {
           method: 'DELETE',
         });
         mutate(data.filter((secretItem) => secretItem.name !== secretName), false);
-        showSuccess('Secret has been removed successfully');
+        showSuccess('Organization secret has been removed successfully');
       } catch (e) {
-        showError(`Unable to remove secret: ${e.message}`);
+        showError(`Unable to remove organization secret: ${e.message}`);
         // eslint-disable-next-line no-console
         console.warn(e.message);
       }
@@ -64,7 +64,7 @@ export default function Secrets() {
   } else {
     secrets = (
       <div className={cx('zero')}>
-        <h2>No Secrets</h2>
+        <h2>No Organization Secrets</h2>
         <p>Manage sensitive configuration parameters, such as passwords, tokens, and ssh keys.</p>
       </div>
     );
@@ -80,14 +80,14 @@ export default function Secrets() {
               icon={<DemoIcon />}
               onClick={toggleModal}
             >
-              New Secret
+              New Organization Secret
             </Button>
           </div>
           {secrets}
         </div>
       </div>
       <Modal
-        title="Create a New Secret"
+        title="Create a New Organization Secret"
         isShowing={isModalShowing}
         hide={toggleModal}
       >

@@ -41,6 +41,15 @@
       color: #0378d4;
     }
   }
+  &-section-header {
+    margin-top: 22px;
+    padding: 10px 17px;
+    line-height: 24px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #9293ab;
+    text-transform: uppercase;
+  }
 }
 
 .inactive {

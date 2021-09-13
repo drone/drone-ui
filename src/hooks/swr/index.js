@@ -6,6 +6,7 @@ import { useRepo, useLatestRepos } from './repo';
 import useBranches from './use-branches';
 import useCrons from './use-crons';
 import useDeployments from './use-deployments';
+import useOrgSecrets from './use-org-secrets';
 import useSecrets from './use-secrets';
 import { useUserList } from './user';
 import { useViewer, useViewerToken, useSyncAccount } from './viewer';
@@ -20,6 +21,7 @@ export {
   useDeployments,
   useRepo,
   useSecrets,
+  useOrgSecrets,
   useCrons,
   useViewerToken,
   useViewer,
