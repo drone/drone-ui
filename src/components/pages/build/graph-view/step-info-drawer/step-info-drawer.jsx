@@ -26,7 +26,7 @@ const StepInfoDrawer = (props) => {
   } = props;
   const { stage = 1, step = 1 } = useParams();
   const runner = data?.stages[stage - 1]?.machine;
-  const stepData = data?.stages[stage - 1]?.steps[step - 1];
+  const stepData = data?.stages[stage - 1]?.steps?.[step - 1];
   const drawerRef = useRef();
   if (!isShown || !stepData) {
     return null;
