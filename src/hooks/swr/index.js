@@ -8,6 +8,7 @@ import useCrons from './use-crons';
 import useDeployments from './use-deployments';
 import useOrgSecrets from './use-org-secrets';
 import useSecrets from './use-secrets';
+import useTemplates from './use-templates';
 import { useUserList } from './user';
 import { useViewer, useViewerToken, useSyncAccount } from './viewer';
 
@@ -29,4 +30,5 @@ export {
   useStreamBuildEvents,
   useStreamLogs,
   useUserList,
+  useTemplates,
 };
