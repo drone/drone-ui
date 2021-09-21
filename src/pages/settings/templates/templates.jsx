@@ -20,9 +20,9 @@ const cx = classNames.bind(styles);
 
 const JSONNET = '.jsonnet';
 const STARLARK = '.starlark';
-const YML = '.yml';
+const YAML = '.yaml';
 
-const EXT_OPTIONS = [JSONNET, STARLARK, YML].map(
+const EXT_OPTIONS = [JSONNET, STARLARK, YAML].map(
   (opt) => ({ key: opt, value: opt }),
 );
 
@@ -89,7 +89,7 @@ const NewTemplateForm = ({ handleSubmit, handleCancel }) => {
       case STARLARK:
         setState((prev) => ({ ...prev, data: defaultStarlark }));
         break;
-      case YML:
+      case YAML:
         setState((prev) => ({ ...prev, data: defaultYaml }));
         break;
       default:
