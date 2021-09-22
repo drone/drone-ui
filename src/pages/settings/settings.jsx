@@ -20,6 +20,7 @@ import Cron from './cron';
 import General from './general';
 import { Secrets, OrgSecrets } from './secrets';
 import styles from './settings.module.scss';
+import Templates from './templates';
 
 const cx = classNames.bind(styles);
 
@@ -128,6 +129,14 @@ export default function Settings({ user, repo }) {
               >
                 Secrets
               </NavLink>
+              <NavLink
+                className={cx('settings-nav-item')}
+                activeClassName={cx('settings-nav-item-active')}
+                to={`/${namespace}/${name}/settings/templates`}
+                exact
+              >
+                Templates
+              </NavLink>
             </nav>
           </aside>
           <Switch>
@@ -140,6 +149,8 @@ export default function Settings({ user, repo }) {
             <Route path="/:namespace/:name/settings/cron" component={Cron} />
             <Route path="/:namespace/:name/settings/badges" component={Badges} />
             <Route path="/:namespace/:name/settings/org-secrets" component={OrgSecrets} />
+            <Route path="/:namespace/:name/settings/templates" component={Templates} />
+
           </Switch>
         </section>
       ) : (
