@@ -1,5 +1,30 @@
 # Changelog
 
+## [v2.3.0](https://github.com/drone/drone-ui/tree/v2.3.0) (2021-09-22)
+
+[Full Changelog](https://github.com/drone/drone-ui/compare/v2.2.1...v2.3.0)
+
+**Implemented enhancements:**
+
+- add templates to repo settings [\#385](https://github.com/drone/drone-ui/pull/385) ([d1wilko](https://github.com/d1wilko))
+- Feat/dron 129 - Add org secrets page [\#381](https://github.com/drone/drone-ui/pull/381) ([d1wilko](https://github.com/d1wilko))
+
+**Fixed bugs:**
+
+- fix graph view crash when runner cannot be found [\#383](https://github.com/drone/drone-ui/pull/383) ([d1wilko](https://github.com/d1wilko))
+
+**Closed issues:**
+
+- How to manually exec special name pipeline [\#384](https://github.com/drone/drone-ui/issues/384)
+
+## [v2.2.1](https://github.com/drone/drone-ui/tree/v2.2.1) (2021-09-09)
+
+[Full Changelog](https://github.com/drone/drone-ui/compare/v2.2.0...v2.2.1)
+
+**Merged pull requests:**
+
+- release v2.2.1 [\#380](https://github.com/drone/drone-ui/pull/380) ([d1wilko](https://github.com/d1wilko))
+
 ## [v2.2.0](https://github.com/drone/drone-ui/tree/v2.2.0) (2021-09-09)
 
 [Full Changelog](https://github.com/drone/drone-ui/compare/v2.1.0...v2.2.0)
