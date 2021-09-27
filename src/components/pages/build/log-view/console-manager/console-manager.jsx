@@ -54,7 +54,7 @@ const stageDefferedLogsStates = stepDefferedLogsStates.slice(1);
 
 export default function LogViewConsoleManager(props) {
   const {
-    consoleProps, hasBuildDebugMode, isDataLoading, stageStatus, stageName, stepData, buildStatus, stageError
+    consoleProps, hasBuildDebugMode, isDataLoading, stageStatus, stageName, stepData, buildStatus, stageError,
   } = props;
   const params = useParams();
   /* State */
@@ -133,38 +133,78 @@ export default function LogViewConsoleManager(props) {
 
   if (state?.stepData?.status === STEP_STATES.ERROR) {
     return (
-      <NonLogsContainer className={cx('no-logs')}>
-        <div className={cx('error-wrapper')}>
-          <SystemMessage intent="danger">
-            {getLogsErrorContent({
-              buildStatus: state.buildStatus,
-              stageStatus: state.stageStatus,
-              stageName: state.stageName,
-              stepName: state.stepData.name,
-              stepError: state.stepData.error,
-              logsHookError: state.logsHookError,
-            })}
-          </SystemMessage>
-        </div>
-      </NonLogsContainer>
+      <>
+        <NonLogsContainer className={cx('no-logs')}>
+          <div className={cx('error-wrapper')}>
+            <SystemMessage intent="danger">
+              {getLogsErrorContent({
+                buildStatus: state.buildStatus,
+                stageStatus: state.stageStatus,
+                stageName: state.stageName,
+                stepName: state.stepData.name,
+                stepError: state.stepData.error,
+                logsHookError: state.logsHookError,
+              })}
+            </SystemMessage>
+          </div>
+        </NonLogsContainer>
+        {state?.logs?.length
+        && (
+        <Console
+          ref={dynamicHeightRef}
+          height={dynamicHeight}
+          shownLogsLimit={LOGS_LIMIT}
+          tmateLink={state.tmateLink}
+          logs={state.logs}
+          showLogsLoadingLine={state.compState === STATES.LOADING
+      || (state.compState === STATES.STREAM_ON && !state.logs.length)}
+          areLogsLoading={state.compState === STATES.LOADING}
+          stepData={state.stepData}
+          showDownloadBtn={state.stepData?.stopped && state.compState === STATES.RESOLVED}
+          showFollowLogsBtn={state.compState === STATES.STREAM_ON}
+          logsBlobName={logsBlobName}
+          {...consoleProps}
+        />
+        )}
+      </>
     );
   }
   // render state switch statement
   switch (state?.compState) {
     case STATES.NO_LOGS_AVAILABLE:
       return (
-        <NonLogsContainer className={cx('no-logs')}>
-          <SystemMessage intent={getIntentFromStepStatus(state.stageStatus)}>
-            {getNoLogsContent({
-              buildStatus: state.buildStatus,
-              stageStatus: state.stageStatus,
-              stageName: state.stageName,
-              stepName: state.stepData.name,
-              stepStatus: state.stepData.status,
-              stageError: state.stageError,
-            })}
-          </SystemMessage>
-        </NonLogsContainer>
+        <>
+          <NonLogsContainer className={cx('no-logs')}>
+            <SystemMessage intent={getIntentFromStepStatus(state.stageStatus)}>
+              {getNoLogsContent({
+                buildStatus: state.buildStatus,
+                stageStatus: state.stageStatus,
+                stageName: state.stageName,
+                stepName: state.stepData.name,
+                stepStatus: state.stepData.status,
+                stageError: state.stageError,
+              })}
+            </SystemMessage>
+          </NonLogsContainer>
+          {state?.logs?.length
+        && (
+        <Console
+          ref={dynamicHeightRef}
+          height={dynamicHeight}
+          shownLogsLimit={LOGS_LIMIT}
+          tmateLink={state.tmateLink}
+          logs={state.logs}
+          showLogsLoadingLine={state.compState === STATES.LOADING
+      || (state.compState === STATES.STREAM_ON && !state.logs.length)}
+          areLogsLoading={state.compState === STATES.LOADING}
+          stepData={state.stepData}
+          showDownloadBtn={state.stepData?.stopped && state.compState === STATES.RESOLVED}
+          showFollowLogsBtn={state.compState === STATES.STREAM_ON}
+          logsBlobName={logsBlobName}
+          {...consoleProps}
+        />
+        )}
+        </>
       );
     case STATES.IDLE:
       return null;
