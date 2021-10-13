@@ -1,5 +1,17 @@
 # Changelog
 
+## [v2.3.1](https://github.com/drone/drone-ui/tree/v2.3.1) (2021-10-13)
+
+[Full Changelog](https://github.com/drone/drone-ui/compare/v2.3.0...v2.3.1)
+
+**Fixed bugs:**
+
+- show error and console logs for buld steps [\#387](https://github.com/drone/drone-ui/pull/387) ([d1wilko](https://github.com/d1wilko))
+
+**Closed issues:**
+
+- Error when opening build [\#382](https://github.com/drone/drone-ui/issues/382)
+
 ## [v2.3.0](https://github.com/drone/drone-ui/tree/v2.3.0) (2021-09-22)
 
 [Full Changelog](https://github.com/drone/drone-ui/compare/v2.2.1...v2.3.0)
@@ -16,6 +28,10 @@
 **Closed issues:**
 
 - How to manually exec special name pipeline [\#384](https://github.com/drone/drone-ui/issues/384)
+
+**Merged pull requests:**
+
+- release v2.3.0 [\#386](https://github.com/drone/drone-ui/pull/386) ([d1wilko](https://github.com/d1wilko))
 
 ## [v2.2.1](https://github.com/drone/drone-ui/tree/v2.2.1) (2021-09-09)
 
