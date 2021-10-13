@@ -13,6 +13,8 @@ import { ReactComponent as ArrowIcon } from 'svg/arrow.svg';
 import { ReactComponent as CalendarIcon } from 'svg/calendar.svg';
 import { getFullDateRepresentation } from 'utils';
 
+import { VIEWS } from '../index';
+
 import css from './header.module.scss';
 
 const cx = classNames.bind(css);
@@ -26,7 +28,7 @@ const Header = (props) => {
     handleCancelClick,
     handleMenuItemSelect,
     handleViewModeClick,
-    isGraphView,
+    view,
     userIsAdminOrHasWritePerm,
   } = props;
   let controls = null;
@@ -73,17 +75,22 @@ const Header = (props) => {
       </div>
       <div className={cx('togglers')}>
         <Button
-          className={cx({ active: !isGraphView })}
-          onClick={handleViewModeClick('log')}
+          className={cx({ active: view === VIEWS.LOGS_VIEW })}
+          onClick={handleViewModeClick(VIEWS.LOGS_VIEW)}
         >
           Log View
         </Button>
         <Button
-          className={cx({ active: isGraphView })}
-          onClick={handleViewModeClick('graph')}
+          className={cx({ active: view === VIEWS.GRAPH_VIEW })}
+          onClick={handleViewModeClick(VIEWS.GRAPH_VIEW)}
         >
           Graph View
-
+        </Button>
+        <Button
+          className={cx({ active: view === VIEWS.CARDS_VIEW })}
+          onClick={handleViewModeClick(VIEWS.CARDS_VIEW)}
+        >
+          Adaptive Cards
         </Button>
       </div>
       {data ? (

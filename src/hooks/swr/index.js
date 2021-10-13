@@ -1,6 +1,7 @@
 import {
   useBuild, useBuilds, useStreamBuildEvents, updateBuilds,
 } from './builds';
+import { useCards, useCard } from './cards';
 import { useLogs, useStreamLogs } from './logs';
 import { useRepo, useLatestRepos } from './repo';
 import useBranches from './use-branches';
@@ -23,6 +24,8 @@ export {
   useRepo,
   useSecrets,
   useOrgSecrets,
+  useCards,
+  useCard,
   useCrons,
   useViewerToken,
   useViewer,

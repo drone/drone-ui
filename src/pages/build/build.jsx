@@ -5,6 +5,7 @@ import React, {
 import { useHistory, useParams } from 'react-router-dom';
 
 import { instance } from '_constants';
+import CardsView from 'components/pages/build/cards-view';
 import GraphView from 'components/pages/build/graph-view';
 import LogView from 'components/pages/build/log-view';
 import { NonLogsContainer } from 'components/pages/build/log-view/console-manager';
@@ -12,7 +13,7 @@ import Button from 'components/shared/button';
 import Modal, { useModal } from 'components/shared/modal';
 import SystemMessage from 'components/shared/system-message';
 import { useLocalStorage, useCustomTitle, useToast } from 'hooks';
-import { useBuild } from 'hooks/swr';
+import { useBuild, useCards } from 'hooks/swr';
 import NotFound from 'pages/not-found';
 import { axiosWrapper } from 'utils';
 
@@ -26,6 +27,42 @@ const ERROR = 'error';
 const RESOLVED = 'resolved';
 const RESOLVED_BLOCKED = 'resolved_blocked';
 
+const LOGS_VIEW = 'logs';
+const GRAPH_VIEW = 'graph';
+const CARDS_VIEW = 'cards';
+
+export const VIEWS = { LOGS_VIEW, GRAPH_VIEW, CARDS_VIEW };
+
+const getContent = (view, data, isLoading, cardsData, cardsIsLoading, cardsIsError, namespace, name, build) => {
+  switch (view) {
+    case GRAPH_VIEW:
+      return (
+        <GraphView
+          data={data}
+          isDataLoading={isLoading}
+        />
+      );
+    case CARDS_VIEW:
+      return (
+        <CardsView
+          data={cardsData}
+          isDataLoading={cardsIsLoading}
+          isError={cardsIsError}
+          namespace={namespace}
+          name={name}
+          build={build}
+        />
+      );
+    default:
+      return (
+        <LogView
+          data={data}
+          isDataLoading={isLoading}
+        />
+      );
+  }
+};
+
 export default function Build({ user, userIsAdminOrHasWritePerm }) {
   const params = useParams();
   const {
@@ -37,8 +74,12 @@ export default function Build({ user, userIsAdminOrHasWritePerm }) {
   const {
     data, mutate, isError, isLoading,
   } = useBuild({ namespace, name, build });
+  const {
+    data: cardsData, isError: cardsIsError, isLoading: cardsIsLoading,
+    // TODO build here probably has to be build number as opposed to build ID - my test data matches these numbers by fluke
+  } = useCards({ namespace, name, build });
   const [state, setState] = useState(RESOLVED);
-  const [isGraphView, setIsGraphView] = useLocalStorage('isBuildPageInGraphMode', false);
+  const [view, setView] = useLocalStorage('buildPageView', LOGS_VIEW);
 
   const [isModalShowing, toggleModal] = useModal();
 
@@ -58,7 +99,21 @@ export default function Build({ user, userIsAdminOrHasWritePerm }) {
     }
   }, [data, isError, isLoading, stage]);
 
-  const handleViewModeClick = (mode) => () => setIsGraphView(mode === 'graph');
+  const stepMap = data?.stages?.reduce((stageAcc, stageData) => ({
+    [stageData?.id]: stageData?.steps?.reduce((stepAcc, stepData) => ({
+      [stepData?.id]: { stageNum: stageData.number, stepNum: stepData.number },
+      ...stepAcc,
+    }), {}),
+    ...stageAcc,
+  }),
+  {});
+
+  const enhancedCardsData = cardsData?.map((cardData) => {
+    const stepMapData = stepMap?.[cardData?.stage]?.[cardData?.step];
+    return { ...cardData, stageNum: stepMapData?.stageNum, stepNum: stepMapData?.stepNum };
+  });
+
+  const handleViewModeClick = (mode) => () => setView(mode);
 
   const handleDeploySubmit = useCallback(async ({ action, target, parameters }) => {
     const queryParams = parameters
@@ -211,24 +266,14 @@ export default function Build({ user, userIsAdminOrHasWritePerm }) {
       break;
     case RESOLVED:
     default:
-      content = isGraphView ? (
-        <GraphView
-          data={data}
-          isDataLoading={isLoading}
-        />
-      ) : (
-        <LogView
-          data={data}
-          isDataLoading={isLoading}
-        />
-      );
+      content = getContent(view, data, isLoading, enhancedCardsData, cardsIsLoading, cardsIsError, namespace, name, build);
   }
   return (
     <>
       <Header
         data={data}
         userIsAdminOrHasWritePerm={userIsAdminOrHasWritePerm}
-        isGraphView={isGraphView}
+        view={view}
         {...headerHandlers}
         {...params}
       />
