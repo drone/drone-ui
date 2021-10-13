@@ -68,6 +68,7 @@ export default function Build({ user, userIsAdminOrHasWritePerm }) {
   const {
     namespace, name, build, stage = 1, step = 1,
   } = params;
+  // console.log(params);
   useCustomTitle(`Build #${build}.${stage}.${step} - ${namespace}/${name}`);
 
   const history = useHistory();
@@ -98,6 +99,8 @@ export default function Build({ user, userIsAdminOrHasWritePerm }) {
       }
     }
   }, [data, isError, isLoading, stage]);
+
+  console.log(data);
 
   const stepMap = data?.stages?.reduce((stageAcc, stageData) => ({
     [stageData?.id]: stageData?.steps?.reduce((stepAcc, stepData) => ({
