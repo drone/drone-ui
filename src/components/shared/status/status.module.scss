@@ -50,14 +50,6 @@
     background: #09c270;
   }
 
-  &-running,
-  &-pending,
-  &-blocked,
-  &-waiting_on_dependencies {
-    svg {
-      animation: spin 2s linear infinite;
-    }
-  }
   &-pending,
   &-blocked,
   &-waiting_on_dependencies {
