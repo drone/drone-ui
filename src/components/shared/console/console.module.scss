@@ -110,6 +110,7 @@
 
 .line-number {
   display: table-cell;
+  user-select: none;
   padding-right: 28px;
   text-align: end;
   white-space: nowrap;
@@ -129,6 +130,7 @@
 
 .line-time {
   display: table-cell;
+  user-select: none;
   padding-left: 28px;
   text-align: end;
   white-space: nowrap;
