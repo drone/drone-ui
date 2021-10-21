@@ -1,11 +1,12 @@
 .card-list {
-    margin: 2rem;
+    margin: 1rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .message {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     padding: 1rem;
     background-color: white;
+    border: 1px lightgrey solid;
 }

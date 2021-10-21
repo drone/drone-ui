@@ -1,4 +1,5 @@
 import classNames from 'classnames/bind';
+import PropTypes from 'prop-types';
 import React, {
   useCallback, useState, useLayoutEffect,
 } from 'react';
@@ -13,7 +14,7 @@ import Button from 'components/shared/button';
 import Modal, { useModal } from 'components/shared/modal';
 import SystemMessage from 'components/shared/system-message';
 import { useLocalStorage, useCustomTitle, useToast } from 'hooks';
-import { useBuild, useCards } from 'hooks/swr';
+import { useBuild } from 'hooks/swr';
 import NotFound from 'pages/not-found';
 import { axiosWrapper } from 'utils';
 
@@ -33,7 +34,7 @@ const CARDS_VIEW = 'cards';
 
 export const VIEWS = { LOGS_VIEW, GRAPH_VIEW, CARDS_VIEW };
 
-const getContent = (view, data, isLoading, cardsData, cardsIsLoading, cardsIsError, namespace, name, build) => {
+const getContent = (view, data, isLoading, namespace, name, build, cardsData) => {
   switch (view) {
     case GRAPH_VIEW:
       return (
@@ -46,8 +47,7 @@ const getContent = (view, data, isLoading, cardsData, cardsIsLoading, cardsIsErr
       return (
         <CardsView
           data={cardsData}
-          isDataLoading={cardsIsLoading}
-          isError={cardsIsError}
+          isDataLoading={isLoading}
           namespace={namespace}
           name={name}
           build={build}
@@ -68,17 +68,12 @@ export default function Build({ user, userIsAdminOrHasWritePerm }) {
   const {
     namespace, name, build, stage = 1, step = 1,
   } = params;
-  // console.log(params);
   useCustomTitle(`Build #${build}.${stage}.${step} - ${namespace}/${name}`);
 
   const history = useHistory();
   const {
     data, mutate, isError, isLoading,
   } = useBuild({ namespace, name, build });
-  const {
-    data: cardsData, isError: cardsIsError, isLoading: cardsIsLoading,
-    // TODO build here probably has to be build number as opposed to build ID - my test data matches these numbers by fluke
-  } = useCards({ namespace, name, build });
   const [state, setState] = useState(RESOLVED);
   const [view, setView] = useLocalStorage('buildPageView', LOGS_VIEW);
 
@@ -100,21 +95,18 @@ export default function Build({ user, userIsAdminOrHasWritePerm }) {
     }
   }, [data, isError, isLoading, stage]);
 
-  console.log(data);
-
-  const stepMap = data?.stages?.reduce((stageAcc, stageData) => ({
-    [stageData?.id]: stageData?.steps?.reduce((stepAcc, stepData) => ({
-      [stepData?.id]: { stageNum: stageData.number, stepNum: stepData.number },
-      ...stepAcc,
-    }), {}),
-    ...stageAcc,
-  }),
-  {});
-
-  const enhancedCardsData = cardsData?.map((cardData) => {
-    const stepMapData = stepMap?.[cardData?.stage]?.[cardData?.step];
-    return { ...cardData, stageNum: stepMapData?.stageNum, stepNum: stepMapData?.stepNum };
-  });
+  // sort individual steps card data into a managable array
+  const cardsData = data?.stages.reduce((cardDataAcc, stageData) => {
+    const stageCardData = stageData?.steps.reduce((stageDataAcc, stepData) => {
+      if (stepData.schema) {
+        return [...stageDataAcc, {
+          stage: stageData.number, step: stepData.number, schema: stepData.schema,
+        }];
+      }
+      return stageDataAcc;
+    }, []);
+    return [...cardDataAcc, ...stageCardData];
+  }, []);
 
   const handleViewModeClick = (mode) => () => setView(mode);
 
@@ -269,7 +261,7 @@ export default function Build({ user, userIsAdminOrHasWritePerm }) {
       break;
     case RESOLVED:
     default:
-      content = getContent(view, data, isLoading, enhancedCardsData, cardsIsLoading, cardsIsError, namespace, name, build);
+      content = getContent(view, data, isLoading, namespace, name, build, cardsData);
   }
   return (
     <>
@@ -291,3 +283,8 @@ export default function Build({ user, userIsAdminOrHasWritePerm }) {
     </>
   );
 }
+
+Build.propTypes = {
+  user: PropTypes.shape().isRequired,
+  userIsAdminOrHasWritePerm: PropTypes.bool.isRequired,
+};

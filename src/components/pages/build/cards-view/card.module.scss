@@ -1,13 +1,11 @@
 .card {
-    width: 100%;
     background-color: white;
     display: flex;
-    justify-content: center;
     align-items: center;
-    margin: 1rem 0;
+    margin: 0 0 1rem 0;
     border: 1px lightgrey solid;
 
-    &-loading {
-        padding: 1rem 0;
+    &-message {
+        padding: 1rem;
     }
 }

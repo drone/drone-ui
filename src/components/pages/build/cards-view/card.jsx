@@ -1,11 +1,12 @@
-// import { AdaptiveCard } from 'adaptivecards';
 import { Template } from 'adaptivecards-templating';
 import axios from 'axios';
 import classNames from 'classnames/bind';
+import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import AdaptiveCard from 'react-adaptivecards';
 
 import { useCard } from 'hooks/swr';
+
+import AdaptiveCard from '../../../shared/adaptive-card';
 
 import css from './card.module.scss';
 
@@ -27,30 +28,36 @@ const Card = ({
 }) => {
   const {
     data: json, isError: jsonIsError, isLoading: jsonIsLoading,
-    // TODO build here probably has to be build number as opposed to build ID - my test data matches these numbers by fluke
   } = useCard({
-    namespace, name, build, stage: data.stageNum, step: data.stepNum,
+    namespace, name, build, stage: data.stage, step: data.step,
   });
-
-  // TODO this should be moved to the SWR part
-  const stringJson = json && Object.keys(json).reduce((acc, key) => {
-    acc[key] = `${json[key]}`;
-    return acc;
-  },
-  {});
 
   const [adaptiveCard, setAdaptiveCard] = useState(null);
 
   useEffect(() => {
     if (!jsonIsLoading && !adaptiveCard) {
-      loadAdaptiveCard(data.schema, stringJson, setAdaptiveCard);
+      loadAdaptiveCard(data.schema, json, setAdaptiveCard);
     }
-  }, [jsonIsLoading, data, stringJson, adaptiveCard]);
+  }, [jsonIsLoading, data, json, adaptiveCard]);
 
   if (jsonIsLoading || !adaptiveCard) {
-    return <li className={cx('card', 'card-loading')}>LOADING...</li>;
+    return <li className={cx('card', 'card-message')}>CARD LOADING...</li>;
+  }
+  if (jsonIsError) {
+    return <li className={cx('card', 'card-message')}>CARD ERROR</li>;
   }
   return <li className={cx('card')}><AdaptiveCard payload={adaptiveCard} /></li>;
+};
+
+Card.propTypes = {
+  namespace: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  build: PropTypes.string.isRequired,
+  data: PropTypes.shape({
+    schema: PropTypes.string.isRequired,
+    stage: PropTypes.number.isRequired,
+    step: PropTypes.number.isRequired,
+  }).isRequired,
 };
 
 export default Card;
