@@ -30,6 +30,7 @@ const Header = (props) => {
     handleViewModeClick,
     view,
     userIsAdminOrHasWritePerm,
+    showCardHeader,
   } = props;
   let controls = null;
   if (data && data.status !== 'blocked') {
@@ -86,12 +87,15 @@ const Header = (props) => {
         >
           Graph View
         </Button>
+        {showCardHeader
+        && (
         <Button
           className={cx({ active: view === VIEWS.CARDS_VIEW })}
           onClick={handleViewModeClick(VIEWS.CARDS_VIEW)}
         >
           Adaptive Cards
         </Button>
+        )}
       </div>
       {data ? (
         <>
@@ -150,10 +154,30 @@ Header.propTypes = {
   namespace: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   build: PropTypes.string.isRequired,
-  data: PropTypes.shape({}),
+  data: PropTypes.shape({
+    number: PropTypes.string.isRequired,
+    event: PropTypes.string.isRequired,
+    action: PropTypes.string.isRequired,
+    sender: PropTypes.string.isRequired,
+    author_avatar: PropTypes.string.isRequired,
+    after: PropTypes.string.isRequired,
+    target: PropTypes.string.isRequired,
+    deploy_to: PropTypes.string.isRequired,
+    ref: PropTypes.string.isRequired,
+    cron: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
+    message: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    started: PropTypes.string.isRequired,
+    created: PropTypes.string.isRequired,
+    finished: PropTypes.string.isRequired,
+  }),
   handleCancelClick: PropTypes.func.isRequired,
   handleMenuItemSelect: PropTypes.func.isRequired,
   userIsAdminOrHasWritePerm: PropTypes.bool,
+  handleViewModeClick: PropTypes.func.isRequired,
+  view: PropTypes.string.isRequired,
+  showCardHeader: PropTypes.bool.isRequired,
 };
 
 Header.defaultProps = {

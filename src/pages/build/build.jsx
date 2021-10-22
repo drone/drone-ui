@@ -96,8 +96,8 @@ export default function Build({ user, userIsAdminOrHasWritePerm }) {
   }, [data, isError, isLoading, stage]);
 
   // sort individual steps card data into a managable array
-  const cardsData = data?.stages.reduce((cardDataAcc, stageData) => {
-    const stageCardData = stageData?.steps.reduce((stageDataAcc, stepData) => {
+  const cardsData = data?.stages?.reduce((cardDataAcc, stageData) => {
+    const stageCardData = stageData?.steps?.reduce((stageDataAcc, stepData) => {
       if (stepData.schema) {
         return [...stageDataAcc, {
           stage: stageData.number, step: stepData.number, schema: stepData.schema,
@@ -271,6 +271,7 @@ export default function Build({ user, userIsAdminOrHasWritePerm }) {
         view={view}
         {...headerHandlers}
         {...params}
+        showCardHeader={!!cardsData?.length}
       />
       {content}
       <Modal
