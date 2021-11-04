@@ -1,0 +1,11 @@
+.card {
+    background-color: white;
+    display: flex;
+    align-items: center;
+    margin: 0 0 1rem 0;
+    border: 1px lightgrey solid;
+
+    &-message {
+        padding: 1rem;
+    }
+}

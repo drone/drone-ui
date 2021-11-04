@@ -1,10 +1,12 @@
 import classNames from 'classnames/bind';
+import PropTypes from 'prop-types';
 import React, {
   useCallback, useState, useLayoutEffect,
 } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
 import { instance } from '_constants';
+import CardsView from 'components/pages/build/cards-view';
 import GraphView from 'components/pages/build/graph-view';
 import LogView from 'components/pages/build/log-view';
 import { NonLogsContainer } from 'components/pages/build/log-view/console-manager';
@@ -26,6 +28,41 @@ const ERROR = 'error';
 const RESOLVED = 'resolved';
 const RESOLVED_BLOCKED = 'resolved_blocked';
 
+const LOGS_VIEW = 'logs';
+const GRAPH_VIEW = 'graph';
+const CARDS_VIEW = 'cards';
+
+export const VIEWS = { LOGS_VIEW, GRAPH_VIEW, CARDS_VIEW };
+
+const getContent = (view, data, isLoading, namespace, name, build, cardsData) => {
+  switch (view) {
+    case GRAPH_VIEW:
+      return (
+        <GraphView
+          data={data}
+          isDataLoading={isLoading}
+        />
+      );
+    case CARDS_VIEW:
+      return (
+        <CardsView
+          data={cardsData}
+          isDataLoading={isLoading}
+          namespace={namespace}
+          name={name}
+          build={build}
+        />
+      );
+    default:
+      return (
+        <LogView
+          data={data}
+          isDataLoading={isLoading}
+        />
+      );
+  }
+};
+
 export default function Build({ user, userIsAdminOrHasWritePerm }) {
   const params = useParams();
   const {
@@ -38,7 +75,7 @@ export default function Build({ user, userIsAdminOrHasWritePerm }) {
     data, mutate, isError, isLoading,
   } = useBuild({ namespace, name, build });
   const [state, setState] = useState(RESOLVED);
-  const [isGraphView, setIsGraphView] = useLocalStorage('isBuildPageInGraphMode', false);
+  const [view, setView] = useLocalStorage('buildPageView', LOGS_VIEW);
 
   const [isModalShowing, toggleModal] = useModal();
 
@@ -58,7 +95,20 @@ export default function Build({ user, userIsAdminOrHasWritePerm }) {
     }
   }, [data, isError, isLoading, stage]);
 
-  const handleViewModeClick = (mode) => () => setIsGraphView(mode === 'graph');
+  // sort individual steps card data into a managable array
+  const cardsData = data?.stages?.reduce((cardDataAcc, stageData) => {
+    const stageCardData = stageData?.steps?.reduce((stageDataAcc, stepData) => {
+      if (stepData.schema) {
+        return [...stageDataAcc, {
+          stage: stageData.number, step: stepData.number, schema: stepData.schema,
+        }];
+      }
+      return stageDataAcc;
+    }, []) || [];
+    return [...cardDataAcc, ...stageCardData];
+  }, []);
+
+  const handleViewModeClick = (mode) => () => setView(mode);
 
   const handleDeploySubmit = useCallback(async ({ action, target, parameters }) => {
     const queryParams = parameters
@@ -211,26 +261,17 @@ export default function Build({ user, userIsAdminOrHasWritePerm }) {
       break;
     case RESOLVED:
     default:
-      content = isGraphView ? (
-        <GraphView
-          data={data}
-          isDataLoading={isLoading}
-        />
-      ) : (
-        <LogView
-          data={data}
-          isDataLoading={isLoading}
-        />
-      );
+      content = getContent(view, data, isLoading, namespace, name, build, cardsData);
   }
   return (
     <>
       <Header
         data={data}
         userIsAdminOrHasWritePerm={userIsAdminOrHasWritePerm}
-        isGraphView={isGraphView}
+        view={view}
         {...headerHandlers}
         {...params}
+        showCardHeader={!!cardsData?.length}
       />
       {content}
       <Modal
@@ -243,3 +284,8 @@ export default function Build({ user, userIsAdminOrHasWritePerm }) {
     </>
   );
 }
+
+Build.propTypes = {
+  user: PropTypes.shape().isRequired,
+  userIsAdminOrHasWritePerm: PropTypes.bool.isRequired,
+};

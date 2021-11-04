@@ -13,6 +13,8 @@ import { ReactComponent as ArrowIcon } from 'svg/arrow.svg';
 import { ReactComponent as CalendarIcon } from 'svg/calendar.svg';
 import { getFullDateRepresentation } from 'utils';
 
+import { VIEWS } from '../index';
+
 import css from './header.module.scss';
 
 const cx = classNames.bind(css);
@@ -26,8 +28,9 @@ const Header = (props) => {
     handleCancelClick,
     handleMenuItemSelect,
     handleViewModeClick,
-    isGraphView,
+    view,
     userIsAdminOrHasWritePerm,
+    showCardHeader,
   } = props;
   let controls = null;
   if (data && data.status !== 'blocked') {
@@ -73,18 +76,26 @@ const Header = (props) => {
       </div>
       <div className={cx('togglers')}>
         <Button
-          className={cx({ active: !isGraphView })}
-          onClick={handleViewModeClick('log')}
+          className={cx({ active: view === VIEWS.LOGS_VIEW })}
+          onClick={handleViewModeClick(VIEWS.LOGS_VIEW)}
         >
           Log View
         </Button>
         <Button
-          className={cx({ active: isGraphView })}
-          onClick={handleViewModeClick('graph')}
+          className={cx({ active: view === VIEWS.GRAPH_VIEW })}
+          onClick={handleViewModeClick(VIEWS.GRAPH_VIEW)}
         >
           Graph View
-
         </Button>
+        {showCardHeader
+        && (
+        <Button
+          className={cx({ active: view === VIEWS.CARDS_VIEW })}
+          onClick={handleViewModeClick(VIEWS.CARDS_VIEW)}
+        >
+          Card View
+        </Button>
+        )}
       </div>
       {data ? (
         <>
@@ -143,10 +154,30 @@ Header.propTypes = {
   namespace: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   build: PropTypes.string.isRequired,
-  data: PropTypes.shape({}),
+  data: PropTypes.shape({
+    number: PropTypes.string.isRequired,
+    event: PropTypes.string.isRequired,
+    action: PropTypes.string.isRequired,
+    sender: PropTypes.string.isRequired,
+    author_avatar: PropTypes.string.isRequired,
+    after: PropTypes.string.isRequired,
+    target: PropTypes.string.isRequired,
+    deploy_to: PropTypes.string.isRequired,
+    ref: PropTypes.string.isRequired,
+    cron: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
+    message: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    started: PropTypes.string.isRequired,
+    created: PropTypes.string.isRequired,
+    finished: PropTypes.string.isRequired,
+  }),
   handleCancelClick: PropTypes.func.isRequired,
   handleMenuItemSelect: PropTypes.func.isRequired,
   userIsAdminOrHasWritePerm: PropTypes.bool,
+  handleViewModeClick: PropTypes.func.isRequired,
+  view: PropTypes.string.isRequired,
+  showCardHeader: PropTypes.bool.isRequired,
 };
 
 Header.defaultProps = {
