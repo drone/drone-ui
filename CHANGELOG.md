@@ -1,5 +1,21 @@
 # Changelog
 
+## [v2.4.0](https://github.com/drone/drone-ui/tree/v2.4.0) (2021-11-04)
+
+[Full Changelog](https://github.com/drone/drone-ui/compare/v2.3.1...v2.4.0)
+
+**Implemented enhancements:**
+
+- Feature/dron 101 [\#391](https://github.com/drone/drone-ui/pull/391) ([d1wilko](https://github.com/d1wilko))
+
+**Fixed bugs:**
+
+- disable user-select on console line numbers and times [\#390](https://github.com/drone/drone-ui/pull/390) ([saj](https://github.com/saj))
+
+**Closed issues:**
+
+- Animated SVGs causing 50-100% load on 1-2 CPU cores [\#315](https://github.com/drone/drone-ui/issues/315)
+
 ## [v2.3.1](https://github.com/drone/drone-ui/tree/v2.3.1) (2021-10-13)
 
 [Full Changelog](https://github.com/drone/drone-ui/compare/v2.3.0...v2.3.1)
@@ -11,6 +27,10 @@
 **Closed issues:**
 
 - Error when opening build [\#382](https://github.com/drone/drone-ui/issues/382)
+
+**Merged pull requests:**
+
+- release v2.3.1 [\#388](https://github.com/drone/drone-ui/pull/388) ([d1wilko](https://github.com/d1wilko))
 
 ## [v2.3.0](https://github.com/drone/drone-ui/tree/v2.3.0) (2021-09-22)
 
