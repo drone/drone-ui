@@ -93,7 +93,7 @@ const Header = (props) => {
           className={cx({ active: view === VIEWS.CARDS_VIEW })}
           onClick={handleViewModeClick(VIEWS.CARDS_VIEW)}
         >
-          Adaptive Cards
+          Card View
         </Button>
         )}
       </div>

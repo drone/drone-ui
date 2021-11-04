@@ -104,7 +104,7 @@ export default function Build({ user, userIsAdminOrHasWritePerm }) {
         }];
       }
       return stageDataAcc;
-    }, []);
+    }, []) || [];
     return [...cardDataAcc, ...stageCardData];
   }, []);
 
