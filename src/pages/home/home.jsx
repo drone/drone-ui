@@ -40,7 +40,9 @@ export default function Home() {
 
   const { isSynced, isSyncing, isError: viewerError } = useViewer({ withPolling: hasSyncReqFiredOff });
 
-  const { repos, orgs, error, reload, reloadOnce } = useStore(); // eslint-disable-line
+  const {
+    repos, orgs, error, reload, reloadOnce,
+  } = useStore();
   const data = repos ? Object.values(repos) : undefined;
   const isLoading = !data && !error;
   useEffect(() => reloadOnce(), [reloadOnce]);
