@@ -58,6 +58,8 @@
   .actions {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
     & > * + * {
       margin-left: 24px;
     }
@@ -148,7 +150,7 @@
 }
 
 .search {
-  padding: 8px 12px 8px 34px;
+  padding: 8px 0 8px 0;
   font-size: 14px;
 
   &::placeholder {

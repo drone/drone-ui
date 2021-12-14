@@ -1,28 +1,49 @@
+import create from 'zustand';
+
 import { axiosWrapper } from 'utils';
 
-import create from 'zustand';
+// helper function that returns an object of unique repos and unique orgs
+const createSet = (input) => {
+  const repos = {};
+  const orgs = new Set();
+  input.forEach((repo) => {
+    repos[repo.slug] = repo;
+    orgs.add(repo.namespace);
+  });
+  return { repos, orgs: [...orgs] };
+};
 
 export const useStore = create((set, get) => ({
   cache: {},
   repos: undefined,
+  orgs: undefined,
   error: undefined,
   fired: false,
 
   update: (repo) => {
-    const repos = get().repos;
+    const { repos } = get();
     if (repos && repos[repo.slug]) {
-      console.log('update', repo.slug, repo.status);
-      set(state => {
-        state.repos[repo.slug] = repo;
-      });
+      const newRepos = repos;
+      newRepos[repo.slug] = repo;
+      set((state) => ({
+        repos: newRepos,
+        ...state,
+      }));
     }
   },
 
   reload: async () => {
-    const repos = await axiosWrapper(`/api/user/repos?latest=true`, { method: 'GET' });
-    set((state => {
-      state.repos = createSet(repos);
-      state.error = undefined;
+    const repos = await axiosWrapper('/api/user/repos?latest=true', {
+      method: 'GET',
+    });
+
+    const { repos: repoSet, orgs } = createSet(repos);
+
+    set((state) => ({
+      ...state,
+      repos: repoSet,
+      orgs,
+      error: undefined,
     }));
   },
 
@@ -36,20 +57,22 @@ export const useStore = create((set, get) => ({
     // update the state of the store to indicate the
     // request to fetch repositorie has been fired,
     // which prevents subsequent calls.
-    set((state => state.fired = true));
+    set((state) => ({
+      ...state,
+      fired: true,
+    }));
 
-    const repos = await axiosWrapper(`/api/user/repos?latest=true`, { method: 'GET' });
-    set((state => {
-      state.repos = createSet(repos);
-      state.error = undefined;
+    const repos = await axiosWrapper('/api/user/repos?latest=true', {
+      method: 'GET',
+    });
+
+    const { repos: repoSet, orgs } = createSet(repos);
+
+    set((state) => ({
+      ...state,
+      repos: repoSet,
+      orgs,
+      error: undefined,
     }));
   },
 }));
-
-// helper function converts an array of repositories to a
-// key value pair, where the key is the repository slug.
-const createSet = (input) => {
-  let output = {};
-  input.forEach(repo => output[repo.slug] = repo);
-  return output;
-}

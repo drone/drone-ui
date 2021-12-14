@@ -3,15 +3,16 @@ import React, {
   useEffect, useState, useMemo, useContext,
 } from 'react';
 
-import { useStore } from 'hooks/store';
 import Repos from 'components/pages/home/repos';
 import ReposRecent from 'components/pages/home/repos-recent';
 import Button from 'components/shared/button';
 import Input from 'components/shared/form/input';
+import Select from 'components/shared/form/select';
 import Switch from 'components/shared/switch';
 import ZeroState from 'components/shared/zero-state';
 import { AppContext } from 'context';
 import { useLocalStorage, useCustomTitle, useToast } from 'hooks';
+import { useStore } from 'hooks/store';
 import { useViewer, useSyncAccount } from 'hooks/swr';
 import { byBuildCreatedAtDesc, byRepoNameAsc } from 'utils';
 
@@ -23,18 +24,26 @@ const cx = classNames.bind(styles);
 // on show more click
 const REPOS_CHUNK_SIZE = 50;
 
-export default function Home({ user }) {
+const RECENT_ACTIVITY = 'Sort by Recent activity';
+const NAME = 'Sort by Name';
+const sortEnums = [RECENT_ACTIVITY, NAME];
+
+export default function Home() {
   const [context, setContext] = useContext(AppContext);
   const [showAllRepos, setShowAllRepos] = useState(false);
   const [isActiveOnly, setIsActiveOnly] = useLocalStorage('home_show_active_only_repos', false);
+  const [sortBy, setSortBy] = useLocalStorage('home_sort_repos_by', sortEnums[0]);
+  const [filterOrg, setFilterOrg] = useLocalStorage('home_org_repos', '');
   const [shouldStartSync, setShouldStartSync] = useState(context.isAccSyncing);
   const { showError } = useToast();
   const { hasSyncReqFiredOff, isError: syncError } = useSyncAccount(shouldStartSync);
 
   const { isSynced, isSyncing, isError: viewerError } = useViewer({ withPolling: hasSyncReqFiredOff });
 
-  const { repos, error, reload, reloadOnce } = useStore(); // eslint-disable-line
-  const data = !!repos ? Object.values(repos) : undefined;
+  const {
+    repos, orgs, error, reload, reloadOnce,
+  } = useStore();
+  const data = repos ? Object.values(repos) : undefined;
   const isLoading = !data && !error;
   useEffect(() => reloadOnce(), [reloadOnce]);
   useCustomTitle();
@@ -43,23 +52,32 @@ export default function Home({ user }) {
 
   const filtered = useMemo(
     () => data?.slice(0)
-      .filter((repo) => (isActiveOnly ? !!repo.build : !!repo))
+      .filter((repo) => (isActiveOnly ? repo.active : !!repo))
+      .filter((repo) => (filterOrg ? repo.namespace === filterOrg : !!repo))
       .filter((item) => item.slug.indexOf(filter) > -1) ?? [],
-    [data, filter, isActiveOnly],
+    [data, filter, isActiveOnly, filterOrg],
   );
 
   const sorted = useMemo(
     () => filtered
       .slice(0)
-      .sort(byRepoNameAsc)
+      .sort(sortBy === NAME ? byRepoNameAsc : byBuildCreatedAtDesc)
       .slice(0, showAllRepos ? filtered.length : REPOS_CHUNK_SIZE) ?? [],
-    [filtered, showAllRepos],
+    [filtered, showAllRepos, sortBy],
   );
 
   const recent = useMemo(
     () => data?.slice(0).sort(byBuildCreatedAtDesc).filter((repo) => !!repo.build)?.slice(0, 6) ?? [],
     [data],
   );
+
+  const orgOptions = useMemo(() => {
+    if (!orgs) return [{ value: '', key: 'All Organizations' }];
+    const returnOrgs = orgs?.map((org) => ({ value: org, key: org }));
+    return [{ value: '', key: 'All Organizations' }, ...returnOrgs];
+  }, [orgs]);
+
+  const sortOptions = sortEnums.map((option) => ({ value: option, key: option }));
 
   useEffect(() => {
     if (syncError || viewerError) {
@@ -101,8 +119,9 @@ export default function Home({ user }) {
               onChange={(val) => setIsActiveOnly(val)}
             >
               Active Only
-
             </Switch>
+            <Select value={sortBy} optionsList={sortOptions} onChange={(e) => setSortBy(e.target.value)} />
+            <Select value={filterOrg} optionsList={orgOptions} onChange={(e) => setFilterOrg(e.target.value)} />
             <Input
               placeholder="Filter …"
               icon="search"
