@@ -72,7 +72,7 @@ export default function Home() {
   );
 
   const orgOptions = useMemo(() => {
-    if (!orgs) return null;
+    if (!orgs) return [{ value: '', key: 'All Organizations' }];
     const returnOrgs = orgs?.map((org) => ({ value: org, key: org }));
     return [{ value: '', key: 'All Organizations' }, ...returnOrgs];
   }, [orgs]);
@@ -120,8 +120,8 @@ export default function Home() {
             >
               Active Only
             </Switch>
-            <Select optionsList={sortOptions} onChange={(e) => setSortBy(e.target.value)} />
-            <Select optionsList={orgOptions} onChange={(e) => setFilterOrg(e.target.value)} />
+            <Select value={sortBy} optionsList={sortOptions} onChange={(e) => setSortBy(e.target.value)} />
+            <Select value={filterOrg} optionsList={orgOptions} onChange={(e) => setFilterOrg(e.target.value)} />
             <Input
               placeholder="Filter …"
               icon="search"
