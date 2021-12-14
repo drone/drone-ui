@@ -52,7 +52,7 @@ export default function Home() {
 
   const filtered = useMemo(
     () => data?.slice(0)
-      .filter((repo) => (isActiveOnly ? !!repo.build : !!repo))
+      .filter((repo) => (isActiveOnly ? repo.active : !!repo))
       .filter((repo) => (filterOrg ? repo.namespace === filterOrg : !!repo))
       .filter((item) => item.slug.indexOf(filter) > -1) ?? [],
     [data, filter, isActiveOnly, filterOrg],
