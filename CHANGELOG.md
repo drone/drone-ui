@@ -1,5 +1,13 @@
 # Changelog
 
+## [v2.4.1](https://github.com/drone/drone-ui/tree/v2.4.1) (2021-12-15)
+
+[Full Changelog](https://github.com/drone/drone-ui/compare/v2.4.0...v2.4.1)
+
+**Implemented enhancements:**
+
+- New filter and sort options for repo list [\#395](https://github.com/drone/drone-ui/pull/395) ([d1wilko](https://github.com/d1wilko))
+
 ## [v2.4.0](https://github.com/drone/drone-ui/tree/v2.4.0) (2021-11-04)
 
 [Full Changelog](https://github.com/drone/drone-ui/compare/v2.3.1...v2.4.0)
@@ -12,9 +20,9 @@
 
 - disable user-select on console line numbers and times [\#390](https://github.com/drone/drone-ui/pull/390) ([saj](https://github.com/saj))
 
-**Closed issues:**
+**Merged pull requests:**
 
-- Animated SVGs causing 50-100% load on 1-2 CPU cores [\#315](https://github.com/drone/drone-ui/issues/315)
+- release v2.4.0 [\#392](https://github.com/drone/drone-ui/pull/392) ([d1wilko](https://github.com/d1wilko))
 
 ## [v2.3.1](https://github.com/drone/drone-ui/tree/v2.3.1) (2021-10-13)
 
@@ -23,10 +31,6 @@
 **Fixed bugs:**
 
 - show error and console logs for buld steps [\#387](https://github.com/drone/drone-ui/pull/387) ([d1wilko](https://github.com/d1wilko))
-
-**Closed issues:**
-
-- Error when opening build [\#382](https://github.com/drone/drone-ui/issues/382)
 
 **Merged pull requests:**
 
@@ -44,10 +48,6 @@
 **Fixed bugs:**
 
 - fix graph view crash when runner cannot be found [\#383](https://github.com/drone/drone-ui/pull/383) ([d1wilko](https://github.com/d1wilko))
-
-**Closed issues:**
-
-- How to manually exec special name pipeline [\#384](https://github.com/drone/drone-ui/issues/384)
 
 **Merged pull requests:**
 
@@ -109,10 +109,6 @@
 - fix off centre alt avatar bug [\#368](https://github.com/drone/drone-ui/pull/368) ([d1wilko](https://github.com/d1wilko))
 - fix single pending build bug and simplify median build time logic [\#367](https://github.com/drone/drone-ui/pull/367) ([d1wilko](https://github.com/d1wilko))
 - show error message for steps and stages [\#365](https://github.com/drone/drone-ui/pull/365) ([d1wilko](https://github.com/d1wilko))
-
-**Closed issues:**
-
-- UI crashes when no builds are found [\#364](https://github.com/drone/drone-ui/issues/364)
 
 **Merged pull requests:**
 
