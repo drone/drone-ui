@@ -1,12 +1,12 @@
 import classNames from 'classnames/bind';
 import React, { useState, useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import Button from 'components/shared/button';
 import Form, { Field, FormSection } from 'components/shared/form';
 import { ReactComponent as DroneLogo } from 'svg/logo-full.svg';
 import { ReactComponent as WelcomePageIllustration } from 'svg/welcome-illustration.svg';
 import { axiosWrapper } from 'utils';
-import { useHistory } from 'react-router-dom';
 
 import css from './register.module.scss';
 
@@ -85,14 +85,18 @@ export default function LoginForm() {
           </FormSection>
         </Form>
         <div className={cx('legal')}>
-          By clicking "Submit", you agree to our
+          By clicking &quot;Submit&quot;, you agree to our
           {' '}
           <a href="https://harness.io/privacy/">Privacy Policy</a>
           {' '}
           and
           {' '}
-          {/* eslint-disable-next-line */}
-          <a href="https://github.com/drone/drone/blob/master/LICENSE">License</a>.
+          <a href="https://github.com/drone/drone/blob/master/LICENSE">License</a>
+          . See our
+          {' '}
+          <a href="https://docs.drone.io/enterprise/pings/">documentation</a>
+          {' '}
+          to learn more about how we process your data.
         </div>
       </div>
       <div className={cx('illustration')}>
