@@ -21,9 +21,6 @@ export default function Builds({ repo }) {
   const { params: { namespace, name }, url } = useRouteMatch();
   const history = useHistory();
 
-  // removes trailing forward slash if it is present
-  const strippedUrl = url.replace(/\/*$/, '');
-
   // if repo is inactive, redirect to settigns where
   // user can proceed with repo activation
   useLayoutEffect(() => {
@@ -55,7 +52,7 @@ export default function Builds({ repo }) {
         <h2 className={cx('section-title')}>Summary</h2>
         <Summary data={data} totalBuildsCounter={repo?.counter} className={cx('summary')} />
         <h2 className={cx('section-title')}>Executions</h2>
-        <BuildList data={data} url={strippedUrl} />
+        <BuildList data={data} url={url} />
         {(!isLoading && !isEndReached && data.length) ? (
           <div>
             <Button className={cx('btn', 'btn-show-more')} onClick={handleShowMoreClick}>Show more &#8595;</Button>
