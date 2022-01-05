@@ -1,4 +1,5 @@
 import classNames from 'classnames/bind';
+import PropTypes from 'prop-types';
 import React, {
   useLayoutEffect,
 } from 'react';
@@ -61,7 +62,10 @@ export default function Builds({ repo }) {
     );
   } else {
     content = (
-      <ZeroState title="Your Build List is Empty." message="Press the New Build button to execute your first build pipeline." />
+      <ZeroState
+        title="Your Build List is Empty."
+        message="Press the New Build button to execute your first build pipeline."
+      />
     );
   }
 
@@ -71,3 +75,17 @@ export default function Builds({ repo }) {
     </>
   );
 }
+
+Builds.propTypes = {
+  repo: PropTypes.shape({
+    active: PropTypes.bool || undefined,
+    counter: PropTypes.number || undefined,
+  }),
+};
+
+Builds.defaultProps = {
+  repo: {
+    actice: undefined,
+    counter: undefined,
+  },
+};
