@@ -1,4 +1,5 @@
 import classNames from 'classnames/bind';
+import PropTypes from 'prop-types';
 import React, {
   useLayoutEffect,
 } from 'react';
@@ -19,6 +20,9 @@ export default function Builds({ repo }) {
   const { active: isRepoActive } = repo;
   const { params: { namespace, name }, url } = useRouteMatch();
   const history = useHistory();
+
+  // removes trailing forward slash if it is present
+  const strippedUrl = url.replace(/\/*$/, '');
 
   // if repo is inactive, redirect to settigns where
   // user can proceed with repo activation
@@ -51,7 +55,7 @@ export default function Builds({ repo }) {
         <h2 className={cx('section-title')}>Summary</h2>
         <Summary data={data} totalBuildsCounter={repo?.counter} className={cx('summary')} />
         <h2 className={cx('section-title')}>Executions</h2>
-        <BuildList data={data} url={url} />
+        <BuildList data={data} url={strippedUrl} />
         {(!isLoading && !isEndReached && data.length) ? (
           <div>
             <Button className={cx('btn', 'btn-show-more')} onClick={handleShowMoreClick}>Show more &#8595;</Button>
@@ -61,7 +65,10 @@ export default function Builds({ repo }) {
     );
   } else {
     content = (
-      <ZeroState title="Your Build List is Empty." message="Press the New Build button to execute your first build pipeline." />
+      <ZeroState
+        title="Your Build List is Empty."
+        message="Press the New Build button to execute your first build pipeline."
+      />
     );
   }
 
@@ -71,3 +78,17 @@ export default function Builds({ repo }) {
     </>
   );
 }
+
+Builds.propTypes = {
+  repo: PropTypes.shape({
+    active: PropTypes.bool || undefined,
+    counter: PropTypes.number || undefined,
+  }),
+};
+
+Builds.defaultProps = {
+  repo: {
+    actice: undefined,
+    counter: undefined,
+  },
+};
