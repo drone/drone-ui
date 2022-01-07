@@ -106,17 +106,17 @@ const TagActivity = ({
 );
 
 const PromoteActivity = ({
-  className, avatar, actor, namespace, name, commit, deeplink, parent, target,
+  className, namespace, name, deeplink, parent, target, trigger,
 }) => (
   <div className={cx('activity', className || '')}>
     <div className={cx('chunk')} data-type="chunk">
-      <Avatar path={avatar} alt={actor} text={actor} className={cx('avatar')} />
-      <span className={cx('info')}>{actor}</span>
+      <Avatar alt={trigger} text={trigger} className={cx('avatar')} />
+      <span className={cx('info')}>{trigger}</span>
     </div>
     <div className={cx('chunk')} data-type="chunk">
       <span className={cx('info')}>promoted build</span>
       {wrapBuildLink(<BuildLabel className={cx('label')} build={parent} />, {
-        namespace, name, commit, deeplink,
+        namespace, name, number: parent, deeplink,
       })}
     </div>
     <div className={cx('chunk')} data-type="chunk">
@@ -264,19 +264,16 @@ TagActivity.defaultProps = {
 
 PromoteActivity.propTypes = {
   className: PropTypes.string,
-  avatar: PropTypes.string.isRequired,
-  actor: PropTypes.string.isRequired,
-  commit: PropTypes.string,
   namespace: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   deeplink: PropTypes.bool,
   parent: PropTypes.string.isRequired,
   target: PropTypes.string.isRequired,
+  trigger: PropTypes.string.isRequired,
 };
 
 PromoteActivity.defaultProps = {
   className: '',
-  commit: undefined,
   deeplink: undefined,
 };
 

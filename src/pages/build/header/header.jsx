@@ -141,7 +141,8 @@ const Header = (props) => {
               target={data.deploy_to}
               refs={data.ref}
               cron={data.cron}
-              parent={build.parent}
+              trigger={data.trigger}
+              parent={data.parent}
               deeplink
             />
           </div>
@@ -155,22 +156,24 @@ Header.propTypes = {
   name: PropTypes.string.isRequired,
   build: PropTypes.string.isRequired,
   data: PropTypes.shape({
-    number: PropTypes.string.isRequired,
+    number: PropTypes.number.isRequired,
     event: PropTypes.string.isRequired,
     action: PropTypes.string.isRequired,
     sender: PropTypes.string.isRequired,
     author_avatar: PropTypes.string.isRequired,
     after: PropTypes.string.isRequired,
     target: PropTypes.string.isRequired,
-    deploy_to: PropTypes.string.isRequired,
+    deploy_to: PropTypes.string,
     ref: PropTypes.string.isRequired,
-    cron: PropTypes.string.isRequired,
+    cron: PropTypes.string,
     status: PropTypes.string.isRequired,
     message: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    started: PropTypes.string.isRequired,
-    created: PropTypes.string.isRequired,
-    finished: PropTypes.string.isRequired,
+    title: PropTypes.string,
+    started: PropTypes.number.isRequired,
+    created: PropTypes.number.isRequired,
+    finished: PropTypes.number.isRequired,
+    trigger: PropTypes.string,
+    parent: PropTypes.number,
   }),
   handleCancelClick: PropTypes.func.isRequired,
   handleMenuItemSelect: PropTypes.func.isRequired,
