@@ -75,7 +75,7 @@ export default function Build({ user, userIsAdminOrHasWritePerm }) {
     data, mutate, isError, isLoading,
   } = useBuild({ namespace, name, build });
   const [state, setState] = useState(RESOLVED);
-  const [view, setView] = useLocalStorage('buildPageView', LOGS_VIEW);
+  const [view, setView] = useState(LOGS_VIEW);
 
   const [isModalShowing, toggleModal] = useModal();
 
