@@ -133,7 +133,6 @@ export default function General({ user, repo }) {
               </Switch>
             </div>
           </FormSection>
-          {user?.admin && (
           <FormSection className={cx('form-section-row')} title="Project Settings">
             <div className={cx('switch-row')}>
               <Switch
@@ -147,57 +146,60 @@ export default function General({ user, repo }) {
                 Blocks a pipeline if the yaml signature cannot be verified.
               </p>
             </div>
-            <div className={cx('switch-row')}>
-              <Switch
-                id="trusted"
-                checked={settings.trusted}
-                onChange={handleSettingsChange('trusted')}
-              >
-                Trusted
-              </Switch>
-              <p className={cx('note')}>
-                Enables privileged container settings.
-              </p>
-            </div>
-            <div className={cx('switch-row')}>
-              <Switch
-                id="auto_cancel_pull_requests"
-                checked={settings.auto_cancel_pull_requests}
-                onChange={handleSettingsChange('auto_cancel_pull_requests')}
-              >
-                Auto cancel pull requests
-              </Switch>
-              <p className={cx('note')}>
-                Automatically cancel pending pull request builds.
-              </p>
-            </div>
-            <div className={cx('switch-row')}>
-              <Switch
-                id="auto_cancel_pushes"
-                checked={settings.auto_cancel_pushes}
-                onChange={handleSettingsChange('auto_cancel_pushes')}
-              >
-                Auto cancel pushes
-              </Switch>
-              <p className={cx('note')}>
-                Automatically cancel pending push builds.
-              </p>
-            </div>
-            <div className={cx('switch-row')}>
-              <Switch
-                id="auto_cancel_running"
-                checked={settings.auto_cancel_running}
-                disabled={!settings.auto_cancel_pull_requests && !settings.auto_cancel_pushes}
-                onChange={handleSettingsChange('auto_cancel_running')}
-              >
-                Auto cancel running
-              </Switch>
-              <p className={cx('note')}>
-                Automatically cancel running builds if newer commit pushed.
-              </p>
-            </div>
+            {user?.admin && (
+              <>
+                <div className={cx('switch-row')}>
+                  <Switch
+                    id="trusted"
+                    checked={settings.trusted}
+                    onChange={handleSettingsChange('trusted')}
+                  >
+                    Trusted
+                  </Switch>
+                  <p className={cx('note')}>
+                    Enables privileged container settings.
+                  </p>
+                </div>
+                <div className={cx('switch-row')}>
+                  <Switch
+                    id="auto_cancel_pull_requests"
+                    checked={settings.auto_cancel_pull_requests}
+                    onChange={handleSettingsChange('auto_cancel_pull_requests')}
+                  >
+                    Auto cancel pull requests
+                  </Switch>
+                  <p className={cx('note')}>
+                    Automatically cancel pending pull request builds.
+                  </p>
+                </div>
+                <div className={cx('switch-row')}>
+                  <Switch
+                    id="auto_cancel_pushes"
+                    checked={settings.auto_cancel_pushes}
+                    onChange={handleSettingsChange('auto_cancel_pushes')}
+                  >
+                    Auto cancel pushes
+                  </Switch>
+                  <p className={cx('note')}>
+                    Automatically cancel pending push builds.
+                  </p>
+                </div>
+                <div className={cx('switch-row')}>
+                  <Switch
+                    id="auto_cancel_running"
+                    checked={settings.auto_cancel_running}
+                    disabled={!settings.auto_cancel_pull_requests && !settings.auto_cancel_pushes}
+                    onChange={handleSettingsChange('auto_cancel_running')}
+                  >
+                    Auto cancel running
+                  </Switch>
+                  <p className={cx('note')}>
+                    Automatically cancel running builds if newer commit pushed.
+                  </p>
+                </div>
+              </>
+            )}
           </FormSection>
-          )}
           <FormSection className={cx('form-section-row')} title="Project Visibility">
             <ul className={cx('visibility-container')}>
               <li className={cx('visibility-card-wrapper')}>
