@@ -39,6 +39,7 @@ const BuildListItem = ({ build, url }) => (
               parent={build.parent}
               cron={build.cron}
               refs={build.ref}
+              trigger={build.trigger}
             />
             <div className={cx('timing')}>
               <div>
@@ -79,12 +80,13 @@ const buildPropTypes = PropTypes.shape({
   after: PropTypes.string,
   target: PropTypes.string,
   deploy_to: PropTypes.string,
-  parent: PropTypes.string,
+  parent: PropTypes.number,
   cron: PropTypes.bool,
   ref: PropTypes.string,
   created: PropTypes.number,
   started: PropTypes.number,
   finished: PropTypes.number,
+  trigger: PropTypes.string,
 });
 
 BuildListItem.propTypes = {

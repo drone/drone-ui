@@ -13,7 +13,7 @@ import { NonLogsContainer } from 'components/pages/build/log-view/console-manage
 import Button from 'components/shared/button';
 import Modal, { useModal } from 'components/shared/modal';
 import SystemMessage from 'components/shared/system-message';
-import { useLocalStorage, useCustomTitle, useToast } from 'hooks';
+import { useCustomTitle, useToast } from 'hooks';
 import { useBuild } from 'hooks/swr';
 import NotFound from 'pages/not-found';
 import { axiosWrapper } from 'utils';
