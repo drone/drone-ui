@@ -1,5 +1,20 @@
 # Changelog
 
+## [v2.5.0](https://github.com/drone/drone-ui/tree/v2.5.0) (2022-01-11)
+
+[Full Changelog](https://github.com/drone/drone-ui/compare/v2.4.1...v2.5.0)
+
+**Implemented enhancements:**
+
+- add link around data collection to registration screen [\#397](https://github.com/drone/drone-ui/pull/397) ([d1wilko](https://github.com/d1wilko))
+
+**Fixed bugs:**
+
+- allow non-admin user to toggle repo protected status [\#401](https://github.com/drone/drone-ui/pull/401) ([d1wilko](https://github.com/d1wilko))
+- fix promotion activity bug [\#400](https://github.com/drone/drone-ui/pull/400) ([d1wilko](https://github.com/d1wilko))
+- remove local storage of build tab [\#399](https://github.com/drone/drone-ui/pull/399) ([d1wilko](https://github.com/d1wilko))
+- strip trailing slash from url to fix build link bug [\#398](https://github.com/drone/drone-ui/pull/398) ([d1wilko](https://github.com/d1wilko))
+
 ## [v2.4.1](https://github.com/drone/drone-ui/tree/v2.4.1) (2021-12-15)
 
 [Full Changelog](https://github.com/drone/drone-ui/compare/v2.4.0...v2.4.1)
@@ -7,6 +22,10 @@
 **Implemented enhancements:**
 
 - New filter and sort options for repo list [\#395](https://github.com/drone/drone-ui/pull/395) ([d1wilko](https://github.com/d1wilko))
+
+**Merged pull requests:**
+
+- release v2.4.1 [\#396](https://github.com/drone/drone-ui/pull/396) ([d1wilko](https://github.com/d1wilko))
 
 ## [v2.4.0](https://github.com/drone/drone-ui/tree/v2.4.0) (2021-11-04)
 
