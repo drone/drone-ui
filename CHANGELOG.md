@@ -1,5 +1,13 @@
 # Changelog
 
+## [v2.6.0](https://github.com/drone/drone-ui/tree/v2.6.0) (2022-01-25)
+
+[Full Changelog](https://github.com/drone/drone-ui/compare/v2.5.0...v2.6.0)
+
+**Implemented enhancements:**
+
+- set fixed width on adaptive cards so they display the same length [\#403](https://github.com/drone/drone-ui/pull/403) ([eoinmcafee00](https://github.com/eoinmcafee00))
+
 ## [v2.5.0](https://github.com/drone/drone-ui/tree/v2.5.0) (2022-01-11)
 
 [Full Changelog](https://github.com/drone/drone-ui/compare/v2.4.1...v2.5.0)
@@ -14,6 +22,10 @@
 - fix promotion activity bug [\#400](https://github.com/drone/drone-ui/pull/400) ([d1wilko](https://github.com/d1wilko))
 - remove local storage of build tab [\#399](https://github.com/drone/drone-ui/pull/399) ([d1wilko](https://github.com/d1wilko))
 - strip trailing slash from url to fix build link bug [\#398](https://github.com/drone/drone-ui/pull/398) ([d1wilko](https://github.com/d1wilko))
+
+**Merged pull requests:**
+
+- release v2.5.0 [\#402](https://github.com/drone/drone-ui/pull/402) ([d1wilko](https://github.com/d1wilko))
 
 ## [v2.4.1](https://github.com/drone/drone-ui/tree/v2.4.1) (2021-12-15)
 
