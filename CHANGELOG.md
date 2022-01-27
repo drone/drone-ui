@@ -8,6 +8,10 @@
 
 - set fixed width on adaptive cards so they display the same length [\#403](https://github.com/drone/drone-ui/pull/403) ([eoinmcafee00](https://github.com/eoinmcafee00))
 
+**Merged pull requests:**
+
+- release prep v2.6.0 [\#404](https://github.com/drone/drone-ui/pull/404) ([eoinmcafee00](https://github.com/eoinmcafee00))
+
 ## [v2.5.0](https://github.com/drone/drone-ui/tree/v2.5.0) (2022-01-11)
 
 [Full Changelog](https://github.com/drone/drone-ui/compare/v2.4.1...v2.5.0)
