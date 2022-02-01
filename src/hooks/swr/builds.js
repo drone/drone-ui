@@ -110,7 +110,7 @@ const updateBuilds = async (slug, repo, newBuild = null) => {
     if (!builds?.length) {
       return [[build]];
     }
-    const unwrappedBuilds = [...builds[0]];
+    const unwrappedBuilds = builds.flat();
     /* otherwise check if the first page includes
     / this particular build
     */
