@@ -1,6 +1,6 @@
 {
   "name": "drone-ui-react",
-  "version": "2.6.1",
+  "version": "2.6.2",
   "private": true,
   "scripts": {
     "start": "react-scripts start",

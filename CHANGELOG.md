@@ -1,5 +1,21 @@
 # Changelog
 
+## [v2.6.2](https://github.com/drone/drone-ui/tree/v2.6.2) (2022-02-15)
+
+[Full Changelog](https://github.com/drone/drone-ui/compare/v2.6.1...v2.6.2)
+
+**Fixed bugs:**
+
+- Persist "Show more" builds when builds are updated [\#406](https://github.com/drone/drone-ui/pull/406) ([d1wilko](https://github.com/d1wilko))
+
+## [v2.6.1](https://github.com/drone/drone-ui/tree/v2.6.1) (2022-01-27)
+
+[Full Changelog](https://github.com/drone/drone-ui/compare/v2.6.0...v2.6.1)
+
+**Merged pull requests:**
+
+- generate go binary [\#405](https://github.com/drone/drone-ui/pull/405) ([d1wilko](https://github.com/d1wilko))
+
 ## [v2.6.0](https://github.com/drone/drone-ui/tree/v2.6.0) (2022-01-25)
 
 [Full Changelog](https://github.com/drone/drone-ui/compare/v2.5.0...v2.6.0)
