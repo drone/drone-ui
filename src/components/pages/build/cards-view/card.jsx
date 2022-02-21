@@ -1,3 +1,4 @@
+import { AdaptiveCard } from 'adaptivecards-react';
 import { Template } from 'adaptivecards-templating';
 import axios from 'axios';
 import classNames from 'classnames/bind';
@@ -5,8 +6,6 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 
 import { useCard } from 'hooks/swr';
-
-import AdaptiveCard from '../../../shared/adaptive-card';
 
 import css from './card.module.scss';
 
@@ -27,9 +26,15 @@ const Card = ({
   data, namespace, name, build,
 }) => {
   const {
-    data: json, isError: jsonIsError, isLoading: jsonIsLoading,
+    data: json,
+    isError: jsonIsError,
+    isLoading: jsonIsLoading,
   } = useCard({
-    namespace, name, build, stage: data.stage, step: data.step,
+    namespace,
+    name,
+    build,
+    stage: data.stage,
+    step: data.step,
   });
 
   const [adaptiveCard, setAdaptiveCard] = useState(null);
@@ -46,7 +51,11 @@ const Card = ({
   if (jsonIsError) {
     return <li className={cx('card', 'card-message')}>CARD ERROR</li>;
   }
-  return <li className={cx('card')}><AdaptiveCard payload={adaptiveCard} /></li>;
+  return (
+    <li className={cx('card')}>
+      <AdaptiveCard payload={adaptiveCard} />
+    </li>
+  );
 };
 
 Card.propTypes = {
