@@ -42,7 +42,7 @@ SearchCard.propTypes = {
 
 const SearchDrawer = ({ isShown, hide }) => {
   const { repos, reloadOnce } = useStore();
-  const data = useMemo(() => !!repos ? Object.values(repos) : undefined, [repos]);
+  const data = useMemo(() => (repos ? Object.values(repos) : undefined), [repos]);
   useEffect(() => reloadOnce(), [reloadOnce]);
 
   const [query, setQuery] = useState('');
@@ -99,7 +99,7 @@ const SearchDrawer = ({ isShown, hide }) => {
             tabIndex={0}
             className={cx('input')}
             type="text"
-            placeholder="Search repositories, branches and builds"
+            placeholder="Search repositories"
             onChange={handleSearchInput}
           />
         </div>
