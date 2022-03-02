@@ -14,6 +14,8 @@ export const getStepSummary = (status, error, exitCode) => {
       return 'Step is pending';
     case 'killed':
       return 'Step is killed (canceled)';
+    case 'skipped':
+      return error ? 'Skipped due to error' : 'Skipped';
     default:
       return 'Loading...';
   }

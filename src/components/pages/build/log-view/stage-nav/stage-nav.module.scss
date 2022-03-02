@@ -59,6 +59,16 @@
     border-bottom: none;
   }
 
+  .time {
+    margin-left: auto;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 13px;
+    flex: 0 0 auto;
+    user-select: none;
+    color: #9293ab;
+  }
+
   &-header {
     padding-top: 14px;
     padding-bottom: 14px;
@@ -91,6 +101,9 @@
       &-disabled {
         stroke: #96a5be;
       }
+      &-hidden {
+        visibility: hidden;
+      }
     }
     &-expanded {
       padding-bottom: 7px;
@@ -102,6 +115,19 @@
       cursor: not-allowed;
     }
   }
+
+  &-active {
+    background: #e6faff;
+    font-weight: 600;
+    .time {
+      color: #0278d5;
+    }
+    .stage-header {
+      color: #0278d5;
+      font-weight: 600;
+    }
+  }
+
   &-status {
     width: 16px;
     height: 16px;
@@ -136,15 +162,6 @@
     }
   }
 
-  .time {
-    margin-left: auto;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 13px;
-    flex: 0 0 auto;
-    user-select: none;
-    color: #9293ab;
-  }
   .steps-header {
     margin-left: 16px;
     margin-top: 12px;

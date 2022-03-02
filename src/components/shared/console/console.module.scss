@@ -215,3 +215,19 @@
   text-align: center;
   margin-bottom: 5px;
 }
+
+.stage-error {
+  background: #22222a;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 0.25rem;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  .status {
+    margin-right: 15px;
+  }
+  .text {
+    white-space: pre-wrap;
+  }
+}
