@@ -51,6 +51,7 @@ export default function StageNav(props) {
               stopped: stageStopped,
               steps,
               number: stageNumber,
+              error,
             }) => {
               if (!steps?.length || [
                 'skipped',
@@ -66,6 +67,10 @@ export default function StageNav(props) {
                     stageStatus={stageStatus}
                     stageStarted={stageStarted}
                     stageStopped={stageStopped}
+                    namespace={namespace}
+                    name={name}
+                    build={build}
+                    stageNumber={stageNumber}
                   />
                 );
               }
@@ -83,6 +88,7 @@ export default function StageNav(props) {
                   name={name}
                   build={build}
                   stageInPath={stage}
+                  error={error}
                   onStepClick={onStepClick}
                 />
               );
@@ -105,6 +111,7 @@ const StageDefault = (props) => {
     build,
     stageInPath,
     onStepClick,
+    error,
   } = props;
   const [isExpanded, setIsExpanded] = useState(stageNumber == stageInPath);
   const toggleIsExpanded = () => setIsExpanded((prev) => !prev);
@@ -129,14 +136,7 @@ const StageDefault = (props) => {
         </li>
         {steps.map(({
           id: stepId, status, name: stepName, started, stopped,
-        }, stepIndex) => (status === 'skipped' ? (
-          <li key={stepId}>
-            <div className={cx('stage-step', 'stage-step-unselectable')}>
-              <Status className={cx('status')} status={status} />
-              <span className={cx('name')}>{stepName}</span>
-            </div>
-          </li>
-        ) : (
+        }, stepIndex) => (
           <li key={stepId}>
             <NavLink
               activeClassName={cx('stage-step-active')}
@@ -158,7 +158,7 @@ const StageDefault = (props) => {
               <Elapsed className={cx('time')} started={started} finished={stopped} />
             </NavLink>
           </li>
-        )))}
+        ))}
       </ul>
       )}
     </div>
@@ -171,15 +171,24 @@ const StageEmpty = (props) => {
     stageName,
     stageStarted,
     stageStopped,
+    namespace,
+    name,
+    build,
+    stageNumber,
   } = props;
   return (
-    <div className={cx('stage')}>
-      <h3 className={cx('stage-header', 'stage-header-unselectable')}>
-        <ChevronIcon className={cx('chevron', 'chevron-disabled')} />
+    <NavLink
+      activeClassName={cx('stage-active')}
+      className={cx('stage')}
+      to={`/${namespace}/${name}/${build}/${stageNumber}`}
+      exact
+    >
+      <h3 className={cx('stage-header')}>
+        <ChevronIcon className={cx('chevron-hidden')} />
         <Status className={cx('stage-status')} status={stageStatus} />
         <span className={cx('name')}>{stageName}</span>
         <Elapsed className={cx('time')} started={stageStarted} finished={stageStopped} />
       </h3>
-    </div>
+    </NavLink>
   );
 };

@@ -97,20 +97,22 @@ const ConsoleFooter = (props) => {
     stepError,
     stepExitCode,
     tmateLink,
+    stageError,
+    stageStatus,
   } = props;
   return (
     <footer className={cx('footer')}>
       <div className={cx('summary')}>
         <div className={cx('summary-info')}>
-          {stepStatus && (
+          {(stepStatus || stageStatus) && (
           <Status
             className={cx('summary-status')}
-            status={stepStatus}
+            status={stepStatus || stageStatus}
           />
           )}
           {getStepSummary(
-            stepStatus,
-            stepError,
+            stepStatus || stageStatus,
+            stepError || stageError,
             stepExitCode,
           )}
         </div>
@@ -209,6 +211,17 @@ LogsLine.propTypes = {
   time: PropTypes.number.isRequired,
 };
 
+const StageError = ({ error }) => (
+  <div className={cx('stage-error')}>
+    <Status className={cx('status')} status="error" />
+    <span className={cx('text')}>{error}</span>
+  </div>
+);
+
+StageError.propTypes = {
+  error: PropTypes.string.isRequired,
+};
+
 const Console = React.forwardRef((props, ref) => {
   const {
     className,
@@ -226,6 +239,8 @@ const Console = React.forwardRef((props, ref) => {
     logsBlobName,
     showCloseBtn,
     onCloseBtnClick,
+    stageError,
+    stageStatus,
   } = props;
 
   const [showAllLogs, setShowAllLogs] = useState(false);
@@ -277,6 +292,7 @@ const Console = React.forwardRef((props, ref) => {
       }
           handleShowAllLogsClick={handleShowAllLogsClick}
         />
+        {stageError && <StageError error={stageError} />}
         <code className={classNames('ansi-hook', cx('output'))}>
           <LogsLoadingLine
             shouldShow={showLogsLoadingLine}
@@ -295,6 +311,8 @@ const Console = React.forwardRef((props, ref) => {
         stepError={stepData.error}
         stepExitCode={stepData.exit_code}
         tmateLink={tmateLink}
+        stageError={stageError}
+        stageStatus={stageStatus}
       />
       )}
     </div>
@@ -327,6 +345,8 @@ Console.propTypes = {
   showFollowLogsBtn: PropTypes.bool,
   logsBlobName: PropTypes.string,
   onCloseBtnClick: PropTypes.func,
+  stageError: PropTypes.string,
+  stageStatus: PropTypes.string,
 };
 
 Console.defaultProps = {
@@ -343,6 +363,8 @@ Console.defaultProps = {
   showCloseBtn: false,
   onCloseBtnClick: undefined,
   logsBlobName: 'step_logs',
+  stageError: null,
+  stageStatus: null,
 };
 
 export default Console;
