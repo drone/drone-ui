@@ -1,5 +1,17 @@
 # Changelog
 
+## [v2.7.0](https://github.com/drone/drone-ui/tree/v2.7.0) (2022-03-03)
+
+[Full Changelog](https://github.com/drone/drone-ui/compare/v2.6.2...v2.7.0)
+
+**Implemented enhancements:**
+
+- improve error visibility UX [\#409](https://github.com/drone/drone-ui/pull/409) ([d1wilko](https://github.com/d1wilko))
+
+**Fixed bugs:**
+
+- remove search text for branches and builds [\#408](https://github.com/drone/drone-ui/pull/408) ([d1wilko](https://github.com/d1wilko))
+
 ## [v2.6.2](https://github.com/drone/drone-ui/tree/v2.6.2) (2022-02-15)
 
 [Full Changelog](https://github.com/drone/drone-ui/compare/v2.6.1...v2.6.2)
@@ -7,6 +19,10 @@
 **Fixed bugs:**
 
 - Persist "Show more" builds when builds are updated [\#406](https://github.com/drone/drone-ui/pull/406) ([d1wilko](https://github.com/d1wilko))
+
+**Merged pull requests:**
+
+- release v2.6.2 [\#407](https://github.com/drone/drone-ui/pull/407) ([d1wilko](https://github.com/d1wilko))
 
 ## [v2.6.1](https://github.com/drone/drone-ui/tree/v2.6.1) (2022-01-27)
 
