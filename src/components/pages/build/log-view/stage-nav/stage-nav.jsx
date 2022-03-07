@@ -1,4 +1,5 @@
 import classNames from 'classnames/bind';
+import { PropTypes } from 'prop-types';
 import React, {
   useState,
 } from 'react';
@@ -87,7 +88,7 @@ export default function StageNav(props) {
                   namespace={namespace}
                   name={name}
                   build={build}
-                  stageInPath={stage}
+                  stageInPath={Number(stage)}
                   error={error}
                   onStepClick={onStepClick}
                 />
@@ -111,9 +112,8 @@ const StageDefault = (props) => {
     build,
     stageInPath,
     onStepClick,
-    error,
   } = props;
-  const [isExpanded, setIsExpanded] = useState(stageNumber == stageInPath);
+  const [isExpanded, setIsExpanded] = useState(stageNumber === stageInPath);
   const toggleIsExpanded = () => setIsExpanded((prev) => !prev);
 
   return (
@@ -134,8 +134,8 @@ const StageDefault = (props) => {
           Steps
           <i className={cx('divider')} />
         </li>
-        {steps.map(({
-          id: stepId, status, name: stepName, started, stopped,
+        {steps.sort((a, b) => a.number - b.number).map(({
+          id: stepId, status, name: stepName, started, stopped, number: stepNumber,
         }, stepIndex) => (
           <li key={stepId}>
             <NavLink
@@ -145,10 +145,10 @@ const StageDefault = (props) => {
                 // if path looks like namespace/name/build
                 // highlight the first step in the first stage
                 // by default to match logs behavior
-                const [, , , , stepIdx] = location.pathname.split('/').filter(Boolean);
-                return (match || (stageNumber == stageInPath && !stepIdx));
+                const isStepInPath = !!location.pathname.split('/')[4];
+                return (match || (stageNumber === stageInPath && !isStepInPath));
               }}
-              to={`/${namespace}/${name}/${build}/${stageNumber}/${stepIndex + 1}`}
+              to={`/${namespace}/${name}/${build}/${stageNumber}/${stepNumber}`}
               title={stepName}
               exact
               onClick={onStepClick}
@@ -191,4 +191,60 @@ const StageEmpty = (props) => {
       </h3>
     </NavLink>
   );
+};
+
+StageNav.propTypes = {
+  className: PropTypes.string.isRequired,
+  stages: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
+    started: PropTypes.number.isRequired,
+    stopped: PropTypes.number.isRequired,
+    steps: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      status: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      started: PropTypes.number.isRequired,
+      stopped: PropTypes.number.isRequired,
+    })),
+    number: PropTypes.number.isRequired,
+  })),
+  isDataLoading: PropTypes.bool.isRequired,
+  onStepClick: PropTypes.func.isRequired,
+};
+
+StageNav.defaultProps = {
+  stages: [],
+};
+
+StageDefault.propTypes = {
+  stageStatus: PropTypes.string.isRequired,
+  stageName: PropTypes.string.isRequired,
+  stageStarted: PropTypes.number.isRequired,
+  stageNumber: PropTypes.number.isRequired,
+  stageStopped: PropTypes.number.isRequired,
+  steps: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    status: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    started: PropTypes.number.isRequired,
+    stopped: PropTypes.number.isRequired,
+  })).isRequired,
+  name: PropTypes.string.isRequired,
+  namespace: PropTypes.string.isRequired,
+  build: PropTypes.string.isRequired,
+  stageInPath: PropTypes.number.isRequired,
+  onStepClick: PropTypes.func.isRequired,
+};
+
+StageEmpty.propTypes = {
+  stageStatus: PropTypes.string.isRequired,
+  stageName: PropTypes.string.isRequired,
+  stageStarted: PropTypes.number.isRequired,
+  stageStopped: PropTypes.number.isRequired,
+  namespace: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  build: PropTypes.string.isRequired,
+  stageNumber: PropTypes.number.isRequired,
 };
