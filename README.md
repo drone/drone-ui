@@ -24,7 +24,7 @@
 
    ```text
    REACT_APP_DRONE_SERVER=https://drone.company.com
-   REACT_APP_DRONE_TOKEN=<your_drone_token>
+   REACT_APP_DRONE_TOKEN=<your_drone_token> // find your token in your Drone account settings (click your Avatar in the UI).
    ```
 
 ### Run the app

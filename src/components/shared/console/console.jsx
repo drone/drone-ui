@@ -46,6 +46,7 @@ const ConsoleHeader = (props) => {
           {showFollowLogsBtn && (
             <Button
               className={cx('controls-logs-toggler')}
+              title={shouldFollowLogs ? 'Stop following logs' : 'Follow logs'}
               onClick={toggleFollowLogs}
             >
               {shouldFollowLogs ? <PauseIcon /> : <PlayIcon />}
