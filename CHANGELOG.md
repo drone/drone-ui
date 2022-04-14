@@ -1,5 +1,18 @@
 # Changelog
 
+## [v2.8.0](https://github.com/drone/drone-ui/tree/v2.8.0) (2022-04-14)
+
+[Full Changelog](https://github.com/drone/drone-ui/compare/v2.7.1...v2.8.0)
+
+**Implemented enhancements:**
+
+- add registration error message for cloud.drone.io [\#415](https://github.com/drone/drone-ui/pull/415) ([d1wilko](https://github.com/d1wilko))
+- add community/support information [\#413](https://github.com/drone/drone-ui/pull/413) ([mrsantons](https://github.com/mrsantons))
+
+**Fixed bugs:**
+
+- \(fix\) add hover text for follow logs button [\#414](https://github.com/drone/drone-ui/pull/414) ([tphoney](https://github.com/tphoney))
+
 ## [v2.7.1](https://github.com/drone/drone-ui/tree/v2.7.1) (2022-03-08)
 
 [Full Changelog](https://github.com/drone/drone-ui/compare/v2.7.0...v2.7.1)
@@ -7,6 +20,10 @@
 **Fixed bugs:**
 
 - sort steps based on stepNumber not array index [\#411](https://github.com/drone/drone-ui/pull/411) ([d1wilko](https://github.com/d1wilko))
+
+**Merged pull requests:**
+
+- \(maint\) release prep for 2.7.1 [\#412](https://github.com/drone/drone-ui/pull/412) ([d1wilko](https://github.com/d1wilko))
 
 ## [v2.7.0](https://github.com/drone/drone-ui/tree/v2.7.0) (2022-03-03)
 
