@@ -29,7 +29,27 @@ export default function Welcome() {
       error = <div className={cx('error')}>Your session has been successfully terminated.</div>;
       break;
     case '/login/error':
-      error = <div className={cx('error')}>{parseQuery(search)?.message ?? 'An error occured during login attempt, please, try again'}</div>;
+      if (window.location.host === 'cloud.drone.io') {
+        // special case for cloud.drone.io
+        error = (
+          <div className={cx('error')}>
+            Drone Cloud is no longer accepting new registrations. We recommend
+            {' '}
+            <a href="https://docs.drone.io/server/overview/">installing Drone</a>
+            {' '}
+            on your own hardware, or you can try out the new
+            {' '}
+            <a href="https://harness.io/products/continuous-integration">Harness CI Cloud</a>
+            .
+          </div>
+        );
+      } else {
+        error = (
+          <div className={cx('error')}>
+            {parseQuery(search)?.message ?? 'An error occured during login attempt, please, try again'}
+          </div>
+        );
+      }
       break;
     default:
   }
