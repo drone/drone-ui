@@ -16,14 +16,16 @@ const padTime = (n, withLetters) => n.toString().padStart(withLetters ? 1 : 2, '
 
 const getTimeElapsed = ({ started, finished, withLetters = false }) => {
   if (!started || !finished) return '';
-  const { hours, minutes, seconds } = intervalToDuration({
+  const {
+    days, hours, minutes, seconds,
+  } = intervalToDuration({
     start: new Date(started * 1000),
     end: new Date(finished * 1000),
   });
   if (withLetters) {
-    return `${hours ? `${padTime(hours, withLetters)}h` : ''} ${padTime(minutes, withLetters)}m ${padTime(seconds, withLetters)}s`;
+    return `${days ? `${padTime(days, withLetters)}d` : ''} ${hours ? `${padTime(hours, withLetters)}h` : ''} ${padTime(minutes, withLetters)}m ${padTime(seconds, withLetters)}s`;
   }
-  return `${hours ? `${padTime(hours)}:` : ''}${padTime(minutes)}:${padTime(seconds)}`;
+  return `${days ? `${padTime(days)}` : ''} ${hours ? `${padTime(hours)}:` : ''}${padTime(minutes)}:${padTime(seconds)}`;
 };
 
 const getTimeElapsedSince = ({ dateSince }) => formatDistanceToNow(
