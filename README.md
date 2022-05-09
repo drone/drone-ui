@@ -1,6 +1,6 @@
-## Drone UI
+# Drone UI
 
-### Getting started
+## Getting started
 
 1. **Clone this repository**
 
@@ -27,7 +27,7 @@
    REACT_APP_DRONE_TOKEN=<your_drone_token> // find your token in your Drone account settings (click your Avatar in the UI).
    ```
 
-### Run the app
+### Run the app in development mode, with hot reloading
 
 ```bash
 npm run start
@@ -71,7 +71,7 @@ We try to make our commits "atomic". [Here](https://www.freshconsulting.com/atom
 
 ## Release procedure
 
-Run the changelog generator.
+### Run the changelog generator
 
 ```BASH
 docker run -it --rm -v "$(pwd)":/usr/local/src/your-app githubchangeloggenerator/github-changelog-generator -u drone -p drone-ui -t <secret github token>
@@ -81,19 +81,52 @@ You can generate a token by logging into your GitHub account and going to Settin
 
 Next we tag the PR's with the fixes or enhancements labels. If the PR does not fufil the requirements, do not add a label.
 
-** Before moving on make sure to update the version in `package.json`. **
-
 Run the changelog generator again with the future version according to semver.
 
 ```BASH
 docker run -it --rm -v "$(pwd)":/usr/local/src/your-app githubchangeloggenerator/github-changelog-generator -u drone -p drone-ui -t <secret token> --future-release v1.0.0
 ```
 
-Create your pull request for the release. Get it merged then tag the release.
+### Update the version in the `./package.json` file
+
+```BASH
+{
+  "name": "drone-ui-react",
+  "version": "2.8.2",        <--- update the version here
+  "private": true,
+  "scripts": {
+```
+
+### Build the app and run go generate
+
+```BASH
+npm run build
+# change to the dist directory
+cd dist
+# run go generate
+GO111MODULE=off go generate ./...
+```
+
+This will update the `dist/dist_gen.go` file.
+
+### Create the pull request for the release
+
+Make sure you have updated and added the following files.
+
+* `./package.json`
+* `./CHANGELOG.md`
+* `dist/dist_gen.go`
+
+Look here for an [example](https://github.com/drone/drone-ui/pull/420)
+
+### Release the new version
+
+Once your PR is reviewed and merged, you can release the new version of the main branch in github.
 
 Please reference the updated changelog in your PR to update `Drone` with the latest UI SHA.
 
 ## Community and Support
+
 [Harness Community Slack](https://join.slack.com/t/harnesscommunity/shared_invite/zt-y4hdqh7p-RVuEQyIl5Hcx4Ck8VCvzBw) - Join the #drone slack channel to connect with our engineers and other users running Drone CI.
 
 [Harness Community Forum](https://community.harness.io/) - Ask questions, find answers, and help other users.
