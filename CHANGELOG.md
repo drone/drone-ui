@@ -1,5 +1,22 @@
 # Changelog
 
+## [v2.8.2](https://github.com/drone/drone-ui/tree/v2.8.2) (2022-05-09)
+
+[Full Changelog](https://github.com/drone/drone-ui/compare/v2.8.1...v2.8.2)
+
+**Fixed bugs:**
+
+- \(fix\) display durations longer than 24hrs [\#419](https://github.com/drone/drone-ui/pull/419) ([tphoney](https://github.com/tphoney))
+- Fix cut-off letter in stage name [\#418](https://github.com/drone/drone-ui/pull/418) ([silverwind](https://github.com/silverwind))
+
+## [v2.8.1](https://github.com/drone/drone-ui/tree/v2.8.1) (2022-04-14)
+
+[Full Changelog](https://github.com/drone/drone-ui/compare/v2.8.0...v2.8.1)
+
+**Merged pull requests:**
+
+- actually push the dist... [\#417](https://github.com/drone/drone-ui/pull/417) ([d1wilko](https://github.com/d1wilko))
+
 ## [v2.8.0](https://github.com/drone/drone-ui/tree/v2.8.0) (2022-04-14)
 
 [Full Changelog](https://github.com/drone/drone-ui/compare/v2.7.1...v2.8.0)
@@ -12,6 +29,10 @@
 **Fixed bugs:**
 
 - \(fix\) add hover text for follow logs button [\#414](https://github.com/drone/drone-ui/pull/414) ([tphoney](https://github.com/tphoney))
+
+**Merged pull requests:**
+
+- \(maint\) release prep for 2.8.0 [\#416](https://github.com/drone/drone-ui/pull/416) ([d1wilko](https://github.com/d1wilko))
 
 ## [v2.7.1](https://github.com/drone/drone-ui/tree/v2.7.1) (2022-03-08)
 
