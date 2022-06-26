@@ -232,7 +232,7 @@ export default function General({ user, repo }) {
               <li className={cx('visibility-card-wrapper')}>
                 <div className={cx('visibility-card')}>
                   <h4>Internal</h4>
-                  <p>Internal repositories are only accessible to authenticated user.</p>
+                  <p>Internal repositories are only accessible to authenticated users.</p>
                 </div>
                 <Field.Radio
                   name="internal"
