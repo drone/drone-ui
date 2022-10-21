@@ -2,6 +2,7 @@ import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import { instance } from '_constants';
 import Avatar from 'components/shared/avatar';
 import {
   CommitLabel,
@@ -21,7 +22,7 @@ function wrapReferenceLink(child, {
   namespace, name, refs, deeplink,
 }) {
   return deeplink === true ? (
-    <a href={`/link/${namespace}/${name}/tree/${refs}`} target="_blank" rel="noreferrer">{child}</a>
+    <a href={`${instance}/link/${namespace}/${name}/tree/${refs}`} target="_blank" rel="noreferrer noopener">{child}</a>
   ) : child;
 }
 
@@ -29,7 +30,7 @@ function wrapCommitLink(child, {
   namespace, name, commit, deeplink,
 }) {
   return deeplink === true ? (
-    <a href={`/link/${namespace}/${name}/commit/${commit}`} target="_blank" rel="noreferrer">{child}</a>
+    <a href={`${instance}/link/${namespace}/${name}/commit/${commit}`} target="_blank" rel="noreferrer noopener">{child}</a>
   ) : child;
 }
 
