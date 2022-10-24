@@ -96,16 +96,18 @@ const Repo = ({ user }) => {
   const handleNewBuildClick = toggleModal;
 
   const handleNewBuildSubmit = useCallback(async (values) => {
-    let endpoint = `/api/repos/${namespace}/${name}/builds`;
+    const queryParams = new URLSearchParams();
     if (values.target) {
-      endpoint = `${endpoint}?branch=${values.target}`;
-      if (values.commit) {
-        endpoint = `${endpoint}&commit=${values.commit}`;
-      }
-      if (values.parameters?.length) {
-        endpoint = `${endpoint}&${values.parameters.map((param) => `${param.key}=${param.value}`).join('&')}`;
-      }
+      queryParams.set('branch', values.target);
     }
+    if (values.commit) {
+      queryParams.set('commit', values.commit);
+    }
+    if (values.parameters?.length) {
+      values.parameters.forEach((param) => { queryParams.set(param.key, param.value); });
+    }
+    const queryString = queryParams.toString();
+    const endpoint = `/api/repos/${namespace}/${name}/builds${queryString.length ? `?${queryString}` : ''}`;
     try {
       const newBuild = await axiosWrapper(endpoint, {
         method: 'POST',
