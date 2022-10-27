@@ -4,6 +4,7 @@
 .list {
   display: block;
   list-style-type: none;
+
   a {
     text-decoration: none;
     cursor: pointer;
@@ -38,6 +39,7 @@
   flex-flow: column;
   width: 100%;
   overflow: hidden;
+
   & > * + * {
     margin-top: 10px;
   }
@@ -45,63 +47,66 @@
 
 .header {
   display: flex;
-  align-items: center;
   align-content: center;
+  align-items: center;
+  width: 100%;
   overflow: hidden;
   white-space: nowrap;
-  width: 100%;
 }
 
 .connector {
   width: 22px;
   height: 15px;
-  border-bottom-left-radius: 24px;
-  border-left: 2px solid #d9dae5;
-  border-bottom: 2px solid #d9dae5;
-  margin-left: 11px;
   margin-top: 5px;
+  margin-left: 11px;
+  border-bottom: 2px solid #d9dae5;
+  border-left: 2px solid #d9dae5;
+  border-bottom-left-radius: 24px;
 }
 
 .commit {
+  display: block;
+  min-width: 0;
   max-width: 80%;
-  min-width: 0px;
   overflow: hidden;
+  font-size: 16px;
+  color: black;
   text-overflow: ellipsis;
   white-space: nowrap;
-  display: block;
-  color: black;
-  font-size: 16px;
+
   @include xxs-down {
     max-width: 70%;
   }
 }
 
 .number {
-  color: black;
-  color: #9293ab;
-  font-size: 16px;
-  white-space: nowrap;
   min-width: 32px;
   margin-right: 6px;
+  font-size: 16px;
+  color: black;
+  color: #9293ab;
+  white-space: nowrap;
 
-  &:before {
-    content: "#";
+  &::before {
     margin-right: 3px;
+    content: "#";
   }
-  &:after {
+
+  &::after {
     content: ".";
   }
 }
 
 .content {
-  color: #627386;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  color: #627386;
+
   @include md-down {
     flex-flow: column;
-    justify-content: unset;
     align-items: unset;
+    justify-content: unset;
   }
 }
 
@@ -109,8 +114,10 @@
   @include xs-down {
     display: flex;
     flex-wrap: wrap;
+
     [data-type="chunk"] {
       flex: 1 1 100%;
+
       + [data-type="chunk"] {
         margin-top: 6px;
       }
@@ -119,15 +126,16 @@
 }
 
 .timing {
-  text-align: right;
-  white-space: nowrap;
   display: inline-flex;
   align-items: center;
   justify-content: flex-end;
+  text-align: right;
+  white-space: nowrap;
+
   @include sm-down {
-    text-align: left;
     justify-content: flex-end;
     margin-top: 12px;
+    text-align: left;
   }
 }
 
@@ -145,8 +153,8 @@
     display: inline-block;
     width: 3px;
     height: 3px;
+    margin: 0 6px;
     background: rgba(30, 55, 90, 0.25);
     border-radius: 50%;
-    margin: 0 6px;
   }
 }

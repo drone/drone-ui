@@ -1,27 +1,28 @@
 .wrapper {
   display: flex;
   align-items: center;
-  background: #ffffff;
-  box-shadow: 0px 0px 1px rgba(40, 41, 61, 0.08), 0px 0.5px 2px rgba(96, 97, 112, 0.16);
+  background: #fff;
   border-radius: 100px;
+  box-shadow: 0 0 1px rgba(40, 41, 61, 0.08), 0 0.5px 2px rgba(96, 97, 112, 0.16);
 }
 
 .option {
-  border: 0;
-  background-color: inherit;
-  color: #9293ab;
   flex: 1;
   padding: 7px 19px;
-  border-radius: 100px;
+  color: #9293ab;
   cursor: pointer;
+  background-color: inherit;
+  border: 0;
+  border-radius: 100px;
   transition: color 0.2s ease;
   transition: background-color 0.2s ease;
 
   &:focus {
     outline: none;
   }
+
   &-selected {
-    background-color: #effbff;
     color: #3e7bfa;
+    background-color: #effbff;
   }
 }

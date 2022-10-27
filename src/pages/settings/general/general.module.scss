@@ -2,12 +2,13 @@
 @import "styles/mixins";
 
 .inner {
-  background: #ffffff;
-  box-shadow: 0px 0px 1px rgba(40, 41, 61, 0.08), 0px 0.5px 2px rgba(96, 97, 112, 0.16);
-  border-radius: 8px;
   padding: 26px 33px;
   margin-bottom: 24px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 1px rgba(40, 41, 61, 0.08), 0 0.5px 2px rgba(96, 97, 112, 0.16);
 }
+
 .form {
   .form-section-row + .form-section-row {
     margin-top: 40px;
@@ -17,99 +18,113 @@
 .form-section {
   &-row {
     h3 {
-      font-weight: 600;
-      font-size: 15px;
-      line-height: 20px;
-      border-bottom: 1px solid #e3e3e8;
       padding-bottom: 12px;
       margin-bottom: 20px;
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 20px;
+      border-bottom: 1px solid #e3e3e8;
     }
+
     .switch-row + .switch-row {
       margin-top: 11px;
     }
+
     &-is-last {
+      display: flex;
+      padding-top: 16px;
       margin-bottom: 36px;
       border-top: 1px solid #e3e3e8;
-      padding-top: 16px;
-      display: flex;
+
       > * + * {
         margin-left: 37px;
       }
+
       .timeout span,
       .config label {
         font-size: 13px;
-        line-height: 22px;
         font-weight: normal;
+        line-height: 22px;
         color: #383946;
       }
+
       @include sm-down {
         flex-flow: column;
+
         > * + * {
-          margin-left: 0px;
           margin-top: 20px;
+          margin-left: 0;
         }
       }
     }
   }
 }
+
 .switch-row {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+
   .note {
     flex: 0 0 50%;
-    text-align: end;
     font-size: 13px;
     line-height: 13px;
     color: #9293ab;
+    text-align: end;
   }
+
   @include md-down {
     flex-wrap: wrap;
+
     .note {
       flex: 1 1 100%;
-      text-align: start;
       margin-top: 10px;
+      text-align: start;
     }
   }
 }
 
 .btn {
-  padding: 6px 20px;
-  border-radius: 4px;
-  border: none;
   min-width: 100px;
-  font-weight: 500;
-  font-family: $font-family-primary;
+  height: 36px;
+  padding: 6px 20px;
   padding: 10px 24px;
   padding-left: 20px;
-  border-radius: 8px;
+  font-family: $font-family-primary;
   font-size: 13px;
   font-weight: 500;
-  text-transform: uppercase;
   text-decoration: none;
-  height: 36px;
+  text-transform: uppercase;
   cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  border-radius: 8px;
+
   &-save {
-    box-shadow: 0px 0px 1px rgba(40, 41, 61, 0.08), 0px 0.5px 2px rgba(96, 97, 112, 0.16);
-    background-color: #0278d5;
     color: white;
+    background-color: #0278d5;
+    box-shadow: 0 0 1px rgba(40, 41, 61, 0.08), 0 0.5px 2px rgba(96, 97, 112, 0.16);
   }
+
   &-disable {
-    background-color: transparent;
-    color: #da291d;
-    letter-spacing: 1px;
     display: flex;
     align-items: center;
-    box-shadow: 0px 0px 1px rgba(40, 41, 61, 0.08), 0px 0.5px 2px rgba(96, 97, 112, 0.16);
+    color: #da291d;
+    letter-spacing: 1px;
+    background-color: transparent;
     border: 1px solid #da291d;
+    box-shadow: 0 0 1px rgba(40, 41, 61, 0.08), 0 0.5px 2px rgba(96, 97, 112, 0.16);
+
     svg {
       width: 20px;
       height: 20px;
       margin-right: 9px;
     }
+
     &:focus {
       outline: none;
     }
+
     @include sm-down {
       justify-content: center;
     }
@@ -118,62 +133,74 @@
 
 .visibility {
   &-container {
-    margin-top: 21px;
     display: flex;
+    margin-top: 21px;
+
     & > * + * {
       margin-left: 25px;
     }
+
     @include sm-down {
       flex-flow: column;
+
       & > * + * {
-        margin-left: 0px;
         margin-top: 25px;
+        margin-left: 0;
       }
     }
   }
+
   &-card-wrapper {
-    flex: 0 0 250px;
     display: flex;
+    flex: 0 0 250px;
     flex-flow: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+
     @include lg-down {
       flex: 1 1 100%;
     }
   }
+
   &-card {
     height: 100%;
-    text-align: center;
-    background: #ffffff;
-    box-shadow: 0px 0px 1px rgba(40, 41, 61, 0.04), 0px 2px 4px rgba(96, 97, 112, 0.16);
-    border-radius: 6px;
     padding: 24px 32px;
     margin-bottom: 15px;
+    text-align: center;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 0 1px rgba(40, 41, 61, 0.04), 0 2px 4px rgba(96, 97, 112, 0.16);
+
     h4 {
+      margin-bottom: 12px;
       font-size: 14px;
       font-weight: 500;
       line-height: 20px;
-      color: #000000;
-      margin-bottom: 12px;
+      color: #000;
     }
+
     p {
       font-size: 13px;
       line-height: 17px;
-      text-align: center;
       color: #6b6d85;
+      text-align: center;
     }
+
     @include sm-down {
       width: 100%;
     }
   }
 }
+
 .controls {
-  border-top: 1px solid #e3e3e8;
-  padding-top: 15px;
   display: flex;
   justify-content: space-between;
+  padding-top: 15px;
+  border-top: 1px solid #e3e3e8;
+
   @include sm-down {
     flex-flow: column;
+
     & > * + * {
       margin-top: 20px;
     }

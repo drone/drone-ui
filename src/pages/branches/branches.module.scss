@@ -3,8 +3,8 @@
 
 .wrapper {
   max-width: var(--bp-xl);
-  margin: 0px auto;
   padding-top: 54px;
+  margin: 0 auto;
 }
 
 .inner {
@@ -33,9 +33,11 @@
   grid-template-columns: 24px 300px 100px 200px auto;
   grid-gap: 15px;
   padding: 15px;
+
   @include md-down {
     grid-template-columns: 24px 1fr 100px 1fr 1fr;
   }
+
   @include sm-down {
     display: none;
   }
@@ -68,19 +70,24 @@
     box-shadow: 0 1px 6px -3px rgba(0, 0, 0, 0.5);
     box-shadow: 2px 0 -3px rgba(40, 41, 61, 0.08), 0 2px 2px rgba(96, 97, 112, 0.16);
   }
+
   @include md-down {
     grid-template-columns: 24px 1fr 100px 1fr 1fr;
   }
+
   @include sm-down {
     display: flex;
     flex-wrap: wrap;
+
     .commit {
       margin-left: auto;
     }
+
     .message {
       flex: 1 1 100%;
     }
   }
+
   @include xs-down {
     .target {
       overflow: hidden;
@@ -88,10 +95,12 @@
       white-space: nowrap;
     }
   }
+
   @include xxs-down {
     .target {
       flex: 0 0 85%;
     }
+
     .commit {
       margin-left: 0;
     }
@@ -109,12 +118,13 @@
 
   &:nth-child(5) {
     overflow: hidden;
+
     span {
+      min-width: 0;
+      max-width: 500px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      min-width: 0px;
-      max-width: 500px;
     }
   }
 

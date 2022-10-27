@@ -1,8 +1,5 @@
 import classNames from 'classnames/bind';
-import {
-  addSeconds, format, formatDistanceToNow, intervalToDuration,
-} from 'date-fns';
-import { formatDuration } from 'date-fns/esm';
+import { formatDistanceToNow, intervalToDuration } from 'date-fns';
 import React from 'react';
 
 import { ReactComponent as ClockIcon } from 'svg/clock.svg';

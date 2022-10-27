@@ -1,6 +1,6 @@
 import { CanvasWidget } from '@projectstorm/react-canvas-core';
 import createEngine, {
-  DiagramModel,	DagreEngine,
+  DiagramModel, DagreEngine,
 } from '@projectstorm/react-diagrams';
 import classNames from 'classnames/bind';
 import React, {
@@ -138,7 +138,7 @@ const Diagram = (props) => {
   useLayoutEffect(() => {
     if (nodeModels.length >= 3) {
       nodeModels.slice(1, nodeModels.length - 1).forEach((nodeModel) => {
-        nodeModel.setIsImperativelySelected(nodeModel.getOptions().number == selectedNodeNumber);
+        nodeModel.setIsImperativelySelected(nodeModel.getOptions().number === selectedNodeNumber);
       });
     }
   }, [nodeModels, selectedNodeNumber]);

@@ -21,7 +21,7 @@ import RouteGuard from './route-guard';
 export const Routes = {
   Home: (props) => <RouteGuard component={Home} {...props} />,
   LoginForm: (props) => <RouteGuard component={Login} {...props} />,
-  Login: (props) => <p>Redirecting to Github Auth...</p>,
+  Login: () => <p>Redirecting to Github Auth...</p>,
   Logout: (props) => <RouteGuard component={Welcome} {...props} />,
   LoginError: (props) => <RouteGuard component={Welcome} {...props} />,
   Register: (props) => <RouteGuard component={Register} {...props} />,

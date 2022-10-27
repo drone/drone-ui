@@ -9,6 +9,7 @@
 
 .no-logs {
   padding: 25px 60px;
+
   @include sm-down {
     padding: 0;
   }

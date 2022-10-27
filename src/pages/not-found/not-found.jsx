@@ -1,7 +1,6 @@
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 
 import Button from 'components/shared/button';
 import { useCustomTitle } from 'hooks';
@@ -20,7 +19,7 @@ export default function NotFound({ user }) {
         <NotFoundIcon />
         <p className={cx('note')}>
           <span>We are sorry, the resource you requested cannot be found.</span>
-          <sub>That's all we know.</sub>
+          <sub>That&aposs all we know.</sub>
         </p>
         {!user && (
           <Button

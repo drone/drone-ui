@@ -1,13 +1,14 @@
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { ReactComponent as Commit } from 'svg/scm/commit.svg';
+
+import { ReactComponent as Clock } from 'svg/clock.svg';
+import { ReactComponent as Box } from 'svg/scm/box.svg';
 import { ReactComponent as Branch } from 'svg/scm/branch.svg';
+import { ReactComponent as Commit } from 'svg/scm/commit.svg';
 import { ReactComponent as Number } from 'svg/scm/number.svg';
 import { ReactComponent as PullRequest } from 'svg/scm/pr.svg';
 import { ReactComponent as Tag } from 'svg/scm/tag.svg';
-import { ReactComponent as Box } from 'svg/scm/box.svg';
-import { ReactComponent as Clock } from 'svg/clock.svg';
 
 import styles from './label.module.scss';
 

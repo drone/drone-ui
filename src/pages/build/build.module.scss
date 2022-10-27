@@ -2,59 +2,69 @@
 @import "styles/_variables";
 
 .blocked {
-  padding: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 20px;
   margin: 20px 60px;
-  background: #ffffff;
-  box-shadow: 0px 0px 1px rgba(40, 41, 61, 0.08), 0px 0.5px 2px rgba(96, 97, 112, 0.16);
+  background: #fff;
   border-radius: 8px;
+  box-shadow: 0 0 1px rgba(40, 41, 61, 0.08), 0 0.5px 2px rgba(96, 97, 112, 0.16);
+
   & > * + * {
     margin-left: 15px;
   }
+
   p {
     font-size: 12px;
     line-height: 14px;
     color: #4f5162;
   }
+
   @include sm-down {
     margin: 20px;
   }
 }
+
 .no-logs {
   padding: 25px 60px;
+
   @include sm-down {
-    padding: 0px;
+    padding: 0;
   }
 }
+
 .controls {
-  grid-column: 7/-1;
-  grid-row: 3;
   display: inline-flex;
+  grid-row: 3;
+  grid-column: 7/-1;
   align-items: center;
   justify-content: flex-end;
+
   & > * + * {
     margin-left: 20px;
   }
+
   &-button {
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+    color: #383946;
+    letter-spacing: 0.2px;
     border: 1px solid #0278d5;
     border-radius: 4px;
-    padding: 5px 10px;
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 16px;
-    letter-spacing: 0.2px;
-    color: #383946;
+
     &-approve {
+      color: #fff;
       background-color: #42ab45;
       border: none;
-      color: #fff;
     }
+
     &-decline {
+      color: #fff;
       background-color: #e43326;
       border: none;
-      color: #fff;
     }
   }
 }

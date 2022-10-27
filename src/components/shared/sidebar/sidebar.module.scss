@@ -3,21 +3,25 @@
 
 .wrapper {
   @include flex;
-  z-index: 1;
+
   position: relative;
+  z-index: 1;
 }
 
 .sidebar {
   @include flex($direction: column, $align-x: space-between, $align-y: center);
+
+  width: 64px;
   height: 100vh;
   padding: 8px 0 6px;
-  width: 64px;
   background-color: $color-primary-9;
   box-shadow: 3px 0 5px rgba(0, 0, 0, 0.2);
+
   @include sm-down {
+    width: 100%;
     height: 64px;
     padding: 0;
-    width: 100%;
+
     @include flex($direction: row, $align-x: space-between, $align-y: center, $wrap: nowrap);
   }
 }
@@ -25,7 +29,9 @@
 .top,
 .bottom {
   @include flex($direction: column, $align-x: center, $align-y: center);
+
   width: 100%;
+
   @include sm-down {
     flex-direction: row;
     flex-wrap: nowrap;
@@ -35,22 +41,26 @@
 
 .sidebar-item {
   @include flex($align-y: center, $align-x: center);
+
   width: 100%;
   height: 64px;
-  background-color: transparent;
-  transition: background-color 0.2s ease;
   color: #fff;
   text-decoration: none;
+  background-color: transparent;
+  transition: background-color 0.2s ease;
+
   svg {
     width: 18px;
     height: 18px;
   }
+
   &-active {
     background-color: #07182b;
   }
 
   &:not(.logo) {
     height: 54px;
+
     @include sm-down {
       height: 64px;
     }
@@ -61,6 +71,7 @@
       background-color: #082952;
     }
   }
+
   .avatar {
     width: 24px;
     height: 24px;
@@ -70,8 +81,8 @@
 
 @include sm-down {
   .sidebar-item {
-    height: 64px;
     width: 64px;
+    height: 64px;
 
     &.logo {
       width: 64px;
@@ -81,29 +92,32 @@
 }
 
 .anonymous {
-  text-decoration: none;
   position: relative;
+  text-decoration: none;
+
   span {
     position: absolute;
     left: calc(100% + 5px);
-    background-color: rgba(0, 0, 0, 0.8);
     padding: 5px;
     white-space: nowrap;
-    border-radius: 4px;
     visibility: hidden;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 4px;
     opacity: 0;
     transition: 0.3s ease;
   }
+
   div {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 30px;
+    height: 30px;
     color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
   }
+
   &:hover {
     span {
       visibility: visible;

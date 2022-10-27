@@ -43,7 +43,10 @@ export default function Branches({ repo }) {
     );
   } else {
     content = (
-      <ZeroState title="Your Branch List is Empty." message="This list will be populated when you execute a pipeline for an open branch." />
+      <ZeroState
+        title="Your Branch List is Empty."
+        message="This list will be populated when you execute a pipeline for an open branch."
+      />
     );
   }
   return (

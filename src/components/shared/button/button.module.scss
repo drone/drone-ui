@@ -2,17 +2,18 @@
 @import "styles/_variables";
 
 .base {
-  font-family: $font-family-primary;
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  font-family: $font-family-primary;
   text-decoration: none;
   letter-spacing: 0.5px;
   cursor: pointer;
   outline: none;
   transition: 0.3s;
   -webkit-appearance: none;
+
   svg + span {
     margin-left: 10px;
   }

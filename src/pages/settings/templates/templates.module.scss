@@ -1,10 +1,10 @@
 @import "styles/_variables";
 
 .inner {
-  background: #ffffff;
-  box-shadow: 0px 0px 1px rgba(40, 41, 61, 0.08), 0px 0.5px 2px rgba(96, 97, 112, 0.16);
-  border-radius: 8px;
   padding: 26px 33px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 1px rgba(40, 41, 61, 0.08), 0 0.5px 2px rgba(96, 97, 112, 0.16);
 }
 
 .container {
@@ -13,16 +13,16 @@
 }
 
 .btn-new {
-  background-color: #0278d5;
-  color: white;
+  height: 36px;
   padding: 10px 24px;
   padding-left: 20px;
-  border-radius: 8px;
   font-size: 13px;
   font-weight: 500;
-  text-transform: uppercase;
+  color: white;
   text-decoration: none;
-  height: 36px;
+  text-transform: uppercase;
+  background-color: #0278d5;
+  border-radius: 8px;
 
   svg {
     width: 18px;
@@ -38,12 +38,13 @@
   &-fields {
     h3 {
       width: 700px;
-      font-weight: 600;
+      margin-bottom: 15px;
       font-size: 14px;
+      font-weight: 600;
       line-height: 20px;
       color: #22222a;
-      margin-bottom: 15px;
     }
+
     & > * + * {
       margin-top: 10px;
     }
@@ -51,13 +52,13 @@
 }
 
 .zero {
-  margin: 24px auto;
   max-width: 350px;
+  margin: 24px auto;
   text-align: center;
 
   h2 {
-    font-weight: 600;
     font-size: 24px;
+    font-weight: 600;
     color: #22222a;
   }
 
@@ -71,31 +72,35 @@
 
 .controls {
   padding-top: 15px;
+
   & > * + * {
     margin-left: 10px;
   }
+
   button {
-    padding: 6px 26px;
-    border-radius: 8px;
-    box-shadow: 0px 0px 1px rgba(40, 41, 61, 0.04), 0px 2px 4px rgba(96, 97, 112, 0.16);
     box-sizing: border-box;
+    padding: 6px 26px;
     border: 1px solid #0278d5;
+    border-radius: 8px;
+    box-shadow: 0 0 1px rgba(40, 41, 61, 0.04), 0 2px 4px rgba(96, 97, 112, 0.16);
   }
+
   button:first-child {
-    background-color: #0278d5;
     color: white;
+    background-color: #0278d5;
   }
+
   button:last-child {
-    background: #fff;
     color: #0278d5;
+    background: #fff;
   }
 }
 
 //
 
 .actions {
-  text-align: right;
   margin-bottom: 30px;
+  text-align: right;
 }
 
 .card {
@@ -132,18 +137,17 @@
   display: grid;
   grid-template-columns: 1fr 24px 24px;
   grid-gap: 15px;
-  box-shadow: inset 0px 0.5px 0px rgba(143, 144, 166, 0.5);
-
   padding: 19px 15px;
   text-align: left;
   background: #fff;
+  box-shadow: inset 0 0.5px 0 rgba(143, 144, 166, 0.5);
 }
 
 .template-list-item div {
   display: flex;
   align-items: center;
-  color: #627386;
   font-size: 14px;
+  color: #627386;
 
   &:nth-child(1) {
     color: black;
@@ -158,6 +162,7 @@
   .wrapper {
     display: block;
   }
+
   .template-list-header,
   .template-list-item {
     min-width: 500px;
@@ -165,6 +170,6 @@
 }
 
 .monaco-wrapper {
-  padding: 0;
   width: 1000px;
+  padding: 0;
 }

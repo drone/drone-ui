@@ -7,53 +7,58 @@
   display: flex;
   flex-flow: column-reverse;
   justify-content: space-between;
-  margin: -5px 0;
-  padding: 0 5px;
   height: calc(100% + 10px);
+  padding: 0 5px;
+  margin: -5px 0;
+
   span {
     font-size: 8px;
     line-height: 12px;
-    letter-spacing: 0.05em;
     color: #9293ab;
     text-align: end;
+    letter-spacing: 0.05em;
   }
 }
 
 .chart-grid {
-  flex: 1 1 100%;
   display: grid;
+  flex: 1 1 100%;
   overflow-x: auto;
 }
 
 .bar-background {
+  display: flex;
+  align-items: flex-end;
   height: 100%;
   background: #f3f3fa;
   border-radius: 100px;
-  display: flex;
-  align-items: flex-end;
 }
 
 .bar {
-  border-radius: 100px;
-  transition: height 0.2s ease;
-  background: transparent;
   width: 100%;
   min-height: 20px;
   cursor: pointer;
+  background: transparent;
+  border-radius: 100px;
+  transition: height 0.2s ease;
+
   &-running {
-    background-color: #FFCC00;
+    background-color: #fc0;
     // background: linear-gradient(45deg, #FDED72, #FFCC00);
   }
+
   &-success {
-    background-color: #06C270;
+    background-color: #06c270;
     // background: linear-gradient(45deg, #57EBA1, #06C270);
   }
+
   &-failure,
   &-killed,
   &-error {
-    background-color: #FF3B3B;
+    background-color: #ff3b3b;
     // background: linear-gradient(45deg, #FF8080, #FF3B3B);
   }
+
   &-pending {
     background-color: transparent;
   }

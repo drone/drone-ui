@@ -41,7 +41,7 @@ const DeploymentForm = ({ handleSubmit, handleCancel }) => {
   const handleParameterChange = (field) => (event) => {
     setParameterState((prev) => ({ ...prev, [field]: event.target.value.trim() }));
   };
-  const handleSubmitMiddleware = (event) => {
+  const handleSubmitMiddleware = () => {
     handleSubmit(state);
     handleCancel();
   };

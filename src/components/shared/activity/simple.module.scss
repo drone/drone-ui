@@ -15,26 +15,28 @@
   }
 
   .info {
-    margin: 0px 2px;
     display: inline-block;
+    margin: 0 2px;
     color: #4f5162;
   }
 
   strong {
+    padding: 0 8px;
+    line-height: 24px;
+    color: #22222a;
     text-decoration: none;
     background: #f3f3fa;
     border-radius: 8px;
-    line-height: 24px;
-    color: #22222a;
-    padding: 0px 8px;
   }
 
   a {
-    text-decoration: none;
     color: #4f5162;
+    text-decoration: none;
+
     div {
       color: #0063f7;
     }
+
     &:hover {
       div {
         text-decoration: underline;
@@ -44,8 +46,8 @@
 }
 
 .label {
-  margin-left: 4px;
   margin-right: 4px;
+  margin-left: 4px;
 }
 
 .avatar {

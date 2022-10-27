@@ -5,32 +5,37 @@
   &-wrapper {
     display: flex;
     flex-flow: column;
+
     & > * + * {
       margin-top: 7px;
     }
   }
-  border: 1px solid #e4e4eb;
+
   box-sizing: border-box;
-  border-radius: 4px;
-  padding: 6px 12px;
   min-width: 200px;
-  font-size: 14px;
+  padding: 6px 12px;
   font-family: $font-family-code;
+  font-size: 14px;
   line-height: 22px;
   color: #343a41;
   resize: none;
+  border: 1px solid #e4e4eb;
+  border-radius: 4px;
+
   @include sm-down {
     width: 100% !important;
   }
+
   &::placeholder {
-    color: #8f90a6;
+    font-family: $font-family-primary;
     font-size: 13px;
     line-height: 22px;
+    color: #8f90a6;
     letter-spacing: -0.00928571px;
-    font-family: $font-family-primary;
   }
+
   &:focus {
-    outline: none;
     border-color: #26a3f2;
+    outline: none;
   }
 }

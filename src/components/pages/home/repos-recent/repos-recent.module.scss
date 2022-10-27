@@ -9,8 +9,8 @@
   padding-bottom: 32px;
 
   a {
-    text-decoration: none;
     display: block;
+    text-decoration: none;
     cursor: pointer;
 
     &:nth-child(5),
@@ -29,6 +29,7 @@
 
   @include md-down {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+
     a:nth-child(4),
     a:nth-child(5),
     a:nth-child(6) {
@@ -44,13 +45,14 @@
 .card {
   display: flex;
   flex-flow: column;
-  background: #fff;
-  color: black;
-  border-radius: 10px;
-  box-shadow: 0 0 1px rgba(40, 41, 61, 0.08), 0 0px 2px rgba(96, 97, 112, 0.16);
-  transition: box-shadow 0.1s linear;
-  padding: 19px 15px;
   height: 100%;
+  padding: 19px 15px;
+  color: black;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 1px rgba(40, 41, 61, 0.08), 0 0 2px rgba(96, 97, 112, 0.16);
+  transition: box-shadow 0.1s linear;
+
   &:hover {
     box-shadow: 0 1px 6px -3px rgba(0, 0, 0, 0.5);
   }
@@ -59,27 +61,29 @@
 .header {
   display: flex;
   margin-bottom: 28px;
+
   .title {
     span {
       display: block;
-      white-space: nowrap;
+      margin-bottom: 3px;
       overflow: hidden;
       font-size: 18px;
-      margin-bottom: 3px;
       font-weight: 500;
+      white-space: nowrap;
     }
 
     .namespace {
-      color: #627386;
       font-size: 16px;
       font-weight: 400;
+      color: #627386;
 
-      &:after {
-        content: "/";
+      &::after {
         margin-left: 1px;
+        content: "/";
       }
     }
   }
+
   .status {
     margin-left: auto;
   }
@@ -88,31 +92,31 @@
 .body {
   display: block;
   margin-bottom: 28px;
+
   span {
-    color: #627386;
     display: block;
-    max-height: 40px;
-
-    -webkit-box-orient: vertical;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: normal;
-
-    font-size: 13px;
-    line-height: 20px;
+    max-height: 40px;
     padding-left: 6px;
     margin-top: 5px;
+    overflow: hidden;
+    font-size: 13px;
+    line-height: 20px;
+    color: #627386;
+    text-overflow: ellipsis;
+    white-space: normal;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
   }
 }
 
 .footer {
   display: flex;
-  border-top: 1px solid #f3f3fa;
-  padding-top: 14px;
   align-items: center;
+  padding-top: 14px;
   margin-top: auto;
+  border-top: 1px solid #f3f3fa;
+
   .avatar {
     width: 24px;
     height: 24px;
