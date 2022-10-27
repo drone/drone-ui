@@ -15,7 +15,7 @@ const EditUserForm = ({
 }) => {
   const [state, setState] = useState(initialValues);
 
-  const handleSubmitMiddleware = (event) => {
+  const handleSubmitMiddleware = () => {
     handleSubmit(state);
     handleCancel();
   };

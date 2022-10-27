@@ -8,7 +8,7 @@ import styles from './license.module.scss';
 
 const cx = classNames.bind(styles);
 
-export default function Home({ user }) {
+export default function Home() {
   return (
     <>
       {isLicenseExpired && (

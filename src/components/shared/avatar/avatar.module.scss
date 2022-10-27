@@ -4,9 +4,9 @@
   justify-content: center;
   width: 16px;
   height: 16px;
-  border-radius: 50%;
   font-size: 12px;
   cursor: default;
+  border-radius: 50%;
 }
 
 .image,
@@ -20,9 +20,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: inherit;
+  font-weight: 500;
+  line-height: 1;
   color: #fff;
   text-transform: uppercase;
-  line-height: 1;
-  font-weight: 500;
-  font-size: inherit;
 }

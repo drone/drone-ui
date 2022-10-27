@@ -1,14 +1,17 @@
 // Variables
 :root {
   /* Typography */
-  --font-family-primary: Inter, Arial, sans-serif;
+  --font-family-primary: inter, arial, sans-serif;
   --font-family-code: "Roboto Mono", "Lucida Console", "Monaco", monospace;
+
   /* Spacing */
   --margin-xs: 5px;
+
   /* Color Scheme */
   --red-dark: #ff3b3b;
   --red-medium: #ff5c5c;
   --red-light: #ff8080;
+
   /* Breakpoints */
   --bp-xl: 1800px; // 1920 - 120px of side paddings
   --bp-lg: 1366px;
@@ -27,7 +30,7 @@ $bp-xxs-down: 414px - 0.01px;
 /* @NOTE: the stuff below will gone */
 
 /* Typography */
-$font-family-primary: Inter, Arial, sans-serif;
+$font-family-primary: inter, arial, sans-serif;
 $font-family-code: "Roboto Mono", "Lucida Console", "Monaco", monospace;
 
 $font-size-xs: 10px;

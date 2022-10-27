@@ -1,21 +1,23 @@
 .form {
   h2 {
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 24px;
-    letter-spacing: 0.01em;
-    color: #4F5162;
     margin-bottom: 17px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    color: #4f5162;
+    letter-spacing: 0.01em;
   }
+
   &-section {
     h3 {
-      font-weight: 500;
-      font-size: 13px;
-      line-height: 16px;
-      letter-spacing: 0.2px;
-      color: #28293D;
       margin-bottom: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 16px;
+      color: #28293d;
+      letter-spacing: 0.2px;
     }
+
     + .form-section {
       margin-top: 17px;
     }

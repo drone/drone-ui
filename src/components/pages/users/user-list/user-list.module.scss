@@ -32,27 +32,26 @@
   display: grid;
   grid-template-columns: 24px auto 75px 75px 75px 125px 125px 24px;
   grid-gap: 15px;
-  box-shadow: inset 0px 0.5px 0px rgba(143, 144, 166, 0.5);
-
   padding: 19px 15px;
   text-align: left;
   background: #fff;
+  box-shadow: inset 0 0.5px 0 rgba(143, 144, 166, 0.5);
 }
 
 .user-list-item div {
   display: flex;
   align-items: center;
-  color: #627386;
   font-size: 14px;
+  color: #627386;
 
   &:nth-child(2) {
     color: black;
   }
 
   svg {
-    color: #b0b1c3;
     width: 22px;
     height: 22px;
+    color: #b0b1c3;
   }
 }
 

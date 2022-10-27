@@ -1,5 +1,6 @@
 import classNames from 'classnames/bind';
 import React, { useState } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import SplitPane from 'react-split-pane';
 import './graph-view.scss';
 
@@ -8,8 +9,6 @@ import { useDynamicHeight } from 'hooks';
 import Diagram from './diagram';
 import css from './graph-view.module.scss';
 import StepInfoDrawer from './step-info-drawer';
-
-import { useHistory, useParams } from 'react-router-dom';
 
 const cx = classNames.bind(css);
 

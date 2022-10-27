@@ -14,6 +14,7 @@
 
 .kicker {
   margin-bottom: 60px;
+
   svg {
     height: 64px;
   }
@@ -21,59 +22,61 @@
 
 .header {
   margin-bottom: 30px;
+
   .title {
-    font-weight: 500;
     font-size: 32px;
+    font-weight: 500;
     line-height: 44px;
     color: #22222a;
+
     &-sub {
-      font-size: 16px;
-      line-height: 24px;
       display: block;
       padding-top: 8px;
-      color: #9293AB;
+      font-size: 16px;
+      line-height: 24px;
+      color: #9293ab;
     }
   }
 }
 
 .illustration {
-  flex: 1;
-  background-color: #0a3364;
   display: flex;
+  flex: 1;
   align-items: flex-end;
   justify-content: flex-end;
+  background-color: #0a3364;
 }
 
 .btn {
-  padding: 10px 20px;
-  border-radius: 6px;
-  border: none;
+  width: 100%;
   min-width: 100px;
-  font-weight: 500;
+  padding: 10px 20px;
   font-family: $font-family-primary;
   font-size: 13px;
+  font-weight: 500;
+  color: white;
+  text-transform: uppercase;
   cursor: pointer;
   background-color: #00ade4;
-  color: white;
-  width: 100%;
-  text-transform: uppercase;
+  border: none;
+  border-radius: 6px;
 
   &:active,
   &:hover {
-    box-shadow: 0px 0px 2px rgba(40, 41, 61, 0.04), 0px 4px 8px rgba(96, 97, 112, 0.16);
+    box-shadow: 0 0 2px rgba(40, 41, 61, 0.04), 0 4px 8px rgba(96, 97, 112, 0.16);
   }
 
   &:active {
-    background: #0A3364;
+    background: #0a3364;
   }
 }
 
 .error {
-  background: #FCEDEC;
+  padding: 12px 22px;
+  margin: 20px 0;
   font-size: 16px;
   line-height: 22px;
-  margin: 20px 0px;
-  padding: 12px 22px;
-  border-left: 4px solid #CF2318;
-  color: #CF2318;
+  color: #cf2318;
+  background: #fcedec;
+  border-left: 4px solid #cf2318;
 }

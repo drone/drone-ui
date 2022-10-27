@@ -20,11 +20,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
   &.fullscreen {
     .modal-inner {
-      border-radius: 0;
       width: 100vw;
       height: 100vh;
+      border-radius: 0;
     }
   }
 }
@@ -32,12 +33,13 @@
 .modal-inner {
   display: flex;
   flex-direction: column;
+  padding: 30px;
   background-color: #fff;
   border-radius: 6px;
-  padding: 30px;
+
   @include sm-down {
-    padding: 20px;
     width: calc(100% - 40px);
+    padding: 20px;
   }
 }
 
@@ -45,12 +47,13 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: none;
   padding-top: 0;
-  padding-bottom: 15px;
   padding-right: 0;
+  padding-bottom: 15px;
   padding-left: 0;
   margin-bottom: 15px;
+  border-bottom: none;
+
   h3 {
     margin: 0;
     font-size: 20px;

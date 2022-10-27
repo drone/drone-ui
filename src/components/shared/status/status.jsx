@@ -29,15 +29,6 @@ const StatusBadge = ({ className, status }) => (
   </span>
 );
 
-const Status = ({ className, status }) => (
-  <div
-    className={cx('status', `status-${status}`, className || '')}
-    title={`Status: ${status}`}
-  >
-    {getStatusIcon(status)}
-  </div>
-);
-
 const getStatusIcon = (status) => {
   switch (status) {
     case 'error':
@@ -60,6 +51,15 @@ const getStatusIcon = (status) => {
       return null;
   }
 };
+
+const Status = ({ className, status }) => (
+  <div
+    className={cx('status', `status-${status}`, className || '')}
+    title={`Status: ${status}`}
+  >
+    {getStatusIcon(status)}
+  </div>
+);
 
 Status.propTypes = {
   className: PropTypes.string,

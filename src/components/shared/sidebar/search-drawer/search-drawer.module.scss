@@ -37,6 +37,7 @@
   &.slide-out {
     animation: slideOut 0.2s ease-in-out forwards;
   }
+
   @include sm-down {
     width: 80%;
     padding: 20px 20px 20px 55px;

@@ -2,12 +2,13 @@
 @import "styles/mixins";
 
 .wrapper {
-  padding-top: 54px;
   max-width: 1700px;
-  margin: 0px auto;
+  padding-top: 54px;
+  margin: 0 auto;
+
   @include sm-down {
-    padding-left: 20px;
     padding-right: 20px;
+    padding-left: 20px;
 
     h2:first-of-type {
       display: none;
@@ -16,13 +17,13 @@
 }
 
 .section-title {
+  padding-left: 0;
+  margin-bottom: 18px;
+  margin-left: 10px;
   font-size: 16px;
   font-weight: 500;
-  padding-left: 0px;
   color: #6b6d85;
   text-transform: uppercase;
-  margin-left: 10px;
-  margin-bottom: 18px;
 }
 
 .summary {
@@ -30,17 +31,18 @@
 }
 
 .btn {
-  padding: 6px 20px;
-  border-radius: 4px;
-  box-shadow: 0px 0px 1px rgba(40, 41, 61, 0.08), 0px 0.5px 2px rgba(96, 97, 112, 0.16);
-  border: none;
   min-width: 100px;
-  font-weight: 500;
+  padding: 6px 20px;
   font-family: $font-family-primary;
+  font-weight: 500;
   cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 0 1px rgba(40, 41, 61, 0.08), 0 0.5px 2px rgba(96, 97, 112, 0.16);
+
   &-show-more {
     color: #0092e4;
-    box-shadow: none;
     text-transform: capitalize;
+    box-shadow: none;
   }
 }

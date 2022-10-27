@@ -15,8 +15,7 @@
   text-align: left;
   background: #fff;
   border-radius: 10px;
-
-  box-shadow: 0 0 1px rgba(40, 41, 61, 0.08), 0 0px 2px rgba(96, 97, 112, 0.16);
+  box-shadow: 0 0 1px rgba(40, 41, 61, 0.08), 0 0 2px rgba(96, 97, 112, 0.16);
   transition: box-shadow 0.1s linear;
 
   &:hover {
@@ -28,8 +27,9 @@
   }
 
   &.inactive {
-    grid-gap: 0px;
     grid-template-rows: 24px;
+    grid-gap: 0;
+
     .detail {
       display: none;
     }
@@ -41,14 +41,15 @@
   grid-template-columns: 24px 1fr auto;
   grid-gap: 15px;
   color: #627386;
+
   span {
-    color: black;
-    font-weight: 400;
-    font-size: 15px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     max-width: 100%;
+    overflow: hidden;
+    font-size: 15px;
+    font-weight: 400;
+    color: black;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 
@@ -64,65 +65,70 @@
   & > div {
     display: flex;
     align-items: center;
-    color: #627386;
     font-size: 13px;
     line-height: 26px;
+    color: #627386;
   }
 
   .date {
-    font-size: 13px;
     justify-content: flex-end;
+    font-size: 13px;
   }
 
   strong {
-    background: #f3f3fa;
-    border-radius: 8px;
-    color: #22222a;
-    line-height: 26px;
-    padding: 0px 8px;
-    font-weight: 400;
-    font-size: 13px;
     display: inline-flex;
     align-items: center;
+    padding: 0 8px;
     margin-right: 8px;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 26px;
+    color: #22222a;
+    background: #f3f3fa;
+    border-radius: 8px;
 
     svg {
-      color: #9293ab;
       width: 20px;
       height: 20px;
       margin-right: 4px;
+      color: #9293ab;
     }
   }
 
   span {
-    white-space: nowrap;
+    max-width: 600px;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 600px;
+    white-space: nowrap;
+
     @include sm-down {
       display: flex;
-      white-space: normal;
       margin: 10px 0;
       line-height: 1.3;
+      white-space: normal;
     }
   }
 
   @include md-down {
     display: flex;
     flex-flow: column;
-    margin-left: 38px;
     grid-gap: unset;
+    margin-left: 38px;
+
     .spacer {
       display: none;
     }
+
     .commit {
       display: flex;
       flex-flow: column;
       align-items: flex-start;
+
       strong {
         margin-bottom: 5px;
       }
     }
+
     .date {
       justify-content: flex-start;
     }

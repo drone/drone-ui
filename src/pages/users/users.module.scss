@@ -1,14 +1,14 @@
 @import "styles/_variables";
 
 .wrapper {
-  margin: 0px auto;
   max-width: 1200px;
+  margin: 0 auto;
   margin-top: 54px;
 }
 
 .actions {
-  text-align: right;
   margin-bottom: 30px;
+  text-align: right;
 }
 
 .avatar {
@@ -17,28 +17,31 @@
 }
 
 .btn {
-  padding: 6px 20px;
-  border-radius: 4px;
-  box-shadow: 0px 0px 1px rgba(40, 41, 61, 0.08), 0px 0.5px 2px rgba(96, 97, 112, 0.16);
-  border: none;
   min-width: 100px;
-  font-weight: 500;
+  padding: 6px 20px;
   font-family: $font-family-primary;
+  font-weight: 500;
   cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 0 1px rgba(40, 41, 61, 0.08), 0 0.5px 2px rgba(96, 97, 112, 0.16);
+
   &-show-more {
+    margin-top: 20px;
     color: #0092e4;
     box-shadow: none;
-    margin-top: 20px;
   }
+
   &-user {
-    background-color: #0278d5;
-    color: white;
     padding: 10px 24px;
-    border-radius: 8px;
     font-size: 13px;
     font-weight: 500;
-    text-transform: uppercase;
+    color: white;
     text-decoration: none;
+    text-transform: uppercase;
+    background-color: #0278d5;
+    border-radius: 8px;
+
     svg {
       width: 18px;
       height: 18px;
@@ -55,8 +58,8 @@
 
 @media only screen and (max-width: 992px) {
   .wrapper {
-    padding-left: 32px;
     padding-right: 32px;
+    padding-left: 32px;
     margin-top: 16px;
   }
 }

@@ -5,19 +5,13 @@ import React, {
 } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { LOGS_LIMIT, STATES, STEP_STATES } from '_constants';
+import { LOGS_LIMIT, STATES } from '_constants';
 import Console from 'components/shared/console';
-import SystemMessage from 'components/shared/system-message';
 import { useDynamicHeight } from 'hooks';
 import { useLogs, useStreamLogs } from 'hooks/swr';
 
 import styles from './console-manager.module.scss';
 import { ACTION_LIST, logsReducer, logsInitFn } from './console-manager.state';
-import {
-  getIntentFromStepStatus,
-  getLogsErrorContent,
-  getNoLogsContent,
-} from './console-manager.utils';
 
 const cx = classNames.bind(styles);
 

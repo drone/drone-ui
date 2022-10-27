@@ -5,6 +5,7 @@
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
@@ -34,6 +35,7 @@
   display: flex;
   flex-direction: row;
   height: 100vh;
+
   @media screen and (max-width: 768px) {
     flex-direction: column;
     height: auto;

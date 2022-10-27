@@ -8,27 +8,32 @@ $dot-size: 1px;
 $dot-space: 10px;
 
 @mixin grid-bg($dot-color, $bg-color, $dot-size, $dot-space) {
-  background: linear-gradient(90deg, $bg-color ($dot-space - $dot-size), transparent 1%) center,
-    linear-gradient($bg-color ($dot-space - $dot-size), transparent 1%) center, $dot-color;
+  background:
+    linear-gradient(90deg, $bg-color ($dot-space - $dot-size), transparent 1%) center,
+    linear-gradient($bg-color ($dot-space - $dot-size), transparent 1%) center,
+    $dot-color;
   background-size: $dot-space $dot-space;
 }
 
 .graph {
   &-wrapper {
-    padding: 0;
-    min-height: 500px;
     position: relative;
+    min-height: 500px;
+    padding: 0;
+
     @include grid-bg($dot-color, $bg-color-w, $dot-size, $dot-space);
   }
+
   &-stages {
+    position: relative;
     width: 100%;
     height: 100%;
-    position: relative;
     background: rgba(238, 249, 255, 0.5);
   }
+
   &-steps {
+    position: relative;
     width: 100%;
     height: 100%;
-    position: relative;
   }
 }

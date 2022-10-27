@@ -57,7 +57,7 @@ const NewBuildForm = ({ handleSubmit, handleCancel }) => {
       <FormSection className={cx('new-build-form-column')}>
         <Field.Input
           label="Branch"
-          placeholder="master"
+          placeholder="<default branch name>"
           value={state.target}
           name="branch"
           onChange={handleFieldChange('target')}

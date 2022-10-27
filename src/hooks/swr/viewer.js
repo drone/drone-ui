@@ -79,13 +79,6 @@ const useViewerToken = () => {
   return { data, isLoading, isError: error };
 };
 
-// this fn has no appliance beyound the hook below
-// that is why we are not moving it to `utils` just yet
-const sleep = async (ms, fn, ...args) => {
-  await new Promise((res) => setTimeout(res, ms));
-  return fn(...args);
-};
-
 const useSyncAccount = (shouldSync) => {
   const [hasSyncReqFiredOff, setHasSyncReqFiredOff] = useState(false);
   const [isError, setIsError] = useState(null);
@@ -93,7 +86,6 @@ const useSyncAccount = (shouldSync) => {
   const runSyncReq = async () => {
     try {
       await axiosWrapper('/api/user/repos?async=true', { method: 'POST' });
-      // await sleep(10000, setHasSyncReqFiredOff, true);
       setHasSyncReqFiredOff(true);
     } catch (e) {
       setIsError(e);
