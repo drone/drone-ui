@@ -1,5 +1,20 @@
 # Changelog
 
+## [v2.9.0](https://github.com/drone/drone-ui/tree/v2.9.0) (2022-10-27)
+
+[Full Changelog](https://github.com/drone/drone-ui/compare/v2.8.2...v2.9.0)
+
+**Implemented enhancements:**
+
+- fix low hanging lint issues [\#425](https://github.com/drone/drone-ui/pull/425) ([d1wilko](https://github.com/d1wilko))
+- \(maint\) document the release proceedure [\#421](https://github.com/drone/drone-ui/pull/421) ([tphoney](https://github.com/tphoney))
+
+**Fixed bugs:**
+
+- bug: \[DRON-433\]: fix new build query logic [\#424](https://github.com/drone/drone-ui/pull/424) ([d1wilko](https://github.com/d1wilko))
+- fix deep links bug [\#423](https://github.com/drone/drone-ui/pull/423) ([d1wilko](https://github.com/d1wilko))
+- Fix minor grammar error in repository settings [\#422](https://github.com/drone/drone-ui/pull/422) ([kittenswolf](https://github.com/kittenswolf))
+
 ## [v2.8.2](https://github.com/drone/drone-ui/tree/v2.8.2) (2022-05-09)
 
 [Full Changelog](https://github.com/drone/drone-ui/compare/v2.8.1...v2.8.2)
@@ -8,6 +23,10 @@
 
 - \(fix\) display durations longer than 24hrs [\#419](https://github.com/drone/drone-ui/pull/419) ([tphoney](https://github.com/tphoney))
 - Fix cut-off letter in stage name [\#418](https://github.com/drone/drone-ui/pull/418) ([silverwind](https://github.com/silverwind))
+
+**Merged pull requests:**
+
+- Prep v2.8.2 [\#420](https://github.com/drone/drone-ui/pull/420) ([tphoney](https://github.com/tphoney))
 
 ## [v2.8.1](https://github.com/drone/drone-ui/tree/v2.8.1) (2022-04-14)
 
