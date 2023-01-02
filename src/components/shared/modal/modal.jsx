@@ -28,7 +28,7 @@ const Modal = ({
     } else {
       window.document.body.style.overflow = 'unset';
     }
-    return () => window.document.body.style.oveflow = 'unset';
+    return () => window.document.body.style.overflow = 'unset';
   }, [isShowing]);
   if (isShowing) {
     return ReactDOM.createPortal(
