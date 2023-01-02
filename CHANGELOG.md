@@ -166,7 +166,7 @@
 
 **Fixed bugs:**
 
-- show error and console logs for buld steps [\#387](https://github.com/drone/drone-ui/pull/387) ([d1wilko](https://github.com/d1wilko))
+- show error and console logs for build steps [\#387](https://github.com/drone/drone-ui/pull/387) ([d1wilko](https://github.com/d1wilko))
 
 **Merged pull requests:**
 
