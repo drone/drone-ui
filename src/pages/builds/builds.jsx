@@ -85,7 +85,7 @@ Builds.propTypes = {
 
 Builds.defaultProps = {
   repo: {
-    actice: undefined,
+    active: undefined,
     counter: undefined,
   },
 };
