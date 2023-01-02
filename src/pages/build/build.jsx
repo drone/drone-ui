@@ -95,7 +95,7 @@ export default function Build({ user, userIsAdminOrHasWritePerm }) {
     }
   }, [data, isError, isLoading, stage]);
 
-  // sort individual steps card data into a managable array
+  // sort individual steps card data into a manageable array
   const cardsData = data?.stages?.reduce((cardDataAcc, stageData) => {
     const stageCardData = stageData?.steps?.reduce((stageDataAcc, stepData) => {
       if (stepData.schema) {
