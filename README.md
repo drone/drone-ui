@@ -79,7 +79,7 @@ docker run -it --rm -v "$(pwd)":/usr/local/src/your-app githubchangeloggenerator
 
 You can generate a token by logging into your GitHub account and going to Settings -> Personal access tokens.
 
-Next we tag the PR's with the fixes or enhancements labels. If the PR does not fufil the requirements, do not add a label.
+Next we tag the PR's with the fixes or enhancements labels. If the PR does not fulfil the requirements, do not add a label.
 
 Run the changelog generator again with the future version according to semver.
 
