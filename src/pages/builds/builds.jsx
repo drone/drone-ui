@@ -21,7 +21,7 @@ export default function Builds({ repo }) {
   const { params: { namespace, name }, url } = useRouteMatch();
   const history = useHistory();
 
-  // if repo is inactive, redirect to settigns where
+  // if repo is inactive, redirect to settings where
   // user can proceed with repo activation
   useLayoutEffect(() => {
     if (!isRepoActive) {
@@ -85,7 +85,7 @@ Builds.propTypes = {
 
 Builds.defaultProps = {
   repo: {
-    actice: undefined,
+    active: undefined,
     counter: undefined,
   },
 };

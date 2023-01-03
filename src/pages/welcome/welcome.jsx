@@ -46,7 +46,7 @@ export default function Welcome() {
       } else {
         error = (
           <div className={cx('error')}>
-            {parseQuery(search)?.message ?? 'An error occured during login attempt, please, try again'}
+            {parseQuery(search)?.message ?? 'An error occurred during login attempt, please, try again'}
           </div>
         );
       }

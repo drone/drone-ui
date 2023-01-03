@@ -37,14 +37,14 @@ const useLogsActionTypes = {
   setIsLoading: ACTION_LIST.UPDATE_ARE_LOGS_LOADING,
 };
 
-const stepDefferedLogsStates = [
+const stepDeferredLogsStates = [
   'running',
   'pending',
   'skipped',
   'waiting_on_dependencies',
 ];
 
-const stageDefferedLogsStates = stepDefferedLogsStates.slice(1);
+const stageDeferredLogsStates = stepDeferredLogsStates.slice(1);
 
 export default function LogViewConsoleManager(props) {
   const {
@@ -68,8 +68,8 @@ export default function LogViewConsoleManager(props) {
     state.compState !== STATES.STREAM_ON
     && !!state.stageStatus
     && !!state.stepData.status
-    && !stageDefferedLogsStates.includes(state.stageStatus)
-    && !stepDefferedLogsStates.includes(state.stepData.status),
+    && !stageDeferredLogsStates.includes(state.stageStatus)
+    && !stepDeferredLogsStates.includes(state.stepData.status),
   );
 
   // logs stream

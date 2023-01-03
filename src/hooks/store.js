@@ -55,7 +55,7 @@ export const useStore = create((set, get) => ({
     }
 
     // update the state of the store to indicate the
-    // request to fetch repositorie has been fired,
+    // request to fetch repository has been fired,
     // which prevents subsequent calls.
     set((state) => ({
       ...state,

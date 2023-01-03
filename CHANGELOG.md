@@ -7,7 +7,7 @@
 **Implemented enhancements:**
 
 - fix low hanging lint issues [\#425](https://github.com/drone/drone-ui/pull/425) ([d1wilko](https://github.com/d1wilko))
-- \(maint\) document the release proceedure [\#421](https://github.com/drone/drone-ui/pull/421) ([tphoney](https://github.com/tphoney))
+- \(maint\) document the release procedure [\#421](https://github.com/drone/drone-ui/pull/421) ([tphoney](https://github.com/tphoney))
 
 **Fixed bugs:**
 
@@ -166,7 +166,7 @@
 
 **Fixed bugs:**
 
-- show error and console logs for buld steps [\#387](https://github.com/drone/drone-ui/pull/387) ([d1wilko](https://github.com/d1wilko))
+- show error and console logs for build steps [\#387](https://github.com/drone/drone-ui/pull/387) ([d1wilko](https://github.com/d1wilko))
 
 **Merged pull requests:**
 

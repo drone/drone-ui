@@ -19,7 +19,7 @@ export default function NotFound({ user }) {
         <NotFoundIcon />
         <p className={cx('note')}>
           <span>We are sorry, the resource you requested cannot be found.</span>
-          <sub>That&aposs all we know.</sub>
+          <sub>That&apos;s all we know.</sub>
         </p>
         {!user && (
           <Button

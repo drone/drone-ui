@@ -82,7 +82,7 @@ export default function Home() {
   useEffect(() => {
     if (syncError || viewerError) {
       setContext({ ...context, isAccSyncing: false });
-      showError('Sync error has occured, please, try again');
+      showError('Sync error has occurred, please, try again');
       console.error('Sync error:', syncError?.message || viewerError?.message); // eslint-disable-line no-console
     }
   }, [syncError, viewerError, showError, context, setContext]);
