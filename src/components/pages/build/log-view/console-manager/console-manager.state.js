@@ -21,6 +21,7 @@ export const ACTION_LIST = {
   UPDATE_ARE_LOGS_LOADING: 'update_are_logs_loading',
   UPDATE_HAS_BUILD_DEBUG_MODE: 'update_has_build_debug_mode',
   SET_LOGS: 'set_logs',
+  BATCH_UPDATE_LOGS: 'batch_update_logs',
 };
 
 // reducer init fn
@@ -116,6 +117,16 @@ export const logsReducer = (state, action) => {
       return {
         ...state,
         logs: state.logs.concat(action.payload),
+        tmateLink: state.tmateLink || mayBeExtractTmateLink(
+          action.payload,
+          state.stepData.status,
+          state.hasBuildDebugMode,
+        ),
+      };
+    case ACTION_LIST.BATCH_UPDATE_LOGS:
+      return {
+        ...state,
+        logs: state.logs.concat(...action.payload),
         tmateLink: state.tmateLink || mayBeExtractTmateLink(
           action.payload,
           state.stepData.status,
