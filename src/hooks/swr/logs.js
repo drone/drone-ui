@@ -59,6 +59,8 @@ const useStreamLogs = (dispatch,
   }, shouldStreamLogs) => {
   const [, forceRerender] = useState();
   const stream = useRef();
+  const timer = useRef(null);
+  const logCache = useRef([]);
   const path = useMemo(() => {
     const pathBody = `${namespace}/${name}/${build}/${stage}/${step}`;
     // make path for stream
@@ -71,7 +73,14 @@ const useStreamLogs = (dispatch,
 
   const messageHandler = useCallback((event) => {
     const receivedLogs = escapeLogs(JSON.parse(event.data));
-    dispatch({ type: actionOnUpdateLogs, payload: receivedLogs });
+    logCache.current.push(receivedLogs);
+    if (!timer.current) {
+      timer.current = setTimeout(() => {
+        dispatch({ type: actionOnUpdateLogs, payload: logCache.current });
+        logCache.current = [];
+        timer.current = null;
+      }, 250);
+    }
   }, [dispatch, actionOnUpdateLogs]);
 
   const errorHandler = useCallback((err, shouldStream) => {

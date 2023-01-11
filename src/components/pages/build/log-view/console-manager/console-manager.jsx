@@ -74,7 +74,7 @@ export default function LogViewConsoleManager(props) {
 
   // logs stream
   useStreamLogs(dispatch,
-    ACTION_LIST.UPDATE_LOGS,
+    ACTION_LIST.BATCH_UPDATE_LOGS,
     params,
     state.compState === STATES.STREAM_ON);
 
