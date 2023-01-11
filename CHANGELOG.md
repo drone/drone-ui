@@ -1,5 +1,14 @@
 # Changelog
 
+## [v2.9.1](https://github.com/drone/drone-ui/tree/v2.9.1) (2023-01-11)
+
+[Full Changelog](https://github.com/drone/drone-ui/compare/v2.9.0...v2.9.1)
+
+**Fixed bugs:**
+
+- batch streaming log state updates to improve UI performance [\#428](https://github.com/drone/drone-ui/pull/428) ([d1wilko](https://github.com/d1wilko))
+- Spelling [\#427](https://github.com/drone/drone-ui/pull/427) ([jsoref](https://github.com/jsoref))
+
 ## [v2.9.0](https://github.com/drone/drone-ui/tree/v2.9.0) (2022-10-27)
 
 [Full Changelog](https://github.com/drone/drone-ui/compare/v2.8.2...v2.9.0)
@@ -14,6 +23,10 @@
 - bug: \[DRON-433\]: fix new build query logic [\#424](https://github.com/drone/drone-ui/pull/424) ([d1wilko](https://github.com/d1wilko))
 - fix deep links bug [\#423](https://github.com/drone/drone-ui/pull/423) ([d1wilko](https://github.com/d1wilko))
 - Fix minor grammar error in repository settings [\#422](https://github.com/drone/drone-ui/pull/422) ([kittenswolf](https://github.com/kittenswolf))
+
+**Merged pull requests:**
+
+- v2.9.0 release prep [\#426](https://github.com/drone/drone-ui/pull/426) ([d1wilko](https://github.com/d1wilko))
 
 ## [v2.8.2](https://github.com/drone/drone-ui/tree/v2.8.2) (2022-05-09)
 
