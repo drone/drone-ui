@@ -47,14 +47,14 @@
   flex-flow: column;
   height: 100%;
   padding: 19px 15px;
-  color: black;
-  background: #fff;
+  color: var(--color-text);
+  background: var(--background-card);
   border-radius: 10px;
-  box-shadow: 0 0 1px rgba(40, 41, 61, 0.08), 0 0 2px rgba(96, 97, 112, 0.16);
+  box-shadow: 0 0 1px var(--shadow-4), 0 0 2px var(--shadow-5);
   transition: box-shadow 0.1s linear;
 
   &:hover {
-    box-shadow: 0 1px 6px -3px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 1px 6px -3px var(--shadow-2);
   }
 }
 
@@ -75,7 +75,7 @@
     .namespace {
       font-size: 16px;
       font-weight: 400;
-      color: #627386;
+      color: var(--color-item);
 
       &::after {
         margin-left: 1px;
@@ -102,7 +102,7 @@
     overflow: hidden;
     font-size: 13px;
     line-height: 20px;
-    color: #627386;
+    color: var(--color-item);
     text-overflow: ellipsis;
     white-space: normal;
     -webkit-box-orient: vertical;
@@ -115,7 +115,7 @@
   align-items: center;
   padding-top: 14px;
   margin-top: auto;
-  border-top: 1px solid #f3f3fa;
+  border-top: 1px solid var(--background-light);
 
   .avatar {
     width: 24px;

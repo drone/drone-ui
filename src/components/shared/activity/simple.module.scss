@@ -17,24 +17,24 @@
   .info {
     display: inline-block;
     margin: 0 2px;
-    color: #4f5162;
+    color: var(--color-label);
   }
 
   strong {
     padding: 0 8px;
     line-height: 24px;
-    color: #22222a;
+    color: var(--color-heading);
     text-decoration: none;
-    background: #f3f3fa;
+    background: var(--background-light);
     border-radius: 8px;
   }
 
   a {
-    color: #4f5162;
+    color: var(--color-label);
     text-decoration: none;
 
     div {
-      color: #0063f7;
+      color: var(--color-link);
     }
 
     &:hover {

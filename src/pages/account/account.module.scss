@@ -18,7 +18,7 @@
     color: white;
     text-decoration: none;
     text-transform: uppercase;
-    background-color: #0278d5;
+    background-color: var(--color-primary-7);
     border-radius: 8px;
   }
 
@@ -41,7 +41,7 @@
   font-size: 16px;
   font-weight: 500;
   line-height: 24px;
-  color: #9293ab;
+  color: var(--color-summary);
   letter-spacing: 0.01em;
 
   &-wrapper {
@@ -55,7 +55,7 @@
   font-size: 16px;
   font-weight: 500;
   line-height: 22px;
-  color: #22222a;
+  color: var(--color-heading);
 }
 
 .row {
@@ -73,11 +73,11 @@
   font-family: $font-family-code;
   font-size: 14px;
   line-height: 20px;
-  color: #383946;
+  color: var(--color-content);
   white-space: pre-wrap;
-  background: #fff;
+  background: var(--background-card);
   border-radius: 8px;
-  box-shadow: 0 0 1px rgba(40, 41, 61, 0.08), 0 0.5px 2px rgba(96, 97, 112, 0.16);
+  box-shadow: 0 0 1px var(--shadow-4), 0 0.5px 2px var(--shadow-5);
 
   code {
     display: block;
@@ -96,7 +96,7 @@
   top: 22px;
   right: 25px;
   font-weight: 500;
-  color: #8f90a6;
+  color: var(--color-placeholder);
   text-transform: uppercase;
 
   svg {
@@ -106,7 +106,7 @@
 
   &:hover {
     svg {
-      color: #383946;
+      color: var(--color-content);
     }
   }
 }

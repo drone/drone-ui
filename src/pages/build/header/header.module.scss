@@ -56,7 +56,7 @@
     font-size: 10px;
     font-weight: 600;
     line-height: 16px;
-    color: #4f5162;
+    color: var(--color-label);
     text-align: center;
     text-transform: uppercase;
     letter-spacing: 0.2px;
@@ -67,7 +67,7 @@
 
     &.active {
       color: #fff;
-      background-color: #4f5162;
+      background-color: var(--color-label);
       border-color: transparent;
     }
   }
@@ -141,10 +141,10 @@
     overflow: hidden;
     font-size: 16px;
     font-weight: 500;
-    color: #4f5162;
+    color: var(--color-label);
     text-overflow: ellipsis;
     white-space: nowrap;
-    border-right: 1px solid rgba(0, 0, 0, 0.2);
+    border-right: 1px solid var(--border-subheader);
   }
 
   @include lg-down {
@@ -193,12 +193,12 @@
   font-size: 12px;
   font-weight: 500;
   line-height: 16px;
-  color: #0278d5;
+  color: var(--color-primary-7);
   text-transform: uppercase;
   letter-spacing: 0.2px;
-  border: 1px solid #0278d5;
+  border: 1px solid var(--color-primary-7);
   border-radius: 8px;
-  box-shadow: 0 0 1px rgba(40, 41, 61, 0.04), 0 2px 4px rgba(96, 97, 112, 0.16);
+  box-shadow: 0 0 1px var(--shadow-3), 0 2px 4px var(--shadow-5);
 }
 
 .title {
@@ -211,13 +211,13 @@
     font-size: 24px;
     font-weight: 500;
     line-height: 28px;
-    color: #22222a;
+    color: var(--color-heading);
     text-overflow: ellipsis;
     white-space: nowrap;
 
     span {
       margin: 0 3px;
-      color: #22222a;
+      color: var(--color-heading);
     }
 
     a {
@@ -234,7 +234,7 @@
         height: 18px;
 
         path {
-          fill: #9293ab;
+          fill: var(--color-summary);
         }
       }
     }
@@ -253,12 +253,12 @@
   display: flex;
   align-items: center;
   font-size: 12px;
-  color: #4f5162;
+  color: var(--color-label);
 
   svg {
     width: 18px;
     height: 18px;
     margin-right: 8px;
-    color: #9293ab;
+    color: var(--color-summary);
   }
 }

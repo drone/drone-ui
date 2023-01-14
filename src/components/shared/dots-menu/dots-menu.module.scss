@@ -23,13 +23,13 @@
   outline: none;
 
   svg {
-    stroke: rgba(0, 0, 0, 0.38);
+    stroke: var(--color-summary);
   }
 
   i {
     width: 4px;
     height: 4px;
-    background: rgba(0, 0, 0, 0.38);
+    background: var(--color-summary);
     border-radius: 50%;
 
     + i {
@@ -44,12 +44,12 @@
   &:active,
   &.is-open {
     cursor: default;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: var(--border-header);
     border: 1px solid transparent;
   }
 
   &.is-focused:not(&:active) {
-    border: 1px solid rgba(#0278d5, 0.7);
+    border: 1px solid rgba(var(--color-primary-7), 0.7);
   }
 }
 
@@ -59,9 +59,9 @@
   z-index: 3;
   min-width: 100px;
   overflow: hidden;
-  background-color: #fff;
+  background-color: var(--background-menu);
   border-radius: 4px;
-  box-shadow: 0 0 2px rgba(40, 41, 61, 0.04), 0 4px 8px rgba(96, 97, 112, 0.16);
+  box-shadow: 0 0 2px var(--shadow-3), 0 4px 8px var(--shadow-5);
 
   &-left {
     left: 0;
@@ -77,13 +77,13 @@
     transition: all 0.2s ease;
 
     &:focus {
-      color: #0278d5;
-      background-color: #e6faff;
+      color: var(--color-primary-7);
+      background-color: var(--background-focus);
       outline: none;
     }
 
     @include hover {
-      color: #0278d5;
+      color: var(--color-primary-7);
     }
   }
 }

@@ -29,7 +29,7 @@
     }
 
     button {
-      color: #e43326;
+      color: var(--color-error-medium);
     }
 
     &-list {
@@ -64,18 +64,18 @@
     button {
       box-sizing: border-box;
       padding: 6px 26px;
-      border: 1px solid #0278d5;
+      border: 1px solid var(--color-primary-7);
       border-radius: 8px;
-      box-shadow: 0 0 1px rgba(40, 41, 61, 0.04), 0 2px 4px rgba(96, 97, 112, 0.16);
+      box-shadow: 0 0 1px var(--shadow-3), 0 2px 4px var(--shadow-5);
 
       &.save {
         color: white;
-        background-color: #0278d5;
+        background-color: var(--color-primary-7);
       }
 
       &.cancel {
-        color: #0278d5;
-        background: #fff;
+        color: var(--color-primary-7);
+        background: var(--background-card);
       }
 
       &.delete {

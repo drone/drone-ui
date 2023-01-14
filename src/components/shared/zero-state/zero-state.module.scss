@@ -25,7 +25,7 @@
       font-size: 22px;
       font-weight: 500;
       line-height: 28px;
-      color: #4f5162;
+      color: var(--color-label);
     }
 
     p {
@@ -34,7 +34,7 @@
       margin-top: 12px;
       font-size: 15px;
       line-height: 22px;
-      color: #4f5162;
+      color: var(--color-label);
       text-align: center;
     }
 
@@ -42,9 +42,9 @@
       padding: 8px 10px;
       margin-top: 28px;
       color: white;
-      background-color: #0278d5;
+      background-color: var(--color-primary-7);
       border-radius: 8px;
-      box-shadow: 0 0 1px rgba(40, 41, 61, 0.08), 0 0.5px 2px rgba(96, 97, 112, 0.16);
+      box-shadow: 0 0 1px var(--shadow-4), 0 0.5px 2px var(--shadow-5);
     }
   }
 

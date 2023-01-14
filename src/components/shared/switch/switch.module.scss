@@ -17,7 +17,7 @@
     width: 12px;
     height: 12px;
     content: "";
-    background: #fff;
+    background: var(--background-card);
     border-radius: 6px;
     box-shadow: 0 1px 2px rgba(40, 41, 61, 0.2), 0 2px 4px rgba(96, 97, 112, 0.2);
     transition: all 0.2s;
@@ -51,8 +51,8 @@
     visibility: hidden;
 
     &:checked + .switch-label {
-      background: #0278d5;
-      border-color: #0278d5;
+      background: var(--color-primary-7);
+      border-color: var(--color-primary-7);
 
       .switch-toggler {
         box-shadow: none;
@@ -63,6 +63,7 @@
 
     &:disabled + .switch-label,
     &:disabled:checked + .switch-label {
+      cursor: not-allowed;
       background: #f2f2f5;
       border-color: #ebebf0;
 
@@ -75,7 +76,7 @@
 
   &-label-fake {
     font-size: 13px;
-    color: #0b0b0d;
+    color: var(--color-switch);
     text-align: center;
   }
 }

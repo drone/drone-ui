@@ -7,12 +7,12 @@
     width: 16px;
     height: 16px;
     background-color: #fff;
-    border: 1px solid #0278d5;
+    border: 1px solid var(--color-primary-7);
     border-radius: 50%;
     transition: background-color 0.2s ease;
 
     &.appearance-checkmark {
-      border: 1px solid #9293ab;
+      border: 1px solid var(--color-summary);
     }
 
     i {
@@ -50,10 +50,10 @@
 
   input:checked {
     & ~ .radio-fake {
-      background-color: #0278d5;
+      background-color: var(--color-primary-7);
 
       &.appearance-checkmark {
-        border-color: #0278d5;
+        border-color: var(--color-primary-7);
       }
 
       i {

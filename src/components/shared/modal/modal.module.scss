@@ -12,7 +12,7 @@
 
 .overlay {
   z-index: 1000;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: var(--shadow-overlay);
 }
 
 .modal-wrapper {
@@ -34,7 +34,7 @@
   display: flex;
   flex-direction: column;
   padding: 30px;
-  background-color: #fff;
+  background-color: var(--background-card);
   border-radius: 6px;
 
   @include sm-down {
@@ -58,5 +58,9 @@
     margin: 0;
     font-size: 20px;
     font-weight: 500;
+  }
+
+  button {
+    color: var(--color-text);
   }
 }

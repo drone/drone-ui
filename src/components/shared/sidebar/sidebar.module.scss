@@ -14,8 +14,8 @@
   width: 64px;
   height: 100vh;
   padding: 8px 0 6px;
-  background-color: $color-primary-9;
-  box-shadow: 3px 0 5px rgba(0, 0, 0, 0.2);
+  background-color: var(--color-primary-9);
+  box-shadow: 3px 0 5px var(--shadow-1);
 
   @include sm-down {
     width: 100%;

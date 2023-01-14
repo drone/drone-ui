@@ -7,8 +7,8 @@
   flex-flow: column;
   max-width: 100%;
   min-height: 500px;
-  color: #f3f3fa;
-  background-color: #0b0b0d;
+  color: var(--color-console);
+  background-color: var(--background-console);
 
   @include sm-down {
     height: 100vh !important;
@@ -125,7 +125,7 @@
   padding-right: 28px;
   font-size: 12px;
   line-height: 20px;
-  color: #6b6d85;
+  color: var(--color-title);
   text-align: end;
   letter-spacing: 0.2px;
   white-space: nowrap;
@@ -146,7 +146,7 @@
   padding-left: 28px;
   font-size: 12px;
   line-height: 20px;
-  color: #6b6d85;
+  color: var(--color-title);
   text-align: end;
   letter-spacing: 0.2px;
   white-space: nowrap;
@@ -173,21 +173,21 @@
   .summary-title {
     flex: 1 1 100%;
     margin-bottom: 10px;
-    color: #9293ab;
+    color: var(--color-summary);
   }
 
   .summary-info {
     display: flex;
     flex: 1;
     align-items: center;
-    color: #f3f3fa;
+    color: var(--color-console);
   }
 
   .summary-status {
     margin-right: 15px;
 
     svg {
-      color: #22222a;
+      color: var(--color-heading);
     }
   }
 
@@ -200,7 +200,7 @@
     right: 25px;
     bottom: 16px;
     font-size: 20px;
-    color: #6b6d85;
+    color: var(--color-title);
     transform: translateX(5px);
   }
 

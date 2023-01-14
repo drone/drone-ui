@@ -7,11 +7,11 @@
   overflow: hidden;
   background-color: white;
   border-radius: 10px;
-  box-shadow: 0 0 1px rgba(40, 41, 61, 0.08), 0 0.5px 2px rgba(96, 97, 112, 0.16);
+  box-shadow: 0 0 1px var(--shadow-4), 0 0.5px 2px var(--shadow-5);
 
   &:hover {
-    box-shadow: 0 1px 6px -3px rgba(0, 0, 0, 0.5);
-    box-shadow: 2px 0 -3px rgba(40, 41, 61, 0.08), 0 2px 2px rgba(96, 97, 112, 0.16);
+    box-shadow: 0 1px 6px -3px var(--shadow-2);
+    box-shadow: 2px 0 -3px var(--shadow-4), 0 2px 2px var(--shadow-5);
   }
 
   &-message {

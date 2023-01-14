@@ -1,8 +1,3 @@
-// Colors
-$bg-color-b: #f6fcff;
-$bg-color-w: #fff;
-$dot-color: #bbc1c4;
-
 // Dimensions
 $dot-size: 1px;
 $dot-space: 10px;
@@ -21,14 +16,14 @@ $dot-space: 10px;
     min-height: 500px;
     padding: 0;
 
-    @include grid-bg($dot-color, $bg-color-w, $dot-size, $dot-space);
+    @include grid-bg(var(--background-graph-dot), var(--background-graph), $dot-size, $dot-space);
   }
 
   &-stages {
     position: relative;
     width: 100%;
     height: 100%;
-    background: rgba(238, 249, 255, 0.5);
+    background: var(--background-graph-overlay);
   }
 
   &-steps {

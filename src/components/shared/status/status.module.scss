@@ -31,28 +31,28 @@
 
     &-success,
     &-running {
-      color: #42ab45;
+      color: var(--color-success-medium);
       background-color: rgba(77, 201, 82, 0.05);
-      border-color: #42ab45;
+      border-color: var(--color-success-medium);
     }
 
     &-failure,
     &-killed,
     &-error {
-      color: #e43326;
+      color: var(--color-error-medium);
       background: rgba(255, 245, 245, 0.5);
-      border-color: #e43326;
+      border-color: var(--color-error-medium);
     }
 
     &-pending {
-      color: orange;
+      color: var(--color-running-medium);
       background-color: lighten(orange, 50%);
-      border-color: orange;
+      border-color: var(--color-running-medium);
     }
   }
 
   &-success {
-    background: #09c270;
+    background: var(--color-success-light);
   }
 
   &-running,
@@ -67,30 +67,30 @@
   &-pending,
   &-blocked,
   &-waiting_on_dependencies {
-    background: #d9dae5;
+    background: var(--background-pending);
   }
 
   &-running {
-    background: #fc0;
+    background: var(--color-running-light);
   }
 
   &-failure,
   &-error,
   &-declined,
   &-killed {
-    background: #ff3c3c;
+    background: var(--color-error-light);
   }
 
   &-inactive {
-    background: #f3f3fa;
+    background: var(--background-light);
 
     svg {
-      color: #96a5be !important;
+      color: var(--color-inactive) !important;
     }
   }
 
   &-skipped {
-    background: #96a5be;
+    background: var(--color-inactive);
   }
 
   svg {

@@ -7,14 +7,14 @@
   border-radius: 4px;
 
   &-success {
-    background: #09c270;
+    background: var(--color-success-light);
   }
 
   &-danger {
-    background: #ff3c3c;
+    background: var(--color-error-light);
   }
 
   &-warning {
-    background-color: orange;
+    background-color: var(--color-running-medium);
   }
 }

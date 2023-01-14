@@ -65,7 +65,7 @@
     font-size: 14px;
     font-weight: 500;
     line-height: 12px;
-    color: #383946;
+    color: var(--color-content);
     text-transform: uppercase;
     letter-spacing: 0.03em;
   }
@@ -78,15 +78,15 @@
     width: 100%;
     height: 100%;
     padding: 18px 20px;
-    background: #fff;
+    background: var(--background-card);
     border-radius: 6px;
-    box-shadow: 0 0 1px rgba(40, 41, 61, 0.08), 0 0.5px 2px rgba(96, 97, 112, 0.16);
+    box-shadow: 0 0 1px var(--shadow-4), 0 0.5px 2px var(--shadow-5);
 
     &-heading {
       height: 13px;
       font-size: 13px;
       line-height: 13px;
-      color: #9293ab;
+      color: var(--color-summary);
     }
 
     &-content {
@@ -96,7 +96,7 @@
       font-size: 22px;
       font-weight: 500;
       line-height: 24px;
-      color: #383946;
+      color: var(--color-content);
       letter-spacing: 0.03em;
 
       sub {
@@ -111,21 +111,21 @@
         text-transform: capitalize;
 
         &-running {
-          color: #fcb519;
+          color: var(--color-running-dark);
         }
 
         &-success {
-          color: #1d841d;
+          color: var(--color-success-dark);
         }
 
         &-failure,
         &-killed,
         &-error {
-          color: #b41710;
+          color: var(--color-error-dark);
         }
 
         &-pending {
-          color: #4f5162;
+          color: var(--color-label);
         }
       }
     }
@@ -137,9 +137,9 @@
   min-height: 210px;
   padding: 27px 43px 27px 27px;
   overflow: hidden;
-  background: #fff;
+  background: var(--background-card);
   border-radius: 6px;
-  box-shadow: 0 0 1px rgba(40, 41, 61, 0.08), 0 0.5px 2px rgba(96, 97, 112, 0.16);
+  box-shadow: 0 0 1px var(--shadow-4), 0 0.5px 2px var(--shadow-5);
 
   @include md-down {
     flex: 1 1 100%;

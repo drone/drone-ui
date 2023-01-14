@@ -8,7 +8,7 @@
   &-group {
     display: flex;
     flex-flow: column;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+    filter: drop-shadow(0 2px 4px var(--shadow-button));
   }
 
   .btn {
@@ -20,9 +20,9 @@
     height: 22px;
     margin-bottom: 8px;
     cursor: pointer;
-    background: #fff;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
-    border: 1px solid #fff;
+    background: var(--background-card);
+    filter: drop-shadow(0 2px 4px var(--shadow-button));
+    border: 1px solid var(--background-graph-node);
     border-radius: 4px;
 
     &-zoom-in,
@@ -38,6 +38,10 @@
 
     &-zoom-out {
       border-radius: 0 0 4px 4px;
+    }
+
+    svg path {
+      fill: var(--color-graph-control);
     }
   }
 }

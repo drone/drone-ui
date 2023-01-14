@@ -7,9 +7,9 @@
   justify-content: center;
   padding: 20px;
   margin: 20px 60px;
-  background: #fff;
+  background: var(--background-card);
   border-radius: 8px;
-  box-shadow: 0 0 1px rgba(40, 41, 61, 0.08), 0 0.5px 2px rgba(96, 97, 112, 0.16);
+  box-shadow: 0 0 1px var(--shadow-4), 0 0.5px 2px var(--shadow-5);
 
   & > * + * {
     margin-left: 15px;
@@ -18,7 +18,7 @@
   p {
     font-size: 12px;
     line-height: 14px;
-    color: #4f5162;
+    color: var(--color-label);
   }
 
   @include sm-down {
@@ -50,20 +50,20 @@
     font-size: 12px;
     font-weight: 500;
     line-height: 16px;
-    color: #383946;
+    color: var(--color-content);
     letter-spacing: 0.2px;
-    border: 1px solid #0278d5;
+    border: 1px solid var(--color-primary-7);
     border-radius: 4px;
 
     &-approve {
       color: #fff;
-      background-color: #42ab45;
+      background-color: var(--color-success-medium);
       border: none;
     }
 
     &-decline {
       color: #fff;
-      background-color: #e43326;
+      background-color: var(--color-error-medium);
       border: none;
     }
   }

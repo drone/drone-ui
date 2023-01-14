@@ -13,13 +13,13 @@
   padding: 19px 15px;
   margin-bottom: 10px;
   text-align: left;
-  background: #fff;
+  background: var(--background-card);
   border-radius: 10px;
-  box-shadow: 0 0 1px rgba(40, 41, 61, 0.08), 0 0 2px rgba(96, 97, 112, 0.16);
+  box-shadow: 0 0 1px var(--shadow-4), 0 0 2px var(--shadow-5);
   transition: box-shadow 0.1s linear;
 
   &:hover {
-    box-shadow: 0 1px 6px -3px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 1px 6px -3px var(--shadow-2);
   }
 
   .date {
@@ -40,14 +40,14 @@
   display: grid;
   grid-template-columns: 24px 1fr auto;
   grid-gap: 15px;
-  color: #627386;
+  color: var(--color-item);
 
   span {
     max-width: 100%;
     overflow: hidden;
     font-size: 15px;
     font-weight: 400;
-    color: black;
+    color: var(--color-text);
     text-overflow: ellipsis;
     white-space: nowrap;
   }
@@ -67,7 +67,7 @@
     align-items: center;
     font-size: 13px;
     line-height: 26px;
-    color: #627386;
+    color: var(--color-item);
   }
 
   .date {
@@ -83,15 +83,15 @@
     font-size: 13px;
     font-weight: 400;
     line-height: 26px;
-    color: #22222a;
-    background: #f3f3fa;
+    color: var(--color-heading);
+    background: var(--background-light);
     border-radius: 8px;
 
     svg {
       width: 20px;
       height: 20px;
       margin-right: 4px;
-      color: #9293ab;
+      color: var(--color-summary);
     }
   }
 
