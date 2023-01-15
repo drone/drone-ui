@@ -91,71 +91,71 @@
 }
 
 body.dark {
-  --background-main: hsl(210, 17%, 10%);
-  --background-light: hsl(240, 17%, 18%);
-  --background-header: hsl(210, 17%, 5%);
-  --background-card: hsl(210, 17%, 5%);
-  --background-focus: hsl(192, 40%, 10%);
-  --background-console: hsl(240, 5%, 0.2%);
+  --background-main: #151a1e;
+  --background-light: #262636;
+  --background-header: #0b0d0f;
+  --background-card: #0b0d0f;
+  --background-focus: #0f2024;
+  --background-console: #000001;
   --background-menu: #000;
-  --background-pending: hsl(235, 19%, 40%);
+  --background-pending: #535679;
   --background-graph: #000;
-  --background-graph-dot: hsl(200, 7%, 25%);
+  --background-graph-dot: #3b4144;
   --background-graph-node: #4a4a4a;
   --background-graph-inner: #5a5a5a;
   --background-graph-icon: #e2e2e2;
-  --background-graph-line: hsl(214, 79%, 66%);
-  --background-graph-overlay: hsla(201, 90%, 15%, 0.5);
+  --background-graph-line: #649fed;
+  --background-graph-overlay: rgba(4, 49, 73, 0.5);
 
   --border-header: rgba(250, 250, 250, 0.1);
   --border-subheader: rgba(250, 250, 250, 0.2);
-  --border-divider: hsla(235, 21%, 40%, 0.5);
-  --border-active: hsl(240, 17%, 25%);
-  --border-focus: hsl(203, 89%, 45%);
-  --border-form: hsl(240, 10%, 20%);
-  --border-drawer: hsl(230, 50%, 20%);
+  --border-divider: rgba(81, 84, 123, 0.5);
+  --border-active: #35354b;
+  --border-focus: #0d8bd9;
+  --border-form: #2e2e38;
+  --border-drawer: #19224d;
 
   --color-primary-1: #f2f8fd;
   --color-primary-5: #00ade4;
   --color-primary-7: #0278d5;
   --color-primary-9: #0a3364;
 
-  --color-link: hsl(216, 95%, 60%);
+  --color-link: #3886fa;
   --color-text: #fff;
-  --color-content: hsl(236, 11%, 75%);
-  --color-item: hsl(212, 16%, 65%);
-  --color-title: hsl(235, 11%, 66%);
-  --color-heading: hsl(240, 11%, 85%);
-  --color-form: hsl(237, 21%, 80%);
-  --color-input: hsl(212, 11%, 88%);
-  --color-switch: hsl(240, 8%, 95%);
-  --color-label: hsl(234, 11%, 65%);
-  --color-placeholder: hsl(237, 11%, 51%);
-  --color-summary: hsl(238, 13%, 52%);
-  --color-tab: hsl(0, 0%, 80%);
+  --color-content: #b8b9c7;
+  --color-item: #97a5b4;
+  --color-title: #9fa0b2;
+  --color-heading: #d5d5dd;
+  --color-form: #c1c2d7;
+  --color-input: #dde0e4;
+  --color-switch: #f1f1f3;
+  --color-label: #9c9eb0;
+  --color-placeholder: #747690;
+  --color-summary: #757694;
+  --color-tab: #ccc;
   --color-console: #f3f3fa;
-  --color-graph: hsla(211, 70%, 98%, 0.85);
+  --color-graph: rgba(246, 250, 253, 0.85);
   --color-graph-control: #fff;
 
-  --color-success-light: hsl(153, 91%, 36%);
-  --color-success-medium: hsl(122, 44%, 56%);
-  --color-success-dark: hsl(120, 64%, 68%);
+  --color-success-light: #08af64;
+  --color-success-medium: #5dc061;
+  --color-success-dark: #79e279;
 
-  --color-error-light: hsl(0, 95%, 45%);
-  --color-error-medium: hsl(4, 78%, 54%);
-  --color-error-dark: hsl(3, 84%, 62%);
+  --color-error-light: #e00606;
+  --color-error-medium: #e53a2e;
+  --color-error-dark: #ef554d;
 
-  --color-running-light: hsl(48, 100%, 42%);
-  --color-running-medium: hsl(39, 100%, 52%);
-  --color-running-dark: hsl(41, 97%, 60%);
+  --color-running-light: #d6ab00;
+  --color-running-medium: #ffa90a;
+  --color-running-dark: #fcbd36;
 
-  --color-inactive: hsl(218, 22%, 52%);
+  --color-inactive: #6a7da0;
 
   --shadow-1: rgba(50, 50, 50, 0.2);
   --shadow-2: rgba(250, 250, 250, 0.5);
-  --shadow-3: hsla(237, 21%, 80%, 0.04);
-  --shadow-4: hsla(237, 21%, 80%, 0.08);
-  --shadow-5: hsla(236, 8%, 60%, 0.16);
+  --shadow-3: rgba(193, 194, 215, 0.04);
+  --shadow-4: rgba(193, 194, 215, 0.08);
+  --shadow-5: rgba(145, 146, 161, 0.16);
   --shadow-button: rgba(200, 200, 200, 0.15);
   --shadow-tabs: rgba(20, 20, 20, 0.25);
   --shadow-overlay: rgba(0, 0, 0, 0.6);
