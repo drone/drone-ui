@@ -51,7 +51,12 @@ const VISIBILITY_LEVELS = {
   ADMIN: 2,
 };
 
+const THEMES = {
+  DARK: 'dark',
+  LIGHT: 'light',
+};
+
 export {
   token, instance, STEP_STATES, TIMEOUTS, FAVICON_STATES, LOGS_LIMIT, STATES,
-  isLicenseExceeded, isLicenseExpired, VISIBILITY_LEVELS,
+  isLicenseExceeded, isLicenseExpired, VISIBILITY_LEVELS, THEMES,
 };

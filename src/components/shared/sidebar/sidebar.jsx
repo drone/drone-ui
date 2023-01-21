@@ -1,8 +1,9 @@
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
+import { THEMES } from '_constants';
 import { useTheme } from 'hooks';
 import logo from 'svg/logo.svg';
 import { ReactComponent as SearchIcon } from 'svg/search.svg';
@@ -32,7 +33,7 @@ export default function Sidebar(props) {
     user,
   } = props;
   const [isSearchDrawerShown, setIsSearchDrawerShown] = useState(false);
-  const { selectedTheme, toggleTheme } = useTheme();
+  const { storedTheme, toggleTheme } = useTheme();
   const isUserAuthenticated = !!user;
   const isUserAdmin = user?.admin;
   const hideSearchDrawer = () => setIsSearchDrawerShown(false);
@@ -64,11 +65,10 @@ export default function Sidebar(props) {
     <div className={cx('bottom')}>
       <Button
         className={cx('sidebar-item', 'theme-btn')}
-        theme="plain"
         label="Search"
         onClick={toggleTheme}
       >
-        {selectedTheme === 'dark' ? (
+        {storedTheme === THEMES.DARK ? (
           <LightThemeIcon />
         ) : (
           <DarkThemeIcon />

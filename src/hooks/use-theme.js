@@ -1,36 +1,30 @@
-import { useEffect, useCallback, useState } from 'react';
+import { useEffect } from 'react';
+
+import { THEMES } from '_constants';
 
 import useLocalStorage from './use-local-storage';
 
 const useTheme = () => {
-  const [storedTheme, setStoredTheme] = useLocalStorage('selected_theme', 'system');
-  const [selectedTheme, setSelectedTheme] = useState(storedTheme);
-
   const isSystemThemeDark = () => window.matchMedia('(prefers-color-scheme: dark)').matches === true;
 
+  const [storedTheme, setStoredTheme] = useLocalStorage(
+    'selected_theme',
+    isSystemThemeDark() ? THEMES.DARK : THEMES.LIGHT,
+  );
+
   useEffect(() => {
-    if (
-      (selectedTheme === 'system' && isSystemThemeDark()) || (selectedTheme === 'dark')
-    ) {
-      document.body.classList.add('dark');
+    if (storedTheme === THEMES.DARK) {
+      document.body.classList.add(THEMES.DARK);
     } else {
-      document.body.classList.remove('dark');
+      document.body.classList.remove(THEMES.DARK);
     }
-  }, [selectedTheme]);
+  }, [storedTheme]);
 
-  const toggleTheme = useCallback(() => {
-    let newTheme = 'system';
-    if (selectedTheme === 'system') {
-      newTheme = isSystemThemeDark() ? 'light' : 'dark';
-    } else {
-      newTheme = selectedTheme === 'dark' ? 'light' : 'dark';
-    }
+  const toggleTheme = () => {
+    setStoredTheme(storedTheme === THEMES.DARK ? THEMES.LIGHT : THEMES.DARK);
+  };
 
-    setStoredTheme(newTheme);
-    setSelectedTheme(newTheme);
-  }, [selectedTheme, setStoredTheme, setSelectedTheme]);
-
-  return { selectedTheme, toggleTheme };
+  return { storedTheme, toggleTheme };
 };
 
 export default useTheme;
