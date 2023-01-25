@@ -1,7 +1,7 @@
 .activity {
   display: inline-flex;
   align-items: center;
-  color: #4f5162;
+  color: var(--color-label);
 
   & > * + * {
     margin-left: 9px;
@@ -22,10 +22,10 @@
   strong {
     padding: 0 8px;
     line-height: 24px;
-    color: #22222a;
+    color: var(--color-heading);
     text-decoration: none;
     white-space: nowrap;
-    background: #f3f3fa;
+    background: var(--background-light);
     border-radius: 8px;
   }
 
@@ -37,7 +37,7 @@
     margin-right: 10px;
 
     path {
-      fill: #9293ab;
+      fill: var(--color-summary);
     }
   }
 

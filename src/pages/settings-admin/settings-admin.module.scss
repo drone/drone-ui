@@ -13,15 +13,15 @@
   display: flex;
   width: 100%;
   padding: 0 60px;
-  background-color: #fff;
-  filter: drop-shadow(0 4px 4px rgba(207, 207, 207, 0.25));
+  background-color: var(--background-card);
+  filter: drop-shadow(0 4px 4px var(--shadow-tabs));
 
   .tab {
     position: relative;
     padding: 16px 10px;
     font-size: 14px;
     line-height: 19px;
-    color: #333;
+    color: var(--color-tab);
     text-align: center;
     text-decoration: none;
     letter-spacing: 0.4px;
@@ -33,7 +33,7 @@
       left: 0;
       height: 3px;
       content: "";
-      background-color: #0278d5;
+      background-color: var(--color-primary-7);
       border-radius: 4px 4px 0 0;
       opacity: 0;
       transition: opacity 0.2s ease;

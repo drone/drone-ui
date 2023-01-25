@@ -4,7 +4,7 @@
   font-size: 13px;
   font-weight: 500;
   line-height: 16px;
-  color: #4f5162;
+  color: var(--color-label);
   letter-spacing: 0.2px;
 
   & > * + * {

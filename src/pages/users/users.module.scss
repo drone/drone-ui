@@ -24,7 +24,7 @@
   cursor: pointer;
   border: none;
   border-radius: 4px;
-  box-shadow: 0 0 1px rgba(40, 41, 61, 0.08), 0 0.5px 2px rgba(96, 97, 112, 0.16);
+  box-shadow: 0 0 1px var(--shadow-4), 0 0.5px 2px var(--shadow-5);
 
   &-show-more {
     margin-top: 20px;
@@ -39,7 +39,7 @@
     color: white;
     text-decoration: none;
     text-transform: uppercase;
-    background-color: #0278d5;
+    background-color: var(--color-primary-7);
     border-radius: 8px;
 
     svg {
@@ -51,9 +51,9 @@
 
 .card {
   padding: 24px;
-  background: #fff;
+  background: var(--background-card);
   border-radius: 10px;
-  box-shadow: 0 0 1px rgba(40, 41, 61, 0.08), 0 0.5px 2px rgba(96, 97, 112, 0.16);
+  box-shadow: 0 0 1px var(--shadow-4), 0 0.5px 2px var(--shadow-5);
 }
 
 @media only screen and (max-width: 992px) {

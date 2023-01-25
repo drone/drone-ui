@@ -57,18 +57,18 @@
   grid-gap: 15px;
 
   // border-radius: 4px;
-  // border-left: 4px solid #09c270;
+  // border-left: 4px solid var(--color-success-light);
 
   padding: 19px 15px;
   margin-bottom: 10px;
   text-align: left;
-  background: #fff;
+  background: var(--background-card);
   border-radius: 10px;
-  box-shadow: 0 0 1px rgba(40, 41, 61, 0.08), 0 0.5px 2px rgba(96, 97, 112, 0.16);
+  box-shadow: 0 0 1px var(--shadow-4), 0 0.5px 2px var(--shadow-5);
 
   &:hover {
-    box-shadow: 0 1px 6px -3px rgba(0, 0, 0, 0.5);
-    box-shadow: 2px 0 -3px rgba(40, 41, 61, 0.08), 0 2px 2px rgba(96, 97, 112, 0.16);
+    box-shadow: 0 1px 6px -3px var(--shadow-2);
+    box-shadow: 2px 0 -3px var(--shadow-4), 0 2px 2px var(--shadow-5);
   }
 
   .avatar {
@@ -116,10 +116,10 @@
 .deployment-list-item div {
   display: flex;
   align-items: center;
-  color: #627386;
+  color: var(--color-item);
 
   &:nth-child(2) {
-    color: black;
+    color: var(--color-text);
   }
 
   &:nth-child(5) {

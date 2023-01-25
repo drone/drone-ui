@@ -29,7 +29,7 @@
 
     &::before {
       margin-right: 5px;
-      color: black;
+      color: var(--color-text);
       content: "←";
     }
   }
@@ -44,6 +44,6 @@
 }
 
 .back-to-feed {
-  color: black;
+  color: var(--color-text);
   text-decoration: none;
 }

@@ -9,13 +9,13 @@
   font-size: 14px;
   font-weight: 400;
   line-height: 16px;
-  color: #383946;
+  color: var(--color-content);
   user-select: none;
 
   a {
     font-size: 14px;
     line-height: 16px;
-    color: #9293ab;
+    color: var(--color-summary);
     text-decoration: none;
   }
 }
@@ -26,5 +26,5 @@
   width: 18px;
   height: 18px;
   margin: 0 8px;
-  color: #9293ab;
+  color: var(--color-summary);
 }

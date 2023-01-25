@@ -5,15 +5,15 @@
   margin-right: 8px;
   font-weight: 400;
   line-height: 26px;
-  color: #22222a;
-  background: #f3f3fa;
+  color: var(--color-heading);
+  background: var(--background-light);
   border-radius: 8px;
 
   svg {
     width: 20px;
     height: 20px;
     margin-right: 4px;
-    color: #9293ab;
+    color: var(--color-summary);
   }
 
   sub {

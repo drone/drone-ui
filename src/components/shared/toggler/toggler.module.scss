@@ -1,15 +1,15 @@
 .wrapper {
   display: flex;
   align-items: center;
-  background: #fff;
+  background: var(--background-card);
   border-radius: 100px;
-  box-shadow: 0 0 1px rgba(40, 41, 61, 0.08), 0 0.5px 2px rgba(96, 97, 112, 0.16);
+  box-shadow: 0 0 1px var(--shadow-4), 0 0.5px 2px var(--shadow-5);
 }
 
 .option {
   flex: 1;
   padding: 7px 19px;
-  color: #9293ab;
+  color: var(--color-summary);
   cursor: pointer;
   background-color: inherit;
   border: 0;

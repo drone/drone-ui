@@ -31,15 +31,15 @@
     padding-left: 17px;
     font-size: 14px;
     line-height: 24px;
-    color: black;
+    color: var(--color-text);
     text-decoration: none;
     background-color: transparent;
     border-radius: 5px;
     transition: background-color 0.2s ease;
 
     &-active {
-      color: #0378d4;
-      background: #f3f3fa;
+      color: var(--color-primary-7);
+      background: var(--background-light);
     }
   }
 
@@ -49,7 +49,7 @@
     font-size: 12px;
     font-weight: 500;
     line-height: 24px;
-    color: #9293ab;
+    color: var(--color-summary);
     text-transform: uppercase;
   }
 }
@@ -81,7 +81,7 @@
       font-size: 22px;
       font-weight: 500;
       line-height: 28px;
-      color: #4f5162;
+      color: var(--color-label);
     }
 
     p {
@@ -90,7 +90,7 @@
       margin-top: 12px;
       font-size: 15px;
       line-height: 22px;
-      color: #4f5162;
+      color: var(--color-label);
       text-align: center;
     }
 
@@ -104,9 +104,9 @@
       color: white;
       text-decoration: none;
       text-transform: uppercase;
-      background-color: #0278d5;
+      background-color: var(--color-primary-7);
       border-radius: 8px;
-      box-shadow: 0 0 1px rgba(40, 41, 61, 0.08), 0 0.5px 2px rgba(96, 97, 112, 0.16);
+      box-shadow: 0 0 1px var(--shadow-4), 0 0.5px 2px var(--shadow-5);
     }
   }
 }

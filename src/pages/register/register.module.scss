@@ -10,7 +10,7 @@
     padding-top: 8px;
     font-size: 16px;
     line-height: 24px;
-    color: #9293ab;
+    color: var(--color-summary);
   }
 }
 
@@ -35,7 +35,7 @@
     font-size: 32px;
     font-weight: 500;
     line-height: 44px;
-    color: #22222a;
+    color: var(--color-heading);
   }
 }
 
@@ -44,7 +44,7 @@
   flex: 1;
   align-items: flex-end;
   justify-content: flex-end;
-  background-color: #0a3364;
+  background-color: var(--color-primary-9);
 }
 
 .btn {
@@ -57,17 +57,17 @@
   color: white;
   text-transform: uppercase;
   cursor: pointer;
-  background-color: #00ade4;
+  background-color: var(--color-primary-5);
   border: none;
   border-radius: 6px;
 
   &:active,
   &:hover {
-    box-shadow: 0 0 2px rgba(40, 41, 61, 0.04), 0 4px 8px rgba(96, 97, 112, 0.16);
+    box-shadow: 0 0 2px var(--shadow-3), 0 4px 8px var(--shadow-5);
   }
 
   &:active {
-    background: #0a3364;
+    background: var(--color-primary-9);
   }
 }
 
@@ -85,7 +85,7 @@
   margin-top: 40px;
   font-size: 13px;
   line-height: 20px;
-  color: #4f5162;
+  color: var(--color-label);
 
   a {
     color: #0378d5;

@@ -48,12 +48,12 @@
     font-size: 32px;
     font-weight: 600;
     line-height: 44px;
-    color: #22222a;
+    color: var(--color-heading);
 
     &-sub {
       font-size: 16px;
       line-height: 24px;
-      color: #22222a;
+      color: var(--color-heading);
     }
   }
 
@@ -62,7 +62,7 @@
     padding-top: 8px;
     font-size: 16px;
     line-height: 24px;
-    color: #9293ab;
+    color: var(--color-summary);
   }
 
   @include sm-down {
@@ -75,7 +75,7 @@
   flex: 1;
   align-items: flex-end;
   justify-content: flex-end;
-  background-color: #0a3364;
+  background-color: var(--color-primary-9);
 
   svg {
     height: 100%;
@@ -98,17 +98,17 @@
   text-decoration: none;
   text-transform: uppercase;
   cursor: pointer;
-  background: #00ade4;
+  background: var(--color-primary-5);
   border: none;
   border-radius: 6px;
 
   &:active,
   &:hover {
-    box-shadow: 0 0 2px rgba(40, 41, 61, 0.04), 0 4px 8px rgba(96, 97, 112, 0.16);
+    box-shadow: 0 0 2px var(--shadow-3), 0 4px 8px var(--shadow-5);
   }
 
   &:active {
-    background: #0a3364;
+    background: var(--color-primary-9);
   }
 
   span {

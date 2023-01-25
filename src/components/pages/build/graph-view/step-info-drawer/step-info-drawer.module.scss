@@ -26,8 +26,8 @@
   flex-flow: column;
   width: 600px;
   height: 100%;
-  background-color: #fff;
-  border-left: 1px solid #dae0ff;
+  background-color: var(--background-card);
+  border-left: 1px solid var(--border-drawer);
   animation: slideIn 0.2s ease-in;
 
   &.slide-out {
@@ -49,7 +49,7 @@
       margin-right: auto;
       font-size: 16px;
       font-weight: 500;
-      color: #4f5162;
+      color: var(--color-label);
       letter-spacing: 0.02px;
     }
   }
@@ -83,10 +83,10 @@
       margin-bottom: 12px;
       font-size: 13px;
       font-weight: 500;
-      color: #4f5162;
+      color: var(--color-label);
 
       div {
-        color: #4f5162;
+        color: var(--color-label);
       }
     }
 
@@ -96,7 +96,7 @@
       margin-bottom: 12px;
       font-size: 13px;
       font-weight: 500;
-      color: #9293ab;
+      color: var(--color-summary);
     }
   }
 

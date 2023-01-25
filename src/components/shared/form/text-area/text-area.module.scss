@@ -17,9 +17,10 @@
   font-family: $font-family-code;
   font-size: 14px;
   line-height: 22px;
-  color: #343a41;
+  color: var(--color-input);
   resize: none;
-  border: 1px solid #e4e4eb;
+  background-color: var(--background-card);
+  border: 1px solid var(--border-active);
   border-radius: 4px;
 
   @include sm-down {
@@ -30,12 +31,12 @@
     font-family: $font-family-primary;
     font-size: 13px;
     line-height: 22px;
-    color: #8f90a6;
+    color: var(--color-placeholder);
     letter-spacing: -0.00928571px;
   }
 
   &:focus {
-    border-color: #26a3f2;
+    border-color: var(--border-focus);
     outline: none;
   }
 }

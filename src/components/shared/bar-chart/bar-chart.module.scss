@@ -14,7 +14,7 @@
   span {
     font-size: 8px;
     line-height: 12px;
-    color: #9293ab;
+    color: var(--color-summary);
     text-align: end;
     letter-spacing: 0.05em;
   }
@@ -30,7 +30,7 @@
   display: flex;
   align-items: flex-end;
   height: 100%;
-  background: #f3f3fa;
+  background: var(--background-light);
   border-radius: 100px;
 }
 
@@ -43,7 +43,7 @@
   transition: height 0.2s ease;
 
   &-running {
-    background-color: #fc0;
+    background-color: var(--color-running-light);
     // background: linear-gradient(45deg, #FDED72, #FFCC00);
   }
 

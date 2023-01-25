@@ -16,8 +16,9 @@
   padding: 6px 12px;
   font-size: 14px;
   line-height: 22px;
-  color: #343a41;
-  border: 1px solid #e4e4eb;
+  color: var(--color-input);
+  background-color: var(--background-card);
+  border: 1px solid var(--border-active);
   border-radius: 4px;
 
   @include sm-down {
@@ -31,7 +32,7 @@
   &::placeholder {
     font-size: 14px;
     line-height: 22px;
-    color: #8f90a6;
+    color: var(--color-placeholder);
     letter-spacing: -0.00928571px;
   }
 
@@ -40,12 +41,12 @@
   }
 
   &:not(:read-only):focus {
-    border-color: #26a3f2;
+    border-color: var(--border-focus);
   }
 
   &:read-only {
     font-style: italic;
-    color: #8f90a6;
+    color: var(--color-placeholder);
     cursor: not-allowed;
     user-select: none;
     background: rgba(143, 144, 166, 0.1);

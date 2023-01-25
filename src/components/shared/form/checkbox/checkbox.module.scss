@@ -8,7 +8,7 @@
     height: 16px;
     margin-right: 12px;
     background-color: #fff;
-    border: 1px solid #0278d5;
+    border: 1px solid var(--color-primary-7);
     border-radius: 4px;
     transition: background-color 0.2s ease;
 
@@ -30,7 +30,7 @@
 
   input:checked {
     & ~ .checkbox-fake {
-      background-color: #0278d5;
+      background-color: var(--color-primary-7);
 
       svg {
         opacity: 1;

@@ -4,6 +4,7 @@ import useFavicon from './use-favicon';
 import useLocalStorage from './use-local-storage';
 import useOnClickOutside from './use-on-click-outside';
 import useResizeObserver from './use-resize-observer';
+import useTheme from './use-theme';
 import useToast from './use-toast';
 
 export {
@@ -12,6 +13,7 @@ export {
   useCustomTitle,
   useFavicon,
   useLocalStorage,
+  useTheme,
   useToast,
   useResizeObserver,
 };

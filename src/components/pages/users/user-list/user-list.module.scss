@@ -34,7 +34,7 @@
   grid-gap: 15px;
   padding: 19px 15px;
   text-align: left;
-  background: #fff;
+  background: var(--background-card);
   box-shadow: inset 0 0.5px 0 rgba(143, 144, 166, 0.5);
 }
 
@@ -42,10 +42,10 @@
   display: flex;
   align-items: center;
   font-size: 14px;
-  color: #627386;
+  color: var(--color-item);
 
   &:nth-child(2) {
-    color: black;
+    color: var(--color-text);
   }
 
   svg {
