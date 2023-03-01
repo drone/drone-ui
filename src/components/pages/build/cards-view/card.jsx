@@ -53,7 +53,7 @@ const Card = ({
   }
   return (
     <li className={cx('card')}>
-      <AdaptiveCard payload={adaptiveCard} />
+      <AdaptiveCard payload={adaptiveCard} style={{ width: '100%' }} />
     </li>
   );
 };
