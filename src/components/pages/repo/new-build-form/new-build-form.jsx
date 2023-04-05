@@ -11,11 +11,17 @@ import css from './new-build-form.module.scss';
 
 const cx = classNames.bind(css);
 
-const NewBuildForm = ({ handleSubmit, handleCancel }) => {
+const NewBuildForm = ({
+  handleSubmit,
+  handleCancel,
+  target,
+  commit,
+  parameters
+}) => {
   const [state, setState] = useState({
-    target: '',
-    commit: '',
-    parameters: [],
+    target,
+    commit,
+    parameters,
   });
   const [parameterState, setParameterState] = useState({
     key: '',
@@ -107,9 +113,24 @@ const NewBuildForm = ({ handleSubmit, handleCancel }) => {
   );
 };
 
+NewBuildForm.defaultProps = {
+  target: "",
+  commit: "",
+  parameters: [],
+};
+
 NewBuildForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   handleCancel: PropTypes.func.isRequired,
+  target: PropTypes.string,
+  commit: PropTypes.string,
+  parameters: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.string,
+      value: PropTypes.string,
+      id: PropTypes.string,
+    })
+  ),
 };
 
 export default NewBuildForm;

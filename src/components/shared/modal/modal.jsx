@@ -10,8 +10,8 @@ import styles from './modal.module.scss';
 
 const cx = classNames.bind(styles);
 
-export const useModal = () => {
-  const [isShowing, setIsShowing] = useState(false);
+export const useModal = (isShowingInit = false) => {
+  const [isShowing, setIsShowing] = useState(isShowingInit);
   const toggle = () => setIsShowing(!isShowing);
   return [isShowing, toggle];
 };
