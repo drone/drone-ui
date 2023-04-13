@@ -4,7 +4,7 @@ import React, {
   useCallback, useMemo, useContext,
 } from 'react';
 import {
-  Route, Switch, NavLink, useRouteMatch,
+  Route, Switch, NavLink, useRouteMatch, useLocation,
 } from 'react-router-dom';
 
 import { VISIBILITY_LEVELS } from '_constants';
@@ -62,7 +62,20 @@ const Repo = ({ user }) => {
   } = params;
   const [context] = useContext(AppContext);
   const { isRepoNavDisabled } = context;
-  const [isModalShowing, toggleModal] = useModal();
+  const { search } = useLocation();
+  const queryParams = new URLSearchParams(search);
+  let target = '';
+  let commit = '';
+  let parameters = [];
+  try {
+    target = queryParams.get('target') || '';
+    commit = queryParams.get('commit') || '';
+    parameters = queryParams.get('parameters') ? JSON.parse(queryParams.get('parameters')) : [];
+  } catch (e) {
+    console.warn('Invalid query parameters', e)
+  }
+  // If there is a target url param, show the new build modal on load
+  const [isModalShowing, toggleModal] = useModal(!!queryParams.get('target'));
 
   const { data: repo, isLoading: isRepoDataLoading, isError } = useRepo({ namespace, name });
 
@@ -202,7 +215,7 @@ const Repo = ({ user }) => {
             isShowing={isModalShowing}
             hide={toggleModal}
           >
-            <NewBuildForm handleSubmit={handleNewBuildSubmit} handleCancel={toggleModal} />
+            <NewBuildForm handleSubmit={handleNewBuildSubmit} handleCancel={toggleModal} target={target} commit={commit} parameters={parameters} />
           </Modal>
         </>
       </Route>
