@@ -1,5 +1,17 @@
 # Changelog
 
+## [v2.10.0](https://github.com/drone/drone-ui/tree/v2.10.0) (2023-04-17)
+
+[Full Changelog](https://github.com/drone/drone-ui/compare/v2.9.1...v2.10.0)
+
+**Implemented enhancements:**
+
+- feat: add dark theme support [\#430](https://github.com/drone/drone-ui/pull/430) ([ecmchow](https://github.com/ecmchow))
+
+**Fixed bugs:**
+
+- Prepopulate the new-build-form with query params [\#432](https://github.com/drone/drone-ui/pull/432) ([kgwebsites](https://github.com/kgwebsites))
+
 ## [v2.9.1](https://github.com/drone/drone-ui/tree/v2.9.1) (2023-01-11)
 
 [Full Changelog](https://github.com/drone/drone-ui/compare/v2.9.0...v2.9.1)
@@ -8,6 +20,10 @@
 
 - batch streaming log state updates to improve UI performance [\#428](https://github.com/drone/drone-ui/pull/428) ([d1wilko](https://github.com/d1wilko))
 - Spelling [\#427](https://github.com/drone/drone-ui/pull/427) ([jsoref](https://github.com/jsoref))
+
+**Merged pull requests:**
+
+- 2.9.1 release prep [\#429](https://github.com/drone/drone-ui/pull/429) ([d1wilko](https://github.com/d1wilko))
 
 ## [v2.9.0](https://github.com/drone/drone-ui/tree/v2.9.0) (2022-10-27)
 
