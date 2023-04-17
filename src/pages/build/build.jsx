@@ -77,7 +77,22 @@ export default function Build({ user, userIsAdminOrHasWritePerm }) {
   const [state, setState] = useState(RESOLVED);
   const [view, setView] = useState(LOGS_VIEW);
 
-  const [isModalShowing, toggleModal] = useModal();
+  const { search } = useLocation();
+  const queryParams = new URLSearchParams(search);
+  let action = 'promote'
+  let target = '';
+  let commit = '';
+  let parameters = [];
+  try {
+    action = queryParams.get('action') || 'promote';
+    target = queryParams.get('target') || '';
+    commit = queryParams.get('commit') || '';
+    parameters = queryParams.get('parameters') ? JSON.parse(queryParams.get('parameters')) : [];
+  } catch (e) {
+    console.warn('Invalid query parameters', e)
+  }
+  // If there is a target url param, show the new build modal on load
+  const [isModalShowing, toggleModal] = useModal(!!queryParams.get('target'));
 
   const { showError } = useToast();
 
@@ -279,7 +294,7 @@ export default function Build({ user, userIsAdminOrHasWritePerm }) {
         isShowing={isModalShowing}
         hide={toggleModal}
       >
-        <DeploymentForm handleSubmit={handleDeploySubmit} handleCancel={toggleModal} />
+        <DeploymentForm handleSubmit={handleDeploySubmit} handleCancel={toggleModal} action={action} target={target} commit={commit} parameters={parameters} />
       </Modal>
     </>
   );
