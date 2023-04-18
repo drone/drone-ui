@@ -81,12 +81,10 @@ export default function Build({ user, userIsAdminOrHasWritePerm }) {
   const queryParams = new URLSearchParams(search);
   let action = 'promote'
   let target = '';
-  let commit = '';
   let parameters = [];
   try {
     action = queryParams.get('action') || 'promote';
     target = queryParams.get('target') || '';
-    commit = queryParams.get('commit') || '';
     parameters = queryParams.get('parameters') ? JSON.parse(queryParams.get('parameters')) : [];
   } catch (e) {
     console.warn('Invalid query parameters', e)
@@ -294,7 +292,7 @@ export default function Build({ user, userIsAdminOrHasWritePerm }) {
         isShowing={isModalShowing}
         hide={toggleModal}
       >
-        <DeploymentForm handleSubmit={handleDeploySubmit} handleCancel={toggleModal} action={action} target={target} commit={commit} parameters={parameters} />
+        <DeploymentForm handleSubmit={handleDeploySubmit} handleCancel={toggleModal} action={action} target={target} parameters={parameters} />
       </Modal>
     </>
   );

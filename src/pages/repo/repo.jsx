@@ -65,11 +65,9 @@ const Repo = ({ user }) => {
   const { search } = useLocation();
   const queryParams = new URLSearchParams(search);
   let target = '';
-  let commit = '';
   let parameters = [];
   try {
     target = queryParams.get('target') || '';
-    commit = queryParams.get('commit') || '';
     parameters = queryParams.get('parameters') ? JSON.parse(queryParams.get('parameters')) : [];
   } catch (e) {
     console.warn('Invalid query parameters', e)
@@ -215,7 +213,7 @@ const Repo = ({ user }) => {
             isShowing={isModalShowing}
             hide={toggleModal}
           >
-            <NewBuildForm handleSubmit={handleNewBuildSubmit} handleCancel={toggleModal} target={target} commit={commit} parameters={parameters} />
+            <NewBuildForm handleSubmit={handleNewBuildSubmit} handleCancel={toggleModal} target={target} parameters={parameters} />
           </Modal>
         </>
       </Route>
