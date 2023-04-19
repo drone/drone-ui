@@ -9,7 +9,9 @@ import css from './deployment-form.module.scss';
 
 const cx = classNames.bind(css);
 
-const DeploymentForm = ({ handleSubmit, handleCancel, action, target, parameters }) => {
+const DeploymentForm = ({
+  handleSubmit, handleCancel, action, target, parameters,
+}) => {
   const [state, setState] = useState({
     action,
     target,
@@ -129,9 +131,9 @@ const DeploymentForm = ({ handleSubmit, handleCancel, action, target, parameters
   );
 };
 
-NewBuildForm.defaultProps = {
-  action: "promote",
-  target: "",
+DeploymentForm.defaultProps = {
+  action: 'promote',
+  target: '',
   parameters: [],
 };
 
@@ -145,7 +147,7 @@ DeploymentForm.propTypes = {
       key: PropTypes.string,
       value: PropTypes.string,
       id: PropTypes.string,
-    })
+    }),
   ),
 };
 

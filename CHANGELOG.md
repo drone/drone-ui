@@ -1,16 +1,25 @@
 # Changelog
 
+## [v2.11.0](https://github.com/drone/drone-ui/tree/v2.11.0) (2023-04-19)
+
+[Full Changelog](https://github.com/drone/drone-ui/compare/v2.10.0...v2.11.0)
+
+**Implemented enhancements:**
+
+- Function to prefill promote modal w/ query params [\#434](https://github.com/drone/drone-ui/pull/434) ([kgwebsites](https://github.com/kgwebsites))
+
 ## [v2.10.0](https://github.com/drone/drone-ui/tree/v2.10.0) (2023-04-17)
 
 [Full Changelog](https://github.com/drone/drone-ui/compare/v2.9.1...v2.10.0)
 
 **Implemented enhancements:**
 
+- Prepopulate the new-build-form with query params [\#432](https://github.com/drone/drone-ui/pull/432) ([kgwebsites](https://github.com/kgwebsites))
 - feat: add dark theme support [\#430](https://github.com/drone/drone-ui/pull/430) ([ecmchow](https://github.com/ecmchow))
 
-**Fixed bugs:**
+**Merged pull requests:**
 
-- Prepopulate the new-build-form with query params [\#432](https://github.com/drone/drone-ui/pull/432) ([kgwebsites](https://github.com/kgwebsites))
+- 2.10.0 release prep [\#433](https://github.com/drone/drone-ui/pull/433) ([d1wilko](https://github.com/d1wilko))
 
 ## [v2.9.1](https://github.com/drone/drone-ui/tree/v2.9.1) (2023-01-11)
 
