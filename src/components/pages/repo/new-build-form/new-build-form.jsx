@@ -15,12 +15,10 @@ const NewBuildForm = ({
   handleSubmit,
   handleCancel,
   target,
-  commit,
   parameters
 }) => {
   const [state, setState] = useState({
     target,
-    commit,
     parameters,
   });
   const [parameterState, setParameterState] = useState({
@@ -115,7 +113,6 @@ const NewBuildForm = ({
 
 NewBuildForm.defaultProps = {
   target: "",
-  commit: "",
   parameters: [],
 };
 
@@ -123,7 +120,6 @@ NewBuildForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   handleCancel: PropTypes.func.isRequired,
   target: PropTypes.string,
-  commit: PropTypes.string,
   parameters: PropTypes.arrayOf(
     PropTypes.shape({
       key: PropTypes.string,

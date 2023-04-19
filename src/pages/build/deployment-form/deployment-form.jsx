@@ -9,11 +9,11 @@ import css from './deployment-form.module.scss';
 
 const cx = classNames.bind(css);
 
-const DeploymentForm = ({ handleSubmit, handleCancel }) => {
+const DeploymentForm = ({ handleSubmit, handleCancel, action, target, parameters }) => {
   const [state, setState] = useState({
-    action: 'promote',
-    target: '',
-    parameters: [],
+    action,
+    target,
+    parameters,
   });
   const [parameterState, setParameterState] = useState({
     key: '',
@@ -129,9 +129,24 @@ const DeploymentForm = ({ handleSubmit, handleCancel }) => {
   );
 };
 
+NewBuildForm.defaultProps = {
+  action: "promote",
+  target: "",
+  parameters: [],
+};
+
 DeploymentForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   handleCancel: PropTypes.func.isRequired,
+  action: PropTypes.string,
+  target: PropTypes.string,
+  parameters: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.string,
+      value: PropTypes.string,
+      id: PropTypes.string,
+    })
+  ),
 };
 
 export default DeploymentForm;
