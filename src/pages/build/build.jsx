@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React, {
   useCallback, useState, useLayoutEffect,
 } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, useLocation } from 'react-router-dom';
 
 import { instance } from '_constants';
 import CardsView from 'components/pages/build/cards-view';
