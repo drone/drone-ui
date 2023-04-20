@@ -1,5 +1,14 @@
 # Changelog
 
+## [v2.11.1](https://github.com/drone/drone-ui/tree/v2.11.1) (2023-04-20)
+
+[Full Changelog](https://github.com/drone/drone-ui/compare/v2.11.0...v2.11.1)
+
+**Fixed bugs:**
+
+- fix regression importing use location [\#437](https://github.com/drone/drone-ui/pull/437) ([d1wilko](https://github.com/d1wilko))
+- added missing import + fixed eslint [\#436](https://github.com/drone/drone-ui/pull/436) ([kgwebsites](https://github.com/kgwebsites))
+
 ## [v2.11.0](https://github.com/drone/drone-ui/tree/v2.11.0) (2023-04-19)
 
 [Full Changelog](https://github.com/drone/drone-ui/compare/v2.10.0...v2.11.0)
@@ -7,6 +16,10 @@
 **Implemented enhancements:**
 
 - Function to prefill promote modal w/ query params [\#434](https://github.com/drone/drone-ui/pull/434) ([kgwebsites](https://github.com/kgwebsites))
+
+**Merged pull requests:**
+
+- 2.11.0 release prep [\#435](https://github.com/drone/drone-ui/pull/435) ([d1wilko](https://github.com/d1wilko))
 
 ## [v2.10.0](https://github.com/drone/drone-ui/tree/v2.10.0) (2023-04-17)
 
