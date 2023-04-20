@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React, {
   useCallback, useState, useLayoutEffect,
 } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, useLocation } from 'react-router-dom';
 
 import { instance } from '_constants';
 import CardsView from 'components/pages/build/cards-view';
@@ -79,7 +79,7 @@ export default function Build({ user, userIsAdminOrHasWritePerm }) {
 
   const { search } = useLocation();
   const queryParams = new URLSearchParams(search);
-  let action = 'promote'
+  let action = 'promote';
   let target = '';
   let parameters = [];
   try {
@@ -87,7 +87,7 @@ export default function Build({ user, userIsAdminOrHasWritePerm }) {
     target = queryParams.get('target') || '';
     parameters = queryParams.get('parameters') ? JSON.parse(queryParams.get('parameters')) : [];
   } catch (e) {
-    console.warn('Invalid query parameters', e)
+    console.warn('Invalid query parameters', e);
   }
   // If there is a target url param, show the new build modal on load
   const [isModalShowing, toggleModal] = useModal(!!queryParams.get('target'));
