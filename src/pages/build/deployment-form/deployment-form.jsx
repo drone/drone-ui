@@ -10,7 +10,11 @@ import css from './deployment-form.module.scss';
 const cx = classNames.bind(css);
 
 const DeploymentForm = ({
-  handleSubmit, handleCancel, action, target, parameters,
+  handleSubmit,
+  handleCancel,
+  action,
+  target,
+  parameters
 }) => {
   const [state, setState] = useState({
     action,
