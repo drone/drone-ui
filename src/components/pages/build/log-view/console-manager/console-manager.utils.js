@@ -52,14 +52,15 @@ export const getNoLogsContent = ({
   return message.join(' ');
 };
 
-export const mayBeExtractTmateLink = (logLine, stepStatus, hasBuildDebugMode) => {
+export const mayBeExtractTmateLink = (logLines, stepStatus, hasBuildDebugMode) => {
   // if the pipeline step is running and if the pipeline
   // step is in debug mode, check the log line for the tmate
   // session url.
-  if (logLine && stepStatus === 'running' && hasBuildDebugMode) {
+  if (logLines && stepStatus === 'running' && hasBuildDebugMode) {
     // if a log entry exists for the tmate session url, trim
     // the log entry so that we are only left with the url.
-    return logLine.out.startsWith('web session: ') ? logLine.out.replace('web session: ', '').replace('\n', '') : '';
+    const webSessionLine = logLines.find((line) => line.out.startsWith('web session: '));
+    return webSessionLine ? webSessionLine.out.replace('web session: ', '').replace('\n', '') : '';
   }
   return '';
 };
