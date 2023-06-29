@@ -1,5 +1,14 @@
 # Changelog
 
+## [v2.11.2](https://github.com/drone/drone-ui/tree/v2.11.2) (2023-06-29)
+
+[Full Changelog](https://github.com/drone/drone-ui/compare/v2.11.1...v2.11.2)
+
+**Merged pull requests:**
+
+- fix: \[CI-8653\]: convert tmate link logic from expecting an object to expect an array [\#440](https://github.com/drone/drone-ui/pull/440) ([d1wilko](https://github.com/d1wilko))
+- fix: button display in deployment form [\#439](https://github.com/drone/drone-ui/pull/439) ([ecmchow](https://github.com/ecmchow))
+
 ## [v2.11.1](https://github.com/drone/drone-ui/tree/v2.11.1) (2023-04-20)
 
 [Full Changelog](https://github.com/drone/drone-ui/compare/v2.11.0...v2.11.1)
@@ -8,6 +17,10 @@
 
 - fix regression importing use location [\#437](https://github.com/drone/drone-ui/pull/437) ([d1wilko](https://github.com/d1wilko))
 - added missing import + fixed eslint [\#436](https://github.com/drone/drone-ui/pull/436) ([kgwebsites](https://github.com/kgwebsites))
+
+**Merged pull requests:**
+
+- 2.11.1 release prep [\#438](https://github.com/drone/drone-ui/pull/438) ([d1wilko](https://github.com/d1wilko))
 
 ## [v2.11.0](https://github.com/drone/drone-ui/tree/v2.11.0) (2023-04-19)
 
