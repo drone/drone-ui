@@ -70,17 +70,19 @@
 
     button {
       padding: 6px 20px;
+      border: 1px solid var(--color-primary-7);
       border-radius: 4px;
       box-shadow: 0 0 1px var(--shadow-4), 0 0.5px 2px var(--shadow-5);
     }
 
     button:first-child {
       color: white;
-      background-color: #0092e4;
+      background: var(--color-primary-7);
     }
 
     button:last-child {
-      background: #fafbfc;
+      color: var(--color-primary-7);
+      background: var(--background-card);
     }
   }
 }
