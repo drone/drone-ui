@@ -1,13 +1,25 @@
 # Changelog
 
+## [v2.11.3](https://github.com/drone/drone-ui/tree/v2.11.3) (2023-07-19)
+
+[Full Changelog](https://github.com/drone/drone-ui/compare/v2.11.2...v2.11.3)
+
+**Fixed bugs:**
+
+- remove blue scrollbar [\#442](https://github.com/drone/drone-ui/pull/442) ([d1wilko](https://github.com/d1wilko))
+
 ## [v2.11.2](https://github.com/drone/drone-ui/tree/v2.11.2) (2023-06-29)
 
 [Full Changelog](https://github.com/drone/drone-ui/compare/v2.11.1...v2.11.2)
 
-**Merged pull requests:**
+**Fixed bugs:**
 
 - fix: \[CI-8653\]: convert tmate link logic from expecting an object to expect an array [\#440](https://github.com/drone/drone-ui/pull/440) ([d1wilko](https://github.com/d1wilko))
 - fix: button display in deployment form [\#439](https://github.com/drone/drone-ui/pull/439) ([ecmchow](https://github.com/ecmchow))
+
+**Merged pull requests:**
+
+- 2.11.2 release prep [\#441](https://github.com/drone/drone-ui/pull/441) ([d1wilko](https://github.com/d1wilko))
 
 ## [v2.11.1](https://github.com/drone/drone-ui/tree/v2.11.1) (2023-04-20)
 
