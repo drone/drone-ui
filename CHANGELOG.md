@@ -1,5 +1,13 @@
 # Changelog
 
+## [v2.11.4](https://github.com/drone/drone-ui/tree/v2.11.4) (2023-08-10)
+
+[Full Changelog](https://github.com/drone/drone-ui/compare/v2.11.3...v2.11.4)
+
+**Merged pull requests:**
+
+- fix multi stage approvals [\#444](https://github.com/drone/drone-ui/pull/444) ([d1wilko](https://github.com/d1wilko))
+
 ## [v2.11.3](https://github.com/drone/drone-ui/tree/v2.11.3) (2023-07-19)
 
 [Full Changelog](https://github.com/drone/drone-ui/compare/v2.11.2...v2.11.3)
@@ -7,6 +15,10 @@
 **Fixed bugs:**
 
 - remove blue scrollbar [\#442](https://github.com/drone/drone-ui/pull/442) ([d1wilko](https://github.com/d1wilko))
+
+**Merged pull requests:**
+
+- 2.11.3 release prep [\#443](https://github.com/drone/drone-ui/pull/443) ([d1wilko](https://github.com/d1wilko))
 
 ## [v2.11.2](https://github.com/drone/drone-ui/tree/v2.11.2) (2023-06-29)
 
