@@ -181,17 +181,27 @@ export default function Build({ user, userIsAdminOrHasWritePerm }) {
   }, [name, namespace, build, history, showError]);
 
   const handleApproveClick = useCallback(async () => {
+    const stageCount = data?.stages?.length || 1;
+    const apiRequests = [];
+
+    for (let i = 0; i < stageCount; i++) {
+      const { number } = data.stages[i];
+      apiRequests.push(
+        axiosWrapper(`/api/repos/${namespace}/${name}/builds/${build}/approve/${number}`, {
+          method: 'POST',
+        }),
+      );
+    }
+
     try {
-      await axiosWrapper(`/api/repos/${namespace}/${name}/builds/${build}/approve/${stage}`, {
-        method: 'POST',
-      });
+      await Promise.all(apiRequests);
       await mutate();
     } catch (e) {
       showError(`Unable to approve build: ${e.message}`);
       // eslint-disable-next-line
       console.warn(e.message);
     }
-  }, [namespace, name, build, stage, mutate, showError]);
+  }, [data, namespace, name, build, mutate, showError]);
 
   const handleDeclineClick = useCallback(async () => {
     try {
