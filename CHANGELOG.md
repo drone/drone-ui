@@ -1,11 +1,20 @@
 # Changelog
 
+## [v2.11.5](https://github.com/drone/drone-ui/tree/v2.11.5) (2023-08-11)
+
+[Full Changelog](https://github.com/drone/drone-ui/compare/v2.11.4...v2.11.5)
+
+**Merged pull requests:**
+
+- fix multi stage rejections [\#446](https://github.com/drone/drone-ui/pull/446) ([d1wilko](https://github.com/d1wilko))
+
 ## [v2.11.4](https://github.com/drone/drone-ui/tree/v2.11.4) (2023-08-10)
 
 [Full Changelog](https://github.com/drone/drone-ui/compare/v2.11.3...v2.11.4)
 
 **Merged pull requests:**
 
+- 2.11.4 release prep [\#445](https://github.com/drone/drone-ui/pull/445) ([d1wilko](https://github.com/d1wilko))
 - fix multi stage approvals [\#444](https://github.com/drone/drone-ui/pull/444) ([d1wilko](https://github.com/d1wilko))
 
 ## [v2.11.3](https://github.com/drone/drone-ui/tree/v2.11.3) (2023-07-19)
