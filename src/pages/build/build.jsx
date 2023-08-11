@@ -204,17 +204,26 @@ export default function Build({ user, userIsAdminOrHasWritePerm }) {
   }, [data, namespace, name, build, mutate, showError]);
 
   const handleDeclineClick = useCallback(async () => {
+    const stageCount = data?.stages?.length || 1;
+    const apiRequests = [];
+
+    for (let i = 0; i < stageCount; i++) {
+      const { number } = data.stages[i];
+      apiRequests.push(
+        axiosWrapper(`/api/repos/${namespace}/${name}/builds/${build}/decline/${number}`, {
+          method: 'POST',
+        }),
+      );
+    }
     try {
-      await axiosWrapper(`/api/repos/${namespace}/${name}/builds/${build}/decline/${stage}`, {
-        method: 'POST',
-      });
+      await Promise.all(apiRequests);
       await mutate();
     } catch (e) {
       showError(`Unable to decline build: ${e.message}`);
       // eslint-disable-next-line
       console.warn(e.message);
     }
-  }, [namespace, name, build, stage, mutate, showError]);
+  }, [data, namespace, name, build, mutate, showError]);
 
   const handleMenuItemSelect = useCallback((value) => {
     switch (value) {
