@@ -1,21 +1,36 @@
 # Changelog
 
+## [v2.12.0](https://github.com/drone/drone-ui/tree/v2.12.0) (2023-12-07)
+
+[Full Changelog](https://github.com/drone/drone-ui/compare/v2.11.5...v2.12.0)
+
+**Implemented enhancements:**
+
+- feat: Show the value in the promotion dialog [\#448](https://github.com/drone/drone-ui/pull/448) ([nenad](https://github.com/nenad))
+
 ## [v2.11.5](https://github.com/drone/drone-ui/tree/v2.11.5) (2023-08-11)
 
 [Full Changelog](https://github.com/drone/drone-ui/compare/v2.11.4...v2.11.5)
 
-**Merged pull requests:**
+**Fixed bugs:**
 
 - fix multi stage rejections [\#446](https://github.com/drone/drone-ui/pull/446) ([d1wilko](https://github.com/d1wilko))
+
+**Merged pull requests:**
+
+- 2.11.5 release prep [\#447](https://github.com/drone/drone-ui/pull/447) ([d1wilko](https://github.com/d1wilko))
 
 ## [v2.11.4](https://github.com/drone/drone-ui/tree/v2.11.4) (2023-08-10)
 
 [Full Changelog](https://github.com/drone/drone-ui/compare/v2.11.3...v2.11.4)
 
+**Fixed bugs:**
+
+- fix multi stage approvals [\#444](https://github.com/drone/drone-ui/pull/444) ([d1wilko](https://github.com/d1wilko))
+
 **Merged pull requests:**
 
 - 2.11.4 release prep [\#445](https://github.com/drone/drone-ui/pull/445) ([d1wilko](https://github.com/d1wilko))
-- fix multi stage approvals [\#444](https://github.com/drone/drone-ui/pull/444) ([d1wilko](https://github.com/d1wilko))
 
 ## [v2.11.3](https://github.com/drone/drone-ui/tree/v2.11.3) (2023-07-19)
 
@@ -140,7 +155,7 @@
 **Implemented enhancements:**
 
 - add registration error message for cloud.drone.io [\#415](https://github.com/drone/drone-ui/pull/415) ([d1wilko](https://github.com/d1wilko))
-- add community/support information [\#413](https://github.com/drone/drone-ui/pull/413) ([mrsantons](https://github.com/mrsantons))
+- add community/support information [\#413](https://github.com/drone/drone-ui/pull/413) ([MarieReRe](https://github.com/MarieReRe))
 
 **Fixed bugs:**
 
