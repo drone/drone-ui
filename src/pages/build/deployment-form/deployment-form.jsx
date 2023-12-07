@@ -14,7 +14,7 @@ const DeploymentForm = ({
   handleCancel,
   action,
   target,
-  parameters
+  parameters,
 }) => {
   const [state, setState] = useState({
     action,
@@ -106,7 +106,11 @@ const DeploymentForm = ({
             {state.parameters.map(({ key, value, id }) => (
               <div className={cx('deployment-form-parameters')} key={id}>
                 <span type="text" placeholder="key">{key}</span>
-                <span type="text" placeholder="value">[{value}]</span>
+                <span type="text" placeholder="value">
+                  [
+                  {value}
+                  ]
+                </span>
                 <Button type="button" onClick={handleRemoveParameter(id)}>Remove</Button>
               </div>
             ))}
