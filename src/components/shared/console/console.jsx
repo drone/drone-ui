@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React, {
   useRef, useEffect, useState,
 } from 'react';
+import DOMPurify from 'dompurify'; // Import DOMPurify
 
 import Button from 'components/shared/button';
 import Status from 'components/shared/status';
@@ -195,7 +196,7 @@ const LogsLine = (props) => {
       {html ? (
         <span
           className={classNames('loc-html', cx('line-content'))}
-          dangerouslySetInnerHTML={{ __html: html }}
+          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(html) }} // Sanitize HTML
         />
       ) : (
         <span className={cx('line-content')}>{out}</span>
