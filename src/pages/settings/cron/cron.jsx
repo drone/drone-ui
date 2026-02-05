@@ -16,13 +16,14 @@ import styles from './cron.module.scss';
 
 const cx = classNames.bind(styles);
 
-const CRON_OPTIONS = ['@hourly', '@daily', '@weekly', '@monthly', '@yearly'].map((opt) => ({ key: opt, value: opt }));
+const CRON_OPTIONS = ['@hourly', '@daily', '@weekly', '@monthly', '@yearly', 'custom'].map((opt) => ({ key: opt, value: opt }));
 
 const NewCronForm = ({ handleSubmit, handleCancel }) => {
   const [state, setState] = useState({
     name: '',
     branch: '',
     expr: CRON_OPTIONS[0].value,
+    syntax: '',
   });
   const handleCronChange = (field) => (e) => {
     setState((prev) => ({ ...prev, [field]: e.target.value }));
@@ -57,6 +58,15 @@ const NewCronForm = ({ handleSubmit, handleCancel }) => {
           width={350}
           onChange={handleCronChange('expr')}
         />
+        <Field.Input
+          label="Custom Cron"
+          value={state.syntax}
+          placeholder="0 0 * * * *"
+          name="cron-syntax"
+          width={350}
+          disabled={state.expr !== 'custom'}
+          onChange={handleCronChange('syntax')}
+        />
       </FormSection>
       <FormSection className={cx('controls')}>
         <Button
@@ -88,7 +98,11 @@ export default function Secrets() {
     try {
       const res = await axiosWrapper(`/api/repos/${namespace}/${name}/cron`, {
         method: 'POST',
-        data: { ...values, branch: values.branch || 'master' },
+        data: {
+          name: values.name,
+          branch: values.branch || 'master',
+          expr: values.expr === 'custom' ? values.syntax : values.expr,
+        },
       });
       mutate((prev) => prev.concat(res), false);
       showSuccess('Cron has been added successfully');
